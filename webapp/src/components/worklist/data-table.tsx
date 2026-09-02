@@ -10,7 +10,7 @@ import type { DataColumn, Density } from "@/types";
 
 function formatValue(column: DataColumn, value: unknown) {
   if (column.type === "money") return <span className="font-extrabold tabular-nums">{formatCurrency(Number(value))}</span>;
-  if (column.type === "percent") return <span className="font-extrabold tabular-nums">{value}%</span>;
+  if (column.type === "percent") return <span className="font-extrabold tabular-nums">{String(value)}%</span>;
   if (column.type === "number") return <span className="font-bold tabular-nums">{String(value)}</span>;
   if (column.type === "status") return <StatusBadge value={value} />;
   if (typeof value === "boolean") return <StatusBadge value={value} />;

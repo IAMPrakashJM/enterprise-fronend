@@ -30,7 +30,7 @@ export function Input({ label, hint, error, required, className, prefix, suffix,
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       <div className="relative">
         {prefix ? <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-[11px] font-bold text-[var(--text-muted)]">{prefix}</div> : null}
-        <input className={cn(inputClass, prefix && "pl-11", suffix && "pr-10")} {...props} />
+        <input className={cn(inputClass, prefix ? "pl-11" : undefined, suffix ? "pr-10" : undefined)} {...props} />
         {suffix ? <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[11px] font-bold text-[var(--text-muted)]">{suffix}</div> : null}
       </div>
     </FieldShell>

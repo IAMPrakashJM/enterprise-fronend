@@ -48,7 +48,7 @@ function SidebarGroup({ item, expanded, activePageId, onSelect }: { item: MenuIt
       </button>
       {expanded && open ? (
         <div className="relative ml-[21px] mt-0.5 space-y-0.5 border-l border-[var(--border)] pl-3">
-          {item.children.map((child) => {
+          {item.children?.map((child) => {
             const active = child.pageId === activePageId;
             return (
               <button key={child.id} type="button" onClick={() => child.pageId && onSelect(child.pageId)} className={cn("focus-ring group relative flex min-h-8 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[10.5px] font-semibold transition", active ? "bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]")}>
