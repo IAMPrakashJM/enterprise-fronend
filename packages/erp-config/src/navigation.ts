@@ -56,7 +56,7 @@ import {
   WalletCards,
   Warehouse,
 } from "lucide-react";
-import type { ModuleDefinition, ModuleKey, PageDefinition } from "@/types";
+import type { ModuleDefinition, ModuleKey, PageDefinition } from "./types";
 
 export const MODULES: Record<ModuleKey, ModuleDefinition> = {
   hr: {

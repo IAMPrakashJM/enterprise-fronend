@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "./cn";
 
 export function Card({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]", className)} {...props}>{children}</div>;

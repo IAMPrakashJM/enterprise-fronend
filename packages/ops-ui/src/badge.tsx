@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "./cn";
 
 export type BadgeTone = "neutral" | "brand" | "success" | "warning" | "danger" | "info" | "violet";
 

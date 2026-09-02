@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { X } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { cn } from "./cn";
 import { IconButton } from "./button";
 
 export function Modal({ open, onClose, title, subtitle, children, size = "lg", footer, className }: { open: boolean; onClose: () => void; title: string; subtitle?: string; children: React.ReactNode; size?: "sm" | "md" | "lg" | "xl" | "full"; footer?: React.ReactNode; className?: string }) {

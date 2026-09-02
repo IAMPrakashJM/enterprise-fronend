@@ -11,7 +11,8 @@
   "dependencies": {
     "@pepbits/ops-ui": "*",
     "@pepbits/erp-config": "*",
-    "@pepbits/platform-ports": "*"
+    "@pepbits/platform-ports": "*",
+    "lucide-react": "^0.468.0"
   },
   "peerDependencies": {
     "react": ">=19"

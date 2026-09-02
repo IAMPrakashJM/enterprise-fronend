@@ -1,4 +1,4 @@
-import type { EntitySchema, FormOption } from "@/types";
+import type { EntitySchema, FormOption } from "./types";
 
 const statusOptions: FormOption[] = [
   { label: "Active", value: "Active" },

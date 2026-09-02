@@ -2,8 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
-import { cn } from "@/lib/cn";
-import type { FormOption } from "@/types";
+import { cn } from "./cn";
+
+/** Structurally identical to erp-config's Option. Declared locally so ops-ui
+    depends on nothing and stays a generic interaction surface. */
+export interface Option { label: string; value: string }
 
 interface BaseFieldProps {
   label?: string;
@@ -60,7 +63,7 @@ export function Textarea({ label, hint, error, required, className, ...props }: 
   );
 }
 
-export function Select({ label, hint, error, required, className, options, placeholder = "Select…", ...props }: BaseFieldProps & React.SelectHTMLAttributes<HTMLSelectElement> & { options: FormOption[]; placeholder?: string }) {
+export function Select({ label, hint, error, required, className, options, placeholder = "Select…", ...props }: BaseFieldProps & React.SelectHTMLAttributes<HTMLSelectElement> & { options: Option[]; placeholder?: string }) {
   return (
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       <div className="relative">
@@ -74,7 +77,7 @@ export function Select({ label, hint, error, required, className, options, place
   );
 }
 
-export function MultiSelect({ label, hint, required, options, value, onChange, placeholder = "Select values…", className, disabled }: BaseFieldProps & { options: FormOption[]; value: string[]; onChange: (value: string[]) => void; placeholder?: string; disabled?: boolean }) {
+export function MultiSelect({ label, hint, required, options, value, onChange, placeholder = "Select values…", className, disabled }: BaseFieldProps & { options: Option[]; value: string[]; onChange: (value: string[]) => void; placeholder?: string; disabled?: boolean }) {
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("");
   const ref = useRef<HTMLDivElement>(null);

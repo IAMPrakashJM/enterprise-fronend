@@ -13,7 +13,9 @@
     "@pepbits/erp-config": "*",
     "@pepbits/erp-data": "*",
     "@pepbits/erp-shell": "*",
-    "@pepbits/platform-ports": "*"
+    "@pepbits/platform-ports": "*",
+    "lucide-react": "^0.468.0",
+    "xlsx": "^0.18.5"
   },
   "peerDependencies": {
     "react": ">=19"

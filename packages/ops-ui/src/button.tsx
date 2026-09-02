@@ -2,7 +2,7 @@
 
 import React from "react";
 import { LoaderCircle } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { cn } from "./cn";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "success" | "outline";
 export type ButtonSize = "xs" | "sm" | "md" | "lg";

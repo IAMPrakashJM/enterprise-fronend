@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { cn } from "./cn";
 
 export interface DropdownOption {
   value: string;

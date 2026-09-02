@@ -1,4 +1,4 @@
-import type { DataColumn, ModuleKey, WorklistConfig } from "@/types";
+import type { DataColumn, ModuleKey, WorklistConfig } from "@pepbits/erp-config";
 
 const firstNames = ["Aisha", "Omar", "Maya", "Daniel", "Fatima", "Arjun", "Sara", "Ibrahim", "Leena", "Noah", "Riya", "Zayed", "Noura", "Vikram", "Hana", "Adil"];
 const lastNames = ["Rahman", "Thomas", "Khan", "George", "Nair", "Ahmed", "Mathew", "Joseph", "Hassan", "Menon", "Fernandes", "Ali", "Kapoor", "Saeed"];
