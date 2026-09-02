@@ -2,7 +2,7 @@
   "name": "nexora-monorepo",
   "private": true,
   "version": "1.0.0",
-  "description": "Nexora Enterprise ERP — web and desktop shells over shared @pepbits packages.",
+  "description": "Nexora Enterprise ERP \u2014 web and desktop shells over shared @pepbits packages.",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -24,5 +24,6 @@
     "react-dom": "^19.2.8",
     "turbo": "^2",
     "typescript": "^5.9.3"
-  }
+  },
+  "packageManager": "npm@11.13.0"
 }
