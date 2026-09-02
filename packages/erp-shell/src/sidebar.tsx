@@ -2,9 +2,10 @@
 
 import React, { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, ChevronsLeft, ChevronsRight, Command, PanelLeftClose, PanelLeftOpen, Pin, PinOff, SlidersHorizontal } from "lucide-react";
-import { cn } from "@/lib/cn";
-import { useERP } from "@/context/erp-context";
-import type { MenuItem } from "@/types";
+import { cn } from "@pepbits/ops-ui";
+import { useNavigation } from "@pepbits/platform-ports";
+import { useERP } from "./erp-context";
+import type { MenuItem } from "@pepbits/erp-config";
 
 function SidebarLeaf({ item, expanded, active, onSelect }: { item: MenuItem; expanded: boolean; active: boolean; onSelect: () => void }) {
   const Icon = item.icon;
@@ -66,7 +67,10 @@ function SidebarGroup({ item, expanded, activePageId, onSelect }: { item: MenuIt
 }
 
 export function Sidebar() {
-  const { module, activePageId, openPage, preferences, updatePreference } = useERP();
+  const { module, preferences, updatePreference } = useERP();
+  const navigation = useNavigation();
+  const activePageId = navigation.current.pageId;
+  const openPage = (pageId: string) => navigation.open({ pageId });
   const [hovered, setHovered] = useState(false);
   const expanded = preferences.sidebarPinned || hovered;
   const isRight = preferences.sidebarPlacement === "right";

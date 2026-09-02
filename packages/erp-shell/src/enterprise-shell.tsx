@@ -1,20 +1,23 @@
 "use client";
 
 import React from "react";
-import { useERP } from "@/context/erp-context";
+import { useERP } from "./erp-context";
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
-import { WorkspaceTabs } from "./workspace-tabs";
 import { Footer } from "./footer";
 
-export function EnterpriseShell({ children }: { children: React.ReactNode }) {
+/* Structurally identical to the original shell, with one substitution: the workspace
+   tab strip was mounted here directly and is now the `tabs` prop, because it exists
+   only on desktop. The desktop app passes <WorkspaceTabs/>; the web app passes
+   nothing and the band collapses. Everything else is shared and unchanged. */
+export function EnterpriseShell({ tabs, children }: { tabs?: React.ReactNode; children: React.ReactNode }) {
   const { preferences } = useERP();
   return (
     <div className={`flex h-dvh w-full overflow-hidden ${preferences.sidebarPlacement === "right" ? "flex-row-reverse" : "flex-row"}`}>
       <Sidebar />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <Header />
-        <WorkspaceTabs />
+        {tabs}
         <main className="nex-scrollbar relative min-h-0 flex-1 overflow-auto bg-[var(--bg)] p-3 md:p-4">{children}</main>
         <Footer />
       </div>

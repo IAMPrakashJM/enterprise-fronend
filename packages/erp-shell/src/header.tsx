@@ -2,15 +2,23 @@
 
 import React from "react";
 import { Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, MessageSquareText, Search, Settings, ShieldCheck, SlidersHorizontal, UserRound } from "lucide-react";
-import { BRANCHES, MODULES, PAGE_REGISTRY, ROLES } from "@/config/navigation";
-import { useERP } from "@/context/erp-context";
-import type { ModuleKey } from "@/types";
-import { ActionMenu, DropdownSelect, MenuButton } from "@/components/ui/dropdown";
-import { IconButton } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { BRANCHES, MODULES, PAGE_REGISTRY, ROLES } from "@pepbits/erp-config";
+import { useNavigation } from "@pepbits/platform-ports";
+import { dashboardPageId, useERP } from "./erp-context";
+import type { ModuleKey } from "@pepbits/erp-config";
+import { ActionMenu, DropdownSelect, MenuButton } from "@pepbits/ops-ui";
+import { IconButton } from "@pepbits/ops-ui";
+import { Badge } from "@pepbits/ops-ui";
 
 export function Header() {
-  const { currentModule, setModule, activePageId, branch, setBranch, role, setRole, openPage, setCommandOpen, setDocumentationOpen, preferences } = useERP();
+  const { currentModule, branch, setBranch, role, setRole, setCommandOpen, setDocumentationOpen, preferences } = useERP();
+  const navigation = useNavigation();
+  const activePageId = navigation.current.pageId;
+  const openPage = (pageId: string, options?: { mode?: "view" | "edit" | "new"; recordId?: string; title?: string }) =>
+    navigation.open({ pageId, ...options });
+  /* The module switcher navigates to that module's dashboard and each shell applies
+     its own semantics: web pushes the URL, desktop rebuilds its tab set. */
+  const setModule = (value: ModuleKey) => navigation.open({ pageId: dashboardPageId(value) });
   const page = PAGE_REGISTRY[activePageId];
   const moduleOptions = Object.values(MODULES).map((item) => ({
     value: item.id,

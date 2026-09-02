@@ -1,7 +1,7 @@
 "use client";
 
 import { CircleCheck, Cloud, Database, LockKeyhole } from "lucide-react";
-import { useERP } from "@/context/erp-context";
+import { useERP } from "./erp-context";
 
 export function Footer() {
   const { module, branch, role } = useERP();
