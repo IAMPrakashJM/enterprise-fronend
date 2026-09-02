@@ -45,7 +45,19 @@ These are requirements, not preferences. A change that violates one is a defect.
 | D2 | Seven `@pepbits/*` packages | One answerable purpose each; proportional to ~4,100 lines. Mirrors the package granularity already in use in `pepcare-platform/frontend/provider-web`. |
 | D3 | URL scheme `/{module}/{page}[/{recordId}][/edit]` | Self-describing URLs matching the sidebar's mental model. Requires a canonical-redirect guard (section 6). |
 | D4 | Navigation is an injected port, not shared state | Shared screens never learn what a tab is. Web and desktop supply different implementations of one interface. |
-| D5 | Desktop is Vite 7 + React 19 + Tauri 2 | The pattern already proven by `apps/allyvora-desktop` next door, which consumes `@pepbits/*` packages alongside Next applications. |
+| D5 | Desktop is Vite 7 + React 19 + Tauri 2 | The toolchain shape used by `apps/allyvora-desktop` next door. See the correction below — that app is a precedent for the *stack*, not for package sharing. |
+
+> **Correction, 2026-09-03.** An earlier draft justified D5 by saying `allyvora-desktop`
+> proves `@pepbits/*` packages can be shared between a Next app and a Vite/Tauri app. It
+> does not. That app declares `@pepbits/ops-ui` as a dependency and imports it in **zero
+> source files**; it runs Tailwind v3 with a colour map sharing almost no names with
+> ops-ui's `@theme`, so every ops-ui utility would be ungenerated there anyway; and it is
+> built by no pipeline and deployed nowhere. The sharing pattern is therefore **unproven
+> next door and proven by nothing** — this project is the first real instance of it.
+> Consequences for this design: (a) Tailwind stays at v4 in *both* applications here,
+> which is what makes sharing viable at all; (b) the section 9.2 source-scanning step is
+> not a precaution copied from a working system, it is the load-bearing mechanism, and
+> step 6 must verify it before anything else is attributed to the migration.
 
 ## 4. Target structure
 
@@ -266,7 +278,12 @@ export interface NavigationTarget {
 }
 
 export interface NavigationPort {
-  /** Where the user is now. Drives the sidebar highlight and the header title. */
+  /** Where the user is now. Drives the sidebar highlight and the header title.
+      `useNavigation()` THROWS when no provider is mounted — a silent no-provider
+      fallback produces a shell that looks fine and navigates nowhere. This follows
+      `@pepbits/platform-ports`' `usePlatform()` next door, and deliberately not
+      `useDensity()`/`useToast()`, which fail silently and are consequently mounted
+      nowhere real in production. */
   current: NavigationTarget;
 
   /** Open the target the way this shell opens things by default.
@@ -411,6 +428,21 @@ application's entry stylesheet must therefore declare them explicitly:
 This is the single most likely cause of a catastrophic-looking visual regression during
 the migration, and the first thing to check if one appears.
 
+Three findings from the `pepcare-platform` frontend confirm this is not hypothetical:
+
+- Adding one `@source` line for `packages/ops-ui/src` there was worth roughly **80
+  previously-ungenerated utility classes, 29 on `Button` alone**. The theme import
+  supplies token *names*; `@source` puts the package into the content scan. Both are
+  required, and neither substitutes for the other.
+- A package stylesheet whose payload is a Tailwind `@theme` block **compiles, builds,
+  deploys and emits nothing** unless it is processed by a stylesheet that imports
+  Tailwind. This design sidesteps that failure entirely: `@pepbits/tokens` ships plain
+  `:root` custom properties, exactly as `webapp/app/globals.css` writes them today. No
+  `@theme`, no generated adapters, no build step. (The equivalent package next door emits
+  three artefacts; two of them have zero consumers repo-wide.)
+- A missing `transpilePackages` entry is a **build failure**, not a warning, because
+  `@pepbits/*` packages ship raw TypeScript with no build step.
+
 ### 9.3 Verification
 
 Screenshot comparison of the pre-migration `webapp` against `apps/web`, across all seven
@@ -495,7 +527,9 @@ Steps 6, 7 and 8 each end in a working, committable state.
 | `<button>` → `<a>` shifts a pixel at some call site. | `NavLink` carries a fixed reset; step 7 has its own visual gate. |
 | `xlsx@0.18.5` carries CVE-2023-30533 and CVE-2024-22363 and rides along into `erp-screens`. | Out of scope under constraint 2. Recorded here so it is not lost; the fixed build is published from `cdn.sheetjs.com`, not npm. |
 | `next-env.d.ts` and `tsconfig.json` show as modified because a dev server rewrote them. | Commit or discard before step 3 so the move diff is readable. |
-| Turborepo and Tauri are new to this repository. | Both mirror configurations already running in `pepcare-platform/frontend/provider-web`. |
+| Turborepo and Tauri are new to this repository. | Turborepo mirrors a configuration already running in `pepcare-platform/frontend/provider-web`. Tauri does not — see the D5 correction; this is the first working instance of package sharing across a Next/Vite pair in either repository. |
+| **A shell package gets forked instead of shared.** Next door, `apps/portal` forked `@pepbits/portal-shell` into its own tree and the two have since drifted by 179 lines of CSS and 54 lines of header markup, leaving the package with no product consumer at all. | The identical failure is available here the moment `apps/web` or `apps/desktop` needs a chrome tweak. Rule for this work: a shell change goes into `@pepbits/erp-shell` behind a prop, or it does not happen. No copy of `header.tsx` / `sidebar.tsx` may exist under `apps/`. |
+| A package is created and never consumed. | Next door, `@pepbits/api-client`, `@pepbits/config`, `@pepbits/types` and `@pepbits/observability` are declared but called by nothing, and an entire `domain-ui` capability has zero importers. All seven packages here have a named consumer on day one; if one ends the migration with no importer, delete it rather than keep it. |
 
 ## 14. Non-goals
 
