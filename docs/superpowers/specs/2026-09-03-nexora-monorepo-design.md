@@ -407,8 +407,22 @@ for. Everything else must be pixel-identical, and any third difference is a defe
    for the first time (defect 6, section 10). The `openRecordsInTabs` field stays in
    `UserPreferences` so the two shells share one persisted preferences shape.
 
-Neither delta applies to desktop, which must be pixel-identical to `webapp` today without
-exception.
+3. **The sidebar overlays the page on hover instead of pushing it** (both shells,
+   added 2026-09-03 on request). Collapsed and pinned behaviour is unchanged: the rail
+   still occupies its width, and pinning still pushes the content. Only hover expansion
+   differs — the panel is now `absolute inset-y-0` over the page with `--shadow-lg`,
+   while an in-flow spacer holds the layout at the collapsed width. This matches
+   `packages/portal-shell` in pepcare, where `.sb` is `position: fixed`, `.sb.open.overlay`
+   carries the rail shadow, and `.shell-main` only gains `.pushed` while pinned.
+
+   Consequence worth knowing: Nexora's sidebar is full height with the header in the
+   column beside it, so an expanded overlay covers the header's leftmost region. The
+   sidebar's own brand block is exactly `--header-height` tall, so the two align.
+
+Deltas 1 and 2 do not apply to desktop, which is otherwise pixel-identical to `webapp`.
+Delta 3 applies to both shells. Note that `verify-parity` does not cover `sidebar.tsx` —
+it is a deliberately rewritten file, not a moved one, so this change is recorded here
+rather than caught there.
 
 ### 9.2 The Tailwind 4 source-scanning trap
 

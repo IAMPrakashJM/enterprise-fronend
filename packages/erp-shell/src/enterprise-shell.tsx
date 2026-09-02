@@ -13,7 +13,9 @@ import { Footer } from "./footer";
 export function EnterpriseShell({ tabs, children }: { tabs?: React.ReactNode; children: React.ReactNode }) {
   const { preferences } = useERP();
   return (
-    <div className={`flex h-dvh w-full overflow-hidden ${preferences.sidebarPlacement === "right" ? "flex-row-reverse" : "flex-row"}`}>
+    /* relative: the sidebar is absolutely positioned inside this box so that hover
+         expansion floats over the page instead of pushing it. */
+    <div className={`relative flex h-dvh w-full overflow-hidden ${preferences.sidebarPlacement === "right" ? "flex-row-reverse" : "flex-row"}`}>
       <Sidebar />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <Header />

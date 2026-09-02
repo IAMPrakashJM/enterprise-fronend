@@ -79,16 +79,31 @@ export function Sidebar() {
   const brandLetters = useMemo(() => module.shortLabel.slice(0, 2).toUpperCase(), [module.shortLabel]);
 
   return (
-    <aside
-      aria-label="Primary navigation"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={cn(
-        "no-print relative z-50 flex h-dvh shrink-0 flex-col bg-[var(--surface)] shadow-[var(--shadow-sm)] transition-[width] duration-200",
-        isRight ? "border-l border-[var(--border)]" : "border-r border-[var(--border)]",
-        expanded ? "w-[var(--sidebar-expanded)]" : "w-[var(--sidebar-collapsed)]",
-      )}
-    >
+    <>
+      {/* The spacer is what holds the layout open, and it only ever grows when the
+          sidebar is PINNED. Hover expansion floats the panel over the page instead of
+          moving it — the same arrangement as pepcare's rail, where .shell-main takes
+          margin-left: var(--rail-w) and only gains .pushed while pinned. */}
+      <div
+        aria-hidden
+        className={cn(
+          "no-print shrink-0 transition-[width] duration-200",
+          preferences.sidebarPinned ? "w-[var(--sidebar-expanded)]" : "w-[var(--sidebar-collapsed)]",
+        )}
+      />
+      <aside
+        aria-label="Primary navigation"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={cn(
+          "no-print absolute inset-y-0 z-50 flex flex-col bg-[var(--surface)] transition-[width] duration-200",
+          isRight ? "right-0 border-l border-[var(--border)]" : "left-0 border-r border-[var(--border)]",
+          expanded ? "w-[var(--sidebar-expanded)]" : "w-[var(--sidebar-collapsed)]",
+          /* Lifted off the page only while it is actually floating over it. Pinned, it
+             is part of the layout again and takes the flat resting shadow. */
+          expanded && !preferences.sidebarPinned ? "shadow-[var(--shadow-lg)]" : "shadow-[var(--shadow-sm)]",
+        )}
+      >
       <div className="flex h-[var(--header-height)] shrink-0 items-center gap-3 border-b border-[var(--border)] px-3">
         <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-[var(--primary)] text-white shadow-md">
           <span className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,.38),transparent_42%)]" />
@@ -123,7 +138,8 @@ export function Sidebar() {
           {expanded ? <span className="min-w-0 flex-1 text-left text-[10px] font-semibold">{preferences.sidebarPinned ? "Unfix sidebar" : "Fix sidebar open"}</span> : null}
           {expanded ? <SideIcon className="size-3 text-[var(--text-subtle)]" /> : null}
         </button>
-      </div>
-    </aside>
+        </div>
+      </aside>
+    </>
   );
 }
