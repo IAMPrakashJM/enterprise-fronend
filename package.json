@@ -1,0 +1,19 @@
+{
+  "name": "nexora-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Nexora Enterprise ERP — web and desktop shells over shared @pepbits packages.",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev",
+    "dev:web": "npm run dev -w web",
+    "dev:desktop": "npm run dev -w desktop",
+    "desktop": "npm run tauri -w desktop -- dev",
+    "verify:parity": "node scripts/verify-parity.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2"
+  }
+}
