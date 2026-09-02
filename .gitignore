@@ -10,5 +10,5 @@ dist
 .DS_Store
 .idea
 tsconfig.tsbuildinfo
-apps/desktop/src-tauri/target
-apps/desktop/src-tauri/gen
+desktop-clients/apps/desktop/src-tauri/target
+desktop-clients/apps/desktop/src-tauri/gen
