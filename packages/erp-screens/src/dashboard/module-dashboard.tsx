@@ -2,13 +2,15 @@
 
 import React from "react";
 import { ArrowDownRight, ArrowUpRight, CalendarDays, ChevronRight, Circle, Clock3, Download, Ellipsis, Filter, Maximize2, RefreshCw, ShieldCheck, Sparkles, TrendingUp } from "lucide-react";
-import { dashboardData } from "@/data/mock";
-import { useERP } from "@/context/erp-context";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button, IconButton } from "@/components/ui/button";
-import { cn, formatCompact } from "@/lib/cn";
-import type { ModuleKey } from "@/types";
+import { dashboardData } from "@pepbits/erp-data";
+import { useNavigation } from "@pepbits/platform-ports";
+import { useERP, dashboardPageId as dashboardFor } from "@pepbits/erp-shell";
+import { Card, CardContent, CardHeader, CardTitle } from "@pepbits/ops-ui";
+import { Badge } from "@pepbits/ops-ui";
+import { Button, IconButton } from "@pepbits/ops-ui";
+import { cn, formatCompact } from "@pepbits/ops-ui";
+import { PAGE_REGISTRY } from "@pepbits/erp-config";
+import type { ModuleKey } from "@pepbits/erp-config";
 
 function TrendChart({ values, labels, module }: { values: number[]; labels: string[]; module: ModuleKey }) {
   const width = 760;
@@ -71,8 +73,18 @@ const branchRows = [
   { branch: "Kochi Delivery", volume: "AED 1.47M", plan: 102, variance: "+11.2%", exceptions: 4, health: "Strong" },
 ];
 
+
+/* Defect: the generated ids did not exist for finance, hr or sales, so the click
+   did nothing at all. Verify against the registry and fall back audibly. */
+function registeredPage(candidate: string, fallback: string): string {
+  if (PAGE_REGISTRY[candidate]) return candidate;
+  console.warn(`[dashboard] no page registered for "${candidate}"; falling back to "${fallback}"`);
+  return fallback;
+}
+
 export function ModuleDashboard({ moduleKey }: { moduleKey?: ModuleKey }) {
-  const { currentModule, module, openPage, toast } = useERP();
+  const { currentModule, module, toast } = useERP();
+  const navigation = useNavigation();
   const key = moduleKey ?? currentModule;
   const data = dashboardData[key];
 
@@ -101,9 +113,9 @@ export function ModuleDashboard({ moduleKey }: { moduleKey?: ModuleKey }) {
         <Card>
           <CardHeader><CardTitle title="Action queue" subtitle="Prioritized by impact and SLA" action={<Badge tone="warning">{data.queue.reduce((sum, item) => sum + item.count, 0)} open</Badge>} /></CardHeader>
           <div className="divide-y divide-[var(--border)]">
-            {data.queue.map((item, index) => <button key={item.label} type="button" onClick={() => openPage(key === "finance" ? "billing-worklist" : key === "hr" ? "approval-worklist" : key === "payroll" ? "payroll-worklist" : key === "sales" ? "order-worklist" : key === "supply" ? "procurement-worklist" : "component-library")} className="group flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[var(--surface-2)]"><span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[var(--primary-soft)] text-[11px] font-black text-[var(--primary-strong)]">{item.count}</span><span className="min-w-0 flex-1"><span className="block truncate text-[10.5px] font-extrabold">{item.label}</span><span className="mt-0.5 block truncate text-[9px] text-[var(--text-muted)]">{item.value}</span></span><span className="text-right"><span className="block text-[8px] font-bold uppercase text-[var(--text-subtle)]">SLA</span><span className="block text-[9.5px] font-extrabold text-[var(--warning)]">{item.SLA}</span></span><ChevronRight className="size-3.5 text-[var(--text-subtle)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]" /></button>)}
+            {data.queue.map((item, index) => <button key={item.label} type="button" onClick={() => navigation.openInNewContext({ pageId: registeredPage(key === "finance" ? "billing-worklist" : key === "hr" ? "approval-worklist" : key === "payroll" ? "payroll-worklist" : key === "sales" ? "order-worklist" : key === "supply" ? "procurement-worklist" : "component-library", dashboardFor(key)) })} className="group flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-[var(--surface-2)]"><span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[var(--primary-soft)] text-[11px] font-black text-[var(--primary-strong)]">{item.count}</span><span className="min-w-0 flex-1"><span className="block truncate text-[10.5px] font-extrabold">{item.label}</span><span className="mt-0.5 block truncate text-[9px] text-[var(--text-muted)]">{item.value}</span></span><span className="text-right"><span className="block text-[8px] font-bold uppercase text-[var(--text-subtle)]">SLA</span><span className="block text-[9.5px] font-extrabold text-[var(--warning)]">{item.SLA}</span></span><ChevronRight className="size-3.5 text-[var(--text-subtle)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]" /></button>)}
           </div>
-          <div className="border-t border-[var(--border)] bg-[var(--surface-2)] p-2"><Button variant="ghost" size="sm" className="w-full" onClick={() => openPage(key === "library" ? "page-catalog" : `${key === "supply" ? "procurement" : key}-worklist`)}>Open full worklist <ChevronRight className="size-3" /></Button></div>
+          <div className="border-t border-[var(--border)] bg-[var(--surface-2)] p-2"><Button variant="ghost" size="sm" className="w-full" onClick={() => navigation.open({ pageId: registeredPage(key === "library" ? "page-catalog" : `${key === "supply" ? "procurement" : key}-worklist`, dashboardFor(key)) })}>Open full worklist <ChevronRight className="size-3" /></Button></div>
         </Card>
       </div>
 

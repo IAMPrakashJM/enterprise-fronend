@@ -2,12 +2,12 @@
 
 import React from "react";
 import { ExternalLink, Pencil, ShieldCheck } from "lucide-react";
-import { useERP } from "@/context/erp-context";
-import { Button } from "@/components/ui/button";
-import { Badge, StatusBadge } from "@/components/ui/badge";
-import { CenterRecordCard, Drawer, Modal } from "@/components/ui/overlay";
-import { formatCurrency } from "@/lib/cn";
-import type { DataColumn, WorklistConfig } from "@/types";
+import { useERP } from "@pepbits/erp-shell";
+import { Button } from "@pepbits/ops-ui";
+import { Badge, StatusBadge } from "@pepbits/ops-ui";
+import { CenterRecordCard, Drawer, Modal } from "@pepbits/ops-ui";
+import { formatCurrency } from "@pepbits/ops-ui";
+import type { DataColumn, WorklistConfig } from "@pepbits/erp-config";
 
 function PreviewContent({ row, config }: { row: Record<string, string | number | boolean>; config: WorklistConfig }) {
   const columnMap = Object.fromEntries(config.columns.map((column) => [column.key, column])) as Record<string, DataColumn>;

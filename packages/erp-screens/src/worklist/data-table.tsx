@@ -2,11 +2,11 @@
 
 import React from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, Eye, MoreHorizontal, Pencil, SquareArrowOutUpRight } from "lucide-react";
-import { cn, formatCurrency } from "@/lib/cn";
-import { StatusBadge } from "@/components/ui/badge";
-import { IconButton } from "@/components/ui/button";
-import { ActionMenu, MenuButton } from "@/components/ui/dropdown";
-import type { DataColumn, Density } from "@/types";
+import { cn, formatCurrency } from "@pepbits/ops-ui";
+import { StatusBadge } from "@pepbits/ops-ui";
+import { IconButton } from "@pepbits/ops-ui";
+import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
+import type { DataColumn, Density } from "@pepbits/erp-config";
 
 function formatValue(column: DataColumn, value: unknown) {
   if (column.type === "money") return <span className="font-extrabold tabular-nums">{formatCurrency(Number(value))}</span>;

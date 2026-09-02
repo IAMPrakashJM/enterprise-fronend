@@ -2,12 +2,12 @@
 
 import React from "react";
 import { Check, Eye, MoreHorizontal, Pencil, SquareArrowOutUpRight } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge, StatusBadge } from "@/components/ui/badge";
-import { IconButton } from "@/components/ui/button";
-import { ActionMenu, MenuButton } from "@/components/ui/dropdown";
-import { cn, formatCurrency } from "@/lib/cn";
-import type { DataColumn, Density } from "@/types";
+import { Card } from "@pepbits/ops-ui";
+import { Badge, StatusBadge } from "@pepbits/ops-ui";
+import { IconButton } from "@pepbits/ops-ui";
+import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
+import { cn, formatCurrency } from "@pepbits/ops-ui";
+import type { DataColumn, Density } from "@pepbits/erp-config";
 
 function display(column: DataColumn, value: unknown) {
   if (column.type === "money") return formatCurrency(Number(value));

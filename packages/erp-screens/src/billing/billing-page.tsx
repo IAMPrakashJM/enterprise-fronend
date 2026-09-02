@@ -2,16 +2,16 @@
 
 import React, { useMemo, useState } from "react";
 import { BadgeCheck, Banknote, Calculator, CheckCircle2, ChevronDown, CircleDollarSign, Copy, Download, FileCheck2, FileText, History, MoreHorizontal, Plus, Printer, ReceiptText, Save, ScanLine, ShieldCheck, Trash2, UserRound, WalletCards } from "lucide-react";
-import { useERP } from "@/context/erp-context";
-import { Button, IconButton } from "@/components/ui/button";
-import { Badge, StatusBadge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Input, MultiSelect, Select, Textarea, Toggle } from "@/components/ui/form-controls";
-import { Tabs } from "@/components/ui/tabs";
-import { ActionMenu, MenuButton } from "@/components/ui/dropdown";
-import { Modal } from "@/components/ui/overlay";
-import { cn, formatCurrency } from "@/lib/cn";
-import type { BillingLayout, PageDefinition } from "@/types";
+import { useERP } from "@pepbits/erp-shell";
+import { Button, IconButton } from "@pepbits/ops-ui";
+import { Badge, StatusBadge } from "@pepbits/ops-ui";
+import { Card } from "@pepbits/ops-ui";
+import { Input, MultiSelect, Select, Textarea, Toggle } from "@pepbits/ops-ui";
+import { Tabs } from "@pepbits/ops-ui";
+import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
+import { Modal } from "@pepbits/ops-ui";
+import { cn, formatCurrency } from "@pepbits/ops-ui";
+import type { BillingLayout, PageDefinition } from "@pepbits/erp-config";
 
 interface LineItem {
   id: number;

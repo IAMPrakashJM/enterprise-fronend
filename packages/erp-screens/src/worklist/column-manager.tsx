@@ -2,10 +2,10 @@
 
 import React from "react";
 import { ArrowDown, ArrowUp, Check, GripVertical, RotateCcw } from "lucide-react";
-import { Modal } from "@/components/ui/overlay";
-import { Button, IconButton } from "@/components/ui/button";
-import { cn } from "@/lib/cn";
-import type { DataColumn } from "@/types";
+import { Modal } from "@pepbits/ops-ui";
+import { Button, IconButton } from "@pepbits/ops-ui";
+import { cn } from "@pepbits/ops-ui";
+import type { DataColumn } from "@pepbits/erp-config";
 
 export function ColumnManager({ open, onClose, columns, visibleKeys, onChange, onReset }: { open: boolean; onClose: () => void; columns: DataColumn[]; visibleKeys: string[]; onChange: (keys: string[]) => void; onReset: () => void }) {
   const toggle = (key: string) => {

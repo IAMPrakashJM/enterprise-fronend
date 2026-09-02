@@ -2,16 +2,18 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock3, Copy, Eye, FileCheck2, History, LockKeyhole, MoreHorizontal, Pencil, RotateCcw, Save, Send, ShieldCheck, Sparkles } from "lucide-react";
-import { getEntitySchema } from "@/config/entity-schemas";
-import { getWorklistConfig } from "@/data/mock";
-import { useERP } from "@/context/erp-context";
-import { Button, IconButton } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { Input, MultiSelect, Select, Textarea, Toggle } from "@/components/ui/form-controls";
-import { ActionMenu, MenuButton } from "@/components/ui/dropdown";
-import { cn } from "@/lib/cn";
-import type { FormFieldSchema, PageDefinition } from "@/types";
+import { getEntitySchema } from "@pepbits/erp-config";
+import { getWorklistConfig } from "@pepbits/erp-data";
+import { useERP } from "@pepbits/erp-shell";
+import { Button, IconButton } from "@pepbits/ops-ui";
+import { Badge } from "@pepbits/ops-ui";
+import { Card } from "@pepbits/ops-ui";
+import { Input, MultiSelect, Select, Textarea, Toggle } from "@pepbits/ops-ui";
+import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
+import { cn } from "@pepbits/ops-ui";
+import type { FormFieldSchema, PageDefinition } from "@pepbits/erp-config";
+import { useNavigation } from "@pepbits/platform-ports";
+import type { NavigationTarget } from "@pepbits/platform-ports";
 import { FormNavigationControl } from "./form-navigation";
 
 function buildInitialValues(page: PageDefinition, recordId?: string) {
@@ -52,17 +54,18 @@ function FieldRenderer({ field, value, onChange, disabled, error }: { field: For
   return <Input {...common} type={field.type === "phone" ? "tel" : field.type} value={String(value ?? "")} disabled={disabled} placeholder={field.placeholder} prefix={field.prefix} suffix={field.suffix} onChange={(event) => onChange(field.type === "number" ? Number(event.target.value) : event.target.value)} />;
 }
 
-export function DynamicRecordForm({ page }: { page: PageDefinition }) {
-  const { activeTab, preferences, openPage, toast } = useERP();
+export function DynamicRecordForm({ page, target }: { page: PageDefinition; target: NavigationTarget }) {
+  const { preferences, toast } = useERP();
+  const navigation = useNavigation();
   const schema = useMemo(() => getEntitySchema(page.entity, page.title), [page.entity, page.title]);
-  const initial = useMemo(() => buildInitialValues(page, activeTab.recordId), [activeTab.recordId, page]);
+  const initial = useMemo(() => buildInitialValues(page, target.recordId), [target.recordId, page]);
   const [values, setValues] = useState(initial);
   const [savedValues, setSavedValues] = useState(initial);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeSection, setActiveSection] = useState(schema.sections[0].id);
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState("Just now");
-  const mode = activeTab.mode ?? (page.kind === "form" ? "edit" : "view");
+  const mode = target.mode ?? (page.kind === "form" ? "edit" : "view");
   const disabled = mode === "view";
   const dirty = JSON.stringify(values) !== JSON.stringify(savedValues);
   const activeIndex = schema.sections.findIndex((section) => section.id === activeSection);
@@ -127,9 +130,9 @@ export function DynamicRecordForm({ page }: { page: PageDefinition }) {
   return (
     <div className="mx-auto flex max-w-[1600px] flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow-sm)]">
-        <div className="flex flex-wrap items-center gap-2"><Badge tone={mode === "view" ? "neutral" : mode === "new" ? "brand" : "warning"}>{mode === "new" ? "NEW RECORD" : mode.toUpperCase()}</Badge><span className="text-[10px] font-extrabold">{activeTab.recordId ?? (mode === "new" ? "Code generated on save" : schema.singular)}</span><span className="h-4 w-px bg-[var(--border)]" /><span className="flex items-center gap-1 text-[8.5px] font-semibold text-[var(--text-muted)]"><Clock3 className="size-3" />Last saved {lastSaved}</span>{dirty ? <Badge tone="warning">Unsaved changes</Badge> : <Badge tone="success"><CheckCircle2 className="size-3" />Saved</Badge>}</div>
+        <div className="flex flex-wrap items-center gap-2"><Badge tone={mode === "view" ? "neutral" : mode === "new" ? "brand" : "warning"}>{mode === "new" ? "NEW RECORD" : mode.toUpperCase()}</Badge><span className="text-[10px] font-extrabold">{target.recordId ?? (mode === "new" ? "Code generated on save" : schema.singular)}</span><span className="h-4 w-px bg-[var(--border)]" /><span className="flex items-center gap-1 text-[8.5px] font-semibold text-[var(--text-muted)]"><Clock3 className="size-3" />Last saved {lastSaved}</span>{dirty ? <Badge tone="warning">Unsaved changes</Badge> : <Badge tone="success"><CheckCircle2 className="size-3" />Saved</Badge>}</div>
         <div className="flex items-center gap-1.5">
-          {mode === "view" ? <Button variant="primary" leftIcon={<Pencil className="size-3.5" />} onClick={() => openPage(page.id, { mode: "edit", recordId: activeTab.recordId, title: `${schema.singular} • Edit` })}>Edit</Button> : <><Button variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} disabled={!dirty} onClick={() => setValues(savedValues)}>Discard</Button><Button variant="secondary" leftIcon={<Save className="size-3.5" />} loading={saving} onClick={save}>Save draft</Button><Button variant="primary" leftIcon={<FileCheck2 className="size-3.5" />} loading={saving} onClick={save}>Save</Button></>}
+          {mode === "view" ? <Button variant="primary" leftIcon={<Pencil className="size-3.5" />} onClick={() => navigation.open({ pageId: page.id, mode: "edit", recordId: target.recordId, title: `${schema.singular} • Edit` })}>Edit</Button> : <><Button variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} disabled={!dirty} onClick={() => setValues(savedValues)}>Discard</Button><Button variant="secondary" leftIcon={<Save className="size-3.5" />} loading={saving} onClick={save}>Save draft</Button><Button variant="primary" leftIcon={<FileCheck2 className="size-3.5" />} loading={saving} onClick={save}>Save</Button></>}
           <ActionMenu trigger={<IconButton label="More record actions"><MoreHorizontal className="size-4" /></IconButton>}>
             {(close) => <><MenuButton icon={<Copy className="size-3.5" />} label="Duplicate record" onClick={close} /><MenuButton icon={<History className="size-3.5" />} label="View audit history" onClick={close} /><MenuButton icon={<Send className="size-3.5" />} label="Submit for approval" onClick={() => { toast({ title: "Submitted for approval", message: "The record was routed to the configured approval workflow.", type: "info" }); close(); }} /></>}
           </ActionMenu>

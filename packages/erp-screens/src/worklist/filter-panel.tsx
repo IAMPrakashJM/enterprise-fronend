@@ -2,10 +2,10 @@
 
 import React from "react";
 import { ChevronDown, Filter, RotateCcw, SlidersHorizontal, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input, Select } from "@/components/ui/form-controls";
-import { cn } from "@/lib/cn";
-import type { WorklistConfig } from "@/types";
+import { Button } from "@pepbits/ops-ui";
+import { Input, Select } from "@pepbits/ops-ui";
+import { cn } from "@pepbits/ops-ui";
+import type { WorklistConfig } from "@pepbits/erp-config";
 
 export function FilterPanel({ config, values, onChange, advancedOpen, onAdvancedToggle, onApply, onReset, activeFilterCount }: { config: WorklistConfig; values: Record<string, string>; onChange: (key: string, value: string) => void; advancedOpen: boolean; onAdvancedToggle: () => void; onApply: () => void; onReset: () => void; activeFilterCount: number }) {
   const renderFilter = (filter: WorklistConfig["basicFilters"][number] | WorklistConfig["advancedFilters"][number]) => {

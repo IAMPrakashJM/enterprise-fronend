@@ -2,26 +2,28 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
-import { getWorklistConfig } from "@/data/mock";
-import { useERP } from "@/context/erp-context";
-import { Button, IconButton } from "@/components/ui/button";
-import { SearchInput } from "@/components/ui/form-controls";
-import { Badge } from "@/components/ui/badge";
-import { ActionMenu, MenuButton } from "@/components/ui/dropdown";
-import { EmptyState } from "@/components/ui/empty-state";
-import { Pagination } from "@/components/ui/pagination";
+import { getWorklistConfig } from "@pepbits/erp-data";
+import { useNavigation } from "@pepbits/platform-ports";
+import { useERP } from "@pepbits/erp-shell";
+import { Button, IconButton } from "@pepbits/ops-ui";
+import { SearchInput } from "@pepbits/ops-ui";
+import { Badge } from "@pepbits/ops-ui";
+import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
+import { EmptyState } from "@pepbits/ops-ui";
+import { Pagination } from "@pepbits/ops-ui";
 import { FilterPanel } from "./filter-panel";
 import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import type { DataColumn, PageDefinition } from "@/types";
-import { cn } from "@/lib/cn";
+import type { DataColumn, PageDefinition } from "@pepbits/erp-config";
+import { cn } from "@pepbits/ops-ui";
 
 function valueText(value: string | number | boolean) { return String(value).toLowerCase(); }
 
 export function WorklistPage({ page }: { page: PageDefinition }) {
-  const { preferences, updatePreference, openPage, toast } = useERP();
+  const { preferences, updatePreference, toast } = useERP();
+  const navigation = useNavigation();
   const config = useMemo(() => getWorklistConfig(page.id, page.title, page.entity), [page.entity, page.id, page.title]);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Record<string, string>>({});
@@ -102,14 +104,14 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
     setSort((previous) => previous?.key === column.key ? { key: column.key, direction: previous.direction === "asc" ? "desc" : "asc" } : { key: column.key, direction: "asc" });
     setPageNumber(1);
   };
-  const view = (row: Record<string, string | number | boolean>) => { setPreviewRow(null); openPage(page.id, { mode: "view", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • View` }); };
-  const edit = (row: Record<string, string | number | boolean>) => { setPreviewRow(null); openPage(page.id, { mode: "edit", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • Edit` }); };
+  const view = (row: Record<string, string | number | boolean>) => { setPreviewRow(null); navigation.openInNewContext({ pageId: page.id, mode: "view", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • View` }); };
+  const edit = (row: Record<string, string | number | boolean>) => { setPreviewRow(null); navigation.openInNewContext({ pageId: page.id, mode: "edit", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • Edit` }); };
 
   return (
     <div className="mx-auto flex max-w-[1900px] flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
         <SearchInput value={search} onChange={(value) => { setSearch(value); setPageNumber(1); }} className="min-w-[240px] flex-1 lg:max-w-xl" placeholder={`Search ${page.title.toLowerCase()} by ID, name or any visible value…`} />
-        <Button variant="primary" leftIcon={<Plus className="size-3.5" />} onClick={() => openPage(page.id, { mode: "new", forceNewTab: true, title: `New ${page.title.replace(/ (Master|Worklist)$/i, "")}` })}>New</Button>
+        <Button variant="primary" leftIcon={<Plus className="size-3.5" />} onClick={() => navigation.openInNewContext({ pageId: page.id, mode: "new", title: `New ${page.title.replace(/ (Master|Worklist)$/i, "")}` })}>New</Button>
         <div className="hidden h-7 w-px bg-[var(--border)] md:block" />
         <ActionMenu align="left" trigger={<Button variant="secondary" leftIcon={<Star className="size-3.5" />}>Saved views</Button>}>
           {(close) => <><MenuButton label="My default view" hint="Table • 8 columns • 20 rows" onClick={close} /><MenuButton label="High priority" hint="4 filters • updated today" onClick={close} /><MenuButton label="Open items by branch" hint="Shared by Operations" onClick={close} /><MenuButton icon={<Save className="size-3.5" />} label="Save current view" onClick={() => { toast({ title: "View saved", message: "Current filters and columns were saved as a personal view.", type: "success" }); close(); }} /></>}
@@ -119,7 +121,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           <IconButton label="Choose columns" onClick={() => setColumnOpen(true)}><Columns3 className="size-4" /></IconButton>
           <IconButton label="Refresh results" onClick={() => toast({ title: "Worklist refreshed", message: `${filtered.length} mock records synchronized.`, type: "info" })}><RefreshCw className="size-4" /></IconButton>
           <ActionMenu trigger={<IconButton label="More worklist actions"><MoreHorizontal className="size-4" /></IconButton>}>
-            {(close) => <><MenuButton icon={<Download className="size-3.5" />} label="Export visible records" onClick={() => { toast({ title: "Export prepared", message: `${filtered.length} records are ready for export.`, type: "success" }); close(); }} /><MenuButton icon={<Upload className="size-3.5" />} label="Import records" onClick={() => { openPage("spreadsheet-studio"); close(); }} /><MenuButton icon={<Settings2 className="size-3.5" />} label="Page preferences" onClick={() => { openPage("preferences"); close(); }} /></>}
+            {(close) => <><MenuButton icon={<Download className="size-3.5" />} label="Export visible records" onClick={() => { toast({ title: "Export prepared", message: `${filtered.length} records are ready for export.`, type: "success" }); close(); }} /><MenuButton icon={<Upload className="size-3.5" />} label="Import records" onClick={() => { navigation.open({ pageId: "spreadsheet-studio" }); close(); }} /><MenuButton icon={<Settings2 className="size-3.5" />} label="Page preferences" onClick={() => { navigation.open({ pageId: "preferences" }); close(); }} /></>}
           </ActionMenu>
         </div>
       </div>

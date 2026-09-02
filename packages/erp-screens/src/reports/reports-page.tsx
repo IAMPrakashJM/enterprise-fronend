@@ -2,14 +2,14 @@
 
 import React, { useMemo, useState } from "react";
 import { BarChart3, CalendarClock, ChevronDown, Clock3, Download, FileSpreadsheet, FileText, Filter, Mail, Play, Printer, RotateCcw, Save, Send, SlidersHorizontal, Sparkles } from "lucide-react";
-import { useERP } from "@/context/erp-context";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input, MultiSelect, Select, Toggle } from "@/components/ui/form-controls";
-import { Modal } from "@/components/ui/overlay";
-import { cn, formatCurrency } from "@/lib/cn";
-import type { PageDefinition } from "@/types";
+import { useERP } from "@pepbits/erp-shell";
+import { Button } from "@pepbits/ops-ui";
+import { Badge } from "@pepbits/ops-ui";
+import { Card, CardHeader, CardTitle } from "@pepbits/ops-ui";
+import { Input, MultiSelect, Select, Toggle } from "@pepbits/ops-ui";
+import { Modal } from "@pepbits/ops-ui";
+import { cn, formatCurrency } from "@pepbits/ops-ui";
+import type { PageDefinition } from "@pepbits/erp-config";
 
 const reportRows = [
   { dimension: "Abu Dhabi HQ", current: 8424000, previous: 7681000, budget: 8100000, variance: 324000, contribution: 44.8 },

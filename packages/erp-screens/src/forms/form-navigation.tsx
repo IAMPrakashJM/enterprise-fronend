@@ -2,8 +2,8 @@
 
 import React from "react";
 import { Check, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/cn";
-import type { FormNavigation, FormSectionSchema } from "@/types";
+import { cn } from "@pepbits/ops-ui";
+import type { FormNavigation, FormSectionSchema } from "@pepbits/erp-config";
 
 export function FormNavigationControl({ type, sections, activeId, onChange, completion }: { type: FormNavigation; sections: FormSectionSchema[]; activeId: string; onChange: (id: string) => void; completion: Record<string, number> }) {
   const activeIndex = sections.findIndex((section) => section.id === activeId);
