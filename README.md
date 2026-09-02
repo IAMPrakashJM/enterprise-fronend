@@ -20,6 +20,18 @@ npm run desktop        # native Tauri window
 Requires Node 24+, and for the Tauri window a Rust toolchain and Xcode Command Line
 Tools.
 
+### If `dev` fails with `command sh -c vite` exited (1)
+
+Vite runs with `strictPort: true`, because Tauri's `devUrl` is a fixed
+`http://localhost:3001` and a shifting port would leave the native window pointed at
+nothing. The cost is that a port already in use is a hard **exit 1**, not a fallback —
+and turbo reports only the exit code, so the real line (`Port 3001 is already in use`)
+is buried. Usually it is a dev server from an earlier session:
+
+```bash
+lsof -ti tcp:3000 tcp:3001 | xargs kill
+```
+
 ## Verify
 
 ```bash
