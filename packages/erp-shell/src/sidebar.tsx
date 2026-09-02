@@ -2,18 +2,18 @@
 
 import React, { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, ChevronsLeft, ChevronsRight, Command, PanelLeftClose, PanelLeftOpen, Pin, PinOff, SlidersHorizontal } from "lucide-react";
-import { cn } from "@pepbits/ops-ui";
+import { NavLink, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "./erp-context";
 import type { MenuItem } from "@pepbits/erp-config";
 
-function SidebarLeaf({ item, expanded, active, onSelect }: { item: MenuItem; expanded: boolean; active: boolean; onSelect: () => void }) {
+function SidebarLeaf({ item, expanded, active, href, onSelect }: { item: MenuItem; expanded: boolean; active: boolean; href: string; onSelect: () => void }) {
   const Icon = item.icon;
   return (
-    <button
-      type="button"
+    <NavLink
+      href={href}
       title={!expanded ? item.label : undefined}
-      onClick={onSelect}
+      onClick={(event) => { event.preventDefault(); onSelect(); }}
       className={cn(
         "focus-ring group relative flex h-9 w-full items-center rounded-[10px] border text-left transition",
         expanded ? "gap-2.5 px-2.5" : "justify-center px-1",
@@ -26,16 +26,16 @@ function SidebarLeaf({ item, expanded, active, onSelect }: { item: MenuItem; exp
       {expanded ? <span className="min-w-0 flex-1 truncate text-[11px] font-bold">{item.label}</span> : null}
       {expanded && item.badge ? <span className="rounded-full bg-[var(--surface-3)] px-1.5 py-0.5 text-[9px] font-extrabold text-[var(--text-muted)]">{item.badge}</span> : null}
       {active ? <span className={cn("absolute inset-y-2 w-0.5 rounded-full bg-[var(--primary)]", "left-0")} /> : null}
-    </button>
+    </NavLink>
   );
 }
 
-function SidebarGroup({ item, expanded, activePageId, onSelect }: { item: MenuItem; expanded: boolean; activePageId: string; onSelect: (pageId: string) => void }) {
+function SidebarGroup({ item, expanded, activePageId, hrefFor, onSelect }: { item: MenuItem; expanded: boolean; activePageId: string; hrefFor: (pageId: string) => string; onSelect: (pageId: string) => void }) {
   const childActive = item.children?.some((child) => child.pageId === activePageId) ?? false;
   const [open, setOpen] = useState(childActive || item.id === "billing" || item.id === "fin-parties");
   const Icon = item.icon;
 
-  if (!item.children?.length && item.pageId) return <SidebarLeaf item={item} expanded={expanded} active={item.pageId === activePageId} onSelect={() => onSelect(item.pageId!)} />;
+  if (!item.children?.length && item.pageId) return <SidebarLeaf item={item} expanded={expanded} active={item.pageId === activePageId} href={hrefFor(item.pageId)} onSelect={() => onSelect(item.pageId!)} />;
   return (
     <div>
       <button
@@ -52,12 +52,12 @@ function SidebarGroup({ item, expanded, activePageId, onSelect }: { item: MenuIt
           {item.children?.map((child) => {
             const active = child.pageId === activePageId;
             return (
-              <button key={child.id} type="button" onClick={() => child.pageId && onSelect(child.pageId)} className={cn("focus-ring group relative flex min-h-8 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[10.5px] font-semibold transition", active ? "bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]")}>
+              <NavLink key={child.id} href={child.pageId ? hrefFor(child.pageId) : "#"} onClick={(event) => { event.preventDefault(); if (child.pageId) onSelect(child.pageId); }} className={cn("focus-ring group relative flex min-h-8 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[10.5px] font-semibold transition", active ? "bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]")}>
                 <span className={cn("absolute -left-[14px] top-1/2 h-px w-3 bg-[var(--border)]", active && "bg-[var(--primary)]")} />
                 {child.icon ? React.createElement(child.icon, { className: "size-3.5 shrink-0" }) : <span className="size-1.5 shrink-0 rounded-full bg-current opacity-40" />}
                 <span className="min-w-0 flex-1 truncate">{child.label}</span>
                 {child.badge ? <span className="rounded-full bg-[var(--surface-3)] px-1.5 py-0.5 text-[8px]">{child.badge}</span> : null}
-              </button>
+              </NavLink>
             );
           })}
         </div>
@@ -71,6 +71,7 @@ export function Sidebar() {
   const navigation = useNavigation();
   const activePageId = navigation.current.pageId;
   const openPage = (pageId: string) => navigation.open({ pageId });
+  const hrefForPage = (pageId: string) => navigation.hrefFor({ pageId });
   const [hovered, setHovered] = useState(false);
   const expanded = preferences.sidebarPinned || hovered;
   const isRight = preferences.sidebarPlacement === "right";
@@ -109,7 +110,7 @@ export function Sidebar() {
           <div key={section.id} className={cn(sectionIndex > 0 && "mt-4")}>
             {expanded ? <div className="mb-1.5 flex items-center gap-2 px-2 text-[8.5px] font-black uppercase tracking-[.16em] text-[var(--text-subtle)]"><span>{section.label}</span><span className="h-px flex-1 bg-[var(--border)]" /></div> : <div className="mx-auto mb-1.5 h-px w-7 bg-[var(--border)]" />}
             <div className="space-y-0.5">
-              {section.items.map((item) => <SidebarGroup key={item.id} item={item} expanded={expanded} activePageId={activePageId} onSelect={openPage} />)}
+              {section.items.map((item) => <SidebarGroup key={item.id} item={item} expanded={expanded} activePageId={activePageId} hrefFor={hrefForPage} onSelect={openPage} />)}
             </div>
           </div>
         ))}
