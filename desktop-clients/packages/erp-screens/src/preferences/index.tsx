@@ -293,7 +293,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               "Layout" and "Navigation and workspace", so changing how the rail
               behaves meant two sections on one tab. */}
           <PreferenceSection {...common} tab="sidebar" tour="prefs-sidebar" title="Sidebar" subtitle="Placement, how it opens, and the palette the rail uses." icon={<PanelLeft className="size-4" />}
-            keys={["sidebarPlacement", "sidebarExpandOn", "sidebarPinned", "sidebarTone", "sidebarTheme"]} keywords="sidebar rail navigation position left right rtl pinned fixed hover click expand tone dark contrast theme palette solarized colour color">
+            keys={["sidebarPlacement", "sidebarExpandOn", "sidebarPinned", "sidebarTone", "sidebarTheme"]} keywords="sidebar rail navigation position left right rtl pinned fixed hover click expand tone light dark deep contrast theme palette solarized colour color">
             <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
               <Row label="Position" hint="Right also suits right-to-left languages">
                 <Segmented<SidebarPlacement> label="Sidebar position" value={preferences.sidebarPlacement} onChange={(value) => set("sidebarPlacement", value)} options={[{ value: "left", label: "Left" }, { value: "right", label: "Right" }]} />
@@ -304,8 +304,8 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               <Row label="Pinned open" hint="Pinned, it pushes the page instead of floating over it">
                 <Segmented<"on" | "off"> label="Sidebar pinned open" value={preferences.sidebarPinned ? "on" : "off"} onChange={(value) => set("sidebarPinned", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
               </Row>
-              <Row label="Rail tone" hint="Its own tone is a deeper rail drawn from the theme">
-                <Segmented<SidebarTone> label="Sidebar tone" value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[{ value: "surface", label: "Match page" }, { value: "contrast", label: "Own tone" }]} />
+              <Row label="Rail tone" hint="Light and Deep hold whatever the page theme is">
+                <Segmented<SidebarTone> label="Sidebar tone" value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[{ value: "surface", label: "Match" }, { value: "light", label: "Light" }, { value: "contrast", label: "Deep" }]} />
               </Row>
               <Row label="Rail theme" hint="Independent of the page theme — Solarized rail on a Nexora page, say">
                 <Select aria-label="Sidebar theme" value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[

@@ -128,19 +128,26 @@ export function Sidebar() {
      --sidebar-text, and the ratios below hold the relationships that make a
      panel readable. Mixed toward the rail rather than `transparent`, so the
      result is opaque and does not composite against whatever is behind. */
-  const railPalette = preferences.sidebarTone === "contrast" ? ({
-    "--surface": "var(--sidebar-surface)",
-    "--surface-2": "color-mix(in srgb, var(--sidebar-text) 10%, var(--sidebar-surface))",
-    "--surface-3": "color-mix(in srgb, var(--sidebar-text) 18%, var(--sidebar-surface))",
-    "--text": "var(--sidebar-text)",
-    "--text-muted": "color-mix(in srgb, var(--sidebar-text) 72%, var(--sidebar-surface))",
-    "--text-subtle": "color-mix(in srgb, var(--sidebar-text) 48%, var(--sidebar-surface))",
-    "--border": "color-mix(in srgb, var(--sidebar-text) 16%, var(--sidebar-surface))",
-    "--border-strong": "color-mix(in srgb, var(--sidebar-text) 30%, var(--sidebar-surface))",
+  /* One derivation, two seed pairs. "light" and "contrast" differ only in which
+     pair they read; every ratio below holds either way, because each is a mix
+     of the rail's TEXT toward the rail's SURFACE -- that stays correct whether
+     the text is light-on-dark or dark-on-light. */
+  const seed = preferences.sidebarTone === "light"
+    ? { surface: "var(--sidebar-surface-light)", text: "var(--sidebar-text-light)" }
+    : { surface: "var(--sidebar-surface)", text: "var(--sidebar-text)" };
+  const railPalette = preferences.sidebarTone !== "surface" ? ({
+    "--surface": seed.surface,
+    "--surface-2": `color-mix(in srgb, ${seed.text} 10%, ${seed.surface})`,
+    "--surface-3": `color-mix(in srgb, ${seed.text} 18%, ${seed.surface})`,
+    "--text": seed.text,
+    "--text-muted": `color-mix(in srgb, ${seed.text} 72%, ${seed.surface})`,
+    "--text-subtle": `color-mix(in srgb, ${seed.text} 48%, ${seed.surface})`,
+    "--border": `color-mix(in srgb, ${seed.text} 16%, ${seed.surface})`,
+    "--border-strong": `color-mix(in srgb, ${seed.text} 30%, ${seed.surface})`,
     /* The active row is primary-tinted against the RAIL, not against the page,
        and its text lifts toward the rail's own text so it stays legible on it. */
-    "--primary-soft": "color-mix(in srgb, var(--primary) 30%, var(--sidebar-surface))",
-    "--primary-strong": "color-mix(in srgb, var(--primary) 35%, var(--sidebar-text))",
+    "--primary-soft": `color-mix(in srgb, var(--primary) 30%, ${seed.surface})`,
+    "--primary-strong": `color-mix(in srgb, var(--primary) 35%, ${seed.text})`,
   } as React.CSSProperties) : undefined;
   const SideIcon = isRight ? ChevronsLeft : ChevronsRight;
   const brandLetters = useMemo(() => module.shortLabel.slice(0, 2).toUpperCase(), [module.shortLabel]);

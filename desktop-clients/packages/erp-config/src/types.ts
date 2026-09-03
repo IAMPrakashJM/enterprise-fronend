@@ -21,8 +21,12 @@ export type NumberLocale = "en-US" | "de-DE" | "fr-FR" | "en-IN";
 export type CurrencyCode = "AED" | "USD" | "EUR" | "INR" | "GBP";
 export type ColumnLayoutScope = "browser" | "account";
 export type SidebarExpandOn = "hover" | "click";
-/** Whether the rail shares the page's surface or gets its own dark palette. */
-export type SidebarTone = "surface" | "contrast";
+/** How the rail is coloured relative to the page.
+    "surface"  the page's own surface, as cards use
+    "light"    a light rail whatever the page theme -- the only way to get one
+               on midnight, graphite, plum or nord
+    "contrast" a deep rail whatever the page theme */
+export type SidebarTone = "surface" | "light" | "contrast";
 /** Which theme supplies the sidebar's palette. "match" follows the page. */
 export type SidebarTheme = "match" | ThemeKey;
 export type TimeFormat = "12h" | "24h";

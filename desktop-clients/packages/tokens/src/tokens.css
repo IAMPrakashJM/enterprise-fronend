@@ -67,6 +67,11 @@
      than the nine tokens the component actually consumes. */
   --sidebar-surface: #132238;
   --sidebar-text: #dbe4f2;
+  /* The light rail, for the third tone. Kept as its own pair rather than
+     derived from --surface: a rail that is exactly the card colour is the
+     'surface' tone already, so this is deliberately a shade off it. */
+  --sidebar-surface-light: #eef3fb;
+  --sidebar-text-light: #132238;
 }
 
 [data-theme="midnight"] {
@@ -94,6 +99,8 @@
   --shadow-lg: 0 32px 90px rgba(0,0,0,.5);
   --sidebar-surface: #060b14;
   --sidebar-text: #c8d5ec;
+  --sidebar-surface-light: #e8edf7;
+  --sidebar-text-light: #0d1626;
 }
 
 [data-theme="emerald"] {
@@ -114,6 +121,8 @@
   --accent-soft: #fff2d7;
   --sidebar-surface: #123326;
   --sidebar-text: #cfe6da;
+  --sidebar-surface-light: #eaf4ee;
+  --sidebar-text-light: #123326;
 }
 
 [data-theme="sand"] {
@@ -134,6 +143,8 @@
   --accent-soft: #e1eff1;
   --sidebar-surface: #33291d;
   --sidebar-text: #e8dcc8;
+  --sidebar-surface-light: #f5eee1;
+  --sidebar-text-light: #33291d;
 }
 
 [data-theme="rose"] {
@@ -154,6 +165,8 @@
   --accent-soft: #e9e6ff;
   --sidebar-surface: #33202b;
   --sidebar-text: #edd8e2;
+  --sidebar-surface-light: #f9ecf1;
+  --sidebar-text-light: #33202b;
 }
 
 [data-theme="slate"] {
@@ -174,6 +187,8 @@
   --accent-soft: #dff0f0;
   --sidebar-surface: #1f2933;
   --sidebar-text: #d4dde5;
+  --sidebar-surface-light: #eef1f4;
+  --sidebar-text-light: #1f2933;
 }
 
 /* --- added 2026-09-03 ------------------------------------------------------
@@ -223,6 +238,8 @@
   --info: #268bd2;
   --sidebar-surface: #002b36;
   --sidebar-text: #eee8d5;
+  --sidebar-surface-light: #eee8d5;
+  --sidebar-text-light: #073642;
 }
 
 [data-theme="indigo"] {
@@ -243,6 +260,8 @@
   --accent-soft: #fde7f1;
   --sidebar-surface: #1e1b3a;
   --sidebar-text: #ddd9f5;
+  --sidebar-surface-light: #edecfa;
+  --sidebar-text-light: #1e1b3a;
 }
 
 [data-theme="lagoon"] {
@@ -263,6 +282,8 @@
   --accent-soft: #fdeed7;
   --sidebar-surface: #0d2a33;
   --sidebar-text: #cfe6ec;
+  --sidebar-surface-light: #e7f2f4;
+  --sidebar-text-light: #0d2a33;
 }
 
 [data-theme="sunset"] {
@@ -283,6 +304,8 @@
   --accent-soft: #ece4ff;
   --sidebar-surface: #331d13;
   --sidebar-text: #f2ddd0;
+  --sidebar-surface-light: #faeade;
+  --sidebar-text-light: #331d13;
 }
 
 [data-theme="graphite"] {
@@ -310,6 +333,8 @@
   --shadow-lg: 0 32px 90px rgba(0,0,0,.6);
   --sidebar-surface: #08080a;
   --sidebar-text: #d4d4dc;
+  --sidebar-surface-light: #ededf0;
+  --sidebar-text-light: #08080a;
 }
 
 [data-theme="plum"] {
@@ -337,6 +362,8 @@
   --shadow-lg: 0 32px 90px rgba(0,0,0,.6);
   --sidebar-surface: #100a18;
   --sidebar-text: #ddd0ee;
+  --sidebar-surface-light: #f0eaf7;
+  --sidebar-text-light: #100a18;
 }
 
 [data-theme="nord"] {
@@ -366,6 +393,8 @@
   --shadow-lg: 0 32px 90px rgba(0,0,0,.5);
   --sidebar-surface: #2b303c;
   --sidebar-text: #d8dee9;
+  --sidebar-surface-light: #e5e9f0;
+  --sidebar-text-light: #2e3440;
 }
 
 [data-theme="contrast"] {
@@ -389,6 +418,8 @@
   --shadow-lg: 0 0 0 3px #111;
   --sidebar-surface: #000000;
   --sidebar-text: #ffffff;
+  --sidebar-surface-light: #ffffff;
+  --sidebar-text-light: #000000;
 }
 
 * { box-sizing: border-box; }

@@ -81,7 +81,7 @@ const ALLOWED: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = 
   decimalPlaces: [0, 2, 3],
   columnLayoutScope: ["browser", "account"],
   sidebarExpandOn: ["hover", "click"],
-  sidebarTone: ["surface", "contrast"],
+  sidebarTone: ["surface", "light", "contrast"],
   sidebarTheme: ["match", ...THEME_IDS],
   maxVisibleToasts: [1, 3, 5],
   timeFormat: ["12h", "24h"],
