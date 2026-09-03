@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, MessageSquareText, Search, Settings, SlidersHorizontal, UserRound } from "lucide-react";
+import { ArrowRight, Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, MessageSquareText, Search, Settings, SlidersHorizontal, UserRound } from "lucide-react";
 import { BRANCHES, MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useSession } from "@pepbits/auth";
@@ -61,7 +61,11 @@ export function Header() {
   /* Component state, not a preference: "I have read these" is per session in a
      mock with no server-side read state, and persisting it to the account would
      imply the notifications themselves are per-account, which they are not. */
-  const [unreadNotifications, setUnreadNotifications] = useState(NOTIFICATIONS.length);
+  /* Counts the UNREAD ones, not every one. It counted the length, which was
+     the same number only while every fixture happened to be unread. The moment
+     notifications gained a read flag the bell said 10 and the page said 5 --
+     the badge is a promise about what you will find, and it was breaking it. */
+  const [unreadNotifications, setUnreadNotifications] = useState(NOTIFICATIONS.filter((item) => item.unread).length);
   const [unreadMessages, setUnreadMessages] = useState(MESSAGES.filter((item) => item.unread).length);
   const markNotificationsRead = () => setUnreadNotifications(0);
   const markMessagesRead = () => setUnreadMessages(0);
@@ -133,7 +137,12 @@ export function Header() {
             </div>
             <div className="nex-scrollbar max-h-[min(60vh,380px)] overflow-y-auto">
               {NOTIFICATIONS.map((item) => (
-                <button key={item.id} type="button" onClick={close} className="flex w-full gap-2.5 border-b border-[var(--border)] px-3 py-2.5 text-left transition last:border-0 hover:bg-[var(--surface-2)]">
+                <button key={item.id} type="button"
+                  /* Was `close` alone: the row looked clickable and did nothing.
+                     It now opens the record where there is one, and the full
+                     list otherwise, so no row is a dead end. */
+                  onClick={() => { close(); navigation.open(item.target && PAGE_REGISTRY[item.target.pageId] ? item.target : { pageId: "notifications" }); }}
+                  className="flex w-full gap-2.5 border-b border-[var(--border)] px-3 py-2.5 text-left transition last:border-0 hover:bg-[var(--surface-2)]">
                   <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", KIND_DOT[item.kind])} />
                   <span className="flex min-w-0 flex-col gap-0.5">
                     <span className="text-[length:calc(10.5px*var(--fs-scale))] font-bold">{item.title}</span>
@@ -143,6 +152,10 @@ export function Header() {
                 </button>
               ))}
             </div>
+            <button type="button" onClick={() => { close(); navigation.open({ pageId: "notifications" }); }}
+              className="focus-ring flex w-full items-center justify-center gap-1.5 border-t border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--primary)] transition hover:bg-[var(--surface-3)]">
+              See all notifications <ArrowRight className="size-3.5" />
+            </button>
           </div>
         )}
       </ActionMenu>
@@ -156,7 +169,9 @@ export function Header() {
             </div>
             <div className="nex-scrollbar max-h-[min(60vh,380px)] overflow-y-auto">
               {MESSAGES.map((item) => (
-                <button key={item.id} type="button" onClick={close} className="flex w-full gap-2.5 border-b border-[var(--border)] px-3 py-2.5 text-left transition last:border-0 hover:bg-[var(--surface-2)]">
+                <button key={item.id} type="button"
+                  onClick={() => { close(); navigation.open(item.target && PAGE_REGISTRY[item.target.pageId] ? item.target : { pageId: "messages" }); }}
+                  className="flex w-full gap-2.5 border-b border-[var(--border)] px-3 py-2.5 text-left transition last:border-0 hover:bg-[var(--surface-2)]">
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--primary-soft)] text-[length:calc(9.5px*var(--fs-scale))] font-black text-[var(--primary-strong)]">{item.initials}</span>
                   <span className="flex min-w-0 flex-col gap-0.5">
                     <span className="text-[length:calc(10.5px*var(--fs-scale))] font-bold">{item.from}</span>
@@ -166,6 +181,10 @@ export function Header() {
                 </button>
               ))}
             </div>
+            <button type="button" onClick={() => { close(); navigation.open({ pageId: "messages" }); }}
+              className="focus-ring flex w-full items-center justify-center gap-1.5 border-t border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--primary)] transition hover:bg-[var(--surface-3)]">
+              See all messages <ArrowRight className="size-3.5" />
+            </button>
           </div>
         )}
       </ActionMenu>
