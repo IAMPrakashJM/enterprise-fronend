@@ -3,8 +3,8 @@
 A data-heavy, multi-module ERP prototype. One shared component layer, two shells.
 
 ```
-apps/web        Next.js 16 — every page is a URL; records open in browser tabs   :3000
-apps/desktop    Vite 7 + Tauri 2 — records open in in-window workspace tabs      :3001
+apps/web        Next.js 16 — every page is a URL; records open in browser tabs   :3100
+apps/desktop    Vite 7 + Tauri 2 — records open in in-window workspace tabs      :3101
 packages/*      @pepbits/* — the shared surface both shells render
 ```
 
@@ -12,18 +12,18 @@ packages/*      @pepbits/* — the shared surface both shells render
 
 ```bash
 npm install
-npm run dev:stack      # demo API :4000 + web :3000   <- the usual one
+npm run dev:stack      # demo API :3200 + web :3100   <- the usual one
 npm run dev:all        # demo API + web + desktop
-npm run dev:api        # demo API only  :4000
-npm run dev:web        # web only       :3000
-npm run dev:desktop    # desktop in a browser :3001
+npm run dev:api        # demo API only  :3200
+npm run dev:web        # web only       :3100
+npm run dev:desktop    # desktop in a browser :3101
 npm run desktop        # native Tauri window
-npm run stop           # kill anything left on 3000/3001/4000
+npm run stop           # kill anything left on 3100/3101/3200
 ```
 
 The one-liners background the API and trap `EXIT INT TERM`, so Ctrl+C should take it
 down with the shells. If a port is ever still held — the symptom is Vite exiting with
-`Port 3001 is already in use`, reported by turbo as a bare exit code — run
+`Port 3101 is already in use`, reported by turbo as a bare exit code — run
 `npm run stop`. Running the API and the shell in two terminals avoids the question
 entirely.
 
@@ -63,13 +63,13 @@ Tools.
 ### If `dev` fails with `command sh -c vite` exited (1)
 
 Vite runs with `strictPort: true`, because Tauri's `devUrl` is a fixed
-`http://localhost:3001` and a shifting port would leave the native window pointed at
+`http://localhost:3101` and a shifting port would leave the native window pointed at
 nothing. The cost is that a port already in use is a hard **exit 1**, not a fallback —
-and turbo reports only the exit code, so the real line (`Port 3001 is already in use`)
+and turbo reports only the exit code, so the real line (`Port 3101 is already in use`)
 is buried. Usually it is a dev server from an earlier session:
 
 ```bash
-lsof -ti tcp:3000 tcp:3001 | xargs kill
+lsof -ti tcp:3100 tcp:3101 | xargs kill
 ```
 
 ## Verify
@@ -143,3 +143,5 @@ build log.
 
 - `docs/superpowers/specs/2026-09-03-nexora-monorepo-design.md` — the design and its constraints
 - `docs/superpowers/plans/2026-09-03-nexora-monorepo.md` — the implementation plan
+- `docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md` — the gated AI assistant, draft
+- `docs/superpowers/plans/2026-09-03-contextual-ai-assistant.md` — its seven-task plan

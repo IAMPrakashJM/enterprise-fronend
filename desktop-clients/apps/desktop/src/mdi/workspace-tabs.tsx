@@ -24,7 +24,7 @@ export function WorkspaceTabs({ tabs, activeTabId, onActivate, onClose, onCloseO
           return (
             <button key={tab.id} type="button" onClick={() => onActivate(tab.id)} className={cn("focus-ring group relative flex h-9 max-w-56 shrink-0 items-center gap-2 rounded-t-[11px] border px-3 text-left transition", active ? "border-[var(--border)] border-b-[var(--surface)] bg-[var(--surface)] text-[var(--text)]" : "border-transparent bg-transparent text-[var(--text-muted)] hover:bg-[var(--surface-3)]")}>
               <span className={cn("size-1.5 shrink-0 rounded-full", active ? "bg-[var(--primary)]" : "bg-[var(--text-subtle)]")} />
-              <span className="min-w-0 flex-1 truncate text-[10.5px] font-bold">{tab.title}</span>
+              <span className="min-w-0 flex-1 truncate text-[length:calc(10.5px*var(--fs-scale))] font-bold">{tab.title}</span>
               {tab.closable ? <span role="button" tabIndex={0} aria-label={`Close ${tab.title}`} onClick={(event) => { event.stopPropagation(); onClose(tab.id); }} className="flex size-5 shrink-0 items-center justify-center rounded-md opacity-0 transition hover:bg-[var(--surface-3)] group-hover:opacity-100"><X className="size-3" /></span> : null}
               {active ? <span className="absolute inset-x-2 top-0 h-0.5 rounded-full bg-[var(--primary)]" /> : null}
             </button>

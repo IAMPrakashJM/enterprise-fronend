@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { NavigationProvider } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
@@ -11,7 +11,11 @@ import "./globals.css";
 /* Split out because the tab strip needs setCommandOpen, which only exists inside
    ERPProvider. */
 function Workspace({ mdi }: { mdi: ReturnType<typeof useMdiNavigation> }) {
-  const { setCommandOpen } = useERP();
+  const { setCommandOpen, preferences } = useERP();
+  /* This is where openRecordsInTabs actually reaches the tab logic. The hook
+     lives above the provider and cannot read preferences; this component lives
+     below it and can. */
+  useEffect(() => { mdi.setTabsEnabled(preferences.openRecordsInTabs); }, [mdi.setTabsEnabled, preferences.openRecordsInTabs]);
   return (
     <EnterpriseShell
       tabs={

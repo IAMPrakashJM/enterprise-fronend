@@ -23,8 +23,11 @@ RUN_DIR="$ROOT/.run"
 # ---------------------------------------------------------------------------
 # Service table:  key | directory (relative to ROOT) | port | start command
 #
-# nexora and vantage both default to 3000 and would collide with web, so they are
-# given explicit ports here. Change these and nothing else needs to move.
+# nexora and vantage both default to Next's :3000 and so would collide with each
+# other, hence the explicit --port in their start commands. Change a port here and
+# the whole script follows -- but the two apps that read a port from their OWN config
+# do not: web's is in apps/web/package.json, desktop's in apps/desktop/vite.config.ts
+# (and, paired with it, src-tauri/tauri.conf.json's devUrl).
 # ---------------------------------------------------------------------------
 SERVICES=(api web desktop nexora vantage)
 
@@ -40,21 +43,67 @@ svc_dir() {
 
 svc_port() {
   case "$1" in
-    api)     echo 4000 ;;
-    web)     echo 3000 ;;
-    desktop) echo 3001 ;;
-    nexora)  echo 3002 ;;
-    vantage) echo 3003 ;;
+    api)     echo 3200 ;;
+    web)     echo 3100 ;;
+    desktop) echo 3101 ;;
+    nexora)  echo 3102 ;;
+    vantage) echo 3103 ;;
   esac
 }
 
+# Production by default, because these are served to other people through nginx.
+# A dev server behind a reverse proxy is slower, needs HMR websockets proxied and
+# needs each framework told which Host headers to trust -- four extra failure
+# points for a URL nobody is editing code against.
+#
+#   ./run.sh start              production: serves the built output
+#   MODE=dev ./run.sh start     the dev servers, with HMR, on the same ports
+MODE="${MODE:-prod}"
+
 svc_cmd() {
+  if [ "$MODE" = "dev" ]; then
+    case "$1" in
+      api)     echo "node server.mjs" ;;
+      web)     echo "npm run dev --silent -w web" ;;
+      desktop) echo "npm run dev --silent -w desktop" ;;
+      nexora)  echo "npm run dev --silent -- --port 3102" ;;
+      vantage) echo "npm run dev --silent -- --port 3103" ;;
+    esac
+    return 0
+  fi
   case "$1" in
     api)     echo "node server.mjs" ;;
-    web)     echo "npm run dev --silent -w web" ;;
-    desktop) echo "npm run dev --silent -w desktop" ;;
-    nexora)  echo "npm run dev --silent -- --port 3002" ;;
-    vantage) echo "npm run dev --silent -- --port 3003" ;;
+    # `next start` reads apps/web/package.json's --port 3100.
+    web)     echo "npm run start --silent -w web" ;;
+    # `vite preview` reads preview.port/host/allowedHosts from vite.config.ts.
+    desktop) echo "npm run preview --silent -w desktop" ;;
+    # These two have a bare `next start`, so the port comes from the CLI.
+    nexora)  echo "npm run start --silent -- --port 3102" ;;
+    vantage) echo "npm run start --silent -- --port 3103" ;;
+  esac
+}
+
+# What must be built before `start` in prod mode. The API is plain node and the
+# dev servers build nothing, so both cases are empty.
+svc_build_cmd() {
+  [ "$MODE" = "dev" ] && return 0
+  case "$1" in
+    api)     echo "" ;;
+    web)     echo "npm run build --silent -w web" ;;
+    desktop) echo "npm run build --silent -w desktop" ;;
+    nexora)  echo "npm run build --silent" ;;
+    vantage) echo "npm run build --silent" ;;
+  esac
+}
+
+# The artefact whose absence means "not built yet".
+svc_artifact() {
+  case "$1" in
+    web)     echo "desktop-clients/apps/web/.next" ;;
+    desktop) echo "desktop-clients/apps/desktop/dist" ;;
+    nexora)  echo "desktop-clients/source/nexora-enterprise-erp/.next" ;;
+    vantage) echo "desktop-clients/source/vantage-erp-next/.next" ;;
+    *)       echo "" ;;
   esac
 }
 
@@ -95,9 +144,32 @@ is_service() {
   return 1
 }
 
-# One -i per address: `lsof -ti tcp:3000 tcp:3001` is not valid and exits without
+# One -i per address: `lsof -ti tcp:3100 tcp:3101` is not valid and exits without
 # killing anything, while still looking like it worked.
-port_pids() { lsof -ti "tcp:$1" 2>/dev/null; }
+#
+# The ss fallback is not belt-and-braces, it is load-bearing on Linux. lsof 4.95 finds
+# a process's command name by scanning /proc/<pid>/stat for the parenthesis that closes
+# the comm field. Next renames its worker process to "next-server (v16.3.3)", which the
+# kernel truncates to 15 characters -- "next-server (v1", an UNBALANCED paren. lsof
+# gives up on the process entirely and reports no sockets for it, so every Next dev
+# server reads as down while it is serving 200s: `start` reports a 45-second timeout
+# for an app that came up in 700ms and then DELETES its pid file, and `stop`'s port
+# sweep finds nothing to kill -- leaving an orphan holding the port that this script
+# can no longer see or signal. vite and plain node are unaffected; their comm strings
+# have no parenthesis. ss parses no such field and sees all of them.
+#
+# ss is Linux-only. macOS never reaches the fallback: lsof works correctly there, and
+# an unset `pids` simply stays empty.
+port_pids() {
+  local pids
+  pids="$(lsof -ti "tcp:$1" 2>/dev/null)"
+  if [ -z "$pids" ] && command -v ss >/dev/null 2>&1; then
+    # No -H: it is a recent iproute2 flag, and the header line carries no "pid=".
+    pids="$(ss -ltnp "sport = :$1" 2>/dev/null | grep -o 'pid=[0-9]*' | cut -d= -f2 | sort -u)"
+  fi
+  [ -n "$pids" ] && printf '%s\n' "$pids"
+  return 0
+}
 port_busy() { [ -n "$(port_pids "$1")" ]; }
 
 pid_file() { echo "$RUN_DIR/$1.pid"; }
@@ -171,6 +243,34 @@ do_install() {
 }
 
 # ---------------------------------------------------------------------------
+# build
+# ---------------------------------------------------------------------------
+do_build() {
+  local svc="$1" dir cmd
+  cmd="$(svc_build_cmd "$svc")"
+  if [ -z "$cmd" ]; then
+    ok "$(printf '%-8s' "$svc") nothing to build"
+    return 0
+  fi
+  dir="$ROOT/$(svc_dir "$svc")"
+  if svc_needs_install "$svc" && [ ! -d "$ROOT/$(svc_install_dir "$svc")/node_modules" ]; then
+    do_install "$svc" || return 1
+  fi
+  mkdir -p "$RUN_DIR"
+  info "  building $(svc_label "$svc") ..."
+  # NEXT_PUBLIC_* and VITE_* are inlined into the bundle HERE, not read at
+  # runtime. Editing a .env.local without rebuilding leaves the old API host
+  # baked in, and the symptom is a shell that loads and cannot sign in.
+  if (cd "$dir" && $cmd >>"$(log_file "$svc")" 2>&1); then
+    ok "$(printf '%-8s' "$svc") built"
+  else
+    err "$(printf '%-8s' "$svc") build failed -- see $(log_file "$svc")"
+    info "$C_DIM$(tail -n 15 "$(log_file "$svc")" 2>/dev/null | sed 's/^/    /')$C_OFF"
+    return 1
+  fi
+}
+
+# ---------------------------------------------------------------------------
 # start
 # ---------------------------------------------------------------------------
 do_start() {
@@ -198,6 +298,14 @@ do_start() {
 
   if svc_needs_install "$svc" && [ ! -d "$ROOT/$(svc_install_dir "$svc")/node_modules" ]; then
     do_install "$svc" || return 1
+  fi
+
+  # In prod mode `start` serves a build that must already exist. Building on
+  # demand beats the alternative: `next start` on a missing .next exits with a
+  # message no one sees, and the port never opens -- which reads as a hang.
+  local artifact; artifact="$(svc_artifact "$svc")"
+  if [ -n "$(svc_build_cmd "$svc")" ] && [ -n "$artifact" ] && [ ! -d "$ROOT/$artifact" ]; then
+    do_build "$svc" || return 1
   fi
 
   mkdir -p "$RUN_DIR"
@@ -307,6 +415,10 @@ Nexora stack control
   ./run.sh status             one line per service
   ./run.sh logs    <svc>      tail -f the service log
   ./run.sh install [svc...]   npm install where node_modules is missing
+  ./run.sh build   [svc...]   production build (start does this if missing)
+
+MODE=dev in front of any command runs the dev servers instead of the built
+output, on the same ports.
 
 Services and ports:
 EOF
@@ -323,7 +435,7 @@ main() {
   local failures=0 targets svc
 
   case "$action" in
-    start|stop|restart|install)
+    start|stop|restart|install|build)
       # Not `mapfile`: that is a bash 4 builtin, and macOS still ships bash 3.2, where
       # it fails with "command not found" and leaves targets empty.
       local line
@@ -347,6 +459,9 @@ main() {
       ;;
     install)
       for svc in "${targets[@]}"; do do_install "$svc" || failures=$((failures + 1)); done
+      ;;
+    build)
+      for svc in "${targets[@]}"; do do_build "$svc" || failures=$((failures + 1)); done
       ;;
     status) do_status ;;
     logs)

@@ -43,16 +43,16 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
             <div className="flex items-center gap-3">
               <span className="flex size-11 items-center justify-center rounded-[13px] bg-white/15"><Command className="size-5" /></span>
               <div>
-                <div className="text-[15px] font-black tracking-[-.04em]">NEXORA ONE</div>
-                <div className="text-[9px] font-bold uppercase tracking-[.15em] opacity-70">Enterprise ERP</div>
+                <div className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA ONE</div>
+                <div className="text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] opacity-70">Enterprise ERP</div>
               </div>
             </div>
-            <h1 className="mt-8 text-[26px] font-black leading-tight tracking-[-.04em]">Sign in to your workspace</h1>
-            <p className="mt-3 max-w-sm text-[11px] leading-relaxed opacity-80">
+            <h1 className="mt-8 text-[length:calc(26px*var(--fs-scale))] font-black leading-tight tracking-[-.04em]">Sign in to your workspace</h1>
+            <p className="mt-3 max-w-sm text-[length:calc(11px*var(--fs-scale))] leading-relaxed opacity-80">
               One configurable interface across human resources, finance, payroll, sales and supply chain.
             </p>
           </div>
-          <div className="relative flex items-center gap-2 text-[9.5px] font-semibold opacity-75">
+          <div className="relative flex items-center gap-2 text-[length:calc(9.5px*var(--fs-scale))] font-semibold opacity-75">
             <ShieldCheck className="size-3.5" />
             Demo environment · mock data · no real records
           </div>
@@ -62,13 +62,13 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
           <div className="lg:hidden">
             <div className="flex items-center gap-2.5">
               <span className="flex size-9 items-center justify-center rounded-xl bg-[var(--primary)] text-white"><Command className="size-4" /></span>
-              <div className="text-[13px] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary)]">ONE</span></div>
+              <div className="text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary)]">ONE</span></div>
             </div>
             <div className="my-5 h-px bg-[var(--border)]" />
           </div>
 
-          <h2 className="text-[15px] font-black tracking-[-.02em]">Welcome back</h2>
-          <p className="mt-1 text-[10px] text-[var(--text-muted)]">Enter your credentials to continue.</p>
+          <h2 className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.02em]">Welcome back</h2>
+          <p className="mt-1 text-[length:calc(10px*var(--fs-scale))] text-[var(--text-muted)]">Enter your credentials to continue.</p>
 
           <form onSubmit={submit} className="mt-5 space-y-4">
             <Input
@@ -93,7 +93,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
             />
 
             {error ? (
-              <div role="alert" className="rounded-xl border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_8%,transparent)] px-3 py-2 text-[10px] font-semibold text-[var(--danger)]">
+              <div role="alert" className="rounded-xl border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_8%,transparent)] px-3 py-2 text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger)]">
                 {error}
               </div>
             ) : null}
@@ -106,7 +106,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
           <div className="mt-6">
             <div className="flex items-center gap-2">
               <span className="h-px flex-1 bg-[var(--border)]" />
-              <span className="text-[8.5px] font-black uppercase tracking-[.14em] text-[var(--text-subtle)]">Demo accounts</span>
+              <span className="text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.14em] text-[var(--text-subtle)]">Demo accounts</span>
               <span className="h-px flex-1 bg-[var(--border)]" />
             </div>
             <div className="mt-3 space-y-1.5">
@@ -121,18 +121,18 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
                     username === account.username && "border-[color-mix(in_srgb,var(--primary)_30%,transparent)] bg-[var(--primary-soft)]",
                   )}
                 >
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[var(--surface-3)] text-[9px] font-black text-[var(--text-muted)]">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[var(--surface-3)] text-[length:calc(9px*var(--fs-scale))] font-black text-[var(--text-muted)]">
                     {account.label.split(" ").map((part) => part[0]).join("")}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[10.5px] font-extrabold">{account.username}</span>
-                    <span className="block truncate text-[9px] text-[var(--text-muted)]">{account.label} · {account.role}</span>
+                    <span className="block truncate text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">{account.username}</span>
+                    <span className="block truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">{account.label} · {account.role}</span>
                   </span>
                   <Badge tone="neutral">Fill</Badge>
                 </button>
               ))}
             </div>
-            <p className="mt-3 text-[9px] leading-relaxed text-[var(--text-subtle)]">
+            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
               Every demo password is the same as its username. Selecting an account fills both fields.
             </p>
           </div>
@@ -151,7 +151,7 @@ export function SessionSplash() {
         <span className="flex size-12 animate-pulse items-center justify-center rounded-[15px] bg-[var(--primary)] text-white shadow-[var(--shadow-md)]">
           <Command className="size-6" />
         </span>
-        <span className="text-[10px] font-bold text-[var(--text-muted)]">Restoring your session…</span>
+        <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">Restoring your session…</span>
       </div>
     </div>
   );

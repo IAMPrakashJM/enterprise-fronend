@@ -13,4 +13,11 @@ export const THEME_OPTIONS: Array<{
   { id: "rose", name: "Rose Quartz", description: "Soft modern workspace", swatches: ["#ad3f6b", "#6b5bd2", "#fbf5f7"] },
   { id: "slate", name: "Industrial Slate", description: "Dense operations neutral", swatches: ["#3f566b", "#3d7b80", "#eef1f4"] },
   { id: "contrast", name: "High Contrast", description: "Maximum visual separation", swatches: ["#0037ff", "#007d42", "#ffffff"] },
+  { id: "indigo", name: "Indigo Studio", description: "Deep violet product workspace", swatches: ["#4f46e5", "#db2777", "#f5f4fd"] },
+  { id: "lagoon", name: "Lagoon", description: "Cool teal, long-session friendly", swatches: ["#0e7490", "#b45309", "#eff8f9"] },
+  { id: "sunset", name: "Sunset Terracotta", description: "Warm amber and clay", swatches: ["#c2410c", "#7c3aed", "#fdf6f2"] },
+  { id: "graphite", name: "Graphite", description: "Neutral near-black, no colour cast", swatches: ["#5b6472", "#4f8fd0", "#0b0b0d"] },
+  { id: "plum", name: "Plum Nocturne", description: "Dark violet with magenta accent", swatches: ["#7c3aed", "#db2777", "#120c1a"] },
+  { id: "nord", name: "Nord Frost", description: "Muted arctic blue-grey", swatches: ["#55759c", "#8fbcbb", "#2e3440"] },
+  { id: "solarized", name: "Solarized Light", description: "Warm paper, low-glare accents", swatches: ["#2076b2", "#2aa198", "#fdf6e3"] },
 ];

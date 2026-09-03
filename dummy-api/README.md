@@ -4,8 +4,8 @@ Demo auth API for the Nexora web and desktop shells. **Zero dependencies** — n
 `npm install` needed.
 
 ```bash
-node server.mjs          # http://localhost:4000
-PORT=4100 node server.mjs
+node server.mjs          # http://localhost:3200
+PORT=3201 node server.mjs
 ```
 
 ## Endpoints

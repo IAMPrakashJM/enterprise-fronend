@@ -64,8 +64,8 @@ export function SpreadsheetPage() {
   const total = rows.reduce((sum, row) => sum + (Number(row[6]) || 0), 0);
 
   return (
-    <div className="mx-auto flex max-w-[1900px] flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
+    <div className="flex w-full flex-col gap-3">
+      <div data-tour="sheet-tools" className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
         <Button variant="primary" leftIcon={<Upload className="size-3.5" />} onClick={() => inputRef.current?.click()}>Import Excel / CSV</Button>
         <input ref={inputRef} className="hidden" type="file" accept=".xlsx,.xls,.csv" onChange={(event) => { const file = event.target.files?.[0]; if (file) void importFile(file); event.currentTarget.value = ""; }} />
         <Button leftIcon={<Download className="size-3.5" />} onClick={exportWorkbook}>Export workbook</Button>
@@ -74,18 +74,18 @@ export function SpreadsheetPage() {
       </div>
 
       <Card className="overflow-hidden">
-        <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-3 py-2">
-          <span className="flex h-8 min-w-14 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[10px] font-black">{cellRef}</span>
+        <div data-tour="sheet-bar" className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-3 py-2">
+          <span className="flex h-8 min-w-14 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[length:calc(10px*var(--fs-scale))] font-black">{cellRef}</span>
           <Input aria-label="Formula bar" value={selectedValue} onChange={(event) => updateCell(selected.row, selected.column, event.target.value)} className="flex-1" />
-          <span className="hidden text-[9px] text-[var(--text-muted)] lg:inline">Edit cells directly, paste ranges, import workbooks and export the current model.</span>
+          <span className="hidden text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)] lg:inline">Edit cells directly, paste ranges, import workbooks and export the current model.</span>
         </div>
-        <div className="nex-scrollbar max-h-[650px] overflow-auto" onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const file = event.dataTransfer.files?.[0]; if (file) void importFile(file); }}>
-          <table className="min-w-[1100px] w-full border-collapse text-[10px]">
+        <div data-tour="sheet" className="nex-scrollbar max-h-[650px] overflow-auto" onDragOver={(event) => event.preventDefault()} onDrop={(event) => { event.preventDefault(); const file = event.dataTransfer.files?.[0]; if (file) void importFile(file); }}>
+          <table className="min-w-[1100px] w-full border-collapse text-[length:calc(10px*var(--fs-scale))]">
             <thead className="sticky top-0 z-10 bg-[var(--surface-2)]">
-              <tr><th className="w-12 border-b border-r border-[var(--border)] px-2 py-2 text-center text-[9px] text-[var(--text-subtle)]">#</th>{SHEET_COLUMNS.map((column, index) => <th key={column} className="min-w-32 border-b border-r border-[var(--border)] px-3 py-2 text-left font-extrabold"><span className="mr-2 text-[8px] text-[var(--text-subtle)]">{String.fromCharCode(65 + index)}</span>{column}</th>)}</tr>
+              <tr><th className="w-12 border-b border-r border-[var(--border)] px-2 py-2 text-center text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]">#</th>{SHEET_COLUMNS.map((column, index) => <th key={column} className="min-w-32 border-b border-r border-[var(--border)] px-3 py-2 text-left font-extrabold"><span className="mr-2 text-[length:calc(8px*var(--fs-scale))] text-[var(--text-subtle)]">{String.fromCharCode(65 + index)}</span>{column}</th>)}</tr>
             </thead>
-            <tbody>{rows.map((row, rowIndex) => <tr key={rowIndex} className="hover:bg-[var(--surface-2)]"><td className="border-b border-r border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-center text-[9px] font-bold text-[var(--text-subtle)]">{rowIndex + 1}</td>{SHEET_COLUMNS.map((_, columnIndex) => <td key={columnIndex} className={cn("border-b border-r border-[var(--border)] p-0", selected.row === rowIndex && selected.column === columnIndex && "outline outline-2 -outline-offset-2 outline-[var(--primary)]")}><input aria-label={`Row ${rowIndex + 1}, column ${SHEET_COLUMNS[columnIndex]}`} value={row[columnIndex] ?? ""} onFocus={() => setSelected({ row: rowIndex, column: columnIndex })} onChange={(event) => updateCell(rowIndex, columnIndex, event.target.value)} className="h-8 w-full min-w-28 bg-transparent px-3 text-[10px] outline-none" /></td>)}</tr>)}</tbody>
-            <tfoot className="sticky bottom-0 bg-[var(--surface)]"><tr><td colSpan={7} className="border-t border-[var(--border-strong)] px-3 py-2 text-right text-[10px] font-black">Grand total</td><td className="border-t border-[var(--border-strong)] px-3 py-2 text-[11px] font-black text-[var(--primary)]">AED {total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td className="border-t border-[var(--border-strong)]" /></tr></tfoot>
+            <tbody>{rows.map((row, rowIndex) => <tr key={rowIndex} className="hover:bg-[var(--surface-2)]"><td className="border-b border-r border-[var(--border)] bg-[var(--surface-2)] px-2 py-1.5 text-center text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--text-subtle)]">{rowIndex + 1}</td>{SHEET_COLUMNS.map((_, columnIndex) => <td key={columnIndex} className={cn("border-b border-r border-[var(--border)] p-0", selected.row === rowIndex && selected.column === columnIndex && "outline outline-2 -outline-offset-2 outline-[var(--primary)]")}><input aria-label={`Row ${rowIndex + 1}, column ${SHEET_COLUMNS[columnIndex]}`} value={row[columnIndex] ?? ""} onFocus={() => setSelected({ row: rowIndex, column: columnIndex })} onChange={(event) => updateCell(rowIndex, columnIndex, event.target.value)} className="h-8 w-full min-w-28 bg-transparent px-3 text-[length:calc(10px*var(--fs-scale))] outline-none" /></td>)}</tr>)}</tbody>
+            <tfoot className="sticky bottom-0 bg-[var(--surface)]"><tr><td colSpan={7} className="border-t border-[var(--border-strong)] px-3 py-2 text-right text-[length:calc(10px*var(--fs-scale))] font-black">Grand total</td><td className="border-t border-[var(--border-strong)] px-3 py-2 text-[length:calc(11px*var(--fs-scale))] font-black text-[var(--primary)]">AED {total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td className="border-t border-[var(--border-strong)]" /></tr></tfoot>
           </table>
         </div>
       </Card>
