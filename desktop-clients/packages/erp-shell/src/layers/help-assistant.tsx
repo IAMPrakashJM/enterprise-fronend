@@ -45,6 +45,12 @@ export function HelpAssistant() {
   const [tab, setTab] = useState<Tab>("tour");
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
+  /* Whether the tour is RUNNING, as distinct from whether the panel is open.
+     Opening the panel used to start it: the tour tab is the default, so the
+     spotlight measured, dimmed the page and scrolled it out from under the
+     user before they had asked for anything. Nothing spotlights until this is
+     true, and only an explicit tour action sets it. */
+  const [touring, setTouring] = useState(false);
   const [spot, setSpot] = useState<Spot | null>(null);
   const [steps, setSteps] = useState<TourStep[]>([]);
 
@@ -58,6 +64,7 @@ export function HelpAssistant() {
     setSteps(present.length ? present : presentSteps(TOURS.default));
     setStep(0);
     setPlaying(false);
+    setTouring(false);
   }, [helpOpen, kind, navigation.current.pageId]);
 
   const current = steps[Math.min(step, Math.max(0, steps.length - 1))];
@@ -74,7 +81,7 @@ export function HelpAssistant() {
      may animate, so the measurement waits for both; resize and scroll keep it
      pinned to the element afterwards. */
   useEffect(() => {
-    if (!helpOpen || tab !== "tour" || !current) { setSpot(null); return; }
+    if (!helpOpen || tab !== "tour" || !touring || !current) { setSpot(null); return; }
     window.dispatchEvent(new CustomEvent(TOUR_REVEAL_EVENT, { detail: { target: current.target } }));
     const el = document.querySelector<HTMLElement>(`[data-tour="${current.target}"]`);
     el?.scrollIntoView({ block: "center", inline: "nearest", behavior: preferences.reducedMotion ? "auto" : "smooth" });
@@ -86,7 +93,7 @@ export function HelpAssistant() {
       window.removeEventListener("resize", measure);
       window.removeEventListener("scroll", measure, true);
     };
-  }, [current, helpOpen, measure, preferences.reducedMotion, tab]);
+  }, [current, helpOpen, measure, preferences.reducedMotion, tab, touring]);
 
   useEffect(() => {
     if (!playing || steps.length < 2) return;
@@ -120,7 +127,7 @@ export function HelpAssistant() {
         <div role="dialog" aria-label="Help" className="animate-slide-up no-print fixed bottom-28 right-5 z-[71] flex max-h-[70vh] w-[360px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
           <div className="flex border-b border-[var(--border)]">
             {tabs.map((item) => (
-              <button key={item.id} type="button" onClick={() => { setTab(item.id); setPlaying(false); }}
+              <button key={item.id} type="button" onClick={() => { setTab(item.id); setPlaying(false); setTouring(false); }}
                 className={cn("focus-ring flex h-10 flex-1 items-center justify-center gap-1.5 border-b-2 text-[length:calc(11px*var(--fs-scale))] font-bold transition",
                   tab === item.id ? "border-[var(--primary)] text-[var(--text)]" : "border-transparent text-[var(--text-muted)] hover:text-[var(--text)]")}>
                 {item.icon}{item.label}
@@ -146,12 +153,16 @@ export function HelpAssistant() {
                   </span>
                 </div>
               ) : <div className="rounded-xl bg-[var(--surface-2)] p-3 text-[length:calc(10.5px*var(--fs-scale))] text-[var(--text-muted)]">Nothing to tour on this page yet.</div>}
-              <div className="flex gap-1.5">{steps.map((s, i) => <button key={s.target} type="button" title={s.title} onClick={() => setStep(i)} className={cn("h-2 flex-1 rounded-sm transition", i <= step ? "bg-[var(--primary)]" : "bg-[var(--border)]")} />)}</div>
+              <div className="flex gap-1.5">{steps.map((s, i) => <button key={s.target} type="button" title={s.title} onClick={() => { setTouring(true); setStep(i); }} className={cn("h-2 flex-1 rounded-sm transition", i <= step ? "bg-[var(--primary)]" : "bg-[var(--border)]")} />)}</div>
               <div className="flex items-center gap-2">
-                <Button variant={playing ? "secondary" : "primary"} size="sm" leftIcon={playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />} onClick={() => setPlaying((p) => !p)} disabled={steps.length < 2}>{playing ? "Pause" : "Play tour"}</Button>
+                {/* Play starts the run. Stepping by hand starts it too -- a Next
+                    button that highlights nothing would just look broken -- but
+                    merely opening the panel does not. */}
+                <Button variant={playing ? "secondary" : "primary"} size="sm" leftIcon={playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />} onClick={() => { setTouring(true); setPlaying((p) => !p); }} disabled={!steps.length}>{playing ? "Pause" : touring ? "Resume" : "Play tour"}</Button>
+                {touring ? <Button variant="ghost" size="sm" onClick={() => { setPlaying(false); setTouring(false); setStep(0); }}>Stop</Button> : null}
                 <span className="flex-1" />
-                <IconButton label="Previous step" onClick={() => setStep((s) => (s - 1 + steps.length) % steps.length)} disabled={!steps.length}><ChevronLeft className="size-4" /></IconButton>
-                <IconButton label="Next step" onClick={() => setStep((s) => (s + 1) % steps.length)} disabled={!steps.length}><ChevronRight className="size-4" /></IconButton>
+                <IconButton label="Previous step" onClick={() => { setTouring(true); setStep((s) => (s - 1 + steps.length) % steps.length); }} disabled={!steps.length}><ChevronLeft className="size-4" /></IconButton>
+                <IconButton label="Next step" onClick={() => { setTouring(true); setStep((s) => (s + 1) % steps.length); }} disabled={!steps.length}><ChevronRight className="size-4" /></IconButton>
               </div>
             </div>
           ) : null}
@@ -181,7 +192,7 @@ export function HelpAssistant() {
         </div>
       ) : null}
 
-      {helpOpen && tab === "tour" && spot && current ? <Spotlight spot={spot} title={current.title} /> : null}
+      {helpOpen && tab === "tour" && touring && spot && current ? <Spotlight spot={spot} title={current.title} /> : null}
     </>
   );
 }
