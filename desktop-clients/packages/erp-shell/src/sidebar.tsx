@@ -175,6 +175,15 @@ export function Sidebar() {
       <aside
         aria-label="Primary navigation"
         data-tour="sidebar"
+        /* A theme id here re-resolves EVERY palette token inside the rail from
+           that theme's block, so the sidebar can run Solarized while the page
+           runs Nexora. It works because tokens.css separates the structural
+           block (:root only -- radius, font, heights) from the palette block
+           (`:root, [data-theme="nexora"]`): scoping a theme to an element
+           swaps colours without resetting the sizes the provider set on <html>.
+           railPalette then reads THIS theme's --sidebar-* seeds, so the two
+           preferences compose rather than fight. */
+        data-theme={preferences.sidebarTheme === "match" ? undefined : preferences.sidebarTheme}
         style={railPalette}
         onMouseEnter={() => byHover && setHovered(true)}
         onMouseLeave={() => byHover && setHovered(false)}

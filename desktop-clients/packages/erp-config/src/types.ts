@@ -23,6 +23,8 @@ export type ColumnLayoutScope = "browser" | "account";
 export type SidebarExpandOn = "hover" | "click";
 /** Whether the rail shares the page's surface or gets its own dark palette. */
 export type SidebarTone = "surface" | "contrast";
+/** Which theme supplies the sidebar's palette. "match" follows the page. */
+export type SidebarTheme = "match" | ThemeKey;
 export type TimeFormat = "12h" | "24h";
 export type CurrencyDisplay = "symbol" | "code" | "none";
 /** How a negative amount reads. "parentheses" is the accounting convention. */
@@ -90,6 +92,7 @@ export interface UserPreferences {
       and two preferences for one state is how they drift apart. */
   sidebarExpandOn: SidebarExpandOn;
   sidebarTone: SidebarTone;
+  sidebarTheme: SidebarTheme;
   maxVisibleToasts: 1 | 3 | 5;
   timeFormat: TimeFormat;
   currencyDisplay: CurrencyDisplay;

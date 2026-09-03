@@ -13,7 +13,7 @@ import {
 import type {
   BillingLayout, ClockZone, ColumnLayoutScope, CurrencyCode, CurrencyDisplay, DateFormat, Density,
   DocsPosition, ExportFormat, FontFamily, FormNavigation, LandingPage, LanguageKey, NegativeStyle, NumberLocale, OpenRecordsIn,
-  PreviewMode, ResultView, SearchMode, SidebarExpandOn, SidebarPlacement, SidebarTone, TimeFormat, ToastPosition,
+  PreviewMode, ResultView, SearchMode, SidebarExpandOn, SidebarPlacement, SidebarTheme, SidebarTone, TimeFormat, ToastPosition,
   ToastStyle, UserPreferences,
 } from "@pepbits/erp-config";
 import { TOUR_REVEAL_EVENT, useERP } from "@pepbits/erp-shell";
@@ -294,12 +294,21 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="behaviour" title="Navigation and workspace" subtitle="How the sidebar opens and where you land." icon={<PanelLeft className="size-4" />}
-            keys={["sidebarExpandOn", "sidebarTone", "openRecordsInTabs", "landingPage"]} keywords="sidebar hover click expand tabs landing home start page tone dark rail contrast colour color">
+            keys={["sidebarExpandOn", "sidebarTone", "sidebarTheme", "openRecordsInTabs", "landingPage"]} keywords="sidebar hover click expand tabs landing home start page tone dark rail contrast colour color">
             <ChoiceGroup<SidebarExpandOn> value={preferences.sidebarExpandOn} onChange={(value) => set("sidebarExpandOn", value)} options={[{ value: "hover", label: "Expand on hover", description: "The rail opens as the pointer crosses it." }, { value: "click", label: "Expand on click", description: "The rail opens only when its logo is clicked." }]} />
             <div className="mt-4">
               <ChoiceGroup<SidebarTone> value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[
                 { value: "surface", label: "Sidebar matches the page", description: "The rail uses the same surface as cards and panels." },
                 { value: "contrast", label: "Sidebar in its own tone", description: "A deeper rail drawn from the active theme — Solarized gets its base03." },
+              ]} />
+            </div>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              {/* The rail can run a different theme from the page: a Solarized
+                  sidebar against a Nexora workspace, say. "Match" is the common
+                  case and stays first. */}
+              <Select label="Sidebar theme" hint="Which palette the rail uses. Independent of the page theme." value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[
+                { label: "Match the page theme", value: "match" },
+                ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
               ]} />
             </div>
             <div className="mt-4 grid gap-2 md:grid-cols-2">

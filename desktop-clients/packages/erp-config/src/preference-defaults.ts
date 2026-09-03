@@ -36,6 +36,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   columnLayoutScope: "browser",
   sidebarExpandOn: "hover",
   sidebarTone: "contrast",
+  sidebarTheme: "match",
   maxVisibleToasts: 3,
   timeFormat: "24h",
   currencyDisplay: "symbol",
@@ -54,8 +55,12 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
 
 /** The legal values for every enumerated key. A key absent here is validated
     by the typeof of its default instead (booleans and numbers). */
+/** One list, so the theme picker, the sidebar picker and the validator cannot
+    disagree about which themes exist. */
+const THEME_IDS = ["nexora", "midnight", "emerald", "sand", "rose", "slate", "contrast", "indigo", "lagoon", "sunset", "graphite", "plum", "nord", "solarized"] as const;
+
 const ALLOWED: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = {
-  theme: ["nexora", "midnight", "emerald", "sand", "rose", "slate", "contrast", "indigo", "lagoon", "sunset", "graphite", "plum", "nord", "solarized"],
+  theme: THEME_IDS,
   formNavigation: ["rail", "tabs", "wizard"],
   resultView: ["table", "cards"],
   previewMode: ["center-card", "center-modal", "left-drawer", "right-drawer"],
@@ -77,6 +82,7 @@ const ALLOWED: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = 
   columnLayoutScope: ["browser", "account"],
   sidebarExpandOn: ["hover", "click"],
   sidebarTone: ["surface", "contrast"],
+  sidebarTheme: ["match", ...THEME_IDS],
   maxVisibleToasts: [1, 3, 5],
   timeFormat: ["12h", "24h"],
   currencyDisplay: ["symbol", "code", "none"],
