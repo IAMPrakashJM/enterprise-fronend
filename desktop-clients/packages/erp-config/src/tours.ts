@@ -18,6 +18,10 @@ export const TOURS: Record<PageKind | "default", TourStep[]> = {
   /* Deliberately short. This screen is read by someone who already knows what a
      provider key is; a tour that explains the obvious is the one people learn to
      dismiss without reading. */
+  inbox: [
+    { target: "filter", title: "Unread only", text: "The header count and this list read the same data, so what it says is unread is what you will find here." },
+    { target: "target", title: "Every item goes somewhere", text: "An item you cannot act on is a nag. Where there is a record behind it, Open takes you straight there." },
+  ],
   "ai-admin": [
     { target: "credential", title: "Write-only", text: "A key can be set, replaced and removed here, and never read back. The last four characters and a fingerprint are what tell two keys apart." },
     { target: "limits", title: "Limits that bite", text: "Requests per minute and tokens per day are enforced on every dispatch. A missing or zero value falls back to the server default, never to unlimited." },

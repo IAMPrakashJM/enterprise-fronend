@@ -3,6 +3,7 @@ import {
   BadgeDollarSign,
   Banknote,
   BarChart3,
+  Bell,
   BookOpen,
   Boxes,
   BriefcaseBusiness,
@@ -400,6 +401,10 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
           { id: "saved-views", label: "Saved Views", pageId: "saved-views" },
           { id: "shortcut-manager", label: "Shortcut Manager", pageId: "shortcut-manager" },
         ] },
+        { id: "inbox", label: "Inbox", icon: Bell, children: [
+          { id: "notifications", label: "Notifications", pageId: "notifications" },
+          { id: "messages", label: "Messages", pageId: "messages" },
+        ] },
         { id: "ai-assistant", label: "AI Assistant", icon: Sparkles, children: [
           { id: "ai-administration", label: "AI Administration", pageId: "ai-administration" },
         ] },
@@ -448,6 +453,11 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
      assistant offering to explain the page where you revoke it reads as a
      joke in a demo and as a finding in an audit. It is also the live proof
      that an explicit block still beats defaultAiFor. */
+  /* Shared, not owned by a module: the header raises them from anywhere, so
+     filing them under Finance would make the breadcrumb lie on every other
+     page. */
+  "notifications": { kind: "inbox", entity: "notification", title: "Notifications", subtitle: "Everything the system has raised for you, and the record behind each one." },
+  "messages": { kind: "inbox", entity: "message", title: "Messages", subtitle: "Conversations from colleagues and shared service desks." },
   "ai-administration": { kind: "ai-admin", entity: "ai", title: "AI Administration", subtitle: "Provider, credential, limits and prompts for this tenant's assistant.", ai: { enabled: false, useCases: [] } },
   "spreadsheet-studio": { kind: "spreadsheet", title: "Spreadsheet Studio" },
   "component-library": { kind: "library", title: "Component Gallery" },
