@@ -164,7 +164,11 @@ export function Header() {
         )}
       </ActionMenu>
 
-      <DropdownSelect value={branch} options={BRANCHES} onChange={setBranch} label="Branch" compact className="hidden lg:block" leading={<Building2 className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
+      {/* Definite width, not content width. Content-sized, this control changed
+          width with the selected branch -- "Sharjah • Operations Hub" is wider
+          than "Kochi • Delivery Center" -- so the whole header shifted on every
+          switch. 296px is the widest label's natural width (236px) plus 25%. */}
+      <DropdownSelect value={branch} options={BRANCHES} onChange={setBranch} label="Branch" compact className="hidden lg:block lg:w-[296px]" leading={<Building2 className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
 
       <div className="hidden min-w-0 items-center gap-2 px-1.5 2xl:flex">
         <div className="min-w-0 text-right"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-black">{user?.name ?? "Signed out"}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{user?.title ?? ""}</div></div>
