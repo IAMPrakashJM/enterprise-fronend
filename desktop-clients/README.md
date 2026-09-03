@@ -75,8 +75,9 @@ lsof -ti tcp:3100 tcp:3101 | xargs kill
 ## Verify
 
 ```bash
-npx turbo run build    # both apps
-npm run verify:parity  # moved files still identical to the pre-migration originals
+npx turbo run build      # both apps
+npm run verify:parity    # moved files still identical to the pre-migration originals
+npm run verify:ai-gates  # the AI access rules, including the escalation cases
 ```
 
 Add `--css` to also diff the emitted stylesheet against a baseline build:
@@ -98,6 +99,7 @@ node scripts/verify-parity.mjs --css
 | `@pepbits/erp-data` | mock datasets and the worklist config builder | `erp-config` |
 | `@pepbits/erp-shell` | `ERPProvider`, Header, Sidebar, Footer, `EnterpriseShell`, the global overlays | `ops-ui`, `erp-config`, `platform-ports` |
 | `@pepbits/erp-screens` | `PageRenderer` and all eight page kinds | all of the above |
+| `@pepbits/ai-config` | the nine AI access gates and the resolver | — |
 
 Apps depend on packages; packages never depend on apps.
 

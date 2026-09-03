@@ -18,7 +18,8 @@
     "dev:desktop": "npm run dev -w desktop",
     "desktop": "npm run tauri -w desktop -- dev",
     "stop": "for p in 3100 3101 3200; do lsof -ti tcp:$p | xargs kill 2>/dev/null; done; true",
-    "verify:parity": "node scripts/verify-parity.mjs"
+    "verify:parity": "node scripts/verify-parity.mjs",
+    "verify:ai-gates": "node scripts/verify-ai-gates.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.1",

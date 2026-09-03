@@ -68,6 +68,9 @@ packages/erp-shell/src/layers/index.tsx mount the panel
 export const GATES = ["build", "platform", "tenant", "application", "module", "page", "useCase", "role", "user"] as const;
 export type Gate = (typeof GATES)[number];
 
+/** Gates that may only NARROW the surviving set, never establish or extend it. */
+export const NARROWING_ONLY: ReadonlySet<Gate> = new Set<Gate>(["role", "user"]);
+
 export interface GateState {
   /** undefined means "this gate expresses no opinion" and passes. */
   allowed?: boolean;
@@ -102,7 +105,18 @@ export function resolveAi(states: Partial<Record<Gate, GateState>>, requested?: 
       return { allowed: false, decidedBy: gate, reason: `Disabled at ${gate} level.`, useCases: [] };
     }
     if (state.useCases) {
-      useCases = useCases === null ? [...state.useCases] : useCases.filter((id) => state.useCases!.includes(id));
+      if (useCases === null) {
+        /* The first gate to name a set ESTABLISHES it, and a narrowing-only
+           gate must never be that gate. Without this branch, `role` alone
+           naming ["a"] resolves to allowed[a] even though no earlier gate
+           permitted anything -- role defining a set rather than reducing one,
+           which is the escalation this design forbids by another route.
+           Found by verify-ai-gates.mjs; the original eight-row table did not
+           cover it. */
+        useCases = NARROWING_ONLY.has(gate) ? [] : [...state.useCases];
+      } else {
+        useCases = useCases.filter((id) => state.useCases!.includes(id));
+      }
     }
   }
   const resolved = useCases ?? [];
@@ -127,11 +141,20 @@ Every row of the worked-examples table, plus the narrowing asymmetry:
 | tenant off, page on, user on | denied, `decidedBy: "tenant"` |
 | page `[a,b]`, role `[a]` | allowed, `useCases: ["a"]` |
 | page `[a]`, **role `[a,b]`** | allowed, `useCases: ["a"]` — role did NOT widen |
+| **role `[a]` and nothing else** | **denied** — role may not establish a set |
+| **user `[a]` and nothing else** | **denied** — same rule |
+| page `[a,b]`, role `[a]`, user `[a,b]` | allowed, `["a"]` — user cannot re-add |
+| page `[]` | denied — an emptied set is a denial |
 | `user: { allowed: false }` | denied, `decidedBy: "user"` |
 | all allow, page `[a]` | allowed, `decidedBy: "user"` |
 | requested `"z"` not in set | denied, reason names `"z"` |
 
-**Verification:** run the table; the fifth row is the one that matters — if role can widen, stop and fix before continuing.
+**Verification:** `npm run verify:ai-gates` — a zero-dependency script beside
+`verify-parity.mjs` that imports the real module (Node 24 strips types on
+import, so there is no second copy to drift). Twelve cases; the four marked
+ESCALATION are the ones that matter. If any fails, a narrowing gate can widen
+the allowed set and "enable at user level" becomes a route around a tenant
+policy — stop and fix before continuing.
 
 ## Task 2: The use-case catalogue and the page flag
 
