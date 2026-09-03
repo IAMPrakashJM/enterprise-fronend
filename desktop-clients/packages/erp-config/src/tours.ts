@@ -49,6 +49,7 @@ export const TOURS: Record<PageKind | "default", TourStep[]> = {
   ],
   preferences: [
     { target: "prefs-layout", title: "Layout", text: "Sidebar side, form style, result view, quick view and page size. Honoured by every module and page." },
+    { target: "prefs-sidebar", title: "Sidebar", text: "Placement, hover or click to open, pinning, and the rail's own palette — which can be a different theme from the page." },
     { target: "prefs-theme", title: "Themes", text: "Thirteen themes; every component picks up tokens instantly. Each card is drawn with that theme's real colours." },
     { target: "prefs-type", title: "Typography", text: "Font family and three independent sizes — shell, forms and result tables — plus density and corner radius." },
     { target: "prefs-toast", title: "Toasts", text: "Position, duration and style of notifications. Try one with the preview buttons." },

@@ -23,11 +23,12 @@ import { TOUR_REVEAL_EVENT, useERP } from "@pepbits/erp-shell";
    flipping this back to true is the whole re-enable. */
 const SHOW_CURRENCY_PICKER = false;
 
-type PrefTab = "behaviour" | "page" | "notification" | "language" | "general";
+type PrefTab = "behaviour" | "sidebar" | "page" | "notification" | "language" | "general";
 
 /** Which tab each tour anchor lives on. */
 const TOUR_TABS: Record<string, PrefTab> = {
   "prefs-layout": "behaviour",
+  "prefs-sidebar": "sidebar",
   "prefs-theme": "page",
   "prefs-type": "page",
   "prefs-toast": "notification",
@@ -36,6 +37,7 @@ const TOUR_TABS: Record<string, PrefTab> = {
 
 const PREF_TABS: Array<{ id: PrefTab; label: string; icon: React.ReactNode }> = [
   { id: "behaviour",    label: "Behaviour",    icon: <MonitorCog className="size-3.5" /> },
+  { id: "sidebar",      label: "Sidebar",      icon: <PanelLeft className="size-3.5" /> },
   { id: "page",         label: "Page",         icon: <Sparkles className="size-3.5" /> },
   { id: "notification", label: "Notification", icon: <BellRing className="size-3.5" /> },
   { id: "language",     label: "Language & help", icon: <Languages className="size-3.5" /> },
@@ -270,14 +272,8 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           {/* ================= BEHAVIOUR ================= */}
           {/* Row for row, Vantage's Layout group -- same labels, same hints. */}
           <PreferenceSection {...common} tab="behaviour" tour="prefs-layout" title="Layout" subtitle="Honoured by every module and page." icon={<PanelLeft className="size-4" />}
-            keys={["sidebarPlacement", "sidebarPinned", "formNavigation", "resultView", "previewMode", "pageSize"]} keywords="layout sidebar position left right pinned hover record form style rail tabs wizard worklist result view table cards quick view preview card modal panel rows per page size">
+            keys={["formNavigation", "resultView", "previewMode", "pageSize"]} keywords="layout record form style rail tabs wizard worklist result view table cards quick view preview card modal panel rows per page size">
             <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
-              <Row label="Sidebar position">
-                <Segmented<SidebarPlacement> label="Sidebar position" value={preferences.sidebarPlacement} onChange={(value) => set("sidebarPlacement", value)} options={[{ value: "left", label: "Left" }, { value: "right", label: "Right" }]} />
-              </Row>
-              <Row label="Sidebar pinned open" hint="Otherwise expands on hover">
-                <Segmented<"on" | "off"> label="Sidebar pinned open" value={preferences.sidebarPinned ? "on" : "off"} onChange={(value) => set("sidebarPinned", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
-              </Row>
               <Row label="Record form style" hint="View, edit and new records">
                 <Segmented<FormNavigation> label="Record form style" value={preferences.formNavigation} onChange={(value) => set("formNavigation", value)} options={[{ value: "rail", label: "Rail" }, { value: "tabs", label: "Tabs" }, { value: "wizard", label: "Wizard" }]} />
               </Row>
@@ -293,25 +289,36 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
             </div>
           </PreferenceSection>
 
-          <PreferenceSection {...common} tab="behaviour" title="Navigation and workspace" subtitle="How the sidebar opens and where you land." icon={<PanelLeft className="size-4" />}
-            keys={["sidebarExpandOn", "sidebarTone", "sidebarTheme", "openRecordsInTabs", "landingPage"]} keywords="sidebar hover click expand tabs landing home start page tone dark rail contrast colour color">
-            <ChoiceGroup<SidebarExpandOn> value={preferences.sidebarExpandOn} onChange={(value) => set("sidebarExpandOn", value)} options={[{ value: "hover", label: "Expand on hover", description: "The rail opens as the pointer crosses it." }, { value: "click", label: "Expand on click", description: "The rail opens only when its logo is clicked." }]} />
-            <div className="mt-4">
-              <ChoiceGroup<SidebarTone> value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[
-                { value: "surface", label: "Sidebar matches the page", description: "The rail uses the same surface as cards and panels." },
-                { value: "contrast", label: "Sidebar in its own tone", description: "A deeper rail drawn from the active theme — Solarized gets its base03." },
-              ]} />
+          {/* Every sidebar setting in one place. They were spread across
+              "Layout" and "Navigation and workspace", so changing how the rail
+              behaves meant two sections on one tab. */}
+          <PreferenceSection {...common} tab="sidebar" tour="prefs-sidebar" title="Sidebar" subtitle="Placement, how it opens, and the palette the rail uses." icon={<PanelLeft className="size-4" />}
+            keys={["sidebarPlacement", "sidebarExpandOn", "sidebarPinned", "sidebarTone", "sidebarTheme"]} keywords="sidebar rail navigation position left right rtl pinned fixed hover click expand tone dark contrast theme palette solarized colour color">
+            <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+              <Row label="Position" hint="Right also suits right-to-left languages">
+                <Segmented<SidebarPlacement> label="Sidebar position" value={preferences.sidebarPlacement} onChange={(value) => set("sidebarPlacement", value)} options={[{ value: "left", label: "Left" }, { value: "right", label: "Right" }]} />
+              </Row>
+              <Row label="Expands on" hint="Click opens it from the logo instead">
+                <Segmented<SidebarExpandOn> label="Sidebar expands on" value={preferences.sidebarExpandOn} onChange={(value) => set("sidebarExpandOn", value)} options={[{ value: "hover", label: "Hover" }, { value: "click", label: "Click" }]} />
+              </Row>
+              <Row label="Pinned open" hint="Pinned, it pushes the page instead of floating over it">
+                <Segmented<"on" | "off"> label="Sidebar pinned open" value={preferences.sidebarPinned ? "on" : "off"} onChange={(value) => set("sidebarPinned", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
+              </Row>
+              <Row label="Rail tone" hint="Its own tone is a deeper rail drawn from the theme">
+                <Segmented<SidebarTone> label="Sidebar tone" value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[{ value: "surface", label: "Match page" }, { value: "contrast", label: "Own tone" }]} />
+              </Row>
+              <Row label="Rail theme" hint="Independent of the page theme — Solarized rail on a Nexora page, say">
+                <Select aria-label="Sidebar theme" value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[
+                  { label: "Match the page theme", value: "match" },
+                  ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
+                ]} />
+              </Row>
             </div>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              {/* The rail can run a different theme from the page: a Solarized
-                  sidebar against a Nexora workspace, say. "Match" is the common
-                  case and stays first. */}
-              <Select label="Sidebar theme" hint="Which palette the rail uses. Independent of the page theme." value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[
-                { label: "Match the page theme", value: "match" },
-                ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
-              ]} />
-            </div>
-            <div className="mt-4 grid gap-2 md:grid-cols-2">
+          </PreferenceSection>
+
+          <PreferenceSection {...common} tab="behaviour" title="Start-up and records" subtitle="Where you land, and how records open." icon={<MonitorCog className="size-4" />}
+            keys={["openRecordsInTabs", "landingPage"]} keywords="landing home start page module dashboard last visited records tabs workspace">
+            <div className="grid gap-2 md:grid-cols-2">
               {showTabPreferences
                 ? <Toggle label="Open records in tabs" description="Each record gets its own workspace tab. Off reuses the matching tab." checked={preferences.openRecordsInTabs} onChange={(value) => set("openRecordsInTabs", value)} />
                 : <Select label="Start on" value={preferences.landingPage} onChange={(event) => set("landingPage", event.target.value as LandingPage)} options={[{ label: "The current module's dashboard", value: "module-dashboard" }, { label: "The page I last had open", value: "last-visited" }]} />}
