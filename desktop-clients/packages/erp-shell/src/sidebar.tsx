@@ -1,11 +1,43 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { ChevronDown, ChevronRight, ChevronsLeft, ChevronsRight, Command, PanelLeftClose, PanelLeftOpen, Pin, PinOff, SlidersHorizontal } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ChevronDown, ChevronRight, ChevronsLeft, ChevronsRight, Command, PanelLeftClose, PanelLeftOpen, Pin, PinOff, Search, SlidersHorizontal, X } from "lucide-react";
 import { NavLink, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "./erp-context";
-import type { MenuItem } from "@pepbits/erp-config";
+import type { MenuItem, MenuSection } from "@pepbits/erp-config";
+
+const matchText = (item: MenuItem, term: string) => item.label.toLowerCase().includes(term);
+
+/**
+ * The navigation tree, narrowed to what matches.
+ *
+ * A parent that matches keeps ALL of its children -- searching "billing" should
+ * show the whole Billing group, not an empty one. A parent that does not match
+ * keeps only the children that do. Sections and groups left with nothing are
+ * dropped, so no empty headings survive.
+ */
+function filterNavigation(navigation: MenuSection[], query: string): MenuSection[] {
+  const term = query.trim().toLowerCase();
+  if (!term) return navigation;
+  const sections: MenuSection[] = [];
+  for (const section of navigation) {
+    const items: MenuItem[] = [];
+    for (const item of section.items) {
+      if (matchText(item, term)) { items.push(item); continue; }
+      const children = item.children?.filter((child) => matchText(child, term)) ?? [];
+      if (children.length) items.push({ ...item, children });
+    }
+    if (items.length) sections.push({ ...section, items });
+  }
+  return sections;
+}
+
+/** Every leaf page a filtered tree still offers, for the result count. */
+function countPages(sections: MenuSection[]): number {
+  return sections.reduce((total, section) => total + section.items.reduce(
+    (sum, item) => sum + (item.children?.length ?? (item.pageId ? 1 : 0)), 0), 0);
+}
 
 function SidebarLeaf({ item, expanded, active, href, onSelect }: { item: MenuItem; expanded: boolean; active: boolean; href: string; onSelect: () => void }) {
   const Icon = item.icon;
@@ -30,9 +62,14 @@ function SidebarLeaf({ item, expanded, active, href, onSelect }: { item: MenuIte
   );
 }
 
-function SidebarGroup({ item, expanded, activePageId, hrefFor, onSelect }: { item: MenuItem; expanded: boolean; activePageId: string; hrefFor: (pageId: string) => string; onSelect: (pageId: string) => void }) {
+function SidebarGroup({ item, expanded, activePageId, hrefFor, onSelect, forceOpen }: { item: MenuItem; expanded: boolean; activePageId: string; hrefFor: (pageId: string) => string; onSelect: (pageId: string) => void; forceOpen?: boolean }) {
   const childActive = item.children?.some((child) => child.pageId === activePageId) ?? false;
-  const [open, setOpen] = useState(childActive || item.id === "billing" || item.id === "fin-parties");
+  const [selfOpen, setSelfOpen] = useState(childActive || item.id === "billing" || item.id === "fin-parties");
+  /* While filtering, a collapsed group would hide the very children the search
+     surfaced. forceOpen overrides without touching the user's own toggle, so
+     clearing the box restores exactly the groups they had open. */
+  const open = forceOpen || selfOpen;
+  const setOpen = setSelfOpen;
   const Icon = item.icon;
 
   if (!item.children?.length && item.pageId) return <SidebarLeaf item={item} expanded={expanded} active={item.pageId === activePageId} href={hrefFor(item.pageId)} onSelect={() => onSelect(item.pageId!)} />;
@@ -82,6 +119,20 @@ export function Sidebar() {
   const isRight = preferences.sidebarPlacement === "right";
   const SideIcon = isRight ? ChevronsLeft : ChevronsRight;
   const brandLetters = useMemo(() => module.shortLabel.slice(0, 2).toUpperCase(), [module.shortLabel]);
+  const [query, setQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+  const searching = query.trim().length > 0;
+  const sections = useMemo(() => filterNavigation(module.navigation, query), [module.navigation, query]);
+  const resultCount = useMemo(() => (searching ? countPages(sections) : 0), [searching, sections]);
+
+  /* A query is about one module's tree, so switching module clears it --
+     otherwise the new module opens filtered by a word chosen for the old one,
+     and usually shows nothing. */
+  useEffect(() => { setQuery(""); }, [module.id]);
+
+  /* Collapsing the rail hides the input; a query left behind would keep the
+     tree filtered with nothing on screen explaining why. */
+  useEffect(() => { if (!expanded) setQuery(""); }, [expanded]);
 
   return (
     <>
@@ -140,12 +191,57 @@ export function Sidebar() {
         </div>
       </div>
 
+      {/* Expanded only. At 68px the rail has no room for an input, and hovering
+          expands it anyway -- so collapsed it is a button that expands and
+          focuses in one click rather than a cramped box. */}
+      <div className={cn("shrink-0 border-b border-[var(--border)]", expanded ? "px-3 py-2.5" : "px-2 py-2")}>
+        {expanded ? (
+          <div className="group relative">
+            <Search className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-subtle)] transition group-focus-within:text-[var(--primary)]" />
+            <input
+              ref={searchRef}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={(event) => { if (event.key === "Escape") { setQuery(""); event.currentTarget.blur(); } }}
+              placeholder={`Search ${module.shortLabel} menu…`}
+              aria-label={`Search the ${module.label} menu`}
+              className="focus-ring h-8 w-full rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] ps-8 pe-7 text-[length:calc(10.5px*var(--fs-scale))] font-semibold text-[var(--text)] transition placeholder:font-normal placeholder:text-[var(--text-subtle)] hover:border-[var(--border-strong)] focus:bg-[var(--surface)]"
+            />
+            {searching ? (
+              <button type="button" aria-label="Clear search" onClick={() => { setQuery(""); searchRef.current?.focus(); }}
+                className="focus-ring absolute end-1.5 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center rounded-md text-[var(--text-subtle)] transition hover:bg-[var(--surface-3)] hover:text-[var(--text)]">
+                <X className="size-3" />
+              </button>
+            ) : null}
+          </div>
+        ) : (
+          <button type="button" aria-label="Search menu" title="Search menu"
+            onClick={() => window.setTimeout(() => searchRef.current?.focus(), 0)}
+            className="focus-ring mx-auto flex size-8 items-center justify-center rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-subtle)] transition hover:border-[var(--primary)] hover:text-[var(--text)]">
+            <Search className="size-3.5" />
+          </button>
+        )}
+        {searching ? (
+          <div className="mt-1.5 flex items-center justify-between px-0.5 text-[length:calc(8.5px*var(--fs-scale))] font-bold text-[var(--text-muted)]">
+            <span>{resultCount} {resultCount === 1 ? "page" : "pages"}</span>
+            <span className="text-[var(--text-subtle)]">Esc to clear</span>
+          </div>
+        ) : null}
+      </div>
+
       <nav className={cn("nex-scrollbar min-h-0 flex-1 overflow-x-hidden overflow-y-auto py-3", expanded ? "px-3" : "px-2")}>
-        {module.navigation.map((section, sectionIndex) => (
+        {searching && sections.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-[var(--border-strong)] px-3 py-6 text-center">
+            <Search className="mx-auto size-4 text-[var(--text-subtle)]" />
+            <p className="mt-2 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text)]">No menu item matches</p>
+            <p className="mt-0.5 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">“{query.trim()}” is not in {module.label}. Try another module.</p>
+          </div>
+        ) : null}
+        {sections.map((section, sectionIndex) => (
           <div key={section.id} className={cn(sectionIndex > 0 && "mt-4")}>
             {expanded ? <div className="mb-1.5 flex items-center gap-2 px-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.16em] text-[var(--text-subtle)]"><span>{section.label}</span><span className="h-px flex-1 bg-[var(--border)]" /></div> : <div className="mx-auto mb-1.5 h-px w-7 bg-[var(--border)]" />}
             <div className="space-y-0.5">
-              {section.items.map((item) => <SidebarGroup key={item.id} item={item} expanded={expanded} activePageId={activePageId} hrefFor={hrefForPage} onSelect={openPage} />)}
+              {section.items.map((item) => <SidebarGroup key={item.id} item={item} expanded={expanded} activePageId={activePageId} hrefFor={hrefForPage} onSelect={openPage} forceOpen={searching} />)}
             </div>
           </div>
         ))}
