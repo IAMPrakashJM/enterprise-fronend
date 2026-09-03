@@ -39,7 +39,7 @@ function InboxTrigger({ label, count, tone, children }: { label: string; count: 
         type="button"
         aria-label={`${label}${count ? ` (${count} unread)` : ""}`}
         title={label}
-        className="focus-ring grid size-9 place-items-center rounded-[min(var(--radius),10px)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] transition hover:border-[var(--primary)] hover:text-[var(--text)]"
+        className="focus-ring grid size-[30px] place-items-center rounded-[min(var(--radius),9px)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] transition hover:border-[var(--primary)] hover:text-[var(--text)]"
       >
         {children}
       </button>
@@ -107,13 +107,13 @@ export function Header() {
         {page?.kind ? <Badge tone="neutral" className="hidden shrink-0 self-center xl:inline-flex">{page.kind}</Badge> : null}
       </div>
 
-      <button type="button" onClick={() => setCommandOpen(true)} className="focus-ring hidden h-9 w-36 items-center gap-2 rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] px-2.5 text-left text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--text-subtle)] transition hover:border-[var(--border-strong)] xl:flex"><Search className="size-3.5" /><span className="flex-1">Search</span>{preferences.showKeyboardHints ? <kbd className="rounded border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 text-[length:calc(8px*var(--fs-scale))]">⌘K</kbd> : null}</button>
+      <button type="button" onClick={() => setCommandOpen(true)} className="focus-ring hidden h-[30px] w-36 items-center gap-2 rounded-[9px] border border-[var(--border)] bg-[var(--surface-2)] px-2.5 text-left text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--text-subtle)] transition hover:border-[var(--border-strong)] xl:flex"><Search className="size-3.5" /><span className="flex-1">Search</span>{preferences.showKeyboardHints ? <kbd className="rounded border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 text-[length:calc(8px*var(--fs-scale))]">⌘K</kbd> : null}</button>
 
       {/* Vantage's inbox popovers: a count badge on the trigger, a titled head
           with a "Mark all read" action, then rows of coloured dot + title +
           body + age. The dot is a semantic token, so a notification is coloured
           by what it MEANS rather than by a hex picked at the call site. */}
-      <ActionMenu trigger={<InboxTrigger label={t("notifications")} count={unreadNotifications} tone="danger"><Bell className="size-4" /></InboxTrigger>}>
+      <ActionMenu trigger={<InboxTrigger label={t("notifications")} count={unreadNotifications} tone="danger"><Bell className="size-3.5" /></InboxTrigger>}>
         {(close) => (
           <div className="-m-1.5 w-[340px] overflow-hidden rounded-xl">
             <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] px-3 py-2.5">
@@ -136,7 +136,7 @@ export function Header() {
         )}
       </ActionMenu>
 
-      <ActionMenu trigger={<InboxTrigger label={t("messages")} count={unreadMessages} tone="primary"><MessageSquareText className="size-4" /></InboxTrigger>}>
+      <ActionMenu trigger={<InboxTrigger label={t("messages")} count={unreadMessages} tone="primary"><MessageSquareText className="size-3.5" /></InboxTrigger>}>
         {(close) => (
           <div className="-m-1.5 w-[340px] overflow-hidden rounded-xl">
             <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] px-3 py-2.5">
@@ -165,7 +165,7 @@ export function Header() {
         <div className="min-w-0 text-right"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-black">{user?.name ?? "Signed out"}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{user?.title ?? ""}</div></div>
       </div>
 
-      <ActionMenu trigger={<button type="button" data-tour="profile" aria-label="Open profile menu" className="focus-ring flex h-9 items-center gap-1 rounded-xl p-1 transition hover:bg-[var(--surface-2)]"><span className="relative flex size-7 items-center justify-center rounded-[9px] bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[length:calc(9.5px*var(--fs-scale))] font-black text-white shadow-sm">{user?.initials ?? "--"}<span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-[var(--surface)] bg-[var(--success)]" /></span><ChevronDown className="size-3 text-[var(--text-subtle)]" /></button>}>
+      <ActionMenu trigger={<button type="button" data-tour="profile" aria-label="Open profile menu" className="focus-ring flex h-8 items-center gap-1 rounded-[10px] p-0.5 transition hover:bg-[var(--surface-2)]"><span className="relative flex size-7 items-center justify-center rounded-[9px] bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[length:calc(9.5px*var(--fs-scale))] font-black text-white shadow-sm">{user?.initials ?? "--"}<span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-[var(--surface)] bg-[var(--success)]" /></span><ChevronDown className="size-3 text-[var(--text-subtle)]" /></button>}>
         {(close) => <div className="w-64"><div className="flex items-center gap-3 rounded-lg bg-[var(--surface-2)] p-3"><span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[length:calc(12px*var(--fs-scale))] font-black text-white">{user?.initials ?? "--"}</span><span className="min-w-0"><span className="block truncate text-[length:calc(11px*var(--fs-scale))] font-extrabold">{user?.name ?? "Signed out"}</span><span className="block truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">{user?.email ?? ""}</span></span></div><div className="my-1.5 h-px bg-[var(--border)]" />
           <MenuButton icon={<Settings className="size-3.5" />} label="Settings" hint="Workspace and organization" onClick={() => { openPage("theme-studio"); close(); }} />
           <MenuButton icon={<UserRound className="size-3.5" />} label="My Profile" hint="Identity and contact details" onClick={() => { openPage("user-master", { mode: "view", recordId: user?.id ?? "USR-00301", title: "My Profile" }); close(); }} />

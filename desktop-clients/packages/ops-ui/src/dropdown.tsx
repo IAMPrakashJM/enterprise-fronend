@@ -25,11 +25,15 @@ export function DropdownSelect({ value, options, onChange, label, compact, align
 
   return (
     <div className={cn("relative", className)} ref={ref}>
-      <button type="button" onClick={() => setOpen((previous) => !previous)} className={cn("focus-ring group flex h-9 items-center gap-2 rounded-[10px] border border-transparent px-2 text-left transition hover:border-[var(--border)] hover:bg-[var(--surface-2)]", compact ? "max-w-40" : "min-w-40")}>
+      <button type="button" onClick={() => setOpen((previous) => !previous)} className={cn("focus-ring group flex h-[30px] items-center gap-2 rounded-[10px] border border-transparent px-2 text-left transition hover:border-[var(--border)] hover:bg-[var(--surface-2)]", compact ? "max-w-40" : "min-w-40")}>
         {leading ?? selected.icon}
-        <span className="min-w-0 flex-1">
-          {label ? <span className="block text-[length:calc(8px*var(--fs-scale))] font-bold uppercase tracking-[.1em] text-[var(--text-subtle)]">{label}</span> : null}
-          <span className={cn("block truncate font-bold text-[var(--text)]", label ? "text-[length:calc(10px*var(--fs-scale))]" : "text-[length:calc(11px*var(--fs-scale))]")}>{selected.label}</span>
+        {/* Label and value sit side by side, as Vantage's "Branch  Dubai HQ"
+            does. Stacked, an 8px label over a 10px value needs ~27px of line
+            boxes, which in a 30px button leaves the text touching the border.
+            Inline, both fit on one line with room to spare. */}
+        <span className="flex min-w-0 flex-1 items-baseline gap-1.5">
+          {label ? <span className="shrink-0 text-[length:calc(9px*var(--fs-scale))] font-semibold text-[var(--text-subtle)]">{label}</span> : null}
+          <span className={cn("min-w-0 truncate font-bold text-[var(--text)]", label ? "text-[length:calc(10.5px*var(--fs-scale))]" : "text-[length:calc(11px*var(--fs-scale))]")}>{selected.label}</span>
         </span>
         <ChevronDown className={cn("size-3.5 shrink-0 text-[var(--text-subtle)] transition", open && "rotate-180")} />
       </button>
