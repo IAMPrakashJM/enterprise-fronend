@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { BadgeCheck, Banknote, Calculator, CheckCircle2, ChevronDown, CircleDollarSign, Copy, Download, FileCheck2, FileText, History, MoreHorizontal, Plus, Printer, ReceiptText, Save, ScanLine, ShieldCheck, Trash2, UserRound, WalletCards } from "lucide-react";
 import { useERP } from "@pepbits/erp-shell";
+import { usePublishAiSources } from "@pepbits/ai-client";
 import { Button, IconButton } from "@pepbits/ops-ui";
 import { Badge, StatusBadge } from "@pepbits/ops-ui";
 import { Card } from "@pepbits/ops-ui";
@@ -85,6 +86,15 @@ export function BillingPage({ page }: { page: PageDefinition }) {
   const [activeTab, setActiveTab] = useState("billing");
   const [lines, setLines] = useState(INITIAL_LINES);
   const [printOpen, setPrintOpen] = useState(false);
+
+  /* Billing has no form state yet -- CustomerDetails and TaxDetails render
+     fixed demo values -- so what is published here mirrors those literals
+     rather than reading them. Named and kept in one place so the day billing
+     gets real state there is a single line to repoint, instead of an assistant
+     quietly describing an invoice nobody is looking at. */
+  usePublishAiSources(`billing:${page.id}`, {
+    "form-values": { customer: "Atlas Horizon LLC", reference: "PO-AHL-2026-0118", terms: "Net 30", jurisdiction: "UAE Federal VAT" },
+  });
   const totals = useMemo(() => {
     const raw = lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0);
     const discount = lines.reduce((sum, line) => sum + line.quantity * line.unitPrice * (line.discount / 100), 0);

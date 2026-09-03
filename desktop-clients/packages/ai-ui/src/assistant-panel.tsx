@@ -68,15 +68,19 @@ export function AssistantPanel() {
 
   return (
     <>
+      {/* Matched to erp-shell's help button on purpose: same size, radius,
+          fill and elevation, sitting beside it rather than above. Two peers in
+          one corner, not a primary control and an afterthought. The help
+          button itself is untouched -- this one was moved to meet it. */}
       <button type="button" aria-label="Open the AI assistant" title={`AI assistant — ${useCases.length} available here`}
         onClick={() => setOpen((previous) => !previous)}
-        className="no-print fixed bottom-28 right-5 z-[70] flex size-12 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--primary)] shadow-[var(--shadow-md)] transition hover:-translate-y-0.5 hover:border-[var(--primary)]">
+        className="no-print fixed bottom-12 right-20 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
         <Sparkles className="size-5" />
       </button>
 
       {open ? (
         <div role="dialog" aria-label="AI assistant"
-          className="animate-slide-up no-print fixed bottom-44 right-5 z-[71] flex max-h-[70vh] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
+          className="animate-slide-up no-print fixed bottom-28 right-5 z-[71] flex max-h-[70vh] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
           <div className="flex shrink-0 items-center gap-2 border-b border-[var(--border)] px-3 py-2.5">
             {mode === "panel" && stage !== "choose" ? (
               <IconButton label="Back" className="size-7" onClick={() => { setStage("choose"); setReply(null); }}><ChevronLeft className="size-4" /></IconButton>
