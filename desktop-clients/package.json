@@ -20,7 +20,8 @@
     "stop": "for p in 3100 3101 3200; do lsof -ti tcp:$p | xargs kill 2>/dev/null; done; true",
     "verify:parity": "node scripts/verify-parity.mjs",
     "verify:ai-gates": "node scripts/verify-ai-gates.mjs",
-    "verify:ai-credential": "node scripts/verify-ai-credential.mjs"
+    "verify:ai-credential": "node scripts/verify-ai-credential.mjs",
+    "verify:ai-context": "node scripts/verify-ai-context.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.1",

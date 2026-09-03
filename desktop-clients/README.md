@@ -79,6 +79,7 @@ npx turbo run build      # both apps
 npm run verify:parity    # moved files still identical to the pre-migration originals
 npm run verify:ai-gates  # the AI access rules, including the escalation cases
 npm run verify:ai-credential  # a provider token never comes back (needs the API up)
+npm run verify:ai-context     # assembly reads only what a use case names
 ```
 
 Add `--css` to also diff the emitted stylesheet against a baseline build:
@@ -101,7 +102,8 @@ node scripts/verify-parity.mjs --css
 | `@pepbits/erp-shell` | `ERPProvider`, Header, Sidebar, Footer, `EnterpriseShell`, the global overlays | `ops-ui`, `erp-config`, `platform-ports` |
 | `@pepbits/erp-screens` | `PageRenderer` and all eight page kinds | all of the above |
 | `@pepbits/ai-config` | the eight AI access gates, the resolver, use cases, policy and admin shapes | — |
-| `@pepbits/ai-client` | the AI administration API, from the client's side | `ai-config`, `auth` |
+| `@pepbits/ai-client` | context assembly, redaction, policy fetch, the admin API | `ai-config`, `auth` |
+| `@pepbits/ai-ui` | the transparency panel | `ai-client`, `ai-config`, `ops-ui` |
 
 Apps depend on packages; packages never depend on apps.
 

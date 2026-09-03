@@ -339,9 +339,20 @@ the payload lacks or hide one it has.
 
 Clinical-category use cases require a second confirmation naming the record.
 
-**Verification:** open the panel on `customer-master`, confirm every listed
-field appears in the JSON that `assembleContext` returned, and that a field
-removed from the use case disappears from both.
+Note on module specifiers: the `@pepbits/ai-*` packages import each other with
+explicit `.ts` extensions and `tsconfig.base.json` sets
+`allowImportingTsExtensions`. Additive — extensionless still works everywhere
+else — and it exists so Node can import these modules directly. That is what
+lets `verify-ai-*.mjs` exercise the REAL code with no bundler and no test
+dependency, and a copied resolver in a test file is a resolver that can drift
+from the one that ships.
+
+**Verification:** `npm run verify:ai-context` — 18 checks covering that only
+named fields are read, that redaction happens during assembly rather than at
+dispatch, and that removing a field from the use case removes it from the
+payload. The panel side is structural rather than testable: `TransparencyPanel`
+renders `context.fields` and has no other source, so it cannot show a field the
+payload lacks nor hide one it has.
 
 ## Task 6: Panel mode over a mock responder
 

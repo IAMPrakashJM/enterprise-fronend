@@ -3,7 +3,7 @@
    Node still has to resolve, and extensionless specifiers are a bundler
    convention Node does not share. This module has no runtime dependency on
    gates.ts, and saying so keeps it directly runnable by the verify script. */
-import type { Gate, GateState } from "./gates";
+import type { Gate, GateState } from "./gates.ts";
 
 /**
  * The runtime half of the control plane: gates 2-7, owned by administrators and
