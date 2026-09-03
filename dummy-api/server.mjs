@@ -38,6 +38,7 @@ const ACCOUNTS = [
       title: "Finance Operations",
       role: "finance-manager",
       branch: "dubai",
+      tenantId: "NEX-AE-001",
     },
   },
   {
@@ -51,6 +52,7 @@ const ACCOUNTS = [
       title: "Supply Chain",
       role: "operations-analyst",
       branch: "sharjah",
+      tenantId: "NEX-AE-001",
     },
   },
   {
@@ -64,6 +66,7 @@ const ACCOUNTS = [
       title: "Solution Architecture",
       role: "enterprise-admin",
       branch: "hq",
+      tenantId: "NEX-AE-001",
     },
   },
 ];
@@ -120,6 +123,35 @@ function saveLayouts() {
   writeFileSync(tmp, JSON.stringify(layouts, null, 2) + "\n");
   renameSync(tmp, LAYOUTS_FILE);
 }
+
+/* AI access policy: gates 2-7 of eight, per tenant.
+ *
+ * A STAND-IN, and the endpoint most likely to be mistaken for governance. It
+ * reads a JSON file and returns it. It enforces nothing, it is not multi-tenant
+ * in any real sense, and the process it runs in states in its own header that it
+ * is not a security boundary. The real service owns policy authorship,
+ * versioning, an audit trail of who changed which gate, and -- above all -- the
+ * server-side re-check at dispatch, which is the actual enforcement point. The
+ * client-side resolver only decides what to RENDER.
+ *
+ * Seeded from ai-policy.example.json, which is committed; the live copy lives
+ * under data/ and is gitignored, exactly as preferences.json is.
+ */
+const POLICY_FILE = join(DATA_DIR, "ai-policy.json");
+const POLICY_SEED = join(dirname(fileURLToPath(import.meta.url)), "ai-policy.example.json");
+
+function loadPolicies() {
+  for (const file of [POLICY_FILE, POLICY_SEED]) {
+    try {
+      return JSON.parse(readFileSync(file, "utf8"));
+    } catch {
+      // Try the seed next; an unreadable seed means no policy, handled below.
+    }
+  }
+  return {};
+}
+
+const policies = loadPolicies();
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -279,8 +311,45 @@ const server = createServer(async (req, res) => {
     return send(res, 405, { error: `${req.method} not allowed on /layouts.` });
   }
 
+  if (pathname === "/ai/policy") {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    if (req.method === "GET") {
+      /* tenantId comes from the SESSION, never from the request. A tenant id in
+         a query string or a body is ignored -- accepting one would make tenant
+         isolation a client-side assertion, which is not isolation. */
+      const tenantId = user.tenantId;
+      const policy = policies[tenantId];
+      if (!policy) {
+        /* No policy for this tenant is a DENIAL, not a default-open. An absent
+           configuration must never be the permissive case. */
+        return send(res, 200, {
+          tenantId,
+          global: { platform: { allowed: false } },
+          modules: {}, pages: {}, useCases: {},
+          note: "No policy is configured for this tenant; AI is denied at the platform gate.",
+        });
+      }
+      return send(res, 200, { tenantId, ...policy });
+    }
+
+    if (req.method === "PUT") {
+      /* Spec §6.4: "admin only" has nothing to check here -- this application
+         has no authorization layer. Failing closed is the only honest answer;
+         accepting writes from any signed-in session would look like it works. */
+      return send(res, 403, {
+        error: "Policy writes require an administrator.",
+        detail: "No authorization layer exists in this demo API. See spec §6.4.",
+      });
+    }
+
+    return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
+  }
+
   if (req.method === "GET" && pathname === "/health") {
-    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length, layouts: Object.keys(layouts).length });
+    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length, layouts: Object.keys(layouts).length, aiTenants: Object.keys(policies).length });
   }
 
   send(res, 404, { error: `No route for ${req.method} ${pathname}.` });

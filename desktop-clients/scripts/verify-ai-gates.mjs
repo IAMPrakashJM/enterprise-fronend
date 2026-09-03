@@ -11,6 +11,7 @@
  *         npm run verify:ai-gates
  */
 import { resolveAi } from "../packages/ai-config/src/gates.ts";
+import { gatesForPage } from "../packages/ai-config/src/policy.ts";
 
 const CASES = [
   // --- deny wins, and the gate that decided ------------------------------
@@ -81,10 +82,73 @@ for (const testCase of CASES) {
 
 console.log();
 if (failed) {
-  console.error(`  ${failed} of ${CASES.length} cases failed.\n`);
   console.error("  A failure among the ESCALATION cases means a narrowing gate can widen the");
   console.error("  allowed set, which makes 'enable at user level' a route around a tenant");
-  console.error("  policy. Do not proceed past Task 1 until it passes.\n");
-  process.exit(1);
+  console.error("  policy. Do not proceed until it passes.\n");
 }
-console.log(`  ${CASES.length} cases passed.\n`);
+console.log(`  ${CASES.length} resolver cases passed.\n`);
+
+/* ---------------------------------------------------------------------------
+ * gatesForPage: the collapse from a stored policy to the flat gate map.
+ * Covered here because it is where a policy shape meets the resolver, and a
+ * mistake in it looks like a resolver bug rather than a mapping one.
+ * ------------------------------------------------------------------------- */
+
+const BUILD = { enabled: true, useCases: ["a", "b"] };
+const POLICY = {
+  tenantId: "T1",
+  global: { platform: { allowed: true }, tenant: { allowed: true }, application: { allowed: true } },
+  modules: { finance: { allowed: true }, hr: { allowed: false } },
+  pages: { "locked-page": { allowed: false } },
+  useCases: { b: { allowed: false } },
+};
+
+const POLICY_CASES = [
+  { name: "pilot page, module allowed",
+    policy: POLICY, page: { pageId: "p", module: "finance", build: BUILD }, user: true,
+    expect: { allowed: true, useCases: ["a"] } },          // b is off tenant-wide
+  { name: "module gate denies a page that HAS a build block",
+    policy: POLICY, page: { pageId: "p", module: "hr", build: BUILD }, user: true,
+    expect: { allowed: false, decidedBy: "module" } },
+  { name: "page gate denies",
+    policy: POLICY, page: { pageId: "locked-page", module: "finance", build: BUILD }, user: true,
+    expect: { allowed: false, decidedBy: "page" } },
+  { name: "no build block: gate 1 denies before any policy is consulted",
+    policy: POLICY, page: { pageId: "p", module: "finance" }, user: true,
+    expect: { allowed: false, decidedBy: "build" } },
+  { name: "user preference off",
+    policy: POLICY, page: { pageId: "p", module: "finance", build: BUILD }, user: false,
+    expect: { allowed: false, decidedBy: "user" } },
+  { name: "policy not fetched: renders build set, server still enforces",
+    policy: null, page: { pageId: "p", module: "finance", build: BUILD }, user: true,
+    expect: { allowed: true, useCases: ["a", "b"] } },     // see the note below
+];
+
+console.log(`  ${pad("", 6)}${pad("gatesForPage case", 44)} ${pad("result", 22)} use cases`);
+console.log(`  ${"-".repeat(6)}${"-".repeat(44)} ${"-".repeat(22)} ---------`);
+for (const testCase of POLICY_CASES) {
+  const got = resolveAi(gatesForPage(testCase.policy, testCase.page, testCase.user));
+  const problems = [];
+  for (const [key, want] of Object.entries(testCase.expect)) {
+    const actual = key === "useCases" ? JSON.stringify(got.useCases) : got[key];
+    const wanted = key === "useCases" ? JSON.stringify(want) : want;
+    if (actual !== wanted) problems.push(`${key}: expected ${wanted}, got ${actual}`);
+  }
+  const verdict = `${got.allowed ? "allowed" : "denied"} / ${got.decidedBy}`;
+  console.log(`  ${pad(problems.length ? "FAIL" : "ok", 6)}${pad(testCase.name, 44)} ${pad(verdict, 22)} [${got.useCases.join(",")}]`);
+  for (const problem of problems) console.log(`        ${problem}`);
+  if (problems.length) failed += 1;
+}
+
+/* The last case deserves a word. gatesForPage(null, ...) means "the policy could
+   not be fetched", and it resolves ALLOWED on the build set. That is deliberate
+   and it is not a default-open: the deny-on-missing-policy decision belongs to
+   the server, which returns platform:{allowed:false} for an unknown tenant
+   rather than an empty body. A client that failed closed on a network blip
+   would make the assistant vanish intermittently, which teaches users to
+   distrust the gating rather than the network. Enforcement is the server's
+   re-check at dispatch; this map only decides what to RENDER. */
+
+console.log();
+if (failed) { console.error(`  ${failed} case(s) failed.\n`); process.exit(1); }
+console.log(`  ${CASES.length + POLICY_CASES.length} cases passed in total.\n`);

@@ -13,6 +13,10 @@ export interface SessionUser {
   role: string;
   /** A `value` from erp-config's BRANCHES. */
   branch: string;
+  /** The account's tenant. Derived server-side and returned with the session;
+      the client never asserts it, because a tenant a client can claim is not
+      isolation. */
+  tenantId: string;
 }
 
 export type SessionStatus = "loading" | "anonymous" | "authenticated";
