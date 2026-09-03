@@ -400,6 +400,9 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
           { id: "saved-views", label: "Saved Views", pageId: "saved-views" },
           { id: "shortcut-manager", label: "Shortcut Manager", pageId: "shortcut-manager" },
         ] },
+        { id: "ai-assistant", label: "AI Assistant", icon: Sparkles, children: [
+          { id: "ai-administration", label: "AI Administration", pageId: "ai-administration" },
+        ] },
       ] },
     ],
   },
@@ -440,6 +443,12 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
   "supplier-performance-report": { kind: "reports", title: "Supplier Performance" },
   "stock-aging-report": { kind: "reports", title: "Stock Aging" },
   "preferences": { kind: "preferences", title: "My Preferences" },
+  /* The assistant is explicitly OFF on the screen that configures it. Not
+     because the config carries a secret -- it does not -- but because an
+     assistant offering to explain the page where you revoke it reads as a
+     joke in a demo and as a finding in an audit. It is also the live proof
+     that an explicit block still beats defaultAiFor. */
+  "ai-administration": { kind: "ai-admin", entity: "ai", title: "AI Administration", subtitle: "Provider, credential, limits and prompts for this tenant's assistant.", ai: { enabled: false, useCases: [] } },
   "spreadsheet-studio": { kind: "spreadsheet", title: "Spreadsheet Studio" },
   "component-library": { kind: "library", title: "Component Gallery" },
   "form-controls": { kind: "library", title: "Form Controls" },
@@ -489,6 +498,11 @@ function defaultAiFor(kind: PageKind): PageAiConfig {
     case "reports":
     case "spreadsheet":
       return { enabled: true, useCases: ["worklist.summarise-selection"] };
+    /* Nothing here offers the assistant, and the explicit block on the page
+       means this arm is unreachable today. It is written anyway so a second
+       ai-admin page cannot inherit the worklist default by omission. */
+    case "ai-admin":
+      return { enabled: false, useCases: [] };
     case "worklist":
     default:
       return { enabled: true, useCases: ["worklist.summarise-selection", "record.explain"] };
@@ -503,9 +517,13 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
     return [pageId, {
       id: pageId,
       title,
-      subtitle: explicit.kind === "dashboard"
+      /* An explicit subtitle wins. The generic line below is written for pages
+         that hold RECORDS, and reads as nonsense on anything else -- "manage ai
+         administration records with saved views" described a screen that has
+         neither records nor saved views. */
+      subtitle: explicit.subtitle ?? (explicit.kind === "dashboard"
         ? MODULES[module].description
-        : `Search, review and manage ${title.toLowerCase()} records with saved views and configurable actions.`,
+        : `Search, review and manage ${title.toLowerCase()} records with saved views and configurable actions.`),
       kind: explicit.kind ?? inferredKind,
       module,
       entity: explicit.entity ?? pageId.replace(/-(master|worklist|report|entry|config|review|setup)$/g, ""),
