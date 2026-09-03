@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Clock3, Copy, Eye, FileCheck2, His
 import { getEntitySchema } from "@pepbits/erp-config";
 import { getWorklistConfig } from "@pepbits/erp-data";
 import { usePublishAiSources } from "@pepbits/ai-client";
+import { InlineAiAction } from "@pepbits/ai-ui";
 import { useERP } from "@pepbits/erp-shell";
 import { Button, IconButton } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
@@ -149,6 +150,11 @@ export function DynamicRecordForm({ page, target }: { page: PageDefinition; targ
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow-sm)]">
         <div className="flex flex-wrap items-center gap-2"><Badge tone={mode === "view" ? "neutral" : mode === "new" ? "brand" : "warning"}>{mode === "new" ? "NEW RECORD" : mode.toUpperCase()}</Badge><span className="text-[length:calc(10px*var(--fs-scale))] font-extrabold">{target.recordId ?? (mode === "new" ? "Code generated on save" : schema.singular)}</span><span className="h-4 w-px bg-[var(--border)]" /><span className="flex items-center gap-1 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><Clock3 className="size-3" />Last saved {lastSaved}</span>{dirty ? <Badge tone="warning">Unsaved changes</Badge> : <Badge tone="success"><CheckCircle2 className="size-3" />Saved</Badge>}</div>
         <div data-tour="form-actions" className="flex items-center gap-1.5">
+          {/* The inline surface for this page kind. Renders nothing unless
+              record.explain survived every gate, so it is safe to place
+              unconditionally -- the component asks the shared engine
+              rather than deciding for itself. */}
+          <InlineAiAction useCaseId="record.explain" label="Explain" />
           {mode === "view" ? <Button variant="primary" leftIcon={<Pencil className="size-3.5" />} onClick={() => navigation.open({ pageId: page.id, mode: "edit", recordId: target.recordId, title: `${schema.singular} • Edit` })}>Edit</Button> : <><Button variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} disabled={!dirty} onClick={() => setValues(savedValues)}>Discard</Button><Button variant="secondary" leftIcon={<Save className="size-3.5" />} loading={saving} onClick={save}>Save draft</Button><Button variant="primary" leftIcon={<FileCheck2 className="size-3.5" />} loading={saving} onClick={save}>Save</Button></>}
           <ActionMenu trigger={<IconButton label="More record actions"><MoreHorizontal className="size-4" /></IconButton>}>
             {(close) => <><MenuButton icon={<Copy className="size-3.5" />} label="Duplicate record" onClick={close} /><MenuButton icon={<History className="size-3.5" />} label="View audit history" onClick={close} /><MenuButton icon={<Send className="size-3.5" />} label="Submit for approval" onClick={() => { toast({ title: "Submitted for approval", message: "The record was routed to the configured approval workflow.", type: "info" }); close(); }} /></>}

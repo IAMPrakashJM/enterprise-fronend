@@ -14,11 +14,12 @@
  * The structural half is the one that survives a refactor, because the
  * behavioural half would still pass if someone added a second resolver.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gatesForPage } from "../packages/ai-config/src/policy.ts";
 import { resolveAi } from "../packages/ai-config/src/gates.ts";
+import { USE_CASES } from "../packages/ai-config/src/use-cases.ts";
 
 const UI = join(dirname(fileURLToPath(import.meta.url)), "..", "packages", "ai-ui", "src");
 const pad = (value, width) => String(value).padEnd(width);
@@ -67,6 +68,35 @@ check("inline checks membership rather than re-resolving",
   /assistant\.useCases\.find\(/.test(source("inline-action.tsx")));
 check("inline refuses to surface a clinical use case",
   source("inline-action.tsx").includes('category === "clinical"'));
+
+/* ---- reachability -------------------------------------------------------
+   A surface nobody mounts is not a surface. `inline-action.tsx` passed every
+   structural check above while being reachable from nowhere -- the checks read
+   the file, and the file was fine; what was missing was a call site.
+
+   This also guards against a subtler thing that actually happened: the export
+   is `InlineAiAction`, and a search for "InlineAction" finds nothing. A grep
+   that misses by two characters reads exactly like a component that is dead,
+   and I concluded the wrong thing from it more than once. A script that names
+   the symbol cannot make that mistake. */
+const SCREENS = join(dirname(fileURLToPath(import.meta.url)), "..", "packages", "erp-screens", "src");
+function filesUnder(dir) {
+  let found = [];
+  try {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const path = join(dir, entry.name);
+      found = found.concat(entry.isDirectory() ? filesUnder(path) : [path]);
+    }
+  } catch { /* absent directory is a failure below, not a crash here */ }
+  return found;
+}
+const screenSource = filesUnder(SCREENS).filter((f) => f.endsWith(".tsx")).map((f) => readFileSync(f, "utf8")).join("\n");
+const mounted = [...screenSource.matchAll(/<InlineAiAction[^>]*useCaseId="([^"]+)"/g)].map((m) => m[1]);
+
+check("the inline surface is mounted somewhere", mounted.length > 0, mounted.length ? `${mounted.length} call site(s)` : "exported and never rendered");
+for (const id of USE_CASES.map((useCase) => useCase.id)) {
+  check(`${id} has an inline affordance`, mounted.includes(id), mounted.includes(id) ? "" : "no <InlineAiAction> names it");
+}
 
 console.log();
 if (failed) {
