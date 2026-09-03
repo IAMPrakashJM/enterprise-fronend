@@ -22,7 +22,8 @@
     "verify:ai-gates": "node scripts/verify-ai-gates.mjs",
     "verify:ai-credential": "node scripts/verify-ai-credential.mjs",
     "verify:ai-context": "node scripts/verify-ai-context.mjs",
-    "verify:ai-modes": "node scripts/verify-ai-modes.mjs"
+    "verify:ai-modes": "node scripts/verify-ai-modes.mjs",
+    "verify:ai-limits": "node scripts/verify-ai-limits.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.1",

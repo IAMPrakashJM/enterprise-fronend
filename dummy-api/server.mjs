@@ -175,6 +175,20 @@ function loadAiConfig() {
 
 const aiConfig = loadAiConfig();
 
+/* The loader had no counterpart for four tasks: PUT /ai/config mutated this
+   object and never wrote it, so every administrative change survived exactly
+   until the next restart. It went unnoticed because the credential DID persist,
+   so a restart left a valid key pointing at no provider and dispatch answered
+   "No provider or model is configured" -- a message that reads like a setup
+   step nobody had done, rather than a setting that had been silently dropped. */
+function saveAiConfig() {
+  try {
+    writeFileSync(AI_CONFIG_FILE, JSON.stringify(aiConfig, null, 2));
+  } catch {
+    console.warn("[ai] could not persist the AI configuration; changes will be lost on restart");
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Provider credential storage.
 
@@ -286,6 +300,120 @@ const PROMPT_TEXT = {
     "You draft a short internal note from values a user has entered on a form. Use ONLY those values. Never invent a reference, a name or an amount. Output the note text alone, with no preamble.",
 };
 
+/* ---------------------------------------------------------------------------
+   Rate and budget enforcement.
+
+   `limits.requestsPerMinute` and `limits.tokensPerDay` were in AiConfig from the
+   start, displayed on the administration surface, and enforced nowhere. That was
+   survivable while dispatch echoed a mock. It stopped being survivable the day a
+   real billed provider was wired in behind a public host whose demo passwords are
+   printed on its own login screen: anyone who can reach the site can sign in and
+   spend the tenant's balance in a loop.
+
+   Two properties this is built around:
+
+   ABSENCE OF CONFIG IS NOT ABSENCE OF A LIMIT. A tenant with no config, or a
+   zero, or a string where a number belongs, gets DEFAULT_LIMITS. The failure
+   mode of a missing limit must never be "unlimited spend".
+
+   REQUESTS ARE COUNTED ON ADMISSION, NOT ON SUCCESS. A failing or slow provider
+   still costs a round trip, and a caller who can retry for free on every error
+   has no limit at all. So the slot is taken before the work is attempted, and
+   the counter sits ahead of prompt and credential validation for the same
+   reason -- a malformed request is still a request.
+   --------------------------------------------------------------------------- */
+const USAGE_FILE = join(DATA_DIR, "ai-usage.json");
+
+/* The token budget is persisted; the per-minute window is not. A restart losing
+   a minute of history is irrelevant, but a restart resetting the DAY'S spend
+   would make the budget bypassable by anyone who can bounce the process. */
+function loadUsage() {
+  try {
+    return JSON.parse(readFileSync(USAGE_FILE, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+const usage = loadUsage();
+const recentRequests = new Map();
+
+const DEFAULT_LIMITS = { requestsPerMinute: 20, tokensPerDay: 200000 };
+
+function limitsFor(tenantId) {
+  const configured = aiConfig[tenantId]?.limits ?? {};
+  const positive = (value, fallback) => (Number.isFinite(Number(value)) && Number(value) > 0 ? Number(value) : fallback);
+  return {
+    requestsPerMinute: positive(configured.requestsPerMinute, DEFAULT_LIMITS.requestsPerMinute),
+    tokensPerDay: positive(configured.tokensPerDay, DEFAULT_LIMITS.tokensPerDay),
+  };
+}
+
+/* UTC, not local. A budget that resets at the server's local midnight silently
+   changes meaning when the machine moves timezone. */
+function utcDay() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function tokensUsedToday(tenantId) {
+  const held = usage[tenantId];
+  return held && held.day === utcDay() ? held.tokens : 0;
+}
+
+/* Returns a refusal, or null to proceed. Does NOT take the slot -- admit() does,
+   so a caller can report the limit without consuming budget. */
+function refuseForRate(tenantId) {
+  const { requestsPerMinute, tokensPerDay } = limitsFor(tenantId);
+  const now = Date.now();
+  const window = (recentRequests.get(tenantId) ?? []).filter((at) => now - at < 60_000);
+  recentRequests.set(tenantId, window);
+
+  if (window.length >= requestsPerMinute) {
+    const retryAfter = Math.max(1, Math.ceil((60_000 - (now - window[0])) / 1000));
+    return {
+      status: 429,
+      retryAfter,
+      body: {
+        error: "Rate limit reached.",
+        detail: `${requestsPerMinute} requests per minute for this tenant. Try again in ${retryAfter}s.`,
+      },
+    };
+  }
+
+  const used = tokensUsedToday(tenantId);
+  if (used >= tokensPerDay) {
+    return {
+      status: 429,
+      /* Seconds to the next UTC midnight, so a client is not told to retry into
+         the same refusal. */
+      retryAfter: Math.max(1, Math.ceil((Date.parse(`${utcDay()}T23:59:59.999Z`) + 1 - Date.now()) / 1000)),
+      body: {
+        error: "Daily token budget spent.",
+        detail: `${used} of ${tokensPerDay} tokens used today. The budget resets at 00:00 UTC.`,
+      },
+    };
+  }
+  return null;
+}
+
+function admit(tenantId) {
+  const window = recentRequests.get(tenantId) ?? [];
+  window.push(Date.now());
+  recentRequests.set(tenantId, window);
+}
+
+function recordTokens(tenantId, tokens) {
+  if (!(Number(tokens) > 0)) return;
+  const day = utcDay();
+  const held = usage[tenantId];
+  usage[tenantId] = held && held.day === day ? { day, tokens: held.tokens + Number(tokens) } : { day, tokens: Number(tokens) };
+  try {
+    writeFileSync(USAGE_FILE, JSON.stringify(usage, null, 2));
+  } catch {
+    console.warn("[ai] could not persist token usage; the daily budget will reset on restart");
+  }
+}
+
 /* One place reads `secret`, and this is it. */
 async function callProvider(config, secret, messages) {
   const endpoint = String(config?.provider?.endpoint ?? "").replace(/\/+$/, "");
@@ -324,13 +452,14 @@ const CORS = {
   "Access-Control-Max-Age": "86400",
 };
 
-function send(res, status, body) {
+function send(res, status, body, extraHeaders) {
   const payload = body === undefined ? "" : JSON.stringify(body);
   res.writeHead(status, {
     ...CORS,
     "Content-Type": "application/json; charset=utf-8",
     "Content-Length": Buffer.byteLength(payload),
     "Cache-Control": "no-store",
+    ...(extraHeaders ?? {}),
   });
   res.end(payload);
 }
@@ -524,7 +653,13 @@ const server = createServer(async (req, res) => {
       if (refusal) return send(res, 403, refusal);
       const held = credentials[tenantId];
       if (!held) return send(res, 409, { error: "No credential is configured for this tenant." });
+      /* This reaches the provider, so it spends from the same budget. An admin
+         action that bypassed the limit would be the obvious way round it. */
+      const rateRefusal = refuseForRate(tenantId);
+      if (rateRefusal) return send(res, rateRefusal.status, rateRefusal.body, { "Retry-After": String(rateRefusal.retryAfter) });
+      admit(tenantId);
       const result = await callProvider(aiConfig[tenantId], held.secret, [{ role: "user", content: "Reply with the single word: ok" }]);
+      recordTokens(tenantId, result.usage?.total_tokens);
       /* Recorded so a bad key is diagnosable from the admin screen without
          anyone reading the key back to check it by eye. */
       held.lastVerifiedAt = result.ok ? new Date().toISOString() : (held.lastVerifiedAt ?? null);
@@ -618,6 +753,8 @@ const server = createServer(async (req, res) => {
         });
       }
       aiConfig[tenantId] = { ...(aiConfig[tenantId] ?? {}), ...body };
+      saveAiConfig();
+      console.log(`[ai] config updated for ${tenantId} by ${user.email ?? user.id}: ${Object.keys(body).join(", ")}`);
       res.writeHead(204, CORS);
       return res.end();
     }
@@ -646,6 +783,16 @@ const server = createServer(async (req, res) => {
     } catch {
       return send(res, 400, { error: "Malformed request body." });
     }
+
+    /* Ahead of prompt and credential validation on purpose: see the limiter's
+       header. A malformed request is still a request, and a caller who retries
+       for free on every 400 is not limited at all. */
+    const refusal = refuseForRate(tenantId);
+    if (refusal) {
+      console.log(`[ai] refused ${user.email ?? user.id}: ${refusal.body.error}`);
+      return send(res, refusal.status, refusal.body, { "Retry-After": String(refusal.retryAfter) });
+    }
+    admit(tenantId);
 
     const system = PROMPT_TEXT[body?.promptId];
     if (!system) {
@@ -683,7 +830,33 @@ const server = createServer(async (req, res) => {
     held.lastVerifiedAt = new Date().toISOString();
     held.lastError = null;
     saveCredentials();
+    /* The provider's own count, not an estimate of ours. */
+    recordTokens(tenantId, result.usage?.total_tokens);
     return send(res, 200, { ok: true, text: result.text, model: result.model, usage: result.usage });
+  }
+
+  /* So the limit is inspectable without reading the process's memory, and so a
+     future admin screen has something real to render. */
+  if (pathname === "/ai/usage") {
+    if (req.method !== "GET") return send(res, 405, { error: `${req.method} not allowed on /ai/usage.` });
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const tenantId = user.tenantId;
+    const limits = limitsFor(tenantId);
+    const now = Date.now();
+    const inWindow = (recentRequests.get(tenantId) ?? []).filter((at) => now - at < 60_000).length;
+    return send(res, 200, {
+      tenantId,
+      day: utcDay(),
+      requestsLastMinute: inWindow,
+      requestsPerMinute: limits.requestsPerMinute,
+      tokensUsedToday: tokensUsedToday(tenantId),
+      tokensPerDay: limits.tokensPerDay,
+      /* Stated, because a configured value of 0 or a missing config resolves to
+         the default rather than to "no limit". */
+      limitsAreDefaults: !aiConfig[tenantId]?.limits,
+    });
   }
 
   if (req.method === "GET" && pathname === "/health") {
