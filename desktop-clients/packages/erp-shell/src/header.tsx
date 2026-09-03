@@ -77,7 +77,12 @@ export function Header() {
     value: item.id,
     label: item.shortLabel,
     description: item.label,
-    icon: <span className="flex size-7 items-center justify-center rounded-lg text-white" style={{ background: item.accent }}>{React.createElement(item.icon, { className: "size-3.5" })}</span>,
+    /* size-5, not size-7. The button is 30px with a 1px border, so its content
+       box is 28px -- a 28px tile filled it edge to edge and made the module
+       control read as taller than the 30px branch control beside it, even
+       though both are the same height. 20px leaves 4px of air top and bottom,
+       matching the optical weight of branch's bare 14px glyph. */
+    icon: <span className="flex size-5 shrink-0 items-center justify-center rounded-md text-white" style={{ background: item.accent }}>{React.createElement(item.icon, { className: "size-3" })}</span>,
   }));
 
   return (
