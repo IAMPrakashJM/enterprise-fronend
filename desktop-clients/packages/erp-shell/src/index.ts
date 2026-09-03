@@ -3,4 +3,6 @@ export * from "./enterprise-shell";
 export * from "./header";
 export * from "./sidebar";
 export * from "./footer";
+export * from "./header-clock";
+export * from "./use-clock";
 export * from "./layers";

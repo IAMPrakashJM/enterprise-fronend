@@ -1,44 +1,37 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { LANGUAGE_OPTIONS, MODULES, PAGE_REGISTRY, translate } from "@pepbits/erp-config";
-import type { ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
+import {
+  DEFAULT_PREFERENCES, LANGUAGE_OPTIONS, MODULES, PAGE_REGISTRY,
+  createFormatters, preferenceOverrides, sanitizePreferences, translate,
+} from "@pepbits/erp-config";
+import type { Formatters, ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { authedFetch, useSession } from "@pepbits/auth";
 
-const DEFAULT_PREFERENCES: UserPreferences = {
-  theme: "nexora",
-  formNavigation: "rail",
-  resultView: "table",
-  previewMode: "right-drawer",
-  sidebarPlacement: "left",
-  sidebarPinned: false,
-  density: "comfortable",
-  pageSize: 20,
-  fontFamily: "inter",
-  fontSize: "md",
-  toastPosition: "top-right",
-  toastDuration: 3500,
-  toastTone: "adaptive",
-  helperEnabled: true,
-  documentationEnabled: true,
-  reducedMotion: false,
-  language: "en",
-  billingLayout: "workspace",
-  globalSearchMode: "smart",
-  rememberFilters: true,
-  openRecordsInTabs: true,
-  showKeyboardHints: true,
-};
 
-const FONT_MAP = {
+/* Every family here is loaded by the shells (Google Fonts in web's layout.tsx
+   and desktop's index.html), so the picker changes what you see. Before this
+   the list offered Inter and Manrope with neither loaded -- the choice did
+   nothing on any machine that lacked them locally, which is most machines. */
+const FONT_MAP: Record<string, string> = {
   inter: "Inter, ui-sans-serif, system-ui, sans-serif",
+  plex: "'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif",
+  "source-sans": "'Source Sans 3', ui-sans-serif, system-ui, sans-serif",
+  nunito: "'Nunito Sans', ui-sans-serif, system-ui, sans-serif",
   manrope: "Manrope, Inter, ui-sans-serif, system-ui, sans-serif",
   system: "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  mono: "'SFMono-Regular', Consolas, 'Liberation Mono', monospace",
+  georgia: "Georgia, 'Times New Roman', serif",
+  "plex-mono": "'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace",
 };
 
-const FONT_SCALE = { sm: ".93", md: "1", lg: "1.08" };
+/* 13px is the reference: the design as drawn. Each scale is the chosen px over
+   that, applied by calc() at every text class -- see tokens.css for why the
+   multiplication happens at the element and not here. */
+const TYPE_REFERENCE_PX = 13;
+
+/** Table/card row padding, as a variable so density has ONE definition. */
+const ROW_PADDING = { compact: "6px", comfortable: "10px", spacious: "14px" };
 
 interface ERPContextValue {
   /** Derived from the navigation port, never stored. Two sources of truth for the
@@ -55,6 +48,9 @@ interface ERPContextValue {
   setRole: (role: string) => void;
   toasts: ToastItem[];
   toast: (toast: Omit<ToastItem, "id">) => void;
+  /** Preference-aware value formatting. Every screen renders money, dates and
+      numbers through this, so one preference change reformats all of them. */
+  format: Formatters;
   dismissToast: (id: string) => void;
   commandOpen: boolean;
   setCommandOpen: (open: boolean) => void;
@@ -76,17 +72,6 @@ export function dashboardPageId(module: ModuleKey): string {
 export function moduleForPage(pageId: string, fallback: ModuleKey = "finance"): ModuleKey {
   const page = PAGE_REGISTRY[pageId];
   return page && page.module !== "shared" ? page.module : fallback;
-}
-
-/** Only the keys that differ from the defaults, so the stored JSON reads as "what this
-    user changed" and any key added to UserPreferences later starts at its new default
-    rather than at whatever was frozen into an older full snapshot. */
-function overridesOf(preferences: UserPreferences): Partial<UserPreferences> {
-  const diff: Record<string, unknown> = {};
-  for (const key of Object.keys(DEFAULT_PREFERENCES) as Array<keyof UserPreferences>) {
-    if (preferences[key] !== DEFAULT_PREFERENCES[key]) diff[key] = preferences[key];
-  }
-  return diff as Partial<UserPreferences>;
 }
 
 export function ERPProvider({ children, fallback = null }: { children: React.ReactNode; fallback?: React.ReactNode }) {
@@ -124,8 +109,11 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
         const response = await authedFetch("/preferences");
         if (cancelled) return;
         if (response.ok) {
-          const body = (await response.json()) as { preferences?: Partial<UserPreferences> };
-          if (!cancelled) setPreferences({ ...DEFAULT_PREFERENCES, ...(body.preferences ?? {}) });
+          const body = (await response.json()) as { preferences?: unknown };
+          /* Validated, not spread. A theme id removed in a later release, or a
+             hand-edited preferences.json, used to reach the shell verbatim and
+             set data-theme to a selector no stylesheet defines. */
+          if (!cancelled) setPreferences(sanitizePreferences(body.preferences));
         }
       } catch {
         // API unreachable: fall through to defaults rather than blocking the shell.
@@ -145,7 +133,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
       void authedFetch("/preferences", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ preferences: overridesOf(preferences) }),
+        body: JSON.stringify({ preferences: preferenceOverrides(preferences) }),
       }).catch(() => {
         // A failed save is not worth interrupting the user over in a demo.
       });
@@ -157,8 +145,15 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     const root = document.documentElement;
     root.dataset.theme = preferences.theme;
     root.dataset.reducedMotion = String(preferences.reducedMotion);
-    root.style.setProperty("--font-ui", FONT_MAP[preferences.fontFamily]);
-    root.style.setProperty("--font-scale", FONT_SCALE[preferences.fontSize]);
+    root.style.setProperty("--font-ui", FONT_MAP[preferences.fontFamily] ?? FONT_MAP.inter);
+    root.style.setProperty("--fs-shell", String(preferences.fontSizeBase / TYPE_REFERENCE_PX));
+    root.style.setProperty("--fs-form", String(preferences.fontSizeForm / TYPE_REFERENCE_PX));
+    root.style.setProperty("--fs-result", String(preferences.fontSizeResult / TYPE_REFERENCE_PX));
+    /* Written as variables rather than read as props by each component: one
+       assignment restyles every card, table row and input at once, and there is
+       no ternary to duplicate across DataTable and CardGrid. */
+    root.style.setProperty("--radius", `${preferences.cornerRadius}px`);
+    root.style.setProperty("--row-py", ROW_PADDING[preferences.density]);
     const language = LANGUAGE_OPTIONS.find((item) => item.value === preferences.language);
     root.lang = preferences.language;
     root.dir = language?.dir ?? "ltr";
@@ -180,9 +175,12 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
 
   const toast = useCallback((nextToast: Omit<ToastItem, "id">) => {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    setToasts((previous) => [...previous, { ...nextToast, id }]);
+    /* Trimmed on ADD, not at render: keeping the overflow in state and showing
+       only the last N leaves invisible toasts holding live dismiss timers, and
+       a bulk action would then drip them back one at a time as those fire. */
+    setToasts((previous) => [...previous, { ...nextToast, id }].slice(-preferences.maxVisibleToasts));
     window.setTimeout(() => setToasts((previous) => previous.filter((item) => item.id !== id)), preferences.toastDuration);
-  }, [preferences.toastDuration]);
+  }, [preferences.maxVisibleToasts, preferences.toastDuration]);
 
   const dismissToast = useCallback((id: string) => setToasts((previous) => previous.filter((item) => item.id !== id)), []);
 
@@ -219,6 +217,11 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
 
   const t = useCallback((key: string) => translate(preferences.language, key), [preferences.language]);
 
+  const format = useMemo(() => createFormatters(preferences), [
+    preferences.currencyCode, preferences.numberLocale, preferences.dateFormat, preferences.decimalPlaces,
+    preferences.timeFormat, preferences.currencyDisplay, preferences.negativeStyle,
+  ]);
+
   const value = useMemo<ERPContextValue>(() => ({
     currentModule,
     module: MODULES[currentModule],
@@ -233,6 +236,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     toasts,
     toast,
     dismissToast,
+    format,
     commandOpen,
     setCommandOpen,
     helpOpen,
@@ -240,7 +244,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     documentationOpen,
     setDocumentationOpen,
     t,
-  }), [branch, commandOpen, currentModule, dismissToast, documentationOpen, helpOpen, preferences, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
+  }), [branch, commandOpen, currentModule, dismissToast, documentationOpen, format, helpOpen, preferences, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
 
   if (!loaded) return <>{fallback}</>;
 

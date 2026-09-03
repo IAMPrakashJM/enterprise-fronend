@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "./cn";
+import { Button } from "./button";
 import { IconButton } from "./button";
 
 export function Modal({ open, onClose, title, subtitle, children, size = "lg", footer, className }: { open: boolean; onClose: () => void; title: string; subtitle?: string; children: React.ReactNode; size?: "sm" | "md" | "lg" | "xl" | "full"; footer?: React.ReactNode; className?: string }) {
@@ -18,7 +19,7 @@ export function Modal({ open, onClose, title, subtitle, children, size = "lg", f
     <div className="animate-fade fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/45 p-5 backdrop-blur-[2px]" role="dialog" aria-modal="true" aria-label={title} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <div className={cn("animate-slide-up flex max-h-[calc(100vh-40px)] w-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]", widths[size], className)}>
         <div className="flex items-start justify-between gap-4 border-b border-[var(--border)] px-5 py-4">
-          <div><h2 className="text-[15px] font-extrabold tracking-[-.02em] text-[var(--text)]">{title}</h2>{subtitle ? <p className="mt-1 text-[11px] text-[var(--text-muted)]">{subtitle}</p> : null}</div>
+          <div><h2 className="text-[length:calc(15px*var(--fs-scale))] font-extrabold tracking-[-.02em] text-[var(--text)]">{title}</h2>{subtitle ? <p className="mt-1 text-[length:calc(11px*var(--fs-scale))] text-[var(--text-muted)]">{subtitle}</p> : null}</div>
           <IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton>
         </div>
         <div className="nex-scrollbar min-h-0 flex-1 overflow-auto">{children}</div>
@@ -40,7 +41,7 @@ export function Drawer({ open, onClose, title, subtitle, children, side = "right
   return (
     <div className="fixed inset-0 z-[115] bg-slate-950/35 backdrop-blur-[1px]" role="dialog" aria-modal="true" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <aside className={cn("animate-slide-up absolute inset-y-0 flex max-w-[92vw] flex-col border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]", widths[width], side === "right" ? "right-0 border-l" : "left-0 border-r")}>
-        <div className="flex items-start justify-between gap-4 border-b border-[var(--border)] px-5 py-4"><div><h2 className="text-[15px] font-extrabold tracking-[-.02em]">{title}</h2>{subtitle ? <p className="mt-1 text-[11px] text-[var(--text-muted)]">{subtitle}</p> : null}</div><IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton></div>
+        <div className="flex items-start justify-between gap-4 border-b border-[var(--border)] px-5 py-4"><div><h2 className="text-[length:calc(15px*var(--fs-scale))] font-extrabold tracking-[-.02em]">{title}</h2>{subtitle ? <p className="mt-1 text-[length:calc(11px*var(--fs-scale))] text-[var(--text-muted)]">{subtitle}</p> : null}</div><IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton></div>
         <div className="nex-scrollbar min-h-0 flex-1 overflow-auto">{children}</div>
         {footer ? <div className="flex items-center justify-end gap-2 border-t border-[var(--border)] bg-[var(--surface-2)] px-5 py-3">{footer}</div> : null}
       </aside>
@@ -54,11 +55,35 @@ export function CenterRecordCard({ open, onClose, title, children, footer }: { o
     <div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/25 p-5 backdrop-blur-[1px]" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <div className="animate-slide-up w-full max-w-xl rounded-[24px] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--surface)] p-2 shadow-[var(--shadow-lg)]">
         <div className="rounded-[18px] border border-[var(--border)] bg-[var(--surface-2)]">
-          <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3"><h2 className="text-[13px] font-extrabold">{title}</h2><IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton></div>
+          <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3"><h2 className="text-[length:calc(13px*var(--fs-scale))] font-extrabold">{title}</h2><IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton></div>
           <div className="nex-scrollbar max-h-[65vh] overflow-auto p-4">{children}</div>
           {footer ? <div className="flex justify-end gap-2 border-t border-[var(--border)] bg-[var(--surface)] px-4 py-3">{footer}</div> : null}
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * A yes/no question. Built on Modal so it inherits focus handling and the
+ * escape key, and sized "sm" because a confirmation with room for three
+ * paragraphs invites three paragraphs.
+ */
+export function ConfirmDialog({ open, title, message, confirmLabel = "Confirm", tone = "primary", onConfirm, onCancel }: {
+  open: boolean;
+  title: string;
+  message: React.ReactNode;
+  confirmLabel?: string;
+  tone?: "primary" | "danger";
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  return (
+    <Modal open={open} onClose={onCancel} title={title} size="sm" footer={<>
+      <Button variant="ghost" onClick={onCancel}>Cancel</Button>
+      <Button variant={tone === "danger" ? "danger" : "primary"} onClick={onConfirm}>{confirmLabel}</Button>
+    </>}>
+      <div className="p-5 text-[length:calc(11px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{message}</div>
+    </Modal>
   );
 }

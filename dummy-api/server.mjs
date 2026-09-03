@@ -13,7 +13,7 @@
  * dev server and the packaged Tauri app are three different origins, and enumerating
  * them buys nothing for a demo. Do not model a real service on this file.
  *
- *   node server.mjs            # :4000
+ *   node server.mjs            # :3200
  *   PORT=4100 node server.mjs
  */
 import { createServer } from "node:http";
@@ -22,7 +22,7 @@ import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const PORT = Number(process.env.PORT ?? 4000);
+const PORT = Number(process.env.PORT ?? 3200);
 
 /* Roles are the `value` strings from packages/erp-config's ROLES, so the shell's role
    selector can reflect the account instead of being free-choice. */
@@ -96,6 +96,29 @@ function savePrefs() {
   const tmp = `${PREFS_FILE}.${process.pid}.tmp`;
   writeFileSync(tmp, JSON.stringify(preferences, null, 2) + "\n");
   renameSync(tmp, PREFS_FILE);
+}
+
+/* Worklist column layout, per user per page. A separate file rather than a key
+   inside preferences.json: this grows with the number of pages a user visits
+   (~200 in PAGE_REGISTRY), and mixing unbounded data into the settings blob
+   would make every preference save rewrite all of it. */
+const LAYOUTS_FILE = join(DATA_DIR, "layouts.json");
+
+function loadLayouts() {
+  try {
+    return JSON.parse(readFileSync(LAYOUTS_FILE, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+const layouts = loadLayouts();
+
+function saveLayouts() {
+  mkdirSync(DATA_DIR, { recursive: true });
+  const tmp = `${LAYOUTS_FILE}.${process.pid}.tmp`;
+  writeFileSync(tmp, JSON.stringify(layouts, null, 2) + "\n");
+  renameSync(tmp, LAYOUTS_FILE);
 }
 
 const CORS = {
@@ -215,8 +238,49 @@ const server = createServer(async (req, res) => {
     return send(res, 405, { error: `${req.method} not allowed on /preferences.` });
   }
 
+  if (pathname === "/layouts") {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    if (req.method === "GET") {
+      return send(res, 200, { layouts: layouts[user.id] ?? {} });
+    }
+
+    if (req.method === "PUT") {
+      let body;
+      try {
+        body = await readJson(req);
+      } catch {
+        return send(res, 400, { error: "Malformed request body." });
+      }
+      const pageId = typeof body.pageId === "string" ? body.pageId : "";
+      const layout = body.layout;
+      if (!pageId || layout === null || typeof layout !== "object" || Array.isArray(layout)) {
+        return send(res, 400, { error: "Expected { pageId: string, layout: object }." });
+      }
+      if (!Array.isArray(layout.columns)) {
+        return send(res, 400, { error: "layout.columns must be an array." });
+      }
+      /* One page per request, merged into the user's map. Accepting the whole
+         map instead would let a stale client wipe layouts saved from another
+         tab between its own read and write. */
+      layouts[user.id] = { ...(layouts[user.id] ?? {}), [pageId]: layout };
+      try {
+        saveLayouts();
+      } catch (error) {
+        console.error("[layouts] write failed:", error.message);
+        return send(res, 500, { error: "Could not persist the layout." });
+      }
+      res.writeHead(204, CORS);
+      return res.end();
+    }
+
+    return send(res, 405, { error: `${req.method} not allowed on /layouts.` });
+  }
+
   if (req.method === "GET" && pathname === "/health") {
-    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length });
+    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length, layouts: Object.keys(layouts).length });
   }
 
   send(res, 404, { error: `No route for ${req.method} ${pathname}.` });

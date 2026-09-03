@@ -13,8 +13,8 @@ export function CardTitle({ title, subtitle, action }: { title: string; subtitle
   return (
     <div className="flex min-w-0 flex-1 items-start justify-between gap-3">
       <div className="min-w-0">
-        <h2 className="truncate text-[13px] font-bold tracking-[-.01em] text-[var(--text)]">{title}</h2>
-        {subtitle ? <p className="mt-0.5 truncate text-[11px] text-[var(--text-muted)]">{subtitle}</p> : null}
+        <h2 className="truncate text-[length:calc(13px*var(--fs-scale))] font-bold tracking-[-.01em] text-[var(--text)]">{title}</h2>
+        {subtitle ? <p className="mt-0.5 truncate text-[length:calc(11px*var(--fs-scale))] text-[var(--text-muted)]">{subtitle}</p> : null}
       </div>
       {action}
     </div>

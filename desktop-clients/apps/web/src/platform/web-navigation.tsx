@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PAGE_REGISTRY } from "@pepbits/erp-config";
 import type { NavigationPort, NavigationTarget } from "@pepbits/platform-ports";
@@ -18,10 +18,20 @@ export function hrefFor(target: NavigationTarget): string {
   return base;
 }
 
+export const LAST_PAGE_KEY = "nexora-last-page";
+
 export function useWebNavigation(): NavigationPort {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams<{ module?: string; page?: string; recordId?: string }>();
+
+  /* Recorded so "/" can restore it when landingPage is "last-visited". Only
+     real pages -- "/" itself is the redirect and must not be remembered, or the
+     next visit lands on a page whose job is to leave. */
+  useEffect(() => {
+    if (!params.page) return;
+    try { window.localStorage.setItem(LAST_PAGE_KEY, pathname); } catch { /* storage unavailable */ }
+  }, [params.page, pathname]);
 
   return useMemo(() => {
     const last = pathname.split("/").filter(Boolean).at(-1);

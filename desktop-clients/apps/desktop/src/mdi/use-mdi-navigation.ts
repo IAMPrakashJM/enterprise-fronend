@@ -38,7 +38,20 @@ function homeTab(module: ModuleKey): MdiTab {
   return { id: targetKey(target), title: titleFor(target), target, closable: false };
 }
 
+/**
+ * Spec §10 defect 6 records `openRecordsInTabs` as "rendered in the preferences
+ * UI but read by no code path", with the correction "desktop wires it to
+ * openInNewContext". That wiring was never actually made; this is it.
+ *
+ * The value arrives through `setTabsEnabled` rather than as an argument, because
+ * this hook runs OUTSIDE ERPProvider -- it produces the navigation port the
+ * provider consumes -- so it cannot call useERP() itself. A child inside the
+ * provider pushes the preference down. A ref, not state: the port object is
+ * memoised, and a state change here would rebuild it on every toggle.
+ */
 export function useMdiNavigation(initialModule: ModuleKey = "finance") {
+  const tabsEnabled = useRef(true);
+  const setTabsEnabled = useCallback((enabled: boolean) => { tabsEnabled.current = enabled; }, []);
   const [tabs, setTabs] = useState<MdiTab[]>(() => [homeTab(initialModule)]);
   const [activeTabId, setActiveTabId] = useState(() => homeTab(initialModule).id);
   /* A monotonic counter, not Date.now(): millisecond resolution let two forced opens
@@ -71,11 +84,15 @@ export function useMdiNavigation(initialModule: ModuleKey = "finance") {
   }, [currentModule]);
 
   const openInNewContext = useCallback((target: NavigationTarget) => {
+    /* With tabs off, "force a new container" has no container to force -- the
+       user has asked for exactly one tab per target, so fall through to the
+       dedupe path rather than appending a duplicate they cannot turn off. */
+    if (!tabsEnabled.current) { open(target); return; }
     forcedSeq.current += 1;
     const id = `${targetKey(target)}#${forcedSeq.current}`;
     setTabs((previous) => [...previous, { id, title: titleFor(target), target, closable: true }]);
     setActiveTabId(id);
-  }, []);
+  }, [open]);
 
   const closeTab = useCallback((tabId: string) => {
     setTabs((previous) => {
@@ -101,5 +118,5 @@ export function useMdiNavigation(initialModule: ModuleKey = "finance") {
     hrefFor: () => "#",
   }), [activeTab.target, open, openInNewContext]);
 
-  return { port, tabs, activeTab, activeTabId, setActiveTabId, closeTab, closeOtherTabs };
+  return { port, tabs, activeTab, activeTabId, setActiveTabId, closeTab, closeOtherTabs, setTabsEnabled };
 }

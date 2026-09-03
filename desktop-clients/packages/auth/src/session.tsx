@@ -39,7 +39,7 @@ function apiBase(): string {
   if (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_API_URL) {
     return process.env.NEXT_PUBLIC_API_URL;
   }
-  return "http://localhost:4000";
+  return "http://localhost:3200";
 }
 
 export const API_BASE = apiBase();

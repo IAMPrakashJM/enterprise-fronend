@@ -19,14 +19,14 @@ interface BaseFieldProps {
 export function FieldShell({ label, hint, error, required, className, children }: BaseFieldProps & { children: React.ReactNode }) {
   return (
     <label className={cn("block min-w-0", className)}>
-      {label ? <span className="mb-1.5 flex items-center gap-1 text-[11px] font-bold text-[var(--text-muted)]">{label}{required ? <span className="text-[var(--danger)]">*</span> : null}</span> : null}
+      {label ? <span className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{label}{required ? <span className="text-[var(--danger)]">*</span> : null}</span> : null}
       {children}
-      {error ? <span className="mt-1 block text-[10px] font-semibold text-[var(--danger)]">{error}</span> : hint ? <span className="mt-1 block text-[10px] text-[var(--text-subtle)]">{hint}</span> : null}
+      {error ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger)]">{error}</span> : hint ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{hint}</span> : null}
     </label>
   );
 }
 
-const inputClass = "focus-ring h-9 w-full rounded-[10px] border border-[var(--border)] bg-[var(--surface)] px-3 text-[12px] font-medium text-[var(--text)] shadow-[inset_0_1px_1px_rgba(15,23,42,.02)] outline-none transition placeholder:text-[var(--text-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--primary)] disabled:cursor-not-allowed disabled:bg-[var(--surface-2)] disabled:text-[var(--text-subtle)]";
+const inputClass = "focus-ring h-9 w-full rounded-[10px] border border-[var(--border)] bg-[var(--surface)] px-3 text-[length:calc(12px*var(--fs-scale))] font-medium text-[var(--text)] shadow-[inset_0_1px_1px_rgba(15,23,42,.02)] outline-none transition placeholder:text-[var(--text-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--primary)] disabled:cursor-not-allowed disabled:bg-[var(--surface-2)] disabled:text-[var(--text-subtle)]";
 
 /* Omit the native `prefix` (and `suffix`) before intersecting: HTML defines prefix as
    an RDFa string attribute, so the intersection collapsed this prop to `string & ReactNode`
@@ -35,9 +35,9 @@ export function Input({ label, hint, error, required, className, prefix, suffix,
   return (
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       <div className="relative">
-        {prefix ? <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-[11px] font-bold text-[var(--text-muted)]">{prefix}</div> : null}
+        {prefix ? <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{prefix}</div> : null}
         <input className={cn(inputClass, prefix ? "pl-11" : undefined, suffix ? "pr-10" : undefined)} {...props} />
-        {suffix ? <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[11px] font-bold text-[var(--text-muted)]">{suffix}</div> : null}
+        {suffix ? <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{suffix}</div> : null}
       </div>
     </FieldShell>
   );
@@ -102,22 +102,22 @@ export function MultiSelect({ label, hint, required, options, value, onChange, p
       <div className="relative" ref={ref}>
         <button type="button" disabled={disabled} onClick={() => setOpen((previous) => !previous)} className={cn(inputClass, "flex min-h-9 h-auto items-center justify-between gap-2 py-1.5 text-left disabled:opacity-60")}>
           <span className="flex min-w-0 flex-1 flex-wrap gap-1">
-            {selectedLabels.length ? selectedLabels.slice(0, 3).map((selected) => <span key={selected} className="rounded-md bg-[var(--primary-soft)] px-1.5 py-0.5 text-[10px] font-bold text-[var(--primary-strong)]">{selected}</span>) : <span className="text-[var(--text-subtle)]">{placeholder}</span>}
-            {selectedLabels.length > 3 ? <span className="rounded-md bg-[var(--surface-3)] px-1.5 py-0.5 text-[10px] font-bold text-[var(--text-muted)]">+{selectedLabels.length - 3}</span> : null}
+            {selectedLabels.length ? selectedLabels.slice(0, 3).map((selected) => <span key={selected} className="rounded-md bg-[var(--primary-soft)] px-1.5 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--primary-strong)]">{selected}</span>) : <span className="text-[var(--text-subtle)]">{placeholder}</span>}
+            {selectedLabels.length > 3 ? <span className="rounded-md bg-[var(--surface-3)] px-1.5 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">+{selectedLabels.length - 3}</span> : null}
           </span>
           <ChevronDown className={cn("size-3.5 shrink-0 text-[var(--text-muted)] transition", open && "rotate-180")} />
         </button>
         {open ? (
           <div className="animate-slide-up absolute z-50 mt-1.5 w-full min-w-64 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-md)]">
             <div className="border-b border-[var(--border)] p-2">
-              <div className="relative"><Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-subtle)]" /><input autoFocus value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Filter options" className={cn(inputClass, "h-8 pl-8 text-[11px]")} /></div>
+              <div className="relative"><Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-subtle)]" /><input autoFocus value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Filter options" className={cn(inputClass, "h-8 pl-8 text-[length:calc(11px*var(--fs-scale))]")} /></div>
             </div>
             <div className="nex-scrollbar max-h-52 overflow-auto p-1.5">
               {filtered.map((option) => {
                 const selected = value.includes(option.value);
-                return <button key={option.value} type="button" onClick={() => toggle(option.value)} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[11px] font-medium hover:bg-[var(--surface-2)]"><span className={cn("flex size-4 items-center justify-center rounded border", selected ? "border-[var(--primary)] bg-[var(--primary)] text-white" : "border-[var(--border-strong)]")}><Check className={cn("size-3", !selected && "opacity-0")} /></span><span className="flex-1">{option.label}</span></button>;
+                return <button key={option.value} type="button" onClick={() => toggle(option.value)} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[length:calc(11px*var(--fs-scale))] font-medium hover:bg-[var(--surface-2)]"><span className={cn("flex size-4 items-center justify-center rounded border", selected ? "border-[var(--primary)] bg-[var(--primary)] text-white" : "border-[var(--border-strong)]")}><Check className={cn("size-3", !selected && "opacity-0")} /></span><span className="flex-1">{option.label}</span></button>;
               })}
-              {!filtered.length ? <div className="px-3 py-5 text-center text-[11px] text-[var(--text-subtle)]">No matching options</div> : null}
+              {!filtered.length ? <div className="px-3 py-5 text-center text-[length:calc(11px*var(--fs-scale))] text-[var(--text-subtle)]">No matching options</div> : null}
             </div>
           </div>
         ) : null}
@@ -129,7 +129,7 @@ export function MultiSelect({ label, hint, required, options, value, onChange, p
 export function Toggle({ label, description, checked, onChange, disabled, className }: { label: string; description?: string; checked: boolean; onChange: (checked: boolean) => void; disabled?: boolean; className?: string }) {
   return (
     <label className={cn("flex min-h-10 items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2", className)}>
-      <span className="min-w-0"><span className="block text-[11px] font-bold text-[var(--text)]">{label}</span>{description ? <span className="mt-0.5 block text-[10px] leading-relaxed text-[var(--text-muted)]">{description}</span> : null}</span>
+      <span className="min-w-0"><span className="block text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text)]">{label}</span>{description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{description}</span> : null}</span>
       <button type="button" role="switch" aria-checked={checked} disabled={disabled} onClick={() => onChange(!checked)} className={cn("focus-ring relative h-5 w-9 shrink-0 rounded-full border transition", checked ? "border-[var(--primary)] bg-[var(--primary)]" : "border-[var(--border-strong)] bg-[var(--surface-3)]", disabled && "opacity-50")}>
         <span className={cn("absolute top-0.5 size-3.5 rounded-full bg-white shadow-sm transition", checked ? "left-[18px]" : "left-0.5")} />
       </button>
@@ -138,3 +138,32 @@ export function Toggle({ label, description, checked, onChange, disabled, classN
 }
 
 export { inputClass };
+
+/** A labelled slider with its value read out beside it. The readout is what
+    makes a slider usable for a setting: "13.5px" means something, a thumb
+    position does not. */
+export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", onChange, className }: {
+  label: string;
+  hint?: string;
+  value: number;
+  min: number;
+  max: number;
+  step?: number;
+  unit?: string;
+  onChange: (value: number) => void;
+  className?: string;
+}) {
+  return (
+    <FieldShell label={label} hint={hint} className={className}>
+      <div className="flex items-center gap-3">
+        <input
+          type="range" min={min} max={max} step={step} value={value}
+          onChange={(event) => onChange(Number(event.target.value))}
+          aria-label={label}
+          className="focus-ring h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-[var(--surface-3)] accent-[var(--primary)]"
+        />
+        <span className="min-w-14 text-right font-mono text-[length:calc(11px*var(--fs-scale))] font-bold tabular-nums text-[var(--text)]">{value}{unit}</span>
+      </div>
+    </FieldShell>
+  );
+}

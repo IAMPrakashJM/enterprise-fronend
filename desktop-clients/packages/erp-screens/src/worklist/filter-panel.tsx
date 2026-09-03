@@ -22,15 +22,15 @@ export function FilterPanel({ config, values, onChange, advancedOpen, onAdvanced
         </div>
       </div>
       <div className="border-t border-[var(--border)] px-3 py-2">
-        <button type="button" onClick={onAdvancedToggle} className="focus-ring flex w-full items-center justify-between rounded-lg text-left text-[10px] font-bold text-[var(--text-muted)] transition hover:text-[var(--text)]">
-          <span className="flex items-center gap-2"><SlidersHorizontal className="size-3.5" />Advanced filters{activeFilterCount ? <span className="rounded-full bg-[var(--primary-soft)] px-1.5 py-0.5 text-[8px] font-black text-[var(--primary-strong)]">{activeFilterCount} active</span> : null}</span>
+        <button type="button" onClick={onAdvancedToggle} className="focus-ring flex w-full items-center justify-between rounded-lg text-left text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)] transition hover:text-[var(--text)]">
+          <span className="flex items-center gap-2"><SlidersHorizontal className="size-3.5" />Advanced filters{activeFilterCount ? <span className="rounded-full bg-[var(--primary-soft)] px-1.5 py-0.5 text-[length:calc(8px*var(--fs-scale))] font-black text-[var(--primary-strong)]">{activeFilterCount} active</span> : null}</span>
           <ChevronDown className={cn("size-3.5 transition", advancedOpen && "rotate-180")} />
         </button>
         {advancedOpen ? (
           <div className="animate-slide-up mt-3 border-t border-dashed border-[var(--border)] pt-3">
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">{config.advancedFilters.map(renderFilter)}</div>
             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-[var(--surface-2)] px-3 py-2">
-              <span className="text-[9px] text-[var(--text-muted)]">Advanced filters can be saved as a named personal or shared view.</span>
+              <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">Advanced filters can be saved as a named personal or shared view.</span>
               <Button size="xs" variant="outline" leftIcon={<Star className="size-3" />}>Save current view</Button>
             </div>
           </div>
