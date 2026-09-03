@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, MessageSquareText, Search, Settings, ShieldCheck, SlidersHorizontal, UserRound } from "lucide-react";
-import { BRANCHES, MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY, ROLES } from "@pepbits/erp-config";
+import { Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, MessageSquareText, Search, Settings, SlidersHorizontal, UserRound } from "lucide-react";
+import { BRANCHES, MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useSession } from "@pepbits/auth";
 import { dashboardPageId, useERP } from "./erp-context";
@@ -56,7 +56,7 @@ function InboxTrigger({ label, count, tone, children }: { label: string; count: 
 }
 
 export function Header() {
-  const { currentModule, branch, setBranch, role, setRole, setCommandOpen, setDocumentationOpen, preferences, toast, t } = useERP();
+  const { currentModule, branch, setBranch, setCommandOpen, setDocumentationOpen, preferences, toast, t } = useERP();
   /* Component state, not a preference: "I have read these" is per session in a
      mock with no server-side read state, and persisting it to the account would
      imply the notifications themselves are per-account, which they are not. */
@@ -160,7 +160,6 @@ export function Header() {
       </ActionMenu>
 
       <DropdownSelect value={branch} options={BRANCHES} onChange={setBranch} label="Branch" compact className="hidden lg:block" leading={<Building2 className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
-      <DropdownSelect value={role} options={ROLES} onChange={setRole} label="Role" compact className="hidden xl:block" leading={<ShieldCheck className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
 
       <div className="hidden min-w-0 items-center gap-2 px-1.5 2xl:flex">
         <div className="min-w-0 text-right"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-black">{user?.name ?? "Signed out"}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{user?.title ?? ""}</div></div>

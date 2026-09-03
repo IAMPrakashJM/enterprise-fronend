@@ -44,8 +44,9 @@ interface ERPContextValue {
   resetPreferences: () => void;
   branch: string;
   setBranch: (branch: string) => void;
+  /** Read-only now. The role selector was a "view as" control, not
+      authorization; with it gone the role is simply the signed-in account's. */
   role: string;
-  setRole: (role: string) => void;
   toasts: ToastItem[];
   toast: (toast: Omit<ToastItem, "id">) => void;
   /** Preference-aware value formatting. Every screen renders money, dates and
@@ -81,7 +82,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
   /* Seeded from the signed-in account rather than hardcoded, but still user-changeable:
      the header selectors are a "view as" control in this prototype, not authorization. */
   const [branch, setBranch] = useState(user?.branch ?? "hq");
-  const [role, setRole] = useState(user?.role ?? "enterprise-admin");
+  const [role] = useState(user?.role ?? "enterprise-admin");
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const [commandOpen, setCommandOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
@@ -232,7 +233,6 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     branch,
     setBranch,
     role,
-    setRole,
     toasts,
     toast,
     dismissToast,

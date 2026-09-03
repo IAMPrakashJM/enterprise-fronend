@@ -8,7 +8,8 @@ export interface SessionUser {
   email: string;
   initials: string;
   title: string;
-  /** A `value` from erp-config's ROLES, so the shell's role selector can reflect it. */
+  /** A `value` from erp-config's ROLES. The shell shows the matching label;
+      it is not selectable -- the role is whatever the account carries. */
   role: string;
   /** A `value` from erp-config's BRANCHES. */
   branch: string;
