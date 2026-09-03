@@ -9,6 +9,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@pepbits/ai-client": "*",
     "@pepbits/auth": "*",
     "@pepbits/erp-config": "*",
     "@pepbits/erp-data": "*",

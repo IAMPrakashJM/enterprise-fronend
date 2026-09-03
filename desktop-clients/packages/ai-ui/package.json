@@ -12,7 +12,11 @@
     "@pepbits/ai-client": "*",
     "@pepbits/ai-config": "*",
     "@pepbits/ops-ui": "*",
-    "lucide-react": "^0.468.0"
+    "lucide-react": "^0.468.0",
+    "@pepbits/erp-config": "*",
+    "@pepbits/erp-shell": "*",
+    "@pepbits/platform-ports": "*",
+    "@pepbits/auth": "*"
   },
   "peerDependencies": {
     "react": ">=19"

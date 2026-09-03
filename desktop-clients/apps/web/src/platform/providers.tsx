@@ -4,6 +4,8 @@ import React from "react";
 import { NavigationProvider } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
 import { ERPProvider, EnterpriseShell, GlobalLayers } from "@pepbits/erp-shell";
+import { AiSourcesProvider } from "@pepbits/ai-client";
+import { AssistantPanel } from "@pepbits/ai-ui";
 import { LoginScreen, SessionSplash } from "@pepbits/erp-screens";
 import { useWebNavigation } from "./web-navigation";
 
@@ -23,8 +25,18 @@ function Gate({ children }: { children: React.ReactNode }) {
   return (
     <NavigationProvider value={navigation}>
       <ERPProvider fallback={<SessionSplash />}>
-        <EnterpriseShell>{children}</EnterpriseShell>
-        <GlobalLayers />
+        {/* Mounted HERE and not in erp-shell's GlobalLayers. ai-ui depends on
+            erp-shell for the ERP context, so erp-shell mounting ai-ui would be
+            a cycle — and the spec's package layout says nothing in erp-shell
+            learns that AI exists. The apps depend on everything, so this is
+            where the two meet.
+            AiSourcesProvider wraps the shell rather than the panel: pages
+            publish into it, and a page is inside the shell. */}
+        <AiSourcesProvider>
+          <EnterpriseShell>{children}</EnterpriseShell>
+          <GlobalLayers />
+          <AssistantPanel />
+        </AiSourcesProvider>
       </ERPProvider>
     </NavigationProvider>
   );

@@ -1,1 +1,2 @@
-export * from "./transparency.ts";
+export * from "./transparency.tsx";
+export * from "./assistant-panel.tsx";

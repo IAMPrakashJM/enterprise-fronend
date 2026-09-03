@@ -365,14 +365,37 @@ payload lacks nor hide one it has.
 No provider. The mock echoes the assembled context so the whole path is
 exercisable without a key existing anywhere.
 
-- [ ] **Step 2: Mount in `GlobalLayers`, render only when `resolveAi` allows**
+- [ ] **Step 2: Mount in the APPS, render only when `resolveAi` allows**
+
+Not in `erp-shell`'s `GlobalLayers`, which is what an earlier draft of this plan
+said. `ai-ui` depends on `erp-shell` for the ERP context, so `erp-shell`
+mounting `ai-ui` is a cycle — and spec §7 states that nothing in `erp-shell` or
+`ops-ui` learns that AI exists. The apps depend on everything, so
+`apps/web/src/platform/providers.tsx` and `apps/desktop/src/main.tsx` are where
+the two meet. Verified afterwards: zero `@pepbits/ai-*` imports in `erp-shell`
+and `ops-ui`.
+
+Both apps' entry stylesheets need `@source ".../packages/ai-ui/src"`. Without it
+Tailwind purges every class the panel uses, with no error anywhere — the trap
+the repository README already documents.
 
 Themes come from `chromePalette()`, so the panel inherits all 14 palettes and
 the light/deep tones already shipped.
 
-**Verification:** the panel is absent on `finance-dashboard`; present on
-`customer-master`; disabling the tenant gate in the JSON removes it everywhere
-and the reason string names the tenant gate.
+**Verification:** run against the live stand-in, which is how the tenant-gate
+case was actually confirmed rather than reasoned about:
+
+```
+with the seeded policy         customer-master    PANEL SHOWS   user    Allowed.
+                               finance-dashboard  panel absent  build   Disabled at build level.
+tenant gate set to false       customer-master    panel absent  tenant  Disabled at tenant level.
+                               finance-dashboard  panel absent  build   Disabled at build level.
+```
+
+Note the second block: `finance-dashboard` still reports `build`, not `tenant`.
+Deny-wins stops at the FIRST denial, so a page without a block never reaches the
+tenant gate. That is correct, and it is the sort of thing a reader assumes is a
+bug.
 
 ## Task 7: Terminal mode and inline actions
 
