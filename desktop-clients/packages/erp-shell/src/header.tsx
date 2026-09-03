@@ -174,8 +174,16 @@ export function Header() {
           "Kochi • Delivery Center" -- so the header shifted on every switch. */}
       <DropdownSelect value={branch} options={BRANCHES} onChange={setBranch} label="Branch" hideLabel compact className="hidden lg:block" triggerClassName="lg:w-[296px] lg:max-w-none" leading={<Building2 className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
 
-      <div className="hidden min-w-0 items-center gap-2 px-1.5 2xl:flex">
-        <div className="min-w-0 text-right"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-black">{user?.name ?? "Signed out"}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{user?.title ?? ""}</div></div>
+      {/* Vantage's identity block: 13px semibold name over a 10.5px muted
+          designation in uppercase with .6px of tracking. The tracking is what
+          makes the caps read as a label rather than as shouting -- uppercase
+          without it sets too tight, because the letterforms lose the lowercase
+          x-height rhythm the spacing was designed around.
+          leading-tight, so two lines at 13 + 10.5px take ~29px of the 48px bar
+          instead of the ~35px normal leading would. */}
+      <div className="hidden min-w-0 shrink-0 flex-col items-end justify-center leading-tight ps-1 2xl:flex">
+        <span className="max-w-44 truncate text-[length:calc(13px*var(--fs-scale))] font-semibold text-[var(--text)]">{user?.name ?? "Signed out"}</span>
+        <span className="max-w-44 truncate text-[length:calc(10.5px*var(--fs-scale))] uppercase tracking-[.6px] text-[var(--text-muted)]">{user?.title ?? ""}</span>
       </div>
 
       <ActionMenu trigger={<button type="button" data-tour="profile" aria-label="Open profile menu" className="focus-ring flex h-8 items-center gap-1 rounded-[10px] p-0.5 transition hover:bg-[var(--surface-2)]"><span className="relative flex size-7 items-center justify-center rounded-[9px] bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[length:calc(9.5px*var(--fs-scale))] font-black text-white shadow-sm">{user?.initials ?? "--"}<span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-[var(--surface)] bg-[var(--success)]" /></span><ChevronDown className="size-3 text-[var(--text-subtle)]" /></button>}>
