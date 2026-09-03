@@ -75,8 +75,12 @@ lsof -ti tcp:3100 tcp:3101 | xargs kill
 ## Verify
 
 ```bash
-npx turbo run build    # both apps
-npm run verify:parity  # moved files still identical to the pre-migration originals
+npx turbo run build      # both apps
+npm run verify:parity    # moved files still identical to the pre-migration originals
+npm run verify:ai-gates  # the AI access rules, including the escalation cases
+npm run verify:ai-credential  # a provider token never comes back (needs the API up)
+npm run verify:ai-context     # assembly reads only what a use case names
+npm run verify:ai-modes       # panel, terminal and inline share one engine
 ```
 
 Add `--css` to also diff the emitted stylesheet against a baseline build:
@@ -98,6 +102,9 @@ node scripts/verify-parity.mjs --css
 | `@pepbits/erp-data` | mock datasets and the worklist config builder | `erp-config` |
 | `@pepbits/erp-shell` | `ERPProvider`, Header, Sidebar, Footer, `EnterpriseShell`, the global overlays | `ops-ui`, `erp-config`, `platform-ports` |
 | `@pepbits/erp-screens` | `PageRenderer` and all eight page kinds | all of the above |
+| `@pepbits/ai-config` | the eight AI access gates, the resolver, use cases, policy and admin shapes | — |
+| `@pepbits/ai-client` | context assembly, redaction, policy fetch, the admin API | `ai-config`, `auth` |
+| `@pepbits/ai-ui` | the assistant: panel, terminal, inline action, transparency | `ai-client`, `ai-config`, `ops-ui`, `erp-shell` |
 
 Apps depend on packages; packages never depend on apps.
 

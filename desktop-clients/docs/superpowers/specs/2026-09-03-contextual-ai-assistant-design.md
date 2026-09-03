@@ -17,7 +17,7 @@ and only the fourth is the kind of UI work this repository has done so far:
 
 | | |
 |---|---|
-| Control plane | who may use AI, where, for what — nine gates |
+| Control plane | who may use AI, where, for what — eight gates |
 | Context assembly | what page data becomes a prompt |
 | Transparency | showing the payload and the pipeline before dispatch |
 | Presentation | panel · action · terminal, plus themes |
@@ -35,7 +35,7 @@ Requirements, not preferences. A change that violates one is a defect.
    names and limits live server-side and are readable only by the AI service.
 3. **The payload is inspectable before dispatch.** The user can see the exact
    assembled context, field by field, before anything leaves the client.
-4. **Deny wins.** Any of the nine gates can disable AI. No lower gate can
+4. **Deny wins.** Any of the eight gates can disable AI. No lower gate can
    re-enable what a higher one disabled — see section 4.
 5. **Nothing is silently widened.** A use case declares the data it may read.
    There is no general-purpose fetcher the assistant can reach for.
@@ -51,7 +51,7 @@ Requirements, not preferences. A change that violates one is a defect.
 
 | # | Decision | Rationale |
 |---|---|---|
-| D1 | Precedence is **deny-wins** across all nine gates, and the `role` and `user` gates may only ever *narrow* | The alternative — nearest-wins — makes "enable at user level" a way around a tenant policy. For a capability touching clinical data the asymmetry has to be explicit, not implied. |
+| D1 | Precedence is **deny-wins** across all eight gates, and the `user` gate may only ever *narrow* | The alternative — nearest-wins — makes "enable at user level" a way around a tenant policy. For a capability touching clinical data the asymmetry has to be explicit, not implied. |
 | D2 | The resolver returns **the deciding gate**, not a boolean | When the panel is absent someone will ask why. "Disabled at tenant level" is answerable; `false` is not. It is also what makes the admin UI diagnosable. |
 | D3 | Context is assembled into a **serialisable object**, then presented, then confirmed, then dispatched | Building the prompt inside a provider adapter makes constraint 3 impossible — by then there is nothing left to show. This ordering is what makes transparency and audit the same artefact. |
 | D4 | Use cases are declared **centrally** and bound to pages by id | A page says *which* use cases it offers; it does not define them. Otherwise the same "summarise" exists in six variants and none can be governed. |
@@ -68,7 +68,7 @@ Requirements, not preferences. A change that violates one is a defect.
 
 ## 4. The access model
 
-### 4.1 The nine gates
+### 4.1 The eight gates
 
 | # | Gate | Set by | Lives |
 |---|---|---|---|
@@ -79,11 +79,18 @@ Requirements, not preferences. A change that violates one is a defect.
 | 5 | Module | tenant administrator | policy service |
 | 6 | Page | tenant administrator | policy service |
 | 7 | Use case | tenant administrator | policy service |
-| 8 | Role | tenant administrator | policy service |
-| 9 | User | the user | user preferences |
+| 8 | User | the user | user preferences |
 
-Gate 1 is compiled in. Gates 2-8 are runtime configuration owned by
-administrators. Gate 9 is a preference and can only turn AI **off**.
+Gate 1 is compiled in. Gates 2-7 are runtime configuration owned by
+administrators. Gate 8 is a preference and can only turn AI **off**.
+
+**A ninth gate, Role, was specified and then removed from scope on 2026-09-03.**
+It was defined against an application authorization layer that does not exist
+here — role is decorative, and its setter was deleted in `8d49e9e` for exactly
+that reason. A gate that checks nothing while appearing to gate AI is worse than
+no gate, because its absence is at least visible. `NARROWING_ONLY` in
+`gates.ts` carries a note to re-add it there, not only to `GATES`, if
+authorization is ever built.
 
 ### 4.2 Resolution
 
@@ -98,9 +105,10 @@ the same answer to "why is this off".
 Two rules that are not negotiable:
 
 - **A gate can only deny.** There is no `force-enable`. A tenant that disables
-  AI cannot be overridden by a module, a role or a user.
-- **Gates 8 and 9 narrow only.** They may remove use cases from the set the
-  earlier gates allowed. They may not add one back.
+  AI cannot be overridden by a module, a page or a user.
+- **Gate 8 narrows only.** It may remove use cases from the set the earlier
+  gates allowed. It may not add one back — including when it is the only gate to
+  name a set at all, which would be establishing one rather than reducing one.
 
 ### 4.3 Worked examples
 
@@ -108,8 +116,9 @@ Two rules that are not negotiable:
 |---|---|
 | Page has no `ai` block | denied at gate 1 — the assistant does not render at all |
 | Tenant off, page on, user on | denied at gate 3 |
-| Page allows `summarise` + `draft`; role allows `summarise` | `summarise` only |
-| User turns AI off | denied at gate 9, all use cases |
+| Page allows `summarise` + `draft`; use-case gate allows `summarise` | `summarise` only |
+| User names a use case no earlier gate allowed | denied — the user gate cannot establish a set |
+| User turns AI off | denied at gate 8, all use cases |
 | Everything allows | allowed, `decidedBy: "user"` |
 
 ## 5. Data contracts
@@ -164,7 +173,7 @@ Two separate surfaces, because they have two audiences and two lifetimes.
 
 | Surface | Read by | When | Carries |
 |---|---|---|---|
-| **Policy** | the shell, for every user | on session start, cached | the nine gates only |
+| **Policy** | the shell, for every user | on session start, cached | the eight gates only |
 | **Configuration** | administrators | when someone opens the admin screen | providers, models, limits, prompts, credential *status* |
 
 The shell never sees the configuration surface. Serving both from one endpoint
@@ -332,7 +341,7 @@ Records are queryable by user, page, use case and outcome.
 
 ## 12. What this repository can host today
 
-Stated plainly, because three of the nine gates have nothing to attach to here.
+Stated plainly, because two of the eight gates have nothing to attach to here.
 
 | Requirement | Status |
 |---|---|
@@ -342,7 +351,7 @@ Stated plainly, because three of the nine gates have nothing to attach to here.
 | Themes | **Done.** 14 themes, chrome tones, `chromePalette()` |
 | Panel / terminal UI | Buildable — `HelpAssistant` proves the docked-panel pattern |
 | Transparency panel | Buildable, and the most valuable part to prototype |
-| **Role gate** | **No authorization exists.** Role is decorative; its setter was removed in `8d49e9e` for precisely that reason. `record-preview.tsx:29` claims visibility is "filtered by your current role, branch and field-level permissions" — nothing does that. |
+| ~~Role gate~~ | **Removed from scope**, because of exactly this: role is decorative, its setter was deleted in `8d49e9e`, and `record-preview.tsx:29` still claims visibility is "filtered by your current role, branch and field-level permissions" when nothing does that. |
 | **Tenant gate** | **Does not exist.** One string in the footer: `Mock tenant • NEX-AE-001` |
 | **Providers, keys, prompts, audit** | **Nowhere to live.** `dummy-api/server.mjs` states in its own header that it is not a security boundary: plaintext passwords, no token expiry, open CORS. |
 | **Administration API** (§6) | **Shape is buildable, storage is not.** The endpoints and their contracts can be stood up against a JSON file so the admin screen has something real to talk to. A provider secret must NOT be among them: `dummy-api` has no vault, no encryption at rest and open CORS, so a token written there is a token in a world-readable file. The stand-in stores everything EXCEPT the credential, and returns `configured: false` with a reason. |
@@ -359,7 +368,7 @@ correctly and cannot be hardened.
    table from 4.3 as tests. Everything else depends on this and it is the piece
    the brief leaves open.
 2. **`PageDefinition.ai`** plus the use-case catalogue; no UI yet.
-3. **Stub policy service** in `dummy-api`, serving gates 2-8 from a JSON file
+3. **Stub policy service** in `dummy-api`, serving gates 2-7 from a JSON file
    and clearly labelled as a stand-in.
 4. **Administration API** (§6) — config read/write and the credential status
    shape, with credential WRITES refused by the stand-in. Gives the admin screen
@@ -382,7 +391,7 @@ Steps 1-7 each end in a working, committable state.
 | A use case widens its own scope through retrieval | D5: explicit field allowlists, no wildcards. Reviewed per use case. |
 | The transparency panel drifts from what is sent | D3 + D10: one object, assembled once, shown, sent and logged. |
 | Nine gates become unauditable in combination | D2: the resolver names the deciding gate everywhere it is used. |
-| "Role level" is specified against an authorization layer that does not exist | Named in section 12. Either build authorization first or drop gate 8 from scope — the one thing not to do is ship a role selector that appears to gate AI and does not. |
+| ~~"Role level" is specified against an authorization layer that does not exist~~ | **Resolved 2026-09-03: out of scope, removed from `GATES`.** Eight gates remain. |
 | Prompt text on the client | D6: prompts are ids client-side, resolved server-side. |
 | A credential is read back through the config API | D13 + constraint 8: `GET` returns a status object. There is no code path that returns the value, so this cannot regress by omission — only by someone adding a field. |
 | The stand-in accepts a real provider token | §12: the stand-in refuses credential writes outright. A key in `dummy-api/data/` is a key in a world-readable file on a box with open CORS. |
@@ -391,8 +400,6 @@ Steps 1-7 each end in a working, committable state.
 
 **Open, needs a decision before step 1:**
 
-- Is gate 8 (role) in scope for a first release, given there is no authorization
-  layer to hang it on?
 - Does "application level" mean the web/desktop shells, or a tenant's licensed
   product set? The brief lists it between tenant and module, which suggests the
   latter, but it is worth confirming.

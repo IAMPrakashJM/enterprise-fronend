@@ -38,6 +38,7 @@ const ACCOUNTS = [
       title: "Finance Operations",
       role: "finance-manager",
       branch: "dubai",
+      tenantId: "NEX-AE-001",
     },
   },
   {
@@ -51,6 +52,7 @@ const ACCOUNTS = [
       title: "Supply Chain",
       role: "operations-analyst",
       branch: "sharjah",
+      tenantId: "NEX-AE-001",
     },
   },
   {
@@ -64,6 +66,7 @@ const ACCOUNTS = [
       title: "Solution Architecture",
       role: "enterprise-admin",
       branch: "hq",
+      tenantId: "NEX-AE-001",
     },
   },
 ];
@@ -119,6 +122,84 @@ function saveLayouts() {
   const tmp = `${LAYOUTS_FILE}.${process.pid}.tmp`;
   writeFileSync(tmp, JSON.stringify(layouts, null, 2) + "\n");
   renameSync(tmp, LAYOUTS_FILE);
+}
+
+/* AI access policy: gates 2-7 of eight, per tenant.
+ *
+ * A STAND-IN, and the endpoint most likely to be mistaken for governance. It
+ * reads a JSON file and returns it. It enforces nothing, it is not multi-tenant
+ * in any real sense, and the process it runs in states in its own header that it
+ * is not a security boundary. The real service owns policy authorship,
+ * versioning, an audit trail of who changed which gate, and -- above all -- the
+ * server-side re-check at dispatch, which is the actual enforcement point. The
+ * client-side resolver only decides what to RENDER.
+ *
+ * Seeded from ai-policy.example.json, which is committed; the live copy lives
+ * under data/ and is gitignored, exactly as preferences.json is.
+ */
+const POLICY_FILE = join(DATA_DIR, "ai-policy.json");
+const POLICY_SEED = join(dirname(fileURLToPath(import.meta.url)), "ai-policy.example.json");
+
+function loadPolicies() {
+  for (const file of [POLICY_FILE, POLICY_SEED]) {
+    try {
+      return JSON.parse(readFileSync(file, "utf8"));
+    } catch {
+      // Try the seed next; an unreadable seed means no policy, handled below.
+    }
+  }
+  return {};
+}
+
+const policies = loadPolicies();
+
+/* AI configuration: what an administrator sets. Same stand-in caveats as the
+   policy store above, plus one that matters more.
+   THERE IS NO CREDENTIAL HERE, and there is no code path that stores one. This
+   process has no vault, no encryption at rest and open CORS; a provider token
+   written into data/ would be a token in a world-readable file. The endpoint
+   that would accept one answers 501 instead. */
+const AI_CONFIG_FILE = join(DATA_DIR, "ai-config.json");
+const AI_CONFIG_SEED = join(dirname(fileURLToPath(import.meta.url)), "ai-config.example.json");
+
+function loadAiConfig() {
+  for (const file of [AI_CONFIG_FILE, AI_CONFIG_SEED]) {
+    try {
+      return JSON.parse(readFileSync(file, "utf8"));
+    } catch {
+      // Fall through to the seed, then to an empty map.
+    }
+  }
+  return {};
+}
+
+const aiConfig = loadAiConfig();
+
+/* The only shape a credential is ever returned in. Written as a function with
+   no parameter for the secret, so there is nothing here that COULD leak one:
+   the stand-in stores none, so every field is the empty answer. */
+function credentialStatus() {
+  return {
+    configured: false,
+    hint: null,
+    fingerprint: null,
+    setBy: null,
+    setAt: null,
+    rotatedAt: null,
+    lastVerifiedAt: null,
+    lastError: null,
+  };
+}
+
+/* "Admin only" has nothing to check: this application has no authorization
+   layer. Failing closed is the only honest answer -- accepting writes from any
+   signed-in session would make an admin screen look finished while enforcing
+   nothing. Returns a response body when refused, or null when it would pass. */
+function refuseAdminWrite() {
+  return {
+    error: "This change requires an administrator.",
+    detail: "No authorization layer exists in this demo API. See spec section 6.4.",
+  };
 }
 
 const CORS = {
@@ -279,8 +360,111 @@ const server = createServer(async (req, res) => {
     return send(res, 405, { error: `${req.method} not allowed on /layouts.` });
   }
 
+  if (pathname === "/ai/policy") {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    if (req.method === "GET") {
+      /* tenantId comes from the SESSION, never from the request. A tenant id in
+         a query string or a body is ignored -- accepting one would make tenant
+         isolation a client-side assertion, which is not isolation. */
+      const tenantId = user.tenantId;
+      const policy = policies[tenantId];
+      if (!policy) {
+        /* No policy for this tenant is a DENIAL, not a default-open. An absent
+           configuration must never be the permissive case. */
+        return send(res, 200, {
+          tenantId,
+          global: { platform: { allowed: false } },
+          modules: {}, pages: {}, useCases: {},
+          note: "No policy is configured for this tenant; AI is denied at the platform gate.",
+        });
+      }
+      return send(res, 200, { tenantId, ...policy });
+    }
+
+    if (req.method === "PUT") {
+      /* Spec §6.4: "admin only" has nothing to check here -- this application
+         has no authorization layer. Failing closed is the only honest answer;
+         accepting writes from any signed-in session would look like it works. */
+      return send(res, 403, {
+        error: "Policy writes require an administrator.",
+        detail: "No authorization layer exists in this demo API. See spec §6.4.",
+      });
+    }
+
+    return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
+  }
+
+  if (pathname === "/ai/config" || pathname === "/ai/config/credential") {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const tenantId = user.tenantId;
+
+    if (pathname === "/ai/config/credential") {
+      /* 501 BEFORE 403, deliberately. 403 would say "you are not an admin",
+         which implies that an admin could do this. No one can: there is no
+         vault to write to. "Not implemented" is the durable answer and the one
+         that does not send someone hunting for the right account. */
+      if (req.method === "PUT") {
+        return send(res, 501, {
+          error: "Credential storage is not implemented in the demo API.",
+          detail: "Provider secrets need a vault. This process has none, no encryption at rest, and open CORS. See spec sections 6.3 and 12.",
+        });
+      }
+      if (req.method === "DELETE") {
+        /* A no-op that succeeds: nothing is ever stored, so "removed" is
+           already true. It exists so the empty state is reachable and the admin
+           screen can be built against the real response. */
+        res.writeHead(204, CORS);
+        return res.end();
+      }
+      return send(res, 405, { error: `${req.method} not allowed on /ai/config/credential.` });
+    }
+
+    if (req.method === "GET") {
+      const stored = aiConfig[tenantId];
+      if (!stored) {
+        return send(res, 404, { error: `No AI configuration for tenant ${tenantId}.` });
+      }
+      /* tenantId from the session, credential from the function that cannot
+         hold one. Spread order matters: `credential` last, so a stray field of
+         that name in the JSON file could never survive into the response. */
+      return send(res, 200, { ...stored, tenantId, credential: credentialStatus() });
+    }
+
+    if (req.method === "PUT") {
+      /* Authorization precedes validation. A caller who may not write should
+         not learn whether their body was well formed, so this returns 403 and
+         the credential-key check below is never reached in the stand-in. It is
+         kept because it is part of the contract a real service must honour. */
+      const refusal = refuseAdminWrite();
+      if (refusal) return send(res, 403, refusal);
+
+      let body;
+      try {
+        body = await readJson(req);
+      } catch {
+        return send(res, 400, { error: "Malformed request body." });
+      }
+      if (body && Object.prototype.hasOwnProperty.call(body, "credential")) {
+        return send(res, 400, {
+          error: "A credential cannot be set through /ai/config.",
+          detail: "Use PUT /ai/config/credential, so only one path ever handles a secret.",
+        });
+      }
+      aiConfig[tenantId] = { ...(aiConfig[tenantId] ?? {}), ...body };
+      res.writeHead(204, CORS);
+      return res.end();
+    }
+
+    return send(res, 405, { error: `${req.method} not allowed on /ai/config.` });
+  }
+
   if (req.method === "GET" && pathname === "/health") {
-    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length, layouts: Object.keys(layouts).length });
+    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length, layouts: Object.keys(layouts).length, aiTenants: Object.keys(policies).length, aiConfigured: Object.keys(aiConfig).length });
   }
 
   send(res, 404, { error: `No route for ${req.method} ${pathname}.` });

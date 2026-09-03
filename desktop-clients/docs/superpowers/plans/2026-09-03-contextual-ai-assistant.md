@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** One reusable AI assistant, surfaced only where nine gates all allow it, able to show the user the exact payload before dispatch, and unable to read anything the signed-in user could not open themselves.
+**Goal:** One reusable AI assistant, surfaced only where eight gates all allow it, able to show the user the exact payload before dispatch, and unable to read anything the signed-in user could not open themselves.
 
 **Architecture:** A resolver decides access; a context assembler builds one serialisable object; the transparency panel renders that object; the transport sends it; the audit stores it. Panel, inline action and terminal are three affordances over one engine. Provider keys, prompts and limits never reach the browser.
 
@@ -14,7 +14,7 @@
 
 - **The assistant is never a privileged actor.** Every retrieval carries the signed-in user's token through the path the page already uses. No service account, no elevated read. A client-side resolver is for RENDERING only — it is never the enforcement point.
 - **No provider credential, endpoint or prompt text in the browser.** The client holds prompt *ids*. Anything else is a defect.
-- **Deny wins.** Nine gates, evaluated in order, first denial stops. `role` and `user` may only narrow the allowed set, never add to it.
+- **Deny wins.** Eight gates, evaluated in order, first denial stops. `user` may only narrow the allowed set, never add to it — including when it is the only gate to name one. A `role` gate was specified and removed from scope: there is no authorization layer here, so it would have checked nothing while appearing to gate AI.
 - **One object.** The context assembled is the object shown, the object sent, and the object logged. Three shapes would drift; one cannot.
 - **No wildcards in `reads`.** A use case names its fields. `"*"` is rejected at the type level and at runtime.
 - **The assistant proposes, it never commits.** No write reaches a record except through the existing forms and their validation.
@@ -65,8 +65,11 @@ packages/erp-shell/src/layers/index.tsx mount the panel
 
 ```ts
 /** In evaluation order. The first gate that denies decides. */
-export const GATES = ["build", "platform", "tenant", "application", "module", "page", "useCase", "role", "user"] as const;
+export const GATES = ["build", "platform", "tenant", "application", "module", "page", "useCase", "user"] as const;
 export type Gate = (typeof GATES)[number];
+
+/** Gates that may only NARROW the surviving set, never establish or extend it. */
+export const NARROWING_ONLY: ReadonlySet<Gate> = new Set<Gate>(["user"]);
 
 export interface GateState {
   /** undefined means "this gate expresses no opinion" and passes. */
@@ -102,7 +105,18 @@ export function resolveAi(states: Partial<Record<Gate, GateState>>, requested?: 
       return { allowed: false, decidedBy: gate, reason: `Disabled at ${gate} level.`, useCases: [] };
     }
     if (state.useCases) {
-      useCases = useCases === null ? [...state.useCases] : useCases.filter((id) => state.useCases!.includes(id));
+      if (useCases === null) {
+        /* The first gate to name a set ESTABLISHES it, and a narrowing-only
+           gate must never be that gate. Without this branch, `role` alone
+           naming ["a"] resolves to allowed[a] even though no earlier gate
+           permitted anything -- role defining a set rather than reducing one,
+           which is the escalation this design forbids by another route.
+           Found by verify-ai-gates.mjs; the original eight-row table did not
+           cover it. */
+        useCases = NARROWING_ONLY.has(gate) ? [] : [...state.useCases];
+      } else {
+        useCases = useCases.filter((id) => state.useCases!.includes(id));
+      }
     }
   }
   const resolved = useCases ?? [];
@@ -125,13 +139,22 @@ Every row of the worked-examples table, plus the narrowing asymmetry:
 | `{}` (no gate speaks) | denied, `useCase`, "No use case is enabled" |
 | `build: { allowed: false }` | denied, `decidedBy: "build"` |
 | tenant off, page on, user on | denied, `decidedBy: "tenant"` |
-| page `[a,b]`, role `[a]` | allowed, `useCases: ["a"]` |
-| page `[a]`, **role `[a,b]`** | allowed, `useCases: ["a"]` — role did NOT widen |
+| page `[a,b]`, useCase `[a]` | allowed, `useCases: ["a"]` |
+| page `[a]`, **user `[a,b]`** | allowed, `useCases: ["a"]` — user did NOT widen |
+| **user `[a]` and nothing else** | **denied** — user may not establish a set |
+| page `[a,b]`, useCase `[a]`, user `[a,b]` | allowed, `["a"]` — user cannot re-add |
+| a stray `role` key | ignored — no longer a gate |
+| page `[]` | denied — an emptied set is a denial |
 | `user: { allowed: false }` | denied, `decidedBy: "user"` |
 | all allow, page `[a]` | allowed, `decidedBy: "user"` |
 | requested `"z"` not in set | denied, reason names `"z"` |
 
-**Verification:** run the table; the fifth row is the one that matters — if role can widen, stop and fix before continuing.
+**Verification:** `npm run verify:ai-gates` — a zero-dependency script beside
+`verify-parity.mjs` that imports the real module (Node 24 strips types on
+import, so there is no second copy to drift). Thirteen cases; the three marked
+ESCALATION are the ones that matter. If any fails, a narrowing gate can widen
+the allowed set and "enable at user level" becomes a route around a tenant
+policy — stop and fix before continuing.
 
 ## Task 2: The use-case catalogue and the page flag
 
@@ -176,6 +199,12 @@ ai?: {
 **Verification:** `PAGE_REGISTRY` still builds; `tsc --noEmit` clean; the guard
 throws when a `"*"` is introduced deliberately, then remove it.
 
+Note for whoever does this: `PAGE_REGISTRY` is built field by field in
+`navigation.ts`, so adding `ai` to `explicitPages` is not enough — the builder
+drops any key it does not name. It needs
+`...(explicit.ai ? { ai: explicit.ai } : {})` as well, spread conditionally so a
+page without a block has no `ai` key at all rather than `ai: undefined`.
+
 ## Task 3: Stand-in policy service
 
 **Files:**
@@ -187,7 +216,7 @@ throws when a `"*"` is introduced deliberately, then remove it.
 
 - [ ] **Step 1: Serve gates 2–8 from a JSON file**
 
-Same bearer check as `/preferences`. Header comment must state, in the file,
+Serves gates 2-7. Same bearer check as `/preferences`. Header comment must state, in the file,
 that this is a stand-in for a real policy service and enforces nothing —
 `dummy-api` already says it is not a security boundary, and this endpoint is the
 one most likely to be mistaken for governance.
@@ -274,13 +303,17 @@ a secret can arrive at the client.
 | `GET /ai/config` unauthenticated | 401 |
 | `GET /ai/config` signed in | 200, `credential.configured: false` |
 | grep the response for the secret in `ai-config.example.json` | no match, ever |
-| `PUT /ai/config` with a `credential` key | 400 |
-| `PUT /ai/config/credential` | 501, message names the vault |
-| any write endpoint | 403 until authorization exists |
+| `PUT /ai/config` with a `credential` key | **403, not 400** — authorization precedes validation, so a caller who may not write never learns whether their body was well formed. The 400 branch stays in the code as the contract a real service must honour. |
+| `PUT /ai/config/credential` | **501, not 403** — 403 would imply an administrator could do this. Nobody can: there is no vault. "Not implemented" is the durable answer and does not send someone hunting for the right account. |
+| `DELETE /ai/config/credential` | 204 — a no-op that succeeds, so the empty state is reachable and the screen can be built against a real response |
+| any other write endpoint | 403 until authorization exists |
 | a `tenantId` in a request body | ignored; response carries the session's |
 
-The grep is the one to keep in CI: it is the check that catches someone adding
-a convenience field years from now.
+The grep is the one to keep in CI, and it is now a script rather than an
+instruction: `npm run verify:ai-credential` submits a canary through BOTH write
+paths and then looks for it in four responses, everything under `dummy-api/data`
+and the API log. It is the check that catches someone adding a convenience field
+years from now, so it should run wherever the build runs.
 
 ## Task 5: Context assembly and the transparency panel
 
@@ -306,9 +339,20 @@ the payload lacks or hide one it has.
 
 Clinical-category use cases require a second confirmation naming the record.
 
-**Verification:** open the panel on `customer-master`, confirm every listed
-field appears in the JSON that `assembleContext` returned, and that a field
-removed from the use case disappears from both.
+Note on module specifiers: the `@pepbits/ai-*` packages import each other with
+explicit `.ts` extensions and `tsconfig.base.json` sets
+`allowImportingTsExtensions`. Additive — extensionless still works everywhere
+else — and it exists so Node can import these modules directly. That is what
+lets `verify-ai-*.mjs` exercise the REAL code with no bundler and no test
+dependency, and a copied resolver in a test file is a resolver that can drift
+from the one that ships.
+
+**Verification:** `npm run verify:ai-context` — 18 checks covering that only
+named fields are read, that redaction happens during assembly rather than at
+dispatch, and that removing a field from the use case removes it from the
+payload. The panel side is structural rather than testable: `TransparencyPanel`
+renders `context.fields` and has no other source, so it cannot show a field the
+payload lacks nor hide one it has.
 
 ## Task 6: Panel mode over a mock responder
 
@@ -321,14 +365,37 @@ removed from the use case disappears from both.
 No provider. The mock echoes the assembled context so the whole path is
 exercisable without a key existing anywhere.
 
-- [ ] **Step 2: Mount in `GlobalLayers`, render only when `resolveAi` allows**
+- [ ] **Step 2: Mount in the APPS, render only when `resolveAi` allows**
+
+Not in `erp-shell`'s `GlobalLayers`, which is what an earlier draft of this plan
+said. `ai-ui` depends on `erp-shell` for the ERP context, so `erp-shell`
+mounting `ai-ui` is a cycle — and spec §7 states that nothing in `erp-shell` or
+`ops-ui` learns that AI exists. The apps depend on everything, so
+`apps/web/src/platform/providers.tsx` and `apps/desktop/src/main.tsx` are where
+the two meet. Verified afterwards: zero `@pepbits/ai-*` imports in `erp-shell`
+and `ops-ui`.
+
+Both apps' entry stylesheets need `@source ".../packages/ai-ui/src"`. Without it
+Tailwind purges every class the panel uses, with no error anywhere — the trap
+the repository README already documents.
 
 Themes come from `chromePalette()`, so the panel inherits all 14 palettes and
 the light/deep tones already shipped.
 
-**Verification:** the panel is absent on `finance-dashboard`; present on
-`customer-master`; disabling the tenant gate in the JSON removes it everywhere
-and the reason string names the tenant gate.
+**Verification:** run against the live stand-in, which is how the tenant-gate
+case was actually confirmed rather than reasoned about:
+
+```
+with the seeded policy         customer-master    PANEL SHOWS   user    Allowed.
+                               finance-dashboard  panel absent  build   Disabled at build level.
+tenant gate set to false       customer-master    panel absent  tenant  Disabled at tenant level.
+                               finance-dashboard  panel absent  build   Disabled at build level.
+```
+
+Note the second block: `finance-dashboard` still reports `build`, not `tenant`.
+Deny-wins stops at the FIRST denial, so a page without a block never reaches the
+tenant gate. That is correct, and it is the sort of thing a reader assumes is a
+bug.
 
 ## Task 7: Terminal mode and inline actions
 
@@ -342,11 +409,28 @@ set — so it cannot name a use case the panel could not invoke.
 
 - [ ] **Step 2: Inline action**
 
-One use case, one click, result in place. Worklist row and form section.
+One use case, one click, result in place — in the worklist's selection bar,
+where the rows it summarises are the rows already selected.
 
-**Verification:** with a use case removed by the role gate, it disappears from
-the panel, the terminal's command list AND the inline affordance. If it survives
-in any of the three, the engine is not shared.
+No review stage, deliberately: the affordance names ONE use case whose `reads`
+are fixed and inspectable in the panel, and a confirmation on every click of a
+button whose scope never changes is a dialog people learn to dismiss without
+reading. Clinical use cases are refused outright here rather than confirmed —
+spec §8's second acknowledgement needs a surface that shows the fields first,
+and this one does not.
+
+**Verification:** `npm run verify:ai-modes`, in two halves.
+
+BEHAVIOUR — removing a use case at the use-case gate (the role gate having been
+dropped from scope) takes it out of the resolved set, leaves the others, and
+denies outright once the set is empty.
+
+STRUCTURE — no surface calls `resolveAi`, `gatesForPage` or `getUseCase`; all
+three read `useAssistant`; the terminal builds its command list from
+`assistant.useCases`; the inline action checks membership rather than
+re-resolving. This half is the one that survives a refactor: the behavioural
+half would still pass if someone added a second resolver, and the surface with
+the second resolver is the one nobody would check.
 
 ## Task 8: Real AI service — OUT OF SCOPE HERE
 
@@ -372,9 +456,9 @@ Plus, per task, the checks listed above. The two that matter most:
 
 Carried from spec §13. Task 1 can proceed without them; Task 3 cannot.
 
-1. Is gate 8 (`role`) in scope, given there is no authorization layer here? If
-   not, drop it from `GATES` rather than shipping a role selector that appears
-   to gate AI and does not.
+1. ~~Is gate 8 (`role`) in scope?~~ **Answered 2026-09-03: no.** Removed from
+   `GATES`; eight gates remain. `NARROWING_ONLY` in `gates.ts` records where to
+   re-add it if authorization is ever built.
 2. Does "application level" mean the two shells, or a tenant's licensed product
    set?
 3. Retention classes — who defines them, per tenant or per region?

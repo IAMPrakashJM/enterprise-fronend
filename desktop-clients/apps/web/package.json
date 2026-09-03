@@ -9,6 +9,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@pepbits/ai-client": "*",
+    "@pepbits/ai-config": "*",
+    "@pepbits/ai-ui": "*",
     "@pepbits/auth": "*",
     "@pepbits/erp-config": "*",
     "@pepbits/erp-data": "*",

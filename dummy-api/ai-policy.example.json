@@ -1,0 +1,19 @@
+{
+  "NEX-AE-001": {
+    "global": {
+      "platform":    { "allowed": true },
+      "tenant":      { "allowed": true },
+      "application": { "allowed": true }
+    },
+    "modules": {
+      "finance": { "allowed": true },
+      "sales":   { "allowed": true },
+      "hr":       { "allowed": false },
+      "payroll":  { "allowed": false },
+      "supply":   { "allowed": true },
+      "library":  { "allowed": false }
+    },
+    "pages": {},
+    "useCases": {}
+  }
+}
