@@ -8,10 +8,10 @@
     "modules": {
       "finance": { "allowed": true },
       "sales":   { "allowed": true },
-      "hr":       { "allowed": false },
-      "payroll":  { "allowed": false },
+      "hr":      { "allowed": true },
+      "payroll": { "allowed": true },
       "supply":   { "allowed": true },
-      "library":  { "allowed": false }
+      "library": { "allowed": true }
     },
     "pages": {},
     "useCases": {}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { AiSources } from "./assemble.ts";
 
 /**
@@ -24,18 +24,42 @@ export function AiSourcesProvider({ children }: { children: React.ReactNode }) {
      next page, which is precisely the kind of leak nobody notices. */
   const [byOwner, setByOwner] = useState<Record<string, AiSources>>({});
 
-  const value = useMemo(() => ({
-    sources: Object.values(byOwner).reduce<AiSources>((all, one) => ({ ...all, ...one }), {}),
-    publish: (owner: string, sources: AiSources) =>
-      setByOwner((previous) => (JSON.stringify(previous[owner]) === JSON.stringify(sources) ? previous : { ...previous, [owner]: sources })),
-    retract: (owner: string) =>
-      setByOwner((previous) => {
-        if (!(owner in previous)) return previous;
-        const next = { ...previous };
-        delete next[owner];
-        return next;
-      }),
-  }), [byOwner]);
+  /* publish and retract are STABLE -- `setByOwner` never changes identity, so
+     these never do either. That is load-bearing, not tidiness.
+
+     They used to be rebuilt inside the same useMemo as `sources`, on [byOwner].
+     Every publish therefore handed subscribers a new `publish`, and the effect
+     in usePublishAiSources listed the whole context object in its deps: publish
+     -> new context -> effect re-runs -> cleanup retracts -> new context ->
+     publish, without end.
+
+     Outside a navigation this was invisible. React bails out of re-rendering
+     children whose element identity has not changed, so the page never
+     re-rendered and the cycle stopped after one turn. During a Next App Router
+     navigation the subtree IS re-rendered from a fresh payload, the bail-out no
+     longer applies, and the loop starves the transition: the RSC payload
+     arrives 200, nothing throws, and the URL simply never commits. */
+  const publish = useCallback((owner: string, sources: AiSources) => {
+    setByOwner((previous) => (JSON.stringify(previous[owner]) === JSON.stringify(sources) ? previous : { ...previous, [owner]: sources }));
+  }, []);
+
+  const retract = useCallback((owner: string) => {
+    setByOwner((previous) => {
+      if (!(owner in previous)) return previous;
+      const next = { ...previous };
+      delete next[owner];
+      return next;
+    });
+  }, []);
+
+  /* Only this recomputes when byOwner changes, so a publish re-renders readers
+     of the DATA without invalidating the functions writers depend on. */
+  const sources = useMemo(
+    () => Object.values(byOwner).reduce<AiSources>((all, one) => ({ ...all, ...one }), {}),
+    [byOwner],
+  );
+
+  const value = useMemo(() => ({ sources, publish, retract }), [sources, publish, retract]);
 
   return <SourcesContext.Provider value={value}>{children}</SourcesContext.Provider>;
 }
@@ -55,14 +79,19 @@ export function useAiSources(): AiSources {
  */
 export function usePublishAiSources(owner: string, sources: AiSources): void {
   const context = useContext(SourcesContext);
+  /* The FUNCTIONS, not the context object. Depending on the whole context here
+     is what created the publish/retract loop described in the provider: the
+     object changes on every publish, including this component's own. */
+  const publish = context?.publish;
+  const retract = context?.retract;
   const serialised = JSON.stringify(sources);
   const latest = useRef(sources);
   latest.current = sources;
 
   useEffect(() => {
-    if (!context) return;
-    context.publish(owner, latest.current);
-    return () => context.retract(owner);
+    if (!publish || !retract) return;
+    publish(owner, latest.current);
+    return () => retract(owner);
     // serialised, not `sources`: a new object with identical content is not a change.
-  }, [context, owner, serialised]);
+  }, [publish, retract, owner, serialised]);
 }

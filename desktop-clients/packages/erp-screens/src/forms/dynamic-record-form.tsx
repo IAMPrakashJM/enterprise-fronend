@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock3, Copy, Eye, FileCheck2, History, LockKeyhole, MoreHorizontal, Pencil, RotateCcw, Save, Send, ShieldCheck, Sparkles } from "lucide-react";
 import { getEntitySchema } from "@pepbits/erp-config";
 import { getWorklistConfig } from "@pepbits/erp-data";
+import { usePublishAiSources } from "@pepbits/ai-client";
 import { useERP } from "@pepbits/erp-shell";
 import { Button, IconButton } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
@@ -60,6 +61,22 @@ export function DynamicRecordForm({ page, target }: { page: PageDefinition; targ
   const schema = useMemo(() => getEntitySchema(page.entity, page.title), [page.entity, page.title]);
   const initial = useMemo(() => buildInitialValues(page, target.recordId), [target.recordId, page]);
   const [values, setValues] = useState(initial);
+
+  /* Offer this page to the assistant, on the same contract the worklist uses:
+     the page publishes what it already holds and learns nothing about AI. The
+     record is what was loaded; form-values is what is on screen NOW, so a draft
+     the user has typed but not saved is what a use case reading form-values
+     sees. The use case still decides which keys of either may be read. */
+  const aiRecord = useMemo(() => {
+    const config = getWorklistConfig(page.id, page.title, page.entity);
+    return target.recordId
+      ? config.rows.find((row) => String(row[config.primaryKey]) === target.recordId)
+      : page.kind === "form" ? config.rows[0] : undefined;
+  }, [page, target.recordId]);
+  usePublishAiSources(`form:${page.id}`, {
+    ...(aiRecord ? { "page-record": aiRecord } : {}),
+    "form-values": values,
+  });
   const [savedValues, setSavedValues] = useState(initial);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [activeSection, setActiveSection] = useState(schema.sections[0].id);

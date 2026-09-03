@@ -1,7 +1,7 @@
 "use client";
 
 import { authedFetch } from "@pepbits/auth";
-import type { AiConfig, AiConfigPatch } from "@pepbits/ai-config";
+import type { AiConfig, AiConfigPatch, AiCredentialStatus } from "@pepbits/ai-config";
 
 /**
  * The administration surface, from the client's side.
@@ -78,4 +78,15 @@ export function setAiCredential(secret: string): Promise<AiAdminResult<never>> {
 
 export function clearAiCredential(): Promise<AiAdminResult<never>> {
   return request<never>("/ai/config/credential", { method: "DELETE" });
+}
+
+/**
+ * Ask the service to try the stored credential against the provider.
+ *
+ * Returns the STATUS, like everything else here. A key that no longer works is
+ * something an administrator has to be able to discover without reading it back
+ * to compare by eye — that is what `lastError` on the status is for.
+ */
+export function verifyAiCredential(): Promise<AiAdminResult<AiCredentialStatus>> {
+  return request<AiCredentialStatus>("/ai/config/credential/verify", { method: "POST" });
 }

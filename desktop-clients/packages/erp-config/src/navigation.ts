@@ -56,7 +56,7 @@ import {
   WalletCards,
   Warehouse,
 } from "lucide-react";
-import type { ModuleDefinition, ModuleKey, PageDefinition } from "./types";
+import type { ModuleDefinition, ModuleKey, PageAiConfig, PageDefinition, PageKind } from "./types";
 
 export const MODULES: Record<ModuleKey, ModuleDefinition> = {
   hr: {
@@ -413,9 +413,9 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
   "supply-dashboard": { kind: "dashboard", title: "Supply Chain Command Center" },
   "library-dashboard": { kind: "dashboard", title: "Developer Library" },
   "user-master": { kind: "form", entity: "user", title: "User Master" },
-  /* AI pilot, gate 1. finance-dashboard is deliberately left without an `ai`
-     block so there is a page proving the assistant renders nothing at all
-     when the build-time gate is absent. */
+  /* These two name their own use cases; every other page now falls back to
+     defaultAiFor(kind). They are kept explicit because their sets were chosen
+     for the page rather than derived from its kind. */
   "customer-master": { kind: "worklist", entity: "customer", title: "Customer Master",
     ai: { enabled: true, useCases: ["worklist.summarise-selection", "record.explain"] } },
   "sales-customer": { kind: "worklist", entity: "customer", title: "Customer Master" },
@@ -469,6 +469,32 @@ function flattenPages() {
   return pages;
 }
 
+/**
+ * The use cases a page offers when it does not name its own.
+ *
+ * Keyed by kind rather than given to every page, because the use case is the
+ * allowlist: offering `form.draft-note` on a dashboard would put a control on
+ * screen that can only ever assemble an empty context. What a kind cannot feed
+ * it does not advertise.
+ */
+function defaultAiFor(kind: PageKind): PageAiConfig {
+  switch (kind) {
+    case "form":
+    case "billing":
+      return { enabled: true, useCases: ["form.draft-note", "record.explain"] };
+    case "dashboard":
+    case "library":
+    case "preferences":
+      return { enabled: true, useCases: ["record.explain"] };
+    case "reports":
+    case "spreadsheet":
+      return { enabled: true, useCases: ["worklist.summarise-selection"] };
+    case "worklist":
+    default:
+      return { enabled: true, useCases: ["worklist.summarise-selection", "record.explain"] };
+  }
+}
+
 export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
   flattenPages().map(({ pageId, label, module }) => {
     const explicit = explicitPages[pageId] ?? {};
@@ -483,11 +509,16 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
       kind: explicit.kind ?? inferredKind,
       module,
       entity: explicit.entity ?? pageId.replace(/-(master|worklist|report|entry|config|review|setup)$/g, ""),
-      /* Carried through only when explicitPages declares it. There is no
-         inferred default: a page without an `ai` block has the assistant
-         disabled at gate 1, and that must stay a decision someone made rather
-         than something a filename pattern turned on. */
-      ...(explicit.ai ? { ai: explicit.ai } : {}),
+      /* Gate 1, now on for every page by default.
+         This USED to carry `ai` through only when explicitPages declared it,
+         so a page with no block was off at gate 1. That default was reversed
+         deliberately (requested: the assistant should be reachable everywhere
+         the help button is), and the honest consequence is that gate 1 no
+         longer stops anything -- it hands the decision to the module/page
+         policy the server owns, which is the layer that can be changed without
+         a client release. An explicit block still wins, INCLUDING an explicit
+         `{ enabled: false }`, so a page can still opt out at build time. */
+      ai: explicit.ai ?? defaultAiFor(explicit.kind ?? inferredKind),
     } satisfies PageDefinition];
   })
 );

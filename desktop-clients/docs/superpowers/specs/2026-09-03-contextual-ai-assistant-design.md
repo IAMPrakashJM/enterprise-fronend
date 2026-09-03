@@ -354,7 +354,7 @@ Stated plainly, because two of the eight gates have nothing to attach to here.
 | ~~Role gate~~ | **Removed from scope**, because of exactly this: role is decorative, its setter was deleted in `8d49e9e`, and `record-preview.tsx:29` still claims visibility is "filtered by your current role, branch and field-level permissions" when nothing does that. |
 | **Tenant gate** | **Does not exist.** One string in the footer: `Mock tenant • NEX-AE-001` |
 | **Providers, keys, prompts, audit** | **Nowhere to live.** `dummy-api/server.mjs` states in its own header that it is not a security boundary: plaintext passwords, no token expiry, open CORS. |
-| **Administration API** (§6) | **Shape is buildable, storage is not.** The endpoints and their contracts can be stood up against a JSON file so the admin screen has something real to talk to. A provider secret must NOT be among them: `dummy-api` has no vault, no encryption at rest and open CORS, so a token written there is a token in a world-readable file. The stand-in stores everything EXCEPT the credential, and returns `configured: false` with a reason. |
+| **Administration API** (§6) | **Shape and storage both stood up — see the amendment below.** Originally: shape buildable, storage refused, because `dummy-api` has no vault, no encryption at rest and open CORS. That refusal was overridden by the operator on 2026-09-03 after the trade-off was put to them twice. A real provider key is now held in a `0600` file under `data/`. The exposure is unchanged and undischarged; what was preserved is that no response returns the value. |
 
 So the client half is buildable now against a **stub policy service that speaks
 the real contract**; the control plane, key vault, prompt registry and audit log
@@ -415,3 +415,47 @@ Steps 1-7 each end in a working, committable state.
 - No cross-tenant learning, tuning or caching of any kind.
 - No replacement for the existing help assistant or guided tour; they remain
   separate, non-AI features.
+
+---
+
+## Amendment — 2026-09-03: credential storage implemented
+
+**What changed, and why this section exists.** §12 said the demo API must not
+store a provider secret, and `PUT /ai/config/credential` returned 501 saying so.
+The operator asked for a working assistant, was shown the trade-off and the
+recommended alternative (an env-var-only server proxy), and chose storage
+through the admin API anyway. That is their call to make. This records what it
+cost, so nobody later reads the original §12 and believes it.
+
+**Now true:**
+
+- `PUT /ai/config/credential` stores the secret in `dummy-api/data/ai-credential.json`,
+  file mode `0600`, gitignored. It is plaintext on disk.
+- `POST /ai/dispatch` resolves the prompt from `promptId` server-side, attaches
+  the credential and calls the provider. Prompt text is still never in the client.
+- `POST /ai/config/credential/verify` tries the key and records
+  `lastVerifiedAt` / `lastError`.
+- `refuseAdminWrite` no longer refuses everyone. It checks
+  `user.role === "enterprise-admin"` against the session **this server issued**,
+  so the role cannot be claimed by a caller — but it is a hardcoded account list,
+  not authorization.
+
+**Still true, and enforced by `verify:ai-credential`:**
+
+- No endpoint returns the value. `GET` returns `AiCredentialStatus`, whose fields
+  are a four-character hint and a SHA-256 prefix.
+- The secret is read by exactly one function, which hands it to the provider.
+- It appears in no other file, no response and no log.
+
+**Not discharged.** Open CORS, no encryption at rest, no key rotation policy, no
+audit store, and a role check that a real deployment must replace. Constraint 8
+in §2 should be read as "write-only at the API surface", not "no secret exists
+here" — that is weaker than what §2 originally claimed, and the difference is the
+whole of the risk.
+
+**One thing the change exposed.** `verify-ai-credential.mjs` was submitting its
+canary with `{ headers: auth, ...json(body) }` — a second `headers` key that
+overwrote the Authorization header, so both writes went out unauthenticated and
+the check passed because nothing was ever submitted. It was invisible while
+writes returned 501. Fixed, and the script now fails loudly if the write it
+depends on is refused.
