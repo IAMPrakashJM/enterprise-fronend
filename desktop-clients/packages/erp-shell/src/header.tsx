@@ -94,12 +94,17 @@ export function Header() {
 
       <div className="mx-1 h-7 w-px shrink-0 bg-[var(--border)]" />
 
-      <div className="min-w-24 flex-1 px-1.5">
-        <div className="flex items-center gap-2">
-          <h1 className="truncate text-[length:calc(14px*var(--fs-scale))] font-black tracking-[-.025em] text-[var(--text)]">{page?.title ?? "Workspace"}</h1>
-          {page?.kind ? <Badge tone="neutral" className="hidden xl:inline-flex">{page.kind}</Badge> : null}
-        </div>
-        <p className="hidden max-w-2xl truncate text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)] lg:block">{page?.subtitle}</p>
+      {/* One row, on a shared baseline -- Vantage's title + crumb. items-baseline
+          is what makes a 15px title and an 11px subtitle sit on the same line
+          of text rather than being centred against each other; the badge is
+          self-center because a pill has no meaningful baseline.
+          Both halves truncate and neither is shrink-0, so flexbox takes the
+          space back from whichever is longer -- usually the subtitle, which is
+          a full sentence where Vantage's crumb is two words. */}
+      <div className="flex min-w-0 flex-1 items-baseline gap-2 overflow-hidden px-1.5">
+        <h1 className="truncate text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.025em] text-[var(--text)]">{page?.title ?? "Workspace"}</h1>
+        {page?.subtitle ? <span className="hidden truncate text-[length:calc(11px*var(--fs-scale))] text-[var(--text-muted)] lg:inline">{page.subtitle}</span> : null}
+        {page?.kind ? <Badge tone="neutral" className="hidden shrink-0 self-center xl:inline-flex">{page.kind}</Badge> : null}
       </div>
 
       <button type="button" onClick={() => setCommandOpen(true)} className="focus-ring hidden h-9 w-36 items-center gap-2 rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] px-2.5 text-left text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--text-subtle)] transition hover:border-[var(--border-strong)] xl:flex"><Search className="size-3.5" /><span className="flex-1">Search</span>{preferences.showKeyboardHints ? <kbd className="rounded border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 text-[length:calc(8px*var(--fs-scale))]">⌘K</kbd> : null}</button>
