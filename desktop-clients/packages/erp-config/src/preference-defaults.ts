@@ -35,7 +35,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   decimalPlaces: 0,
   columnLayoutScope: "browser",
   sidebarExpandOn: "hover",
-  sidebarTone: "surface",
+  sidebarTone: "contrast",
   maxVisibleToasts: 3,
   timeFormat: "24h",
   currencyDisplay: "symbol",
