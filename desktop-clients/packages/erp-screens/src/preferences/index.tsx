@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   BellRing, CheckCircle2, Clock3, Coins, Download, Languages, MonitorCog, PanelLeft,
-  RotateCcw, Search, Settings2, SlidersHorizontal, Sparkles, Table2, Upload,
+  PanelTop, RotateCcw, Search, Settings2, SlidersHorizontal, Sparkles, Table2, Upload,
 } from "lucide-react";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, RangeInput, Select, Tabs, Toggle, cn } from "@pepbits/ops-ui";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@pepbits/erp-config";
 import type {
   BillingLayout, ClockZone, ColumnLayoutScope, CurrencyCode, CurrencyDisplay, DateFormat, Density,
-  DocsPosition, ExportFormat, FontFamily, FormNavigation, LandingPage, LanguageKey, NegativeStyle, NumberLocale, OpenRecordsIn,
+  DocsPosition, ExportFormat, FontFamily, FormNavigation, HeaderTheme, HeaderTone, LandingPage, LanguageKey, NegativeStyle, NumberLocale, OpenRecordsIn,
   PreviewMode, ResultView, SearchMode, SidebarExpandOn, SidebarPlacement, SidebarTheme, SidebarTone, TimeFormat, ToastPosition,
   ToastStyle, UserPreferences,
 } from "@pepbits/erp-config";
@@ -37,7 +37,7 @@ const TOUR_TABS: Record<string, PrefTab> = {
 
 const PREF_TABS: Array<{ id: PrefTab; label: string; icon: React.ReactNode }> = [
   { id: "behaviour",    label: "Behaviour",    icon: <MonitorCog className="size-3.5" /> },
-  { id: "sidebar",      label: "Sidebar",      icon: <PanelLeft className="size-3.5" /> },
+  { id: "sidebar",      label: "Shell",        icon: <PanelLeft className="size-3.5" /> },
   { id: "page",         label: "Page",         icon: <Sparkles className="size-3.5" /> },
   { id: "notification", label: "Notification", icon: <BellRing className="size-3.5" /> },
   { id: "language",     label: "Language & help", icon: <Languages className="size-3.5" /> },
@@ -309,6 +309,24 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               </Row>
               <Row label="Rail theme" hint="Independent of the page theme — Solarized rail on a Nexora page, say">
                 <Select aria-label="Sidebar theme" value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[
+                  { label: "Match the page theme", value: "match" },
+                  ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
+                ]} />
+              </Row>
+            </div>
+          </PreferenceSection>
+
+          {/* The header takes the same two choices as the rail, from the same
+              seeds and the same helper -- so a deep rail and a deep bar agree
+              without either being told about the other. */}
+          <PreferenceSection {...common} tab="sidebar" title="Header" subtitle="The top bar takes the same palette choices as the rail." icon={<PanelTop className="size-4" />}
+            keys={["headerTone", "headerTheme"]} keywords="header top bar tone light dark deep contrast theme palette colour color chrome">
+            <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
+              <Row label="Bar tone" hint="Light and Deep hold whatever the page theme is">
+                <Segmented<HeaderTone> label="Header tone" value={preferences.headerTone} onChange={(value) => set("headerTone", value)} options={[{ value: "surface", label: "Match" }, { value: "light", label: "Light" }, { value: "contrast", label: "Deep" }]} />
+              </Row>
+              <Row label="Bar theme" hint="Independent of the page theme, as the rail's is">
+                <Select aria-label="Header theme" value={preferences.headerTheme} onChange={(event) => set("headerTheme", event.target.value as HeaderTheme)} options={[
                   { label: "Match the page theme", value: "match" },
                   ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
                 ]} />

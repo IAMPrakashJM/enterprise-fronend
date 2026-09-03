@@ -5,6 +5,7 @@ import { Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, 
 import { BRANCHES, MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useSession } from "@pepbits/auth";
+import { chromePalette } from "./chrome-palette";
 import { dashboardPageId, useERP } from "./erp-context";
 import { HeaderClock } from "./header-clock";
 import type { ModuleKey, NotificationKind } from "@pepbits/erp-config";
@@ -72,6 +73,11 @@ export function Header() {
   /* The module switcher navigates to that module's dashboard and each shell applies
      its own semantics: web pushes the URL, desktop rebuilds its tab set. */
   const setModule = (value: ModuleKey) => navigation.open({ pageId: dashboardPageId(value) });
+  /* Same mechanism the sidebar uses: a theme id scopes the whole palette to
+     this element, and the tone re-points the generic tokens onto that theme's
+     chrome seeds. The bar is translucent with a backdrop blur, so
+     --surface-translucent is part of what the helper overrides. */
+  const headerPalette = chromePalette(preferences.headerTone);
   const page = PAGE_REGISTRY[activePageId];
   const moduleOptions = Object.values(MODULES).map((item) => ({
     value: item.id,
@@ -86,7 +92,7 @@ export function Header() {
   }));
 
   return (
-    <header className="no-print relative z-40 flex h-[var(--header-height)] shrink-0 items-center gap-1.5 border-b border-[var(--border)] bg-[var(--surface-translucent)] px-3 backdrop-blur-xl">
+    <header data-theme={preferences.headerTheme === "match" ? undefined : preferences.headerTheme} style={headerPalette} className="no-print relative z-40 flex h-[var(--header-height)] shrink-0 items-center gap-1.5 border-b border-[var(--border)] bg-[var(--surface-translucent)] px-3 backdrop-blur-xl">
       <div data-tour="module" className="shrink-0">
       <DropdownSelect
         value={currentModule}

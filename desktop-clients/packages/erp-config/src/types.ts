@@ -21,14 +21,22 @@ export type NumberLocale = "en-US" | "de-DE" | "fr-FR" | "en-IN";
 export type CurrencyCode = "AED" | "USD" | "EUR" | "INR" | "GBP";
 export type ColumnLayoutScope = "browser" | "account";
 export type SidebarExpandOn = "hover" | "click";
-/** How the rail is coloured relative to the page.
+/** How a piece of shell chrome -- the sidebar rail or the header bar -- is
+    coloured relative to the page.
     "surface"  the page's own surface, as cards use
-    "light"    a light rail whatever the page theme -- the only way to get one
+    "light"    a light chrome whatever the page theme -- the only way to get one
                on midnight, graphite, plum or nord
-    "contrast" a deep rail whatever the page theme */
-export type SidebarTone = "surface" | "light" | "contrast";
-/** Which theme supplies the sidebar's palette. "match" follows the page. */
-export type SidebarTheme = "match" | ThemeKey;
+    "contrast" a deep chrome whatever the page theme */
+export type ChromeTone = "surface" | "light" | "contrast";
+/** Which theme supplies a chrome element's palette. "match" follows the page. */
+export type ChromePalette = "match" | ThemeKey;
+
+/* Named per surface so the preference keys read for themselves, but one shape:
+   the header and the sidebar offer exactly the same choice. */
+export type SidebarTone = ChromeTone;
+export type SidebarTheme = ChromePalette;
+export type HeaderTone = ChromeTone;
+export type HeaderTheme = ChromePalette;
 export type TimeFormat = "12h" | "24h";
 export type CurrencyDisplay = "symbol" | "code" | "none";
 /** How a negative amount reads. "parentheses" is the accounting convention. */
@@ -97,6 +105,8 @@ export interface UserPreferences {
   sidebarExpandOn: SidebarExpandOn;
   sidebarTone: SidebarTone;
   sidebarTheme: SidebarTheme;
+  headerTone: HeaderTone;
+  headerTheme: HeaderTheme;
   maxVisibleToasts: 1 | 3 | 5;
   timeFormat: TimeFormat;
   currencyDisplay: CurrencyDisplay;
