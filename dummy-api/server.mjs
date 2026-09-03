@@ -175,6 +175,20 @@ function loadAiConfig() {
 
 const aiConfig = loadAiConfig();
 
+/* The loader had no counterpart for four tasks: PUT /ai/config mutated this
+   object and never wrote it, so every administrative change survived exactly
+   until the next restart. It went unnoticed because the credential DID persist,
+   so a restart left a valid key pointing at no provider and dispatch answered
+   "No provider or model is configured" -- a message that reads like a setup
+   step nobody had done, rather than a setting that had been silently dropped. */
+function saveAiConfig() {
+  try {
+    writeFileSync(AI_CONFIG_FILE, JSON.stringify(aiConfig, null, 2));
+  } catch {
+    console.warn("[ai] could not persist the AI configuration; changes will be lost on restart");
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Provider credential storage.
 
@@ -739,6 +753,8 @@ const server = createServer(async (req, res) => {
         });
       }
       aiConfig[tenantId] = { ...(aiConfig[tenantId] ?? {}), ...body };
+      saveAiConfig();
+      console.log(`[ai] config updated for ${tenantId} by ${user.email ?? user.id}: ${Object.keys(body).join(", ")}`);
       res.writeHead(204, CORS);
       return res.end();
     }
