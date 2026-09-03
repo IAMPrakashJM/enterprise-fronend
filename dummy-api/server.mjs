@@ -17,8 +17,8 @@
  *   PORT=4100 node server.mjs
  */
 import { createServer } from "node:http";
-import { randomBytes } from "node:crypto";
-import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { createHash, randomBytes } from "node:crypto";
+import { chmodSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -175,36 +175,151 @@ function loadAiConfig() {
 
 const aiConfig = loadAiConfig();
 
-/* The only shape a credential is ever returned in. Written as a function with
-   no parameter for the secret, so there is nothing here that COULD leak one:
-   the stand-in stores none, so every field is the empty answer. */
-function credentialStatus() {
+/* ---------------------------------------------------------------------------
+   Provider credential storage.
+
+   This exists at the operator's explicit instruction, after the trade-off was
+   put to them and restated: this process has no vault, no encryption at rest
+   and open CORS, so the secret lives in a 0600 file under data/ and is only as
+   safe as this machine and this account. It is a demo decision. Spec sections
+   6.3 and 12 still describe what a real deployment owes here, and nothing below
+   discharges that.
+
+   What survived from the write-only design, because keeping it cost nothing:
+     - no endpoint returns the value,
+     - no response shape has a field that could carry it,
+     - exactly one function reads `secret`, and it hands it to the provider.
+   --------------------------------------------------------------------------- */
+const CREDENTIAL_FILE = join(DATA_DIR, "ai-credential.json");
+
+function loadCredentials() {
+  try {
+    return JSON.parse(readFileSync(CREDENTIAL_FILE, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+const credentials = loadCredentials();
+
+function saveCredentials() {
+  /* `mode` only applies when the file is CREATED, so the chmod is not
+     redundant: without it a file that already existed keeps whatever
+     permissions it had, which is the case that actually matters on a box where
+     something wrote it once before this code did. */
+  writeFileSync(CREDENTIAL_FILE, JSON.stringify(credentials, null, 2), { mode: 0o600 });
+  try {
+    chmodSync(CREDENTIAL_FILE, 0o600);
+  } catch {
+    console.warn("[ai] could not chmod the credential file to 0600");
+  }
+}
+
+/* Takes a TENANT, never a secret, and returns only values that cannot be
+   reversed: the last four characters and a hash prefix. The shape is byte for
+   byte what it was when nothing was stored, which is the part worth noticing --
+   adding storage did not add a field capable of carrying the value. */
+function credentialStatus(tenantId) {
+  const held = credentials[tenantId];
+  if (!held) {
+    return {
+      configured: false,
+      hint: null,
+      fingerprint: null,
+      setBy: null,
+      setAt: null,
+      rotatedAt: null,
+      lastVerifiedAt: null,
+      lastError: null,
+    };
+  }
+  /* Field by field rather than a spread of `held`. A spread would put `secret`
+     into every response the day someone adds a field and forgets to omit it. */
   return {
-    configured: false,
-    hint: null,
-    fingerprint: null,
-    setBy: null,
-    setAt: null,
-    rotatedAt: null,
-    lastVerifiedAt: null,
-    lastError: null,
+    configured: true,
+    hint: held.hint ?? null,
+    fingerprint: held.fingerprint ?? null,
+    setBy: held.setBy ?? null,
+    setAt: held.setAt ?? null,
+    rotatedAt: held.rotatedAt ?? null,
+    lastVerifiedAt: held.lastVerifiedAt ?? null,
+    lastError: held.lastError ?? null,
   };
 }
 
-/* "Admin only" has nothing to check: this application has no authorization
-   layer. Failing closed is the only honest answer -- accepting writes from any
-   signed-in session would make an admin screen look finished while enforcing
-   nothing. Returns a response body when refused, or null when it would pass. */
-function refuseAdminWrite() {
+function fingerprintOf(secret) {
+  return `sha256:${createHash("sha256").update(secret).digest("hex").slice(0, 16)}`;
+}
+
+/* The stand-in for an authorization layer.
+
+   This used to refuse EVERYONE, which was the honest answer while nothing could
+   be written anyway. It is now a role check, and that is a deliberate loosening
+   made so the credential can be set through the admin API as asked.
+
+   The one property that makes it worth more than nothing: `role` is read off
+   the session object this server issued at login, never off the request, so a
+   caller cannot claim to be an admin. It is still a comparison against a
+   hardcoded account list. A real deployment needs real authorization, and this
+   function is where that goes.
+
+   Returns a response body when refused, or null when the write may proceed. */
+function refuseAdminWrite(user) {
+  if (user?.role === "enterprise-admin") return null;
   return {
     error: "This change requires an administrator.",
-    detail: "No authorization layer exists in this demo API. See spec section 6.4.",
+    detail: `Signed in as ${user?.role ?? "an unknown role"}. The demo API accepts administrative writes only from enterprise-admin.`,
   };
+}
+
+/* Prompt TEXT, server-side and nowhere else.
+
+   The client sends a promptId; this is what that id resolves to. Keeping the
+   text here is the whole reason a browser cannot read, replay or edit a prompt,
+   and it is why changing one is a server restart rather than a client release. */
+const PROMPT_TEXT = {
+  "worklist.summarise.v1":
+    "You summarise ERP worklist rows for an operations user. Use ONLY the fields provided. Never invent a value, a total or a status. If the fields do not support a statement, omit it. Be brief and factual.",
+  "record.explain.v1":
+    "You explain one ERP record and what its current status means for the person looking at it. Use ONLY the fields provided. Never invent a value. If something looks unusual given the fields, say so plainly.",
+  "form.draft-note.v1":
+    "You draft a short internal note from values a user has entered on a form. Use ONLY those values. Never invent a reference, a name or an amount. Output the note text alone, with no preamble.",
+};
+
+/* One place reads `secret`, and this is it. */
+async function callProvider(config, secret, messages) {
+  const endpoint = String(config?.provider?.endpoint ?? "").replace(/\/+$/, "");
+  const model = config?.model?.id;
+  if (!endpoint || !model || model === "unset") {
+    return { ok: false, status: 409, error: "No provider or model is configured.", detail: "Set provider.endpoint and model.id through PUT /ai/config first." };
+  }
+  let response;
+  try {
+    response = await fetch(`${endpoint}/chat/completions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${secret}` },
+      body: JSON.stringify({ model, messages, max_tokens: 700, temperature: 0.2 }),
+      signal: AbortSignal.timeout(45000),
+    });
+  } catch (cause) {
+    /* The provider's own message, not the request that produced it: a thrown
+       fetch error can carry the request headers, and those hold the key. */
+    return { ok: false, status: 502, error: "The provider could not be reached.", detail: cause?.name === "TimeoutError" ? "Timed out after 45s." : "Network error." };
+  }
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    return { ok: false, status: response.status === 401 ? 401 : 502, error: "The provider rejected the request.", detail: payload?.error?.message ?? `HTTP ${response.status}.` };
+  }
+  const text = payload?.choices?.[0]?.message?.content;
+  if (typeof text !== "string" || !text.trim()) {
+    return { ok: false, status: 502, error: "The provider returned no text." };
+  }
+  return { ok: true, text: text.trim(), model: payload?.model ?? model, usage: payload?.usage ?? null };
 }
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
   "Access-Control-Max-Age": "86400",
 };
@@ -397,27 +512,74 @@ const server = createServer(async (req, res) => {
     return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
   }
 
-  if (pathname === "/ai/config" || pathname === "/ai/config/credential") {
+  if (pathname === "/ai/config" || pathname === "/ai/config/credential" || pathname === "/ai/config/credential/verify") {
     const token = bearer(req);
     const user = token ? sessions.get(token) : undefined;
     if (!user) return send(res, 401, { error: "Not signed in." });
     const tenantId = user.tenantId;
 
+    if (pathname === "/ai/config/credential/verify") {
+      if (req.method !== "POST") return send(res, 405, { error: `${req.method} not allowed on /ai/config/credential/verify.` });
+      const refusal = refuseAdminWrite(user);
+      if (refusal) return send(res, 403, refusal);
+      const held = credentials[tenantId];
+      if (!held) return send(res, 409, { error: "No credential is configured for this tenant." });
+      const result = await callProvider(aiConfig[tenantId], held.secret, [{ role: "user", content: "Reply with the single word: ok" }]);
+      /* Recorded so a bad key is diagnosable from the admin screen without
+         anyone reading the key back to check it by eye. */
+      held.lastVerifiedAt = result.ok ? new Date().toISOString() : (held.lastVerifiedAt ?? null);
+      held.lastError = result.ok ? null : `${result.error} ${result.detail ?? ""}`.trim();
+      saveCredentials();
+      return send(res, result.ok ? 200 : (result.status ?? 502), credentialStatus(tenantId));
+    }
+
     if (pathname === "/ai/config/credential") {
-      /* 501 BEFORE 403, deliberately. 403 would say "you are not an admin",
-         which implies that an admin could do this. No one can: there is no
-         vault to write to. "Not implemented" is the durable answer and the one
-         that does not send someone hunting for the right account. */
+      /* Authorization precedes validation everywhere below: a caller who may
+         not write must not learn whether their body was well formed. */
+      if (req.method === "GET") return send(res, 200, credentialStatus(tenantId));
+
+      const refusal = refuseAdminWrite(user);
+
       if (req.method === "PUT") {
-        return send(res, 501, {
-          error: "Credential storage is not implemented in the demo API.",
-          detail: "Provider secrets need a vault. This process has none, no encryption at rest, and open CORS. See spec sections 6.3 and 12.",
-        });
+        if (refusal) return send(res, 403, refusal);
+        let body;
+        try {
+          body = await readJson(req);
+        } catch {
+          return send(res, 400, { error: "Malformed request body." });
+        }
+        /* `secret`, matching the client and the canary check. The OTHER path,
+           PUT /ai/config, rejects any body carrying a `credential` key, so the
+           two names cannot be confused into working on the wrong endpoint. */
+        const secret = typeof body?.secret === "string" ? body.secret.trim() : "";
+        if (!secret) return send(res, 400, { error: "A credential is required.", detail: 'Send { "secret": "..." }.' });
+        if (secret.length < 16) return send(res, 400, { error: "That does not look like a provider key.", detail: "Expected at least 16 characters." });
+        const existing = credentials[tenantId];
+        credentials[tenantId] = {
+          secret,
+          hint: secret.slice(-4),
+          fingerprint: fingerprintOf(secret),
+          setBy: user.email ?? user.id,
+          /* setAt is when a key was FIRST set for this tenant; rotatedAt moves
+             on every replacement. Collapsing them would lose the distinction
+             between "configured months ago" and "changed this morning", which
+             is the one an incident actually turns on. */
+          setAt: existing?.setAt ?? new Date().toISOString(),
+          rotatedAt: existing ? new Date().toISOString() : null,
+          lastVerifiedAt: null,
+          lastError: null,
+        };
+        saveCredentials();
+        /* The status, never the value and never an echo of the body. */
+        console.log(`[ai] credential set for ${tenantId} by ${user.email ?? user.id} (ending ${secret.slice(-4)})`);
+        return send(res, 200, credentialStatus(tenantId));
       }
+
       if (req.method === "DELETE") {
-        /* A no-op that succeeds: nothing is ever stored, so "removed" is
-           already true. It exists so the empty state is reachable and the admin
-           screen can be built against the real response. */
+        if (refusal) return send(res, 403, refusal);
+        delete credentials[tenantId];
+        saveCredentials();
+        console.log(`[ai] credential removed for ${tenantId} by ${user.email ?? user.id}`);
         res.writeHead(204, CORS);
         return res.end();
       }
@@ -432,7 +594,7 @@ const server = createServer(async (req, res) => {
       /* tenantId from the session, credential from the function that cannot
          hold one. Spread order matters: `credential` last, so a stray field of
          that name in the JSON file could never survive into the response. */
-      return send(res, 200, { ...stored, tenantId, credential: credentialStatus() });
+      return send(res, 200, { ...stored, tenantId, credential: credentialStatus(tenantId) });
     }
 
     if (req.method === "PUT") {
@@ -440,7 +602,7 @@ const server = createServer(async (req, res) => {
          not learn whether their body was well formed, so this returns 403 and
          the credential-key check below is never reached in the stand-in. It is
          kept because it is part of the contract a real service must honour. */
-      const refusal = refuseAdminWrite();
+      const refusal = refuseAdminWrite(user);
       if (refusal) return send(res, 403, refusal);
 
       let body;
@@ -461,6 +623,67 @@ const server = createServer(async (req, res) => {
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /ai/config.` });
+  }
+
+  /* Dispatch. The client sends an assembled, redacted context and a promptId;
+     it never sends prompt text and never holds a key.
+
+     Note what is NOT trusted from the body: the prompt (resolved here from the
+     id), the tenant (taken from the session), and the field count (capped here
+     against the configured limit). What IS trusted is the field list, because
+     the client already had that data on screen -- it is the user's own record,
+     not an escalation. */
+  if (pathname === "/ai/dispatch") {
+    if (req.method !== "POST") return send(res, 405, { error: `${req.method} not allowed on /ai/dispatch.` });
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const tenantId = user.tenantId;
+
+    let body;
+    try {
+      body = await readJson(req);
+    } catch {
+      return send(res, 400, { error: "Malformed request body." });
+    }
+
+    const system = PROMPT_TEXT[body?.promptId];
+    if (!system) {
+      return send(res, 400, { error: "Unknown prompt.", detail: `No prompt is registered as ${body?.promptId ?? "(none)"}.` });
+    }
+    const held = credentials[tenantId];
+    if (!held) {
+      return send(res, 409, { error: "No provider credential is configured.", detail: "An administrator must set one through PUT /ai/config/credential." });
+    }
+
+    const config = aiConfig[tenantId];
+    const limit = config?.limits?.maxContextFields ?? 24;
+    const fields = Array.isArray(body?.fields) ? body.fields.slice(0, limit) : [];
+    if (!fields.length) {
+      return send(res, 400, { error: "Nothing to send.", detail: "The assembled context held no fields." });
+    }
+
+    const lines = fields.map((f) => `${String(f?.label ?? "").slice(0, 120)}: ${String(f?.value ?? "").slice(0, 600)}`);
+    const userInput = typeof body?.userInput === "string" && body.userInput.trim() ? `\n\nThe user asks: ${body.userInput.trim().slice(0, 500)}` : "";
+    const result = await callProvider(config, held.secret, [
+      { role: "system", content: system },
+      { role: "user", content: `Page: ${String(body?.pageId ?? "unknown")}\n\nFields:\n${lines.join("\n")}${userInput}` },
+    ]);
+
+    /* Audit metadata only. The fields themselves are the user's record and are
+       deliberately not logged here -- this process has no retention policy and
+       no log rotation, so anything written is written forever. */
+    console.log(`[ai] dispatch ${body.useCaseId} on ${body.pageId} by ${user.email ?? user.id}: ${result.ok ? "ok" : "failed"} (${fields.length} fields${result.usage ? `, ${result.usage.total_tokens} tokens` : ""})`);
+
+    if (!result.ok) {
+      held.lastError = `${result.error} ${result.detail ?? ""}`.trim();
+      saveCredentials();
+      return send(res, result.status ?? 502, { error: result.error, detail: result.detail });
+    }
+    held.lastVerifiedAt = new Date().toISOString();
+    held.lastError = null;
+    saveCredentials();
+    return send(res, 200, { ok: true, text: result.text, model: result.model, usage: result.usage });
   }
 
   if (req.method === "GET" && pathname === "/health") {
