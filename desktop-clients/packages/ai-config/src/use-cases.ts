@@ -1,0 +1,104 @@
+/**
+ * The AI use-case catalogue.
+ *
+ * Use cases are declared HERE and referenced by pages by id. A page says which
+ * ones it offers; it never defines one. Otherwise the same "summarise" exists
+ * in six variants and none of them can be governed, rate-limited or audited as
+ * a single thing.
+ *
+ * See spec §5. The field that matters most is `reads`: retrieval is the leak,
+ * not the prompt. A use case that fetches "related records" has widened its own
+ * scope without anyone deciding to, so every field it may read is named.
+ */
+
+/** Where a field comes from. Each maps to something the page already has. */
+export type AiSource = "page-record" | "worklist-selection" | "form-values";
+
+export interface AiRead {
+  source: AiSource;
+  /** Explicit field keys. Wildcards are rejected — see assertNoWildcards. */
+  fields: string[];
+  /** A field the page may not have. Absent optional fields are simply omitted. */
+  optional?: boolean;
+}
+
+export interface AiUseCase {
+  id: string;
+  label: string;
+  /** Shown in the transparency panel, so it must describe what is SENT. */
+  description: string;
+  reads: AiRead[];
+  /**
+   * Server-side prompt id. The client never holds prompt text: it cannot be
+   * read, replayed or edited from a browser, and changing a prompt is a server
+   * deployment rather than a client release.
+   */
+  promptId: string;
+  /**
+   * Clinical use cases require a second confirmation naming the record, and are
+   * audited under the elevated retention class.
+   */
+  category: "general" | "clinical";
+}
+
+export const USE_CASES: AiUseCase[] = [
+  {
+    id: "worklist.summarise-selection",
+    label: "Summarise selection",
+    description: "Summarises the records you have selected, using only the columns currently visible.",
+    reads: [{ source: "worklist-selection", fields: ["id", "name", "status", "owner", "outstanding", "lastInvoice"] }],
+    promptId: "worklist.summarise.v1",
+    category: "general",
+  },
+  {
+    id: "record.explain",
+    label: "Explain this record",
+    description: "Explains the fields on the open record and what its current status means.",
+    reads: [{ source: "page-record", fields: ["id", "name", "type", "segment", "status", "risk", "creditLimit", "outstanding"] }],
+    promptId: "record.explain.v1",
+    category: "general",
+  },
+  {
+    id: "form.draft-note",
+    label: "Draft a note",
+    description: "Drafts an internal note from the values you have entered. Nothing is saved — the draft lands in the form for you to edit.",
+    reads: [{ source: "form-values", fields: ["customer", "reference", "terms", "jurisdiction"], optional: true }],
+    promptId: "form.draft-note.v1",
+    category: "general",
+  },
+];
+
+/**
+ * A wildcard in `reads` would silently widen every use case that carried it,
+ * which is the one failure in this file that has no visible symptom — the
+ * assistant simply starts seeing more than it was granted.
+ *
+ * Thrown at module load rather than checked at dispatch: a bad entry then fails
+ * the build, which is where it is cheap, instead of the request, which is where
+ * it has already happened.
+ */
+function assertNoWildcards(useCases: AiUseCase[]): void {
+  for (const useCase of useCases) {
+    for (const read of useCase.reads) {
+      if (read.fields.length === 0) {
+        throw new Error(`AiUseCase "${useCase.id}" declares an empty field list for "${read.source}". Name the fields or drop the read.`);
+      }
+      for (const field of read.fields) {
+        if (field === "*" || field.includes("*")) {
+          throw new Error(`AiUseCase "${useCase.id}" uses a wildcard field "${field}". Retrieval scope must be named explicitly — see spec D5.`);
+        }
+      }
+    }
+  }
+}
+
+assertNoWildcards(USE_CASES);
+
+const BY_ID = new Map(USE_CASES.map((useCase) => [useCase.id, useCase]));
+
+export function getUseCase(id: string): AiUseCase | undefined {
+  return BY_ID.get(id);
+}
+
+/** Ids a page may legally reference. Used to validate PageDefinition.ai. */
+export const USE_CASE_IDS: string[] = USE_CASES.map((useCase) => useCase.id);

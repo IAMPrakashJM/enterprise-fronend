@@ -158,6 +158,17 @@ export interface ModuleDefinition {
   navigation: MenuSection[];
 }
 
+/** Gate 1 of nine. Absent means the assistant never renders on this page --
+    the build-time decision, and the only gate a tenant administrator cannot
+    turn back on. See the AI assistant spec §4.1. */
+export interface PageAiConfig {
+  enabled: true;
+  /** Ids from @pepbits/ai-config's USE_CASES. Held as strings so erp-config
+      stays free of an ai-config dependency: the arrow runs ai-config ->
+      erp-config, never back. Validity is checked at load by the AI layer. */
+  useCases: string[];
+}
+
 export interface PageDefinition {
   id: string;
   title: string;
@@ -166,6 +177,7 @@ export interface PageDefinition {
   module: ModuleKey | "shared";
   entity?: string;
   icon?: LucideIcon;
+  ai?: PageAiConfig;
 }
 
 export interface FormOption {

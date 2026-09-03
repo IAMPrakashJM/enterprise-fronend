@@ -413,9 +413,14 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
   "supply-dashboard": { kind: "dashboard", title: "Supply Chain Command Center" },
   "library-dashboard": { kind: "dashboard", title: "Developer Library" },
   "user-master": { kind: "form", entity: "user", title: "User Master" },
-  "customer-master": { kind: "worklist", entity: "customer", title: "Customer Master" },
+  /* AI pilot, gate 1. finance-dashboard is deliberately left without an `ai`
+     block so there is a page proving the assistant renders nothing at all
+     when the build-time gate is absent. */
+  "customer-master": { kind: "worklist", entity: "customer", title: "Customer Master",
+    ai: { enabled: true, useCases: ["worklist.summarise-selection", "record.explain"] } },
   "sales-customer": { kind: "worklist", entity: "customer", title: "Customer Master" },
-  "billing-entry": { kind: "billing", entity: "invoice", title: "Billing Entry" },
+  "billing-entry": { kind: "billing", entity: "invoice", title: "Billing Entry",
+    ai: { enabled: true, useCases: ["form.draft-note"] } },
   "sales-invoice": { kind: "billing", entity: "invoice", title: "Sales Invoice" },
   "billing-worklist": { kind: "worklist", entity: "invoice", title: "Billing Worklist" },
   "profit-loss-report": { kind: "reports", title: "Profit & Loss" },
@@ -478,6 +483,11 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
       kind: explicit.kind ?? inferredKind,
       module,
       entity: explicit.entity ?? pageId.replace(/-(master|worklist|report|entry|config|review|setup)$/g, ""),
+      /* Carried through only when explicitPages declares it. There is no
+         inferred default: a page without an `ai` block has the assistant
+         disabled at gate 1, and that must stay a decision someone made rather
+         than something a filename pattern turned on. */
+      ...(explicit.ai ? { ai: explicit.ai } : {}),
     } satisfies PageDefinition];
   })
 );

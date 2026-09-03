@@ -199,6 +199,12 @@ ai?: {
 **Verification:** `PAGE_REGISTRY` still builds; `tsc --noEmit` clean; the guard
 throws when a `"*"` is introduced deliberately, then remove it.
 
+Note for whoever does this: `PAGE_REGISTRY` is built field by field in
+`navigation.ts`, so adding `ai` to `explicitPages` is not enough — the builder
+drops any key it does not name. It needs
+`...(explicit.ai ? { ai: explicit.ai } : {})` as well, spread conditionally so a
+page without a block has no `ai` key at all rather than `ai: undefined`.
+
 ## Task 3: Stand-in policy service
 
 **Files:**
