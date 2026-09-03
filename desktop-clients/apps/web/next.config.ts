@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
      That is the good failure. The silent one is Tailwind; see globals.css. */
   transpilePackages: [
     "@pepbits/ops-ui",
+    "@pepbits/auth",
     "@pepbits/erp-config",
     "@pepbits/erp-data",
     "@pepbits/erp-shell",

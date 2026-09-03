@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@pepbits/auth": "*",
     "@pepbits/erp-config": "*",
     "@pepbits/erp-data": "*",
     "@pepbits/erp-screens": "*",

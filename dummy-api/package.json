@@ -1,0 +1,12 @@
+{
+  "name": "nexora-dummy-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Demo auth API for the Nexora shells. Zero dependencies, zero persistence.",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  }
+}

@@ -4,6 +4,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import { LANGUAGE_OPTIONS, MODULES, PAGE_REGISTRY, translate } from "@pepbits/erp-config";
 import type { ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
+import { useSession } from "@pepbits/auth";
 
 const DEFAULT_PREFERENCES: UserPreferences = {
   theme: "nexora",
@@ -79,9 +80,12 @@ export function moduleForPage(pageId: string, fallback: ModuleKey = "finance"): 
 
 export function ERPProvider({ children }: { children: React.ReactNode }) {
   const navigation = useNavigation();
+  const { user } = useSession();
   const [preferences, setPreferences] = useState<UserPreferences>(DEFAULT_PREFERENCES);
-  const [branch, setBranch] = useState("hq");
-  const [role, setRole] = useState("enterprise-admin");
+  /* Seeded from the signed-in account rather than hardcoded, but still user-changeable:
+     the header selectors are a "view as" control in this prototype, not authorization. */
+  const [branch, setBranch] = useState(user?.branch ?? "hq");
+  const [role, setRole] = useState(user?.role ?? "enterprise-admin");
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const [commandOpen, setCommandOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);

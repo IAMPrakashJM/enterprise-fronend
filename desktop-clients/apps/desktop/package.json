@@ -11,6 +11,7 @@
     "lint": "echo \"desktop: no lint configured\""
   },
   "dependencies": {
+    "@pepbits/auth": "*",
     "@pepbits/erp-config": "*",
     "@pepbits/erp-data": "*",
     "@pepbits/erp-screens": "*",

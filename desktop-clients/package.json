@@ -11,6 +11,8 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "dev": "turbo run dev",
+    "dev:all": "node ../dummy-api/server.mjs & turbo run dev",
+    "dev:api": "node ../dummy-api/server.mjs",
     "dev:web": "npm run dev -w web",
     "dev:desktop": "npm run dev -w desktop",
     "desktop": "npm run tauri -w desktop -- dev",

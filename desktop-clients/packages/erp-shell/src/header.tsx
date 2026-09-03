@@ -4,6 +4,7 @@ import React from "react";
 import { Bell, BookOpen, Building2, ChevronDown, CircleUserRound, LogOut, Mail, MessageSquareText, Search, Settings, ShieldCheck, SlidersHorizontal, UserRound } from "lucide-react";
 import { BRANCHES, MODULES, PAGE_REGISTRY, ROLES } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
+import { useSession } from "@pepbits/auth";
 import { dashboardPageId, useERP } from "./erp-context";
 import type { ModuleKey } from "@pepbits/erp-config";
 import { ActionMenu, DropdownSelect, MenuButton } from "@pepbits/ops-ui";
@@ -13,6 +14,7 @@ import { Badge } from "@pepbits/ops-ui";
 export function Header() {
   const { currentModule, branch, setBranch, role, setRole, setCommandOpen, setDocumentationOpen, preferences } = useERP();
   const navigation = useNavigation();
+  const { user, logout } = useSession();
   const activePageId = navigation.current.pageId;
   const openPage = (pageId: string, options?: { mode?: "view" | "edit" | "new"; recordId?: string; title?: string }) =>
     navigation.open({ pageId, ...options });
@@ -69,16 +71,16 @@ export function Header() {
       <DropdownSelect value={role} options={ROLES} onChange={setRole} label="Role" compact className="hidden xl:block" leading={<ShieldCheck className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
 
       <div className="hidden min-w-0 items-center gap-2 px-1.5 2xl:flex">
-        <div className="min-w-0 text-right"><div className="truncate text-[10.5px] font-black">Prakash Mathew</div><div className="truncate text-[8.5px] text-[var(--text-muted)]">Solution Architecture</div></div>
+        <div className="min-w-0 text-right"><div className="truncate text-[10.5px] font-black">{user?.name ?? "Signed out"}</div><div className="truncate text-[8.5px] text-[var(--text-muted)]">{user?.title ?? ""}</div></div>
       </div>
 
-      <ActionMenu trigger={<button type="button" aria-label="Open profile menu" className="focus-ring flex h-10 items-center gap-1 rounded-xl p-1 transition hover:bg-[var(--surface-2)]"><span className="relative flex size-8 items-center justify-center rounded-[10px] bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[10px] font-black text-white shadow-sm">PM<span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-[var(--surface)] bg-[var(--success)]" /></span><ChevronDown className="size-3 text-[var(--text-subtle)]" /></button>}>
-        {(close) => <div className="w-64"><div className="flex items-center gap-3 rounded-lg bg-[var(--surface-2)] p-3"><span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[12px] font-black text-white">PM</span><span className="min-w-0"><span className="block truncate text-[11px] font-extrabold">Prakash Mathew</span><span className="block truncate text-[9px] text-[var(--text-muted)]">prakash@nexora.example</span></span></div><div className="my-1.5 h-px bg-[var(--border)]" />
+      <ActionMenu trigger={<button type="button" aria-label="Open profile menu" className="focus-ring flex h-10 items-center gap-1 rounded-xl p-1 transition hover:bg-[var(--surface-2)]"><span className="relative flex size-8 items-center justify-center rounded-[10px] bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[10px] font-black text-white shadow-sm">{user?.initials ?? "--"}<span className="absolute -bottom-0.5 -right-0.5 size-2.5 rounded-full border-2 border-[var(--surface)] bg-[var(--success)]" /></span><ChevronDown className="size-3 text-[var(--text-subtle)]" /></button>}>
+        {(close) => <div className="w-64"><div className="flex items-center gap-3 rounded-lg bg-[var(--surface-2)] p-3"><span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] text-[12px] font-black text-white">{user?.initials ?? "--"}</span><span className="min-w-0"><span className="block truncate text-[11px] font-extrabold">{user?.name ?? "Signed out"}</span><span className="block truncate text-[9px] text-[var(--text-muted)]">{user?.email ?? ""}</span></span></div><div className="my-1.5 h-px bg-[var(--border)]" />
           <MenuButton icon={<Settings className="size-3.5" />} label="Settings" hint="Workspace and organization" onClick={() => { openPage("theme-studio"); close(); }} />
-          <MenuButton icon={<UserRound className="size-3.5" />} label="My Profile" hint="Identity and contact details" onClick={() => { openPage("user-master", { mode: "view", recordId: "USR-00301", title: "My Profile" }); close(); }} />
+          <MenuButton icon={<UserRound className="size-3.5" />} label="My Profile" hint="Identity and contact details" onClick={() => { openPage("user-master", { mode: "view", recordId: user?.id ?? "USR-00301", title: "My Profile" }); close(); }} />
           <MenuButton icon={<SlidersHorizontal className="size-3.5" />} label="My Preferences" hint="Layout, theme and behavior" onClick={() => { openPage("preferences"); close(); }} />
           <div className="my-1.5 h-px bg-[var(--border)]" />
-          <MenuButton icon={<LogOut className="size-3.5" />} label="Sign out" hint="End this secure session" tone="danger" onClick={close} />
+          <MenuButton icon={<LogOut className="size-3.5" />} label="Sign out" hint="End this secure session" tone="danger" onClick={() => { close(); void logout(); }} />
           <div className="my-1.5 h-px bg-[var(--border)]" />
           <button type="button" onClick={() => { setDocumentationOpen(true); close(); }} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-[10px] font-bold text-[var(--text-muted)] hover:bg-[var(--surface-2)]"><BookOpen className="size-3.5" />Product documentation</button>
           <button type="button" onClick={close} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-[10px] font-bold text-[var(--text-muted)] hover:bg-[var(--surface-2)]"><Mail className="size-3.5" />Contact support</button>

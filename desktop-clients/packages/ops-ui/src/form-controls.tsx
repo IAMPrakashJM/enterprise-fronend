@@ -28,7 +28,10 @@ export function FieldShell({ label, hint, error, required, className, children }
 
 const inputClass = "focus-ring h-9 w-full rounded-[10px] border border-[var(--border)] bg-[var(--surface)] px-3 text-[12px] font-medium text-[var(--text)] shadow-[inset_0_1px_1px_rgba(15,23,42,.02)] outline-none transition placeholder:text-[var(--text-subtle)] hover:border-[var(--border-strong)] focus:border-[var(--primary)] disabled:cursor-not-allowed disabled:bg-[var(--surface-2)] disabled:text-[var(--text-subtle)]";
 
-export function Input({ label, hint, error, required, className, prefix, suffix, ...props }: BaseFieldProps & React.InputHTMLAttributes<HTMLInputElement> & { prefix?: React.ReactNode; suffix?: React.ReactNode }) {
+/* Omit the native `prefix` (and `suffix`) before intersecting: HTML defines prefix as
+   an RDFa string attribute, so the intersection collapsed this prop to `string & ReactNode`
+   and rejected an icon element. Strings still pass, since ReactNode includes them. */
+export function Input({ label, hint, error, required, className, prefix, suffix, ...props }: BaseFieldProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix" | "suffix"> & { prefix?: React.ReactNode; suffix?: React.ReactNode }) {
   return (
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       <div className="relative">

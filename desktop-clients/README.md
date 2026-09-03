@@ -12,10 +12,31 @@ packages/*      @pepbits/* — the shared surface both shells render
 
 ```bash
 npm install
+npm run dev:all        # demo API :4000 + both shells
+npm run dev:api        # demo API only  :4000
 npm run dev:web        # http://localhost:3000
 npm run dev:desktop    # http://localhost:3001 in a browser
 npm run desktop        # native Tauri window
 ```
+
+Both shells require the demo auth API. `dummy-api/` is a sibling of this workspace, not
+a member of it, so turbo cannot start it — hence the separate `dev:api` script.
+
+### Signing in
+
+| Username | Password | Role |
+|---|---|---|
+| `user1` | `user1` | Finance Manager |
+| `user2` | `user2` | Operations Analyst |
+| `admin` | `admin` | Enterprise Administrator |
+
+The login screen lists all three and fills the form when you pick one. The signed-in
+account drives the header identity, the role selector and the branch selector.
+
+The gate is client-side in both shells rather than a `/login` route: the token lives in
+`localStorage`, the only store both shells share. Next middleware cannot read it, and a
+cookie cannot reach the packaged Tauri app, which is a different origin. So signed out
+on web you stay at the current URL and see the login screen there.
 
 Requires Node 24+, and for the Tauri window a Rust toolchain and Xcode Command Line
 Tools.

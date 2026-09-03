@@ -419,6 +419,12 @@ for. Everything else must be pixel-identical, and any third difference is a defe
    column beside it, so an expanded overlay covers the header's leftmost region. The
    sidebar's own brand block is exactly `--header-height` tall, so the two align.
 
+4. **The header identity is the signed-in account** (both shells, added 2026-09-03 on
+   request, alongside the demo auth API). "Prakash Mathew" / `prakash@nexora.example` /
+   `PM` were hardcoded; they now come from `@pepbits/auth`'s session, as do the initial
+   role and branch selections. Signing in as `admin` reproduces the old hardcoded values
+   exactly, so that account is visually identical to the pre-auth shell.
+
 Deltas 1 and 2 do not apply to desktop, which is otherwise pixel-identical to `webapp`.
 Delta 3 applies to both shells. Note that `verify-parity` does not cover `sidebar.tsx` —
 it is a deliberately rewritten file, not a moved one, so this change is recorded here

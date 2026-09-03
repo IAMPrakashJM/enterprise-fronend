@@ -45,7 +45,7 @@ const MOVES = [
 /** Files with a deliberate, spec-sanctioned change. Anything not listed must match. */
 const ALLOWED = {
   "packages/tokens/src/tokens.css": "the @import \"tailwindcss\" line moved to each app's entry stylesheet",
-  "packages/ops-ui/src/form-controls.tsx": "FormOption replaced by a local Option, to keep ops-ui dependency-free",
+  "packages/ops-ui/src/form-controls.tsx": "FormOption replaced by a local Option (ops-ui stays dependency-free); Input omits the native prefix/suffix attributes so the props accept an element",
 };
 
 /* Utilities that appear ONLY in apps/desktop/src/mdi/workspace-tabs.tsx, so their

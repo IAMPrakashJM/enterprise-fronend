@@ -9,10 +9,11 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@pepbits/ops-ui": "*",
+    "@pepbits/auth": "*",
     "@pepbits/erp-config": "*",
     "@pepbits/erp-data": "*",
     "@pepbits/erp-shell": "*",
+    "@pepbits/ops-ui": "*",
     "@pepbits/platform-ports": "*",
     "lucide-react": "^0.468.0",
     "xlsx": "^0.18.5"

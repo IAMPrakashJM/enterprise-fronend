@@ -10,5 +10,6 @@
    supplies variable NAMES; @source puts the files into the content scan. Both are
    required, and neither substitutes for the other. */
 @source "../../../../packages/ops-ui/src";
+@source "../../../../packages/auth/src";
 @source "../../../../packages/erp-shell/src";
 @source "../../../../packages/erp-screens/src";

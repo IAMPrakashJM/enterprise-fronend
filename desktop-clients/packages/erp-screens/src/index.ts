@@ -1,4 +1,5 @@
 export * from "./page-renderer";
+export * from "./login";
 export * from "./worklist/worklist-page";
 export * from "./forms/dynamic-record-form";
 export * from "./dashboard/module-dashboard";
