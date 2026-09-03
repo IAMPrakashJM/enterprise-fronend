@@ -170,6 +170,44 @@
    row), not a deeper shade. Getting that backwards is invisible in the swatch
    row and unreadable in the sidebar. */
 
+[data-theme="solarized"] {
+  /* Ethan Schoonover's Solarized Light, mapped onto this token set. The base
+     ramp is used as designed -- base3/base2 for grounds, base02/base00/base1
+     for the three text weights -- which is what gives it the warm paper cast
+     no other theme here has.
+
+     Two accents are DARKENED from the canonical values, because this shell
+     puts white text on --primary, --danger and --success, and Solarized's
+     blue (3.68:1) and green (3.20:1) fail AA at that size. Blue #268bd2 ->
+     #2076b2 and green #859900 -> #6a7a00, both a straight lightness step down
+     the same hue, so they still read as Solarized. Red #dc322f is 4.63:1 and
+     is left exactly as published. */
+  --bg: #fdf6e3;
+  --surface: #fffbf0;
+  --surface-2: #f6efdc;
+  --surface-3: #eee8d5;
+  --surface-translucent: rgba(255,251,240,.88);
+  --text: #073642;
+  /* base01, not base00. Solarized's own body tone (#657b83) is 4.13:1 on base3
+     -- under AA -- and this is the colour every subtitle and hint uses. base01
+     is the palette's next step down, so 4.99:1 without leaving Solarized.
+     --text-subtle stays base1: it is decorative (placeholders, dividers'
+     labels) and never the only carrier of meaning. */
+  --text-muted: #586e75;
+  --text-subtle: #93a1a1;
+  --border: #e2dbc6;
+  --border-strong: #cfc7ae;
+  --primary: #2076b2;
+  --primary-strong: #1a5c8a;
+  --primary-soft: #dcecf7;
+  --accent: #2aa198;
+  --accent-soft: #d6f0ed;
+  --danger: #dc322f;
+  --warning: #b58900;
+  --success: #6a7a00;
+  --info: #268bd2;
+}
+
 [data-theme="indigo"] {
   --bg: #f5f4fd;
   --surface: #ffffff;

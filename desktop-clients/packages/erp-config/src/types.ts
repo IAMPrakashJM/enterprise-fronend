@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 
 export type ModuleKey = "hr" | "finance" | "payroll" | "sales" | "supply" | "library";
 export type ThemeKey = "nexora" | "midnight" | "emerald" | "sand" | "rose" | "slate" | "contrast"
-  | "indigo" | "lagoon" | "sunset" | "graphite" | "plum" | "nord";
+  | "indigo" | "lagoon" | "sunset" | "graphite" | "plum" | "nord" | "solarized";
 export type FormNavigation = "rail" | "tabs" | "wizard";
 export type ResultView = "table" | "cards";
 export type PreviewMode = "center-card" | "center-modal" | "left-drawer" | "right-drawer";

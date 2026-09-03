@@ -54,7 +54,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
 /** The legal values for every enumerated key. A key absent here is validated
     by the typeof of its default instead (booleans and numbers). */
 const ALLOWED: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = {
-  theme: ["nexora", "midnight", "emerald", "sand", "rose", "slate", "contrast", "indigo", "lagoon", "sunset", "graphite", "plum", "nord"],
+  theme: ["nexora", "midnight", "emerald", "sand", "rose", "slate", "contrast", "indigo", "lagoon", "sunset", "graphite", "plum", "nord", "solarized"],
   formNavigation: ["rail", "tabs", "wizard"],
   resultView: ["table", "cards"],
   previewMode: ["center-card", "center-modal", "left-drawer", "right-drawer"],

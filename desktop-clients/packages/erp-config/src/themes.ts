@@ -19,4 +19,5 @@ export const THEME_OPTIONS: Array<{
   { id: "graphite", name: "Graphite", description: "Neutral near-black, no colour cast", swatches: ["#5b6472", "#4f8fd0", "#0b0b0d"] },
   { id: "plum", name: "Plum Nocturne", description: "Dark violet with magenta accent", swatches: ["#7c3aed", "#db2777", "#120c1a"] },
   { id: "nord", name: "Nord Frost", description: "Muted arctic blue-grey", swatches: ["#55759c", "#8fbcbb", "#2e3440"] },
+  { id: "solarized", name: "Solarized Light", description: "Warm paper, low-glare accents", swatches: ["#2076b2", "#2aa198", "#fdf6e3"] },
 ];
