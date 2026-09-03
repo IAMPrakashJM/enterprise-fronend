@@ -2,9 +2,11 @@
 /**
  * Nexora demo auth API.
  *
- * Deliberately zero dependencies and zero persistence: it is a stand-in for a real
- * identity service so the two shells have something to log in against. Tokens live in
- * a Map that dies with the process.
+ * Deliberately zero dependencies: a stand-in for a real identity and settings service
+ * so the two shells have something to log in against. Sessions live in a Map and die
+ * with the process; per-user preferences are written to data/preferences.json and do
+ * survive a restart, because "log out, log back in, your settings are still there" is
+ * the whole point of that endpoint.
  *
  * NOT a security boundary. Passwords are compared in plaintext, tokens are random hex
  * with no expiry claim, and CORS is open to every origin — the web shell, the desktop
@@ -16,6 +18,9 @@
  */
 import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const PORT = Number(process.env.PORT ?? 4000);
 
@@ -66,9 +71,36 @@ const ACCOUNTS = [
 /** token -> user. Lost on restart, which is correct for a demo. */
 const sessions = new Map();
 
+/* Preferences, unlike sessions, are written to disk. An in-memory store would lose
+   every saved preference the moment the process restarted, which defeats the whole
+   point of "log out, log back in, your settings are still there".
+   Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
+const DATA_DIR = join(dirname(fileURLToPath(import.meta.url)), "data");
+const PREFS_FILE = join(DATA_DIR, "preferences.json");
+
+function loadPrefs() {
+  try {
+    return JSON.parse(readFileSync(PREFS_FILE, "utf8"));
+  } catch {
+    // Missing or corrupt: start clean rather than refusing to boot.
+    return {};
+  }
+}
+
+const preferences = loadPrefs();
+
+/* Temp file + rename, so a crash mid-write cannot leave a truncated JSON file that
+   then fails to parse on the next boot and silently drops everyone's settings. */
+function savePrefs() {
+  mkdirSync(DATA_DIR, { recursive: true });
+  const tmp = `${PREFS_FILE}.${process.pid}.tmp`;
+  writeFileSync(tmp, JSON.stringify(preferences, null, 2) + "\n");
+  renameSync(tmp, PREFS_FILE);
+}
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
   "Access-Control-Max-Age": "86400",
 };
@@ -146,8 +178,45 @@ const server = createServer(async (req, res) => {
     return res.end();
   }
 
+  if (pathname === "/preferences") {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    if (req.method === "GET") {
+      /* Empty on a first login by design: the client merges this over its own
+         defaults, so an absent key means "still default" rather than "unset". */
+      return send(res, 200, { preferences: preferences[user.id] ?? {} });
+    }
+
+    if (req.method === "PUT") {
+      let body;
+      try {
+        body = await readJson(req);
+      } catch {
+        return send(res, 400, { error: "Malformed request body." });
+      }
+      const next = body.preferences;
+      if (next === null || typeof next !== "object" || Array.isArray(next)) {
+        return send(res, 400, { error: "Expected { preferences: object }." });
+      }
+      preferences[user.id] = next;
+      try {
+        savePrefs();
+      } catch (error) {
+        console.error("[prefs] write failed:", error.message);
+        return send(res, 500, { error: "Could not persist preferences." });
+      }
+      console.log(`[prefs] ${user.id} saved ${Object.keys(next).length} override(s)`);
+      res.writeHead(204, CORS);
+      return res.end();
+    }
+
+    return send(res, 405, { error: `${req.method} not allowed on /preferences.` });
+  }
+
   if (req.method === "GET" && pathname === "/health") {
-    return send(res, 200, { ok: true, sessions: sessions.size });
+    return send(res, 200, { ok: true, sessions: sessions.size, profiles: Object.keys(preferences).length });
   }
 
   send(res, 404, { error: `No route for ${req.method} ${pathname}.` });

@@ -4,7 +4,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import { LANGUAGE_OPTIONS, MODULES, PAGE_REGISTRY, translate } from "@pepbits/erp-config";
 import type { ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
-import { useSession } from "@pepbits/auth";
+import { authedFetch, useSession } from "@pepbits/auth";
 
 const DEFAULT_PREFERENCES: UserPreferences = {
   theme: "nexora",
@@ -78,7 +78,18 @@ export function moduleForPage(pageId: string, fallback: ModuleKey = "finance"): 
   return page && page.module !== "shared" ? page.module : fallback;
 }
 
-export function ERPProvider({ children }: { children: React.ReactNode }) {
+/** Only the keys that differ from the defaults, so the stored JSON reads as "what this
+    user changed" and any key added to UserPreferences later starts at its new default
+    rather than at whatever was frozen into an older full snapshot. */
+function overridesOf(preferences: UserPreferences): Partial<UserPreferences> {
+  const diff: Record<string, unknown> = {};
+  for (const key of Object.keys(DEFAULT_PREFERENCES) as Array<keyof UserPreferences>) {
+    if (preferences[key] !== DEFAULT_PREFERENCES[key]) diff[key] = preferences[key];
+  }
+  return diff as Partial<UserPreferences>;
+}
+
+export function ERPProvider({ children, fallback = null }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   const navigation = useNavigation();
   const { user } = useSession();
   const [preferences, setPreferences] = useState<UserPreferences>(DEFAULT_PREFERENCES);
@@ -101,17 +112,48 @@ export function ERPProvider({ children }: { children: React.ReactNode }) {
     if (page && page.module !== "shared") setLastModule(page.module);
   }, [navigation.current.pageId]);
 
+  /* Preferences come from the server, keyed by the signed-in user. The shell renders
+     `fallback` until they land, so it never paints in one theme and then jumps to
+     another — and localStorage holds none of this, because two stores for one setting
+     is a reconciliation bug waiting to happen. */
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("nexora-preferences-v1");
-      if (saved) setPreferences({ ...DEFAULT_PREFERENCES, ...JSON.parse(saved) as Partial<UserPreferences> });
-    } catch {
-      // Invalid browser storage is ignored and safe defaults are retained.
-    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const response = await authedFetch("/preferences");
+        if (cancelled) return;
+        if (response.ok) {
+          const body = (await response.json()) as { preferences?: Partial<UserPreferences> };
+          if (!cancelled) setPreferences({ ...DEFAULT_PREFERENCES, ...(body.preferences ?? {}) });
+        }
+      } catch {
+        // API unreachable: fall through to defaults rather than blocking the shell.
+      } finally {
+        if (!cancelled) setLoaded(true);
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
+  /* Debounced so dragging a slider or clicking through a theme row does not fire a
+     request per keystroke, and skipped until the initial load resolves so mounting
+     cannot immediately write back what it just read. */
   useEffect(() => {
-    window.localStorage.setItem("nexora-preferences-v1", JSON.stringify(preferences));
+    if (!loaded) return;
+    const timer = window.setTimeout(() => {
+      void authedFetch("/preferences", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ preferences: overridesOf(preferences) }),
+      }).catch(() => {
+        // A failed save is not worth interrupting the user over in a demo.
+      });
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [loaded, preferences]);
+
+  useEffect(() => {
     const root = document.documentElement;
     root.dataset.theme = preferences.theme;
     root.dataset.reducedMotion = String(preferences.reducedMotion);
@@ -199,6 +241,8 @@ export function ERPProvider({ children }: { children: React.ReactNode }) {
     setDocumentationOpen,
     t,
   }), [branch, commandOpen, currentModule, dismissToast, documentationOpen, helpOpen, preferences, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
+
+  if (!loaded) return <>{fallback}</>;
 
   return <ERPContext.Provider value={value}>{children}</ERPContext.Provider>;
 }

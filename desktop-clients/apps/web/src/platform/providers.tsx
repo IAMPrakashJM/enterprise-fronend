@@ -22,7 +22,7 @@ function Gate({ children }: { children: React.ReactNode }) {
 
   return (
     <NavigationProvider value={navigation}>
-      <ERPProvider>
+      <ERPProvider fallback={<SessionSplash />}>
         <EnterpriseShell>{children}</EnterpriseShell>
         <GlobalLayers />
       </ERPProvider>

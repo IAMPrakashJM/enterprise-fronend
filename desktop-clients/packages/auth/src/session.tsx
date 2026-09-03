@@ -42,7 +42,8 @@ function apiBase(): string {
   return "http://localhost:4000";
 }
 
-const API = apiBase();
+export const API_BASE = apiBase();
+const API = API_BASE;
 
 function readToken(): string | null {
   try {
@@ -151,6 +152,16 @@ export function useSession(): SessionValue {
   const context = useContext(SessionContext);
   if (!context) throw new Error("useSession must be used within a SessionProvider");
   return context;
+}
+
+/** fetch with the stored bearer attached. Callers get a plain Response; a 401 means
+    the session died server-side (an API restart drops every token) and the caller
+    should treat it as signed out rather than retrying. */
+export function authedFetch(path: string, init: RequestInit = {}): Promise<Response> {
+  const token = readToken();
+  const headers = new Headers(init.headers);
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+  return fetch(`${API}${path}`, { ...init, headers });
 }
 
 export const DEMO_ACCOUNTS: Array<{ username: string; label: string; role: string }> = [

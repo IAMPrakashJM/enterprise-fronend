@@ -44,7 +44,7 @@ function Authenticated() {
   const mdi = useMdiNavigation();
   return (
     <NavigationProvider value={mdi.port}>
-      <ERPProvider>
+      <ERPProvider fallback={<SessionSplash />}>
         <Workspace mdi={mdi} />
         <GlobalLayers />
       </ERPProvider>

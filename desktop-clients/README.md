@@ -33,6 +33,17 @@ a member of it, so turbo cannot start it — hence the separate `dev:api` script
 The login screen lists all three and fills the form when you pick one. The signed-in
 account drives the header identity, the role selector and the branch selector.
 
+**Preferences follow the account.** Everything on the My Preferences page — theme, fonts,
+density, sidebar side, form navigation, record preview mode, toasts, language, page size
+— is stored server-side per user and reloaded at sign-in. Only the values a user actually
+changed are persisted; everything else stays at its default, so a preference added later
+starts at its new default. Changes apply instantly and save 400 ms later.
+
+The shell renders the splash until preferences arrive, so it never paints in one theme
+and jumps to another. `localStorage` holds no preferences at all — two stores for one
+setting is a reconciliation bug waiting to happen. Worklist column layout and sort are
+still per-browser, since they are not My Preferences items.
+
 The gate is client-side in both shells rather than a `/login` route: the token lives in
 `localStorage`, the only store both shells share. Next middleware cannot read it, and a
 cookie cannot reach the packaged Tauri app, which is a different origin. So signed out
