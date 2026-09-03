@@ -12,12 +12,20 @@ packages/*      @pepbits/* — the shared surface both shells render
 
 ```bash
 npm install
-npm run dev:all        # demo API :4000 + both shells
+npm run dev:stack      # demo API :4000 + web :3000   <- the usual one
+npm run dev:all        # demo API + web + desktop
 npm run dev:api        # demo API only  :4000
-npm run dev:web        # http://localhost:3000
-npm run dev:desktop    # http://localhost:3001 in a browser
+npm run dev:web        # web only       :3000
+npm run dev:desktop    # desktop in a browser :3001
 npm run desktop        # native Tauri window
+npm run stop           # kill anything left on 3000/3001/4000
 ```
+
+The one-liners background the API and trap `EXIT INT TERM`, so Ctrl+C should take it
+down with the shells. If a port is ever still held — the symptom is Vite exiting with
+`Port 3001 is already in use`, reported by turbo as a bare exit code — run
+`npm run stop`. Running the API and the shell in two terminals avoids the question
+entirely.
 
 Both shells require the demo auth API. `dummy-api/` is a sibling of this workspace, not
 a member of it, so turbo cannot start it — hence the separate `dev:api` script.

@@ -17,7 +17,7 @@
     "dev:web": "npm run dev -w web",
     "dev:desktop": "npm run dev -w desktop",
     "desktop": "npm run tauri -w desktop -- dev",
-    "stop": "lsof -ti tcp:3000 tcp:3001 tcp:4000 | xargs kill 2>/dev/null || true",
+    "stop": "for p in 3000 3001 4000; do lsof -ti tcp:$p | xargs kill 2>/dev/null; done; true",
     "verify:parity": "node scripts/verify-parity.mjs"
   },
   "devDependencies": {
