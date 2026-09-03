@@ -18,7 +18,8 @@
 - **One object.** The context assembled is the object shown, the object sent, and the object logged. Three shapes would drift; one cannot.
 - **No wildcards in `reads`.** A use case names its fields. `"*"` is rejected at the type level and at runtime.
 - **The assistant proposes, it never commits.** No write reaches a record except through the existing forms and their validation.
-- **Tasks 1–6 do not require a real backend.** Task 3's policy service is an explicitly labelled stand-in. Do not let it accrete responsibilities that belong to a real service — see spec §11.
+- **Credentials are write-only.** A provider token can be set and replaced. It is never returned, logged, echoed in an error, or present in any client type. `GET` returns a status object: configured, last four characters, fingerprint, who and when.
+- **Tasks 1–7 do not require a real backend.** Tasks 3 and 4 are explicitly labelled stand-ins. Do not let them accrete responsibilities that belong to a real service — see spec §12. Task 4 in particular REFUSES credential writes rather than storing them.
 
 ## File Structure
 
@@ -47,7 +48,7 @@ packages/ai-ui/src/
 ```
 packages/erp-config/src/types.ts        PageDefinition gains `ai?`
 packages/erp-config/src/navigation.ts   `ai` blocks on the pilot pages
-dummy-api/server.mjs                    GET /ai/policy  (stand-in, Task 3)
+dummy-api/server.mjs                    GET /ai/policy (Task 3), /ai/config (Task 4)
 packages/erp-shell/src/layers/index.tsx mount the panel
 ```
 
@@ -199,7 +200,89 @@ Task 3 and exists so the client contract is right from the start.
 **Verification:** `GET` unauthenticated → 401. Editing the JSON and re-fetching
 changes the resolved gates. A `tenantId` in the request body is ignored.
 
-## Task 4: Context assembly and the transparency panel
+## Task 4: Administration API — fetch and set the AI settings
+
+**Files:**
+- Modify: `dummy-api/server.mjs`
+- Create: `dummy-api/data/ai-config.example.json`, `packages/ai-client/src/admin.ts`
+
+**Interfaces:**
+- Produces: `GET/PUT /ai/config`, `PUT/DELETE /ai/config/credential`, `PUT /ai/policy`; client `fetchAiConfig`, `saveAiConfig`, `setAiCredential`.
+
+- [ ] **Step 1: `GET /ai/config`**
+
+Returns `AiConfig` per spec §6.2. The `credential` field is an
+`AiCredentialStatus`, never the secret:
+
+```js
+/* Write-only, per spec constraint 8. There is deliberately no branch in this
+   file that returns credential.secret -- not truncated, not behind a flag, not
+   for an admin. The hint is the last four characters, which is enough to tell
+   two keys apart and not enough to use either. */
+function credentialStatus(record) {
+  if (!record) return { configured: false, hint: null, fingerprint: null, setBy: null,
+                        setAt: null, rotatedAt: null, lastVerifiedAt: null, lastError: null };
+  return {
+    configured: true,
+    hint: `…${record.secret.slice(-4)}`,
+    fingerprint: createHash("sha256").update(record.secret).digest("hex").slice(0, 12),
+    setBy: record.setBy, setAt: record.setAt, rotatedAt: record.rotatedAt ?? null,
+    lastVerifiedAt: record.lastVerifiedAt ?? null, lastError: record.lastError ?? null,
+  };
+}
+```
+
+- [ ] **Step 2: `PUT /ai/config`**
+
+Merges provider, model, limits, retention and dataSharing. **Rejects a
+`credential` key in the body with 400** — the common edit must never carry a
+secret, which is why D14 gives the credential its own endpoint.
+
+- [ ] **Step 3: `PUT /ai/config/credential` — refused by the stand-in**
+
+```js
+/* Spec §12: this stand-in has no vault, no encryption at rest and open CORS.
+   A provider token written here is a token in a world-readable file. Refusing
+   is the only honest answer; accepting it would make the admin screen look
+   finished while creating the exact disclosure the design forbids. */
+return send(res, 501, {
+  error: "Credential storage is not implemented in the demo API.",
+  detail: "Provider secrets need a vault. See spec §6.3 and §12.",
+});
+```
+
+`DELETE` returns 204 and leaves `configured: false`, so the empty state is
+reachable and the UI can be built against it.
+
+- [ ] **Step 4: `PUT /ai/policy`, and fail closed on "admin only"**
+
+Per spec §6.4, there is no authorization layer here. Every write endpoint
+refuses with 403 and a reason naming the missing layer, rather than accepting
+writes from any signed-in session. `GET` stays open to signed-in users.
+
+- [ ] **Step 5: Client helpers in `packages/ai-client/src/admin.ts`**
+
+`fetchAiConfig()`, `saveAiConfig(patch)`, `setAiCredential(secret)`,
+`clearAiCredential()`. The type of `fetchAiConfig` returns `AiConfig` whose
+`credential` is `AiCredentialStatus` — so there is no TypeScript shape in which
+a secret can arrive at the client.
+
+**Verification:**
+
+| Check | Expect |
+|---|---|
+| `GET /ai/config` unauthenticated | 401 |
+| `GET /ai/config` signed in | 200, `credential.configured: false` |
+| grep the response for the secret in `ai-config.example.json` | no match, ever |
+| `PUT /ai/config` with a `credential` key | 400 |
+| `PUT /ai/config/credential` | 501, message names the vault |
+| any write endpoint | 403 until authorization exists |
+| a `tenantId` in a request body | ignored; response carries the session's |
+
+The grep is the one to keep in CI: it is the check that catches someone adding
+a convenience field years from now.
+
+## Task 5: Context assembly and the transparency panel
 
 **Files:**
 - Create: `packages/ai-client/src/{assemble.ts,policy.ts}`, `packages/ai-ui/src/transparency.tsx`
@@ -227,7 +310,7 @@ Clinical-category use cases require a second confirmation naming the record.
 field appears in the JSON that `assembleContext` returned, and that a field
 removed from the use case disappears from both.
 
-## Task 5: Panel mode over a mock responder
+## Task 6: Panel mode over a mock responder
 
 **Files:**
 - Create: `packages/ai-client/src/transport.ts`, `packages/ai-ui/src/assistant-panel.tsx`
@@ -247,7 +330,7 @@ the light/deep tones already shipped.
 `customer-master`; disabling the tenant gate in the JSON removes it everywhere
 and the reason string names the tenant gate.
 
-## Task 6: Terminal mode and inline actions
+## Task 7: Terminal mode and inline actions
 
 **Files:**
 - Create: `packages/ai-ui/src/{terminal.tsx,inline-action.tsx}`
@@ -265,7 +348,7 @@ One use case, one click, result in place. Worklist row and form section.
 the panel, the terminal's command list AND the inline affordance. If it survives
 in any of the three, the engine is not shared.
 
-## Task 7: Real AI service — OUT OF SCOPE HERE
+## Task 8: Real AI service — OUT OF SCOPE HERE
 
 Providers, key vault, prompt registry, rate limits, redaction policy and the
 audit store need a backend this repository does not have. Specified in the spec

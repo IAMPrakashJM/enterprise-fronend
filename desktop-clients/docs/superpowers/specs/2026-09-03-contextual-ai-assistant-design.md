@@ -21,7 +21,7 @@ and only the fourth is the kind of UI work this repository has done so far:
 | Context assembly | what page data becomes a prompt |
 | Transparency | showing the payload and the pipeline before dispatch |
 | Presentation | panel · action · terminal, plus themes |
-| Governance | central providers, keys, prompts, limits, audit |
+| Governance | central providers, keys, prompts, limits, audit — §6 |
 
 ## 2. Hard constraints
 
@@ -42,6 +42,10 @@ Requirements, not preferences. A change that violates one is a defect.
 6. **Every dispatch is audited**, with the same object the user was shown.
 7. **Tenant isolation is absolute.** No context, cache, prompt or audit record
    crosses a tenant boundary.
+8. **Credentials are write-only.** A provider token can be SET and REPLACED
+   through the administration API. It can never be read back — not by an
+   administrator, not by the AI service's own callers, not in an error message
+   or a log line. `GET` returns the credential's *status*, never its value.
 
 ## 3. Decisions taken
 
@@ -57,7 +61,10 @@ Requirements, not preferences. A change that violates one is a defect.
 | D8 | Three presentation modes over **one engine** | Panel, inline action and terminal differ in affordance, not in capability. Separate engines would mean three places to enforce the same policy. |
 | D9 | Themes reuse the existing chrome-palette mechanism | `chromePalette()` already derives a full panel palette from two seeds per theme, and 14 themes already declare them. |
 | D10 | The audit record **is** the transparency payload, plus the outcome | Two shapes would drift, and the one shown to the user is the one that matters in a review. |
-| D11 | The client half ships against a **stub policy service** with the real contract | Lets the registry, surfacing, transparency and terminal work proceed without pretending `dummy-api` is a security boundary. See section 11. |
+| D11 | The client half ships against a **stub policy service** with the real contract | Lets the registry, surfacing, transparency and terminal work proceed without pretending `dummy-api` is a security boundary. See section 12. |
+| D12 | AI settings are **fetched and set through one administration API**, separate from the runtime policy read | Two audiences, two shapes: the shell asks "may I, and for what" on every page; an administrator asks "what is configured" once. Serving both from one endpoint would put provider and limit data on every page load. |
+| D13 | `GET` on a credential returns a **status object**, never the value | The objective asks to fetch and set the token; constraint 8 forbids reading it back. Both hold if fetch answers "is one installed, which one, since when" — enough to administer a key, not enough to exfiltrate it. The last four characters and a fingerprint identify it without disclosing it. |
+| D14 | Writing a credential is a **separate endpoint** from writing the rest of the config | So the common edit — change a model, raise a limit — never carries a secret in its body, and the endpoint that does can be rate-limited, re-authenticated and audited differently. |
 
 ## 4. The access model
 
@@ -151,7 +158,93 @@ interface AiAuditRecord {
 transparency panel renders, so it cannot contain anything the user was not
 shown.
 
-## 6. Package layout
+## 6. Administration API
+
+Two separate surfaces, because they have two audiences and two lifetimes.
+
+| Surface | Read by | When | Carries |
+|---|---|---|---|
+| **Policy** | the shell, for every user | on session start, cached | the nine gates only |
+| **Configuration** | administrators | when someone opens the admin screen | providers, models, limits, prompts, credential *status* |
+
+The shell never sees the configuration surface. Serving both from one endpoint
+would put provider names and rate limits into every page load for every user.
+
+### 6.1 Endpoints
+
+```
+GET    /ai/policy                 -> { tenantId, gates }        any signed-in user
+GET    /ai/config                 -> AiConfig                    admin only
+PUT    /ai/config                 <- Partial<AiConfig>           admin only
+PUT    /ai/config/credential      <- { secret: string }          admin only, write-only
+DELETE /ai/config/credential                                     admin only
+PUT    /ai/policy                 <- { gates }                   admin only
+```
+
+`tenantId` is derived server-side from the session on every one of these. A
+tenant id in a request body is ignored, never trusted.
+
+### 6.2 Shapes
+
+```ts
+interface AiConfig {
+  tenantId: string;
+  provider: { id: string; label: string; endpoint: string };
+  model: { id: string; label: string; contextWindow: number };
+  limits: { requestsPerMinute: number; tokensPerDay: number; maxContextFields: number };
+  /** Prompt IDS and metadata. Prompt TEXT is never returned -- it is resolved
+      server-side at dispatch, so a client cannot read or replay it. */
+  prompts: Array<{ id: string; useCaseId: string; version: number; updatedAt: string }>;
+  retention: { class: "standard" | "elevated"; days: number };
+  dataSharing: { providerTrainsOnContent: boolean; region: string };
+  credential: AiCredentialStatus;
+}
+
+/**
+ * What GET returns in place of the token. Enough to administer a key --
+ * whether one is installed, which one, how old, who put it there -- and not
+ * enough to use it anywhere.
+ */
+interface AiCredentialStatus {
+  configured: boolean;
+  /** Last four characters only. Lets an admin tell two keys apart. */
+  hint: string | null;              // "…a91f"
+  /** SHA-256 prefix, for matching against a vault record without disclosure. */
+  fingerprint: string | null;
+  setBy: string | null;             // user id
+  setAt: string | null;             // ISO
+  rotatedAt: string | null;
+  /** Set by the service after a failed provider call, so a bad key is
+      diagnosable without anyone reading it back. */
+  lastVerifiedAt: string | null;
+  lastError: string | null;
+}
+```
+
+### 6.3 Rules for the credential path
+
+1. `PUT /ai/config/credential` accepts the secret, stores it in the vault, and
+   returns **204 with no body**. It does not echo the value, not even truncated
+   beyond the four-character hint on the next `GET`.
+2. The secret never appears in a log line, an error message, a stack trace or an
+   audit record. The audit records *that* a credential was set, by whom, and the
+   new fingerprint — never the value.
+3. Rotation is `PUT` again. There is no read-modify-write cycle, because there is
+   no read.
+4. `DELETE` removes it and sets `configured: false`. AI then resolves as denied
+   at the platform gate with a reason naming the missing credential, rather than
+   failing at dispatch with a provider error the user cannot act on.
+5. Only the AI service reads the vault. No other service, and no request path
+   that can be reached from a browser.
+
+### 6.4 Who counts as an administrator
+
+Gate 8's problem in miniature: this repository has no authorization layer, so
+"admin only" has nothing to check. Until one exists, the stand-in must **fail
+closed** — refuse every write and say why — rather than accept writes from any
+signed-in session and appear to work. See section 12.
+
+## 7. Package layout
 
 ```
 packages/
@@ -173,7 +266,7 @@ apps/*      -> all three
 `ai-ui` depends on `erp-shell` for the ERP context, exactly as `erp-screens`
 does. Nothing in `erp-shell` or `ops-ui` learns that AI exists.
 
-## 7. The transparency surface
+## 8. The transparency surface
 
 Three tabs on one panel, opened before dispatch and reachable afterwards from
 any answer:
@@ -190,7 +283,7 @@ any answer:
 Dispatch requires an explicit action. Clinical use cases require a second
 confirmation naming the record.
 
-## 8. Presentation modes
+## 9. Presentation modes
 
 | Mode | Affordance | Where |
 |---|---|---|
@@ -205,7 +298,7 @@ not, and its command surface is generated from the resolved use-case set.
 Themes come from the user's preferences and reuse `chromePalette()`, so the
 assistant inherits all 14 palettes and the light/deep tones already in place.
 
-## 9. Security and safety
+## 10. Security and safety
 
 **Authorization.** The assistant holds no credentials of its own. Retrieval
 happens through the same authenticated calls the page already makes, with the
@@ -227,7 +320,7 @@ form and its normal validation.
 **Workflow rules.** The assistant cannot advance a workflow. Anything it drafts
 enters the existing screens as unsaved input.
 
-## 10. Audit
+## 11. Audit
 
 One record per dispatch, written server-side, containing the object in section
 5. Refusals and cancellations are recorded too — an assistant that refuses is a
@@ -237,7 +330,7 @@ capability.
 Retention follows the tenant's class; clinical records take the elevated class.
 Records are queryable by user, page, use case and outcome.
 
-## 11. What this repository can host today
+## 12. What this repository can host today
 
 Stated plainly, because three of the nine gates have nothing to attach to here.
 
@@ -252,6 +345,7 @@ Stated plainly, because three of the nine gates have nothing to attach to here.
 | **Role gate** | **No authorization exists.** Role is decorative; its setter was removed in `8d49e9e` for precisely that reason. `record-preview.tsx:29` claims visibility is "filtered by your current role, branch and field-level permissions" — nothing does that. |
 | **Tenant gate** | **Does not exist.** One string in the footer: `Mock tenant • NEX-AE-001` |
 | **Providers, keys, prompts, audit** | **Nowhere to live.** `dummy-api/server.mjs` states in its own header that it is not a security boundary: plaintext passwords, no token expiry, open CORS. |
+| **Administration API** (§6) | **Shape is buildable, storage is not.** The endpoints and their contracts can be stood up against a JSON file so the admin screen has something real to talk to. A provider secret must NOT be among them: `dummy-api` has no vault, no encryption at rest and open CORS, so a token written there is a token in a world-readable file. The stand-in stores everything EXCEPT the credential, and returns `configured: false` with a reason. |
 
 So the client half is buildable now against a **stub policy service that speaks
 the real contract**; the control plane, key vault, prompt registry and audit log
@@ -259,7 +353,7 @@ need a backend this repository does not have. Building the client against
 `dummy-api` as though it were the real thing would produce something that demos
 correctly and cannot be hardened.
 
-## 12. Order of work
+## 13. Order of work
 
 1. **The resolver and its types**, in `@pepbits/ai-config`, with the precedence
    table from 4.3 as tests. Everything else depends on this and it is the piece
@@ -267,17 +361,20 @@ correctly and cannot be hardened.
 2. **`PageDefinition.ai`** plus the use-case catalogue; no UI yet.
 3. **Stub policy service** in `dummy-api`, serving gates 2-8 from a JSON file
    and clearly labelled as a stand-in.
-4. **Context assembly + the transparency panel.** Deliverable on its own: it can
+4. **Administration API** (§6) — config read/write and the credential status
+   shape, with credential WRITES refused by the stand-in. Gives the admin screen
+   a real contract to build against without a vault existing.
+5. **Context assembly + the transparency panel.** Deliverable on its own: it can
    show what *would* be sent without a provider behind it.
-5. **Panel mode**, over a mock responder.
-6. **Terminal mode** and inline actions.
-7. **Real AI service** — providers, keys, prompts, limits, audit. Out of scope
+6. **Panel mode**, over a mock responder.
+7. **Terminal mode** and inline actions.
+8. **Real AI service** — providers, keys, prompts, limits, audit. Out of scope
    for this repository; specified here so the client contract is not invented
    twice.
 
-Steps 1-6 each end in a working, committable state.
+Steps 1-7 each end in a working, committable state.
 
-## 13. Risks and open items
+## 14. Risks and open items
 
 | Risk | Mitigation |
 |---|---|
@@ -285,8 +382,11 @@ Steps 1-6 each end in a working, committable state.
 | A use case widens its own scope through retrieval | D5: explicit field allowlists, no wildcards. Reviewed per use case. |
 | The transparency panel drifts from what is sent | D3 + D10: one object, assembled once, shown, sent and logged. |
 | Nine gates become unauditable in combination | D2: the resolver names the deciding gate everywhere it is used. |
-| "Role level" is specified against an authorization layer that does not exist | Named in section 11. Either build authorization first or drop gate 8 from scope — the one thing not to do is ship a role selector that appears to gate AI and does not. |
+| "Role level" is specified against an authorization layer that does not exist | Named in section 12. Either build authorization first or drop gate 8 from scope — the one thing not to do is ship a role selector that appears to gate AI and does not. |
 | Prompt text on the client | D6: prompts are ids client-side, resolved server-side. |
+| A credential is read back through the config API | D13 + constraint 8: `GET` returns a status object. There is no code path that returns the value, so this cannot regress by omission — only by someone adding a field. |
+| The stand-in accepts a real provider token | §12: the stand-in refuses credential writes outright. A key in `dummy-api/data/` is a key in a world-readable file on a box with open CORS. |
+| "Admin only" enforced by nothing | §6.4: fail closed until an authorization layer exists. Accepting admin writes from any signed-in session is worse than refusing them, because it looks like it works. |
 | Terminal mode as a bypass | Section 8: same engine, same resolved set. |
 
 **Open, needs a decision before step 1:**
@@ -298,7 +398,7 @@ Steps 1-6 each end in a working, committable state.
   latter, but it is worth confirming.
 - Retention classes: who defines them, and are they per tenant or per region?
 
-## 14. Non-goals
+## 15. Non-goals
 
 - No provider is chosen or integrated in this repository.
 - No agentic behaviour: the assistant does not act, it proposes.
