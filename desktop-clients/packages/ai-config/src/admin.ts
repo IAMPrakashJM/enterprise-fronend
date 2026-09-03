@@ -56,3 +56,26 @@ export interface AiConfig {
  * re-authentication, rate limiting and audit treatment.
  */
 export type AiConfigPatch = Partial<Omit<AiConfig, "tenantId" | "credential" | "prompts">>;
+
+/**
+ * What has actually been spent, as opposed to what is allowed.
+ *
+ * Separate from `AiConfig` because it is not configuration: it changes on every
+ * request, and folding it into the config response would make a settings read
+ * look cacheable when it is not.
+ *
+ * `limitsAreDefaults` exists so an administrator can tell "20 because someone
+ * chose 20" from "20 because nothing is configured and the server refused to
+ * treat that as unlimited". Those look identical in the numbers alone.
+ */
+export interface AiUsage {
+  tenantId: string;
+  /** UTC. A budget that rolled at local midnight would change meaning with the
+      machine's timezone. */
+  day: string;
+  requestsLastMinute: number;
+  requestsPerMinute: number;
+  tokensUsedToday: number;
+  tokensPerDay: number;
+  limitsAreDefaults: boolean;
+}

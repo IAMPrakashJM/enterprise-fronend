@@ -1,7 +1,7 @@
 "use client";
 
 import { authedFetch } from "@pepbits/auth";
-import type { AiConfig, AiConfigPatch, AiCredentialStatus } from "@pepbits/ai-config";
+import type { AiConfig, AiConfigPatch, AiCredentialStatus, AiUsage } from "@pepbits/ai-config";
 
 /**
  * The administration surface, from the client's side.
@@ -89,4 +89,9 @@ export function clearAiCredential(): Promise<AiAdminResult<never>> {
  */
 export function verifyAiCredential(): Promise<AiAdminResult<AiCredentialStatus>> {
   return request<AiCredentialStatus>("/ai/config/credential/verify", { method: "POST" });
+}
+
+/** Spend and headroom. See AiUsage for why this is not part of the config. */
+export function fetchAiUsage(): Promise<AiAdminResult<AiUsage>> {
+  return request<AiUsage>("/ai/usage");
 }

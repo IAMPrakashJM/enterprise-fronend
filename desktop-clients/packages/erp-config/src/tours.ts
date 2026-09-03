@@ -15,6 +15,13 @@ export interface TourStep {
 }
 
 export const TOURS: Record<PageKind | "default", TourStep[]> = {
+  /* Deliberately short. This screen is read by someone who already knows what a
+     provider key is; a tour that explains the obvious is the one people learn to
+     dismiss without reading. */
+  "ai-admin": [
+    { target: "credential", title: "Write-only", text: "A key can be set, replaced and removed here, and never read back. The last four characters and a fingerprint are what tell two keys apart." },
+    { target: "limits", title: "Limits that bite", text: "Requests per minute and tokens per day are enforced on every dispatch. A missing or zero value falls back to the server default, never to unlimited." },
+  ],
   worklist: [
     { target: "search", title: "Find records", text: "Start typing to search every visible column. How it matches — smart, contains or starts-with — is a preference." },
     { target: "filters", title: "Refine with filters", text: "Basic filters are always visible. Open Advanced filters for dates and less common fields." },
