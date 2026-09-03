@@ -9,7 +9,6 @@ import { dashboardPageId, useERP } from "./erp-context";
 import { HeaderClock } from "./header-clock";
 import type { ModuleKey, NotificationKind } from "@pepbits/erp-config";
 import { ActionMenu, DropdownSelect, MenuButton, cn } from "@pepbits/ops-ui";
-import { IconButton } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 
 /** Semantic token per kind, so the dot means something rather than matching a
@@ -21,6 +20,40 @@ const KIND_DOT: Record<NotificationKind, string> = {
   success: "bg-[var(--success)]",
   info: "bg-[var(--info)]",
 };
+
+/* Vantage's inbox trigger: a bordered box whose border picks up the accent on
+   hover, with the count overflowing the top corner. Nexora's IconButton is
+   borderless by design, so this is its own control rather than a variant --
+   the header's other icon buttons should stay borderless.
+
+   The corner is min(--radius, 10px), not --radius: at the default 14px on a
+   36px box the "rounded square" reads as a circle, and at cornerRadius 0 it
+   still squares off exactly as Vantage's does.
+
+   -end-1.5, not -right-1.5: the badge has to sit on the outer corner in Arabic
+   too, and the shell flips to RTL. */
+function InboxTrigger({ label, count, tone, children }: { label: string; count: number; tone: "danger" | "primary"; children: React.ReactNode }) {
+  return (
+    <div className="relative shrink-0">
+      <button
+        type="button"
+        aria-label={`${label}${count ? ` (${count} unread)` : ""}`}
+        title={label}
+        className="focus-ring grid size-9 place-items-center rounded-[min(var(--radius),10px)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] transition hover:border-[var(--primary)] hover:text-[var(--text)]"
+      >
+        {children}
+      </button>
+      {count ? (
+        <span
+          className="pointer-events-none absolute -top-1.5 -end-1.5 grid h-4 min-w-4 place-items-center rounded-full px-1 text-[length:calc(9px*var(--fs-scale))] font-black tabular-nums text-white"
+          style={{ background: `var(--${tone === "danger" ? "danger" : "primary"})` }}
+        >
+          {count}
+        </span>
+      ) : null}
+    </div>
+  );
+}
 
 export function Header() {
   const { currentModule, branch, setBranch, role, setRole, setCommandOpen, setDocumentationOpen, preferences, toast, t } = useERP();
@@ -75,12 +108,7 @@ export function Header() {
           with a "Mark all read" action, then rows of coloured dot + title +
           body + age. The dot is a semantic token, so a notification is coloured
           by what it MEANS rather than by a hex picked at the call site. */}
-      <ActionMenu trigger={
-        <div className="relative">
-          <IconButton label={`Notifications (${unreadNotifications})`}><Bell className="size-4" /></IconButton>
-          {unreadNotifications ? <span className="pointer-events-none absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full border-2 border-[var(--surface)] bg-[var(--danger)] px-1 text-[length:calc(8.5px*var(--fs-scale))] font-black tabular-nums text-white">{unreadNotifications}</span> : null}
-        </div>
-      }>
+      <ActionMenu trigger={<InboxTrigger label={t("notifications")} count={unreadNotifications} tone="danger"><Bell className="size-4" /></InboxTrigger>}>
         {(close) => (
           <div className="-m-1.5 w-[340px] overflow-hidden rounded-xl">
             <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] px-3 py-2.5">
@@ -103,12 +131,7 @@ export function Header() {
         )}
       </ActionMenu>
 
-      <ActionMenu trigger={
-        <div className="relative">
-          <IconButton label={`Messages (${unreadMessages})`}><MessageSquareText className="size-4" /></IconButton>
-          {unreadMessages ? <span className="pointer-events-none absolute -right-0.5 -top-0.5 flex min-w-4 items-center justify-center rounded-full border-2 border-[var(--surface)] bg-[var(--primary)] px-1 text-[length:calc(8.5px*var(--fs-scale))] font-black tabular-nums text-white">{unreadMessages}</span> : null}
-        </div>
-      }>
+      <ActionMenu trigger={<InboxTrigger label={t("messages")} count={unreadMessages} tone="primary"><MessageSquareText className="size-4" /></InboxTrigger>}>
         {(close) => (
           <div className="-m-1.5 w-[340px] overflow-hidden rounded-xl">
             <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] px-3 py-2.5">
