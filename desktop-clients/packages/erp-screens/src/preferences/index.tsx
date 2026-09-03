@@ -13,7 +13,7 @@ import {
 import type {
   BillingLayout, ClockZone, ColumnLayoutScope, CurrencyCode, CurrencyDisplay, DateFormat, Density,
   DocsPosition, ExportFormat, FontFamily, FormNavigation, LandingPage, LanguageKey, NegativeStyle, NumberLocale, OpenRecordsIn,
-  PreviewMode, ResultView, SearchMode, SidebarExpandOn, SidebarPlacement, TimeFormat, ToastPosition,
+  PreviewMode, ResultView, SearchMode, SidebarExpandOn, SidebarPlacement, SidebarTone, TimeFormat, ToastPosition,
   ToastStyle, UserPreferences,
 } from "@pepbits/erp-config";
 import { TOUR_REVEAL_EVENT, useERP } from "@pepbits/erp-shell";
@@ -294,8 +294,14 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="behaviour" title="Navigation and workspace" subtitle="How the sidebar opens and where you land." icon={<PanelLeft className="size-4" />}
-            keys={["sidebarExpandOn", "openRecordsInTabs", "landingPage"]} keywords="sidebar hover click expand tabs landing home start page">
+            keys={["sidebarExpandOn", "sidebarTone", "openRecordsInTabs", "landingPage"]} keywords="sidebar hover click expand tabs landing home start page tone dark rail contrast colour color">
             <ChoiceGroup<SidebarExpandOn> value={preferences.sidebarExpandOn} onChange={(value) => set("sidebarExpandOn", value)} options={[{ value: "hover", label: "Expand on hover", description: "The rail opens as the pointer crosses it." }, { value: "click", label: "Expand on click", description: "The rail opens only when its logo is clicked." }]} />
+            <div className="mt-4">
+              <ChoiceGroup<SidebarTone> value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[
+                { value: "surface", label: "Sidebar matches the page", description: "The rail uses the same surface as cards and panels." },
+                { value: "contrast", label: "Sidebar in its own tone", description: "A deeper rail drawn from the active theme — Solarized gets its base03." },
+              ]} />
+            </div>
             <div className="mt-4 grid gap-2 md:grid-cols-2">
               {showTabPreferences
                 ? <Toggle label="Open records in tabs" description="Each record gets its own workspace tab. Off reuses the matching tab." checked={preferences.openRecordsInTabs} onChange={(value) => set("openRecordsInTabs", value)} />

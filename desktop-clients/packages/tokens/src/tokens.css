@@ -62,6 +62,11 @@
   --shadow-sm: 0 1px 2px rgba(15,23,42,.05), 0 1px 6px rgba(15,23,42,.04);
   --shadow-md: 0 14px 40px rgba(15,23,42,.10), 0 4px 12px rgba(15,23,42,.06);
   --shadow-lg: 0 30px 80px rgba(15,23,42,.18), 0 8px 24px rgba(15,23,42,.10);
+  /* The rail's own two seeds. Everything else the sidebar paints with is
+     derived from these in sidebar.tsx, so a theme declares two values rather
+     than the nine tokens the component actually consumes. */
+  --sidebar-surface: #132238;
+  --sidebar-text: #dbe4f2;
 }
 
 [data-theme="midnight"] {
@@ -87,6 +92,8 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,.24);
   --shadow-md: 0 16px 48px rgba(0,0,0,.34);
   --shadow-lg: 0 32px 90px rgba(0,0,0,.5);
+  --sidebar-surface: #060b14;
+  --sidebar-text: #c8d5ec;
 }
 
 [data-theme="emerald"] {
@@ -105,6 +112,8 @@
   --primary-soft: #dff5e9;
   --accent: #d97706;
   --accent-soft: #fff2d7;
+  --sidebar-surface: #123326;
+  --sidebar-text: #cfe6da;
 }
 
 [data-theme="sand"] {
@@ -123,6 +132,8 @@
   --primary-soft: #f5e6d0;
   --accent: #416a75;
   --accent-soft: #e1eff1;
+  --sidebar-surface: #33291d;
+  --sidebar-text: #e8dcc8;
 }
 
 [data-theme="rose"] {
@@ -141,6 +152,8 @@
   --primary-soft: #f8dfE9;
   --accent: #6b5bd2;
   --accent-soft: #e9e6ff;
+  --sidebar-surface: #33202b;
+  --sidebar-text: #edd8e2;
 }
 
 [data-theme="slate"] {
@@ -159,6 +172,8 @@
   --primary-soft: #e0e7ed;
   --accent: #3d7b80;
   --accent-soft: #dff0f0;
+  --sidebar-surface: #1f2933;
+  --sidebar-text: #d4dde5;
 }
 
 /* --- added 2026-09-03 ------------------------------------------------------
@@ -206,6 +221,8 @@
   --warning: #b58900;
   --success: #6a7a00;
   --info: #268bd2;
+  --sidebar-surface: #002b36;
+  --sidebar-text: #eee8d5;
 }
 
 [data-theme="indigo"] {
@@ -224,6 +241,8 @@
   --primary-soft: #e8e6ff;
   --accent: #db2777;
   --accent-soft: #fde7f1;
+  --sidebar-surface: #1e1b3a;
+  --sidebar-text: #ddd9f5;
 }
 
 [data-theme="lagoon"] {
@@ -242,6 +261,8 @@
   --primary-soft: #d7f0f6;
   --accent: #b45309;
   --accent-soft: #fdeed7;
+  --sidebar-surface: #0d2a33;
+  --sidebar-text: #cfe6ec;
 }
 
 [data-theme="sunset"] {
@@ -260,6 +281,8 @@
   --primary-soft: #ffe6d5;
   --accent: #7c3aed;
   --accent-soft: #ece4ff;
+  --sidebar-surface: #331d13;
+  --sidebar-text: #f2ddd0;
 }
 
 [data-theme="graphite"] {
@@ -285,6 +308,8 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
   --shadow-md: 0 16px 48px rgba(0,0,0,.42);
   --shadow-lg: 0 32px 90px rgba(0,0,0,.6);
+  --sidebar-surface: #08080a;
+  --sidebar-text: #d4d4dc;
 }
 
 [data-theme="plum"] {
@@ -310,6 +335,8 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
   --shadow-md: 0 16px 48px rgba(0,0,0,.42);
   --shadow-lg: 0 32px 90px rgba(0,0,0,.6);
+  --sidebar-surface: #100a18;
+  --sidebar-text: #ddd0ee;
 }
 
 [data-theme="nord"] {
@@ -337,6 +364,8 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,.26);
   --shadow-md: 0 16px 48px rgba(0,0,0,.36);
   --shadow-lg: 0 32px 90px rgba(0,0,0,.5);
+  --sidebar-surface: #2b303c;
+  --sidebar-text: #d8dee9;
 }
 
 [data-theme="contrast"] {
@@ -358,6 +387,8 @@
   --shadow-sm: 0 0 0 1px #111;
   --shadow-md: 0 0 0 2px #111;
   --shadow-lg: 0 0 0 3px #111;
+  --sidebar-surface: #000000;
+  --sidebar-text: #ffffff;
 }
 
 * { box-sizing: border-box; }

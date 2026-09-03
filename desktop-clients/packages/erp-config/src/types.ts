@@ -21,6 +21,8 @@ export type NumberLocale = "en-US" | "de-DE" | "fr-FR" | "en-IN";
 export type CurrencyCode = "AED" | "USD" | "EUR" | "INR" | "GBP";
 export type ColumnLayoutScope = "browser" | "account";
 export type SidebarExpandOn = "hover" | "click";
+/** Whether the rail shares the page's surface or gets its own dark palette. */
+export type SidebarTone = "surface" | "contrast";
 export type TimeFormat = "12h" | "24h";
 export type CurrencyDisplay = "symbol" | "code" | "none";
 /** How a negative amount reads. "parentheses" is the accounting convention. */
@@ -87,6 +89,7 @@ export interface UserPreferences {
   /** "always expanded" is deliberately absent -- sidebarPinned already is it,
       and two preferences for one state is how they drift apart. */
   sidebarExpandOn: SidebarExpandOn;
+  sidebarTone: SidebarTone;
   maxVisibleToasts: 1 | 3 | 5;
   timeFormat: TimeFormat;
   currencyDisplay: CurrencyDisplay;

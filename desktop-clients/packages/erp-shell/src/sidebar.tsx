@@ -117,6 +117,31 @@ export function Sidebar() {
   const byHover = preferences.sidebarExpandOn === "hover";
   const expanded = preferences.sidebarPinned || (byHover ? hovered : latched);
   const isRight = preferences.sidebarPlacement === "right";
+
+  /* The rail's palette, when the user asks for one.
+     Rather than new class names, this RE-POINTS the generic tokens on the
+     <aside>. Custom properties cascade, so every `bg-[var(--surface)]` and
+     `text-[var(--text-muted)]` already inside the sidebar resolves to these
+     instead -- the component needs no dark variant, and there is no second set
+     of markup to keep in sync with the first.
+     Nine values from two seeds: a theme declares --sidebar-surface and
+     --sidebar-text, and the ratios below hold the relationships that make a
+     panel readable. Mixed toward the rail rather than `transparent`, so the
+     result is opaque and does not composite against whatever is behind. */
+  const railPalette = preferences.sidebarTone === "contrast" ? ({
+    "--surface": "var(--sidebar-surface)",
+    "--surface-2": "color-mix(in srgb, var(--sidebar-text) 10%, var(--sidebar-surface))",
+    "--surface-3": "color-mix(in srgb, var(--sidebar-text) 18%, var(--sidebar-surface))",
+    "--text": "var(--sidebar-text)",
+    "--text-muted": "color-mix(in srgb, var(--sidebar-text) 72%, var(--sidebar-surface))",
+    "--text-subtle": "color-mix(in srgb, var(--sidebar-text) 48%, var(--sidebar-surface))",
+    "--border": "color-mix(in srgb, var(--sidebar-text) 16%, var(--sidebar-surface))",
+    "--border-strong": "color-mix(in srgb, var(--sidebar-text) 30%, var(--sidebar-surface))",
+    /* The active row is primary-tinted against the RAIL, not against the page,
+       and its text lifts toward the rail's own text so it stays legible on it. */
+    "--primary-soft": "color-mix(in srgb, var(--primary) 30%, var(--sidebar-surface))",
+    "--primary-strong": "color-mix(in srgb, var(--primary) 35%, var(--sidebar-text))",
+  } as React.CSSProperties) : undefined;
   const SideIcon = isRight ? ChevronsLeft : ChevronsRight;
   const brandLetters = useMemo(() => module.shortLabel.slice(0, 2).toUpperCase(), [module.shortLabel]);
   const [query, setQuery] = useState("");
@@ -150,6 +175,7 @@ export function Sidebar() {
       <aside
         aria-label="Primary navigation"
         data-tour="sidebar"
+        style={railPalette}
         onMouseEnter={() => byHover && setHovered(true)}
         onMouseLeave={() => byHover && setHovered(false)}
         className={cn(
