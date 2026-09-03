@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** One reusable AI assistant, surfaced only where nine gates all allow it, able to show the user the exact payload before dispatch, and unable to read anything the signed-in user could not open themselves.
+**Goal:** One reusable AI assistant, surfaced only where eight gates all allow it, able to show the user the exact payload before dispatch, and unable to read anything the signed-in user could not open themselves.
 
 **Architecture:** A resolver decides access; a context assembler builds one serialisable object; the transparency panel renders that object; the transport sends it; the audit stores it. Panel, inline action and terminal are three affordances over one engine. Provider keys, prompts and limits never reach the browser.
 
@@ -14,7 +14,7 @@
 
 - **The assistant is never a privileged actor.** Every retrieval carries the signed-in user's token through the path the page already uses. No service account, no elevated read. A client-side resolver is for RENDERING only — it is never the enforcement point.
 - **No provider credential, endpoint or prompt text in the browser.** The client holds prompt *ids*. Anything else is a defect.
-- **Deny wins.** Nine gates, evaluated in order, first denial stops. `role` and `user` may only narrow the allowed set, never add to it.
+- **Deny wins.** Eight gates, evaluated in order, first denial stops. `user` may only narrow the allowed set, never add to it — including when it is the only gate to name one. A `role` gate was specified and removed from scope: there is no authorization layer here, so it would have checked nothing while appearing to gate AI.
 - **One object.** The context assembled is the object shown, the object sent, and the object logged. Three shapes would drift; one cannot.
 - **No wildcards in `reads`.** A use case names its fields. `"*"` is rejected at the type level and at runtime.
 - **The assistant proposes, it never commits.** No write reaches a record except through the existing forms and their validation.
@@ -65,11 +65,11 @@ packages/erp-shell/src/layers/index.tsx mount the panel
 
 ```ts
 /** In evaluation order. The first gate that denies decides. */
-export const GATES = ["build", "platform", "tenant", "application", "module", "page", "useCase", "role", "user"] as const;
+export const GATES = ["build", "platform", "tenant", "application", "module", "page", "useCase", "user"] as const;
 export type Gate = (typeof GATES)[number];
 
 /** Gates that may only NARROW the surviving set, never establish or extend it. */
-export const NARROWING_ONLY: ReadonlySet<Gate> = new Set<Gate>(["role", "user"]);
+export const NARROWING_ONLY: ReadonlySet<Gate> = new Set<Gate>(["user"]);
 
 export interface GateState {
   /** undefined means "this gate expresses no opinion" and passes. */
@@ -139,11 +139,11 @@ Every row of the worked-examples table, plus the narrowing asymmetry:
 | `{}` (no gate speaks) | denied, `useCase`, "No use case is enabled" |
 | `build: { allowed: false }` | denied, `decidedBy: "build"` |
 | tenant off, page on, user on | denied, `decidedBy: "tenant"` |
-| page `[a,b]`, role `[a]` | allowed, `useCases: ["a"]` |
-| page `[a]`, **role `[a,b]`** | allowed, `useCases: ["a"]` — role did NOT widen |
-| **role `[a]` and nothing else** | **denied** — role may not establish a set |
-| **user `[a]` and nothing else** | **denied** — same rule |
-| page `[a,b]`, role `[a]`, user `[a,b]` | allowed, `["a"]` — user cannot re-add |
+| page `[a,b]`, useCase `[a]` | allowed, `useCases: ["a"]` |
+| page `[a]`, **user `[a,b]`** | allowed, `useCases: ["a"]` — user did NOT widen |
+| **user `[a]` and nothing else** | **denied** — user may not establish a set |
+| page `[a,b]`, useCase `[a]`, user `[a,b]` | allowed, `["a"]` — user cannot re-add |
+| a stray `role` key | ignored — no longer a gate |
 | page `[]` | denied — an emptied set is a denial |
 | `user: { allowed: false }` | denied, `decidedBy: "user"` |
 | all allow, page `[a]` | allowed, `decidedBy: "user"` |
@@ -151,7 +151,7 @@ Every row of the worked-examples table, plus the narrowing asymmetry:
 
 **Verification:** `npm run verify:ai-gates` — a zero-dependency script beside
 `verify-parity.mjs` that imports the real module (Node 24 strips types on
-import, so there is no second copy to drift). Twelve cases; the four marked
+import, so there is no second copy to drift). Thirteen cases; the three marked
 ESCALATION are the ones that matter. If any fails, a narrowing gate can widen
 the allowed set and "enable at user level" becomes a route around a tenant
 policy — stop and fix before continuing.
@@ -216,7 +216,7 @@ page without a block has no `ai` key at all rather than `ai: undefined`.
 
 - [ ] **Step 1: Serve gates 2–8 from a JSON file**
 
-Same bearer check as `/preferences`. Header comment must state, in the file,
+Serves gates 2-7. Same bearer check as `/preferences`. Header comment must state, in the file,
 that this is a stand-in for a real policy service and enforces nothing —
 `dummy-api` already says it is not a security boundary, and this endpoint is the
 one most likely to be mistaken for governance.
@@ -401,9 +401,9 @@ Plus, per task, the checks listed above. The two that matter most:
 
 Carried from spec §13. Task 1 can proceed without them; Task 3 cannot.
 
-1. Is gate 8 (`role`) in scope, given there is no authorization layer here? If
-   not, drop it from `GATES` rather than shipping a role selector that appears
-   to gate AI and does not.
+1. ~~Is gate 8 (`role`) in scope?~~ **Answered 2026-09-03: no.** Removed from
+   `GATES`; eight gates remain. `NARROWING_ONLY` in `gates.ts` records where to
+   re-add it if authorization is ever built.
 2. Does "application level" mean the two shells, or a tenant's licensed product
    set?
 3. Retention classes — who defines them, per tenant or per region?

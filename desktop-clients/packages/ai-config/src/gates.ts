@@ -1,7 +1,7 @@
 /**
  * Who may use AI, where, and for what.
  *
- * Nine gates, evaluated in order, first denial decides. See
+ * Eight gates, evaluated in order, first denial decides. See
  * docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md §4.
  *
  * This module is deliberately dependency-free and side-effect-free: it is the
@@ -19,7 +19,6 @@ export const GATES = [
   "module",
   "page",
   "useCase",
-  "role",
   "user",
 ] as const;
 
@@ -33,8 +32,14 @@ export type Gate = (typeof GATES)[number];
  * intersected back in. For a capability that reads clinical records that is not
  * a defensible default, so narrowing is enforced structurally rather than left
  * to the caller to respect.
+ *
+ * A `role` gate sat here until it was removed from scope. It was specified
+ * against an authorization layer this application does not have, so it would
+ * have checked nothing while appearing to gate AI -- which is worse than its
+ * absence, because the absence is at least visible. Re-add it here, not just to
+ * GATES, if authorization is ever built.
  */
-export const NARROWING_ONLY: ReadonlySet<Gate> = new Set<Gate>(["role", "user"]);
+export const NARROWING_ONLY: ReadonlySet<Gate> = new Set<Gate>(["user"]);
 
 export interface GateState {
   /** `undefined` means this gate expresses no opinion, and it passes. */

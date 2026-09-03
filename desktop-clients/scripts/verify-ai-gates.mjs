@@ -30,25 +30,28 @@ const CASES = [
     expect: { allowed: true, decidedBy: "user", useCases: ["a"] } },
 
   // --- the set is an intersection ----------------------------------------
-  { name: "page [a,b] narrowed by role [a]",
-    states: { page: { useCases: ["a", "b"] }, role: { useCases: ["a"] } },
+  { name: "page [a,b] narrowed by user [a]",
+    states: { page: { useCases: ["a", "b"] }, user: { useCases: ["a"] } },
     expect: { allowed: true, useCases: ["a"] } },
+  { name: "useCase gate narrows the page's set",
+    states: { page: { useCases: ["a", "b"] }, useCase: { useCases: ["b"] } },
+    expect: { allowed: true, useCases: ["b"] } },
   { name: "requested id outside the set",
     states: { page: { useCases: ["a"] } }, requested: "z",
     expect: { allowed: false, decidedBy: "useCase" } },
 
   // --- narrowing gates must never widen ----------------------------------
-  { name: "ESCALATION: role names b, page did not",
-    states: { page: { useCases: ["a"] }, role: { useCases: ["a", "b"] } },
+  { name: "ESCALATION: user names b, page did not",
+    states: { page: { useCases: ["a"] }, user: { useCases: ["a", "b"] } },
     expect: { allowed: true, useCases: ["a"] } },
-  { name: "ESCALATION: role is the ONLY gate to name a set",
-    states: { role: { useCases: ["a"] } },
-    expect: { allowed: false, decidedBy: "useCase" } },
   { name: "ESCALATION: user is the ONLY gate to name a set",
     states: { user: { useCases: ["a"] } },
     expect: { allowed: false, decidedBy: "useCase" } },
-  { name: "ESCALATION: user re-adds what role removed",
-    states: { page: { useCases: ["a", "b"] }, role: { useCases: ["a"] }, user: { useCases: ["a", "b"] } },
+  { name: "ESCALATION: user re-adds what useCase removed",
+    states: { page: { useCases: ["a", "b"] }, useCase: { useCases: ["a"] }, user: { useCases: ["a", "b"] } },
+    expect: { allowed: true, useCases: ["a"] } },
+  { name: "role is no longer a gate: an unknown key is ignored",
+    states: { page: { useCases: ["a"] }, role: { allowed: false } },
     expect: { allowed: true, useCases: ["a"] } },
 
   // --- an emptied set is a denial, not a pass ----------------------------
