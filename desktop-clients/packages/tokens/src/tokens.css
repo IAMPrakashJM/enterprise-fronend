@@ -18,7 +18,10 @@
   --fs-result: 1;
   --fs-scale: var(--fs-shell);
   --radius: 14px;
-  --header-height: 64px;
+  /* 48px, matching Vantage's h-12 header. The sidebar's brand block reads this
+     too, so the two stay aligned when the rail overlays the page -- that
+     alignment is the reason this is a token and not a local height. */
+  --header-height: 48px;
   --tabbar-height: 42px;
   --footer-height: 32px;
   --sidebar-collapsed: 68px;

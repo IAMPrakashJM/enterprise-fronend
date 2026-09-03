@@ -112,9 +112,9 @@ export function Sidebar() {
       >
       <div className="flex h-[var(--header-height)] shrink-0 items-center gap-3 border-b border-[var(--border)] px-3">
         {byHover ? (
-          <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-[var(--primary)] text-white shadow-md">
+          <div className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[var(--primary)] text-white shadow-md">
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,.38),transparent_42%)]" />
-            <Command className="relative size-5" />
+            <Command className="relative size-4" />
           </div>
         ) : (
           <button
@@ -123,10 +123,10 @@ export function Sidebar() {
             aria-label={expanded ? "Collapse navigation" : "Expand navigation"}
             title={expanded ? "Collapse navigation" : "Expand navigation"}
             onClick={() => setLatched((previous) => !previous)}
-            className="focus-ring relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-[var(--primary)] text-white shadow-md"
+            className="focus-ring relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[var(--primary)] text-white shadow-md"
           >
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,.38),transparent_42%)]" />
-            <Command className="relative size-5" />
+            <Command className="relative size-4" />
           </button>
         )}
         {expanded ? <div className="min-w-0 flex-1"><div className="truncate text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary)]">ONE</span></div><div className="truncate text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] text-[var(--text-subtle)]">Enterprise ERP</div></div> : null}
