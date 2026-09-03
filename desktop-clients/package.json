@@ -11,11 +11,13 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "dev": "turbo run dev",
-    "dev:all": "node ../dummy-api/server.mjs & turbo run dev",
+    "dev:stack": "node ../dummy-api/server.mjs & API=$!; trap 'kill $API 2>/dev/null' EXIT INT TERM; npm run dev -w web",
+    "dev:all": "node ../dummy-api/server.mjs & API=$!; trap 'kill $API 2>/dev/null' EXIT INT TERM; turbo run dev",
     "dev:api": "node ../dummy-api/server.mjs",
     "dev:web": "npm run dev -w web",
     "dev:desktop": "npm run dev -w desktop",
     "desktop": "npm run tauri -w desktop -- dev",
+    "stop": "lsof -ti tcp:3000 tcp:3001 tcp:4000 | xargs kill 2>/dev/null || true",
     "verify:parity": "node scripts/verify-parity.mjs"
   },
   "devDependencies": {
