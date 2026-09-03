@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { ArrowRight, Bell, Check, CheckCheck, Inbox, MessageSquareText, Search } from "lucide-react";
+import { ArrowRight, Bell, Check, CheckCheck, CircleAlert, CircleCheck, Inbox, Info, MessageSquareText, Search, Send, TriangleAlert } from "lucide-react";
 import type { MessageItem, NotificationItem, NotificationKind, PageDefinition } from "@pepbits/erp-config";
 import { MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY } from "@pepbits/erp-config";
 import { useERP } from "@pepbits/erp-shell";
-import { Badge, Button, Input, cn } from "@pepbits/ops-ui";
+import { Badge, Button, Input, Textarea, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
 
 /**
@@ -35,6 +35,38 @@ const KIND_DOT: Record<NotificationKind, string> = {
 const KIND_TONE: Record<NotificationKind, "warning" | "danger" | "success" | "info"> = {
   warning: "warning", danger: "danger", success: "success", info: "info",
 };
+
+/* The severity as a shape as well as a colour. A palette alone excludes anyone
+   who cannot separate the hues, and a red dot beside a green one is the exact
+   pair that goes. */
+const KIND_ICON: Record<NotificationKind, React.ComponentType<{ className?: string }>> = {
+  warning: TriangleAlert, danger: CircleAlert, success: CircleCheck, info: Info,
+};
+
+const KIND_WASH: Record<NotificationKind, string> = {
+  warning: "bg-[color-mix(in_srgb,var(--warning)_14%,transparent)] text-[var(--warning)]",
+  danger: "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger)]",
+  success: "bg-[color-mix(in_srgb,var(--success)_14%,transparent)] text-[var(--success)]",
+  info: "bg-[var(--primary-soft)] text-[var(--primary)]",
+};
+
+/* A stable colour per person, derived from the initials rather than the row
+   index, so someone keeps their colour when the list is filtered or sorted --
+   the whole point of a colour is that you learn it. */
+const AVATAR_WASH = [
+  "bg-[color-mix(in_srgb,var(--primary)_16%,transparent)] text-[var(--primary-strong)]",
+  "bg-[color-mix(in_srgb,var(--success)_16%,transparent)] text-[var(--success)]",
+  "bg-[color-mix(in_srgb,var(--warning)_18%,transparent)] text-[var(--warning)]",
+  "bg-[color-mix(in_srgb,var(--violet,var(--primary))_16%,transparent)] text-[var(--primary)]",
+  "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger)]",
+];
+const washFor = (seed: string) =>
+  AVATAR_WASH[[...seed].reduce((sum, c) => sum + c.charCodeAt(0), 0) % AVATAR_WASH.length];
+
+/* "2m", "1d" -> a bucket. The fixtures carry humanised ages rather than dates,
+   so this reads the unit off the end instead of doing arithmetic on a clock
+   that does not exist. */
+const bucketOf = (time: string) => (/[dw]$/.test(time.trim()) ? "Earlier" : "Today");
 
 type Row = {
   id: string;
@@ -77,6 +109,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
   const [selectedId, setSelectedId] = useState<string | null>(all[0]?.id ?? null);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "unread">("all");
+  const [reply, setReply] = useState("");
 
   const isUnread = (row: Row) => row.unread && !readIds.includes(row.id);
 
@@ -119,7 +152,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
         <Badge tone={unreadCount ? "info" : "neutral"}>{unreadCount} unread</Badge>
 
         <div className="ms-auto flex items-center gap-2">
-          <div className="w-56">
+          <div className="w-72">
             <Input placeholder={messages ? "Search people and messages…" : "Search notifications…"}
               value={query} onChange={(event) => setQuery(event.target.value)} prefix={<Search className="size-3.5" />} />
           </div>
@@ -151,45 +184,86 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                 {filter === "unread" ? "Everything has been read." : "No item matches that search."}
               </span>
             </div>
-          ) : shown.map((row) => (
-            <button key={row.id} type="button" onClick={() => open(row)}
-              className={cn("flex w-full gap-2.5 border-b border-[var(--border)] px-3 py-2.5 text-left transition last:border-0",
-                selected?.id === row.id ? "bg-[var(--primary-soft)]" : "hover:bg-[var(--surface-2)]")}>
-              {row.initials ? (
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--primary-soft)] text-[length:calc(9.5px*var(--fs-scale))] font-black text-[var(--primary-strong)]">{row.initials}</span>
-              ) : (
-                <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", KIND_DOT[row.kind ?? "info"])} />
-              )}
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span className={cn("truncate text-[length:calc(10.5px*var(--fs-scale))]", isUnread(row) ? "font-black" : "font-bold text-[var(--text-muted)]")}>{row.title}</span>
-                <span className="truncate text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{row.preview}</span>
-              </span>
-              <span className="ms-auto flex shrink-0 flex-col items-end gap-1">
-                <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]">{row.time}</span>
-                {isUnread(row) ? <span className="size-1.5 rounded-full bg-[var(--primary)]" /> : null}
-              </span>
-            </button>
-          ))}
+          ) : shown.map((row, index) => {
+            const bucket = bucketOf(row.time);
+            const newBucket = index === 0 || bucketOf(shown[index - 1].time) !== bucket;
+            const Icon = row.kind ? KIND_ICON[row.kind] : null;
+            return (
+              <React.Fragment key={row.id}>
+                {newBucket ? (
+                  <div className="sticky top-0 z-[1] border-b border-[var(--border)] bg-[var(--surface-2)]/95 px-3 py-1 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.1em] text-[var(--text-subtle)] backdrop-blur">
+                    {bucket}
+                  </div>
+                ) : null}
+                <button type="button" onClick={() => open(row)}
+                  className={cn(
+                    /* The unread accent is a border on the leading edge rather
+                       than a background: a filled row competes with selection,
+                       and then neither state is legible when both are true. */
+                    "relative flex w-full gap-2.5 border-b border-s-2 border-[var(--border)] px-3 py-2.5 text-left transition",
+                    isUnread(row) ? "border-s-[var(--primary)]" : "border-s-transparent",
+                    selected?.id === row.id ? "bg-[var(--primary-soft)]" : "hover:bg-[var(--surface-2)]")}>
+                  {row.initials ? (
+                    <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-full text-[length:calc(9.5px*var(--fs-scale))] font-black", washFor(row.initials))}>
+                      {row.initials}
+                    </span>
+                  ) : Icon ? (
+                    <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-full", KIND_WASH[row.kind ?? "info"])}>
+                      <Icon className="size-4" />
+                    </span>
+                  ) : null}
+
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="flex items-baseline gap-2">
+                      <span className={cn("min-w-0 flex-1 truncate text-[length:calc(10.5px*var(--fs-scale))]",
+                        isUnread(row) ? "font-black text-[var(--text)]" : "font-bold text-[var(--text-muted)]")}>{row.title}</span>
+                      <span className="shrink-0 text-[length:calc(9px*var(--fs-scale))] tabular-nums text-[var(--text-subtle)]">{row.time}</span>
+                    </span>
+                    {row.role ? (
+                      <span className="truncate text-[length:calc(8.5px*var(--fs-scale))] font-bold uppercase tracking-[.06em] text-[var(--text-subtle)]">{row.role}</span>
+                    ) : null}
+                    <span className="line-clamp-2 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{row.preview}</span>
+                  </span>
+
+                  {isUnread(row) ? <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[var(--primary)]" /> : null}
+                </button>
+              </React.Fragment>
+            );
+          })}
         </div>
 
         {/* reading pane */}
         <div className="nex-scrollbar min-h-0 overflow-y-auto p-4">
           {selected ? (
             <div className="mx-auto max-w-2xl">
-              <div className="flex flex-wrap items-start gap-2">
+              {/* A header block rather than a line of text: the sender is the
+                  first thing you look for, so it gets the weight. */}
+              <div className="flex items-start gap-3 border-b border-[var(--border)] pb-4">
+                {selected.initials ? (
+                  <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-full text-[length:calc(12px*var(--fs-scale))] font-black", washFor(selected.initials))}>
+                    {selected.initials}
+                  </span>
+                ) : selected.kind ? (
+                  <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-full", KIND_WASH[selected.kind])}>
+                    {React.createElement(KIND_ICON[selected.kind], { className: "size-5" })}
+                  </span>
+                ) : null}
+
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.01em]">{selected.title}</h2>
-                  <div className="mt-1 flex flex-wrap items-center gap-2 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
-                    <span>{selected.role ?? (selected.module ? MODULES[selected.module as keyof typeof MODULES]?.label ?? selected.module : "System")}</span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.01em]">{selected.title}</h2>
+                    {selected.kind ? <Badge tone={KIND_TONE[selected.kind]}>{selected.kind}</Badge> : null}
+                    {isUnread(selected) ? <Badge tone="info">unread</Badge> : null}
+                  </div>
+                  <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
+                    <span className="font-bold">{selected.role ?? (selected.module ? MODULES[selected.module as keyof typeof MODULES]?.label ?? selected.module : "System")}</span>
                     <span aria-hidden>•</span>
                     <span>{selected.time} ago</span>
                   </div>
                 </div>
-                {selected.kind ? <Badge tone={KIND_TONE[selected.kind]}>{selected.kind}</Badge> : null}
-                {isUnread(selected) ? <Badge tone="info">unread</Badge> : null}
               </div>
 
-              <p className="mt-4 text-[length:calc(11px*var(--fs-scale))] leading-relaxed">{selected.detail}</p>
+              <p className="mt-4 text-[length:calc(11.5px*var(--fs-scale))] leading-[1.75]">{selected.detail}</p>
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {selected.target ? (
@@ -208,6 +282,23 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                   Goes to <span className="font-mono">{selected.target.pageId}</span>
                   {PAGE_REGISTRY[selected.target.pageId] ? "" : " — not registered in this build"}
                 </p>
+              ) : null}
+
+              {/* Reply exists only on messages: a notification has no one to
+                  answer. It is a compose box over a mock, and says so on send
+                  rather than pretending something was delivered. */}
+              {messages ? (
+                <div className="mt-6 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] p-3">
+                  <div className="mb-2 text-[length:calc(9.5px*var(--fs-scale))] font-black">Reply to {selected.title.split(" ")[0]}</div>
+                  <Textarea rows={3} placeholder="Write a reply…" value={reply} onChange={(event) => setReply(event.target.value)} />
+                  <div className="mt-2 flex items-center gap-2">
+                    <Button size="sm" variant="primary" leftIcon={<Send className="size-3.5" />} disabled={!reply.trim()}
+                      onClick={() => { setReply(""); toast({ title: "Reply not sent", message: "There is no messaging service behind this screen — the draft was discarded.", type: "warning" }); }}>
+                      Send
+                    </Button>
+                    <span className="text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-subtle)]">Nothing is delivered; this is a prototype.</span>
+                  </div>
+                </div>
               ) : null}
             </div>
           ) : (
