@@ -144,3 +144,4 @@ build log.
 - `docs/superpowers/specs/2026-09-03-nexora-monorepo-design.md` — the design and its constraints
 - `docs/superpowers/plans/2026-09-03-nexora-monorepo.md` — the implementation plan
 - `docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md` — the gated AI assistant, draft
+- `docs/superpowers/plans/2026-09-03-contextual-ai-assistant.md` — its seven-task plan
