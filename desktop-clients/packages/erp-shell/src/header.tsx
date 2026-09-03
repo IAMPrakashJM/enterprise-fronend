@@ -164,11 +164,15 @@ export function Header() {
         )}
       </ActionMenu>
 
-      {/* Definite width, not content width. Content-sized, this control changed
-          width with the selected branch -- "Sharjah • Operations Hub" is wider
-          than "Kochi • Delivery Center" -- so the whole header shifted on every
-          switch. 296px is the widest label's natural width (236px) plus 25%. */}
-      <DropdownSelect value={branch} options={BRANCHES} onChange={setBranch} label="Branch" compact className="hidden lg:block lg:w-[296px]" leading={<Building2 className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
+      {/* The width goes on triggerClassName, not className: className lands on
+          the positioning wrapper, while the BUTTON carries compact's
+          max-w-40 (160px) -- which silently capped an earlier attempt to set
+          this on the wrapper. lg:max-w-none lifts that cap; the media query
+          also makes it win over the unprefixed max-w-40.
+          Definite rather than content width, because content-sized it changed
+          with the selected branch -- "Sharjah • Operations Hub" is wider than
+          "Kochi • Delivery Center" -- so the header shifted on every switch. */}
+      <DropdownSelect value={branch} options={BRANCHES} onChange={setBranch} label="Branch" hideLabel compact className="hidden lg:block" triggerClassName="lg:w-[296px] lg:max-w-none" leading={<Building2 className="size-3.5 shrink-0 text-[var(--text-muted)]" />} menuClassName="w-64" />
 
       <div className="hidden min-w-0 items-center gap-2 px-1.5 2xl:flex">
         <div className="min-w-0 text-right"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-black">{user?.name ?? "Signed out"}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{user?.title ?? ""}</div></div>
