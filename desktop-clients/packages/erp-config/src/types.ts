@@ -158,11 +158,16 @@ export interface ModuleDefinition {
   navigation: MenuSection[];
 }
 
-/** Gate 1 of nine. Absent means the assistant never renders on this page --
-    the build-time decision, and the only gate a tenant administrator cannot
-    turn back on. See the AI assistant spec §4.1. */
+/** Gate 1. The build-time decision, and the only gate a tenant administrator
+    cannot turn back on. See the AI assistant spec §4.1.
+
+    `enabled` was once the literal `true`, because absent meant off and the only
+    reason to write a block was to turn the assistant ON. Since PAGE_REGISTRY
+    grew a per-kind default, absent means ON, and that type left a page with no
+    way to opt out at all -- the type forbade the one value that now mattered.
+    It is a boolean because `{ enabled: false }` has to be expressible. */
 export interface PageAiConfig {
-  enabled: true;
+  enabled: boolean;
   /** Ids from @pepbits/ai-config's USE_CASES. Held as strings so erp-config
       stays free of an ai-config dependency: the arrow runs ai-config ->
       erp-config, never back. Validity is checked at load by the AI layer. */

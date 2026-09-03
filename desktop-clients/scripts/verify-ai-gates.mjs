@@ -113,6 +113,12 @@ const POLICY_CASES = [
   { name: "page gate denies",
     policy: POLICY, page: { pageId: "locked-page", module: "finance", build: BUILD }, user: true,
     expect: { allowed: false, decidedBy: "page" } },
+  /* The case that was missing. `{ enabled: false }` is the only way a page can
+     refuse the assistant now that absence means yes, and gate 1 tested presence
+     rather than the flag -- so the loudest possible no read as a yes. */
+  { name: "explicit { enabled: false } denies at gate 1, even with use cases named",
+    policy: POLICY, page: { pageId: "p", module: "finance", build: { enabled: false, useCases: ["worklist.summarise-selection"] } }, user: true,
+    expect: { allowed: false, decidedBy: "build" } },
   { name: "no build block: gate 1 denies before any policy is consulted",
     policy: POLICY, page: { pageId: "p", module: "finance" }, user: true,
     expect: { allowed: false, decidedBy: "build" } },

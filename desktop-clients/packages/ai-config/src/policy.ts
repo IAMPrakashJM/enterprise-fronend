@@ -34,7 +34,7 @@ export interface PageAiInput {
   pageId: string;
   module: string;
   /** Gate 1: the page's build-time block, or undefined if it has none. */
-  build?: { enabled: true; useCases: string[] };
+  build?: { enabled: boolean; useCases: string[] };
 }
 
 /**
@@ -53,10 +53,17 @@ export function gatesForPage(
 ): Partial<Record<Gate, GateState>> {
   const gates: Partial<Record<Gate, GateState>> = {};
 
-  /* Gate 1. Absent means the assistant never renders here, and no runtime
-     configuration can turn it on -- it is the one gate an administrator cannot
-     reach. */
-  gates.build = page.build ? { allowed: true, useCases: page.build.useCases } : { allowed: false };
+  /* Gate 1. Absent OR explicitly disabled means the assistant never renders
+     here, and no runtime configuration can turn it on -- it is the one gate an
+     administrator cannot reach.
+
+     This tested PRESENCE, not `enabled`, which was harmless while the type
+     admitted only `true`: writing a block was the only way to say yes, so
+     "there is a block" and "it is enabled" were the same statement. They stopped
+     being the same when PAGE_REGISTRY grew a per-kind default and a page needed
+     a way to opt OUT. A `{ enabled: false }` block would have read as enabled --
+     the loudest possible way of saying no, ignored. */
+  gates.build = page.build?.enabled ? { allowed: true, useCases: page.build.useCases } : { allowed: false };
 
   if (policy) {
     for (const gate of ["platform", "tenant", "application"] as const) {
