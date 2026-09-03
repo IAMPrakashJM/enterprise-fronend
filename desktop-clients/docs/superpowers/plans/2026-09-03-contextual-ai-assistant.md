@@ -409,11 +409,28 @@ set — so it cannot name a use case the panel could not invoke.
 
 - [ ] **Step 2: Inline action**
 
-One use case, one click, result in place. Worklist row and form section.
+One use case, one click, result in place — in the worklist's selection bar,
+where the rows it summarises are the rows already selected.
 
-**Verification:** with a use case removed by the role gate, it disappears from
-the panel, the terminal's command list AND the inline affordance. If it survives
-in any of the three, the engine is not shared.
+No review stage, deliberately: the affordance names ONE use case whose `reads`
+are fixed and inspectable in the panel, and a confirmation on every click of a
+button whose scope never changes is a dialog people learn to dismiss without
+reading. Clinical use cases are refused outright here rather than confirmed —
+spec §8's second acknowledgement needs a surface that shows the fields first,
+and this one does not.
+
+**Verification:** `npm run verify:ai-modes`, in two halves.
+
+BEHAVIOUR — removing a use case at the use-case gate (the role gate having been
+dropped from scope) takes it out of the resolved set, leaves the others, and
+denies outright once the set is empty.
+
+STRUCTURE — no surface calls `resolveAi`, `gatesForPage` or `getUseCase`; all
+three read `useAssistant`; the terminal builds its command list from
+`assistant.useCases`; the inline action checks membership rather than
+re-resolving. This half is the one that survives a refactor: the behavioural
+half would still pass if someone added a second resolver, and the surface with
+the second resolver is the one nobody would check.
 
 ## Task 8: Real AI service — OUT OF SCOPE HERE
 

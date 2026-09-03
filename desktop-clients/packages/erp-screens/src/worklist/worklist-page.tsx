@@ -13,6 +13,7 @@ import { EmptyState } from "@pepbits/ops-ui";
 import { Pagination } from "@pepbits/ops-ui";
 import { useColumnLayout } from "./use-column-layout";
 import { usePublishAiSources } from "@pepbits/ai-client";
+import { InlineAiAction } from "@pepbits/ai-ui";
 import { exportRows } from "./export-rows";
 import { FilterPanel } from "./filter-panel";
 import { DataTable } from "./data-table";
@@ -175,7 +176,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
 
       <div data-tour="filters"><FilterPanel config={config} values={filters} onChange={changeFilter} advancedOpen={advancedOpen} onAdvancedToggle={() => setAdvancedOpen((previous) => !previous)} onApply={() => toast({ title: "Filters applied", message: `${filtered.length} matching records found.`, type: "success" })} onReset={reset} activeFilterCount={activeFilterCount} /></div>
 
-      {selected.length ? <div className="animate-slide-up flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--primary-soft)] px-3 py-2"><Badge tone="brand">{selected.length} selected</Badge><span className="text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">Bulk operations apply only to records you can update.</span><div className="ml-auto flex gap-1.5"><Button size="xs" variant="secondary" leftIcon={<Archive className="size-3" />} onClick={() => preferences.confirmBulkActions ? setConfirmArchive(true) : archive()}>Archive</Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />} onClick={() => doExport(selectedRows, "selected records")}>Export</Button><Button size="xs" variant="ghost" leftIcon={<FilterX className="size-3" />} onClick={() => setSelected([])}>Clear</Button></div></div> : null}
+      {selected.length ? <div className="animate-slide-up flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--primary-soft)] px-3 py-2"><Badge tone="brand">{selected.length} selected</Badge><span className="text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">Bulk operations apply only to records you can update.</span><div className="ml-auto flex gap-1.5"><Button size="xs" variant="secondary" leftIcon={<Archive className="size-3" />} onClick={() => preferences.confirmBulkActions ? setConfirmArchive(true) : archive()}>Archive</Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />} onClick={() => doExport(selectedRows, "selected records")}>Export</Button><InlineAiAction useCaseId="worklist.summarise-selection" label="Summarise" /><Button size="xs" variant="ghost" leftIcon={<FilterX className="size-3" />} onClick={() => setSelected([])}>Clear</Button></div></div> : null}
 
       <section className="min-h-[420px] overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]">
         <div className="flex min-h-11 flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] px-3 py-2">
