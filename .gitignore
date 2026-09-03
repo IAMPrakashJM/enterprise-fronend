@@ -12,3 +12,6 @@ dist
 tsconfig.tsbuildinfo
 desktop-clients/apps/desktop/src-tauri/target
 desktop-clients/apps/desktop/src-tauri/gen
+
+# run.sh state
+.run/
