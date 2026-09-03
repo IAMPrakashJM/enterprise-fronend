@@ -303,13 +303,17 @@ a secret can arrive at the client.
 | `GET /ai/config` unauthenticated | 401 |
 | `GET /ai/config` signed in | 200, `credential.configured: false` |
 | grep the response for the secret in `ai-config.example.json` | no match, ever |
-| `PUT /ai/config` with a `credential` key | 400 |
-| `PUT /ai/config/credential` | 501, message names the vault |
-| any write endpoint | 403 until authorization exists |
+| `PUT /ai/config` with a `credential` key | **403, not 400** — authorization precedes validation, so a caller who may not write never learns whether their body was well formed. The 400 branch stays in the code as the contract a real service must honour. |
+| `PUT /ai/config/credential` | **501, not 403** — 403 would imply an administrator could do this. Nobody can: there is no vault. "Not implemented" is the durable answer and does not send someone hunting for the right account. |
+| `DELETE /ai/config/credential` | 204 — a no-op that succeeds, so the empty state is reachable and the screen can be built against a real response |
+| any other write endpoint | 403 until authorization exists |
 | a `tenantId` in a request body | ignored; response carries the session's |
 
-The grep is the one to keep in CI: it is the check that catches someone adding
-a convenience field years from now.
+The grep is the one to keep in CI, and it is now a script rather than an
+instruction: `npm run verify:ai-credential` submits a canary through BOTH write
+paths and then looks for it in four responses, everything under `dummy-api/data`
+and the API log. It is the check that catches someone adding a convenience field
+years from now, so it should run wherever the build runs.
 
 ## Task 5: Context assembly and the transparency panel
 

@@ -1,0 +1,26 @@
+{
+  "NEX-AE-001": {
+    "provider": {
+      "id": "unset",
+      "label": "No provider configured",
+      "endpoint": ""
+    },
+    "model": {
+      "id": "unset",
+      "label": "No model selected",
+      "contextWindow": 0
+    },
+    "limits": {
+      "requestsPerMinute": 20,
+      "tokensPerDay": 200000,
+      "maxContextFields": 24
+    },
+    "prompts": [
+      { "id": "worklist.summarise.v1", "useCaseId": "worklist.summarise-selection", "version": 1, "updatedAt": "2026-09-03T00:00:00.000Z" },
+      { "id": "record.explain.v1", "useCaseId": "record.explain", "version": 1, "updatedAt": "2026-09-03T00:00:00.000Z" },
+      { "id": "form.draft-note.v1", "useCaseId": "form.draft-note", "version": 1, "updatedAt": "2026-09-03T00:00:00.000Z" }
+    ],
+    "retention": { "class": "standard", "days": 30 },
+    "dataSharing": { "providerTrainsOnContent": false, "region": "UAE North" }
+  }
+}
