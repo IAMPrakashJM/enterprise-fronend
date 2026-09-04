@@ -4,6 +4,8 @@ import React from "react";
 import { ArrowDownRight, ArrowUpRight, CalendarDays, ChevronRight, Circle, Clock3, Download, Ellipsis, Filter, Maximize2, RefreshCw, ShieldCheck, Sparkles, TrendingUp } from "lucide-react";
 import { dashboardData } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
+import { usePublishAiSources } from "@pepbits/ai-client";
+import { InlineAiAction } from "@pepbits/ai-ui";
 import { useERP, dashboardPageId as dashboardFor } from "@pepbits/erp-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
@@ -88,6 +90,11 @@ export function ModuleDashboard({ moduleKey }: { moduleKey?: ModuleKey }) {
   const key = moduleKey ?? currentModule;
   const data = dashboardData[key];
 
+  /* The figures on screen, offered to the assistant. Same contract as every
+     other publisher: the page hands over what it is already showing and learns
+     nothing about AI; the use case decides which keys of it may be read. */
+  usePublishAiSources(`dashboard:${key}`, { "page-metrics": data.kpis });
+
   return (
     <div className="flex w-full flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow-sm)]">
@@ -95,6 +102,7 @@ export function ModuleDashboard({ moduleKey }: { moduleKey?: ModuleKey }) {
         <div className="flex items-center gap-1.5"><Button size="xs" variant="ghost" leftIcon={<Filter className="size-3" />}>Filters</Button><Button size="xs" variant="ghost" leftIcon={<Download className="size-3" />} onClick={() => toast({ title: "Dashboard exported", message: "The mock snapshot was prepared as CSV.", type: "success" })}>Export</Button><Button size="xs" variant="secondary" leftIcon={<RefreshCw className="size-3" />} onClick={() => toast({ title: "Dashboard refreshed", message: "All widgets are synchronized with mock data.", type: "info" })}>Refresh</Button></div>
       </div>
 
+      <div className="flex justify-end"><InlineAiAction useCaseId="dashboard.explain-metrics" label="Explain figures" /></div>
       <div data-tour="kpis" className="grid grid-cols-2 gap-3 lg:grid-cols-3 2xl:grid-cols-6">
         {data.kpis.map((item, index) => <KpiCard key={item.label} item={item} index={index} />)}
       </div>

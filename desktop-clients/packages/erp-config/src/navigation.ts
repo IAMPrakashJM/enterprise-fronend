@@ -502,12 +502,31 @@ function defaultAiFor(kind: PageKind): PageAiConfig {
     case "billing":
       return { enabled: true, useCases: ["form.draft-note", "record.explain"] };
     case "dashboard":
-    case "library":
-    case "preferences":
-      return { enabled: true, useCases: ["record.explain"] };
+      return { enabled: true, useCases: ["dashboard.explain-metrics"] };
     case "reports":
+      return { enabled: true, useCases: ["report.summarise"] };
+    /* OFF, and that is the fix rather than a gap in it.
+
+       These pages offered `record.explain` and had no record to give it: the
+       button appeared, the transparency panel said nothing matched, and Send
+       was disabled. Honest, but a control that can only ever refuse is worse
+       than no control -- it costs a click to learn nothing.
+
+       A component gallery, a spreadsheet scratchpad and a preferences form have
+       nothing an approved use case may read, and inventing one to fill the hole
+       would mean writing a `reads` list to fit a screen rather than a purpose.
+       They opt out at gate 1, which is exactly what { enabled: false } is for. */
+    case "library":
     case "spreadsheet":
-      return { enabled: true, useCases: ["worklist.summarise-selection"] };
+    case "preferences":
+    /* The inbox joins them, and it is worth saying why rather than lumping it
+       in: "summarise my unread" is a genuinely good use case, but it is a use
+       case -- a named `reads` list over an inbox source, prompt and all -- not
+       something record.explain can be pointed at. Until that exists the pages
+       would inherit the worklist default and offer a button that can only
+       refuse, which is the state this change is removing. */
+    case "inbox":
+      return { enabled: false, useCases: [] };
     /* Nothing here offers the assistant, and the explicit block on the page
        means this arm is unreachable today. It is written anyway so a second
        ai-admin page cannot inherit the worklist default by omission. */

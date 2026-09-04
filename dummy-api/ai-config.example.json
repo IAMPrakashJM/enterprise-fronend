@@ -16,11 +16,44 @@
       "maxContextFields": 24
     },
     "prompts": [
-      { "id": "worklist.summarise.v1", "useCaseId": "worklist.summarise-selection", "version": 1, "updatedAt": "2026-09-03T00:00:00.000Z" },
-      { "id": "record.explain.v1", "useCaseId": "record.explain", "version": 1, "updatedAt": "2026-09-03T00:00:00.000Z" },
-      { "id": "form.draft-note.v1", "useCaseId": "form.draft-note", "version": 1, "updatedAt": "2026-09-03T00:00:00.000Z" }
+      {
+        "id": "worklist.summarise.v1",
+        "useCaseId": "worklist.summarise-selection",
+        "version": 1,
+        "updatedAt": "2026-09-03T00:00:00.000Z"
+      },
+      {
+        "id": "record.explain.v1",
+        "useCaseId": "record.explain",
+        "version": 1,
+        "updatedAt": "2026-09-03T00:00:00.000Z"
+      },
+      {
+        "id": "form.draft-note.v1",
+        "useCaseId": "form.draft-note",
+        "version": 1,
+        "updatedAt": "2026-09-03T00:00:00.000Z"
+      },
+      {
+        "id": "dashboard.explain-metrics.v1",
+        "useCaseId": "dashboard.explain-metrics",
+        "version": 1,
+        "updatedAt": "2026-09-04T00:00:00.000Z"
+      },
+      {
+        "id": "report.summarise.v1",
+        "useCaseId": "report.summarise",
+        "version": 1,
+        "updatedAt": "2026-09-04T00:00:00.000Z"
+      }
     ],
-    "retention": { "class": "standard", "days": 30 },
-    "dataSharing": { "providerTrainsOnContent": false, "region": "UAE North" }
+    "retention": {
+      "class": "standard",
+      "days": 30
+    },
+    "dataSharing": {
+      "providerTrainsOnContent": false,
+      "region": "UAE North"
+    }
   }
 }
