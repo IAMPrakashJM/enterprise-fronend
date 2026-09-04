@@ -8,6 +8,7 @@ import {
 import { EM_ELEMENTS, candidateLine, codesFor, deriveFromMdm, deriveFromTime, ordersFor, timeBandsFor } from "@pepbits/erp-config";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { TransparencyPanel, useAssistant } from "@pepbits/ai-ui";
+import { ConsultationRecorder } from "./recorder";
 import type { ConsultationOption, EmElementLevel, EmPatientType, PageDefinition } from "@pepbits/erp-config";
 import { useERP } from "@pepbits/erp-shell";
 import { Badge, Button, IconButton, Input, Textarea, cn } from "@pepbits/ops-ui";
@@ -356,6 +357,8 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
                   <Textarea label="Clinical reasoning" rows={3} value={values.assessment ?? ""} onChange={(e) => set("assessment", e.target.value)}
                     placeholder="Differential, evidence, and the relationship between problems." />
                 </div>
+              ) : s.id === "recording" ? (
+                <ConsultationRecorder onTranscript={(text) => set("hpi", `${(values.hpi ?? "").trim()}${values.hpi ? "\n\n" : ""}${text}`)} />
               ) : s.id === "coding" || s.id === "orders" ? (
                 (() => {
                   const coding = s.id === "coding";

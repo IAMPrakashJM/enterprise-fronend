@@ -95,3 +95,18 @@ export function verifyAiCredential(): Promise<AiAdminResult<AiCredentialStatus>>
 export function fetchAiUsage(): Promise<AiAdminResult<AiUsage>> {
   return request<AiUsage>("/ai/usage");
 }
+
+/**
+ * A credential for a scoped provider — speech, today.
+ *
+ * Same endpoint, same write-only contract, same status shape. A second store
+ * for speech keys would drift from this one, and it would be the copy with the
+ * weaker rules.
+ */
+export function setAiScopedCredential(scope: string, secret: string): Promise<AiAdminResult<never>> {
+  return request<never>("/ai/config/credential", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ scope, secret }),
+  });
+}
