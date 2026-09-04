@@ -605,7 +605,7 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
   "stock-on-hand": { kind: "worklist", entity: "drug", title: "Stock on Hand" },
   "batch-expiry": { kind: "worklist", entity: "drug", title: "Batch & Expiry" },
   "controlled-register": { kind: "worklist", entity: "drug", title: "Controlled Register" },
-  "consultation-entry": { kind: "form", entity: "consultation", title: "New Consultation", subtitle: "Record an outpatient consultation: presentation, examination, assessment and plan." },
+  "consultation-entry": { kind: "consultation", entity: "consultation", title: "New Consultation", subtitle: "Composed from consultation type, specialty, complaint and patient context." },
   "consultation-worklist": { kind: "worklist", entity: "consultation", title: "Consultations", subtitle: "Outpatient consultations by specialty, clinician and outcome." },
   "ai-administration": { kind: "ai-admin", entity: "ai", title: "AI Administration", subtitle: "Provider, credential, limits and prompts for this tenant's assistant.", ai: { enabled: false, useCases: [] } },
   "spreadsheet-studio": { kind: "spreadsheet", title: "Spreadsheet Studio" },

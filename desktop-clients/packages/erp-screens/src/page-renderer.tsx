@@ -13,6 +13,7 @@ import { SpreadsheetPage } from "./spreadsheet";
 import { LibraryPage } from "./library";
 import { AiAdministration } from "@pepbits/ai-ui";
 import { InboxPage } from "./inbox";
+import { ConsultationPage } from "./consultation";
 
 /* The switch body is unchanged from EnterpriseApp's PageRenderer. What changed is
    where mode and recordId come from: an explicit target, supplied by the route on
@@ -32,6 +33,7 @@ export function PageRenderer({ target, showTabPreferences = true }: { target: Na
     case "library": return <LibraryPage page={page} />;
     case "ai-admin": return <AiAdministration />;
     case "inbox": return <InboxPage page={page} />;
+    case "consultation": return <ConsultationPage page={page} />;
     default: return <WorklistPage page={page} />;
   }
 }
