@@ -32,9 +32,22 @@
       },
       "healthcare": {
         "allowed": false
+      },
+      "pharmacy": {
+        "allowed": true
       }
     },
-    "pages": {},
+    "pages": {
+      "prescription-queue": {
+        "allowed": false
+      },
+      "dispense-history": {
+        "allowed": false
+      },
+      "medication-review": {
+        "allowed": false
+      }
+    },
     "useCases": {}
   }
 }

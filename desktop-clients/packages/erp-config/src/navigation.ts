@@ -38,6 +38,7 @@ import {
   PackageOpen,
   PanelTop,
   Percent,
+  Pill,
   ReceiptText,
   RefreshCw,
   Scale,
@@ -425,6 +426,66 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
       },
     ],
   },
+  pharmacy: {
+    id: "pharmacy",
+    label: "Pharmacy",
+    shortLabel: "RX",
+    description: "Dispensing, formulary, stock, controlled substances and procurement",
+    accent: "#7a5cd6",
+    icon: Pill,
+    navigation: [
+      { id: "rx-overview", label: "Overview", items: [{ id: "pharmacy-dashboard", label: "Pharmacy Dashboard", icon: LayoutDashboard, pageId: "pharmacy-dashboard" }] },
+      {
+        id: "rx-dispensing", label: "Dispensing", items: [
+          { id: "rx-queue", label: "Prescriptions", icon: ClipboardCheck, children: [
+            { id: "prescription-queue", label: "Prescription Queue", pageId: "prescription-queue" },
+            { id: "dispense-history", label: "Dispense History", pageId: "dispense-history" },
+            { id: "medication-review", label: "Medication Review", pageId: "medication-review" },
+          ] },
+        ],
+      },
+      {
+        id: "rx-inventory", label: "Inventory", items: [
+          { id: "rx-formulary", label: "Formulary & Stock", icon: Boxes, children: [
+            { id: "drug-master", label: "Drug Master", pageId: "drug-master" },
+            { id: "stock-on-hand", label: "Stock on Hand", pageId: "stock-on-hand" },
+            { id: "batch-expiry", label: "Batch & Expiry", pageId: "batch-expiry" },
+            { id: "stock-transfer", label: "Stock Transfer", pageId: "stock-transfer" },
+          ] },
+          { id: "rx-controlled", label: "Controlled Substances", icon: ShieldCheck, children: [
+            { id: "controlled-register", label: "Controlled Register", pageId: "controlled-register" },
+            { id: "controlled-reconciliation", label: "Reconciliation", pageId: "controlled-reconciliation" },
+          ] },
+        ],
+      },
+      {
+        id: "rx-procurement", label: "Procurement", items: [
+          { id: "rx-buy", label: "Purchasing", icon: ReceiptText, children: [
+            { id: "pharmacy-requisition", label: "Requisitions", pageId: "pharmacy-requisition" },
+            { id: "pharmacy-goods-receipt", label: "Goods Receipt", pageId: "pharmacy-goods-receipt" },
+            { id: "pharmacy-supplier", label: "Supplier Master", pageId: "pharmacy-supplier" },
+          ] },
+        ],
+      },
+      {
+        id: "rx-insight", label: "Reports", items: [
+          { id: "rx-reports", label: "Analysis", icon: BarChart3, children: [
+            { id: "consumption-report", label: "Consumption", pageId: "consumption-report" },
+            { id: "expiry-risk-report", label: "Expiry Risk", pageId: "expiry-risk-report" },
+            { id: "stock-turn-report", label: "Stock Turn", pageId: "stock-turn-report" },
+          ] },
+        ],
+      },
+      {
+        id: "rx-setup", label: "Configuration", items: [
+          { id: "rx-config", label: "Pharmacy Setup", icon: Settings2, children: [
+            { id: "formulary-setup", label: "Formulary Setup", pageId: "formulary-setup" },
+            { id: "dispensing-rules", label: "Dispensing Rules", pageId: "dispensing-rules" },
+          ] },
+        ],
+      },
+    ],
+  },
   library: {
     id: "library",
     label: "Developer Library",
@@ -534,6 +595,16 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
   /* `consultation-entry` needs an explicit kind: inferredKind reads "report" and
      "dashboard" out of a page id and defaults everything else to worklist, so a
      form whose id ends in -entry would have rendered as a table of one row. */
+  /* Explicit entities: the suffix rule strips -master/-worklist/-report and the
+     rest, which does not reach "queue", "history" or "on-hand". Without these
+     the dispensing pages resolve to an entity named after themselves -- generic
+     rows, and outside PHI_ENTITIES, which is the half that matters. */
+  "prescription-queue": { kind: "worklist", entity: "prescription", title: "Prescription Queue", subtitle: "Prescriptions awaiting dispense, by ward and priority." },
+  "dispense-history": { kind: "worklist", entity: "prescription", title: "Dispense History", subtitle: "What has been dispensed, when and by whom." },
+  "medication-review": { kind: "worklist", entity: "prescription", title: "Medication Review", subtitle: "Prescriptions flagged for pharmacist review." },
+  "stock-on-hand": { kind: "worklist", entity: "drug", title: "Stock on Hand" },
+  "batch-expiry": { kind: "worklist", entity: "drug", title: "Batch & Expiry" },
+  "controlled-register": { kind: "worklist", entity: "drug", title: "Controlled Register" },
   "consultation-entry": { kind: "form", entity: "consultation", title: "New Consultation", subtitle: "Record an outpatient consultation: presentation, examination, assessment and plan." },
   "consultation-worklist": { kind: "worklist", entity: "consultation", title: "Consultations", subtitle: "Outpatient consultations by specialty, clinician and outcome." },
   "ai-administration": { kind: "ai-admin", entity: "ai", title: "AI Administration", subtitle: "Provider, credential, limits and prompts for this tenant's assistant.", ai: { enabled: false, useCases: [] } },
@@ -574,6 +645,21 @@ function flattenPages() {
  * screen that can only ever assemble an empty context. What a kind cannot feed
  * it does not advertise.
  */
+/** Modules where every page is clinical, whatever its entity says. */
+const CLINICAL_MODULES: ReadonlySet<string> = new Set(["healthcare"]);
+
+/**
+ * Entities that carry patient data wherever they appear.
+ *
+ * A set rather than a flag on each page, for the reason the healthcare rule was
+ * written the same way: the next page is the one nobody remembers to mark. Add a
+ * page whose entity is `prescription` in any module and it is covered the day it
+ * is added.
+ */
+const PHI_ENTITIES: ReadonlySet<string> = new Set([
+  "patient", "consultation", "encounter", "prescription", "dispense", "medication",
+]);
+
 function defaultAiFor(kind: PageKind): PageAiConfig {
   switch (kind) {
     case "form":
@@ -619,6 +705,9 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
     const explicit = explicitPages[pageId] ?? {};
     const inferredKind = pageId.includes("report") ? "reports" : pageId.includes("dashboard") ? "dashboard" : "worklist";
     const title = explicit.title ?? label;
+    /* Hoisted out of the returned object: the AI rule below decides from the
+       ENTITY, so it has to exist before the decision rather than beside it. */
+    const entity = explicit.entity ?? pageId.replace(/-(master|worklist|report|entry|config|review|setup)$/g, "");
     return [pageId, {
       id: pageId,
       title,
@@ -631,7 +720,7 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
         : `Search, review and manage ${title.toLowerCase()} records with saved views and configurable actions.`),
       kind: explicit.kind ?? inferredKind,
       module,
-      entity: explicit.entity ?? pageId.replace(/-(master|worklist|report|entry|config|review|setup)$/g, ""),
+      entity,
       /* Gate 1, now on for every page by default.
          This USED to carry `ai` through only when explicitPages declared it,
          so a page with no block was off at gate 1. That default was reversed
@@ -641,21 +730,21 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
          policy the server owns, which is the layer that can be changed without
          a client release. An explicit block still wins, INCLUDING an explicit
          `{ enabled: false }`, so a page can still opt out at build time. */
-      /* HEALTHCARE DOES NOT GET THE GENERAL USE CASES, and cannot opt into
-         them: the rule sits ahead of `explicit.ai` so no page can widen itself.
+      /* A page that holds patient data gets the clinical use cases and nothing
+         else, and cannot opt out -- the rule sits ahead of `explicit.ai` so no
+         page can widen itself.
 
-         It used to be a flat { enabled: false } for the whole module, because
-         the general set would have sent patient names to a third-party provider
-         and the redactor covered none of that. The clinical use cases exist now,
-         read no name at all, and have their dob masked on the way out -- so the
-         module offers those three and nothing else.
+         Keyed on the ENTITY, not the module. Healthcare is clinical throughout,
+         but pharmacy is not: a prescription queue carries a patient, a drug and
+         a dose -- the triple you least want at a general-purpose provider --
+         while a drug master carries stock levels and suppliers and is ordinary
+         supply-chain data. A per-module rule would have to be wrong about one of
+         them.
 
-         Gate 1 saying yes is not the same as the assistant appearing. The tenant
-         policy still denies `healthcare` server-side, which is the layer an
-         administrator can change once a PHI-approved provider is configured. One
-         switch, on the server, where it can be turned off again without a client
-         release. */
-      ai: module === "healthcare"
+         Gate 1 saying yes is still not the assistant appearing: the tenant
+         policy denies healthcare server-side, which is the layer an
+         administrator changes once a PHI-approved provider exists. */
+      ai: CLINICAL_MODULES.has(module) || PHI_ENTITIES.has(entity)
         ? { enabled: true, useCases: ["encounter.summarise", "documentation.gaps", "cohort.summarise-selection"] }
         : explicit.ai ?? defaultAiFor(explicit.kind ?? inferredKind),
     } satisfies PageDefinition];

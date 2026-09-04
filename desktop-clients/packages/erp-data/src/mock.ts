@@ -57,6 +57,42 @@ export const consultationRows = Array.from({ length: 72 }, (_, i) => ({
   status: ["Completed", "In progress", "Awaiting notes", "Completed", "Cancelled"][i % 5],
 }));
 
+/* Formulary. Ordinary stock data -- no patient anywhere in it, which is why the
+   pharmacy inventory pages keep the general use cases while dispensing does not. */
+const drugNames = ["Metformin", "Amoxicillin", "Atorvastatin", "Salbutamol", "Omeprazole", "Amlodipine", "Paracetamol", "Insulin glargine", "Enoxaparin", "Ceftriaxone", "Morphine sulfate", "Levothyroxine"];
+const forms = ["Tablet", "Capsule", "Injection", "Inhaler", "Oral solution", "Infusion"];
+
+export const drugRows = Array.from({ length: 96 }, (_, i) => ({
+  id: `DRG-${pad(31200 + i * 4)}`,
+  name: `${drugNames[i % drugNames.length]} ${[250, 500, 5, 10, 20, 100][i % 6]}mg`,
+  form: forms[i % forms.length],
+  atc: `${"ABCDEFGHJLMNPRSV"[i % 16]}${pad(i % 99).slice(-2)}`,
+  formulary: i % 7 === 0 ? "Non-formulary" : "Formulary",
+  controlled: i % 11 === 0 ? "Schedule 2" : i % 13 === 0 ? "Schedule 3" : "—",
+  onHand: (i * 37) % 1400,
+  reorderLevel: 120 + (i % 5) * 40,
+  unitCost: Number((1.2 + (i % 40) * 0.85).toFixed(2)),
+  supplier: ["Gulf Pharma", "Medline MENA", "Julphar", "NovaMed"][i % 4],
+  nextExpiry: `2027-${pad((i % 12) + 1).slice(-2)}-${pad((i % 27) + 1).slice(-2)}`,
+  status: (i * 37) % 1400 === 0 ? "Stock-out" : (i * 37) % 1400 < 120 + (i % 5) * 40 ? "Below reorder" : "In stock",
+}));
+
+/* Prescriptions. PHI: a patient, a drug and a dose together are exactly the
+   triple that must not reach a general-purpose provider. */
+export const prescriptionRows = Array.from({ length: 78 }, (_, i) => ({
+  id: `RX-${pad(72400 + i * 5)}`,
+  patient: `MRN-${pad(90210 + (i % 84) * 7)}`,
+  drug: `${drugNames[(i * 3) % drugNames.length]} ${[250, 500, 5, 10, 20, 100][i % 6]}mg`,
+  dose: ["1 tab BD", "1 tab OD", "2 tabs TDS", "10 units nocte", "1 puff PRN", "1 g IV BD"][i % 6],
+  route: ["Oral", "Oral", "Subcutaneous", "Inhaled", "Intravenous", "Topical"][i % 6],
+  duration: `${[3, 5, 7, 14, 28][i % 5]} days`,
+  prescriber: `Dr ${familyNames[(i * 5) % familyNames.length]}`,
+  ward: ["4A Medical", "4B Surgical", "2C Maternity", "ICU", "Outpatient"][i % 5],
+  prescribedOn: `2026-09-${pad((i % 28) + 1).slice(-2)}`,
+  priority: ["Routine", "Urgent", "Stat", "Routine"][i % 4],
+  status: ["Awaiting dispense", "Dispensed", "Partially dispensed", "On hold", "Cancelled"][i % 5],
+}));
+
 export const customerRows = Array.from({ length: 96 }, (_, i) => ({
   id: `CUS-${pad(2401 + i)}`,
   name: companies[i % companies.length] + (i > 15 ? ` ${Math.floor(i / 16) + 1}` : ""),
@@ -209,6 +245,47 @@ export function getWorklistConfig(pageId: string, title: string, entity = "recor
     description: `Configurable ${title.toLowerCase()} with saved filters, column layouts, table/card views and contextual record actions.`,
     basicFilters: baseFilters(),
     advancedFilters: advancedFilters(),
+  };
+
+  if (entity === "drug") return {
+    ...common,
+    rows: drugRows,
+    primaryKey: "id",
+    displayKey: "name",
+    columns: [
+      { key: "id", label: "Item code", sortable: true, defaultVisible: true },
+      { key: "name", label: "Drug", sortable: true, defaultVisible: true },
+      { key: "form", label: "Form", sortable: true, defaultVisible: true },
+      { key: "atc", label: "ATC", sortable: true, defaultVisible: false },
+      { key: "formulary", label: "Formulary", type: "status", sortable: true, defaultVisible: true },
+      { key: "controlled", label: "Controlled", sortable: true, defaultVisible: false },
+      { key: "onHand", label: "On hand", sortable: true, defaultVisible: true },
+      { key: "reorderLevel", label: "Reorder level", sortable: true, defaultVisible: false },
+      { key: "unitCost", label: "Unit cost", type: "money", sortable: true, defaultVisible: true },
+      { key: "supplier", label: "Supplier", sortable: true, defaultVisible: false },
+      { key: "nextExpiry", label: "Next expiry", type: "date", sortable: true, defaultVisible: true },
+      { key: "status", label: "Status", type: "status", sortable: true, defaultVisible: true },
+    ],
+  };
+
+  if (entity === "prescription") return {
+    ...common,
+    rows: prescriptionRows,
+    primaryKey: "id",
+    displayKey: "drug",
+    columns: [
+      { key: "id", label: "Prescription", sortable: true, defaultVisible: true },
+      { key: "patient", label: "MRN", sortable: true, defaultVisible: true },
+      { key: "drug", label: "Drug", sortable: true, defaultVisible: true },
+      { key: "dose", label: "Dose", sortable: true, defaultVisible: true },
+      { key: "route", label: "Route", sortable: true, defaultVisible: false },
+      { key: "duration", label: "Duration", sortable: true, defaultVisible: false },
+      { key: "prescriber", label: "Prescriber", sortable: true, defaultVisible: true },
+      { key: "ward", label: "Ward", sortable: true, defaultVisible: true },
+      { key: "prescribedOn", label: "Prescribed", type: "date", sortable: true, defaultVisible: false },
+      { key: "priority", label: "Priority", type: "status", sortable: true, defaultVisible: false },
+      { key: "status", label: "Status", type: "status", sortable: true, defaultVisible: true },
+    ],
   };
 
   if (entity === "consultation") return {
@@ -558,6 +635,35 @@ export const dashboardData: Record<ModuleKey, {
       { label: "Discharge summaries due", count: 14, value: "—", SLA: "48h" },
       { label: "Claims in denial", count: 182, value: "AED 1.1M", SLA: "30d" },
       { label: "Unsigned clinical notes", count: 63, value: "—", SLA: "72h" },
+    ],
+  },
+  pharmacy: {
+    kpis: [
+      { label: "Prescriptions today", value: "1,142", delta: "+5.2%", trend: "up", note: "218 awaiting dispense" },
+      { label: "Average dispense time", value: "11.4 min", delta: "-1.8", trend: "down", note: "Target 12 min" },
+      { label: "Stock-outs", value: "17", delta: "+4", trend: "up", note: "6 on critical formulary" },
+      { label: "Expiring in 90 days", value: "AED 284K", delta: "+12.1%", trend: "up", note: "42 batches" },
+      { label: "Formulary compliance", value: "94.1%", delta: "+0.7%", trend: "up", note: "68 off-formulary" },
+      { label: "Controlled variance", value: "0", delta: "0", trend: "neutral", note: "Reconciled to date" },
+    ],
+    trend: [842, 878, 861, 924, 968, 951, 1004, 1042, 1088, 1061, 1114, 1142],
+    trendLabels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+    breakdown: [
+      { label: "Outpatient", value: 684, total: 800 }, { label: "Inpatient", value: 312, total: 400 },
+      { label: "Day case", value: 96, total: 140 }, { label: "Discharge", value: 50, total: 80 },
+    ],
+    activity: [
+      { title: "Stock-out risk", detail: "Metformin 500mg — 2 days cover at current run rate", time: "18m", tone: "danger" },
+      { title: "Controlled register signed", detail: "Evening count reconciled by two pharmacists", time: "52m", tone: "success" },
+      { title: "Batch quarantined", detail: "Recall notice — batch AMX-2261 withdrawn", time: "2h", tone: "warning" },
+      { title: "Goods receipt posted", detail: "184 lines from Gulf Pharma • AED 412K", time: "3h", tone: "info" },
+      { title: "Off-formulary approval", detail: "6 requests pending pharmacy director", time: "5h", tone: "warning" },
+    ],
+    queue: [
+      { label: "Awaiting dispense", count: 218, value: "—", SLA: "30m" },
+      { label: "Off-formulary approvals", count: 6, value: "AED 48K", SLA: "24h" },
+      { label: "Expiring within 90 days", count: 42, value: "AED 284K", SLA: "90d" },
+      { label: "Requisitions to approve", count: 23, value: "AED 1.6M", SLA: "48h" },
     ],
   },
   library: {
