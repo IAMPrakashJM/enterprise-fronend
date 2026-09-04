@@ -519,14 +519,12 @@ function defaultAiFor(kind: PageKind): PageAiConfig {
     case "library":
     case "spreadsheet":
     case "preferences":
-    /* The inbox joins them, and it is worth saying why rather than lumping it
-       in: "summarise my unread" is a genuinely good use case, but it is a use
-       case -- a named `reads` list over an inbox source, prompt and all -- not
-       something record.explain can be pointed at. Until that exists the pages
-       would inherit the worklist default and offer a button that can only
-       refuse, which is the state this change is removing. */
-    case "inbox":
       return { enabled: false, useCases: [] };
+    /* The inbox was in that list until inbox.summarise-unread existed. It now
+       has a source, a reads list and a prompt of its own, which is what it
+       needed -- not record.explain aimed at something it was never written for. */
+    case "inbox":
+      return { enabled: true, useCases: ["inbox.summarise-unread"] };
     /* Nothing here offers the assistant, and the explicit block on the page
        means this arm is unreachable today. It is written anyway so a second
        ai-admin page cannot inherit the worklist default by omission. */

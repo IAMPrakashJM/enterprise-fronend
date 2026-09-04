@@ -13,6 +13,8 @@ export interface AiSources {
   "form-values"?: Record<string, unknown>;
   /** Figures the page is displaying: dashboard KPIs, report rows. */
   "page-metrics"?: Array<Record<string, unknown>>;
+  /** Inbox items still unread. The page filters; the name says so. */
+  "inbox-unread"?: Array<Record<string, unknown>>;
 }
 
 const SOURCE_LABEL: Record<string, string> = {
@@ -20,6 +22,7 @@ const SOURCE_LABEL: Record<string, string> = {
   "worklist-selection": "Selected rows",
   "form-values": "Form values",
   "page-metrics": "Figures on this page",
+  "inbox-unread": "Unread items",
 };
 
 /** Turns a field key into something a person can match to the screen. */
@@ -66,7 +69,7 @@ export function assembleContext(
           const raw = row[key];
           if (!present(raw)) continue;
           const { value, redacted } = redactField(key, String(raw));
-          fields.push({ label: `${humanise(key)} (${read.source === "page-metrics" ? "figure" : "row"} ${index + 1})`, value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
+          fields.push({ label: `${humanise(key)} (${read.source === "page-metrics" ? "figure" : read.source === "inbox-unread" ? "item" : "row"} ${index + 1})`, value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
         }
       });
       continue;

@@ -21,7 +21,13 @@ export type AiSource =
       thing is the set and how the parts compare. Added rather than folded into
       worklist-selection so the transparency panel can say "Figures on this
       page" instead of "Selected rows", which would be a lie on a dashboard. */
-  | "page-metrics";
+  | "page-metrics"
+  /** The inbox items that are still unread. A row predicate in the source name,
+      exactly like worklist-selection: `reads` names FIELDS and cannot express
+      "only the unread ones", so the page decides which rows it is offering and
+      the name says which those are. A source called "inbox-items" carrying only
+      some of them would be the lie. */
+  | "inbox-unread";
 
 export interface AiRead {
   source: AiSource;
@@ -92,6 +98,17 @@ export const USE_CASES: AiUseCase[] = [
        the page already made rather than read the numbers. */
     reads: [{ source: "page-metrics", fields: ["dimension", "current", "previous", "budget", "variance", "contribution"] }],
     promptId: "report.summarise.v1",
+    category: "general",
+  },
+  {
+    id: "inbox.summarise-unread",
+    label: "Summarise my unread",
+    description: "Reads the unread items in this list — their subject, preview and age — and tells you what is waiting and what looks urgent.",
+    /* `detail` is left out. The full text of every unread item would trible the
+       payload to improve a summary that the subject and preview already
+       support, and a transparency panel nobody can skim is one nobody reads. */
+    reads: [{ source: "inbox-unread", fields: ["title", "preview", "time", "kind", "role"], optional: true }],
+    promptId: "inbox.summarise-unread.v1",
     category: "general",
   },
 ];
