@@ -1,142 +1,136 @@
 #!/usr/bin/env node
 /**
- * Presentation is frozen (spec §2.1). This proves it two ways, with no new dependency:
+ * Every package's utilities must reach BOTH apps' stylesheets.
  *
- *   SOURCE  every moved file is identical to its pre-migration original once import
- *           lines are stripped. Stronger than a screenshot: a screenshot shows one
- *           viewport of one theme, this covers every class string in the file.
+ * WHAT THIS USED TO BE, and why it is not that any more:
  *
- *   CSS     the emitted stylesheet's utility selectors are compared against the
- *           baseline build's. Catches the failure a source diff cannot — Tailwind
- *           silently purging package utilities because an @source line is missing.
+ * It proved the monorepo migration changed no presentation — each moved file
+ * byte-identical to its pre-migration original once imports were stripped. That
+ * was a real invariant and it held, but it was a ONE-TIME property of a move.
+ * It stopped being true at d4f5228, where 45 wired preferences deliberately
+ * changed presentation, and 24 commits have since edited those files on purpose.
+ * The check has been failing by design ever since, and a check that is expected
+ * to be red teaches people to ignore red.
  *
- * Usage:  node scripts/verify-parity.mjs [--css]
- *         BASELINE_REF=<sha> node scripts/verify-parity.mjs
+ * Re-baselining it to HEAD would have been worse: it would assert that files
+ * equal themselves, which is vacuous today and becomes a nuisance on the next
+ * intentional edit — answered by adding to an ALLOWED list until the list is the
+ * whole file set.
  *
- * --css needs a baseline build; it prints how to make one if it is not there.
+ * WHAT IT CHECKS NOW is the half that was always prospective. Tailwind only
+ * emits utilities it can SEE. The packages live outside each app's root, so
+ * every one of them needs an `@source` line in the app's entry stylesheet; miss
+ * one and its classes are silently purged. The build succeeds, the types pass,
+ * and the component renders unstyled. This session hit that trap once already.
+ *
+ *   COVERAGE   every package whose source uses classNames is @source'd by BOTH
+ *              apps. Needs no build, so it runs in a second and catches a new
+ *              package the moment it is added.
+ *
+ *   EMITTED    utilities UNIQUE to one package are present in that app's built
+ *              CSS. Unique ones are the honest canaries: a class another package
+ *              also uses would still be emitted if this one were purged, and
+ *              would prove nothing. Skipped when there is no build.
+ *
+ * Zero dependencies. Run:  npm run verify:parity
  */
-import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const BASELINE = process.env.BASELINE_REF ?? "7951db3";
-const CHECK_CSS = process.argv.includes("--css");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const PACKAGES = join(ROOT, "packages");
 
-const MOVES = [
-  ["webapp/app/globals.css", "packages/tokens/src/tokens.css"],
-  ["webapp/src/lib/cn.ts", "packages/ops-ui/src/cn.ts"],
-  ...["badge", "button", "card", "dropdown", "empty-state", "overlay", "pagination", "tabs"]
-    .map((f) => [`webapp/src/components/ui/${f}.tsx`, `packages/ops-ui/src/${f}.tsx`]),
-  ...["navigation", "entity-schemas", "themes", "i18n"]
-    .map((f) => [`webapp/src/config/${f}.ts`, `packages/erp-config/src/${f}.ts`]),
-  ["webapp/src/types/index.ts", "packages/erp-config/src/types.ts"],
-  ["webapp/src/data/mock.ts", "packages/erp-data/src/mock.ts"],
-  ["webapp/src/components/layout/footer.tsx", "packages/erp-shell/src/footer.tsx"],
-  ["webapp/src/components/billing/billing-page.tsx", "packages/erp-screens/src/billing/billing-page.tsx"],
-  ["webapp/src/components/reports/reports-page.tsx", "packages/erp-screens/src/reports/reports-page.tsx"],
-  ["webapp/src/components/worklist/filter-panel.tsx", "packages/erp-screens/src/worklist/filter-panel.tsx"],
-  ["webapp/src/components/worklist/column-manager.tsx", "packages/erp-screens/src/worklist/column-manager.tsx"],
-  ["webapp/src/components/worklist/record-preview.tsx", "packages/erp-screens/src/worklist/record-preview.tsx"],
-  ["webapp/src/components/worklist/data-table.tsx", "packages/erp-screens/src/worklist/data-table.tsx"],
-  ["webapp/src/components/worklist/card-grid.tsx", "packages/erp-screens/src/worklist/card-grid.tsx"],
-  ["webapp/src/components/forms/form-navigation.tsx", "packages/erp-screens/src/forms/form-navigation.tsx"],
+const APPS = [
+  { name: "web", css: join(ROOT, "apps/web/src/app/globals.css"), built: join(ROOT, "apps/web/.next") },
+  { name: "desktop", css: join(ROOT, "apps/desktop/src/globals.css"), built: join(ROOT, "apps/desktop/dist") },
 ];
 
-/** Files with a deliberate, spec-sanctioned change. Anything not listed must match. */
-const ALLOWED = {
-  "packages/tokens/src/tokens.css": "the @import \"tailwindcss\" line moved to each app's entry stylesheet",
-  "packages/ops-ui/src/form-controls.tsx": "FormOption replaced by a local Option (ops-ui stays dependency-free); Input omits the native prefix/suffix attributes so the props accept an element",
-};
+function filesUnder(dir, ext) {
+  let found = [];
+  try {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const path = join(dir, entry.name);
+      if (entry.isDirectory()) found = found.concat(filesUnder(path, ext));
+      else if (ext.some((e) => entry.name.endsWith(e))) found.push(path);
+    }
+  } catch { /* absent directory yields nothing, and the caller decides if that matters */ }
+  return found;
+}
 
-/* Utilities that appear ONLY in apps/desktop/src/mdi/workspace-tabs.tsx, so their
-   absence from the web build is accepted delta 1 (§9.1) rather than a regression.
-   Each was checked against packages/ and apps/web/ before being listed here. */
-const TAB_STRIP_ONLY = new Set([
-  ".max-w-56", ".mb-1", ".overflow-y-hidden", ".pl-1\\.5", ".pt-1\\.5",
-  ".h-\\[var\\(--tabbar-height\\)\\]", ".rounded-t-\\[11px\\]",
-  ".border-b-\\[var\\(--surface\\)\\]", ".bg-\\[var\\(--text-subtle\\)\\]",
-]);
-/** Added by NavLink's reset so an <a> renders identically to a <button>. */
-const NAV_LINK_ADDED = new Set([".no-underline", ".underline"]);
+/* Only utilities Tailwind emits as a plain, unescaped selector. Arbitrary values
+   (size-[11px]), variants (hover:...), opacity slashes and CSS-variable values
+   are all real and all emitted with escaping or rewriting that differs between
+   versions — matching them by string is how a checker cries wolf. The simple
+   ones are enough: if a package is purged they go with everything else. */
+const SIMPLE = /^[a-z][a-z0-9]*(-[a-z0-9.]+)*$/;
+const NOT_EMITTED = new Set(["group", "peer", "dark", "container", "sr", "antialiased"]);
 
-const normalize = (text) => text
-  .split("\n")
-  .filter((line) => !/^\s*import\b/.test(line))
-  .join("\n")
-  .replace(/\n{2,}/g, "\n")
-  .trim();
+function utilitiesIn(text) {
+  const found = new Set();
+  for (const match of text.matchAll(/className\s*=\s*"([^"]+)"/g)) {
+    for (const token of match[1].split(/\s+/)) {
+      if (SIMPLE.test(token) && !NOT_EMITTED.has(token) && token.length > 2) found.add(token);
+    }
+  }
+  return found;
+}
 
 let failures = 0;
+const check = (ok, label, detail = "") => {
+  if (!ok) failures += 1;
+  console.log(`  ${(ok ? "ok" : "FAIL").padEnd(6)}${label.padEnd(52)}${detail}`);
+};
 
-console.log(`source parity vs ${BASELINE}\n`);
-for (const [before, after] of MOVES) {
-  if (ALLOWED[after]) {
-    console.log(`~ ${after}\n    allowed: ${ALLOWED[after]}`);
-    continue;
-  }
-  let original;
-  try {
-    original = execFileSync("git", ["show", `${BASELINE}:${before}`], { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
-  } catch {
-    console.error(`! ${before} not found at ${BASELINE}`);
-    failures += 1;
-    continue;
-  }
-  if (!existsSync(after)) {
-    console.error(`! ${after} does not exist`);
-    failures += 1;
-    continue;
-  }
-  if (normalize(original) === normalize(readFileSync(after, "utf8"))) {
-    console.log(`✓ ${after}`);
-  } else {
-    console.error(`✗ ${after} differs from ${BASELINE}:${before} beyond its imports`);
-    failures += 1;
-  }
-}
-console.log(`\n${MOVES.length - failures}/${MOVES.length} files identical modulo imports`);
+/* ---- which packages actually need to be seen ---------------------------- */
+const styled = readdirSync(PACKAGES, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .map((name) => ({ name, files: filesUnder(join(PACKAGES, name, "src"), [".tsx", ".ts"]) }))
+  .map((pkg) => ({ ...pkg, utilities: pkg.files.reduce((all, f) => { for (const u of utilitiesIn(readFileSync(f, "utf8"))) all.add(u); return all; }, new Set()) }))
+  .filter((pkg) => pkg.utilities.size > 0);
 
-if (CHECK_CSS) {
-  const selectors = (file) => {
-    const css = readFileSync(file, "utf8");
-    return new Set((css.match(/\.[a-zA-Z][a-zA-Z0-9\\:_.%()[\]-]*\{/g) ?? []).map((s) => s.slice(0, -1)));
-  };
-  const findCss = (dir) => {
-    if (!existsSync(dir)) return null;
-    const stack = [dir];
-    while (stack.length) {
-      const here = stack.pop();
-      for (const entry of readdirSync(here)) {
-        const full = join(here, entry);
-        if (statSync(full).isDirectory()) stack.push(full);
-        else if (entry.endsWith(".css")) return full;
-      }
-    }
-    return null;
-  };
+console.log(`\n  ${styled.length} packages use utility classes\n`);
 
-  const baseDir = process.env.BASELINE_BUILD ?? ".baseline-build/webapp/.next";
-  const baseCss = findCss(baseDir);
-  if (!baseCss) {
-    console.log(`\ncss parity SKIPPED — no baseline build at ${baseDir}`);
-    console.log(`  git worktree add .baseline-build ${BASELINE} \\`);
-    console.log(`    && (cd .baseline-build/webapp && npm install && npm run build)`);
-  } else {
-    const base = selectors(baseCss);
-    for (const [label, dir, ignore] of [
-      ["web", "apps/web/.next", TAB_STRIP_ONLY],
-      ["desktop", "apps/desktop/dist", new Set()],
-    ]) {
-      const css = findCss(dir);
-      if (!css) { console.log(`\ncss parity ${label}: SKIPPED — no build at ${dir}`); continue; }
-      const got = selectors(css);
-      const missing = [...base].filter((s) => !got.has(s) && !ignore.has(s));
-      const added = [...got].filter((s) => !base.has(s) && !NAV_LINK_ADDED.has(s));
-      console.log(`\ncss parity ${label}: ${base.size} baseline selectors, ${missing.length} missing, ${added.length} unexpected`);
-      for (const s of missing) { console.error(`  ✗ missing ${s}`); failures += 1; }
-      for (const s of added) { console.error(`  ? added   ${s}`); }
-    }
+/* ---- coverage: every one is @source'd by every app ---------------------- */
+console.log("  every styled package is @source'd by both apps");
+for (const app of APPS) {
+  if (!existsSync(app.css)) { check(false, `${app.name}: entry stylesheet`, `${app.css} not found`); continue; }
+  const css = readFileSync(app.css, "utf8");
+  const sourced = [...css.matchAll(/@source\s+"([^"]+)"/g)].map((m) => m[1]);
+  for (const pkg of styled) {
+    const covered = sourced.some((line) => line.includes(`packages/${pkg.name}/`) || line.endsWith(`packages/${pkg.name}`));
+    check(covered, `${app.name}: ${pkg.name}`, covered ? "" : `no @source line reaches packages/${pkg.name}/src — its classes will be purged`);
   }
 }
 
-process.exit(failures ? 1 : 0);
+/* ---- emitted: the canaries survived the build --------------------------- */
+const owners = new Map();
+for (const pkg of styled) for (const u of pkg.utilities) owners.set(u, (owners.get(u) ?? new Set()).add(pkg.name));
+const uniqueTo = (name) => [...owners].filter(([, pkgs]) => pkgs.size === 1 && pkgs.has(name)).map(([u]) => u);
+
+console.log("\n  utilities unique to a package survive into the built CSS");
+for (const app of APPS) {
+  const sheets = filesUnder(app.built, [".css"]).filter((f) => !f.includes("/dev/"));
+  if (!sheets.length) { console.log(`    skip   ${app.name}: no build found — run ./run.sh build`); continue; }
+  const emitted = sheets.map((f) => readFileSync(f, "utf8")).join("\n");
+  for (const pkg of styled) {
+    const canaries = uniqueTo(pkg.name).slice(0, 6);
+    if (!canaries.length) { console.log(`    skip   ${app.name}: ${pkg.name} has no utility unique to it`); continue; }
+    /* `.pb-1.5` is emitted as `.pb-1\.5` — CSS escapes the dot in a class
+       name. Matching the raw form reported it purged when it was right there,
+       which is precisely the crying-wolf this check was written to avoid. */
+    const selector = (u) => `.${u.replace(/\./g, "\\.")}`;
+    const missing = canaries.filter((u) => !emitted.includes(selector(u)));
+    check(missing.length === 0, `${app.name}: ${pkg.name}`, missing.length ? `purged: ${missing.join(", ")}` : `${canaries.length} canaries present`);
+  }
+}
+
+console.log();
+if (failures) {
+  console.error(`  ${failures} check(s) failed.\n`);
+  console.error("  A package Tailwind cannot see builds, typechecks and renders unstyled.");
+  console.error("  Add an @source line for it to BOTH apps' entry stylesheets.\n");
+  process.exit(1);
+}
+console.log("  Every styled package is visible to both apps, and its classes survive the build.\n");
