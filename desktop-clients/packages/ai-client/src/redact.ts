@@ -24,6 +24,12 @@ const SENSITIVE = [
   { test: /iban|account(number)?$|card/, mask: maskTail },
   { test: /policy|coverage|claim/, mask: maskTail },
   { test: /passport|emirates ?id|nationalid|ssn/, mask: maskAll },
+  /* Clinical identifiers. Added with the healthcare module, having checked what
+     this list did NOT cover before enabling anything there: a date of birth
+     plus a ward and a diagnosis re-identifies a person in a small population,
+     which is why dob is masked entirely rather than truncated. */
+  { test: /^dob$|birth ?date|date ?of ?birth/, mask: maskAll },
+  { test: /\bmrn\b|medical ?record ?(no|number)|patient ?(id|no)/, mask: maskTail },
 ];
 
 function maskTail(value: string): string {

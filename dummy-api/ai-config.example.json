@@ -51,6 +51,24 @@
         "useCaseId": "inbox.summarise-unread",
         "version": 1,
         "updatedAt": "2026-09-04T00:00:00.000Z"
+      },
+      {
+        "id": "encounter.summarise.v1",
+        "useCaseId": "encounter.summarise",
+        "version": 1,
+        "updatedAt": "2026-09-04T00:00:00.000Z"
+      },
+      {
+        "id": "documentation.gaps.v1",
+        "useCaseId": "documentation.gaps",
+        "version": 1,
+        "updatedAt": "2026-09-04T00:00:00.000Z"
+      },
+      {
+        "id": "cohort.summarise-selection.v1",
+        "useCaseId": "cohort.summarise-selection",
+        "version": 1,
+        "updatedAt": "2026-09-04T00:00:00.000Z"
       }
     ],
     "retention": {

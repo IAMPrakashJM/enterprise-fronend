@@ -94,8 +94,26 @@ const screenSource = filesUnder(SCREENS).filter((f) => f.endsWith(".tsx")).map((
 const mounted = [...screenSource.matchAll(/<InlineAiAction[^>]*useCaseId="([^"]+)"/g)].map((m) => m[1]);
 
 check("the inline surface is mounted somewhere", mounted.length > 0, mounted.length ? `${mounted.length} call site(s)` : "exported and never rendered");
-for (const id of USE_CASES.map((useCase) => useCase.id)) {
-  check(`${id} has an inline affordance`, mounted.includes(id), mounted.includes(id) ? "" : "no <InlineAiAction> names it");
+
+/* Split by category, because the two halves want OPPOSITE things and this check
+   originally demanded the same of both.
+
+   It was written when every use case was general, and the first clinical one
+   failed it three times over -- correctly reporting that nothing named them,
+   while inline-action.tsx refuses to render a clinical use case at all. Two of
+   this repo's own rules pointing in opposite directions, with the check being
+   the one that was wrong.
+
+   Asserting the negative is worth more than exempting them: a one-click button
+   over clinical data is the affordance you cannot take back, so "no inline
+   affordance names it" is a property to enforce, not a case to skip. */
+for (const useCase of USE_CASES) {
+  const has = mounted.includes(useCase.id);
+  if (useCase.category === "clinical") {
+    check(`${useCase.id} has NO inline affordance`, !has, has ? "clinical use cases must not be one click — see inline-action.tsx" : "clinical, correctly absent");
+  } else {
+    check(`${useCase.id} has an inline affordance`, has, has ? "" : "no <InlineAiAction> names it");
+  }
 }
 
 console.log();
