@@ -300,6 +300,8 @@ const PROMPT_TEXT = {
     "You draft a short internal note from values a user has entered on a form. Use ONLY those values. Never invent a reference, a name or an amount. Output the note text alone, with no preamble.",
   "dashboard.explain-metrics.v1":
     "You explain a set of dashboard figures to the person looking at them. Use ONLY the figures provided, including their movement and footnotes. Say what they mean TOGETHER rather than restating each one in turn, and name anything that looks inconsistent between them. Never invent a figure, a period or a cause.",
+  "inbox.summarise-unread.v1":
+    "You tell someone what is waiting in their inbox. Use ONLY the unread items provided. Lead with anything that looks time-critical or blocking, group the rest by what they are about, and give a one-line count. Do not invent an item, a deadline or a sender, and do not tell the reader what to do about any of it.",
   "report.summarise.v1":
     "You summarise a report's rows: actual against previous and against budget. Use ONLY the rows provided. Lead with where the movement is and which rows drive it. State variances in the direction they are given and never invent a total, a percentage or a reason.",
 };
@@ -430,7 +432,14 @@ async function callProvider(config, secret, messages) {
     response = await fetch(`${endpoint}/chat/completions`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${secret}` },
-      body: JSON.stringify({ model, messages, max_tokens: 700, temperature: 0.2 }),
+      /* 700 was the original figure and it was wrong for a reasoning model: the
+         provider spends completion tokens THINKING before it writes anything, so
+         a 700-token budget was consumed entirely by reasoning and the answer
+         came back empty. Measured against this provider, a five-item inbox
+         summary needs ~1,100 reasoning tokens before the first word of output.
+         The daily budget counts total_tokens, so a larger cap here is honestly
+         accounted for rather than hidden. */
+      body: JSON.stringify({ model, messages, max_tokens: 2000, temperature: 0.2 }),
       signal: AbortSignal.timeout(45000),
     });
   } catch (cause) {
@@ -442,9 +451,24 @@ async function callProvider(config, secret, messages) {
   if (!response.ok) {
     return { ok: false, status: response.status === 401 ? 401 : 502, error: "The provider rejected the request.", detail: payload?.error?.message ?? `HTTP ${response.status}.` };
   }
-  const text = payload?.choices?.[0]?.message?.content;
+  const choice = payload?.choices?.[0];
+  const text = choice?.message?.content;
   if (typeof text !== "string" || !text.trim()) {
-    return { ok: false, status: 502, error: "The provider returned no text." };
+    /* Say WHICH kind of nothing. "Returned no text" was true of both a provider
+       fault and a budget that ran out mid-thought, and those need opposite
+       responses -- one is retry, the other is raise the cap. finish_reason is
+       the provider telling us which, and throwing it away made a diagnosable
+       failure look like an outage. */
+    if (choice?.finish_reason === "length") {
+      const reasoning = payload?.usage?.completion_tokens_details?.reasoning_tokens;
+      return {
+        ok: false,
+        status: 502,
+        error: "The model ran out of output budget before answering.",
+        detail: `It spent its entire allowance${reasoning ? ` (${reasoning} reasoning tokens)` : ""} without producing an answer. Raise max_tokens for this provider.`,
+      };
+    }
+    return { ok: false, status: 502, error: "The provider returned no text.", detail: choice?.finish_reason ? `finish_reason: ${choice.finish_reason}` : undefined };
   }
   return { ok: true, text: text.trim(), model: payload?.model ?? model, usage: payload?.usage ?? null };
 }

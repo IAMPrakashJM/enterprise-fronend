@@ -45,6 +45,12 @@
         "useCaseId": "report.summarise",
         "version": 1,
         "updatedAt": "2026-09-04T00:00:00.000Z"
+      },
+      {
+        "id": "inbox.summarise-unread.v1",
+        "useCaseId": "inbox.summarise-unread",
+        "version": 1,
+        "updatedAt": "2026-09-04T00:00:00.000Z"
       }
     ],
     "retention": {

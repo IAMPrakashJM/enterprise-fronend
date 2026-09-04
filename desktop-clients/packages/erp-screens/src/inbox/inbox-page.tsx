@@ -7,6 +7,8 @@ import { MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY } from "@pepbits/erp-co
 import { useERP } from "@pepbits/erp-shell";
 import { Badge, Button, Input, Textarea, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
+import { usePublishAiSources } from "@pepbits/ai-client";
+import { InlineAiAction } from "@pepbits/ai-ui";
 
 /**
  * The full inbox, behind the header's bell and messages menu.
@@ -113,6 +115,18 @@ export function InboxPage({ page }: { page: PageDefinition }) {
 
   const isUnread = (row: Row) => row.unread && !readIds.includes(row.id);
 
+  /* Only the unread ones, which is the whole point of the use case that reads
+     them. Recomputed as they are read, so a summary asked for after clearing
+     three items covers what is actually left rather than what was waiting when
+     the page opened. */
+  usePublishAiSources(`inbox:${page.id}`, {
+    "inbox-unread": all.filter(isUnread).map((row) => ({
+      title: row.title, preview: row.preview, time: row.time,
+      ...(row.kind ? { kind: row.kind } : {}),
+      ...(row.role ? { role: row.role } : {}),
+    })),
+  });
+
   const shown = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return all.filter((row) => {
@@ -165,6 +179,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
               </button>
             ))}
           </div>
+          <InlineAiAction useCaseId="inbox.summarise-unread" label="Summarise unread" />
           <Button size="sm" variant="secondary" leftIcon={<CheckCheck className="size-3.5" />}
             disabled={!unreadCount}
             onClick={() => { setReadIds(all.map((row) => row.id)); toast({ title: messages ? "All messages marked as read" : "All notifications marked as read", type: "info" }); }}>
