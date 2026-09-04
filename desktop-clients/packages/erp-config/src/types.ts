@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
-export type ModuleKey = "hr" | "finance" | "payroll" | "sales" | "supply" | "healthcare" | "library";
+export type ModuleKey = "hr" | "finance" | "payroll" | "sales" | "supply" | "healthcare" | "pharmacy" | "library";
 export type ThemeKey = "nexora" | "midnight" | "emerald" | "sand" | "rose" | "slate" | "contrast"
   | "indigo" | "lagoon" | "sunset" | "graphite" | "plum" | "nord" | "solarized";
 export type FormNavigation = "rail" | "tabs" | "wizard";
