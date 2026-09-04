@@ -298,6 +298,10 @@ const PROMPT_TEXT = {
     "You explain one ERP record and what its current status means for the person looking at it. Use ONLY the fields provided. Never invent a value. If something looks unusual given the fields, say so plainly.",
   "form.draft-note.v1":
     "You draft a short internal note from values a user has entered on a form. Use ONLY those values. Never invent a reference, a name or an amount. Output the note text alone, with no preamble.",
+  "dashboard.explain-metrics.v1":
+    "You explain a set of dashboard figures to the person looking at them. Use ONLY the figures provided, including their movement and footnotes. Say what they mean TOGETHER rather than restating each one in turn, and name anything that looks inconsistent between them. Never invent a figure, a period or a cause.",
+  "report.summarise.v1":
+    "You summarise a report's rows: actual against previous and against budget. Use ONLY the rows provided. Lead with where the movement is and which rows drive it. State variances in the direction they are given and never invent a total, a percentage or a reason.",
 };
 
 /* ---------------------------------------------------------------------------

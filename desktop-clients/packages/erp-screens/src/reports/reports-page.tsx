@@ -3,6 +3,8 @@
 import React, { useMemo, useState } from "react";
 import { BarChart3, CalendarClock, ChevronDown, Clock3, Download, FileSpreadsheet, FileText, Filter, Mail, Play, Printer, RotateCcw, Save, Send, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useERP } from "@pepbits/erp-shell";
+import { usePublishAiSources } from "@pepbits/ai-client";
+import { InlineAiAction } from "@pepbits/ai-ui";
 import { Button } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { Card, CardHeader, CardTitle } from "@pepbits/ops-ui";
@@ -33,6 +35,10 @@ export function ReportsPage({ page }: { page: PageDefinition }) {
   const { toast, format } = useERP();
   const [advanced, setAdvanced] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
+
+  /* The rows the report is currently showing. The report is the figures, so
+     this is the whole of what the page has to offer. */
+  usePublishAiSources(`report:${page.id}`, { "page-metrics": reportRows });
   const [from, setFrom] = useState("2026-09-01");
   const [to, setTo] = useState("2026-09-30");
   const [running, setRunning] = useState(false);
@@ -47,7 +53,7 @@ export function ReportsPage({ page }: { page: PageDefinition }) {
           <Input data-tour="report-filters" label="From date" type="date" value={from} onChange={(event) => setFrom(event.target.value)} />
           <Input label="To date" type="date" value={to} onChange={(event) => setTo(event.target.value)} />
           <Select label="Date preset" value="mtd" options={[{ label: "Month to date", value: "mtd" }, { label: "Previous month", value: "previous" }, { label: "Quarter to date", value: "qtd" }, { label: "Year to date", value: "ytd" }, { label: "Custom", value: "custom" }]} onChange={() => undefined} />
-          <div data-tour="report-actions" className="flex items-end gap-1.5"><Button variant="primary" leftIcon={<Play className="size-3.5" />} loading={running} onClick={run}>Run report</Button><Button variant="secondary" leftIcon={<CalendarClock className="size-3.5" />} onClick={() => setScheduleOpen(true)}>Schedule</Button></div>
+          <div data-tour="report-actions" className="flex items-end gap-1.5"><InlineAiAction useCaseId="report.summarise" label="Summarise" /><Button variant="primary" leftIcon={<Play className="size-3.5" />} loading={running} onClick={run}>Run report</Button><Button variant="secondary" leftIcon={<CalendarClock className="size-3.5" />} onClick={() => setScheduleOpen(true)}>Schedule</Button></div>
         </div>
         <div className="border-t border-[var(--border)] px-3 py-2"><button type="button" onClick={() => setAdvanced((value) => !value)} className="flex w-full items-center justify-between text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]"><span className="flex items-center gap-2"><SlidersHorizontal className="size-3.5" />Advanced filters <Badge tone="neutral">collapsed by default</Badge></span><ChevronDown className={cn("size-3.5 transition", advanced && "rotate-180")} /></button>{advanced ? <div className="animate-slide-up mt-3 grid gap-3 border-t border-dashed border-[var(--border)] pt-3 md:grid-cols-2 xl:grid-cols-5"><MultiSelect label="Branches" value={["hq", "dubai", "sharjah"]} onChange={() => undefined} options={[{ label: "Abu Dhabi HQ", value: "hq" }, { label: "Dubai Center", value: "dubai" }, { label: "Sharjah Hub", value: "sharjah" }, { label: "Kochi Delivery", value: "kochi" }]} /><Select label="Currency" value="AED" options={[{ label: "AED", value: "AED" }, { label: "USD", value: "USD" }]} onChange={() => undefined} /><Select label="Comparison" value="budget" options={[{ label: "Budget", value: "budget" }, { label: "Previous period", value: "previous" }, { label: "Previous year", value: "year" }]} onChange={() => undefined} /><Select label="Aggregation" value="branch" options={[{ label: "Branch", value: "branch" }, { label: "Department", value: "department" }, { label: "Customer", value: "customer" }, { label: "Month", value: "month" }]} onChange={() => undefined} /><Input label="Minimum value" type="number" placeholder="No minimum" /></div> : null}</div>
       </Card>

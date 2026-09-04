@@ -11,12 +11,15 @@ export interface AiSources {
   "page-record"?: Record<string, unknown>;
   "worklist-selection"?: Array<Record<string, unknown>>;
   "form-values"?: Record<string, unknown>;
+  /** Figures the page is displaying: dashboard KPIs, report rows. */
+  "page-metrics"?: Array<Record<string, unknown>>;
 }
 
 const SOURCE_LABEL: Record<string, string> = {
   "page-record": "This record",
   "worklist-selection": "Selected rows",
   "form-values": "Form values",
+  "page-metrics": "Figures on this page",
 };
 
 /** Turns a field key into something a person can match to the screen. */
@@ -50,20 +53,26 @@ export function assembleContext(
   for (const read of useCase.reads) {
     const sourceLabel = SOURCE_LABEL[read.source] ?? read.source;
 
-    if (read.source === "worklist-selection") {
-      const rows = sources["worklist-selection"] ?? [];
+    /* Row sources are recognised by SHAPE, not by name. This tested
+       `read.source === "worklist-selection"`, so the day a second array source
+       was added its rows fell through to the object branch, `record[key]` read
+       undefined off an array, and every field was silently dropped -- an empty
+       context with nothing to point at. */
+    const value = sources[read.source];
+    if (Array.isArray(value)) {
+      const rows = value;
       rows.forEach((row, index) => {
         for (const key of read.fields) {
           const raw = row[key];
           if (!present(raw)) continue;
           const { value, redacted } = redactField(key, String(raw));
-          fields.push({ label: `${humanise(key)} (row ${index + 1})`, value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
+          fields.push({ label: `${humanise(key)} (${read.source === "page-metrics" ? "figure" : "row"} ${index + 1})`, value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
         }
       });
       continue;
     }
 
-    const record = sources[read.source] ?? {};
+    const record = (value as Record<string, unknown> | undefined) ?? {};
     for (const key of read.fields) {
       const raw = record[key];
       if (!present(raw)) {

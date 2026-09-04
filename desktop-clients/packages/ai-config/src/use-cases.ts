@@ -12,7 +12,16 @@
  */
 
 /** Where a field comes from. Each maps to something the page already has. */
-export type AiSource = "page-record" | "worklist-selection" | "form-values";
+export type AiSource =
+  | "page-record"
+  | "worklist-selection"
+  | "form-values"
+  /** Figures a page is DISPLAYING rather than records it holds: dashboard KPIs,
+      report rows. An array, like worklist-selection, because the interesting
+      thing is the set and how the parts compare. Added rather than folded into
+      worklist-selection so the transparency panel can say "Figures on this
+      page" instead of "Selected rows", which would be a lie on a dashboard. */
+  | "page-metrics";
 
 export interface AiRead {
   source: AiSource;
@@ -64,6 +73,25 @@ export const USE_CASES: AiUseCase[] = [
     description: "Drafts an internal note from the values you have entered. Nothing is saved — the draft lands in the form for you to edit.",
     reads: [{ source: "form-values", fields: ["customer", "reference", "terms", "jurisdiction"], optional: true }],
     promptId: "form.draft-note.v1",
+    category: "general",
+  },
+  {
+    id: "dashboard.explain-metrics",
+    label: "Explain these figures",
+    description: "Reads the headline figures on this dashboard — their values, movement and footnotes — and explains what they say together.",
+    reads: [{ source: "page-metrics", fields: ["label", "value", "delta", "note"] }],
+    promptId: "dashboard.explain-metrics.v1",
+    category: "general",
+  },
+  {
+    id: "report.summarise",
+    label: "Summarise this report",
+    description: "Reads the rows currently in the report — actual against previous and budget — and summarises where the movement is.",
+    /* `trend` is deliberately absent: it is a presentation flag the chart uses
+       to pick an arrow, and sending it invites the model to repeat a judgement
+       the page already made rather than read the numbers. */
+    reads: [{ source: "page-metrics", fields: ["dimension", "current", "previous", "budget", "variance", "contribution"] }],
+    promptId: "report.summarise.v1",
     category: "general",
   },
 ];
