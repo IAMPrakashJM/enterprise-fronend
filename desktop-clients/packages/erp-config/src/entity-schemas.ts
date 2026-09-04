@@ -116,6 +116,56 @@ export const ENTITY_SCHEMAS: Record<string, EntitySchema> = {
       },
     ],
   },
+  consultation: {
+    id: "consultation",
+    singular: "Consultation",
+    plural: "Consultations",
+    description: "Outpatient consultation: presentation, examination, assessment and plan.",
+    sections: [
+      { id: "encounter", title: "Encounter", description: "Who was seen, by whom, and under what cover.", fields: [
+        { id: "consultationCode", label: "Consultation no.", type: "text", required: true, placeholder: "CON-48100" },
+        { id: "patient", label: "Patient MRN", type: "text", required: true, placeholder: "MRN-90210" },
+        { id: "consultedOn", label: "Seen on", type: "date", required: true },
+        { id: "specialty", label: "Specialty", type: "select", required: true, options: [
+          { label: "General Medicine", value: "General Medicine" }, { label: "Cardiology", value: "Cardiology" },
+          { label: "Orthopaedics", value: "Orthopaedics" }, { label: "Paediatrics", value: "Paediatrics" },
+          { label: "Endocrinology", value: "Endocrinology" }, { label: "Dermatology", value: "Dermatology" },
+        ] },
+        { id: "clinician", label: "Consulting clinician", type: "text", required: true, placeholder: "Dr Haddad" },
+        { id: "payer", label: "Payer", type: "select", options: [
+          { label: "Daman", value: "Daman" }, { label: "AXA Gulf", value: "AXA Gulf" }, { label: "Thiqa", value: "Thiqa" },
+          { label: "MetLife", value: "MetLife" }, { label: "Self-pay", value: "Self-pay" },
+        ] },
+      ] },
+      { id: "presentation", title: "Presentation", description: "What the patient came with, in their terms and yours.", fields: [
+        { id: "chiefComplaint", label: "Presenting complaint", type: "text", required: true, colSpan: 2, placeholder: "In the patient's own words where possible" },
+        { id: "history", label: "History of presenting complaint", type: "textarea", colSpan: 2 },
+        { id: "pastHistory", label: "Relevant past history", type: "textarea", colSpan: 2 },
+        { id: "allergies", label: "Allergies", type: "text", placeholder: "Or 'none known'" },
+        { id: "currentMedication", label: "Current medication", type: "textarea", colSpan: 2 },
+      ] },
+      { id: "examination", title: "Examination", description: "Observations and findings recorded at the visit.", fields: [
+        { id: "bloodPressure", label: "Blood pressure", type: "text", placeholder: "120/80" },
+        { id: "pulse", label: "Pulse (bpm)", type: "number" },
+        { id: "temperature", label: "Temperature (°C)", type: "text", placeholder: "36.8" },
+        { id: "examinationNotes", label: "Findings", type: "textarea", colSpan: 2 },
+      ] },
+      { id: "assessment", title: "Assessment and plan", description: "The clinical conclusion and what happens next.", fields: [
+        { id: "primaryDiagnosis", label: "Primary diagnosis", type: "text", required: true, colSpan: 2 },
+        { id: "differential", label: "Differential", type: "textarea", colSpan: 2 },
+        { id: "plan", label: "Management plan", type: "textarea", required: true, colSpan: 2 },
+        { id: "outcome", label: "Outcome", type: "select", required: true, options: [
+          { label: "Follow-up in 4 weeks", value: "Follow-up in 4 weeks" }, { label: "Discharged to GP", value: "Discharged to GP" },
+          { label: "Referred for imaging", value: "Referred for imaging" }, { label: "Referred to specialist", value: "Referred to specialist" },
+          { label: "Medication adjusted", value: "Medication adjusted" }, { label: "Admitted", value: "Admitted" },
+        ] },
+        { id: "followUp", label: "Follow-up date", type: "date" },
+        { id: "acuity", label: "Acuity", type: "select", options: [
+          { label: "Routine", value: "Routine" }, { label: "Urgent", value: "Urgent" }, { label: "Critical", value: "Critical" },
+        ], defaultValue: "Routine" },
+      ] },
+    ],
+  },
   customer: {
     id: "customer",
     singular: "Customer",

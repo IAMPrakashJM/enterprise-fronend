@@ -35,6 +35,28 @@ export const patientRows = Array.from({ length: 84 }, (_, i) => ({
   acuity: ["Routine", "Urgent", "Critical", "Routine"][i % 4],
 }));
 
+/* Outpatient consultations. Shares the patient vocabulary deliberately -- ward
+   is absent because a consultation is not an admission, and `outcome` carries
+   what an admission record would express as `status`. Invented throughout. */
+const specialties = ["General Medicine", "Cardiology", "Orthopaedics", "Paediatrics", "Endocrinology", "Dermatology", "ENT", "Obstetrics"];
+const complaints = ["Chest discomfort on exertion", "Persistent cough, 3 weeks", "Lower back pain", "Routine diabetic review", "Recurrent headache", "Skin rash, forearm", "Reduced hearing, left ear", "Ante-natal review"];
+const outcomes = ["Follow-up in 4 weeks", "Discharged to GP", "Referred for imaging", "Admitted", "Referred to specialist", "Medication adjusted"];
+
+export const consultationRows = Array.from({ length: 72 }, (_, i) => ({
+  id: `CON-${pad(48100 + i * 3)}`,
+  patient: `MRN-${pad(90210 + (i % 84) * 7)}`,
+  consultedOn: `2026-09-${pad((i % 28) + 1).slice(-2)}`,
+  specialty: specialties[i % specialties.length],
+  clinician: `Dr ${familyNames[(i * 7) % familyNames.length]}`,
+  chiefComplaint: complaints[i % complaints.length],
+  primaryDiagnosis: conditions[(i * 5) % conditions.length],
+  acuity: ["Routine", "Urgent", "Routine", "Routine"][i % 4],
+  outcome: outcomes[i % outcomes.length],
+  followUp: i % 3 === 0 ? `2026-10-${pad((i % 27) + 1).slice(-2)}` : "",
+  payer: ["Daman", "AXA Gulf", "Self-pay", "Thiqa", "MetLife"][i % 5],
+  status: ["Completed", "In progress", "Awaiting notes", "Completed", "Cancelled"][i % 5],
+}));
+
 export const customerRows = Array.from({ length: 96 }, (_, i) => ({
   id: `CUS-${pad(2401 + i)}`,
   name: companies[i % companies.length] + (i > 15 ? ` ${Math.floor(i / 16) + 1}` : ""),
@@ -187,6 +209,27 @@ export function getWorklistConfig(pageId: string, title: string, entity = "recor
     description: `Configurable ${title.toLowerCase()} with saved filters, column layouts, table/card views and contextual record actions.`,
     basicFilters: baseFilters(),
     advancedFilters: advancedFilters(),
+  };
+
+  if (entity === "consultation") return {
+    ...common,
+    rows: consultationRows,
+    primaryKey: "id",
+    displayKey: "chiefComplaint",
+    columns: [
+      { key: "id", label: "Consultation", sortable: true, defaultVisible: true },
+      { key: "patient", label: "MRN", sortable: true, defaultVisible: true },
+      { key: "consultedOn", label: "Seen on", type: "date", sortable: true, defaultVisible: true },
+      { key: "specialty", label: "Specialty", sortable: true, defaultVisible: true },
+      { key: "clinician", label: "Clinician", sortable: true, defaultVisible: true },
+      { key: "chiefComplaint", label: "Presenting complaint", sortable: true, defaultVisible: true },
+      { key: "primaryDiagnosis", label: "Diagnosis", sortable: true, defaultVisible: false },
+      { key: "outcome", label: "Outcome", sortable: true, defaultVisible: true },
+      { key: "followUp", label: "Follow-up", type: "date", sortable: true, defaultVisible: false },
+      { key: "payer", label: "Payer", sortable: true, defaultVisible: false },
+      { key: "acuity", label: "Acuity", type: "status", sortable: true, defaultVisible: false },
+      { key: "status", label: "Status", type: "status", sortable: true, defaultVisible: true },
+    ],
   };
 
   if (entity === "patient") return {
