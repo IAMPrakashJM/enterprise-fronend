@@ -6,6 +6,7 @@ import { Badge, Button, IconButton, cn } from "@pepbits/ops-ui";
 import type { AiContext, AiUseCase } from "@pepbits/ai-config";
 import type { AiReply } from "@pepbits/ai-client";
 import { useNavigation } from "@pepbits/platform-ports";
+import { useERP } from "@pepbits/erp-shell";
 import { TransparencyPanel } from "./transparency.tsx";
 import { AiTerminal } from "./terminal.tsx";
 import { useAssistant } from "./use-assistant.ts";
@@ -27,7 +28,27 @@ export function AssistantPanel() {
      disappearances" structural rather than a promise. */
   const assistant = useAssistant();
 
+  /* Both panels are ~370px wide and both anchor to bottom-28 right-5, so with
+     both open one sits on top of the other. Resolved HERE rather than by moving
+     one aside: side by side survives a wide screen and collides again on a
+     narrow one, and two panels in a corner is cluttered even when it fits.
+
+     It is one-sided in the code and two-sided in effect. ai-ui already depends
+     on erp-shell for the ERP context, so this reads and writes `helpOpen`
+     directly and erp-shell learns nothing -- help-assistant.tsx is untouched,
+     which also means the tour cannot be interrupted by an import it does not
+     know about. */
+  const { helpOpen, setHelpOpen } = useERP();
   const [open, setOpen] = useState(false);
+
+  /* Help winning is deliberate: it is the older affordance and the one a
+     confused user reaches for, so it should never be the thing that closes. */
+  useEffect(() => { if (helpOpen) setOpen(false); }, [helpOpen]);
+
+  const openAssistant = (next: boolean) => {
+    if (next) setHelpOpen(false);
+    setOpen(next);
+  };
   const [mode, setMode] = useState<"panel" | "terminal">("panel");
   const [stage, setStage] = useState<Stage>("choose");
   const [chosen, setChosen] = useState<AiUseCase | null>(null);
@@ -73,7 +94,7 @@ export function AssistantPanel() {
           one corner, not a primary control and an afterthought. The help
           button itself is untouched -- this one was moved to meet it. */}
       <button type="button" aria-label="Open the AI assistant" title={`AI assistant — ${useCases.length} available here`}
-        onClick={() => setOpen((previous) => !previous)}
+        onClick={() => openAssistant(!open)}
         className="no-print fixed bottom-12 right-20 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
         <Sparkles className="size-5" />
       </button>
