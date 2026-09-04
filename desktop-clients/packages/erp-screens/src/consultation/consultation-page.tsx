@@ -5,7 +5,8 @@ import { Check, CircleAlert, FileSignature, Layers, RotateCcw, Stethoscope, Tria
 import {
   COMBINATION_COUNT, CONDITIONS, CONSULTATION_TYPES, PATIENT_CONTEXTS, SPECIALTIES, composeConsultation,
 } from "@pepbits/erp-config";
-import type { ConsultationOption, PageDefinition } from "@pepbits/erp-config";
+import { EM_ELEMENTS, deriveFromMdm, deriveFromTime, timeBandsFor } from "@pepbits/erp-config";
+import type { ConsultationOption, EmElementLevel, EmPatientType, PageDefinition } from "@pepbits/erp-config";
 import { useERP } from "@pepbits/erp-shell";
 import { Badge, Button, Input, Textarea, cn } from "@pepbits/ops-ui";
 
@@ -85,10 +86,19 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
   const [built, setBuilt] = useState(false);
   const [chosenPrompts, setChosenPrompts] = useState<string[]>([]);
   const [values, setValues] = useState<Record<string, string>>({});
+  /* Off by default. A deployment turns it on; see composeConsultation. */
+  const [coding, setCoding] = useState<"none" | "em">("none");
+  const [em, setEm] = useState<{ problems: EmElementLevel; data: EmElementLevel; risk: EmElementLevel; patient: EmPatientType; minutes: string; basis: "mdm" | "time" }>(
+    { problems: "moderate", data: "moderate", risk: "moderate", patient: "new", minutes: "", basis: "mdm" },
+  );
+  const emResult = useMemo(
+    () => (em.basis === "time" ? deriveFromTime(Number(em.minutes), em.patient) : deriveFromMdm(em.problems, em.data, em.risk, em.patient)),
+    [em],
+  );
 
   const composed = useMemo(
-    () => composeConsultation(selection.type, selection.specialty, selection.condition, selection.context),
-    [selection],
+    () => composeConsultation(selection.type, selection.specialty, selection.condition, selection.context, coding),
+    [selection, coding],
   );
 
   /* Required sections come from the composition, so a layer that adds a required
@@ -240,6 +250,88 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
                   <Textarea label="Clinical reasoning" rows={3} value={values.assessment ?? ""} onChange={(e) => set("assessment", e.target.value)}
                     placeholder="Differential, evidence, and the relationship between problems." />
                 </div>
+              ) : s.id === "em" ? (
+                <div className="grid gap-3">
+                  <div className="rounded-lg border border-[color-mix(in_srgb,var(--warning)_30%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_8%,transparent)] p-2.5 text-[length:calc(9px*var(--fs-scale))] leading-relaxed">
+                    <b>This derives a level from what is already documented.</b> It is not a target. A level is supported by the work
+                    that was clinically necessary and actually done — raising an element to reach a code is the thing this panel is
+                    meant to make visible, not easier. Office and outpatient levels are selected by medical decision making <b>or</b>
+                    total time, not by counting history and examination bullets. US CPT guidance; it does not apply to this tenant's
+                    UAE billing.
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    {(["mdm", "time"] as const).map((b) => (
+                      <button key={b} type="button" onClick={() => setEm((p) => ({ ...p, basis: b }))}
+                        className={cn("focus-ring rounded-full border px-2.5 py-1 text-[length:calc(9.5px*var(--fs-scale))] font-bold transition",
+                          em.basis === b ? "border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)]")}>
+                        {b === "mdm" ? "By decision making" : "By total time"}
+                      </button>
+                    ))}
+                    <span className="flex-1" />
+                    {(["new", "established"] as const).map((t) => (
+                      <button key={t} type="button" onClick={() => setEm((p) => ({ ...p, patient: t }))}
+                        className={cn("focus-ring rounded-full border px-2.5 py-1 text-[length:calc(9.5px*var(--fs-scale))] transition",
+                          em.patient === t ? "border-[var(--primary)] bg-[var(--primary-soft)] font-bold text-[var(--primary-strong)]" : "border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)]")}>
+                        {t} patient
+                      </button>
+                    ))}
+                  </div>
+
+                  {em.basis === "mdm" ? (
+                    <div className="grid gap-2">
+                      {EM_ELEMENTS.map((el) => (
+                        <div key={el.id} className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-2.5">
+                          <div className="text-[length:calc(10px*var(--fs-scale))] font-extrabold">{el.label}</div>
+                          <div className="mt-0.5 mb-1.5 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{el.hint}</div>
+                          <div className="grid gap-1">
+                            {el.options.map((o) => (
+                              <label key={o.value} className="flex items-start gap-2 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
+                                <input type="radio" className="mt-0.5 accent-[var(--primary)]" name={`em-${el.id}`}
+                                  checked={em[el.id] === o.value} onChange={() => setEm((p) => ({ ...p, [el.id]: o.value }))} />
+                                <span><b className="capitalize">{o.value}</b> — {o.label}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid gap-2">
+                      <Input label="Total time on the date of the encounter (minutes)" type="number" min={0}
+                        value={em.minutes} onChange={(e) => setEm((p) => ({ ...p, minutes: e.target.value }))}
+                        hint="Face-to-face and non-face-to-face time by the reporting practitioner on that date. Do not infer it from how long the record was open." />
+                      <div className="flex flex-wrap gap-1.5">
+                        {timeBandsFor(em.patient).map((b) => (
+                          <span key={b.code} className="rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1 text-[length:calc(8.5px*var(--fs-scale))]">
+                            {b.min}–{b.max} min · {b.code}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={cn("rounded-lg border p-2.5", emResult ? "border-[color-mix(in_srgb,var(--primary)_35%,var(--border))] bg-[var(--primary-soft)]" : "border-[var(--border)] bg-[var(--surface-2)]")}>
+                    {emResult ? (
+                      <>
+                        <div className="flex flex-wrap items-baseline gap-2">
+                          <span className="text-[length:calc(14px*var(--fs-scale))] font-black capitalize">{emResult.level}</span>
+                          <Badge tone="info">{emResult.code}</Badge>
+                          <Badge tone="neutral">{emResult.basis === "mdm" ? "by decision making" : "by time"}</Badge>
+                        </div>
+                        <div className="mt-1 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{emResult.explanation}</div>
+                      </>
+                    ) : (
+                      <div className="text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
+                        Below the lowest time band — no level is supported on time alone.
+                      </div>
+                    )}
+                    <div className="mt-2 text-[length:calc(8.5px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
+                      A supported level, not a submitted code. Final selection rests with the clinician or coder against current
+                      guidance, medical necessity and payer rules.
+                    </div>
+                  </div>
+                </div>
               ) : s.id === "sign" ? (
                 <div className="grid gap-1">
                   <CheckLine>I reviewed the clinical content</CheckLine>
@@ -276,6 +368,22 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
             ))}
             <div className="mt-2 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
               {composed.sections.length} sections, ordered core → type → specialty → complaint → context. Each names its layer.
+            </div>
+          </div>
+
+          <div className="mb-3 rounded-[var(--radius)] border border-[var(--border)] p-3">
+            <div className="mb-1.5 text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">Coding scheme</div>
+            <div className="flex gap-1.5">
+              {(["none", "em"] as const).map((c) => (
+                <button key={c} type="button" onClick={() => setCoding(c)}
+                  className={cn("focus-ring flex-1 rounded-lg border px-2 py-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-bold transition",
+                    coding === c ? "border-[var(--primary)] bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)]")}>
+                  {c === "none" ? "None" : "US E/M"}
+                </button>
+              ))}
+            </div>
+            <div className="mt-1.5 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
+              A tenant setting. This tenant is configured for the UAE, where E/M levels do not apply, so the default is none.
             </div>
           </div>
 
