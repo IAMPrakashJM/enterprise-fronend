@@ -7,3 +7,4 @@ export * from "./preference-defaults";
 export * from "./tours";
 export * from "./inbox";
 export * from "./i18n";
+export * from "./consultation-template";

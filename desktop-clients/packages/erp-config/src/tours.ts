@@ -18,6 +18,10 @@ export const TOURS: Record<PageKind | "default", TourStep[]> = {
   /* Deliberately short. This screen is read by someone who already knows what a
      provider key is; a tour that explains the obvious is the one people learn to
      dismiss without reading. */
+  consultation: [
+    { target: "compose", title: "Four layers, one screen", text: "Type, specialty, complaint and patient context compose the template. The same engine covers every combination without a page for each." },
+    { target: "source", title: "Every section says why", text: "Each section names the layer that added it, so a field you are asked to fill can always be traced back to the choice that put it there." },
+  ],
   inbox: [
     { target: "filter", title: "Unread only", text: "The header count and this list read the same data, so what it says is unread is what you will find here." },
     { target: "target", title: "Every item goes somewhere", text: "An item you cannot act on is a nag. Where there is a record behind it, Open takes you straight there." },
