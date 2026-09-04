@@ -148,6 +148,25 @@ export const USE_CASES: AiUseCase[] = [
     promptId: "cohort.summarise-selection.v1",
     category: "clinical",
   },
+  {
+    id: "coding.suggest-icd",
+    label: "Suggest diagnosis codes",
+    description: "Proposes codes from this service's catalogue for the documented problem. It selects from a supplied list and cannot invent a code; nothing is applied until you accept it.",
+    /* Structured fields only. The clinician's narrative is deliberately absent:
+       free text is where a name, a relative or an employer ends up, and a coding
+       suggestion does not need any of it. */
+    reads: [{ source: "page-record", fields: ["problem", "specialty", "complaint", "findings", "candidateCodes"], optional: true }],
+    promptId: "coding.suggest-icd.v1",
+    category: "clinical",
+  },
+  {
+    id: "orders.suggest",
+    label: "Suggest orders",
+    description: "Proposes orders from this service's orderable catalogue for the documented problem. Selection only, never invention, and nothing is placed until you accept it.",
+    reads: [{ source: "page-record", fields: ["problem", "specialty", "complaint", "findings", "candidateOrders"], optional: true }],
+    promptId: "orders.suggest.v1",
+    category: "clinical",
+  },
 ];
 
 /**

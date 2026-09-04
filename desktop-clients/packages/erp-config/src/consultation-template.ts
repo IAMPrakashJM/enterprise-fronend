@@ -260,6 +260,8 @@ export function composeConsultation(
     { id: "scores", title: "Clinical instruments", subtitle: "Offered with the conditions under which each applies", source: `Specialty · ${label(SPECIALTIES, specialty)}`, required: false },
     { id: "assessment", title: "Assessment and problems", subtitle: "Clinical reasoning and the problems addressed", source: `Complaint · ${label(CONDITIONS, condition)}`, required: true },
     { id: "plan", title: "Plan, education and follow-up", subtitle: "Actionable and traceable to each problem", source: "Core", required: true },
+    { id: "coding", title: "Diagnosis coding", subtitle: "Selected from this service's catalogue — manually, or proposed and accepted", source: "Core", required: false },
+    { id: "orders", title: "Orders", subtitle: "Selected from what this service can place", source: "Core", required: false },
     ...(type === "procedure" ? [{ id: "consent", title: "Consent and readiness", subtitle: "Indication, risks discussed, and preparation", source: "Type · Procedure", required: true }] : []),
     ...(type === "transition" ? [{ id: "reconcile", title: "Transition reconciliation", subtitle: "Discharge course, medication changes and unresolved issues", source: "Type · Post-discharge", required: true }] : []),
     ...(context === "older" || context === "complex"

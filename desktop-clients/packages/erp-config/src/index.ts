@@ -9,3 +9,4 @@ export * from "./inbox";
 export * from "./i18n";
 export * from "./consultation-template";
 export * from "./em-coding";
+export * from "./clinical-catalogue";

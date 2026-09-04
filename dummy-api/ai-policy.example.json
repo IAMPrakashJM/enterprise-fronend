@@ -31,7 +31,7 @@
         "allowed": true
       },
       "healthcare": {
-        "allowed": false
+        "allowed": true
       },
       "pharmacy": {
         "allowed": true
@@ -45,6 +45,12 @@
         "allowed": false
       },
       "medication-review": {
+        "allowed": false
+      },
+      "patient-master": {
+        "allowed": false
+      },
+      "encounter-worklist": {
         "allowed": false
       }
     },
