@@ -39,6 +39,11 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
   const recorder = useRef<MediaRecorder | null>(null);
   const stream = useRef<MediaStream | null>(null);
   const timer = useRef<number | null>(null);
+  /* Refs, not state: the recorder's onstop closure captures whatever these hold
+     at the moment it fires, and a state value would be the one from the render
+     that created it. */
+  const stopped = useRef(false);
+  const paused = useRef(false);
 
   const teardown = () => {
     recorder.current?.state !== "inactive" && recorder.current?.stop();
@@ -53,6 +58,7 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
 
   const start = async () => {
     setProblem(null); setState("starting"); setSegments([]); setSeconds(0);
+    stopped.current = false; paused.current = false;
     let media: MediaStream;
     try {
       media = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -66,7 +72,11 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
     const ws = new WebSocket(WS_URL());
     socket.current = ws;
 
-    ws.onopen = () => ws.send(JSON.stringify({ type: "SESSION_START", token, language }));
+    /* The container the browser chose. Chrome gives webm/opus, Safari mp4/aac,
+       and the gateway has to label the upload correctly or the provider rejects
+       it as corrupt — which reads as a broken microphone and is not. */
+    const mime = ["audio/webm", "audio/mp4", "audio/ogg"].find((m) => MediaRecorder.isTypeSupported?.(m)) ?? "";
+    ws.onopen = () => ws.send(JSON.stringify({ type: "SESSION_START", token, language, mime }));
     ws.onerror = () => {
       /* Named precisely, because the likeliest cause is infrastructure rather
          than the app: a proxy that does not pass the upgrade header. */
@@ -78,12 +88,26 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
       if (message.type === "SESSION_READY") {
         setProvider({ label: message.provider.label, model: message.provider.model, verified: message.verified });
         setState("recording");
-        const rec = new MediaRecorder(media);
-        recorder.current = rec;
-        rec.ondataavailable = async (e) => {
-          if (e.data.size && ws.readyState === WebSocket.OPEN) ws.send(await e.data.arrayBuffer());
+        /* TAKES, NOT TIMESLICES. rec.start(1000) yields chunks of which only
+           the first carries a container header; the rest are undecodable on
+           their own, so a batch transcription endpoint rejects them. Recording
+           a complete take, stopping, sending, and starting the next makes every
+           binary message a standalone audio file — and costs one transcription
+           per take rather than re-sending a growing buffer, which would be
+           quadratic over a long consultation. */
+        const TAKE_MS = 10000;
+        const recordTake = () => {
+          if (!stream.current || ws.readyState !== WebSocket.OPEN) return;
+          const rec = mime ? new MediaRecorder(media, { mimeType: mime }) : new MediaRecorder(media);
+          recorder.current = rec;
+          rec.ondataavailable = async (e) => {
+            if (e.data.size > 1024 && ws.readyState === WebSocket.OPEN) ws.send(await e.data.arrayBuffer());
+          };
+          rec.onstop = () => { if (!stopped.current && !paused.current) recordTake(); };
+          rec.start();
+          window.setTimeout(() => { if (rec.state === "recording") rec.stop(); }, TAKE_MS);
         };
-        rec.start(1000);
+        recordTake();
         timer.current = window.setInterval(() => setSeconds((s) => s + 1), 1000);
       }
       if (message.type === "TRANSCRIPT_PARTIAL" || message.type === "TRANSCRIPT_FINAL") {
@@ -94,16 +118,25 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
             .sort((a, b) => a.sequence - b.sequence);
         });
       }
+      if (message.type === "TRANSCRIPT_DROPPED") {
+        setSegments((prev) => prev.filter((s) => s.sequence !== message.sequence));
+      }
       if (message.type === "ERROR") { setProblem(`${message.error}${message.detail ? ` ${message.detail}` : ""}`); setState("idle"); teardown(); }
       if (message.type === "SESSION_ENDED") setState("ended");
     };
   };
 
   const pause = () => {
-    if (state === "recording") { recorder.current?.pause(); socket.current?.send(JSON.stringify({ type: "PAUSE" })); setState("paused"); }
-    else { recorder.current?.resume(); socket.current?.send(JSON.stringify({ type: "RESUME" })); setState("recording"); }
+    if (state === "recording") {
+      paused.current = true; recorder.current?.pause();
+      socket.current?.send(JSON.stringify({ type: "PAUSE" })); setState("paused");
+    } else {
+      paused.current = false; recorder.current?.resume();
+      socket.current?.send(JSON.stringify({ type: "RESUME" })); setState("recording");
+    }
   };
   const stop = () => {
+    stopped.current = true;
     socket.current?.send(JSON.stringify({ type: "STOP" }));
     setState("ended");
     recorder.current?.state !== "inactive" && recorder.current?.stop();

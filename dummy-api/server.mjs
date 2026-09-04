@@ -17,7 +17,7 @@
  *   PORT=4100 node server.mjs
  */
 import { createServer } from "node:http";
-import { ADAPTERS, acceptKey, attachSocket, chooseProvider, mockSegment } from "./speech-gateway.mjs";
+import { ADAPTERS, acceptKey, attachSocket, chooseProvider, mockSegment, transcribeOpenAI } from "./speech-gateway.mjs";
 import { createHash, randomBytes } from "node:crypto";
 import { chmodSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -985,6 +985,7 @@ server.on("upgrade", (req, socket, head) => {
         session.user = user;
         session.started = Date.now();
         session.language = message.language === "ar" ? "ar" : "en";
+        session.mime = typeof message.mime === "string" ? message.mime : "audio/webm";
 
         const tenantConfig = aiConfig[user.tenantId] ?? {};
         const providers = (tenantConfig.speech?.providers ?? []).map((p) => ({
@@ -1015,7 +1016,7 @@ server.on("upgrade", (req, socket, head) => {
       if (message.type === "STOP") { reply({ type: "SESSION_ENDED", segments: session.sequence, seconds: Math.round((Date.now() - session.started) / 1000) }); finish("stop"); close(); return; }
     },
 
-    onAudio: (chunk, reply, close) => {
+    onAudio: async (chunk, reply, close) => {
       if (!session.user || session.paused) return;
       session.bytes += chunk.length;
       if ((Date.now() - session.started) / 1000 > SPEECH_MAX_SECONDS) {
@@ -1024,29 +1025,39 @@ server.on("upgrade", (req, socket, head) => {
       }
       /* Keyed to audio actually arriving, so a dead microphone still looks dead
          rather than producing a transcript out of nothing. */
-      if (session.provider?.id !== "mock") {
-        if (session.sequence === 0) {
-          session.sequence = 1;
-          reply({ type: "ERROR", error: `The ${session.provider.id} adapter is declared but not implemented here.`, detail: "Only the built-in mock transcriber runs in this repository." });
-        }
-        return;
-      }
-      /* One segment per chunk was wrong: chunks arrive faster than a segment
-         completes, so every chunk inside the same 900ms read the SAME script
-         line and the transcript repeated itself. The index now advances when
-         the segment is claimed, and a segment is only claimed every few seconds
-         — which is roughly how long a spoken sentence takes, and stops a 500ms
-         chunk size from deciding how the transcript is broken up. */
-      const now = Date.now();
-      if (now - (session.lastSegmentAt ?? 0) < 2500) return;
-      session.lastSegmentAt = now;
-
-      const at = (now - session.started) / 1000;
-      const line = mockSegment(session.index, session.language);
+      /* ONE BINARY MESSAGE IS ONE COMPLETE AUDIO FILE. The client records in
+         takes rather than timeslices, because a MediaRecorder chunk after the
+         first has no container header and is undecodable alone — posting those
+         individually returns "corrupted or unsupported", which looks exactly
+         like a broken microphone and is not. */
+      const at = (Date.now() - session.started) / 1000;
       const sequence = session.index + 1;
       session.index += 1;
       session.sequence = sequence;
 
+      if (session.provider.id === "openai") {
+        const held = credentials[credentialKey(session.user.tenantId, "speech:openai")];
+        if (!held) { reply({ type: "ERROR", error: "The OpenAI speech credential is missing." }); return; }
+        reply({ type: "TRANSCRIPT_PARTIAL", sequence, speaker: "SPEAKER", text: "transcribing…" });
+        const result = await transcribeOpenAI({
+          audio: chunk, secret: held.secret, model: session.provider.model, language: session.language, mime: session.mime,
+        });
+        if (!result.ok) { send({ type: "ERROR", error: result.error }); return; }
+        /* An empty transcript is silence, not a failure. Emitting a blank
+           segment would pad the record with nothing. */
+        if (!result.text) { send({ type: "TRANSCRIPT_DROPPED", sequence, reason: "no speech detected" }); return; }
+        send({ type: "TRANSCRIPT_FINAL", sequence, speaker: "SPEAKER", text: result.text, startTime: Number(at.toFixed(2)), endTime: Number((at + 10).toFixed(2)) });
+        /* Metadata only — never the text. */
+        console.log(`[speech] segment session=${session.id} provider=openai seq=${sequence} ${chunk.length} bytes ${result.tokens ?? "?"} tokens`);
+        return;
+      }
+
+      if (session.provider.id !== "mock") {
+        reply({ type: "ERROR", error: `The ${session.provider.id} adapter is declared but not implemented here.`, detail: "OpenAI and the built-in mock are the adapters that run." });
+        return;
+      }
+
+      const line = mockSegment(session.index - 1, session.language);
       reply({ type: "TRANSCRIPT_PARTIAL", sequence, speaker: line.speaker, text: line.text.slice(0, Math.ceil(line.text.length * 0.6)) + "…" });
       setTimeout(() => {
         send({ type: "TRANSCRIPT_FINAL", sequence, speaker: line.speaker, text: line.text, startTime: Number(at.toFixed(2)), endTime: Number((at + 2.4).toFixed(2)) });

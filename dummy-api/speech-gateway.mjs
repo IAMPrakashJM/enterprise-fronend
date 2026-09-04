@@ -135,9 +135,9 @@ export const ADAPTERS = {
   openai: {
     id: "openai",
     label: "OpenAI",
-    streaming: true,
+    streaming: false,
     languages: ["en", "ar"],
-    verified: false,
+    verified: true,
     needsCredential: true,
     endpoint: "https://api.openai.com/v1/audio/transcriptions",
   },
@@ -202,4 +202,56 @@ const SCRIPT = {
 export function mockSegment(index, language) {
   const lines = SCRIPT[language] ?? SCRIPT.en;
   return lines[index % lines.length];
+}
+
+
+/* ---- OpenAI transcription -------------------------------------------------
+
+   NOT STREAMING, and the adapter says so rather than implying otherwise.
+   /v1/audio/transcriptions takes a COMPLETE audio file. Two consequences shape
+   the whole protocol:
+
+   A MediaRecorder timeslice chunk is not a file. Only the first chunk carries
+   the container header, so chunks two onward are undecodable on their own —
+   posting them individually returns errors or silence, which looks like a bad
+   microphone and is not. The client therefore records in complete TAKES: one
+   recorder per segment, stopped and restarted, so every binary message on the
+   socket is a standalone file.
+
+   Re-transcribing a growing buffer would be quadratic in cost. A five-minute
+   consultation re-sent every ten seconds is thirty calls over up to five
+   minutes of audio each. Takes are transcribed once and appended, so cost is
+   linear in the length of the consultation.
+
+   True low-latency streaming needs the realtime transcription API, which is a
+   different protocol and a larger integration than this. */
+export async function transcribeOpenAI({ audio, secret, model, language, mime }) {
+  /* The FILENAME EXTENSION drives the decoder, not the bytes. A WAV posted as
+     segment.webm comes back "corrupted or unsupported", which reads like a
+     broken microphone and is a mislabel. It is a parameter because the browser
+     decides: Chrome records webm/opus, Safari mp4/aac. */
+  const type = (mime || "audio/webm").split(";")[0];
+  const ext = type.includes("mp4") ? "mp4" : type.includes("ogg") ? "ogg" : type.includes("wav") ? "wav" : "webm";
+  const form = new FormData();
+  form.append("file", new Blob([audio], { type }), `segment.${ext}`);
+  form.append("model", model || "gpt-4o-transcribe");
+  if (language) form.append("language", language);
+
+  let response;
+  try {
+    response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${secret}` },
+      body: form,
+      signal: AbortSignal.timeout(60000),
+    });
+  } catch (cause) {
+    /* The provider's own failure, never the request that produced it: a thrown
+       fetch error can carry headers, and the headers carry the key. */
+    return { ok: false, error: cause?.name === "TimeoutError" ? "The provider timed out." : "The provider could not be reached." };
+  }
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) return { ok: false, error: payload?.error?.message ?? `Provider returned HTTP ${response.status}.` };
+  const text = typeof payload?.text === "string" ? payload.text.trim() : "";
+  return { ok: true, text, tokens: payload?.usage?.total_tokens ?? null };
 }
