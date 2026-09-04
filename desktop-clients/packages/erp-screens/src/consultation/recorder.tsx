@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Circle, Mic, MicOff, Pause, Play, Square } from "lucide-react";
 import { Badge, Button, cn } from "@pepbits/ops-ui";
+import { readToken } from "@pepbits/auth";
 
 /**
  * Ambient consultation recording.
@@ -68,7 +69,11 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
     }
     stream.current = media;
 
-    const token = (() => { try { return window.localStorage.getItem("nexora-token"); } catch { return null; } })();
+    /* From the auth package, not a literal. The key is "nexora-session-token"
+       and my first guess at it was wrong — a hardcoded copy in another package
+       is one rename away from a failure that presents as "not signed in" with
+       nothing obviously broken. */
+    const token = readToken();
     const ws = new WebSocket(WS_URL());
     socket.current = ws;
 
