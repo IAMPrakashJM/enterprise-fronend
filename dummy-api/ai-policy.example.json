@@ -1,17 +1,38 @@
 {
   "NEX-AE-001": {
     "global": {
-      "platform":    { "allowed": true },
-      "tenant":      { "allowed": true },
-      "application": { "allowed": true }
+      "platform": {
+        "allowed": true
+      },
+      "tenant": {
+        "allowed": true
+      },
+      "application": {
+        "allowed": true
+      }
     },
     "modules": {
-      "finance": { "allowed": true },
-      "sales":   { "allowed": true },
-      "hr":      { "allowed": true },
-      "payroll": { "allowed": true },
-      "supply":   { "allowed": true },
-      "library": { "allowed": true }
+      "finance": {
+        "allowed": true
+      },
+      "sales": {
+        "allowed": true
+      },
+      "hr": {
+        "allowed": true
+      },
+      "payroll": {
+        "allowed": true
+      },
+      "supply": {
+        "allowed": true
+      },
+      "library": {
+        "allowed": true
+      },
+      "healthcare": {
+        "allowed": false
+      }
     },
     "pages": {},
     "useCases": {}

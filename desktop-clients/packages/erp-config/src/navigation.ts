@@ -19,9 +19,11 @@ import {
   CreditCard,
   FileChartColumn,
   FileCog,
+  FlaskConical,
   FileSpreadsheet,
   FileText,
   Gauge,
+  HeartPulse,
   Gavel,
   HandCoins,
   IdCard,
@@ -44,6 +46,7 @@ import {
   ShoppingBag,
   ShoppingCart,
   SlidersHorizontal,
+  Stethoscope,
   Sparkles,
   Store,
   TableProperties,
@@ -352,6 +355,74 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
       ] },
     ],
   },
+  healthcare: {
+    id: "healthcare",
+    label: "Healthcare",
+    shortLabel: "HC",
+    description: "Patient administration, clinical workflow and revenue cycle",
+    accent: "#0e9f8f",
+    icon: HeartPulse,
+    navigation: [
+      { id: "hc-overview", label: "Overview", items: [{ id: "healthcare-dashboard", label: "Healthcare Dashboard", icon: LayoutDashboard, pageId: "healthcare-dashboard" }] },
+      {
+        id: "hc-patient", label: "Patient Administration", items: [
+          { id: "hc-registry", label: "Registry", icon: ContactRound, children: [
+            { id: "patient-master", label: "Patient Master", pageId: "patient-master" },
+            { id: "patient-merge", label: "Duplicate Review", pageId: "patient-merge" },
+            { id: "next-of-kin", label: "Next of Kin", pageId: "next-of-kin" },
+          ] },
+          { id: "hc-access", label: "Admissions & Visits", icon: CalendarClock, children: [
+            { id: "appointment-worklist", label: "Appointments", pageId: "appointment-worklist" },
+            { id: "admission-worklist", label: "Admissions", pageId: "admission-worklist" },
+            { id: "bed-management", label: "Bed Management", pageId: "bed-management" },
+            { id: "discharge-worklist", label: "Discharges", pageId: "discharge-worklist" },
+          ] },
+        ],
+      },
+      {
+        id: "hc-clinical", label: "Clinical", items: [
+          { id: "hc-encounter", label: "Encounters", icon: Stethoscope, children: [
+            { id: "encounter-worklist", label: "Encounter Worklist", pageId: "encounter-worklist" },
+            { id: "clinical-notes", label: "Clinical Notes", pageId: "clinical-notes" },
+            { id: "vitals-worklist", label: "Vitals & Observations", pageId: "vitals-worklist" },
+          ] },
+          { id: "hc-orders", label: "Orders & Results", icon: FlaskConical, children: [
+            { id: "order-worklist", label: "Order Worklist", pageId: "order-worklist" },
+            { id: "lab-results", label: "Laboratory Results", pageId: "lab-results" },
+            { id: "imaging-worklist", label: "Imaging", pageId: "imaging-worklist" },
+            { id: "medication-orders", label: "Medication Orders", pageId: "medication-orders" },
+          ] },
+        ],
+      },
+      {
+        id: "hc-revenue", label: "Revenue Cycle", items: [
+          { id: "hc-payer", label: "Payer & Claims", icon: ReceiptText, children: [
+            { id: "preauthorization", label: "Pre-authorisation", pageId: "preauthorization" },
+            { id: "claim-worklist", label: "Claim Worklist", pageId: "claim-worklist" },
+            { id: "denial-worklist", label: "Denials & Appeals", pageId: "denial-worklist" },
+          ] },
+        ],
+      },
+      {
+        id: "hc-insight", label: "Reports", items: [
+          { id: "hc-reports", label: "Clinical & Operational", icon: BarChart3, children: [
+            { id: "occupancy-report", label: "Bed Occupancy", pageId: "occupancy-report" },
+            { id: "los-report", label: "Length of Stay", pageId: "los-report" },
+            { id: "denial-rate-report", label: "Denial Rate", pageId: "denial-rate-report" },
+          ] },
+        ],
+      },
+      {
+        id: "hc-setup", label: "Configuration", items: [
+          { id: "hc-config", label: "Clinical Setup", icon: Settings2, children: [
+            { id: "service-catalog", label: "Service Catalogue", pageId: "service-catalog" },
+            { id: "payer-master", label: "Payer Master", pageId: "payer-master" },
+            { id: "clinician-master", label: "Clinician Master", pageId: "clinician-master" },
+          ] },
+        ],
+      },
+    ],
+  },
   library: {
     id: "library",
     label: "Developer Library",
@@ -563,7 +634,24 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
          policy the server owns, which is the layer that can be changed without
          a client release. An explicit block still wins, INCLUDING an explicit
          `{ enabled: false }`, so a page can still opt out at build time. */
-      ai: explicit.ai ?? defaultAiFor(explicit.kind ?? inferredKind),
+      /* PHI OVERRIDES EVERYTHING, including an explicit page block.
+
+         Every other module resolves gate 1 from the page. Healthcare does not
+         get the choice: its pages carry patient names, MRNs, diagnoses and dates
+         of birth, and the redactor masks emails, phones, IBANs and national ids
+         -- none of those. A patient worklist inheriting the default use cases
+         would put real names into a request to a third-party provider, which is
+         precisely what spec §10 says must never happen without a PHI-approved
+         route, and there is no such provider configured.
+
+         Written as a module rule rather than `ai: { enabled: false }` on each of
+         the 22 pages because the 23rd page is the one that would be forgotten,
+         and it is placed BEFORE `explicit.ai` so no page can opt itself back in
+         by accident. When a PHI-safe provider exists this is the single line
+         that changes, next to the use cases written for it. */
+      ai: module === "healthcare"
+        ? { enabled: false, useCases: [] }
+        : explicit.ai ?? defaultAiFor(explicit.kind ?? inferredKind),
     } satisfies PageDefinition];
   })
 );

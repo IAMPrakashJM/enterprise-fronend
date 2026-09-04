@@ -12,6 +12,29 @@ function pad(value: number, size = 5) { return String(value).padStart(size, "0")
 function dateFor(index: number) { return `2026-${String(((index + 5) % 9) + 1).padStart(2, "0")}-${String(((index * 3) % 27) + 1).padStart(2, "0")}`; }
 function nameFor(index: number) { return `${firstNames[index % firstNames.length]} ${lastNames[(index * 3) % lastNames.length]}`; }
 
+/* Patients. Deliberately shaped like real PHI -- a name, an MRN, a date of
+   birth, a diagnosis -- because the point of this module is to exercise what
+   happens around data that must NOT leave the building, and rows of "Record 1"
+   would prove nothing. Every value is invented; no real person is described. */
+const givenNames = ["Aisha", "Omar", "Leena", "Yousef", "Mariam", "Hassan", "Fatima", "Khalid", "Noor", "Rashid", "Sara", "Tariq"];
+const familyNames = ["Al Mansouri", "Rahman", "George", "Khan", "Haddad", "Nasser", "Sultan", "Farouk", "Bishara", "Idris"];
+const conditions = ["Type 2 diabetes", "Hypertension", "Asthma", "Post-operative review", "Ischaemic heart disease", "Chronic kidney disease", "Pneumonia", "Fracture — left radius"];
+
+export const patientRows = Array.from({ length: 84 }, (_, i) => ({
+  id: `MRN-${pad(90210 + i * 7)}`,
+  name: `${givenNames[i % givenNames.length]} ${familyNames[(i * 3) % familyNames.length]}`,
+  dob: `19${String(55 + (i % 45)).padStart(2, "0")}-${pad((i % 12) + 1).slice(-2)}-${pad((i % 27) + 1).slice(-2)}`,
+  gender: ["Female", "Male"][i % 2],
+  ward: ["4A Medical", "4B Surgical", "2C Maternity", "ICU", "Day Case", "Outpatient"][i % 6],
+  clinician: `Dr ${familyNames[(i * 5) % familyNames.length]}`,
+  primaryDiagnosis: conditions[i % conditions.length],
+  payer: ["Daman", "AXA Gulf", "Self-pay", "Thiqa", "MetLife"][i % 5],
+  admitted: `2026-0${(i % 9) + 1}-${pad((i % 27) + 1).slice(-2)}`,
+  lengthOfStay: (i % 14) + 1,
+  status: ["Admitted", "Discharged", "Pre-admission", "Outpatient", "Under review"][i % 5],
+  acuity: ["Routine", "Urgent", "Critical", "Routine"][i % 4],
+}));
+
 export const customerRows = Array.from({ length: 96 }, (_, i) => ({
   id: `CUS-${pad(2401 + i)}`,
   name: companies[i % companies.length] + (i > 15 ? ` ${Math.floor(i / 16) + 1}` : ""),
@@ -164,6 +187,27 @@ export function getWorklistConfig(pageId: string, title: string, entity = "recor
     description: `Configurable ${title.toLowerCase()} with saved filters, column layouts, table/card views and contextual record actions.`,
     basicFilters: baseFilters(),
     advancedFilters: advancedFilters(),
+  };
+
+  if (entity === "patient") return {
+    ...common,
+    rows: patientRows,
+    primaryKey: "id",
+    displayKey: "name",
+    columns: [
+      { key: "id", label: "MRN", sortable: true, defaultVisible: true },
+      { key: "name", label: "Patient", sortable: true, defaultVisible: true },
+      { key: "dob", label: "Date of birth", type: "date", sortable: true, defaultVisible: true },
+      { key: "gender", label: "Gender", sortable: true, defaultVisible: false },
+      { key: "ward", label: "Ward", sortable: true, defaultVisible: true },
+      { key: "clinician", label: "Responsible clinician", sortable: true, defaultVisible: true },
+      { key: "primaryDiagnosis", label: "Primary diagnosis", sortable: true, defaultVisible: false },
+      { key: "payer", label: "Payer", sortable: true, defaultVisible: true },
+      { key: "admitted", label: "Admitted", type: "date", sortable: true, defaultVisible: false },
+      { key: "lengthOfStay", label: "LOS (days)", sortable: true, defaultVisible: true },
+      { key: "acuity", label: "Acuity", type: "status", sortable: true, defaultVisible: false },
+      { key: "status", label: "Status", type: "status", sortable: true, defaultVisible: true },
+    ],
   };
 
   if (entity === "customer") return {
@@ -442,6 +486,35 @@ export const dashboardData: Record<ModuleKey, {
     ],
     queue: [
       { label: "Requisitions", count: 86, value: "AED 2.7M", SLA: "8h" }, { label: "PO approvals", count: 41, value: "AED 4.2M", SLA: "4h" }, { label: "Receiving exceptions", count: 23, value: "68 lines", SLA: "2h" }, { label: "Reorder proposals", count: 126, value: "AED 1.84M", SLA: "1d" },
+    ],
+  },
+  healthcare: {
+    kpis: [
+      { label: "Inpatients today", value: "412", delta: "+2.4%", trend: "up", note: "68 admitted in 24h" },
+      { label: "Bed occupancy", value: "87.3%", delta: "+3.1%", trend: "up", note: "Above 85% threshold" },
+      { label: "Average length of stay", value: "4.2 days", delta: "-0.3", trend: "down", note: "Target 4.5" },
+      { label: "Outpatient visits", value: "1,864", delta: "+6.8%", trend: "up", note: "Week to date" },
+      { label: "Claim denial rate", value: "6.9%", delta: "-1.2%", trend: "down", note: "182 in appeal" },
+      { label: "Pending pre-auth", value: "97", delta: "+14", trend: "up", note: "23 breach SLA today" },
+    ],
+    trend: [1284, 1310, 1298, 1366, 1402, 1388, 1445, 1478, 1502, 1466, 1531, 1568],
+    trendLabels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+    breakdown: [
+      { label: "Inpatient", value: 412, total: 472 }, { label: "Day case", value: 168, total: 220 },
+      { label: "Emergency", value: 96, total: 120 }, { label: "Outpatient clinics", value: 1864, total: 2100 },
+    ],
+    activity: [
+      { title: "Bed capacity warning", detail: "Ward 4B at 96% — 2 beds available", time: "12m", tone: "warning" },
+      { title: "Claim batch submitted", detail: "648 claims to Daman • AED 3.9M", time: "48m", tone: "success" },
+      { title: "Pre-authorisation denied", detail: "3 requests need clinical documentation", time: "1h", tone: "danger" },
+      { title: "Discharge summary overdue", detail: "14 encounters closed without a summary", time: "2h", tone: "warning" },
+      { title: "Lab interface healthy", detail: "2,184 results received and matched", time: "3h", tone: "info" },
+    ],
+    queue: [
+      { label: "Awaiting pre-authorisation", count: 97, value: "AED 2.4M", SLA: "24h" },
+      { label: "Discharge summaries due", count: 14, value: "—", SLA: "48h" },
+      { label: "Claims in denial", count: 182, value: "AED 1.1M", SLA: "30d" },
+      { label: "Unsigned clinical notes", count: 63, value: "—", SLA: "72h" },
     ],
   },
   library: {
