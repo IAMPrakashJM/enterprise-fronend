@@ -383,6 +383,8 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
         id: "hc-clinical", label: "Clinical", items: [
           { id: "hc-encounter", label: "Encounters", icon: Stethoscope, children: [
             { id: "encounter-worklist", label: "Encounter Worklist", pageId: "encounter-worklist" },
+            { id: "consultation-worklist", label: "Consultations", pageId: "consultation-worklist" },
+            { id: "consultation-entry", label: "New Consultation", pageId: "consultation-entry" },
             { id: "clinical-notes", label: "Clinical Notes", pageId: "clinical-notes" },
             { id: "vitals-worklist", label: "Vitals & Observations", pageId: "vitals-worklist" },
           ] },
@@ -529,6 +531,11 @@ const explicitPages: Record<string, Partial<PageDefinition>> = {
      page. */
   "notifications": { kind: "inbox", entity: "notification", title: "Notifications", subtitle: "Everything the system has raised for you, and the record behind each one." },
   "messages": { kind: "inbox", entity: "message", title: "Messages", subtitle: "Conversations from colleagues and shared service desks." },
+  /* `consultation-entry` needs an explicit kind: inferredKind reads "report" and
+     "dashboard" out of a page id and defaults everything else to worklist, so a
+     form whose id ends in -entry would have rendered as a table of one row. */
+  "consultation-entry": { kind: "form", entity: "consultation", title: "New Consultation", subtitle: "Record an outpatient consultation: presentation, examination, assessment and plan." },
+  "consultation-worklist": { kind: "worklist", entity: "consultation", title: "Consultations", subtitle: "Outpatient consultations by specialty, clinician and outcome." },
   "ai-administration": { kind: "ai-admin", entity: "ai", title: "AI Administration", subtitle: "Provider, credential, limits and prompts for this tenant's assistant.", ai: { enabled: false, useCases: [] } },
   "spreadsheet-studio": { kind: "spreadsheet", title: "Spreadsheet Studio" },
   "component-library": { kind: "library", title: "Component Gallery" },
