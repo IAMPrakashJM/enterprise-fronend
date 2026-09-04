@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { Check, CircleAlert, FileSignature, Layers, RotateCcw, Stethoscope, TriangleAlert } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Check, CircleAlert, FileSignature, Layers, Plus, RotateCcw, Sparkles, Stethoscope, TriangleAlert, X } from "lucide-react";
 import {
   COMBINATION_COUNT, CONDITIONS, CONSULTATION_TYPES, PATIENT_CONTEXTS, SPECIALTIES, composeConsultation,
 } from "@pepbits/erp-config";
-import { EM_ELEMENTS, deriveFromMdm, deriveFromTime, timeBandsFor } from "@pepbits/erp-config";
+import { EM_ELEMENTS, candidateLine, codesFor, deriveFromMdm, deriveFromTime, ordersFor, timeBandsFor } from "@pepbits/erp-config";
+import { usePublishAiSources } from "@pepbits/ai-client";
+import { TransparencyPanel, useAssistant } from "@pepbits/ai-ui";
 import type { ConsultationOption, EmElementLevel, EmPatientType, PageDefinition } from "@pepbits/erp-config";
 import { useERP } from "@pepbits/erp-shell";
-import { Badge, Button, Input, Textarea, cn } from "@pepbits/ops-ui";
+import { Badge, Button, IconButton, Input, Textarea, cn } from "@pepbits/ops-ui";
 
 /**
  * The dynamic consultation engine.
@@ -91,6 +93,49 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
   const [em, setEm] = useState<{ problems: EmElementLevel; data: EmElementLevel; risk: EmElementLevel; patient: EmPatientType; minutes: string; basis: "mdm" | "time" }>(
     { problems: "moderate", data: "moderate", risk: "moderate", patient: "new", minutes: "", basis: "mdm" },
   );
+  /* ---- coding and orders -------------------------------------------------
+     MANUAL IS THE BASELINE and works with no assistant at all: both lists are
+     pickers over this service's catalogue. The assist proposes into the same
+     lists and cannot reach anything the manual path could not. */
+  const codeCatalogue = useMemo(() => codesFor(selection.specialty), [selection.specialty]);
+  const orderCatalogue = useMemo(() => ordersFor(selection.specialty), [selection.specialty]);
+  const [codes, setCodes] = useState<string[]>([]);
+  const [orders, setOrders] = useState<string[]>([]);
+  const [assist, setAssist] = useState<{ id: string; reply?: string; sending?: boolean } | null>(null);
+
+  const assistant = useAssistant();
+
+
+  const assistUseCase = assist ? assistant.useCases.find((u) => u.id === assist.id) : undefined;
+  const assistContext = useMemo(
+    () => (assistUseCase ? assistant.prepare(assistUseCase) : null),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [assistUseCase, assist?.id],
+  );
+
+  /* TransparencyPanel keeps Send disabled until the credential status says a
+     provider is configured, and that status arrives with the administration
+     config — which only AssistantPanel was fetching. Without this the review
+     rendered correctly and could never be confirmed. */
+  useEffect(() => { if (assist) assistant.loadConfig(); }, [assist, assistant]);
+
+  const runAssist = async () => {
+    if (!assistUseCase) return;
+    setAssist((a) => (a ? { ...a, sending: true } : a));
+    const { reply } = await assistant.run(assistUseCase);
+    setAssist((a) => (a ? { ...a, sending: false, reply: reply.text ?? reply.error ?? "No response." } : a));
+  };
+
+  /* Codes the reply actually named, matched back against the catalogue. A code
+     the model produced that is not in the list is dropped here rather than
+     shown -- selection-only has to be enforced on the way back, not just asked
+     for on the way out. */
+  const proposed = useMemo(() => {
+    if (!assist?.reply) return [] as string[];
+    const pool = assist.id === "coding.suggest-icd" ? codeCatalogue.map((c) => c.code) : orderCatalogue.map((o) => o.code);
+    return pool.filter((code) => assist.reply!.includes(code));
+  }, [assist, codeCatalogue, orderCatalogue]);
+
   const emResult = useMemo(
     () => (em.basis === "time" ? deriveFromTime(Number(em.minutes), em.patient) : deriveFromMdm(em.problems, em.data, em.risk, em.patient)),
     [em],
@@ -104,6 +149,20 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
   /* Required sections come from the composition, so a layer that adds a required
      section also adds it to the sign gate. Keeping a second list would let the
      two disagree, and the gate is the half that would be wrong. */
+  /* What the assist may read. The clinician's narrative is deliberately not
+     published: a coding suggestion does not need free text, and free text is
+     where a name ends up. */
+  usePublishAiSources("consultation", {
+    "page-record": {
+      problem: values.problem ?? composed.problemLabel,
+      specialty: selection.specialty,
+      complaint: selection.condition,
+      findings: chosenPrompts.join(", "),
+      candidateCodes: candidateLine(codeCatalogue),
+      candidateOrders: candidateLine(orderCatalogue),
+    },
+  });
+
   const requiredFields = useMemo(
     () => composed.sections.filter((s) => s.required && s.id !== "sign").map((s) => s.id),
     [composed],
@@ -197,6 +256,53 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
         </Button>
       </div>
 
+      {assist && assistUseCase && assistContext ? (
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-[color-mix(in_srgb,var(--text)_45%,transparent)] p-4" role="dialog" aria-label="Review before sending">
+          <div className="flex max-h-[85vh] w-[520px] max-w-full flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
+            <div className="flex items-center gap-2 border-b border-[var(--border)] px-3 py-2.5">
+              <Sparkles className="size-4 text-[var(--primary)]" />
+              <span className="flex-1 text-[length:calc(11px*var(--fs-scale))] font-extrabold">{assistUseCase.label}</span>
+              <IconButton label="Cancel" className="size-7" onClick={() => setAssist(null)}><X className="size-4" /></IconButton>
+            </div>
+            {assist.reply ? (
+              <div className="nex-scrollbar min-h-0 overflow-y-auto p-3">
+                <pre className="whitespace-pre-wrap break-words font-sans text-[length:calc(10px*var(--fs-scale))] leading-relaxed">{assist.reply}</pre>
+                <div className="mt-3 border-t border-[var(--border)] pt-3">
+                  <div className="mb-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-bold">
+                    {proposed.length ? "Matched back against the catalogue:" : "Nothing in the reply matched the catalogue."}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {proposed.map((code) => (
+                      <button key={code} type="button"
+                        onClick={() => {
+                          const target = assist.id === "coding.suggest-icd" ? codes : orders;
+                          const setter = assist.id === "coding.suggest-icd" ? setCodes : setOrders;
+                          if (!target.includes(code)) setter([...target, code]);
+                        }}
+                        className="focus-ring rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-2 py-1 font-mono text-[length:calc(9px*var(--fs-scale))] font-bold transition hover:border-[var(--primary)] hover:bg-[var(--primary-soft)]">
+                        + {code}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-[length:calc(8.5px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
+                    Suggestions only. Nothing is added until you click it, and a code the reply named that is not in this
+                    service's catalogue is dropped here rather than shown.
+                  </p>
+                </div>
+                <Button className="mt-3" size="sm" variant="secondary" onClick={() => setAssist(null)}>Done</Button>
+              </div>
+            ) : (
+              /* The SAME review every clinical use case gets — including the
+                 acknowledgement naming the record. Reused rather than rebuilt,
+                 so the assist cannot drift into a lighter confirmation. */
+              <TransparencyPanel context={assistContext} useCase={assistUseCase} config={assistant.config}
+                decidedBy={assistant.decidedBy} sending={assist.sending}
+                onCancel={() => setAssist(null)} onConfirm={() => void runAssist()} />
+            )}
+          </div>
+        </div>
+      ) : null}
+
       <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="nex-scrollbar min-h-0 overflow-y-auto bg-[var(--surface-2)] p-3">
           {composed.warnings.length ? (
@@ -250,6 +356,71 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
                   <Textarea label="Clinical reasoning" rows={3} value={values.assessment ?? ""} onChange={(e) => set("assessment", e.target.value)}
                     placeholder="Differential, evidence, and the relationship between problems." />
                 </div>
+              ) : s.id === "coding" || s.id === "orders" ? (
+                (() => {
+                  const coding = s.id === "coding";
+                  const catalogue: Array<{ code: string; label: string }> = coding
+                    ? codeCatalogue.map((c) => ({ code: c.code, label: c.term }))
+                    : orderCatalogue.map((o) => ({ code: o.code, label: `${o.name} · ${o.kind}` }));
+                  const picked = coding ? codes : orders;
+                  const setPicked = coding ? setCodes : setOrders;
+                  const useCaseId = coding ? "coding.suggest-icd" : "orders.suggest";
+                  const offered = assistant.allowed && assistant.useCases.some((u) => u.id === useCaseId);
+                  return (
+                    <div className="grid gap-2.5">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
+                          {picked.length ? `${picked.length} selected` : "Nothing selected yet"}
+                        </span>
+                        <span className="flex-1" />
+                        {/* Offered only where the gates allow it. Its absence is
+                            the whole manual path, not a degraded one. */}
+                        {offered ? (
+                          <Button size="sm" variant="secondary" leftIcon={<Sparkles className="size-3.5" />}
+                            onClick={() => setAssist({ id: useCaseId })}>
+                            Suggest with AI
+                          </Button>
+                        ) : (
+                          <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]">
+                            Assistant not enabled here — select manually
+                          </span>
+                        )}
+                      </div>
+
+                      {picked.length ? (
+                        <div className="flex flex-wrap gap-1.5">
+                          {picked.map((code) => {
+                            const item = catalogue.find((c) => c.code === code);
+                            return (
+                              <span key={code} className="flex items-center gap-1.5 rounded-full border border-[var(--primary)] bg-[var(--primary-soft)] px-2 py-1 text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--primary-strong)]">
+                                <span className="font-mono">{code}</span> {item?.label}
+                                <IconButton label={`Remove ${code}`} className="size-4" onClick={() => setPicked(picked.filter((c) => c !== code))}>
+                                  <X className="size-3" />
+                                </IconButton>
+                              </span>
+                            );
+                          })}
+                        </div>
+                      ) : null}
+
+                      <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-2.5">
+                        <div className="mb-1.5 text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.06em] text-[var(--text-subtle)]">
+                          {coding ? "Diagnosis catalogue" : "Orderable catalogue"} · {selection.specialty}
+                        </div>
+                        <div className="grid gap-1">
+                          {catalogue.filter((c) => !picked.includes(c.code)).map((c) => (
+                            <button key={c.code} type="button" onClick={() => setPicked([...picked, c.code])}
+                              className="focus-ring flex items-center gap-2 rounded-md px-1.5 py-1 text-left text-[length:calc(9.5px*var(--fs-scale))] transition hover:bg-[var(--surface-3)]">
+                              <Plus className="size-3 shrink-0 text-[var(--primary)]" />
+                              <span className="font-mono font-bold">{c.code}</span>
+                              <span className="min-w-0 truncate text-[var(--text-muted)]">{c.label}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()
               ) : s.id === "em" ? (
                 <div className="grid gap-3">
                   <div className="rounded-lg border border-[color-mix(in_srgb,var(--warning)_30%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_8%,transparent)] p-2.5 text-[length:calc(9px*var(--fs-scale))] leading-relaxed">

@@ -745,7 +745,7 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
          policy denies healthcare server-side, which is the layer an
          administrator changes once a PHI-approved provider exists. */
       ai: CLINICAL_MODULES.has(module) || PHI_ENTITIES.has(entity)
-        ? { enabled: true, useCases: ["encounter.summarise", "documentation.gaps", "cohort.summarise-selection"] }
+        ? { enabled: true, useCases: ["encounter.summarise", "documentation.gaps", "cohort.summarise-selection", "coding.suggest-icd", "orders.suggest"] }
         : explicit.ai ?? defaultAiFor(explicit.kind ?? inferredKind),
     } satisfies PageDefinition];
   })
