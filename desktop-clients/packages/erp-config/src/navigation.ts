@@ -634,23 +634,22 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
          policy the server owns, which is the layer that can be changed without
          a client release. An explicit block still wins, INCLUDING an explicit
          `{ enabled: false }`, so a page can still opt out at build time. */
-      /* PHI OVERRIDES EVERYTHING, including an explicit page block.
+      /* HEALTHCARE DOES NOT GET THE GENERAL USE CASES, and cannot opt into
+         them: the rule sits ahead of `explicit.ai` so no page can widen itself.
 
-         Every other module resolves gate 1 from the page. Healthcare does not
-         get the choice: its pages carry patient names, MRNs, diagnoses and dates
-         of birth, and the redactor masks emails, phones, IBANs and national ids
-         -- none of those. A patient worklist inheriting the default use cases
-         would put real names into a request to a third-party provider, which is
-         precisely what spec §10 says must never happen without a PHI-approved
-         route, and there is no such provider configured.
+         It used to be a flat { enabled: false } for the whole module, because
+         the general set would have sent patient names to a third-party provider
+         and the redactor covered none of that. The clinical use cases exist now,
+         read no name at all, and have their dob masked on the way out -- so the
+         module offers those three and nothing else.
 
-         Written as a module rule rather than `ai: { enabled: false }` on each of
-         the 22 pages because the 23rd page is the one that would be forgotten,
-         and it is placed BEFORE `explicit.ai` so no page can opt itself back in
-         by accident. When a PHI-safe provider exists this is the single line
-         that changes, next to the use cases written for it. */
+         Gate 1 saying yes is not the same as the assistant appearing. The tenant
+         policy still denies `healthcare` server-side, which is the layer an
+         administrator can change once a PHI-approved provider is configured. One
+         switch, on the server, where it can be turned off again without a client
+         release. */
       ai: module === "healthcare"
-        ? { enabled: false, useCases: [] }
+        ? { enabled: true, useCases: ["encounter.summarise", "documentation.gaps", "cohort.summarise-selection"] }
         : explicit.ai ?? defaultAiFor(explicit.kind ?? inferredKind),
     } satisfies PageDefinition];
   })

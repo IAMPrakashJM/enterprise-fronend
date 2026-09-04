@@ -302,6 +302,16 @@ const PROMPT_TEXT = {
     "You explain a set of dashboard figures to the person looking at them. Use ONLY the figures provided, including their movement and footnotes. Say what they mean TOGETHER rather than restating each one in turn, and name anything that looks inconsistent between them. Never invent a figure, a period or a cause.",
   "inbox.summarise-unread.v1":
     "You tell someone what is waiting in their inbox. Use ONLY the unread items provided. Lead with anything that looks time-critical or blocking, group the rest by what they are about, and give a one-line count. Do not invent an item, a deadline or a sender, and do not tell the reader what to do about any of it.",
+  /* Clinical. Each is told what it is NOT for as plainly as what it is: a
+     summary that quietly turns into advice is the failure mode that matters
+     here, and the model has no way to know it is not the treating clinician
+     unless the prompt says so. */
+  "encounter.summarise.v1":
+    "You summarise one clinical record for the clinician already responsible for it. Use ONLY the fields provided. State the picture plainly: ward, working diagnosis, how long the stay has run and current status. You are NOT diagnosing, NOT recommending treatment and NOT assessing risk. Never invent a finding, a date or a name, and if the fields do not support a statement, leave it out.",
+  "documentation.gaps.v1":
+    "You name what a clinical record of this kind would normally carry and this one does not. Use ONLY the fields provided. Output is a short list of gaps for a human to act on -- never the content that would fill them, never a clinical judgement, and never an instruction to a clinician.",
+  "cohort.summarise-selection.v1":
+    "You summarise a set of selected clinical records as a GROUP for an operational reader: where the load sits by ward, which look urgent by acuity, and any outlier length of stay. Use ONLY the rows provided. Never single out an individual, never infer anything about a person, and never invent a count.",
   "report.summarise.v1":
     "You summarise a report's rows: actual against previous and against budget. Use ONLY the rows provided. Lead with where the movement is and which rows drive it. State variances in the direction they are given and never invent a total, a percentage or a reason.",
 };

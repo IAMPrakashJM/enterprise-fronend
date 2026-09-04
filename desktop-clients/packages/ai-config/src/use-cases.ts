@@ -111,6 +111,43 @@ export const USE_CASES: AiUseCase[] = [
     promptId: "inbox.summarise-unread.v1",
     category: "general",
   },
+  /* ---- clinical ---------------------------------------------------------
+     The first members of a category that has existed since Task 6 with nothing
+     in it. Declaring one turns on machinery already written and never exercised:
+     a warning badge in the panel, a second confirmation naming the record before
+     Send unlocks, and a flat refusal to surface the use case as an inline button
+     -- a one-click affordance over clinical data is the thing you cannot take
+     back.
+
+     THE PATIENT'S NAME IS NOT READ BY ANY OF THEM. A clinician summarising a
+     record is already looking at who it belongs to; the name adds nothing to the
+     answer and everything to the consequences of a leak. What is left is
+     minimised to the clinical facts, and `dob` is masked by the redactor on the
+     way out. */
+  {
+    id: "encounter.summarise",
+    label: "Summarise this encounter",
+    description: "Summarises the clinical picture of this record — ward, diagnosis, length of stay and status. The patient's name is never sent.",
+    reads: [{ source: "page-record", fields: ["dob", "ward", "clinician", "primaryDiagnosis", "admitted", "lengthOfStay", "status", "acuity"], optional: true }],
+    promptId: "encounter.summarise.v1",
+    category: "clinical",
+  },
+  {
+    id: "documentation.gaps",
+    label: "Find documentation gaps",
+    description: "Names what a record of this kind would normally carry and is missing here. Suggests only — it never writes to the record.",
+    reads: [{ source: "page-record", fields: ["ward", "clinician", "primaryDiagnosis", "admitted", "lengthOfStay", "status", "acuity", "payer"], optional: true }],
+    promptId: "documentation.gaps.v1",
+    category: "clinical",
+  },
+  {
+    id: "cohort.summarise-selection",
+    label: "Summarise selected records",
+    description: "Summarises the clinical records you have selected as a group — where the load is, and which look urgent. No names are sent.",
+    reads: [{ source: "worklist-selection", fields: ["ward", "primaryDiagnosis", "status", "acuity", "lengthOfStay"] }],
+    promptId: "cohort.summarise-selection.v1",
+    category: "clinical",
+  },
 ];
 
 /**
