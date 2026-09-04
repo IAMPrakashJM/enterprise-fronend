@@ -50,7 +50,15 @@ function apiBase(): string {
 export const API_BASE = apiBase();
 const API = API_BASE;
 
-function readToken(): string | null {
+/**
+ * The session token, for callers that cannot go through authedFetch — a
+ * WebSocket, whose handshake cannot carry an Authorization header.
+ *
+ * Exported so no other package has to know the storage key. A second copy of
+ * the literal is a rename away from a bug that looks like an auth failure, and
+ * that is exactly how it presented the first time.
+ */
+export function readToken(): string | null {
   try {
     return window.localStorage.getItem(STORAGE_KEY);
   } catch {

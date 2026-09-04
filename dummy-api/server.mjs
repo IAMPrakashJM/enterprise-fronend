@@ -17,6 +17,7 @@
  *   PORT=4100 node server.mjs
  */
 import { createServer } from "node:http";
+import { ADAPTERS, acceptKey, attachSocket, chooseProvider, mockSegment, transcribeOpenAI } from "./speech-gateway.mjs";
 import { createHash, randomBytes } from "node:crypto";
 import { chmodSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -233,8 +234,15 @@ function saveCredentials() {
    reversed: the last four characters and a hash prefix. The shape is byte for
    byte what it was when nothing was stored, which is the part worth noticing --
    adding storage did not add a field capable of carrying the value. */
-function credentialStatus(tenantId) {
-  const held = credentials[tenantId];
+/* `scope` lets speech providers reuse this exact machinery rather than growing a
+   second credential store with its own subtly different rules. The main provider
+   keeps the bare tenant key so nothing already stored has to move. */
+function credentialKey(tenantId, scope) {
+  return scope ? `${tenantId}:${scope}` : tenantId;
+}
+
+function credentialStatus(tenantId, scope) {
+  const held = credentials[credentialKey(tenantId, scope)];
   if (!held) {
     return {
       configured: false,
@@ -718,7 +726,7 @@ const server = createServer(async (req, res) => {
     if (pathname === "/ai/config/credential") {
       /* Authorization precedes validation everywhere below: a caller who may
          not write must not learn whether their body was well formed. */
-      if (req.method === "GET") return send(res, 200, credentialStatus(tenantId));
+      if (req.method === "GET") return send(res, 200, credentialStatus(tenantId, url.searchParams.get("scope") ?? undefined));
 
       const refusal = refuseAdminWrite(user);
 
@@ -736,8 +744,15 @@ const server = createServer(async (req, res) => {
         const secret = typeof body?.secret === "string" ? body.secret.trim() : "";
         if (!secret) return send(res, 400, { error: "A credential is required.", detail: 'Send { "secret": "..." }.' });
         if (secret.length < 16) return send(res, 400, { error: "That does not look like a provider key.", detail: "Expected at least 16 characters." });
-        const existing = credentials[tenantId];
-        credentials[tenantId] = {
+        /* Validated against the adapters, so a typo cannot create a credential
+           for a provider that does not exist and then look configured. */
+        const scope = typeof body?.scope === "string" ? body.scope : undefined;
+        if (scope && !/^speech:(mock|openai|deepgram|azure)$/.test(scope)) {
+          return send(res, 400, { error: "Unknown credential scope.", detail: `${scope} is not a provider this gateway knows.` });
+        }
+        const storeKey = credentialKey(tenantId, scope);
+        const existing = credentials[storeKey];
+        credentials[storeKey] = {
           secret,
           hint: secret.slice(-4),
           fingerprint: fingerprintOf(secret),
@@ -753,15 +768,16 @@ const server = createServer(async (req, res) => {
         };
         saveCredentials();
         /* The status, never the value and never an echo of the body. */
-        console.log(`[ai] credential set for ${tenantId} by ${user.email ?? user.id} (ending ${secret.slice(-4)})`);
-        return send(res, 200, credentialStatus(tenantId));
+        console.log(`[ai] credential set for ${storeKey} by ${user.email ?? user.id} (ending ${secret.slice(-4)})`);
+        return send(res, 200, credentialStatus(tenantId, scope));
       }
 
       if (req.method === "DELETE") {
         if (refusal) return send(res, 403, refusal);
-        delete credentials[tenantId];
+        const scope = url.searchParams.get("scope") ?? undefined;
+        delete credentials[credentialKey(tenantId, scope)];
         saveCredentials();
-        console.log(`[ai] credential removed for ${tenantId} by ${user.email ?? user.id}`);
+        console.log(`[ai] credential removed for ${credentialKey(tenantId, scope)} by ${user.email ?? user.id}`);
         res.writeHead(204, CORS);
         return res.end();
       }
@@ -776,7 +792,13 @@ const server = createServer(async (req, res) => {
       /* tenantId from the session, credential from the function that cannot
          hold one. Spread order matters: `credential` last, so a stray field of
          that name in the JSON file could never survive into the response. */
-      return send(res, 200, { ...stored, tenantId, credential: credentialStatus(tenantId) });
+            /* Each speech provider carries its own status object, built by the same
+         function as the main credential — four characters and a fingerprint,
+         never a value. */
+      const speech = stored.speech
+        ? { ...stored.speech, providers: (stored.speech.providers ?? []).map((sp) => ({ ...sp, credential: credentialStatus(tenantId, `speech:${sp.id}`) })) }
+        : undefined;
+      return send(res, 200, { ...stored, tenantId, ...(speech ? { speech } : {}), credential: credentialStatus(tenantId) });
     }
 
     if (req.method === "PUT") {
@@ -911,6 +933,139 @@ const server = createServer(async (req, res) => {
   }
 
   send(res, 404, { error: `No route for ${req.method} ${pathname}.` });
+});
+
+/* ---------------------------------------------------------------------------
+   Speech gateway.
+
+   Audio of a patient talking is the most sensitive thing this system handles,
+   and two rules are built in rather than written down: NO AUDIO IS EVER WRITTEN
+   TO DISK, and NO TRANSCRIPT TEXT IS EVER LOGGED. The audit line carries who,
+   when, how long, how many bytes and which provider — everything needed to
+   answer "who recorded this consultation" and nothing of what was said.
+
+   The token arrives in the first message, not the query string. Browsers cannot
+   set headers on a WebSocket handshake, and the usual workaround — ?token=... —
+   puts a bearer token into every access log and proxy trace it passes through.
+   SESSION_START carries it instead.
+   --------------------------------------------------------------------------- */
+const SPEECH_MAX_SECONDS = 30 * 60;
+const speechSessions = new Map();
+
+server.on("upgrade", (req, socket, head) => {
+  const { pathname } = new URL(req.url, `http://${req.headers.host}`);
+  const key = req.headers["sec-websocket-key"];
+  if (pathname !== "/speech" || !key) { socket.destroy(); return; }
+
+  socket.write([
+    "HTTP/1.1 101 Switching Protocols",
+    "Upgrade: websocket",
+    "Connection: Upgrade",
+    `Sec-WebSocket-Accept: ${acceptKey(key)}`,
+    "\r\n",
+  ].join("\r\n"));
+
+  const session = { id: randomBytes(8).toString("hex"), user: null, started: 0, bytes: 0, sequence: 0, index: 0, paused: false, language: "en", provider: null };
+  speechSessions.set(session.id, session);
+
+  const finish = (reason) => {
+    if (!speechSessions.delete(session.id)) return;
+    if (session.user) {
+      const seconds = session.started ? Math.round((Date.now() - session.started) / 1000) : 0;
+      /* Metadata only. Never session content. */
+      console.log(`[speech] ${reason} session=${session.id} user=${session.user.email ?? session.user.id} provider=${session.provider?.id ?? "none"} lang=${session.language} ${seconds}s ${session.bytes} bytes ${session.sequence} segments`);
+    }
+  };
+
+  const { send } = attachSocket(socket, {
+    onMessage: (message, reply, close) => {
+      if (message.type === "SESSION_START") {
+        const user = message.token ? sessions.get(message.token) : undefined;
+        if (!user) { reply({ type: "ERROR", error: "Not signed in." }); close(); return; }
+        session.user = user;
+        session.started = Date.now();
+        session.language = message.language === "ar" ? "ar" : "en";
+        session.mime = typeof message.mime === "string" ? message.mime : "audio/webm";
+
+        const tenantConfig = aiConfig[user.tenantId] ?? {};
+        const providers = (tenantConfig.speech?.providers ?? []).map((p) => ({
+          ...p, credentialConfigured: Boolean(credentials[`${user.tenantId}:speech:${p.id}`]),
+        }));
+        session.provider = chooseProvider(providers, session.language);
+
+        if (!session.provider) {
+          reply({ type: "ERROR", error: "No speech provider is available for this language.", detail: "Enable one under AI Administration, or configure its credential." });
+          close(); return;
+        }
+        const adapter = ADAPTERS[session.provider.id];
+        reply({
+          type: "SESSION_READY",
+          sessionId: session.id,
+          provider: { id: session.provider.id, label: adapter?.label ?? session.provider.id, model: session.provider.model ?? null },
+          /* The UI shows this. A transcript from an unexercised adapter must
+             never be mistaken for one from a provider that has actually run. */
+          verified: adapter?.verified === true,
+          language: session.language,
+        });
+        console.log(`[speech] start session=${session.id} user=${user.email ?? user.id} provider=${session.provider.id} lang=${session.language}`);
+        return;
+      }
+      if (!session.user) { close(); return; }
+      if (message.type === "PAUSE") { session.paused = true; reply({ type: "PAUSED" }); return; }
+      if (message.type === "RESUME") { session.paused = false; reply({ type: "RESUMED" }); return; }
+      if (message.type === "STOP") { reply({ type: "SESSION_ENDED", segments: session.sequence, seconds: Math.round((Date.now() - session.started) / 1000) }); finish("stop"); close(); return; }
+    },
+
+    onAudio: async (chunk, reply, close) => {
+      if (!session.user || session.paused) return;
+      session.bytes += chunk.length;
+      if ((Date.now() - session.started) / 1000 > SPEECH_MAX_SECONDS) {
+        reply({ type: "ERROR", error: "Session exceeded the maximum length." });
+        finish("timeout"); close(); return;
+      }
+      /* Keyed to audio actually arriving, so a dead microphone still looks dead
+         rather than producing a transcript out of nothing. */
+      /* ONE BINARY MESSAGE IS ONE COMPLETE AUDIO FILE. The client records in
+         takes rather than timeslices, because a MediaRecorder chunk after the
+         first has no container header and is undecodable alone — posting those
+         individually returns "corrupted or unsupported", which looks exactly
+         like a broken microphone and is not. */
+      const at = (Date.now() - session.started) / 1000;
+      const sequence = session.index + 1;
+      session.index += 1;
+      session.sequence = sequence;
+
+      if (session.provider.id === "openai") {
+        const held = credentials[credentialKey(session.user.tenantId, "speech:openai")];
+        if (!held) { reply({ type: "ERROR", error: "The OpenAI speech credential is missing." }); return; }
+        reply({ type: "TRANSCRIPT_PARTIAL", sequence, speaker: "SPEAKER", text: "transcribing…" });
+        const result = await transcribeOpenAI({
+          audio: chunk, secret: held.secret, model: session.provider.model, language: session.language, mime: session.mime,
+        });
+        if (!result.ok) { send({ type: "ERROR", error: result.error }); return; }
+        /* An empty transcript is silence, not a failure. Emitting a blank
+           segment would pad the record with nothing. */
+        if (!result.text) { send({ type: "TRANSCRIPT_DROPPED", sequence, reason: "no speech detected" }); return; }
+        send({ type: "TRANSCRIPT_FINAL", sequence, speaker: "SPEAKER", text: result.text, startTime: Number(at.toFixed(2)), endTime: Number((at + 10).toFixed(2)) });
+        /* Metadata only — never the text. */
+        console.log(`[speech] segment session=${session.id} provider=openai seq=${sequence} ${chunk.length} bytes ${result.tokens ?? "?"} tokens`);
+        return;
+      }
+
+      if (session.provider.id !== "mock") {
+        reply({ type: "ERROR", error: `The ${session.provider.id} adapter is declared but not implemented here.`, detail: "OpenAI and the built-in mock are the adapters that run." });
+        return;
+      }
+
+      const line = mockSegment(session.index - 1, session.language);
+      reply({ type: "TRANSCRIPT_PARTIAL", sequence, speaker: line.speaker, text: line.text.slice(0, Math.ceil(line.text.length * 0.6)) + "…" });
+      setTimeout(() => {
+        send({ type: "TRANSCRIPT_FINAL", sequence, speaker: line.speaker, text: line.text, startTime: Number(at.toFixed(2)), endTime: Number((at + 2.4).toFixed(2)) });
+      }, 900);
+    },
+
+    onClose: () => finish("closed"),
+  });
 });
 
 server.listen(PORT, () => {

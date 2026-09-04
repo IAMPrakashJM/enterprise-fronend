@@ -238,6 +238,7 @@ const label = (options: ConsultationOption[], id: string) => options.find((o) =>
 /** Core sections every consultation carries, whatever the four layers say. */
 const CORE_SECTIONS = [
   { id: "overview", title: "Clinical overview", subtitle: "Encounter context and active alerts", source: "Core", required: false },
+  { id: "recording", title: "Ambient recording", subtitle: "Streamed to the speech gateway; audio is never stored", source: "Core", required: false },
   { id: "hpi", title: "Presenting complaint and history", subtitle: "Structured prompts plus clinician narrative", source: "Core", required: true },
   { id: "history", title: "History, allergies and reconciliation", subtitle: "Longitudinal data reused rather than re-entered", source: "Core", required: false },
   { id: "vitals", title: "Vitals and measurements", subtitle: "Imported with provenance from validated observations", source: "Core", required: false },

@@ -44,6 +44,16 @@ export interface AiConfig {
   retention: { class: "standard" | "elevated"; days: number };
   dataSharing: { providerTrainsOnContent: boolean; region: string };
   credential: AiCredentialStatus;
+  /** Transcription providers in priority order. Optional: a tenant that does
+      not transcribe has no speech block rather than an empty one. */
+  speech?: {
+    providers: Array<{
+      id: string; label: string; model: string; streaming: boolean; priority: number;
+      languages: string[]; enabled: boolean; credential?: AiCredentialStatus;
+    }>;
+    maxSessionMinutes: number;
+    retainAudio: boolean;
+  };
 }
 
 /**

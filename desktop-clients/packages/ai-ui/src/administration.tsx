@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { BadgeCheck, CircleAlert, Eye, RefreshCw, Save, ShieldAlert, Trash2 } from "lucide-react";
+import { AudioLines, BadgeCheck, CircleAlert, Eye, RefreshCw, Save, ShieldAlert, Trash2 } from "lucide-react";
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, cn } from "@pepbits/ops-ui";
 import { useSession } from "@pepbits/auth";
 import type { AiConfig, AiUsage } from "@pepbits/ai-config";
-import { clearAiCredential, fetchAiConfig, fetchAiUsage, saveAiConfig, setAiCredential, verifyAiCredential } from "@pepbits/ai-client";
+import { clearAiCredential, fetchAiConfig, fetchAiUsage, saveAiConfig, setAiCredential, setAiScopedCredential, verifyAiCredential } from "@pepbits/ai-client";
 
 /**
  * The administration surface.
@@ -65,6 +65,7 @@ export function AiAdministration() {
   const [usage, setUsage] = useState<AiUsage | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [secret, setSecret] = useState("");
+  const [secrets, setSecrets] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState<string | null>(null);
   const [note, setNote] = useState<{ tone: "ok" | "bad"; text: string; detail?: string } | null>(null);
 
@@ -257,6 +258,60 @@ export function AiAdministration() {
               }), "Limits saved.")}>
               {busy === "limits" ? "Saving…" : "Save limits"}
             </Button>
+          </CardContent>
+        </Card>
+
+        {/* ---- speech providers ----------------------------------------- */}
+        <Card>
+          <CardHeader>
+            <CardTitle title="Speech providers" subtitle="Priority order for transcription; the first that can run is used." />
+            <Badge tone="neutral">{config.speech?.providers?.length ?? 0} configured</Badge>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-2 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">
+              The gateway picks the lowest priority number that is enabled, supports the session language, and has a credential.
+              A provider that is enabled but has no key is <b>skipped, not attempted</b> — failing at call time would turn a
+              configuration mistake into an outage in the middle of a consultation.
+            </p>
+            {(config.speech?.providers ?? []).map((sp) => (
+              <div key={sp.id} className="mb-2 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <AudioLines className="size-3.5 text-[var(--primary)]" />
+                  <b className="text-[length:calc(10.5px*var(--fs-scale))]">{sp.label}</b>
+                  <Badge tone={sp.enabled ? "success" : "neutral"}>{sp.enabled ? "enabled" : "disabled"}</Badge>
+                  <Badge tone="neutral">priority {sp.priority}</Badge>
+                  {sp.credential?.configured ? <Badge tone="success">key ····{sp.credential.hint}</Badge> : <Badge tone="warning">no key</Badge>}
+                  <span className="flex-1" />
+                  <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">
+                    {sp.model} · {(sp.languages ?? []).join(", ")}
+                  </span>
+                </div>
+                <div className="mt-2 flex flex-wrap items-end gap-2">
+                  <div className="min-w-48 flex-1">
+                    <Input label={`${sp.label} key`} type="password" autoComplete="off" placeholder="Paste the provider key"
+                      disabled={!mayWrite} value={secrets[sp.id] ?? ""} onChange={(e) => setSecrets({ ...secrets, [sp.id]: e.target.value })} />
+                  </div>
+                  <Button size="sm" variant="primary" disabled={!mayWrite || !(secrets[sp.id] ?? "").trim() || busy !== null}
+                    onClick={() => void act(`sp-${sp.id}`, async () => {
+                      const r = await setAiScopedCredential(`speech:${sp.id}`, (secrets[sp.id] ?? "").trim());
+                      setSecrets({ ...secrets, [sp.id]: "" });
+                      return r;
+                    }, `${sp.label} key stored.`)}>
+                    {busy === `sp-${sp.id}` ? "Saving…" : "Set key"}
+                  </Button>
+                  <Button size="sm" variant="secondary" disabled={!mayWrite || busy !== null}
+                    onClick={() => void act(`sp-toggle-${sp.id}`, () => saveAiConfig({
+                      speech: { ...config.speech, providers: (config.speech?.providers ?? []).map((x) => x.id === sp.id ? { ...x, enabled: !x.enabled } : x) },
+                    } as never), `${sp.label} ${sp.enabled ? "disabled" : "enabled"}.`)}>
+                    {sp.enabled ? "Disable" : "Enable"}
+                  </Button>
+                </div>
+              </div>
+            ))}
+            <p className="mt-1 text-[length:calc(8.5px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
+              Only the built-in mock transcriber runs in this build. The other adapters are declared with their real call shapes
+              and have never been exercised — a session on one reports that rather than producing a transcript.
+            </p>
           </CardContent>
         </Card>
 

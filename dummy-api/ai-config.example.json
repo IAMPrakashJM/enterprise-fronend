@@ -90,6 +90,60 @@
     "dataSharing": {
       "providerTrainsOnContent": false,
       "region": "UAE North"
+    },
+    "speech": {
+      "providers": [
+        {
+          "id": "openai",
+          "label": "OpenAI",
+          "model": "gpt-4o-transcribe",
+          "streaming": true,
+          "priority": 1,
+          "languages": [
+            "en",
+            "ar"
+          ],
+          "enabled": true
+        },
+        {
+          "id": "deepgram",
+          "label": "Deepgram",
+          "model": "nova-3",
+          "streaming": true,
+          "priority": 2,
+          "languages": [
+            "en",
+            "ar"
+          ],
+          "enabled": true
+        },
+        {
+          "id": "azure",
+          "label": "Azure Speech",
+          "model": "standard",
+          "streaming": true,
+          "priority": 3,
+          "languages": [
+            "en",
+            "ar"
+          ],
+          "enabled": false
+        },
+        {
+          "id": "mock",
+          "label": "Built-in mock",
+          "model": "scripted",
+          "streaming": true,
+          "priority": 9,
+          "languages": [
+            "en",
+            "ar"
+          ],
+          "enabled": true
+        }
+      ],
+      "maxSessionMinutes": 30,
+      "retainAudio": false
     }
   }
 }
