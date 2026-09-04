@@ -245,6 +245,11 @@ const CORE_SECTIONS = [
 
 export function composeConsultation(
   type: string, specialty: string, condition: string, context: string,
+  /* A tenant setting, not a default. E/M levels are a US construct and this
+     tenant is configured for the UAE, so the section exists only where a
+     deployment has chosen that coding scheme. Baking a US billing model in as
+     though it were universal is how a default quietly becomes wrong abroad. */
+  coding: "none" | "em" = "none",
 ): ComposedConsultation {
   const pack = SPECIALTY_PACKS[specialty] ?? SPECIALTY_PACKS.cardiology;
   const typePrompts = TYPE_PROMPTS[type] ?? TYPE_PROMPTS.new;
@@ -261,6 +266,7 @@ export function composeConsultation(
       ? [{ id: "function", title: "Function, frailty and caregiver", subtitle: "Added by the patient-context layer", source: `Context · ${label(PATIENT_CONTEXTS, context)}`, required: false }] : []),
     ...(context === "pregnancy" ? [{ id: "maternal", title: "Maternal and fetal considerations", subtitle: "Added by the patient-context layer", source: "Context · Pregnancy", required: true }] : []),
     ...(context === "paediatric" ? [{ id: "guardian", title: "Guardian, growth and safeguarding", subtitle: "Added by the patient-context layer", source: "Context · Paediatric", required: true }] : []),
+    ...(coding === "em" ? [{ id: "em", title: "E/M level support", subtitle: "Derived from what is documented — never a target to reach", source: "Coding scheme · E/M", required: false }] : []),
     { id: "sign", title: "Review and sign", subtitle: "Signed notes are versioned; corrections are addenda", source: "Core", required: true },
   ].map((section, index) => ({ ...section, index: String(index + 1).padStart(2, "0") }));
 
