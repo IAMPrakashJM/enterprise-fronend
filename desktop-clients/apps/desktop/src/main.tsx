@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import { NavigationProvider } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
 import type { SessionUser } from "@pepbits/auth";
-import { ERPProvider, EnterpriseShell, GlobalLayers, WorkspaceTabs, useERP, useWorkspaceNavigation, skeletonsPreferred } from "@pepbits/erp-shell";
+import { targetFromDocument } from "@pepbits/erp-shell";
+import { ERPProvider, EnterpriseShell, GlobalLayers, SplitWorkspace, WorkspaceTabs, useERP, useWorkspaceNavigation, skeletonsPreferred } from "@pepbits/erp-shell";
 import { LoginScreen, PageRenderer, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { createWorkspace, WorkspaceProvider } from "@pepbits/workspace-core";
 import { ConfirmDialog } from "@pepbits/ops-ui";
@@ -14,7 +15,7 @@ import "./globals.css";
 /* Split out because the tab strip needs setCommandOpen, which only exists inside
    ERPProvider. */
 function Workspace({ nav }: { nav: ReturnType<typeof useWorkspaceNavigation> }) {
-  const { setCommandOpen, preferences } = useERP();
+  const { setCommandOpen, preferences, toast } = useERP();
   const workspace = nav.workspace;
 
   /* Where openRecordsInTabs actually reaches the workspace. The navigation hook
@@ -27,10 +28,15 @@ function Workspace({ nav }: { nav: ReturnType<typeof useWorkspaceNavigation> }) 
      of one encounter are two unsaved drafts of the same record. */
   useEffect(() => {
     workspace.setPolicy({
-      platform: { modes: ["SINGLE", "TAB"] },
-      user: { modes: preferences.openRecordsInTabs ? ["TAB"] : ["SINGLE"] },
+      platform: { modes: ["SINGLE", "TAB", "SPLIT"] },
+      /* SPLIT survives either way: it is a thing you do to two documents, not a
+         preference about how many tabs there are. Turning tabs off and then
+         being unable to compare two records would read as a bug. */
+      user: { modes: preferences.openRecordsInTabs ? ["TAB", "SPLIT"] : ["SINGLE", "SPLIT"] },
     });
   }, [workspace, preferences.openRecordsInTabs]);
+
+  const split = nav.splitPanes.length >= 2;
 
   return (
     <>
@@ -43,10 +49,26 @@ function Workspace({ nav }: { nav: ReturnType<typeof useWorkspaceNavigation> }) 
             onClose={nav.closeDocument}
             onCloseOthers={nav.closeOthers}
             onOpenCommand={() => setCommandOpen(true)}
+            onSplit={() => { const result = nav.splitCurrent("right"); if (result.reason) toast({ type: "warning", title: result.reason }); }}
+            onSwap={nav.swapSplit}
+            onExitSplit={nav.exitSplit}
+            isSplit={split}
           />
         }
       >
-        <PageRenderer target={nav.port.current} />
+        {split ? (
+          <SplitWorkspace
+            panes={nav.splitPanes}
+            activeDocumentId={nav.activeDocument?.documentId ?? null}
+            onFocusPane={nav.focusDocument}
+            onClosePane={nav.closeDocument}
+            onSwap={nav.swapSplit}
+            onExit={nav.exitSplit}
+            renderDocument={(document) => <PageRenderer target={targetFromDocument(document)} />}
+          />
+        ) : (
+          <PageRenderer target={nav.port.current} />
+        )}
       </EnterpriseShell>
       {/* Every destructive path in the workspace routes through here. Before
           this, crossing from Finance to HR rebuilt the tab set and threw away

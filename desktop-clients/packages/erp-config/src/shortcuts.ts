@@ -25,6 +25,15 @@ export interface ShortcutDefinition {
   /** Shift must also be held. Kept explicit rather than inferred from `display`. */
   shift?: boolean;
   group: "Navigation" | "Workspace" | "Help";
+  /**
+   * A capability the shell must have for this to do anything.
+   *
+   * Read by the dispatcher AND by the help panel, so a shortcut cannot be
+   * listed somewhere it would silently do nothing — the web shell has no
+   * workspace yet, and a split key printed in its help is a promise it cannot
+   * keep.
+   */
+  requires?: "workspace";
   label: string;
   /**
    * Whether it still fires while the caret is in a field.
@@ -43,8 +52,18 @@ export const SHORTCUTS: ShortcutDefinition[] = [
   { id: "search",      display: "Alt+/", code: "Slash",  modifier: "alt",  group: "Navigation", label: "Search the menu" },
   { id: "newRecord",   display: "Alt+N", code: "KeyN",   modifier: "alt",  group: "Workspace",  label: "New record in a new tab" },
   { id: "pinSidebar",  display: "Alt+S", code: "KeyS",   modifier: "alt",  group: "Workspace",  label: "Pin or unpin the sidebar" },
+  /* Backslash, because it is the key VS Code and every editor since has used
+     for splitting, and because it is free of the letters the module and record
+     shortcuts already hold. */
+  { id: "split",       display: "Alt+\\", code: "Backslash", modifier: "alt", group: "Workspace", requires: "workspace", label: "Show this document beside the last one" },
+  { id: "exitSplit",   display: "Alt+Shift+\\", code: "Backslash", modifier: "alt", shift: true, group: "Workspace", requires: "workspace", label: "Collapse the split to one document" },
   { id: "help",        display: "?",     code: "Slash",  modifier: "none", shift: true, group: "Help", label: "Open the page helper" },
 ];
+
+/** Whether this shell can run that shortcut at all. One predicate, two readers. */
+export function shortcutAvailable(shortcut: ShortcutDefinition, capabilities: { workspace: boolean }): boolean {
+  return shortcut.requires !== "workspace" || capabilities.workspace;
+}
 
 /** True when this event is that shortcut. The one place the comparison lives. */
 export function matchesShortcut(

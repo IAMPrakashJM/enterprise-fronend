@@ -93,6 +93,11 @@ export function useActiveDocumentIn(workspace: Workspace): WorkspaceDocument | n
   );
 }
 
+/** The split arrangement, kept in step with the store. */
+export function useSplitIn(workspace: Workspace): string[] {
+  return useSyncExternalStore(workspace.subscribeToChanges, workspace.getSplit, workspace.getSplit);
+}
+
 /** The context forms, for components rendered inside the provider. */
 export function useWorkspaceDocuments(): WorkspaceDocument[] {
   return useDocumentsIn(useWorkspace());
@@ -100,4 +105,8 @@ export function useWorkspaceDocuments(): WorkspaceDocument[] {
 
 export function useActiveDocument(): WorkspaceDocument | null {
   return useActiveDocumentIn(useWorkspace());
+}
+
+export function useSplit(): string[] {
+  return useSplitIn(useWorkspace());
 }

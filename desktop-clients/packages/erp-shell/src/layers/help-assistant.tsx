@@ -3,7 +3,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronLeft, ChevronRight, CircleHelp, Keyboard, Pause, Play, Route, X } from "lucide-react";
 import { Button, IconButton, cn } from "@pepbits/ops-ui";
-import { PAGE_REGISTRY, SHORTCUTS, SHORTCUT_GROUPS, TOURS, displayFor } from "@pepbits/erp-config";
+import { PAGE_REGISTRY, SHORTCUTS, SHORTCUT_GROUPS, TOURS, displayFor, shortcutAvailable } from "@pepbits/erp-config";
+import { useOptionalWorkspace } from "@pepbits/workspace-core";
 import type { TourStep } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "../erp-context";
@@ -37,6 +38,7 @@ function Spotlight({ spot, title }: { spot: Spot; title: string }) {
 }
 
 export function HelpAssistant() {
+  const hasWorkspace = useOptionalWorkspace() !== null;
   const { preferences, helpOpen, setHelpOpen, setDocumentationOpen } = useERP();
   const navigation = useNavigation();
   const page = PAGE_REGISTRY[navigation.current.pageId];
@@ -193,7 +195,9 @@ export function HelpAssistant() {
                   again here, which is the copy that goes stale: a shortcut that
                   moves keeps working and the help quietly starts lying. */}
               {SHORTCUT_GROUPS.map((group) => {
-                const items = SHORTCUTS.filter((s) => s.group === group);
+                /* The same predicate the dispatcher uses. A split key printed in the
+                     web shell's help would be a promise it cannot keep. */
+                  const items = SHORTCUTS.filter((s) => s.group === group && shortcutAvailable(s, { workspace: hasWorkspace }));
                 if (!items.length) return null;
                 return (
                   <div key={group} className="mb-1">

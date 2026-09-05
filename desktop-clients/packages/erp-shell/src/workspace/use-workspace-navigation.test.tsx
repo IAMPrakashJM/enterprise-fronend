@@ -6,13 +6,14 @@ import { createWorkspace, type Workspace } from "@pepbits/workspace-core";
 import { useWorkspaceNavigation } from "./use-workspace-navigation.tsx";
 
 const session = { tenantId: "T1", userId: "dr-x" };
-const newWorkspace = (modes: Array<"SINGLE" | "TAB"> = ["TAB"]) =>
+const newWorkspace = (modes: Array<"SINGLE" | "TAB" | "SPLIT"> = ["TAB", "SPLIT"]) =>
   createWorkspace({ session, policy: { platform: { modes } } });
 
 /* Renders the tab titles and exposes the port, so every assertion is about what
    a user would see rather than about hook internals. */
 function Probe({ workspace }: { workspace: Workspace }) {
   const nav = useWorkspaceNavigation(workspace, { initialModule: "finance" });
+  const [refusal, setRefusal] = React.useState("");
   return (
     <div>
       <p data-testid="current">{nav.port.current.pageId}</p>
@@ -29,6 +30,11 @@ function Probe({ workspace }: { workspace: Workspace }) {
       <button type="button" onClick={() => nav.port.open({ pageId: "hr-dashboard" })}>go to HR</button>
       <button type="button" onClick={() => nav.dirtyActive()}>make dirty</button>
       <button type="button" onClick={() => nav.closeDocument(nav.documents.at(-1)!.documentId)}>close last</button>
+      <p data-testid="split">{nav.splitPanes.map((d) => d.title).join(" | ") || "none"}</p>
+      <p data-testid="refusal">{refusal}</p>
+      <button type="button" onClick={() => setRefusal(nav.splitCurrent("right").reason ?? "")}>split right</button>
+      <button type="button" onClick={() => nav.swapSplit()}>swap</button>
+      <button type="button" onClick={() => nav.exitSplit()}>exit split</button>
       <button type="button" onClick={() => nav.confirmPending()}>confirm</button>
       <button type="button" onClick={() => nav.cancelPending()}>cancel</button>
     </div>
@@ -44,7 +50,7 @@ const click = (name: string) => userEvent.click(screen.getByRole("button", { nam
    pass against an arrangement the application never has: the desktop shell
    rendered a blank screen with "useWorkspace must be used within a
    WorkspaceProvider" while all twelve were green. */
-function mount(modes?: Array<"SINGLE" | "TAB">) {
+function mount(modes?: Array<"SINGLE" | "TAB" | "SPLIT">) {
   const workspace = newWorkspace(modes);
   render(<Probe workspace={workspace} />);
   return workspace;
@@ -164,5 +170,53 @@ describe("useWorkspaceNavigation", () => {
   test("hrefFor is inert on desktop", () => {
     mount();
     expect(screen.getByTestId("current")).toBeVisible();
+  });
+});
+
+describe("split view", () => {
+  const split = () => screen.getByTestId("split").textContent;
+
+  test("splitting puts the current document beside the previous one", async () => {
+    mount();
+    await click("open customers");
+    await click("open C-1");
+    await click("split right");
+    expect(split()).toBe("Customer Master | Customer Master • C-1");
+  });
+
+  test("swapping reverses them", async () => {
+    mount();
+    await click("open customers");
+    await click("open C-1");
+    await click("split right");
+    await click("swap");
+    expect(split()).toBe("Customer Master • C-1 | Customer Master");
+  });
+
+  test("exiting leaves both open as tabs", async () => {
+    mount();
+    await click("open customers");
+    await click("open C-1");
+    await click("split right");
+    await click("exit split");
+    expect(split()).toBe("none");
+    expect(titles()).toHaveLength(3);
+  });
+
+  /* A shell that cannot split has to say so rather than doing nothing when the
+     shortcut is pressed. */
+  test("a workspace without SPLIT refuses, and says which level removed it", async () => {
+    mount(["TAB"]);
+    await click("open customers");
+    await click("open C-1");
+    await click("split right");
+    expect(screen.getByTestId("refusal")).toHaveTextContent(/not available/i);
+    expect(split()).toBe("none");
+  });
+
+  test("splitting with only the dashboard open does nothing to complain about", async () => {
+    mount();
+    await click("split right");
+    expect(split()).toBe("none");
   });
 });
