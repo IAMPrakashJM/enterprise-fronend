@@ -1,38 +1,55 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
 import { cn } from "./cn";
+import { Highlight, filterOptions, nextEnabledIndex, type FilterableOption } from "./option-filter";
 
-export interface DropdownOption {
-  value: string;
-  label: string;
-  description?: string;
+export interface DropdownOption extends FilterableOption {
   icon?: React.ReactNode;
-  disabled?: boolean;
 }
 
 export function DropdownSelect({ value, options, onChange, label, hideLabel, compact, align = "left", className, triggerClassName, menuClassName, leading }: { value: string; options: DropdownOption[]; onChange: (value: string) => void; label?: string; hideLabel?: boolean; compact?: boolean; align?: "left" | "right"; className?: string; triggerClassName?: string; menuClassName?: string; leading?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1);
   const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
   const selected = options.find((option) => option.value === value) ?? options[0];
+
+  const base = useId();
+  const listId = `${base}-list`;
+  const optionId = (index: number) => `${base}-option-${index}`;
 
   /* Description is searched too: a module's own name is its short code ("FIN"),
      and the thing a user actually types is in the description ("Finance"). */
-  const matches = useMemo(() => {
-    const term = query.trim().toLowerCase();
-    if (!term) return options;
-    return options.filter((option) => `${option.label} ${option.description ?? ""}`.toLowerCase().includes(term));
-  }, [options, query]);
+  const matches = useMemo(() => filterOptions(options, query), [options, query]);
 
   /* Cleared on close, not on open: leaving it set means reopening shows a
      filtered list with no memory of why, which reads as options going missing. */
   useEffect(() => {
-    if (open) searchRef.current?.focus();
-    else setQuery("");
+    if (!open) { setQuery(""); setActiveIndex(-1); return; }
+    searchRef.current?.focus();
   }, [open]);
+
+  /* Opening starts on the current selection so the first ArrowDown steps off
+     what is already chosen, the way a native <select> behaves; typing re-homes
+     to the first match so Enter is meaningful at every keystroke rather than
+     only once the list is down to a single row. */
+  useEffect(() => {
+    if (!open) return;
+    const from = query.trim() ? -1 : matches.findIndex((option) => option.value === value);
+    setActiveIndex(from >= 0 && !matches[from]?.disabled ? from : nextEnabledIndex(matches, -1, 1));
+  }, [open, query, matches, value]);
+
+  /* Guarded because jsdom, where this is tested, has no scrollIntoView, and an
+     unguarded call fails the test for a reason unrelated to the behaviour. */
+  useEffect(() => {
+    if (!open || activeIndex < 0) return;
+    listRef.current?.querySelector(`[data-index="${activeIndex}"]`)?.scrollIntoView?.({ block: "nearest" });
+  }, [open, activeIndex]);
 
   useEffect(() => {
     const close = (event: MouseEvent) => { if (!ref.current?.contains(event.target as Node)) setOpen(false); };
@@ -40,9 +57,17 @@ export function DropdownSelect({ value, options, onChange, label, hideLabel, com
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
+  const commit = (index: number) => {
+    const option = matches[index];
+    if (!option || option.disabled) return;
+    onChange(option.value);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
   return (
     <div className={cn("relative", className)} ref={ref}>
-      <button type="button" aria-label={label} onClick={() => setOpen((previous) => !previous)} className={cn("focus-ring group flex h-[30px] items-center gap-2 rounded-[10px] border border-transparent px-2 text-left transition hover:border-[var(--border)] hover:bg-[var(--surface-2)]", compact ? "max-w-40" : "min-w-40", triggerClassName)}>
+      <button ref={triggerRef} type="button" aria-label={label} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen((previous) => !previous)} onKeyDown={(event) => { if (event.key === "ArrowDown" && !open) { event.preventDefault(); setOpen(true); } }} className={cn("focus-ring group flex h-[30px] items-center gap-2 rounded-[10px] border border-transparent px-2 text-left transition hover:border-[var(--border)] hover:bg-[var(--surface-2)]", compact ? "max-w-40" : "min-w-40", triggerClassName)}>
         {leading ?? selected.icon}
         {/* Label and value sit side by side, as Vantage's "Branch  Dubai HQ"
             does. Stacked, an 8px label over a 10px value needs ~27px of line
@@ -58,38 +83,59 @@ export function DropdownSelect({ value, options, onChange, label, hideLabel, com
         <ChevronDown className={cn("size-3.5 shrink-0 text-[var(--text-subtle)] transition", open && "rotate-180")} />
       </button>
       {open ? (
-        <div className={cn("nex-scrollbar animate-slide-up absolute z-[80] mt-1.5 max-h-[min(70vh,420px)] min-w-full overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-md)]", align === "right" ? "right-0" : "left-0", menuClassName)}>
+        <div className={cn("nex-scrollbar animate-slide-up absolute z-[80] mt-1.5 max-h-[min(70vh,420px)] min-w-full overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow-md)]", align === "right" ? "right-0" : "left-0", menuClassName)} ref={listRef}>
           {/* Sits INSIDE the menu, so the 30px trigger is untouched. */}
           <div className="relative mb-1 border-b border-[var(--border)] pb-1.5">
             <Search className="pointer-events-none absolute start-2 top-1/2 size-3 -translate-y-1/2 text-[var(--text-subtle)]" />
             <input
               ref={searchRef}
+              role="combobox"
+              aria-expanded
+              aria-controls={listId}
+              aria-autocomplete="list"
+              aria-activedescendant={activeIndex >= 0 ? optionId(activeIndex) : undefined}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              /* Enter picks the only remaining match -- with a short list, type
-                 two letters and commit without reaching for the mouse. */
+              /* Enter takes the ACTIVE row. This used to fire only when exactly
+                 one match remained, which meant that between "two matches" and
+                 "one match" the keyboard did nothing and the user had to reach
+                 for the mouse -- for a two-branch tenant, always. */
               onKeyDown={(event) => {
-                if (event.key === "Escape") { event.stopPropagation(); setOpen(false); return; }
-                if (event.key === "Enter" && matches.length === 1 && !matches[0].disabled) {
-                  onChange(matches[0].value);
-                  setOpen(false);
+                if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                  event.preventDefault();
+                  setActiveIndex((current) => nextEnabledIndex(matches, current, event.key === "ArrowDown" ? 1 : -1));
+                  return;
                 }
+                if (event.key === "Home" || event.key === "End") {
+                  event.preventDefault();
+                  setActiveIndex(event.key === "Home" ? nextEnabledIndex(matches, -1, 1) : nextEnabledIndex(matches, -1, -1));
+                  return;
+                }
+                if (event.key === "Enter") { event.preventDefault(); commit(activeIndex); return; }
+                if (event.key === "Escape") { event.stopPropagation(); setOpen(false); triggerRef.current?.focus(); return; }
+                if (event.key === "Tab") setOpen(false);
               }}
               placeholder={label ? `Search ${label.toLowerCase()}…` : "Search…"}
               aria-label={label ? `Search ${label.toLowerCase()}` : "Search options"}
               className="focus-ring h-7 w-full rounded-lg border border-[var(--border)] bg-[var(--surface-2)] ps-7 pe-2 text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--text)] placeholder:font-normal placeholder:text-[var(--text-subtle)]"
             />
           </div>
-          {matches.length === 0 ? (
-            <div className="px-2.5 py-3 text-center text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">No match for “{query.trim()}”</div>
-          ) : null}
-          {matches.map((option) => (
-            <button key={option.value} type="button" disabled={option.disabled} onClick={() => { onChange(option.value); setOpen(false); }} className={cn("flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left transition hover:bg-[var(--surface-2)] disabled:opacity-40", option.value === value && "bg-[var(--primary-soft)]")}>
-              {option.icon ? <span className="text-[var(--text-muted)]">{option.icon}</span> : null}
-              <span className="min-w-0 flex-1"><span className="block whitespace-nowrap text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text)]">{option.label}</span>{option.description ? <span className="mt-0.5 block whitespace-nowrap text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{option.description}</span> : null}</span>
-              <Check className={cn("size-3.5 text-[var(--primary)]", option.value !== value && "opacity-0")} />
-            </button>
-          ))}
+          {/* Announced, not merely drawn: filtering is otherwise a purely
+              visual event, and a screen-reader user typing here would get no
+              signal that the list moved under them. */}
+          <span role="status" className="sr-only">{matches.length === 0 ? "No matching options" : `${matches.length} option${matches.length === 1 ? "" : "s"}`}</span>
+          <div role="listbox" id={listId} aria-label={label}>
+            {matches.length === 0 ? (
+              <div className="px-2.5 py-3 text-center text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">No match for “{query.trim()}”</div>
+            ) : null}
+            {matches.map((option, index) => (
+              <button key={option.value} id={optionId(index)} data-index={index} role="option" aria-selected={option.value === value} tabIndex={-1} type="button" disabled={option.disabled} onClick={() => commit(index)} onMouseEnter={() => { if (!option.disabled) setActiveIndex(index); }} className={cn("flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left transition disabled:opacity-40", index === activeIndex && !option.disabled && "bg-[var(--surface-2)]", option.value === value && "bg-[var(--primary-soft)]")}>
+                {option.icon ? <span className="text-[var(--text-muted)]">{option.icon}</span> : null}
+                <span className="min-w-0 flex-1"><span className="block whitespace-nowrap text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text)]"><Highlight text={option.label} query={query} /></span>{option.description ? <span className="mt-0.5 block whitespace-nowrap text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]"><Highlight text={option.description} query={query} /></span> : null}</span>
+                <Check className={cn("size-3.5 text-[var(--primary)]", option.value !== value && "opacity-0")} />
+              </button>
+            ))}
+          </div>
         </div>
       ) : null}
     </div>
