@@ -4,7 +4,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { MODULES, PAGE_REGISTRY } from "@pepbits/erp-config";
 import type { ModuleKey } from "@pepbits/erp-config";
 import type { NavigationPort, NavigationTarget } from "@pepbits/platform-ports";
-import { useActiveDocumentIn, useDocumentsIn, type Workspace, type WorkspaceDocument } from "@pepbits/workspace-core";
+import { useActiveDocumentIn, useDocumentsIn, useSplitIn, type OpenResult, type SplitSide, type Workspace, type WorkspaceDocument } from "@pepbits/workspace-core";
 import { documentFromTarget, targetFromDocument } from "./target-document.ts";
 
 /** What the shell must ask about before it can proceed. */
@@ -22,6 +22,15 @@ export interface WorkspaceNavigation {
   focusDocument(documentId: string): void;
   closeDocument(documentId: string): void;
   closeOthers(documentId: string): void;
+
+  /** The panes, left to right. Empty when a single document is on screen. */
+  splitPanes: WorkspaceDocument[];
+  /** Put the focused document beside the one used before it. */
+  splitCurrent(side?: SplitSide): OpenResult;
+  /** Bring a document that is already open into the split. */
+  splitWith(documentId: string, side?: SplitSide): OpenResult;
+  swapSplit(): void;
+  exitSplit(): void;
   /** Marks the active document dirty. The shell calls this from a form. */
   dirtyActive(): void;
   pending: PendingWorkspaceAction | null;
@@ -69,6 +78,11 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
   }
 
   const activeDocument = useActiveDocumentIn(workspace);
+  const splitIds = useSplitIn(workspace);
+  const splitPanes = useMemo(
+    () => splitIds.map((id) => documents.find((doc) => doc.documentId === id)).filter(Boolean) as WorkspaceDocument[],
+    [splitIds, documents],
+  );
 
   const ask = useCallback((action: PendingWorkspaceAction, run: () => void) => {
     pendingAction.current = run;
@@ -158,6 +172,11 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
   return {
     workspace,
     port,
+    splitPanes,
+    splitCurrent: (side) => workspace.splitWithPrevious(side),
+    splitWith: (documentId, side) => workspace.moveToSplit(documentId, side),
+    swapSplit: () => { workspace.swapSplit(); },
+    exitSplit: () => { workspace.exitSplit(); },
     documents,
     activeDocument,
     focusDocument: (documentId) => { workspace.focusDocument(documentId); },

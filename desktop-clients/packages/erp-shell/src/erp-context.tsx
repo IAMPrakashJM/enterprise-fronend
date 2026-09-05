@@ -7,10 +7,12 @@ import {
   SHORTCUTS,
   SIDEBAR_SEARCH_EVENT,
   matchesShortcut,
+  shortcutAvailable,
 } from "@pepbits/erp-config";
 import type { Formatters, ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { authedFetch, useSession } from "@pepbits/auth";
+import { useOptionalWorkspace } from "@pepbits/workspace-core";
 
 
 /* Every family here is loaded by the shells (Google Fonts in web's layout.tsx
@@ -96,6 +98,9 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
   const [role] = useState(user?.role ?? "enterprise-admin");
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const [commandOpen, setCommandOpen] = useState(false);
+  /* Optional: the web shell has no workspace yet, and the same provider runs
+     in both. */
+  const workspace = useOptionalWorkspace();
   const [helpOpen, setHelpOpen] = useState(false);
   const [documentationOpen, setDocumentationOpen] = useState(false);
   /* Remembered only so a "shared" page (Preferences, Spreadsheet Studio, the Developer
@@ -217,6 +222,8 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
       newRecord: () => navigation.openInNewContext({ pageId: navigation.current.pageId, mode: "new" }),
       pinSidebar: () => updatePreference("sidebarPinned", !preferences.sidebarPinned),
       help: () => setHelpOpen(true),
+      split: () => { workspace?.splitWithPrevious("right"); },
+      exitSplit: () => { workspace?.exitSplit(); },
     };
 
     const onKey = (event: KeyboardEvent) => {
@@ -230,6 +237,9 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
          and not in the binding, or the other way round. */
       for (const shortcut of SHORTCUTS) {
         if (!matchesShortcut(shortcut, event)) continue;
+        /* The same predicate the help panel uses, so a key listed there always
+           does something and a key that does nothing is never listed. */
+        if (!shortcutAvailable(shortcut, { workspace: workspace !== null })) continue;
         if (typing && !shortcut.whileTyping) continue;
         const run = actions[shortcut.id];
         if (!run) continue;
@@ -240,7 +250,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [currentModule, navigation, preferences.keyboardShortcuts, preferences.sidebarPinned, updatePreference]);
+  }, [currentModule, navigation, preferences.keyboardShortcuts, preferences.sidebarPinned, updatePreference, workspace]);
 
   const t = useCallback((key: string) => translate(preferences.language, key), [preferences.language]);
 

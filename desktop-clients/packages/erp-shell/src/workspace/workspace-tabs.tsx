@@ -15,13 +15,18 @@ import type { WorkspaceDocument } from "@pepbits/workspace-core";
  * Deliberately dumb -- it takes documents and callbacks. The store, the policy
  * and the unsaved-changes question all live above it.
  */
-export function WorkspaceTabs({ documents, activeDocumentId, onActivate, onClose, onCloseOthers, onOpenCommand }: {
+export function WorkspaceTabs({ documents, activeDocumentId, onActivate, onClose, onCloseOthers, onOpenCommand, onSplit, onSwap, onExitSplit, isSplit }: {
   documents: WorkspaceDocument[];
   activeDocumentId: string | null;
   onActivate: (documentId: string) => void;
   onClose: (documentId: string) => void;
   onCloseOthers: (documentId: string) => void;
   onOpenCommand: () => void;
+  /** Split actions. Omitted where the shell cannot split. */
+  onSplit?: () => void;
+  onSwap?: () => void;
+  onExitSplit?: () => void;
+  isSplit?: boolean;
 }) {
   const activeId = documents.some((doc) => doc.documentId === activeDocumentId) ? activeDocumentId : documents[0]?.documentId ?? null;
   return (
@@ -64,6 +69,9 @@ export function WorkspaceTabs({ documents, activeDocumentId, onActivate, onClose
         <IconButton label="Open page" className="size-8" onClick={() => onOpenCommand()}><Plus className="size-3.5" /></IconButton>
         <ActionMenu trigger={<IconButton label="Tab options" className="size-8"><Ellipsis className="size-3.5" /></IconButton>}>
           {(close) => <>
+            {onSplit && !isSplit ? <MenuButton label="Split with the last document" hint="Alt+\\" onClick={() => { onSplit(); close(); }} /> : null}
+            {isSplit && onSwap ? <MenuButton label="Swap the panes" onClick={() => { onSwap(); close(); }} /> : null}
+            {isSplit && onExitSplit ? <MenuButton label="Make full screen" hint="Alt+Shift+\\" onClick={() => { onExitSplit(); close(); }} /> : null}
             <MenuButton label="Close other tabs" onClick={() => { if (activeId) onCloseOthers(activeId); close(); }} />
             <MenuButton label="Open command palette" onClick={() => { onOpenCommand(); close(); }} />
           </>}

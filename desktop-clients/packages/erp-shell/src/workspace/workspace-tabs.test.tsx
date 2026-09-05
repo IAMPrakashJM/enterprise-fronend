@@ -75,6 +75,31 @@ describe("WorkspaceTabs", () => {
     expect(onCloseOthers).toHaveBeenCalledWith("w2");
   });
 
+  /* The split lives in the tab strip's menu because that is where "what do I
+     do with this tab" already is. Offering it on every tab would mean choosing
+     which tab you meant before choosing the action. */
+  test("offers to split the current tab", async () => {
+    const onSplit = vi.fn();
+    render_({ onSplit });
+    await userEvent.click(screen.getByRole("button", { name: "Tab options" }));
+    await userEvent.click(screen.getByText(/Split/));
+    expect(onSplit).toHaveBeenCalledOnce();
+  });
+
+  test("offers swap and full screen only while split", async () => {
+    render_({ onSwap: noop, onExitSplit: noop, isSplit: false });
+    await userEvent.click(screen.getByRole("button", { name: "Tab options" }));
+    expect(screen.queryByText(/Swap/)).toBeNull();
+  });
+
+  test("and offers them when it is", async () => {
+    const onSwap = vi.fn();
+    render_({ onSwap, onExitSplit: noop, isSplit: true });
+    await userEvent.click(screen.getByRole("button", { name: "Tab options" }));
+    await userEvent.click(screen.getByText(/Swap/));
+    expect(onSwap).toHaveBeenCalledOnce();
+  });
+
   test("the plus opens the command palette", async () => {
     const onOpenCommand = vi.fn();
     render_({ onOpenCommand });

@@ -27,6 +27,7 @@ export interface OpenRequest {
 }
 
 export interface OpenResult { ok: boolean; reused?: boolean; document?: WorkspaceDocument; reason?: string }
+export type SplitSide = "left" | "right";
 export interface CloseResult { ok: boolean; reason?: string; dirtyDocumentIds?: string[] }
 export interface ResumeResult { ok: boolean; revalidationRequired?: boolean; reason?: string }
 
@@ -65,6 +66,26 @@ export interface Workspace {
 
   suspendDocument(documentId: string): void;
   resumeDocument(documentId: string, options?: { authorised?: boolean }): ResumeResult;
+
+  /** The documents on screen side by side, ordered left to right. Empty when not split. */
+  getSplit(): string[];
+  /** Open a document beside the focused one. */
+  openInSplit(request: OpenRequest, side?: SplitSide): OpenResult;
+  /** Bring a document that is already open into the split. */
+  moveToSplit(documentId: string, side?: SplitSide): OpenResult;
+  /**
+   * Split the focused document against the one used before it.
+   *
+   * What a shortcut and a menu item both mean by "split": show me this beside
+   * what I was just looking at. One open document returns ok:false with no
+   * reason — nothing to compare against is a workspace with one thing in it,
+   * not a failure to report.
+   */
+  splitWithPrevious(side?: SplitSide): OpenResult;
+  /** Reverse the panes. The focused document stays focused. */
+  swapSplit(): void;
+  /** Back to one document. The other stays open as a tab. */
+  exitSplit(): void;
 
   isAlreadyOpen(what: { documentType: string; entityId: string }): boolean;
   getDocument(documentId: string): WorkspaceDocument | null;
@@ -114,6 +135,19 @@ export function createWorkspace(options: {
    */
   let documents: WorkspaceDocument[] = [];
   let activeId: string | null = null;
+  /* The split is an arrangement over documents, not a property of one. Ordered
+     left to right; empty means a single document is on screen. */
+  let split: string[] = [];
+  /**
+   * Document ids, most recently focused first.
+   *
+   * Not derived from `lastActivatedAt`. That is an ISO string with millisecond
+   * resolution, and three documents opened in one tick carry the same one, so
+   * sorting by it returns an arbitrary order — "the document I was just looking
+   * at" resolved to whichever the sort happened to prefer. The timestamp stays
+   * on the document for display and audit; ordering lives here.
+   */
+  let recent: string[] = [];
   let counter = 0;
   const listeners = new Set<(event: WorkspaceEvent) => void>();
   const changeListeners = new Set<() => void>();
@@ -134,23 +168,43 @@ export function createWorkspace(options: {
 
   const find = (documentId: string) => documents.find((doc) => doc.documentId === documentId) ?? null;
 
-  /** A new array where the target is ACTIVE and any other ACTIVE falls back. */
-  const withActivated = (list: WorkspaceDocument[], documentId: string, at: string): WorkspaceDocument[] =>
+  /* The mode a document falls back to when it leaves the split. */
+  const singleMode = (): WorkspacePresentation =>
+    resolved.modes.find((mode) => mode !== "SPLIT") ?? resolved.modes[0] ?? "SINGLE";
+
+  /**
+   * One pass that makes the document list agree with the arrangement.
+   *
+   * Everything on screen is ACTIVE -- the focused document, and both panes when
+   * split, which is where maxActiveDocuments finally binds. Documents it does
+   * not need to change are returned unchanged, so an unrelated tab keeps its
+   * identity and does not re-render.
+   */
+  const reconcile = (list: WorkspaceDocument[], focusedId: string | null, splitIds: string[], touched: Set<string>, at: string): WorkspaceDocument[] =>
     list.map((doc) => {
-      if (doc.documentId === documentId) return { ...doc, state: "ACTIVE" as const, lastActivatedAt: at };
-      if (doc.state === "ACTIVE") return { ...doc, state: "BACKGROUND" as const };
-      return doc;
+      const inSplit = splitIds.includes(doc.documentId);
+      const onScreen = inSplit || doc.documentId === focusedId;
+      const presentation = inSplit ? "SPLIT" as const : doc.presentation === "SPLIT" ? singleMode() : doc.presentation;
+      const state = onScreen ? "ACTIVE" as const : doc.state === "ACTIVE" ? "BACKGROUND" as const : doc.state;
+      const lastActivatedAt = touched.has(doc.documentId) ? at : doc.lastActivatedAt;
+      if (presentation === doc.presentation && state === doc.state && lastActivatedAt === doc.lastActivatedAt) return doc;
+        return { ...doc, presentation, state, lastActivatedAt };
     });
 
   /**
-   * Exactly one document is ACTIVE, and the rest keep their state without
-   * paying for liveness. maxActiveDocuments is the ceiling for split panes and
-   * starts binding in Phase 3; enforcing it here would be enforcing a limit
-   * nothing in a tab workspace can reach.
+   * Everything on screen is ACTIVE and nothing else is: one document when
+   * single, both panes when split. maxActiveDocuments is what stops a third
+   * pane, and it binds from here — in a tab-only workspace nothing could reach
+   * it, which is why Phase 1 left it unenforced rather than pretending.
    */
+  /* Focusing something outside the split leaves the split. Clicking a tab shows
+     that tab; replacing whichever pane happened to be focused would make one
+     click do two different things depending on state the user cannot see. */
   const activate = (documentId: string) => {
-    commit(withActivated(documents, documentId, now()));
+    split = split.includes(documentId) ? split : [];
     activeId = documentId;
+    recent = [documentId, ...recent.filter((id) => id !== documentId)];
+    commit(reconcile(documents, documentId, split, new Set([documentId]), now()));
   };
 
   const presentationFor = (requested?: WorkspacePresentation): { mode?: WorkspacePresentation; reason?: string } => {
@@ -166,18 +220,23 @@ export function createWorkspace(options: {
 
   const removeDocument = (document: WorkspaceDocument, announce: boolean) => {
     let next = documents.filter((doc) => doc.documentId !== document.documentId);
+    /* A split of one is not a split. Closing a pane collapses onto the other
+       rather than leaving a divider with nothing on the far side. */
+    const remaining = split.filter((id) => id !== document.documentId);
+    split = remaining.length >= 2 ? remaining : [];
+    if (split.length === 1) split = [];
+    recent = recent.filter((id) => id !== document.documentId);
     if (activeId === document.documentId) {
       activeId = null;
       /* Whatever was used most recently takes over. Deliberately silent: this
          is a consequence of the close, not a second access event, and an audit
          trail full of implicit focus records is the noise §17.8 warns about. */
-      const successor = [...next].sort((a, b) => b.lastActivatedAt.localeCompare(a.lastActivatedAt))[0];
-      if (successor) {
-        next = withActivated(next, successor.documentId, now());
-        activeId = successor.documentId;
-      }
+      const successor = split.length > 0
+        ? next.find((doc) => doc.documentId === split[0])
+        : next.find((doc) => doc.documentId === recent[0]) ?? next[next.length - 1];
+      if (successor) activeId = successor.documentId;
     }
-    commit(next);
+    commit(reconcile(next, activeId, split, new Set(), now()));
     if (announce) emit("close", document);
   };
 
@@ -201,10 +260,39 @@ export function createWorkspace(options: {
     /* Unconditional, dirty or not. A tenant switch or a logout is not a moment
        to ask whether to keep another tenant's record on screen. */
     const closing = documents;
-    commit([]);
+    split = [];
+    recent = [];
     activeId = null;
+    commit([]);
     for (const doc of closing) emit("close", doc);
   };
+
+    /** Why this workspace cannot split right now, or undefined if it can. */
+  const splitRefusal = (): string | undefined => {
+  if (!resolved.modes.includes("SPLIT")) {
+    const level = resolved.deniedBy.SPLIT;
+    return `Split view is not available${level ? ` — removed at the ${level} level` : ""}.`;
+  }
+  /* Both panes are on screen and both are live, so a workspace that allows
+     one active document cannot show two. */
+  if (resolved.limits.maxActiveDocuments < 2) {
+    return `This workspace shows one document at a time (maxActiveDocuments is ${resolved.limits.maxActiveDocuments}).`;
+  }
+  if (split.length >= resolved.limits.maxSplitPanes) {
+    return `The split holds ${resolved.limits.maxSplitPanes} panes. Close one first.`;
+  }
+  return undefined;
+  };
+
+  const joinSplit = (documentId: string, side: SplitSide, baseId: string): OpenResult => {
+  const document = find(documentId);
+  if (!document) return { ok: false, reason: "That document is not open." };
+  split = side === "left" ? [documentId, baseId] : [baseId, documentId];
+  activeId = documentId;
+  commit(reconcile(documents, activeId, split, new Set([documentId]), now()));
+  return { ok: true, document: find(documentId)! };
+  };
+
 
   return {
     openDocument(request) {
@@ -265,8 +353,10 @@ export function createWorkspace(options: {
       /* One commit, not two. Appending and then activating would move the
          snapshot twice for a single user action, and every subscriber would
          render an intermediate state that never existed on screen. */
-      commit(withActivated([...documents, document], documentId, document.lastActivatedAt));
+      split = [];
       activeId = documentId;
+      recent = [documentId, ...recent.filter((id) => id !== documentId)];
+      commit(reconcile([...documents, document], documentId, split, new Set([documentId]), document.lastActivatedAt));
       const opened = find(documentId)!;
       emit("open", opened);
       return { ok: true, document: opened };
@@ -333,6 +423,68 @@ export function createWorkspace(options: {
       activate(documentId);
       emit("resume", find(documentId)!);
       return { ok: true, revalidationRequired: true };
+    },
+
+    getSplit() { return split; },
+
+    /**
+     * Open a document beside the focused one.
+     *
+     * With nothing open there is nothing to sit beside, so this is an ordinary
+     * open. With something already open, the record is opened (or found, if it
+     * is open elsewhere) and moved into the pane -- splitting a record against
+     * itself, or opening a second copy of it, is what the duplicate guard
+     * exists to prevent.
+     */
+    openInSplit(request, side = "right") {
+      const base = activeId;
+      if (!base) return this.openDocument(request);
+
+      const refusal = splitRefusal();
+      if (refusal) return { ok: false, reason: refusal };
+
+      const key = documentKey({ tenantId: session.tenantId, documentType: request.documentType, entityId: request.entityId });
+      const existing = documents.find((doc) => doc.documentKey === key);
+      if (existing) return joinSplit(existing.documentId, side, base);
+
+      const opened = this.openDocument(request);
+      if (!opened.ok || !opened.document) return opened;
+      /* openDocument leaves the split, so the pane is rebuilt around the two
+         documents rather than added to whatever was there before. */
+      return joinSplit(opened.document.documentId, side, base);
+    },
+
+    moveToSplit(documentId, side = "right") {
+      const base = activeId;
+      if (!base || base === documentId) return { ok: false, reason: "Nothing to split against." };
+      const refusal = splitRefusal();
+      if (refusal) return { ok: false, reason: refusal };
+      return joinSplit(documentId, side, base);
+    },
+
+    splitWithPrevious(side = "right") {
+      const current = activeId ? find(activeId) : null;
+      if (!current || documents.length < 2) return { ok: false };
+      const previousId = recent.find((id) => id !== current.documentId);
+      const previous = previousId ? find(previousId) : null;
+      if (!previous) return { ok: false };
+      const refusal = splitRefusal();
+      if (refusal) return { ok: false, reason: refusal };
+      /* The previous document is the base and the current one joins beside it,
+         so the document the user is looking at keeps the focus. */
+      return joinSplit(current.documentId, side, previous.documentId);
+    },
+
+    swapSplit() {
+      if (split.length < 2) return;
+      split = [...split].reverse();
+      commit(reconcile(documents, activeId, split, new Set(), now()));
+    },
+
+    exitSplit() {
+      if (split.length === 0) return;
+      split = [];
+      commit(reconcile(documents, activeId, split, new Set(), now()));
     },
 
     isAlreadyOpen({ documentType, entityId }) {
