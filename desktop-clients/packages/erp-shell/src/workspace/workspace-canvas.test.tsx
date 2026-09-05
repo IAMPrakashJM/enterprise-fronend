@@ -100,6 +100,23 @@ describe("WorkspaceCanvas — split", () => {
     expect(focused[0]).toHaveAccessibleName(/Purchase Order/);
   });
 
+  /* `split` is a property of the arrangement, so every mounted document carries
+     the role while a split is on — including the warm ones behind it. What
+     keeps that honest is aria-hidden and inert, which take those elements out
+     of the accessibility tree: three region ELEMENTS exist, two are announced.
+     Both halves are asserted, because a raw DOM count of three looks like a bug
+     and is not one. */
+  test("a warm document behind the split is mounted but not announced", () => {
+    render_({
+      documents: [a, b, doc("w4", "Payroll Run")],
+      splitIds: ["w1", "w2"],
+      activeDocumentId: "w2",
+    });
+    expect(screen.getAllByRole("region")).toHaveLength(2);
+    expect(screen.getAllByRole("region", { hidden: true })).toHaveLength(3);
+    expect(mounted("Payroll Run")).not.toBeVisible();
+  });
+
   test("an unsaved pane says so in its name", () => {
     render_({ splitIds: ["w1", "w2"], activeDocumentId: "w2", documents: [{ ...a, dirty: true }, b, cold] });
     expect(screen.getByRole("region", { name: /Invoice INV-2201/ })).toHaveAccessibleName(/unsaved/i);

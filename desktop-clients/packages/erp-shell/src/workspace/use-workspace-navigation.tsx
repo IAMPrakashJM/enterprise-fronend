@@ -4,7 +4,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { MODULES, PAGE_REGISTRY } from "@pepbits/erp-config";
 import type { ModuleKey } from "@pepbits/erp-config";
 import type { NavigationPort, NavigationTarget } from "@pepbits/platform-ports";
-import { useActiveDocumentIn, useDocumentsIn, useSplitIn, type OpenResult, type SplitSide, type Workspace, type WorkspaceDocument } from "@pepbits/workspace-core";
+import { useActiveDocumentIn, useDetachedIn, useDocumentsIn, useSplitIn, type OpenResult, type SplitSide, type Workspace, type WorkspaceDocument } from "@pepbits/workspace-core";
 import { documentFromTarget, targetFromDocument } from "./target-document.ts";
 
 /** What the shell must ask about before it can proceed. */
@@ -27,6 +27,13 @@ export interface WorkspaceNavigation {
   splitPanes: WorkspaceDocument[];
   /** The same, as ids. A stable array, so passing it as a prop does not re-render. */
   splitIds: string[];
+
+  /** Documents shown in windows of their own. */
+  detachedIds: string[];
+  /** Everything this window is responsible for drawing — the detached are not. */
+  localDocuments: WorkspaceDocument[];
+  detach(documentId: string): OpenResult;
+  reattach(documentId: string): OpenResult;
   /** Put the focused document beside the one used before it. */
   splitCurrent(side?: SplitSide): OpenResult;
   /** Bring a document that is already open into the split. */
@@ -81,6 +88,15 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
 
   const activeDocument = useActiveDocumentIn(workspace);
   const splitIds = useSplitIn(workspace);
+  const detachedIds = useDetachedIn(workspace);
+  /* A detached document is drawn by the window that owns it. Mounting a second
+     copy here would be two live screens on one record, each with its own
+     unsaved draft — the thing the duplicate guard exists to prevent, arrived at
+     from the other direction. */
+  const localDocuments = useMemo(
+    () => (detachedIds.length === 0 ? documents : documents.filter((doc) => !detachedIds.includes(doc.documentId))),
+    [documents, detachedIds],
+  );
   const splitPanes = useMemo(
     () => splitIds.map((id) => documents.find((doc) => doc.documentId === id)).filter(Boolean) as WorkspaceDocument[],
     [splitIds, documents],
@@ -176,6 +192,10 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
     port,
     splitPanes,
     splitIds,
+    detachedIds,
+    localDocuments,
+    detach: (documentId) => workspace.detachDocument(documentId),
+    reattach: (documentId) => workspace.attachDocument(documentId),
     splitCurrent: (side) => workspace.splitWithPrevious(side),
     splitWith: (documentId, side) => workspace.moveToSplit(documentId, side),
     swapSplit: () => { workspace.swapSplit(); },

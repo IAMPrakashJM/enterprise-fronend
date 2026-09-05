@@ -28,6 +28,23 @@ export interface OpenRequest {
 
 export interface OpenResult { ok: boolean; reused?: boolean; document?: WorkspaceDocument; reason?: string }
 export type SplitSide = "left" | "right";
+
+/**
+ * What a detached window is called.
+ *
+ * Never the document's title. §17.6: a window title reaches the OS taskbar, the
+ * window switcher, screen recordings and preview thumbnails — none of which
+ * anyone thinks of as part of the application, and all of which outlive the
+ * session. The type and the record id say which window is which without saying
+ * whose record it is.
+ */
+export function windowTitleFor(document: { documentType: string; entityId: string; title?: string }): string {
+  /* `title` is accepted and deliberately unused. Narrowing the parameter so a
+     title cannot be passed would make this true by type rather than by choice,
+     and the choice is the thing worth testing — a later caller reaching for
+     `document.title` here is exactly the mistake to catch. */
+  return `${document.documentType} ${document.entityId}`;
+}
 export interface CloseResult { ok: boolean; reason?: string; dirtyDocumentIds?: string[] }
 export interface ResumeResult { ok: boolean; revalidationRequired?: boolean; reason?: string }
 
@@ -82,6 +99,20 @@ export interface Workspace {
    * not a failure to report.
    */
   splitWithPrevious(side?: SplitSide): OpenResult;
+  /** Document ids currently shown in windows of their own. */
+  getDetached(): string[];
+  /**
+   * Move a document out into its own window.
+   *
+   * The document stays open here — the tab remains, so it can be brought back —
+   * but it is not drawn here and is never suspended, because it is live on
+   * someone's other monitor and releasing it would tear down a screen they are
+   * looking at.
+   */
+  detachDocument(documentId: string): OpenResult;
+  /** Bring it back into this window. */
+  attachDocument(documentId: string): OpenResult;
+
   /** Reverse the panes. The focused document stays focused. */
   swapSplit(): void;
   /** Back to one document. The other stays open as a tab. */
@@ -138,6 +169,10 @@ export function createWorkspace(options: {
   /* The split is an arrangement over documents, not a property of one. Ordered
      left to right; empty means a single document is on screen. */
   let split: string[] = [];
+  /* Documents living in windows of their own. Held here rather than inferred
+     from presentation, because the shell has to know which windows it owns in
+     order to close them on logout. */
+  let detached: string[] = [];
   /**
    * Document ids, most recently focused first.
    *
@@ -199,7 +234,7 @@ export function createWorkspace(options: {
     const budget = Math.max(0, resolved.limits.maxWarmDocuments);
     const warm = new Set(
       list
-        .filter((doc) => !onScreen.has(doc.documentId) && !doc.dirty)
+        .filter((doc) => !onScreen.has(doc.documentId) && !doc.dirty && !detached.includes(doc.documentId))
         .sort((a, b) => rank(a.documentId) - rank(b.documentId))
         .slice(0, budget)
         .map((doc) => doc.documentId),
@@ -208,10 +243,15 @@ export function createWorkspace(options: {
     return list.map((doc) => {
       const inSplit = splitIds.includes(doc.documentId);
       const visible = onScreen.has(doc.documentId);
-      const presentation = inSplit ? "SPLIT" as const : doc.presentation === "SPLIT" ? singleMode() : doc.presentation;
+      const isDetached = detached.includes(doc.documentId);
+      const presentation = isDetached ? "WINDOW" as const
+        : inSplit ? "SPLIT" as const
+        : doc.presentation === "SPLIT" || doc.presentation === "WINDOW" ? singleMode() : doc.presentation;
       const state = visible
         ? "ACTIVE" as const
-        : doc.dirty || warm.has(doc.documentId) ? "BACKGROUND" as const : "SUSPENDED" as const;
+        /* Detached documents are never released: they are on screen, just not
+           on this one. */
+        : isDetached || doc.dirty || warm.has(doc.documentId) ? "BACKGROUND" as const : "SUSPENDED" as const;
       const lastActivatedAt = touched.has(doc.documentId) ? at : doc.lastActivatedAt;
       if (presentation === doc.presentation && state === doc.state && lastActivatedAt === doc.lastActivatedAt) return doc;
       return { ...doc, presentation, state, lastActivatedAt };
@@ -249,6 +289,7 @@ export function createWorkspace(options: {
     let next = documents.filter((doc) => doc.documentId !== document.documentId);
     /* A split of one is not a split. Closing a pane collapses onto the other
        rather than leaving a divider with nothing on the far side. */
+    detached = detached.filter((id) => id !== document.documentId);
     const remaining = split.filter((id) => id !== document.documentId);
     split = remaining.length >= 2 ? remaining : [];
     if (split.length === 1) split = [];
@@ -292,6 +333,7 @@ export function createWorkspace(options: {
        to ask whether to keep another tenant's record on screen. */
     const closing = documents;
     split = [];
+    detached = [];
     recent = [];
     activeId = null;
     commit([]);
@@ -508,6 +550,40 @@ export function createWorkspace(options: {
       /* The previous document is the base and the current one joins beside it,
          so the document the user is looking at keeps the focus. */
       return joinSplit(current.documentId, side, previous.documentId);
+    },
+
+    getDetached() { return detached; },
+
+    detachDocument(documentId) {
+      const document = find(documentId);
+      if (!document) return { ok: false, reason: "That document is not open." };
+      if (detached.includes(documentId)) return { ok: true, document };
+      if (!resolved.allowDetach) return { ok: false, reason: "Detaching to a window is not allowed here." };
+      if (!resolved.modes.includes("WINDOW")) {
+        const level = resolved.deniedBy.WINDOW;
+        return { ok: false, reason: `A separate window is not available${level ? ` — removed at the ${level} level` : ""}.` };
+      }
+      if (detached.length >= resolved.limits.maxDetachedWindows) {
+        return { ok: false, reason: `${resolved.limits.maxDetachedWindows} window(s) are already open. Close one first.` };
+      }
+
+      detached = [...detached, documentId];
+      /* It leaves the split and gives up focus here — it is not on this screen
+         any more, and leaving it marked active would draw it twice. */
+      split = split.includes(documentId) ? [] : split;
+      if (activeId === documentId) {
+        activeId = recent.find((id) => id !== documentId && !detached.includes(id)) ?? null;
+      }
+      commit(reconcile(documents, activeId, split, new Set(), now()));
+      return { ok: true, document: find(documentId)! };
+    },
+
+    attachDocument(documentId) {
+      const document = find(documentId);
+      if (!document) return { ok: false, reason: "That document is not open." };
+      detached = detached.filter((id) => id !== documentId);
+      activate(documentId);
+      return { ok: true, document: find(documentId)! };
     },
 
     swapSplit() {
