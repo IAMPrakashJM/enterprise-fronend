@@ -1,3 +1,4 @@
+export * from "./avatar";
 export * from "./badge";
 export * from "./button";
 export * from "./card";
@@ -11,5 +12,7 @@ export * from "./option-filter";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./search-select";
+export * from "./segmented";
+export * from "./stat-card";
 export * from "./tabs";
 export * from "./skeleton";

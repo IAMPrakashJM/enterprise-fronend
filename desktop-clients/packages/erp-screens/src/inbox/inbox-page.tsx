@@ -5,7 +5,7 @@ import { ArrowRight, Bell, Check, CheckCheck, CircleAlert, CircleCheck, Inbox, I
 import type { MessageItem, NotificationItem, NotificationKind, PageDefinition } from "@pepbits/erp-config";
 import { MESSAGES, MODULES, NOTIFICATIONS, PAGE_REGISTRY } from "@pepbits/erp-config";
 import { useERP } from "@pepbits/erp-shell";
-import { Badge, Button, Input, Textarea, cn } from "@pepbits/ops-ui";
+import { Avatar, Badge, Button, Input, Textarea, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { InlineAiAction } from "@pepbits/ai-ui";
@@ -52,18 +52,6 @@ const KIND_WASH: Record<NotificationKind, string> = {
   info: "bg-[var(--primary-soft)] text-[var(--primary)]",
 };
 
-/* A stable colour per person, derived from the initials rather than the row
-   index, so someone keeps their colour when the list is filtered or sorted --
-   the whole point of a colour is that you learn it. */
-const AVATAR_WASH = [
-  "bg-[color-mix(in_srgb,var(--primary)_16%,transparent)] text-[var(--primary-strong)]",
-  "bg-[color-mix(in_srgb,var(--success)_16%,transparent)] text-[var(--success)]",
-  "bg-[color-mix(in_srgb,var(--warning)_18%,transparent)] text-[var(--warning)]",
-  "bg-[color-mix(in_srgb,var(--violet,var(--primary))_16%,transparent)] text-[var(--primary)]",
-  "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger)]",
-];
-const washFor = (seed: string) =>
-  AVATAR_WASH[[...seed].reduce((sum, c) => sum + c.charCodeAt(0), 0) % AVATAR_WASH.length];
 
 /* "2m", "1d" -> a bucket. The fixtures carry humanised ages rather than dates,
    so this reads the unit off the end instead of doing arithmetic on a clock
@@ -219,9 +207,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                     isUnread(row) ? "border-s-[var(--primary)]" : "border-s-transparent",
                     selected?.id === row.id ? "bg-[var(--primary-soft)]" : "hover:bg-[var(--surface-2)]")}>
                   {row.initials ? (
-                    <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-full text-[length:calc(9.5px*var(--fs-scale))] font-black", washFor(row.initials))}>
-                      {row.initials}
-                    </span>
+                    <Avatar name={row.initials ?? ""} initials={row.initials} size="sm" decorative />
                   ) : Icon ? (
                     <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-full", KIND_WASH[row.kind ?? "info"])}>
                       <Icon className="size-4" />
@@ -255,9 +241,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                   first thing you look for, so it gets the weight. */}
               <div className="flex items-start gap-3 border-b border-[var(--border)] pb-4">
                 {selected.initials ? (
-                  <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-full text-[length:calc(12px*var(--fs-scale))] font-black", washFor(selected.initials))}>
-                    {selected.initials}
-                  </span>
+                  <Avatar name={selected.initials ?? ""} initials={selected.initials} size="lg" decorative />
                 ) : selected.kind ? (
                   <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-full", KIND_WASH[selected.kind])}>
                     {React.createElement(KIND_ICON[selected.kind], { className: "size-5" })}
