@@ -31,7 +31,10 @@ export function WorkspaceTabs({ documents, activeDocumentId, onActivate, onClose
   const activeId = documents.some((doc) => doc.documentId === activeDocumentId) ? activeDocumentId : documents[0]?.documentId ?? null;
   return (
     <div className="no-print flex h-[var(--tabbar-height)] shrink-0 items-end border-b border-[var(--border)] bg-[var(--surface-2)] px-2">
-      <div role="tablist" className="nex-scrollbar flex min-w-0 flex-1 items-end gap-1 overflow-x-auto overflow-y-hidden pt-1.5">
+      {/* Named, because a page can have tablists of its own — a billing record has
+          six — and "tablist" on its own does not say which one holds the open
+          documents. */}
+      <div role="tablist" aria-label="Open documents" className="nex-scrollbar flex min-w-0 flex-1 items-end gap-1 overflow-x-auto overflow-y-hidden pt-1.5">
         {documents.map((doc) => {
           const active = doc.documentId === activeId;
           return (

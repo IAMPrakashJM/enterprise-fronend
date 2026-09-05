@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { useIsDocumentVisible } from "@pepbits/workspace-core";
 import { Circle, Mic, MicOff, Pause, Play, Square } from "lucide-react";
 import { Badge, Button, cn } from "@pepbits/ops-ui";
 import { readToken } from "@pepbits/auth";
@@ -56,6 +57,27 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
   /* The microphone must not outlive the page. Without this, navigating away
      mid-consultation leaves the recording indicator on and the stream open. */
   useEffect(() => teardown, []);
+
+  /**
+   * Stop the moment this consultation is no longer the one on screen.
+   *
+   * Not a performance measure. The microphone is live and the audio is being
+   * streamed to a transcription provider, and the clinician who switched to
+   * another patient's tab has every reason to believe that stopped when the
+   * screen did. A recorder that keeps listening to a room while showing someone
+   * else's record is a consent problem before it is a resource one.
+   *
+   * Paused rather than ended, so coming back resumes the same session instead
+   * of starting a second one against the same encounter.
+   */
+  const visible = useIsDocumentVisible();
+  useEffect(() => {
+    if (visible || state !== "recording") return;
+    paused.current = true;
+    recorder.current?.pause();
+    socket.current?.send(JSON.stringify({ type: "PAUSE" }));
+    setState("paused");
+  }, [visible, state]);
 
   const start = async () => {
     setProblem(null); setState("starting"); setSegments([]); setSeconds(0);
