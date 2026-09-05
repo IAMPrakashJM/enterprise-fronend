@@ -89,7 +89,7 @@ export function Drawer({ open, onClose, title, subtitle, children, side = "right
   const widths = { sm: "w-[360px]", md: "w-[460px]", lg: "w-[620px]" };
   return (
     <div className="fixed inset-0 z-[115] bg-slate-950/35 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-label={title} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-      <aside className={cn("animate-slide-up absolute inset-y-0 flex max-w-[92vw] flex-col border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]", widths[width], side === "right" ? "right-0 border-l" : "left-0 border-r")}>
+      <aside ref={panelRef} tabIndex={-1} className={cn("animate-slide-up absolute inset-y-0 flex max-w-[92vw] flex-col border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)] outline-none", widths[width], side === "right" ? "right-0 border-l" : "left-0 border-r")}>
         <div className="flex items-start justify-between gap-4 border-b border-[var(--border)] px-5 py-4"><div><h2 className="text-[length:calc(15px*var(--fs-scale))] font-extrabold tracking-[-.02em]">{title}</h2>{subtitle ? <p className="mt-1 text-[length:calc(11px*var(--fs-scale))] text-[var(--text-muted)]">{subtitle}</p> : null}</div><IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton></div>
         <div className="nex-scrollbar min-h-0 flex-1 overflow-auto">{children}</div>
         {footer ? <div className="flex items-center justify-end gap-2 border-t border-[var(--border)] bg-[var(--surface-2)] px-5 py-3">{footer}</div> : null}
@@ -104,7 +104,7 @@ export function CenterRecordCard({ open, onClose, title, children, footer }: { o
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/25 p-5 backdrop-blur-[1px]" role="dialog" aria-modal="true" aria-label={title} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-      <div className="animate-slide-up w-full max-w-xl rounded-[24px] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--surface)] p-2 shadow-[var(--shadow-lg)]">
+      <div ref={panelRef} tabIndex={-1} className="animate-slide-up w-full max-w-xl rounded-[24px] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--surface)] p-2 shadow-[var(--shadow-lg)] outline-none">
         <div className="rounded-[18px] border border-[var(--border)] bg-[var(--surface-2)]">
           <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3"><h2 className="text-[length:calc(13px*var(--fs-scale))] font-extrabold">{title}</h2><IconButton label="Close" onClick={onClose}><X className="size-4" /></IconButton></div>
           <div className="nex-scrollbar max-h-[65vh] overflow-auto p-4">{children}</div>

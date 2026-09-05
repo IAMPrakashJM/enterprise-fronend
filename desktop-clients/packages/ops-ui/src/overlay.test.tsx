@@ -66,6 +66,20 @@ describe("Drawer", () => {
     await userEvent.keyboard("{Escape}");
     expect(onClose).toHaveBeenCalledOnce();
   });
+
+  /* Written per overlay rather than once for Modal. The shared hook took a ref
+     that the Drawer never attached, so the panel was always null: Escape still
+     worked, focus never moved in, and the Tab trap quietly did nothing. Only
+     Modal had a focus test, so all of it passed. */
+  test("focus moves into the panel and Tab stays there", async () => {
+    render(<Drawer open onClose={() => undefined} title="Filters" footer={<button type="button">Apply</button>}><button type="button">Inside</button></Drawer>);
+    expect(screen.getByRole("dialog").firstElementChild).toHaveFocus();
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+    expect(screen.getByRole("dialog").contains(document.activeElement)).toBe(true);
+  });
 });
 
 describe("CenterRecordCard", () => {
@@ -81,6 +95,16 @@ describe("CenterRecordCard", () => {
     render(<CenterRecordCard open onClose={onClose} title="Journal entry"><p>Body</p></CenterRecordCard>);
     await userEvent.keyboard("{Escape}");
     expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  test("focus moves into the panel and Tab stays there", async () => {
+    render(<CenterRecordCard open onClose={() => undefined} title="Journal entry" footer={<button type="button">Post</button>}><button type="button">Inside</button></CenterRecordCard>);
+    expect(screen.getByRole("dialog").firstElementChild).toHaveFocus();
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+    expect(screen.getByRole("dialog").contains(document.activeElement)).toBe(true);
   });
 });
 
