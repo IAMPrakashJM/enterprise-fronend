@@ -41,7 +41,7 @@ export function nextEnabledIndex(options: FilterableOption[], from: number, step
 
 /* Marks the matched run inside a label, so the reason a row survived the
    filter is visible rather than inferred. `<mark>`'s browser default is a
-   yellow none of the fifteen themes contain, so the background is replaced --
+   yellow none of the themes contain, so the background is replaced --
    with accent, not primary, because primary-soft is already the selected
    row's background and a mark in that same colour would vanish on exactly the
    row a user looks at first. A color-mix rather than the flat --accent-soft

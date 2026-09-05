@@ -383,7 +383,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           </PreferenceSection>
 
           {/* ================= PAGE ================= */}
-          <PreferenceSection {...common} tab="page" tour="prefs-theme" title="Theme" subtitle="Thirteen palettes. Each card is drawn with that theme's real tokens." icon={<Sparkles className="size-4" />}
+          <PreferenceSection {...common} tab="page" tour="prefs-theme" title="Theme" subtitle={`${THEME_OPTIONS.length} palettes. Each card is drawn with that theme's real tokens.`} icon={<Sparkles className="size-4" />}
             keys={["theme"]} keywords="theme dark light colour color palette midnight nord plum graphite">
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {THEME_OPTIONS.map((theme) => <ThemeCard key={theme.id} id={theme.id} name={theme.name} description={theme.description} active={preferences.theme === theme.id} onSelect={() => set("theme", theme.id)} />)}
