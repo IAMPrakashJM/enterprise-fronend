@@ -7,3 +7,4 @@ export * from "./header-clock";
 export * from "./use-clock";
 export * from "./chrome-palette";
 export * from "./layers";
+export * from "./workspace";

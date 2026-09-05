@@ -7,6 +7,7 @@ import { getWorklistConfig } from "@pepbits/erp-data";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { InlineAiAction } from "@pepbits/ai-ui";
 import { useERP } from "@pepbits/erp-shell";
+import { useReportDirty } from "@pepbits/workspace-core";
 import { Button, IconButton } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { Card } from "@pepbits/ops-ui";
@@ -86,6 +87,10 @@ export function DynamicRecordForm({ page, target }: { page: PageDefinition; targ
   const mode = target.mode ?? (page.kind === "form" ? "edit" : "view");
   const disabled = mode === "view";
   const dirty = JSON.stringify(values) !== JSON.stringify(savedValues);
+  /* Published to the workspace, so closing this tab or crossing to another
+     module asks before throwing the draft away. A no-op in the web shell, which
+     has no workspace yet. */
+  useReportDirty(dirty);
   const activeIndex = schema.sections.findIndex((section) => section.id === activeSection);
   const section = schema.sections[activeIndex] ?? schema.sections[0];
 

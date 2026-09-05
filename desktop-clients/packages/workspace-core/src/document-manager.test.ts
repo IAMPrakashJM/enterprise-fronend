@@ -329,3 +329,151 @@ describe("events", () => {
     expect(seen).toEqual(["open"]);
   });
 });
+
+/* React reads this store through useSyncExternalStore, which compares snapshots
+   by identity. A getter that builds a fresh array every call is an infinite
+   render loop, and a document mutated in place is a change React cannot see at
+   all -- the tab bar would keep rendering the previous title. Both are
+   properties of the store, not of the binding, so they are pinned here. */
+describe("snapshots", () => {
+  test("the document list keeps its identity while nothing changes", () => {
+    ws.openDocument(patient("1", "A"));
+    expect(ws.getOpenDocuments()).toBe(ws.getOpenDocuments());
+  });
+
+  test("and takes a new one when something does", () => {
+    const before = ws.getOpenDocuments();
+    ws.openDocument(patient("1", "A"));
+    expect(ws.getOpenDocuments()).not.toBe(before);
+  });
+
+  test("a changed document is a new object", () => {
+    const a = ws.openDocument(patient("1", "A")).document!;
+    ws.markDirty(a.documentId);
+    expect(ws.getDocument(a.documentId)).not.toBe(a);
+    expect(ws.getDocument(a.documentId)?.dirty).toBe(true);
+  });
+
+  /* The other half, and the one that matters for a wide tab bar: marking one
+     document dirty must not hand every other tab a new object, or all of them
+     re-render on every keystroke in one form. */
+  test("an untouched document keeps its identity", () => {
+    const a = ws.openDocument(patient("1", "A")).document!;
+    const b = ws.openDocument(patient("2", "B")).document!;
+    const bBefore = ws.getDocument(b.documentId);
+    ws.markDirty(a.documentId);
+    expect(ws.getDocument(b.documentId)).toBe(bBefore);
+  });
+
+  test("a no-op reports no change", () => {
+    const a = ws.openDocument(patient("1", "A")).document!;
+    const before = ws.getOpenDocuments();
+    ws.focusDocument(a.documentId);
+    ws.markClean(a.documentId);
+    expect(ws.getOpenDocuments()).toBe(before);
+  });
+
+  test("subscribers are told when the snapshot moves", () => {
+    let changes = 0;
+    ws.subscribeToChanges(() => { changes += 1; });
+    ws.openDocument(patient("1", "A"));
+    expect(changes).toBe(1);
+    ws.markDirty(ws.getOpenDocuments()[0].documentId);
+    expect(changes).toBe(2);
+    ws.markClean(ws.getOpenDocuments()[0].documentId);
+    ws.markClean(ws.getOpenDocuments()[0].documentId);
+    expect(changes).toBe(3);
+  });
+});
+
+/* Every shell has a tab that must stay: the module dashboard you return to when
+   everything else is closed. Without the concept in the core, each shell filters
+   it out of its own close paths and one of them eventually forgets. */
+describe("unclosable documents", () => {
+  const home = { module: "FINANCE", documentType: "DASHBOARD", entityId: "finance", title: "Finance", closable: false };
+
+  test("refuses to close, and says why", () => {
+    const doc = ws.openDocument(home).document!;
+    const result = ws.closeDocument(doc.documentId);
+    expect(result.ok).toBe(false);
+    expect(result.reason).toMatch(/cannot be closed/i);
+    expect(ws.getOpenDocuments()).toHaveLength(1);
+  });
+
+  /* Not a dirty-state question. discardChanges answers "may I lose this work",
+     which is a different question from "may this tab go away at all". */
+  test("discardChanges does not override it", () => {
+    const doc = ws.openDocument(home).document!;
+    expect(ws.closeDocument(doc.documentId, { discardChanges: true }).ok).toBe(false);
+  });
+
+  test("closeAll and closeOthers leave it alone", () => {
+    const doc = ws.openDocument(home).document!;
+    ws.openDocument(patient("1", "A"));
+    ws.openDocument(patient("2", "B"));
+    expect(ws.closeAll().ok).toBe(true);
+    expect(ws.getOpenDocuments().map((d) => d.documentId)).toEqual([doc.documentId]);
+  });
+
+  test("closeOthers keeps both it and the one named", () => {
+    const doc = ws.openDocument(home).document!;
+    ws.openDocument(patient("1", "A"));
+    const keep = ws.openDocument(patient("2", "B")).document!;
+    ws.closeOthers(keep.documentId);
+    expect(ws.getOpenDocuments().map((d) => d.documentId).sort()).toEqual([doc.documentId, keep.documentId].sort());
+  });
+
+  /* Changing module is not "close all the tabs" -- the module itself is being
+     replaced, so its dashboard goes with it. Without this the shell is left
+     holding the previous module's fixed tab, stranded in a bar that belongs to
+     a module it is no longer part of. */
+  test("closeAll can be told to take the fixed tab too", () => {
+    ws.openDocument(home);
+    ws.openDocument(patient("1", "A"));
+    expect(ws.closeAll({ includeUnclosable: true }).ok).toBe(true);
+    expect(ws.getOpenDocuments()).toHaveLength(0);
+  });
+
+  test("and it still asks about unsaved work first", () => {
+    const doc = ws.openDocument(home).document!;
+    const a = ws.openDocument(patient("1", "A")).document!;
+    ws.markDirty(a.documentId);
+    const refused = ws.closeAll({ includeUnclosable: true });
+    expect(refused.ok).toBe(false);
+    expect(refused.dirtyDocumentIds).toEqual([a.documentId]);
+    expect(ws.getOpenDocuments()).toHaveLength(2);
+    expect(ws.closeAll({ includeUnclosable: true, discardChanges: true }).ok).toBe(true);
+    expect(ws.getDocument(doc.documentId)).toBeNull();
+  });
+
+  test("documents are closable unless told otherwise", () => {
+    expect(ws.openDocument(patient("1", "A")).document?.closable).toBe(true);
+  });
+});
+
+/* The shell resolves policy from preferences, and preferences live below the
+   point where the workspace is created. Rebuilding the store on every toggle
+   would drop every open tab, so the policy is replaceable in place. */
+describe("setPolicy", () => {
+  test("changes what may be opened next", () => {
+    const w = createWorkspace({ session, policy: { platform: { modes: ["TAB"] } } });
+    expect(w.openDocument(patient("1", "A")).document?.presentation).toBe("TAB");
+    w.setPolicy({ platform: { modes: ["SINGLE"] } });
+    expect(w.openDocument(patient("2", "B")).document?.presentation).toBe("SINGLE");
+  });
+
+  /* A tab does not change shape under the user because a preference moved. */
+  test("leaves what is already open alone", () => {
+    const w = createWorkspace({ session, policy: { platform: { modes: ["TAB"] } } });
+    const a = w.openDocument(patient("1", "A")).document!;
+    w.setPolicy({ platform: { modes: ["SINGLE"] } });
+    expect(w.getDocument(a.documentId)?.presentation).toBe("TAB");
+  });
+
+  test("a new limit applies from now on", () => {
+    const w = createWorkspace({ session, policy: { platform: { modes: ["TAB"] } } });
+    w.openDocument(patient("1", "A"));
+    w.setPolicy({ platform: { modes: ["TAB"], limits: { maxOpenDocuments: 1 } } });
+    expect(w.openDocument(patient("2", "B")).ok).toBe(false);
+  });
+});

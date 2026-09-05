@@ -55,6 +55,12 @@ export interface WorkspaceDocument {
   presentation: WorkspacePresentation;
   state: WorkspaceDocumentState;
   dirty: boolean;
+  /**
+   * Every shell has a tab that must stay -- the module dashboard you return to
+   * when everything else is gone. Held here rather than filtered out by each
+   * shell's own close paths, because one of those shells eventually forgets.
+   */
+  closable: boolean;
 
   security: WorkspaceSecurityContext;
 
