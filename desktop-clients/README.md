@@ -75,6 +75,7 @@ lsof -ti tcp:3100 tcp:3101 | xargs kill
 ## Verify
 
 ```bash
+npm test                 # 116 component tests -- does the screen come out right?
 npx turbo run build      # both apps
 npm run verify:parity    # moved files still identical to the pre-migration originals
 npm run verify:ai-gates  # the AI access rules, including the escalation cases
@@ -152,3 +153,4 @@ build log.
 - `docs/superpowers/plans/2026-09-03-nexora-monorepo.md` — the implementation plan
 - `docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md` — the gated AI assistant, draft
 - `docs/superpowers/plans/2026-09-03-contextual-ai-assistant.md` — its seven-task plan
+- `docs/ui-gap-analysis.md` — what AllyVORA's provider-web has that this does not, with the cost and the case against each
