@@ -5,7 +5,7 @@ import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizont
 import { getWorklistConfig } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
-import { Button, ConfirmDialog, IconButton } from "@pepbits/ops-ui";
+import { Button, ConfirmDialog, IconButton, Segmented } from "@pepbits/ops-ui";
 import { SearchInput } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
@@ -20,7 +20,7 @@ import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import type { DataColumn, PageDefinition } from "@pepbits/erp-config";
+import type { DataColumn, PageDefinition, ResultView } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
 function valueText(value: string | number | boolean) { return String(value).toLowerCase(); }
@@ -183,7 +183,20 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           {(close) => <><MenuButton label="My default view" hint="Table • 8 columns • 20 rows" onClick={close} /><MenuButton label="High priority" hint="4 filters • updated today" onClick={close} /><MenuButton label="Open items by branch" hint="Shared by Operations" onClick={close} /><MenuButton icon={<Save className="size-3.5" />} label="Save current view" onClick={() => { toast({ title: "View saved", message: "Current filters and columns were saved as a personal view.", type: "success" }); close(); }} /></>}
         </ActionMenu>
         <div className="ml-auto flex items-center gap-1">
-          <div data-tour="view" className="flex rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] p-0.5"><IconButton label="Table view" className={cn("size-7", preferences.resultView === "table" && "bg-[var(--surface)] text-[var(--primary)] shadow-sm")} onClick={() => updatePreference("resultView", "table")}><Rows3 className="size-3.5" /></IconButton><IconButton label="Card grid view" className={cn("size-7", preferences.resultView === "cards" && "bg-[var(--surface)] text-[var(--primary)] shadow-sm")} onClick={() => updatePreference("resultView", "cards")}><Grid2X2 className="size-3.5" /></IconButton></div>
+            {/* Was two IconButtons in a bordered box, which is a segmented
+                control drawn by hand: no group name, no radio semantics, and
+                two tab stops where there should be one. */}
+            <div data-tour="view">
+              <Segmented
+                label="Result view"
+                value={preferences.resultView}
+                onChange={(next) => updatePreference("resultView", next as ResultView)}
+                options={[
+                  { value: "table", label: "Table view", icon: <Rows3 className="size-3.5" />, iconOnly: true },
+                  { value: "cards", label: "Card grid view", icon: <Grid2X2 className="size-3.5" />, iconOnly: true },
+                ]}
+              />
+            </div>
           <IconButton data-tour="columns" label="Choose columns" onClick={() => setColumnOpen(true)}><Columns3 className="size-4" /></IconButton>
           <IconButton label="Refresh results" onClick={() => toast({ title: "Worklist refreshed", message: `${filtered.length} mock records synchronized.`, type: "info" })}><RefreshCw className="size-4" /></IconButton>
           <ActionMenu trigger={<IconButton label="More worklist actions"><MoreHorizontal className="size-4" /></IconButton>}>

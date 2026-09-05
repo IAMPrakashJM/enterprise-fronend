@@ -7,7 +7,7 @@ import { useNavigation } from "@pepbits/platform-ports";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { InlineAiAction } from "@pepbits/ai-ui";
 import { useERP, dashboardPageId as dashboardFor } from "@pepbits/erp-shell";
-import { Card, CardContent, CardHeader, CardTitle } from "@pepbits/ops-ui";
+import { Card, CardContent, CardHeader, CardTitle, StatCard } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { Button, IconButton } from "@pepbits/ops-ui";
 import { cn } from "@pepbits/ops-ui";
@@ -48,25 +48,6 @@ function TrendChart({ values, labels, module }: { values: number[]; labels: stri
   );
 }
 
-function KpiCard({ item, index }: { item: { label: string; value: string; delta: string; trend: "up" | "down" | "neutral"; note: string }; index: number }) {
-  const positive = item.trend === "up";
-  const negative = item.trend === "down";
-  return (
-    <Card className="group relative min-w-0 overflow-hidden transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--primary)_24%,var(--border))] hover:shadow-[var(--shadow-md)]">
-      <div className="absolute inset-x-0 top-0 h-0.5 bg-[var(--primary)] opacity-0 transition group-hover:opacity-100" />
-      <CardContent className="p-3.5">
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0"><p className="truncate text-[length:calc(9px*var(--fs-scale))] font-black uppercase tracking-[.11em] text-[var(--text-subtle)]">{item.label}</p><div className="mt-2 truncate text-[length:calc(20px*var(--fs-scale))] font-black tracking-[-.045em] text-[var(--text)]">{item.value}</div></div>
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[var(--surface-2)] text-[var(--primary)]"><span className="text-[length:calc(11px*var(--fs-scale))] font-black">{String(index + 1).padStart(2, "0")}</span></div>
-        </div>
-        <div className="mt-3 flex items-center justify-between gap-2 border-t border-[var(--border)] pt-2.5">
-          <span className={cn("inline-flex items-center gap-1 text-[length:calc(9.5px*var(--fs-scale))] font-extrabold", positive && "text-[var(--success)]", negative && "text-[var(--danger)]", item.trend === "neutral" && "text-[var(--warning)]")}>{positive ? <ArrowUpRight className="size-3" /> : negative ? <ArrowDownRight className="size-3" /> : <Circle className="size-2 fill-current" />}{item.delta}</span>
-          <span className="truncate text-right text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">{item.note}</span>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
 
 const branchRows = [
   { branch: "Abu Dhabi HQ", volume: "AED 8.42M", plan: 96, variance: "+7.8%", exceptions: 12, health: "Strong" },
@@ -104,7 +85,19 @@ export function ModuleDashboard({ moduleKey }: { moduleKey?: ModuleKey }) {
 
       <div className="flex justify-end"><InlineAiAction useCaseId="dashboard.explain-metrics" label="Explain figures" /></div>
       <div data-tour="kpis" className="grid grid-cols-2 gap-3 lg:grid-cols-3 2xl:grid-cols-6">
-        {data.kpis.map((item, index) => <KpiCard key={item.label} item={item} index={index} />)}
+        {data.kpis.map((item) => (
+          <StatCard
+            key={item.label}
+            label={item.label}
+            value={item.value}
+            hint={item.note}
+            /* The comparison the old card never carried. Its arrow said "+3.8%"
+               and left every reader to guess the period; the mock data has no
+               period in it, so the honest answer is the one the dashboard is
+               actually built from. */
+            trend={{ direction: item.trend === "neutral" ? "flat" : item.trend, delta: item.delta, comparedTo: "vs previous period" }}
+          />
+        ))}
       </div>
 
       <div className="grid min-h-0 gap-3 xl:grid-cols-[minmax(0,1.75fr)_minmax(330px,.75fr)]">
