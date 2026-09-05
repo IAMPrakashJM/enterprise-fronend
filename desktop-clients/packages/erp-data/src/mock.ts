@@ -342,7 +342,11 @@ export function getWorklistConfig(pageId: string, title: string, entity = "recor
       { key: "segment", label: "Segment", sortable: true, defaultVisible: true },
       { key: "city", label: "City", sortable: true, defaultVisible: false },
       { key: "contact", label: "Primary contact", sortable: true, defaultVisible: false },
-      { key: "creditLimit", label: "Credit limit", type: "money", sortable: true, defaultVisible: true },
+      /* Editable in the table. A credit limit is the kind of small correction a
+         form is too much for — twenty of them across twenty customers is twenty
+         forms otherwise. Nothing else here opts in: an id is not a typo to fix
+         in place, and a status has a workflow behind it. */
+      { key: "creditLimit", label: "Credit limit", type: "money", sortable: true, defaultVisible: true, editable: true },
       { key: "outstanding", label: "Outstanding", type: "money", sortable: true, defaultVisible: true },
       { key: "lastInvoice", label: "Last invoice", type: "date", sortable: true, defaultVisible: false },
       { key: "owner", label: "Owner", sortable: true, defaultVisible: true },

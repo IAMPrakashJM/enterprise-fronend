@@ -2,11 +2,29 @@
 
 import React from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, Eye, MoreHorizontal, Pencil, SquareArrowOutUpRight } from "lucide-react";
-import { cn } from "@pepbits/ops-ui";
+import { cn, InlineEdit } from "@pepbits/ops-ui";
 import { StatusBadge } from "@pepbits/ops-ui";
 import { IconButton } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
 import type { DataColumn, Density, Formatters } from "@pepbits/erp-config";
+
+/**
+ * What a correction typed into a cell has to satisfy before it is written.
+ *
+ * Per type rather than per column, because the wrongness is in the type: a
+ * money column takes a number and no currency symbol, and a percent cannot pass
+ * a hundred. Anything a specific column needs beyond this belongs on the column.
+ */
+function validateCell(column: DataColumn, next: string): string | null {
+  if (next.trim() === "") return `${column.label} cannot be empty.`;
+  if (column.type === "money" || column.type === "number" || column.type === "percent") {
+    const parsed = Number(next.replace(/[\s,]/g, ""));
+    if (!Number.isFinite(parsed)) return `${column.label} must be a number.`;
+    if (parsed < 0) return `${column.label} cannot be negative.`;
+    if (column.type === "percent" && parsed > 100) return "A percentage cannot be above 100.";
+  }
+  return null;
+}
 
 /* The status/boolean branches come FIRST and never reach the formatter: they
    render a badge, not text, and are the reason this stays a component rather
@@ -22,7 +40,7 @@ function formatValue(column: DataColumn, value: unknown, format: Formatters, wra
   return <span className="block max-w-[260px] truncate" title={text}>{text}</span>;
 }
 
-export function DataTable({ rows, columns, primaryKey, displayKey, selected, onToggle, onToggleAll, sort, onSort, onPreview, onView, onEdit, density, format, stickyHeader = true, zebra = false, wrap = false }: {
+export function DataTable({ rows, columns, primaryKey, displayKey, selected, onToggle, onToggleAll, sort, onSort, onPreview, onView, onEdit, onCellCommit, density, format, stickyHeader = true, zebra = false, wrap = false }: {
   rows: Array<Record<string, string | number | boolean>>;
   columns: DataColumn[];
   primaryKey: string;
@@ -35,6 +53,8 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
   onPreview: (row: Record<string, string | number | boolean>) => void;
   onView: (row: Record<string, string | number | boolean>) => void;
   onEdit: (row: Record<string, string | number | boolean>) => void;
+  /** Present only where a shell can persist a correction. Absent means read-only. */
+  onCellCommit?: (row: Record<string, string | number | boolean>, column: DataColumn, next: string) => void | Promise<void>;
   density: Density;
   format: Formatters;
   stickyHeader?: boolean;
@@ -71,7 +91,21 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
             return (
               <tr key={id} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
                 <td className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><input aria-label={`Select ${id}`} type="checkbox" checked={checked} onChange={() => onToggle(id)} className="size-3.5 accent-[var(--primary)]" /></td>
-                {columns.map((column, index) => <td key={column.key} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{formatValue(column, row[column.key], format, wrap)}</td>)}
+                {columns.map((column, index) => <td key={column.key} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
+                    /* stopPropagation: the cell opens the record preview, and
+                       clicking into an editor must not also open a drawer over
+                       the thing being edited. */
+                    ? <span onClick={(event) => event.stopPropagation()} onDoubleClick={(event) => event.stopPropagation()}>
+                        <InlineEdit
+                          label={column.label}
+                          value={String(row[column.key] ?? "")}
+                          display={formatValue(column, row[column.key], format, wrap)}
+                          inputMode={column.type === "money" || column.type === "number" || column.type === "percent" ? "decimal" : undefined}
+                          validate={(next) => validateCell(column, next)}
+                          onCommit={(next) => onCellCommit(row, column, next)}
+                        />
+                      </span>
+                      : formatValue(column, row[column.key], format, wrap)}</td>)}
                 <td className={cn("sticky right-0 bg-[var(--surface)] px-2 text-right transition group-hover:bg-[var(--surface-2)]", checked && "bg-[var(--primary-soft)]", padding)}>
                   <div className="flex justify-end gap-0.5">
                     <IconButton label={`Preview ${id}`} className="size-7" onClick={() => onPreview(row)}><Eye className="size-3.5" /></IconButton>

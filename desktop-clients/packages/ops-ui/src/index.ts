@@ -5,6 +5,7 @@ export * from "./cn";
 export * from "./dropdown";
 export * from "./empty-state";
 export * from "./form-controls";
+export * from "./inline-edit";
 export * from "./nav-link";
 export * from "./option-filter";
 export * from "./overlay";
