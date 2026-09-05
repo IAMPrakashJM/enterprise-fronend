@@ -251,6 +251,14 @@ export interface DataColumn {
   width?: number;
   sortable?: boolean;
   defaultVisible?: boolean;
+  /**
+   * Whether this value can be corrected in the table.
+   *
+   * Opt-in per column, because most of them should not be: an id is not a typo
+   * to fix in place, and a status usually has a workflow behind it. It is for
+   * the small safe changes a form is too much for.
+   */
+  editable?: boolean;
 }
 
 export interface WorklistConfig {

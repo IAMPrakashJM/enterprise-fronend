@@ -112,7 +112,25 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   }, [config.rows, filters, preferences.globalSearchMode, search, sort]);
 
   const pageSize = preferences.pageSize;
-  const pageRows = filtered.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+  /**
+   * Corrections made in the table, by record id and column.
+   *
+   * Held here rather than written through, because these rows are generated in
+   * the client and there is no server copy to write to yet. What that means for
+   * the framework's §20 conflict model is that it is unexercised, not absent:
+   * InlineEdit surfaces a rejected write and keeps the typed value, and the day
+   * these rows come from an API with a version on them, the rejection has
+   * somewhere to come from.
+   */
+  const [edits, setEdits] = useState<Record<string, Record<string, string>>>({});
+  useEffect(() => { setEdits({}); }, [page.id]);
+
+  const pageRows = filtered
+    .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
+    .map((row) => {
+      const applied = edits[String(row[config.primaryKey])];
+      return applied ? { ...row, ...applied } : row;
+    });
   const visibleColumns = visibleKeys.map((key) => config.columns.find((column) => column.key === key)).filter(Boolean) as DataColumn[];
   const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
@@ -184,7 +202,13 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           <div className="flex items-center gap-2 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><span>View: <b className="text-[var(--text)]">{preferences.resultView === "table" ? "Table" : "Card grid"}</b></span><span className="h-3 w-px bg-[var(--border)]" /><span>Preview: <b className="text-[var(--text)]">{preferences.previewMode.replaceAll("-", " ")}</b></span></div>
         </div>
         {pageRows.length ? preferences.resultView === "table" ? (
-          <DataTable rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onToggleAll={toggleAll} sort={sort} onSort={toggleSort} onPreview={setPreviewRow} onView={view} onEdit={edit} density={preferences.density} format={format} stickyHeader={preferences.stickyTableHeader} zebra={preferences.zebraStripes} wrap={preferences.wrapCellText} />
+          <DataTable
+            onCellCommit={(row, column, next) => {
+              const id = String(row[config.primaryKey]);
+              setEdits((current) => ({ ...current, [id]: { ...current[id], [column.key]: next } }));
+              toast({ type: "success", title: `${column.label} updated`, message: `${id} · ${next}` });
+            }}
+            rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onToggleAll={toggleAll} sort={sort} onSort={toggleSort} onPreview={setPreviewRow} onView={view} onEdit={edit} density={preferences.density} format={format} stickyHeader={preferences.stickyTableHeader} zebra={preferences.zebraStripes} wrap={preferences.wrapCellText} />
         ) : (
           <CardGrid rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onPreview={setPreviewRow} onView={view} onEdit={edit} density={preferences.density} format={format} />
         ) : <EmptyState action={<Button variant="secondary" onClick={reset}>Clear filters</Button>} />}
