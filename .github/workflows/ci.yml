@@ -1,0 +1,75 @@
+name: CI
+
+# Every push and every pull request. The point is that nobody has to remember to
+# run anything: 422 tests, six property checks and thirteen typecheck targets
+# existed for weeks and were all opt-in, which means they held right up until
+# the first person who did not know to run them.
+on:
+  push:
+  pull_request:
+
+# A second push to the same branch cancels the first. Waiting on a run for a
+# commit that has already been replaced tells you nothing.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    defaults:
+      run:
+        working-directory: desktop-clients
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 24, because the packages ship raw TypeScript and Node's type stripping
+      # is what lets the verify scripts import the REAL modules with no build
+      # step. On an older Node they would not parse.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: desktop-clients/package-lock.json
+
+      # ci, not install: it installs exactly the lockfile and fails if
+      # package.json and the lock have drifted, which is a real failure and not
+      # something to paper over on a build machine.
+      - name: Install
+        run: npm ci
+
+      # Before the tests, because it is the fastest check and the one most
+      # likely to be red — vitest transpiles and does not typecheck, so a green
+      # suite says nothing about this.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      # No .env.local on a build machine. Both shells fall back to "/api", which
+      # is right here: this step asks whether it compiles, not who it talks to.
+      - name: Build
+        run: npm run build
+
+      # After the build on purpose. verify:parity reads the EMITTED css to prove
+      # a package's classes survived Tailwind's content scan, and it skips
+      # silently when there is nothing built — which would make it look like it
+      # passed.
+      - name: Property checks
+        run: npm run verify
+
+      # Only when something failed, and only for as long as it takes to read.
+      - name: Upload build logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            desktop-clients/apps/web/.next/build-manifest.json
+            desktop-clients/**/*.log
+          retention-days: 7
+          if-no-files-found: ignore
