@@ -4,7 +4,7 @@ import { NavigationProvider, WindowPortProvider } from "@pepbits/platform-ports"
 import type { NavigationPort, NavigationTarget } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
 import type { SessionUser } from "@pepbits/auth";
-import { targetFromDocument, useDetachedWindows } from "@pepbits/erp-shell";
+import { MdiTaskbar, targetFromDocument, useDetachedWindows, useMdiWorkspace } from "@pepbits/erp-shell";
 import { ERPProvider, EnterpriseShell, GlobalLayers, WorkspaceCanvas, WorkspaceTabs, useERP, useWorkspaceNavigation, skeletonsPreferred } from "@pepbits/erp-shell";
 import { LoginScreen, PageRenderer, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { createWorkspace, parseDocumentKey, WorkspaceProvider } from "@pepbits/workspace-core";
@@ -47,11 +47,17 @@ function Workspace({ nav }: { nav: ReturnType<typeof useWorkspaceNavigation> }) 
   }, [workspace, preferences.openRecordsInTabs]);
 
   const split = nav.splitPanes.length >= 2;
+  /* Off unless the user asked for it, and null when off — the arrangement the
+     shell has always had is what everyone else keeps. */
+  const mdi = useMdiWorkspace(workspace, preferences.floatingWindows);
 
   return (
     <>
       <EnterpriseShell
-        tabs={
+        /* The taskbar replaces the tab strip rather than joining it. Two rows
+           listing the same open documents, one of which cannot minimise them,
+           is a question the user has to answer before every click. */
+        tabs={mdi ? undefined : (
           <WorkspaceTabs
             documents={nav.documents}
             activeDocumentId={nav.activeDocument?.documentId ?? null}
@@ -66,7 +72,7 @@ function Workspace({ nav }: { nav: ReturnType<typeof useWorkspaceNavigation> }) 
             onDetach={windowPort.available ? (documentId) => { const result = nav.detach(documentId); if (result.reason) toast({ type: "warning", title: result.reason }); } : undefined}
             detachedIds={nav.detachedIds}
           />
-        }
+        )}
       >
         <WorkspaceCanvas
           documents={nav.localDocuments}
@@ -77,7 +83,16 @@ function Workspace({ nav }: { nav: ReturnType<typeof useWorkspaceNavigation> }) 
           onSwap={nav.swapSplit}
           onExitSplit={nav.exitSplit}
           renderDocument={(document) => <PageRenderer target={targetFromDocument(document)} />}
+          mdi={mdi ?? undefined}
         />
+        {mdi ? (
+          <MdiTaskbar
+            documents={nav.localDocuments}
+            frames={mdi.frames}
+            activeDocumentId={nav.activeDocument?.documentId ?? null}
+            onSelect={mdi.onSelect}
+          />
+        ) : null}
       </EnterpriseShell>
       {/* Every destructive path in the workspace routes through here. Before
           this, crossing from Finance to HR rebuilt the tab set and threw away

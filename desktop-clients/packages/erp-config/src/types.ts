@@ -84,6 +84,17 @@ export interface UserPreferences {
   openRecordsInTabs: boolean;
   showKeyboardHints: boolean;
 
+  /**
+   * Desktop only, and off unless asked for.
+   *
+   * Arranges open records as floating windows with a taskbar instead of tabs.
+   * The framework document marks the whole idea optional — "only if user
+   * research proves real value" — and AllyVORA's own implementation has zero
+   * live call sites, so this ships as something a user turns on rather than
+   * something everyone is moved to.
+   */
+  floatingWindows: boolean;
+
   /* --- added 2026-09-03 ---------------------------------------------------
      Every key below is optional in storage, not in the type: overridesOf()
      persists only what differs from DEFAULT_PREFERENCES, so an account saved

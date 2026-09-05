@@ -28,6 +28,8 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   rememberFilters: true,
   openRecordsInTabs: true,
   showKeyboardHints: true,
+  /* Off. Tabs stay the default arrangement for everyone who does not ask. */
+  floatingWindows: false,
   openRecordsIn: "new-tab",
   dateFormat: "iso",
   numberLocale: "en-US",
