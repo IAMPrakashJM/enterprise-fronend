@@ -116,7 +116,17 @@ export function Sidebar() {
      sidebar still floats over it and still closes when you click away. */
   const [latched, setLatched] = useState(false);
   const byHover = preferences.sidebarExpandOn === "hover";
-  const expanded = preferences.sidebarPinned || (byHover ? hovered : latched);
+  /* Keyboard focus opens the rail on the same terms hover does, when the
+     preference allows it. Without this the rail is mouse-only: tabbing into it
+     moves the caret through labels that are not rendered, so a keyboard user
+     navigates a menu they cannot read.
+
+     `focusWithin` is tracked separately from `hovered` rather than folded into
+     it, because they end for different reasons -- a pointer leaves, focus moves
+     to a specific element -- and collapsing them makes one clear the other. */
+  const [focusWithin, setFocusWithin] = useState(false);
+  const focusOpens = preferences.sidebarFocusExpand && focusWithin;
+  const expanded = preferences.sidebarPinned || focusOpens || (byHover ? hovered : latched);
   const isRight = preferences.sidebarPlacement === "right";
 
   const railPalette = chromePalette(preferences.sidebarTone);
@@ -165,6 +175,17 @@ export function Sidebar() {
         style={railPalette}
         onMouseEnter={() => byHover && setHovered(true)}
         onMouseLeave={() => byHover && setHovered(false)}
+        /* onFocus/onBlur bubble in React, so these fire for any descendant --
+           which is the whole point: focus anywhere inside the rail counts.
+           relatedTarget is where focus is GOING; if that is still inside the
+           rail the sidebar must stay open, otherwise tabbing between two of its
+           own links would close it under the user. */
+        onFocus={() => preferences.sidebarFocusExpand && setFocusWithin(true)}
+        onBlur={(event) => {
+          if (!preferences.sidebarFocusExpand) return;
+          const next = event.relatedTarget as Node | null;
+          if (!next || !event.currentTarget.contains(next)) setFocusWithin(false);
+        }}
         className={cn(
           "no-print absolute inset-y-0 z-50 flex flex-col bg-[var(--surface)] transition-[width] duration-200",
           isRight ? "right-0 border-l border-[var(--border)]" : "left-0 border-r border-[var(--border)]",

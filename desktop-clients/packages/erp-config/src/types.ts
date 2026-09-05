@@ -103,6 +103,14 @@ export interface UserPreferences {
   /** "always expanded" is deliberately absent -- sidebarPinned already is it,
       and two preferences for one state is how they drift apart. */
   sidebarExpandOn: SidebarExpandOn;
+  /** Whether keyboard focus inside the rail expands it, the way hover does.
+
+      A separate preference rather than part of sidebarExpandOn, because it is
+      not a third way of choosing between hover and click -- it applies to
+      BOTH. Someone who has set the rail to click still tabs through it, and
+      folding this into that enum would have forced them to give up the click
+      behaviour to get keyboard access. */
+  sidebarFocusExpand: boolean;
   sidebarTone: SidebarTone;
   sidebarTheme: SidebarTheme;
   headerTone: HeaderTone;

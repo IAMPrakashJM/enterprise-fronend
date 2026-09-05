@@ -35,6 +35,11 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   decimalPlaces: 0,
   columnLayoutScope: "browser",
   sidebarExpandOn: "hover",
+  /* ON by default. It is an accessibility affordance, and defaulting one of
+     those to off means the people who need it are the ones who have to go and
+     find a setting. It costs a mouse user nothing: focus only lands in the rail
+     by keyboard. */
+  sidebarFocusExpand: true,
   sidebarTone: "contrast",
   sidebarTheme: "match",
   headerTone: "surface",
