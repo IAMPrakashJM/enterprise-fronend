@@ -73,4 +73,13 @@ export interface WorkspaceLimits {
   maxActiveDocuments: number;
   maxSplitPanes: number;
   maxDetachedWindows: number;
+  /**
+   * How many off-screen documents stay mounted.
+   *
+   * The nearby ones stay warm so switching back is instant and nothing typed
+   * into them is lost; everything past that is suspended and released. Unset
+   * means no limit, so a workspace built before this existed does not silently
+   * start dropping screens.
+   */
+  maxWarmDocuments: number;
 }

@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 import type { Workspace } from "./document-manager.ts";
-import type { WorkspaceDocument } from "./types.ts";
+import type { WorkspaceDocument, WorkspaceDocumentState } from "./types.ts";
 
 const WorkspaceContext = createContext<Workspace | null>(null);
 
@@ -92,6 +92,49 @@ export function useActiveDocumentIn(workspace: Workspace): WorkspaceDocument | n
     workspace.getActiveDocument,
   );
 }
+
+const DocumentContext = createContext<string | null>(null);
+
+/**
+ * Names the document a subtree belongs to.
+ *
+ * The shell mounts several documents at once and shows one; without this a
+ * screen has no way to know whether it is the one being looked at, and every
+ * mounted copy behaves as though it were.
+ */
+export function DocumentProvider({ documentId, children }: { documentId: string; children: React.ReactNode }) {
+  return <DocumentContext.Provider value={documentId}>{children}</DocumentContext.Provider>;
+}
+
+/**
+ * Whether this screen is on screen, warm in the background, or suspended.
+ *
+ * ACTIVE where there is no workspace or no declared document, because the same
+ * screens render in the web shell and a screen that decided it was BACKGROUND
+ * there would switch itself off on every page.
+ */
+export function useDocumentState(): WorkspaceDocumentState {
+  const workspace = useOptionalWorkspace();
+  const documentId = useContext(DocumentContext);
+  const documents = useSyncExternalStore(
+    workspace?.subscribeToChanges ?? noSubscribe,
+    workspace?.getOpenDocuments ?? noDocuments,
+    workspace?.getOpenDocuments ?? noDocuments,
+  );
+  if (!workspace || !documentId) return "ACTIVE";
+  return documents.find((doc) => doc.documentId === documentId)?.state ?? "ACTIVE";
+}
+
+/** True while this screen is the one being looked at. */
+export function useIsDocumentVisible(): boolean {
+  return useDocumentState() === "ACTIVE";
+}
+
+/* Stable identities, or useSyncExternalStore re-subscribes and re-reads on
+   every render and never settles. */
+const EMPTY: WorkspaceDocument[] = [];
+const noSubscribe = () => () => undefined;
+const noDocuments = () => EMPTY;
 
 /** The split arrangement, kept in step with the store. */
 export function useSplitIn(workspace: Workspace): string[] {

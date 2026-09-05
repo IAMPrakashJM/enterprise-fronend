@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import { createWorkspace } from "./document-manager.ts";
-import { WorkspaceProvider, useActiveDocument, useOptionalWorkspace, useReportDirty, useWorkspace, useWorkspaceDocuments } from "./use-workspace.tsx";
+import { DocumentProvider, WorkspaceProvider, useActiveDocument, useDocumentState, useOptionalWorkspace, useReportDirty, useWorkspace, useWorkspaceDocuments } from "./use-workspace.tsx";
 
 const session = { tenantId: "T1", userId: "dr-x" };
 const policy = { platform: { modes: ["TAB"] as const } };
@@ -162,5 +162,46 @@ describe("useReportDirty", () => {
     const Probe = () => { seen = useOptionalWorkspace(); return null; };
     render(<Probe />);
     expect(seen).toBeNull();
+  });
+});
+
+describe("useDocumentState", () => {
+  const Probe = () => <p>state: {useDocumentState()}</p>;
+
+  test("tells a screen whether it is the one on screen", () => {
+    const workspace = newWorkspace();
+    const a = workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "1", title: "A" }).document!;
+    const b = workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "2", title: "B" }).document!;
+    render(
+      <WorkspaceProvider workspace={workspace}>
+        <DocumentProvider documentId={a.documentId}><Probe /></DocumentProvider>
+        <DocumentProvider documentId={b.documentId}><Probe /></DocumentProvider>
+      </WorkspaceProvider>,
+    );
+    expect(screen.getByText("state: BACKGROUND")).toBeVisible();
+    expect(screen.getByText("state: ACTIVE")).toBeVisible();
+  });
+
+  test("and follows the workspace when focus moves", () => {
+    const workspace = newWorkspace();
+    const a = workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "1", title: "A" }).document!;
+    workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "2", title: "B" });
+    render(<WorkspaceProvider workspace={workspace}><DocumentProvider documentId={a.documentId}><Probe /></DocumentProvider></WorkspaceProvider>);
+    expect(screen.getByText("state: BACKGROUND")).toBeVisible();
+    React.act(() => { workspace.focusDocument(a.documentId); });
+    expect(screen.getByText("state: ACTIVE")).toBeVisible();
+  });
+
+  /* The same screens render in the web shell, which has no workspace. A screen
+     that decided it was BACKGROUND there would switch itself off on every page. */
+  test("says ACTIVE where there is no workspace at all", () => {
+    render(<Probe />);
+    expect(screen.getByText("state: ACTIVE")).toBeVisible();
+  });
+
+  test("and where a document has not been declared", () => {
+    const workspace = newWorkspace();
+    render(<WorkspaceProvider workspace={workspace}><Probe /></WorkspaceProvider>);
+    expect(screen.getByText("state: ACTIVE")).toBeVisible();
   });
 });

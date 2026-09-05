@@ -25,6 +25,8 @@ export interface WorkspaceNavigation {
 
   /** The panes, left to right. Empty when a single document is on screen. */
   splitPanes: WorkspaceDocument[];
+  /** The same, as ids. A stable array, so passing it as a prop does not re-render. */
+  splitIds: string[];
   /** Put the focused document beside the one used before it. */
   splitCurrent(side?: SplitSide): OpenResult;
   /** Bring a document that is already open into the split. */
@@ -173,6 +175,7 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
     workspace,
     port,
     splitPanes,
+    splitIds,
     splitCurrent: (side) => workspace.splitWithPrevious(side),
     splitWith: (documentId, side) => workspace.moveToSplit(documentId, side),
     swapSplit: () => { workspace.swapSplit(); },

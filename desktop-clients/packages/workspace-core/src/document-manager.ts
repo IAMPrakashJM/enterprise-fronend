@@ -168,6 +168,12 @@ export function createWorkspace(options: {
 
   const find = (documentId: string) => documents.find((doc) => doc.documentId === documentId) ?? null;
 
+  /* Position in `recent`, with never-focused documents last. */
+  const rank = (documentId: string) => {
+    const at = recent.indexOf(documentId);
+    return at < 0 ? Number.MAX_SAFE_INTEGER : at;
+  };
+
   /* The mode a document falls back to when it leaves the split. */
   const singleMode = (): WorkspacePresentation =>
     resolved.modes.find((mode) => mode !== "SPLIT") ?? resolved.modes[0] ?? "SINGLE";
@@ -180,16 +186,37 @@ export function createWorkspace(options: {
    * not need to change are returned unchanged, so an unrelated tab keeps its
    * identity and does not re-render.
    */
-  const reconcile = (list: WorkspaceDocument[], focusedId: string | null, splitIds: string[], touched: Set<string>, at: string): WorkspaceDocument[] =>
-    list.map((doc) => {
+  const reconcile = (list: WorkspaceDocument[], focusedId: string | null, splitIds: string[], touched: Set<string>, at: string): WorkspaceDocument[] => {
+    const onScreen = new Set<string>([...(focusedId ? [focusedId] : []), ...splitIds]);
+
+    /* Which off-screen documents stay mounted, ordered by when they were last
+       used so that switching away and straight back is always instant.
+
+       Dirty documents are exempt and do not spend a slot. Suspending releases
+       what the screen was holding, and what a screen holds is the half-typed
+       form nobody saved -- a cap on warm documents must never be the reason
+       someone's work disappears. */
+    const budget = Math.max(0, resolved.limits.maxWarmDocuments);
+    const warm = new Set(
+      list
+        .filter((doc) => !onScreen.has(doc.documentId) && !doc.dirty)
+        .sort((a, b) => rank(a.documentId) - rank(b.documentId))
+        .slice(0, budget)
+        .map((doc) => doc.documentId),
+    );
+
+    return list.map((doc) => {
       const inSplit = splitIds.includes(doc.documentId);
-      const onScreen = inSplit || doc.documentId === focusedId;
+      const visible = onScreen.has(doc.documentId);
       const presentation = inSplit ? "SPLIT" as const : doc.presentation === "SPLIT" ? singleMode() : doc.presentation;
-      const state = onScreen ? "ACTIVE" as const : doc.state === "ACTIVE" ? "BACKGROUND" as const : doc.state;
+      const state = visible
+        ? "ACTIVE" as const
+        : doc.dirty || warm.has(doc.documentId) ? "BACKGROUND" as const : "SUSPENDED" as const;
       const lastActivatedAt = touched.has(doc.documentId) ? at : doc.lastActivatedAt;
       if (presentation === doc.presentation && state === doc.state && lastActivatedAt === doc.lastActivatedAt) return doc;
-        return { ...doc, presentation, state, lastActivatedAt };
+      return { ...doc, presentation, state, lastActivatedAt };
     });
+  };
 
   /**
    * Everything on screen is ACTIVE and nothing else is: one document when
@@ -243,7 +270,11 @@ export function createWorkspace(options: {
   const setDirty = (documentId: string, dirty: boolean) => {
     const doc = find(documentId);
     if (!doc || doc.dirty === dirty) return;
-    commit(documents.map((each) => (each.documentId === documentId ? { ...each, dirty } : each)));
+    /* Through reconcile, not a plain map: saving a document makes it eligible
+       to cool, and marking one dirty exempts it. The dirty flag is an input to
+       the lifecycle, not only a badge on a tab. */
+    const next = documents.map((each) => (each.documentId === documentId ? { ...each, dirty } : each));
+    commit(reconcile(next, activeId, split, new Set(), now()));
   };
 
   const closeMany = (candidates: WorkspaceDocument[], discardChanges: boolean, includeUnclosable = false): CloseResult => {
@@ -365,6 +396,10 @@ export function createWorkspace(options: {
     focusDocument(documentId) {
       const document = find(documentId);
       if (!document) return false;
+      /* Coming back to a suspended tab is a resume, not a focus: it holds no
+         data, and its authorisation is however old the tab is. Callers that
+         need to check that authorisation call resumeDocument directly. */
+      if (document.state === "SUSPENDED") return this.resumeDocument(documentId).ok;
       /* Focusing what is already focused is not an access event. */
       if (document.documentId === activeId) return true;
       activate(documentId);

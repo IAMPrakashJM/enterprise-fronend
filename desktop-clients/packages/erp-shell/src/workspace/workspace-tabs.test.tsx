@@ -107,8 +107,10 @@ describe("WorkspaceTabs", () => {
     expect(onOpenCommand).toHaveBeenCalledOnce();
   });
 
-  test("it is a tablist", () => {
+  /* A page can have tablists of its own — a billing record has six — so the
+     one holding the open documents has to be distinguishable from them. */
+  test("it is a tablist with a name of its own", () => {
     render_();
-    expect(screen.getByRole("tablist")).toBeVisible();
+    expect(screen.getByRole("tablist", { name: "Open documents" })).toBeVisible();
   });
 });

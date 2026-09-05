@@ -47,6 +47,10 @@ export const DEFAULT_LIMITS: WorkspaceLimits = {
   maxActiveDocuments: 2,
   maxSplitPanes: 2,
   maxDetachedWindows: 4,
+  /* No cap by default. Suspending is a decision a shell makes about its own
+     device and screens, and inventing one here would change the behaviour of
+     every workspace that never asked for it. */
+  maxWarmDocuments: Number.POSITIVE_INFINITY,
 };
 
 export function resolveWorkspacePolicy(rules: Partial<Record<WorkspacePolicyLevel, WorkspacePolicyRule>>): ResolvedWorkspacePolicy {
