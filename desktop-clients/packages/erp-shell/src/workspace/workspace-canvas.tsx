@@ -3,7 +3,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftRight, Maximize2, X } from "lucide-react";
 import { IconButton, cn } from "@pepbits/ops-ui";
+import { Minus } from "lucide-react";
 import { DocumentProvider, type WorkspaceDocument } from "@pepbits/workspace-core";
+import type { MdiFrame } from "./mdi-frames.ts";
 
 const MIN_PERCENT = 20;
 const MAX_PERCENT = 80;
@@ -25,7 +27,7 @@ const STEP = 2;
  * state this exists to keep. So the split is CSS order on the same children,
  * not a different parent.
  */
-export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocusPane, onClosePane, onSwap, onExitSplit, renderDocument }: {
+export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocusPane, onClosePane, onSwap, onExitSplit, renderDocument, mdi }: {
   documents: WorkspaceDocument[];
   splitIds: string[];
   activeDocumentId: string | null;
@@ -34,6 +36,22 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
   onSwap: () => void;
   onExitSplit: () => void;
   renderDocument: (document: WorkspaceDocument) => React.ReactNode;
+  /**
+   * Phase 6. Present only when the workspace is arranged as floating frames.
+   *
+   * The store still owns which documents exist, which is focused and which are
+   * dirty — §29 is explicit that MDI consumes the same core rather than
+   * introducing a second record-management system. All that arrives here is a
+   * rectangle per document.
+   */
+  mdi?: {
+    frames: MdiFrame[];
+    onMove: (documentId: string, x: number, y: number) => void;
+    onResize: (documentId: string, width: number, height: number) => void;
+    onRaise: (documentId: string) => void;
+    onMinimise: (documentId: string) => void;
+    setBounds: (bounds: { width: number; height: number }) => void;
+  };
 }) {
   const [percent, setPercent] = useState(50);
   const rowRef = useRef<HTMLDivElement>(null);
@@ -57,18 +75,85 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
     return () => { window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); };
   }, []);
 
+  /**
+   * Tell the arrangement how much room it actually has.
+   *
+   * Without this the frames are laid out against a guessed size, and a window
+   * cascaded for a taller shell hangs below the taskbar with its own title bar
+   * unreachable underneath it. A ResizeObserver rather than a window resize
+   * listener, because the space also changes when the sidebar pins or the split
+   * toolbar appears, and neither of those resizes the window.
+   */
+  const setBounds = mdi?.setBounds;
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!setBounds || !row) return;
+    const report = () => setBounds({ width: row.clientWidth, height: row.clientHeight });
+    report();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(report);
+    observer.observe(row);
+    return () => observer.disconnect();
+  }, [setBounds]);
+
+  /* Dragging a frame.
+     
+     Bound to the window once the pointer is down, for the same reason the split
+     divider is: the pointer is allowed to move faster than the 32px title bar,
+     and a listener on the bar alone drops the drag the moment it outruns it.
+     The offset is captured at press time so the window does not jump its own
+     corner under the cursor. */
+  const dragFrame = useRef<{ documentId: string; dx: number; dy: number } | null>(null);
+
+  const startDrag = useCallback((event: React.PointerEvent, documentId: string) => {
+    const frame = mdi?.frames.find((each) => each.documentId === documentId);
+    const box = rowRef.current?.getBoundingClientRect();
+    if (!frame || !box) return;
+    dragFrame.current = { documentId, dx: event.clientX - box.left - frame.x, dy: event.clientY - box.top - frame.y };
+    event.preventDefault();
+  }, [mdi]);
+
+  useEffect(() => {
+    if (!mdi) return;
+    const move = (event: PointerEvent) => {
+      const drag = dragFrame.current;
+      const box = rowRef.current?.getBoundingClientRect();
+      if (!drag || !box) return;
+      mdi.onMove(drag.documentId, Math.round(event.clientX - box.left - drag.dx), Math.round(event.clientY - box.top - drag.dy));
+    };
+    const up = () => { dragFrame.current = null; };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    return () => { window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); };
+  }, [mdi]);
+
   const onDividerKey = useCallback((event: React.KeyboardEvent) => {
     if (event.key === "ArrowLeft") { event.preventDefault(); setPercent((p) => clamp(p - STEP)); }
     else if (event.key === "ArrowRight") { event.preventDefault(); setPercent((p) => clamp(p + STEP)); }
     else if (event.key === "Home") { event.preventDefault(); setPercent(50); }
   }, []);
 
-  const split = splitIds.length >= 2;
+  const floating = Boolean(mdi);
+  const split = !floating && splitIds.length >= 2;
   const mounted = documents.filter((doc) => doc.state !== "SUSPENDED");
-  const visible = split ? splitIds : activeDocumentId ? [activeDocumentId] : [];
+  /* In MDI every document is on screen at once, so "visible" is every frame
+     that is not minimised rather than the one being looked at. */
+  const visible = floating
+    ? mdi!.frames.filter((frame) => !frame.minimised).map((frame) => frame.documentId)
+    : split ? splitIds : activeDocumentId ? [activeDocumentId] : [];
+  const frameOf = (documentId: string) => mdi?.frames.find((frame) => frame.documentId === documentId);
+  /* Chrome — a title bar with the close button — belongs to any arrangement
+     where more than one document is on screen. In a single view the page header
+     and the tab strip already say what this is. */
+  const chrome = split || floating;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    /* h-full only when floating. The shell's <main> is a block, not a flex
+       container, so flex-1 here resolves to nothing and the height comes from
+       the content — which in MDI is entirely absolutely positioned, leaving the
+       row zero pixels tall. Every frame then opened at the minimum size, in the
+       same corner, because cascade had no room to step into. */
+    <div className={cn("flex min-h-0 flex-1 flex-col", floating && "h-full")}>
       {split ? (
         /* Once for the arrangement, not once per pane: swapping and collapsing
            are operations on the split, and offering them twice invites the
@@ -80,12 +165,16 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
         </div>
       ) : null}
 
-      <div ref={rowRef} className="flex min-h-0 flex-1">
+      <div ref={rowRef} className={cn("min-h-0 flex-1", floating ? "relative overflow-hidden bg-[var(--surface-2)]" : "flex")}>
         {mounted.map((document) => {
           const at = visible.indexOf(document.documentId);
           const shown = at >= 0;
           const focused = document.documentId === activeDocumentId;
-          const width = !shown ? undefined : !split ? "100%" : at === 0 ? `${percent}%` : `${100 - percent}%`;
+          const frame = frameOf(document.documentId);
+          const width = !shown ? undefined : floating ? `${frame?.width ?? 0}px` : !split ? "100%" : at === 0 ? `${percent}%` : `${100 - percent}%`;
+          const placement: React.CSSProperties = floating && frame
+            ? { position: "absolute", left: `${frame.x}px`, top: `${frame.y}px`, height: `${frame.height}px`, zIndex: frame.z }
+            : { order: shown ? at * 2 : 99 };
           return (
             <div
               key={document.documentId}
@@ -94,8 +183,9 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
                  focus should not reach a document nobody is looking at. */
               inert={!shown}
               aria-hidden={!shown || undefined}
-              style={{ display: shown ? "flex" : "none", order: shown ? at * 2 : 99, width }}
-              className="min-w-0 flex-col overflow-hidden bg-[var(--surface)]"
+              style={{ display: shown ? "flex" : "none", width, ...placement }}
+              onMouseDownCapture={floating ? () => mdi!.onRaise(document.documentId) : undefined}
+              className={cn("min-w-0 flex-col overflow-hidden bg-[var(--surface)]", floating && "rounded-lg border border-[var(--border)] shadow-[var(--shadow-lg)]")}
             >
               {/* The SAME tree whether split or not — only attributes change.
                   Wrapping the document in a <section> just for the split moved
@@ -104,21 +194,27 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
                   compare. The header renders as null rather than being absent,
                   so the content keeps its position among its siblings. */}
               <section
-                role={split ? "region" : undefined}
-                aria-label={split ? (document.dirty ? `${document.title} — unsaved changes` : document.title) : undefined}
-                aria-current={split && focused ? "true" : undefined}
+                role={chrome ? "region" : undefined}
+                aria-label={chrome ? (document.dirty ? `${document.title} — unsaved changes` : document.title) : undefined}
+                aria-current={chrome && focused ? "true" : undefined}
                 onFocusCapture={() => onFocusPane(document.documentId)}
                 onMouseDown={() => onFocusPane(document.documentId)}
                 className="flex min-h-0 flex-1 flex-col"
               >
-                {split ? (
-                  <header className={cn("flex h-8 shrink-0 items-center gap-2 border-b px-3 transition", focused ? "border-[var(--primary)] bg-[var(--primary-soft)]" : "border-[var(--border)] bg-[var(--surface-2)]")}>
+                {chrome ? (
+                  <header
+                    /* The title bar is the drag handle, which is what every
+                       window manager has taught people to expect. */
+                    onPointerDown={floating ? (event) => startDrag(event, document.documentId) : undefined}
+                    className={cn("flex h-8 shrink-0 items-center gap-2 border-b px-3 transition", floating && "cursor-move select-none", focused ? "border-[var(--primary)] bg-[var(--primary-soft)]" : "border-[var(--border)] bg-[var(--surface-2)]")}
+                  >
                     {document.dirty ? <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-[var(--warning)]" /> : null}
                     <span className={cn("min-w-0 flex-1 truncate text-[length:calc(10px*var(--fs-scale))] font-bold", focused ? "text-[var(--primary-strong)]" : "text-[var(--text-muted)]")}>{document.title}</span>
+                    {floating ? <IconButton label={`Minimise ${document.title}`} className="size-6" onClick={() => mdi!.onMinimise(document.documentId)}><Minus className="size-3" /></IconButton> : null}
                     {document.closable ? <IconButton label={`Close ${document.title}`} className="size-6" onClick={() => onClosePane(document.documentId)}><X className="size-3" /></IconButton> : null}
                   </header>
                 ) : null}
-                <div className={cn("min-h-0 flex-1", split ? "nex-scrollbar overflow-auto" : "flex flex-col")}>
+                <div className={cn("min-h-0 flex-1", chrome ? "nex-scrollbar overflow-auto" : "flex flex-col")}>
                   <DocumentProvider documentId={document.documentId}>{renderDocument(document)}</DocumentProvider>
                 </div>
               </section>

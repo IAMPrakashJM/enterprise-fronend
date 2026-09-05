@@ -344,11 +344,16 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="behaviour" title="Start-up and records" subtitle="Where you land, and how records open." icon={<MonitorCog className="size-4" />}
-            keys={["openRecordsInTabs", "landingPage"]} keywords="landing home start page module dashboard last visited records tabs workspace">
+            keys={["openRecordsInTabs", "landingPage", "floatingWindows"]} keywords="landing home start page module dashboard last visited records tabs workspace floating windows mdi taskbar">
             <div className="grid gap-2 md:grid-cols-2">
               {showTabPreferences
                 ? <Toggle label="Open records in tabs" description="Each record gets its own workspace tab. Off reuses the matching tab." checked={preferences.openRecordsInTabs} onChange={(value) => set("openRecordsInTabs", value)} />
                 : <Select label="Start on" value={preferences.landingPage} onChange={(event) => set("landingPage", event.target.value as LandingPage)} options={[{ label: "The current module's dashboard", value: "module-dashboard" }, { label: "The page I last had open", value: "last-visited" }]} />}
+                {/* Desktop only, and off by default. The framework marks the
+                    whole idea optional, so it is offered rather than imposed. */}
+                {showTabPreferences
+                  ? <Toggle label="Floating windows" description="Arrange open records as movable windows with a taskbar, instead of tabs." checked={preferences.floatingWindows} onChange={(value) => set("floatingWindows", value)} />
+                  : null}
             </div>
           </PreferenceSection>
 

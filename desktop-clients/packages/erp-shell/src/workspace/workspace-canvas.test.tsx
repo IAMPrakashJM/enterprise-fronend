@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import type { WorkspaceDocument } from "@pepbits/workspace-core";
 import { WorkspaceCanvas } from "./workspace-canvas.tsx";
+import type { MdiFrame } from "./mdi-frames.ts";
 
 const doc = (id: string, title: string, over: Partial<WorkspaceDocument> = {}): WorkspaceDocument => ({
   documentId: id, documentKey: `T1:PAGE:${id}`, module: "finance", documentType: "PAGE", entityId: id,
@@ -188,6 +189,118 @@ describe("WorkspaceCanvas — split", () => {
     const { rerender } = render(<WorkspaceCanvas {...props} splitIds={[]} activeDocumentId="w1" />);
     await userEvent.type(screen.getByLabelText("draft w1"), "kept");
     rerender(<WorkspaceCanvas {...props} splitIds={["w1", "w2"]} activeDocumentId="w2" />);
+    expect(screen.getByLabelText("draft w1")).toHaveValue("kept");
+  });
+});
+
+/* Phase 6. Floating frames inside the shell, over the same mounted children —
+   the store still owns which documents exist; a frame is a rectangle with an id. */
+describe("WorkspaceCanvas — MDI", () => {
+  const frame = (documentId: string, over: Partial<MdiFrame> = {}): MdiFrame =>
+    ({ documentId, documentType: "PAGE", x: 20, y: 20, width: 600, height: 400, minimised: false, z: 1, ...over });
+
+  const mdi = (over: Partial<Parameters<typeof WorkspaceCanvas>[0]["mdi"]> = {}, canvas: Partial<Parameters<typeof WorkspaceCanvas>[0]> = {}) =>
+    render_({
+      mdi: {
+        frames: [frame("w1"), frame("w2", { x: 60, y: 60, z: 2 })],
+        onMove: noop, onResize: noop, onRaise: noop, onMinimise: noop, setBounds: noop,
+        ...over,
+      },
+      ...canvas,
+    });
+
+  test("every open document gets a frame of its own", () => {
+    mdi();
+    expect(mounted("Invoice INV-2201")).toBeVisible();
+    expect(mounted("Purchase Order PO-88")).toBeVisible();
+    expect(screen.getAllByRole("region")).toHaveLength(2);
+  });
+
+  /* A frame is positioned by style, so this is what the user actually sees. */
+  test("a frame sits where its geometry says", () => {
+    mdi();
+    const panel = screen.getByRole("region", { name: /Purchase Order/ }).closest("div[style]") as HTMLElement;
+    expect(panel.style.left).toBe("60px");
+    expect(panel.style.top).toBe("60px");
+  });
+
+  test("the frames stack in z order", () => {
+    mdi();
+    const first = screen.getByRole("region", { name: /Invoice/ }).closest("div[style]") as HTMLElement;
+    const second = screen.getByRole("region", { name: /Purchase Order/ }).closest("div[style]") as HTMLElement;
+    expect(Number(second.style.zIndex)).toBeGreaterThan(Number(first.style.zIndex));
+  });
+
+  test("pressing on a frame raises it", async () => {
+    const onRaise = vi.fn();
+    mdi({ onRaise });
+    await userEvent.click(screen.getByText("body of Invoice INV-2201"));
+    expect(onRaise).toHaveBeenCalledWith("w1");
+  });
+
+  test("each frame minimises itself", async () => {
+    const onMinimise = vi.fn();
+    mdi({ onMinimise });
+    await userEvent.click(screen.getByRole("button", { name: /Minimise Invoice INV-2201/i }));
+    expect(onMinimise).toHaveBeenCalledWith("w1");
+  });
+
+  /* Minimised means out of sight, not unmounted — the whole Phase 4 point.
+     Rebuilding the screen on restore would lose the filters it was minimised
+     with. */
+  test("a minimised frame stays mounted, hidden", () => {
+    mdi({ frames: [frame("w1", { minimised: true }), frame("w2")] });
+    const hidden = mounted("Invoice INV-2201");
+    expect(hidden).not.toBeNull();
+    expect(hidden).not.toBeVisible();
+    expect(mounted("Purchase Order PO-88")).toBeVisible();
+  });
+
+  test("each frame closes itself", async () => {
+    const onClosePane = vi.fn();
+    mdi({}, { onClosePane });
+    await userEvent.click(screen.getByRole("button", { name: /Close Invoice INV-2201/ }));
+    expect(onClosePane).toHaveBeenCalledWith("w1");
+  });
+
+  test("an unsaved frame says so in its name", () => {
+    mdi({}, { documents: [{ ...a, dirty: true }, b, cold] });
+    expect(screen.getByRole("region", { name: /Invoice INV-2201/ })).toHaveAccessibleName(/unsaved/i);
+  });
+
+  test("a suspended document has no frame at all", () => {
+    mdi();
+    expect(mounted("Budget 2026")).toBeNull();
+  });
+
+  test("there is no split divider in MDI", () => {
+    mdi();
+    expect(screen.queryByRole("separator")).toBeNull();
+  });
+
+  /* The layout is CSS over the same children, so moving between arrangements
+     must not rebuild the screens — the same rule the split had to obey. */
+  /* setBounds existed and nothing called it, so frames were laid out against a
+     guessed size — a window cascaded for a taller shell hung below the taskbar
+     with its own title bar unreachable underneath it. */
+  test("it tells the arrangement how much room there is", () => {
+    const setBounds = vi.fn();
+    mdi({ setBounds });
+    expect(setBounds).toHaveBeenCalled();
+    expect(setBounds.mock.calls[0][0]).toHaveProperty("width");
+    expect(setBounds.mock.calls[0][0]).toHaveProperty("height");
+  });
+
+  test("switching from tabs to MDI keeps what was typed", async () => {
+    function Editor({ id }: { id: string }) {
+      const [value, setValue] = React.useState("");
+      return <input aria-label={`draft ${id}`} value={value} onChange={(e) => setValue(e.target.value)} />;
+    }
+    const base = { documents: [a, b], splitIds: [], onFocusPane: noop, onClosePane: noop, onSwap: noop, onExitSplit: noop,
+      renderDocument: (d: WorkspaceDocument) => <Editor id={d.documentId} /> };
+    const { rerender } = render(<WorkspaceCanvas {...base} activeDocumentId="w1" />);
+    await userEvent.type(screen.getByLabelText("draft w1"), "kept");
+    rerender(<WorkspaceCanvas {...base} activeDocumentId="w1" mdi={{ frames: [frame("w1"), frame("w2")], onMove: noop, onResize: noop, onRaise: noop, onMinimise: noop, setBounds: noop }} />);
     expect(screen.getByLabelText("draft w1")).toHaveValue("kept");
   });
 });
