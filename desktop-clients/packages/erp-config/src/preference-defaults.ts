@@ -40,6 +40,8 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
      find a setting. It costs a mouse user nothing: focus only lands in the rail
      by keyboard. */
   sidebarFocusExpand: true,
+  keyboardShortcuts: true,
+  loadingSkeletons: true,
   sidebarTone: "contrast",
   sidebarTheme: "match",
   headerTone: "surface",

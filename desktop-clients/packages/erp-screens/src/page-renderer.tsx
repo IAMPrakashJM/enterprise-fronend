@@ -3,6 +3,7 @@
 import React from "react";
 import type { NavigationTarget } from "@pepbits/platform-ports";
 import { PAGE_REGISTRY } from "@pepbits/erp-config";
+import { DashboardSkeleton, FormSkeleton, TableSkeleton } from "@pepbits/ops-ui";
 import { ModuleDashboard } from "./dashboard/module-dashboard";
 import { WorklistPage } from "./worklist/worklist-page";
 import { DynamicRecordForm } from "./forms/dynamic-record-form";
@@ -18,6 +19,30 @@ import { ConsultationPage } from "./consultation";
 /* The switch body is unchanged from EnterpriseApp's PageRenderer. What changed is
    where mode and recordId come from: an explicit target, supplied by the route on
    web and by the active tab on desktop, rather than a tab read from context. */
+/**
+ * The loading placeholder for a page, chosen by its kind.
+ *
+ * Exported for the shell's own loading state rather than used inside
+ * PageRenderer, and the distinction is worth recording because two obvious
+ * wirings were tried and neither fires:
+ *
+ *   `loading.tsx` at the route segment never renders — these pages do no async
+ *   server work, so the segment never suspends and Next simply holds the
+ *   previous screen until the RSC payload arrives.
+ *
+ *   A React transition around router.push reports nothing, because push is
+ *   fire-and-forget: isPending flips true and back inside one tick.
+ *
+ * The honest conclusion is that per-navigation there is no wait to fill here —
+ * Next holds the old page, which is arguably better than a skeleton anyway. The
+ * wait that IS real is the shell's first load, and that is where this is used.
+ */
+export function SkeletonFor({ kind }: { kind: string }) {
+  if (kind === "dashboard") return <DashboardSkeleton />;
+  if (kind === "form" || kind === "billing" || kind === "consultation") return <FormSkeleton />;
+  return <TableSkeleton />;
+}
+
 export function PageRenderer({ target, showTabPreferences = true }: { target: NavigationTarget; showTabPreferences?: boolean }) {
   const page = PAGE_REGISTRY[target.pageId];
   if (!page) return <div className="p-8 text-center text-sm text-[var(--text-muted)]">Page configuration was not found.</div>;

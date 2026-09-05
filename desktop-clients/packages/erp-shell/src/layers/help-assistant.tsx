@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronLeft, ChevronRight, CircleHelp, Keyboard, Pause, Play, Route, X } from "lucide-react";
 import { Button, IconButton, cn } from "@pepbits/ops-ui";
-import { HOTKEYS, PAGE_REGISTRY, TOURS } from "@pepbits/erp-config";
+import { PAGE_REGISTRY, SHORTCUTS, SHORTCUT_GROUPS, TOURS, displayFor } from "@pepbits/erp-config";
 import type { TourStep } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "../erp-context";
@@ -114,6 +114,9 @@ export function HelpAssistant() {
     { id: "keys" as Tab, label: "Shortcuts", icon: <Keyboard className="size-3.5" /> },
   ], []);
 
+  /* ⌘ is a Mac key; showing it to a Windows user names a key they do not have. */
+  const apple = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+
   if (!preferences.helperEnabled) return null;
 
   return (
@@ -181,12 +184,32 @@ export function HelpAssistant() {
 
           {tab === "keys" ? (
             <div className="nex-scrollbar flex flex-col overflow-auto px-4 pb-3.5 pt-2">
-              {HOTKEYS.map((h) => (
-                <div key={h.keys} className="flex items-center justify-between border-b border-[var(--border)] py-2 text-[length:calc(10.5px*var(--fs-scale))]">
-                  <span className="font-semibold">{h.what}</span>
-                  <kbd className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[length:calc(9.5px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{h.keys}</kbd>
+                            {!preferences.keyboardShortcuts ? (
+                <div className="px-1 py-3 text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">
+                  Keyboard shortcuts are switched off in your preferences. The list below is what they would be.
                 </div>
-              ))}
+              ) : null}
+              {/* Rendered FROM the registry. The list used to be written out
+                  again here, which is the copy that goes stale: a shortcut that
+                  moves keeps working and the help quietly starts lying. */}
+              {SHORTCUT_GROUPS.map((group) => {
+                const items = SHORTCUTS.filter((s) => s.group === group);
+                if (!items.length) return null;
+                return (
+                  <div key={group} className="mb-1">
+                    <div className="pb-1 pt-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.1em] text-[var(--text-subtle)]">{group}</div>
+                    {items.map((item) => (
+                      <div key={item.id} className={cn("flex items-center justify-between gap-3 border-b border-[var(--border)] py-2 text-[length:calc(10.5px*var(--fs-scale))]",
+                        !preferences.keyboardShortcuts && "opacity-45")}>
+                        <span className="font-semibold">{item.label}</span>
+                        <kbd className="shrink-0 rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[length:calc(9.5px*var(--fs-scale))]">
+                          {displayFor(item, apple)}
+                        </kbd>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           ) : null}
         </div>

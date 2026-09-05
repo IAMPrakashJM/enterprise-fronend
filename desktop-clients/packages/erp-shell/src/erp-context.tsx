@@ -4,6 +4,9 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import {
   DEFAULT_PREFERENCES, LANGUAGE_OPTIONS, MODULES, PAGE_REGISTRY,
   createFormatters, preferenceOverrides, sanitizePreferences, translate,
+  SHORTCUTS,
+  SIDEBAR_SEARCH_EVENT,
+  matchesShortcut,
 } from "@pepbits/erp-config";
 import type { Formatters, ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
@@ -75,6 +78,14 @@ export function moduleForPage(pageId: string, fallback: ModuleKey = "finance"): 
   return page && page.module !== "shared" ? page.module : fallback;
 }
 
+/** Where the boot-time answer to "skeletons?" is kept. */
+export const SKELETON_HINT = "nexora-loading-skeletons";
+
+/** Readable before the provider exists, so the fallback can be chosen. */
+export function skeletonsPreferred(): boolean {
+  try { return window.localStorage.getItem(SKELETON_HINT) !== "false"; } catch { return true; }
+}
+
 export function ERPProvider({ children, fallback = null }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   const navigation = useNavigation();
   const { user } = useSession();
@@ -140,6 +151,12 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
       });
     }, 400);
     return () => window.clearTimeout(timer);
+    /* Remembered for the NEXT first paint. The loading placeholder must be
+       chosen before preferences exist — that fetch is the wait it covers — so
+       the only honest way to honour the setting is to have kept last time's
+       answer, the same trick a theme uses to avoid a flash of wrong colours.
+       The first visit ever gets the default, and nothing can change that. */
+    try { window.localStorage.setItem(SKELETON_HINT, String(preferences.loadingSkeletons)); } catch { /* storage unavailable */ }
   }, [loaded, preferences]);
 
   useEffect(() => {
@@ -186,35 +203,44 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
   const dismissToast = useCallback((id: string) => setToasts((previous) => previous.filter((item) => item.id !== id)), []);
 
   useEffect(() => {
+    /* OFF UNBINDS, rather than binding and then ignoring. Someone who turns
+       shortcuts off usually wants a key back — for a screen reader, the browser,
+       an IME — and a listener that swallows the event before deciding not to act
+       has still taken it. */
+    if (!preferences.keyboardShortcuts) return undefined;
+
+    const actions: Record<string, () => void> = {
+      command: () => setCommandOpen(true),
+      preferences: () => navigation.open({ pageId: "preferences" }),
+      dashboard: () => navigation.open({ pageId: `${currentModule}-dashboard` }),
+      search: () => window.dispatchEvent(new CustomEvent(SIDEBAR_SEARCH_EVENT)),
+      newRecord: () => navigation.openInNewContext({ pageId: navigation.current.pageId, mode: "new" }),
+      pinSidebar: () => updatePreference("sidebarPinned", !preferences.sidebarPinned),
+      help: () => setHelpOpen(true),
+    };
+
     const onKey = (event: KeyboardEvent) => {
-      /* Holding Alt+N used to append one tab per OS key-repeat event — roughly 19 on
-         a default macOS setting, 45 on Windows, from one sustained press. */
+      /* Holding a shortcut used to append one tab per OS key-repeat event. */
       if (event.repeat) return;
       const target = event.target as HTMLElement | null;
-      const typing = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.getAttribute("contenteditable") === "true";
-      /* event.code, not event.key: Option+N on a macOS US layout is the tilde dead key
-         and reports event.key === "Dead", so every key-based match was silently dead
-         on every Mac. */
-      if ((event.metaKey || event.ctrlKey) && event.code === "KeyK") {
+      const typing = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA"
+        || target?.getAttribute("contenteditable") === "true";
+
+      /* One loop over the registry, so a shortcut cannot exist in the help panel
+         and not in the binding, or the other way round. */
+      for (const shortcut of SHORTCUTS) {
+        if (!matchesShortcut(shortcut, event)) continue;
+        if (typing && !shortcut.whileTyping) continue;
+        const run = actions[shortcut.id];
+        if (!run) continue;
         event.preventDefault();
-        setCommandOpen(true);
-      }
-      if ((event.metaKey || event.ctrlKey) && event.code === "Comma") {
-        event.preventDefault();
-        navigation.open({ pageId: "preferences" });
-      }
-      if (!typing && event.key === "?") {
-        event.preventDefault();
-        setHelpOpen(true);
-      }
-      if (!typing && event.altKey && event.code === "KeyN") {
-        event.preventDefault();
-        navigation.openInNewContext({ pageId: navigation.current.pageId, mode: "new" });
+        run();
+        return;
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigation]);
+  }, [currentModule, navigation, preferences.keyboardShortcuts, preferences.sidebarPinned, updatePreference]);
 
   const t = useCallback((key: string) => translate(preferences.language, key), [preferences.language]);
 

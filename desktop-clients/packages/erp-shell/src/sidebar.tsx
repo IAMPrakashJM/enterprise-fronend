@@ -6,6 +6,7 @@ import { NavLink, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
 import { chromePalette } from "./chrome-palette";
 import { useERP } from "./erp-context";
+import { SIDEBAR_SEARCH_EVENT } from "@pepbits/erp-config";
 import type { MenuItem, MenuSection } from "@pepbits/erp-config";
 
 const matchText = (item: MenuItem, term: string) => item.label.toLowerCase().includes(term);
@@ -125,6 +126,19 @@ export function Sidebar() {
      it, because they end for different reasons -- a pointer leaves, focus moves
      to a specific element -- and collapsing them makes one clear the other. */
   const [focusWithin, setFocusWithin] = useState(false);
+
+  /* Alt+/ asks for the menu search. The shortcut broadcasts; the sidebar decides
+     what "search" means here — expanding itself first, because focusing an input
+     nobody can see is not what was asked for. */
+  useEffect(() => {
+    const onAsk = () => {
+      setLatched(true);
+      setFocusWithin(true);
+      window.setTimeout(() => searchRef.current?.focus(), 0);
+    };
+    window.addEventListener(SIDEBAR_SEARCH_EVENT, onAsk);
+    return () => window.removeEventListener(SIDEBAR_SEARCH_EVENT, onAsk);
+  }, []);
   const focusOpens = preferences.sidebarFocusExpand && focusWithin;
   const expanded = preferences.sidebarPinned || focusOpens || (byHover ? hovered : latched);
   const isRight = preferences.sidebarPlacement === "right";

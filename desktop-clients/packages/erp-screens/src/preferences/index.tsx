@@ -301,6 +301,12 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               <Row label="Expands on" hint="Click opens it from the logo instead">
                 <Segmented<SidebarExpandOn> label="Sidebar expands on" value={preferences.sidebarExpandOn} onChange={(value) => set("sidebarExpandOn", value)} options={[{ value: "hover", label: "Hover" }, { value: "click", label: "Click" }]} />
               </Row>
+              <Row label="Keyboard shortcuts" hint="Off unbinds them entirely, so the keys go back to the browser">
+                <Segmented<"on" | "off"> label="Keyboard shortcuts" value={preferences.keyboardShortcuts ? "on" : "off"} onChange={(value) => set("keyboardShortcuts", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
+              </Row>
+              <Row label="Loading placeholders" hint="Shaped grey blocks while a page arrives, instead of the old page sitting there">
+                <Segmented<"on" | "off"> label="Loading placeholders" value={preferences.loadingSkeletons ? "on" : "off"} onChange={(value) => set("loadingSkeletons", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
+              </Row>
               <Row label="Opens on keyboard focus" hint="Tabbing into the rail expands it, as hovering does">
                 <Segmented<"on" | "off"> label="Sidebar opens on keyboard focus" value={preferences.sidebarFocusExpand ? "on" : "off"} onChange={(value) => set("sidebarFocusExpand", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
               </Row>

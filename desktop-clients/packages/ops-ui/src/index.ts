@@ -9,3 +9,4 @@ export * from "./nav-link";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./tabs";
+export * from "./skeleton";
