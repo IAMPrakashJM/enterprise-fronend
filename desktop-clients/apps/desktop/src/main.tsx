@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { NavigationProvider } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
-import { ERPProvider, EnterpriseShell, GlobalLayers, useERP } from "@pepbits/erp-shell";
-import { LoginScreen, PageRenderer, SessionSplash } from "@pepbits/erp-screens";
+import { ERPProvider, EnterpriseShell, GlobalLayers, useERP, skeletonsPreferred } from "@pepbits/erp-shell";
+import { LoginScreen, PageRenderer, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { AiSourcesProvider } from "@pepbits/ai-client";
 import { AssistantPanel } from "@pepbits/ai-ui";
 import { useMdiNavigation } from "./mdi/use-mdi-navigation";
@@ -50,7 +50,7 @@ function Authenticated() {
   const mdi = useMdiNavigation();
   return (
     <NavigationProvider value={mdi.port}>
-      <ERPProvider fallback={<SessionSplash />}>
+      <ERPProvider fallback={skeletonsPreferred() ? <ShellSkeleton /> : <SessionSplash />}>
         {/* See apps/web/src/platform/providers.tsx for why this is mounted in
             the app rather than in erp-shell's GlobalLayers. */}
         <AiSourcesProvider>

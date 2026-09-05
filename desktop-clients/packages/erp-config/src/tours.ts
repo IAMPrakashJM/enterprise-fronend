@@ -84,11 +84,7 @@ export const TOURS: Record<PageKind | "default", TourStep[]> = {
 /** Every shortcut the shell or a page handles. Kept beside the tours because
     the help panel lists both, and a shortcut that exists here but not in a
     keydown handler is a lie the panel tells. */
-export const HOTKEYS: Array<{ keys: string; what: string }> = [
-  { keys: "Ctrl / ⌘ K", what: "Open any page" },
-  { keys: "Ctrl / ⌘ ,", what: "My Preferences" },
-  { keys: "?", what: "Help assistant" },
-  { keys: "Alt N", what: "New record on the current page" },
-  { keys: "Alt S", what: "Save the open form" },
-  { keys: "Esc", what: "Close any overlay" },
-];
+/* HOTKEYS lived here and the help panel wrote the same list out again.
+   Replaced by SHORTCUTS in shortcuts.ts, which the binder, the help panel and
+   the preferences page all read — so a shortcut cannot work and be documented
+   wrong at the same time. */

@@ -111,6 +111,12 @@ export interface UserPreferences {
       folding this into that enum would have forced them to give up the click
       behaviour to get keyboard access. */
   sidebarFocusExpand: boolean;
+  /** Whether keyboard shortcuts are bound at all. Off unbinds the listener
+      rather than ignoring events inside it, so a page that fights for a key can
+      have it back. */
+  keyboardShortcuts: boolean;
+  /** Show shaped placeholders while a page loads, instead of nothing. */
+  loadingSkeletons: boolean;
   sidebarTone: SidebarTone;
   sidebarTheme: SidebarTheme;
   headerTone: HeaderTone;

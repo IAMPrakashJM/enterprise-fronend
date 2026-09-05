@@ -3,10 +3,10 @@
 import React from "react";
 import { NavigationProvider } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
-import { ERPProvider, EnterpriseShell, GlobalLayers } from "@pepbits/erp-shell";
+import { ERPProvider, EnterpriseShell, GlobalLayers, skeletonsPreferred } from "@pepbits/erp-shell";
 import { AiSourcesProvider } from "@pepbits/ai-client";
 import { AssistantPanel } from "@pepbits/ai-ui";
-import { LoginScreen, SessionSplash } from "@pepbits/erp-screens";
+import { LoginScreen, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { useWebNavigation } from "./web-navigation";
 
 /* The gate is client-side rather than a /login route, because the token lives in
@@ -24,7 +24,7 @@ function Gate({ children }: { children: React.ReactNode }) {
 
   return (
     <NavigationProvider value={navigation}>
-      <ERPProvider fallback={<SessionSplash />}>
+      <ERPProvider fallback={skeletonsPreferred() ? <ShellSkeleton /> : <SessionSplash />}>
         {/* Mounted HERE and not in erp-shell's GlobalLayers. ai-ui depends on
             erp-shell for the ERP context, so erp-shell mounting ai-ui would be
             a cycle — and the spec's package layout says nothing in erp-shell

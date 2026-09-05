@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Skeleton, TableSkeleton } from "@pepbits/ops-ui";
 import { Command, LockKeyhole, LogIn, ShieldCheck, UserRound } from "lucide-react";
 import { Badge, Button, Input, cn } from "@pepbits/ops-ui";
 import { DEMO_ACCOUNTS } from "@pepbits/auth";
@@ -152,6 +153,32 @@ export function SessionSplash() {
           <Command className="size-6" />
         </span>
         <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">Restoring your session…</span>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The shell, as shapes, while its preferences are being fetched.
+ *
+ * Shown instead of the splash when the remembered setting says so. It draws the
+ * chrome that is about to appear — rail, header bar, a table — so the first
+ * paint is the right shape rather than a logo that then rearranges into an
+ * application.
+ */
+export function ShellSkeleton() {
+  return (
+    <div className="flex min-h-dvh w-full bg-[var(--bg)]">
+      <div className="hidden w-[68px] shrink-0 flex-col gap-2 border-e border-[var(--border)] bg-[var(--surface)] p-3 sm:flex">
+        <Skeleton className="h-9 w-9" /><Skeleton className="mt-2 h-6 w-9" />
+        {Array.from({ length: 7 }, (_, i) => <Skeleton key={i} className="h-7 w-9" />)}
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-3 border-b border-[var(--border)] bg-[var(--surface)] px-4 py-2.5">
+          <Skeleton className="h-6 w-32" /><Skeleton className="h-4 w-48" />
+          <span className="flex-1" /><Skeleton className="h-7 w-40" /><Skeleton className="h-8 w-8" rounded="full" />
+        </div>
+        <TableSkeleton rows={9} />
       </div>
     </div>
   );
