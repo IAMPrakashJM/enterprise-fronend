@@ -21,7 +21,10 @@ export function Pagination({ page, pageSize, total, onPageChange, onPageSizeChan
       </div>
       <div className="flex items-center gap-1">
         <IconButton label="Previous page" disabled={page <= 1} onClick={() => onPageChange(page - 1)}><ChevronLeft className="size-4" /></IconButton>
-        {visible.map((item) => <Button key={item} size="xs" variant={item === page ? "primary" : "ghost"} className="min-w-7 px-2" onClick={() => onPageChange(item)}>{item}</Button>)}
+        {/* aria-current, not just the filled variant: styled alone, the row
+            reads to a screen reader as five identical numbered buttons with
+            nothing saying which one is the page you are on. */}
+        {visible.map((item) => <Button key={item} size="xs" variant={item === page ? "primary" : "ghost"} aria-current={item === page ? "page" : undefined} className="min-w-7 px-2" onClick={() => onPageChange(item)}>{item}</Button>)}
         <IconButton label="Next page" disabled={page >= pages} onClick={() => onPageChange(page + 1)}><ChevronRight className="size-4" /></IconButton>
       </div>
     </div>
