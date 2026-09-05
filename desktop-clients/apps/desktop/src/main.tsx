@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { NavigationProvider, WindowPortProvider } from "@pepbits/platform-ports";
+import type { NavigationPort, NavigationTarget } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
 import type { SessionUser } from "@pepbits/auth";
 import { targetFromDocument, useDetachedWindows } from "@pepbits/erp-shell";
@@ -8,7 +9,7 @@ import { ERPProvider, EnterpriseShell, GlobalLayers, WorkspaceCanvas, WorkspaceT
 import { LoginScreen, PageRenderer, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { createWorkspace, parseDocumentKey, WorkspaceProvider } from "@pepbits/workspace-core";
 import { createTauriWindowPort, detachedDocumentKey } from "./platform/tauri-windows";
-import { ConfirmDialog } from "@pepbits/ops-ui";
+import { ConfirmDialog, EmptyState } from "@pepbits/ops-ui";
 import { AiSourcesProvider } from "@pepbits/ai-client";
 import { AssistantPanel } from "@pepbits/ai-ui";
 import "./globals.css";
@@ -117,18 +118,48 @@ function Gate() {
  */
 function DetachedWindow({ documentKey }: { documentKey: string }) {
   const parts = parseDocumentKey(documentKey);
-  if (!parts) return <SessionSplash />;
-  const target = targetFromDocument({ documentType: parts.documentType, entityId: parts.entityId });
+  const [target, setTarget] = useState<NavigationTarget | null>(
+    () => (parts ? targetFromDocument({ documentType: parts.documentType, entityId: parts.entityId }) : null),
+  );
+
+  /* Its own navigation, and not optional: PageRenderer and everything under it
+     calls useNavigation, which throws rather than falling back — so a window
+     without this renders nothing at all and says so only in the console. It was
+     missing, and the window was blank.
+
+     Navigating inside this window replaces what it shows rather than opening a
+     tab: there is no tab strip here, and a second document in a window opened
+     to hold one record is a workspace by accident. */
+  const port: NavigationPort = useMemo(() => ({
+    current: target ?? { pageId: "finance-dashboard" },
+    open: setTarget,
+    openInNewContext: setTarget,
+    hrefFor: () => "#",
+  }), [target]);
+
+  if (!target) {
+    /* Not the session splash. A window that sits for ever on "Restoring your
+       session…" is a support call; a window that says what went wrong is a
+       window the user closes. */
+    return (
+      <div className="grid h-screen place-items-center bg-[var(--surface-2)] p-8">
+        <EmptyState title="This window could not be opened" description={`"${documentKey}" is not a record this workspace can show. Close the window and try again from the tab strip.`} />
+      </div>
+    );
+  }
+
   return (
-    <ERPProvider fallback={skeletonsPreferred() ? <ShellSkeleton /> : <SessionSplash />}>
-      <AiSourcesProvider>
-        <EnterpriseShell>
-          <PageRenderer target={target} />
-        </EnterpriseShell>
-        <GlobalLayers />
-        <AssistantPanel />
-      </AiSourcesProvider>
-    </ERPProvider>
+    <NavigationProvider value={port}>
+      <ERPProvider fallback={skeletonsPreferred() ? <ShellSkeleton /> : <SessionSplash />}>
+        <AiSourcesProvider>
+          <EnterpriseShell>
+            <PageRenderer target={target} />
+          </EnterpriseShell>
+          <GlobalLayers />
+          <AssistantPanel />
+        </AiSourcesProvider>
+      </ERPProvider>
+    </NavigationProvider>
   );
 }
 
@@ -139,7 +170,7 @@ function Authenticated({ user }: { user: SessionUser }) {
   const workspace = useMemo(
     () => createWorkspace({
       session: { tenantId: user.tenantId, userId: user.id, roleId: user.role, branchId: user.branch },
-      policy: { platform: { modes: ["SINGLE", "TAB"] } },
+      policy: { platform: { modes: ["SINGLE", "TAB", "SPLIT", "WINDOW"], allowDetach: true } },
     }),
     [user.tenantId, user.id, user.role, user.branch],
   );

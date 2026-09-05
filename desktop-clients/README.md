@@ -153,4 +153,5 @@ build log.
 - `docs/superpowers/plans/2026-09-03-nexora-monorepo.md` — the implementation plan
 - `docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md` — the gated AI assistant, draft
 - `docs/superpowers/plans/2026-09-03-contextual-ai-assistant.md` — its seven-task plan
+- `docs/running-tauri.md` — running the desktop app as a real Tauri window, and what a headless machine can and cannot show you
 - `docs/ui-gap-analysis.md` — what AllyVORA's provider-web has that this does not, with the cost and the case against each
