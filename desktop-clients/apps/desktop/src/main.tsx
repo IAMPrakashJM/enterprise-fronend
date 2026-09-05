@@ -9,7 +9,7 @@ import { ERPProvider, EnterpriseShell, GlobalLayers, WorkspaceCanvas, WorkspaceT
 import { LoginScreen, PageRenderer, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { createWorkspace, parseDocumentKey, WorkspaceProvider } from "@pepbits/workspace-core";
 import { createTauriWindowPort, detachedDocumentKey } from "./platform/tauri-windows";
-import { ConfirmDialog, EmptyState } from "@pepbits/ops-ui";
+import { AccessDenied, ConfirmDialog, ErrorState } from "@pepbits/ops-ui";
 import { AiSourcesProvider } from "@pepbits/ai-client";
 import { AssistantPanel } from "@pepbits/ai-ui";
 import "./globals.css";
@@ -120,7 +120,7 @@ function Gate() {
   /* A detached window signs in like any other: the session is per process, and
      a second window that skipped the gate would be a way around it. */
   const detached = detachedDocumentKey();
-  return detached ? <DetachedWindow documentKey={detached} /> : <Authenticated user={user} />;
+  return detached ? <DetachedWindow documentKey={detached} tenantId={user.tenantId} /> : <Authenticated user={user} />;
 }
 
 /**
@@ -131,8 +131,17 @@ function Gate() {
  * because there is nothing to switch between: closing the window is how this
  * document goes back to the workspace that opened it.
  */
-function DetachedWindow({ documentKey }: { documentKey: string }) {
+function DetachedWindow({ documentKey, tenantId }: { documentKey: string; tenantId: string }) {
   const parts = parseDocumentKey(documentKey);
+  /**
+   * The tenant in the key is a claim, and the key arrives in a URL.
+   *
+   * §17.2: a document from another tenant must never remain visible. Nothing
+   * checked this before — the window parsed whatever it was given and rendered
+   * it, and the address bar of a detached window is as editable as any other.
+   * The session's tenant is the server's answer; the URL's is an assertion.
+   */
+  const foreignTenant = parts !== null && parts.tenantId !== tenantId;
   const [target, setTarget] = useState<NavigationTarget | null>(
     () => (parts ? targetFromDocument({ documentType: parts.documentType, entityId: parts.entityId }) : null),
   );
@@ -152,13 +161,29 @@ function DetachedWindow({ documentKey }: { documentKey: string }) {
     hrefFor: () => "#",
   }), [target]);
 
+  if (foreignTenant) {
+    return (
+      <div className="grid h-screen place-items-center bg-[var(--surface-2)] p-8">
+        <AccessDenied
+          title="This window belongs to another tenant"
+          description="It was opened against a different organisation than the one you are signed in to. Close it and open the record from your own workspace."
+          detail={`signed in as ${tenantId} · window asked for ${parts?.tenantId}`}
+        />
+      </div>
+    );
+  }
+
   if (!target) {
     /* Not the session splash. A window that sits for ever on "Restoring your
        session…" is a support call; a window that says what went wrong is a
        window the user closes. */
     return (
       <div className="grid h-screen place-items-center bg-[var(--surface-2)] p-8">
-        <EmptyState title="This window could not be opened" description={`"${documentKey}" is not a record this workspace can show. Close the window and try again from the tab strip.`} />
+        <ErrorState
+          title="This window could not be opened"
+          description="Close it and open the record again from the tab strip."
+          detail={documentKey}
+        />
       </div>
     );
   }

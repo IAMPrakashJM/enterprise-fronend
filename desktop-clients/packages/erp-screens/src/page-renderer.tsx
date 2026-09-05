@@ -3,7 +3,7 @@
 import React from "react";
 import type { NavigationTarget } from "@pepbits/platform-ports";
 import { PAGE_REGISTRY } from "@pepbits/erp-config";
-import { DashboardSkeleton, FormSkeleton, TableSkeleton } from "@pepbits/ops-ui";
+import { DashboardSkeleton, ErrorState, FormSkeleton, TableSkeleton } from "@pepbits/ops-ui";
 import { ModuleDashboard } from "./dashboard/module-dashboard";
 import { WorklistPage } from "./worklist/worklist-page";
 import { DynamicRecordForm } from "./forms/dynamic-record-form";
@@ -45,7 +45,9 @@ export function SkeletonFor({ kind }: { kind: string }) {
 
 export function PageRenderer({ target, showTabPreferences = true }: { target: NavigationTarget; showTabPreferences?: boolean }) {
   const page = PAGE_REGISTRY[target.pageId];
-  if (!page) return <div className="p-8 text-center text-sm text-[var(--text-muted)]">Page configuration was not found.</div>;
+  /* A page id with no entry is a configuration fault, not an empty result, and
+     it used to render as one line of grey text with nothing to do about it. */
+  if (!page) return <ErrorState title="This page is not configured" description="The workspace asked for a page that is not in the registry." detail={`pageId: ${target.pageId}`} />;
   if (target.mode && (page.kind === "worklist" || page.kind === "form")) return <DynamicRecordForm page={page} target={target} />;
   switch (page.kind) {
     case "dashboard": return <ModuleDashboard moduleKey={page.module === "shared" ? undefined : page.module} />;
