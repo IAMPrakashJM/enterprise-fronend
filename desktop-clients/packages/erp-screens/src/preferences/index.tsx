@@ -301,6 +301,9 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               <Row label="Expands on" hint="Click opens it from the logo instead">
                 <Segmented<SidebarExpandOn> label="Sidebar expands on" value={preferences.sidebarExpandOn} onChange={(value) => set("sidebarExpandOn", value)} options={[{ value: "hover", label: "Hover" }, { value: "click", label: "Click" }]} />
               </Row>
+              <Row label="Opens on keyboard focus" hint="Tabbing into the rail expands it, as hovering does">
+                <Segmented<"on" | "off"> label="Sidebar opens on keyboard focus" value={preferences.sidebarFocusExpand ? "on" : "off"} onChange={(value) => set("sidebarFocusExpand", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
+              </Row>
               <Row label="Pinned open" hint="Pinned, it pushes the page instead of floating over it">
                 <Segmented<"on" | "off"> label="Sidebar pinned open" value={preferences.sidebarPinned ? "on" : "off"} onChange={(value) => set("sidebarPinned", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
               </Row>
