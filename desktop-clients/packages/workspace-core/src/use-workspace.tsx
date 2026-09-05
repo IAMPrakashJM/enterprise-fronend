@@ -136,6 +136,11 @@ const EMPTY: WorkspaceDocument[] = [];
 const noSubscribe = () => () => undefined;
 const noDocuments = () => EMPTY;
 
+/** The documents living in windows of their own, kept in step with the store. */
+export function useDetachedIn(workspace: Workspace): string[] {
+  return useSyncExternalStore(workspace.subscribeToChanges, workspace.getDetached, workspace.getDetached);
+}
+
 /** The split arrangement, kept in step with the store. */
 export function useSplitIn(workspace: Workspace): string[] {
   return useSyncExternalStore(workspace.subscribeToChanges, workspace.getSplit, workspace.getSplit);

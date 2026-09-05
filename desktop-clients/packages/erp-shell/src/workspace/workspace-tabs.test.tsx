@@ -100,6 +100,30 @@ describe("WorkspaceTabs", () => {
     expect(onSwap).toHaveBeenCalledOnce();
   });
 
+  /* Offered only where a shell can actually open a window. An action that
+     silently does nothing is worse than one that is not there. */
+  test("offers to open the current tab in a window when the shell can", async () => {
+    const onDetach = vi.fn();
+    render_({ onDetach });
+    await userEvent.click(screen.getByRole("button", { name: "Tab options" }));
+    await userEvent.click(screen.getByText(/own window/i));
+    expect(onDetach).toHaveBeenCalledWith("w2");
+  });
+
+  test("and does not offer it when the shell cannot", async () => {
+    render_();
+    await userEvent.click(screen.getByRole("button", { name: "Tab options" }));
+    expect(screen.queryByText(/own window/i)).toBeNull();
+  });
+
+  /* A tab whose record is on another monitor must not look like one you can
+     read here — clicking it brings the window forward, it does not draw a
+     second copy. */
+  test("a detached tab says where its record is", () => {
+    render_({ detachedIds: ["w3"] });
+    expect(screen.getByRole("tab", { name: /Journal Entry/ })).toHaveAccessibleName(/window/i);
+  });
+
   test("the plus opens the command palette", async () => {
     const onOpenCommand = vi.fn();
     render_({ onOpenCommand });
