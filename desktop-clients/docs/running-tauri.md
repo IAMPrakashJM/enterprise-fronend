@@ -81,6 +81,32 @@ data[at:at + 40] = b"/tmp/wk" + b"\0" * 33
 Do the `injected-bundle/` string too, and patch the longest match first or the
 shorter one eats its prefix.
 
+## Verifying detached windows without a click
+
+`cargo run --example detach-smoke` opens a second webview the way the JS port
+does — same `doc-` label, same query-string document key, same title — and
+reports what happened:
+
+```
+SMOKE before=1
+SMOKE created=true label=doc-w1
+SMOKE windows=2
+SMOKE title="CUSTOMER-MASTER view~CUS-02401"
+SMOKE url=http://localhost:3101/index.html?document=acme%3ACUSTOMER-MASTER%3Aview~CUS-02401
+SMOKE after_close=1
+```
+
+That answers the question Phase 5 left open: this build, with these
+capabilities, does open a second window, and the title reaching the OS carries
+the record id and no name. It asks from Rust because there is nothing to click
+with — `wayland-info` against the headless compositor lists no `wl_seat` at all,
+so there is no keyboard and no pointer to synthesise from.
+
+What it does not cover is the menu item itself. The JS port is tested against a
+fake in both directions, the child window's page is checked in a browser, and
+the runtime is checked here; the one link nobody has exercised is a human
+clicking "Open in its own window".
+
 ## What this can and cannot show you
 
 It runs. The binary compiles against the real WebKit and GTK, the webview loads
