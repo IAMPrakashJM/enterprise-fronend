@@ -17,13 +17,37 @@ candidates were **removed** during that pass because we already have them:
 | A record surface that can be panel / modal / drawer | `erp-screens/src/worklist/record-preview.tsx`, chosen by the `previewMode` preference |
 | Search-select, match highlighting, skeletons, shortcuts, sidebar focus mode | added here between August and September 2026 |
 
+A second pass traced usage rather than existence on their side too, which changed item 1:
+a package can be complete, tested and imported by nothing anyone still runs. "They have a
+component for it" and "they use it" are different claims, and only the second is a reason
+to copy anything.
+
+Counting real call sites — excluding their own tests, the design-system catalogue and the
+archived `apps/old` — item 1 is the only one that fails that test:
+
+| Item | Real call sites in their live app |
+|---|---|
+| Inline editing (`InlineField`) | 9 |
+| Error state (`ErrorState`) | 8 |
+| Avatar | 5 |
+| Segmented, stat card | 3 each |
+| Slider, filter bar, reference-data notice | 2 each |
+| Section wizard | 2 (`section-layout.tsx`, `patient-management.tsx`) |
+| Filters in the URL | 15 files read `useSearchParams` |
+| **MDI windows** | **0** |
+| `AccessDenied` specifically | 1, and it is design-system tooling |
+
+So every item except MDI is something they actually run. `ErrorState` is well proven at
+eight sites; `AccessDenied`, shipped beside it, is not — take the pair as one good idea and
+one untested one.
+
 Reference: `/home/pepadmin/ap/allyvora-platform/frontend/provider-web`.
 
 ## Summary
 
 | # | Feature | Effort | Verdict |
 |---|---|---|---|
-| 1 | MDI windows | ~1 week | Plan it properly |
+| 1 | MDI windows | ~1 week | **Ask why they stopped using it first** |
 | 2 | Inline editing | 1–2 days | **Best value on the list** |
 | 3 | Filters in the URL | 1 day | Needs a PHI decision first |
 | 4 | Error and denied states | half day | Do now |
@@ -48,16 +72,45 @@ bring one back. Closing one with unsaved edits asks first.
 
 **Use case.** Comparing two records side by side without losing your place in either.
 
-**Advantage.** The single biggest difference in how the two applications *feel*. Theirs
-reads as software you installed; ours reads as a site you visited. We have
-`openRecordsInTabs`, which is the same idea flattened into one row of tabs.
+### They are not using it
 
-**Drawback.** It touches navigation, preferences and every screen. Windows are cramped on
-a 13-inch laptop and have no story at all on a tablet. Each window needs its own
-dirty-state guard, which means unsaved-changes tracking moves from "the page" to "each
+This entry is kept for the idea, not as something to copy. `@pepbits/mdi` is a real,
+complete package — `MdiWorkspace`, `MdiWindow`, `MdiTaskbar`, a store and a dirty-state
+guard — but tracing its imports gives:
+
+```
+apps/old/desktop-tauri/src/App.tsx                    the only real use — and it is ARCHIVED
+apps/shell-web/.../design-system/_catalog/composition.tsx   a tile in the component catalogue
+apps/allyvora-desktop                                 no reference to mdi at all
+```
+
+Their current desktop app does not import it. In the web shell it appears only inside the
+design-system catalogue, which is a showcase page rather than anywhere work happens. So
+the feature was built, shipped in a Tauri shell, and left behind when that shell was
+retired.
+
+That is not proof the idea is wrong — a shell gets archived for many reasons unrelated to
+any one feature in it — but building this would mean reviving something its own authors set
+down, and that is worth knowing before spending a week. If it is ever taken seriously, ask
+them why `allyvora-desktop` does not carry it forward. The answer is worth more than the
+code.
+
+**Advantage.** The largest available change in how the application *feels* — software you
+installed rather than a site you visited. We have `openRecordsInTabs`, which is the same
+idea flattened into one row of tabs.
+
+**Drawback.** Beyond the point above: it touches navigation, preferences and every screen.
+Windows are cramped on a 13-inch laptop and have no story at all on a tablet. Each window
+needs its own dirty-state guard, so unsaved-changes tracking moves from "the page" to "each
 open document" — a real change to how screens hold state.
 
-**Effort.** About a week. Plan it; do not slip it into another branch.
+And it only makes sense in one of our two shells. `apps/web` opens records in browser tabs,
+which is correct for a URL-addressable application; MDI would land in `apps/desktop` alone.
+The two shells deliberately differ on tab behaviour today, but they differ in one contained
+place. This would make them diverge in how a record is opened at all.
+
+**Effort.** About a week — after the question above has an answer. Not a week of building
+followed by finding out.
 
 ## 2. Inline editing
 
@@ -112,6 +165,8 @@ the same retry.
 each screen handles its own failure.
 
 **Advantage.** One failure pattern the user learns once. Retry logic lives in one place.
+The error half is well proven on their side — eight call sites. The access-denied half has
+one, in design-system tooling, so treat it as an idea rather than a validated component.
 
 **Drawback.** Very little. The only real risk is over-generalising — a shared component
 that swallows the specific message that would have told someone what actually went wrong.
@@ -263,7 +318,8 @@ file rather than a stack trace.
    in the vitest setup added in September.
 2. **2 — inline editing.** Decide the conflict rule first.
 3. **9 — shared filter bar.**
-4. **1 — MDI windows**, as its own planned piece of work.
+4. **1 — MDI windows**, only after finding out why AllyVORA's current desktop app
+   dropped it. Desktop shell only.
 5. **3 — filters in the URL**, once someone has decided which filters may appear in a URL.
 6. **6, 11, 12** — leave.
 
