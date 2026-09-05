@@ -22,6 +22,7 @@
     "@pepbits/ops-ui": "*",
     "@pepbits/platform-ports": "*",
     "@pepbits/tokens": "*",
+    "@pepbits/workspace-core": "*",
     "@tauri-apps/api": "^2.2.0",
     "lucide-react": "^0.468.0",
     "react": "^19.2.0",

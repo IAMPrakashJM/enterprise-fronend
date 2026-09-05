@@ -22,6 +22,8 @@ export interface OpenRequest {
   episodeId?: string;
   /** A request, not a grant: policy still decides. */
   presentation?: WorkspacePresentation;
+  /** Defaults to true. False for a module dashboard or another fixed tab. */
+  closable?: boolean;
 }
 
 export interface OpenResult { ok: boolean; reused?: boolean; document?: WorkspaceDocument; reason?: string }
@@ -54,7 +56,8 @@ export interface Workspace {
   openDocument(request: OpenRequest): OpenResult;
   focusDocument(documentId: string): boolean;
   closeDocument(documentId: string, options?: { discardChanges?: boolean }): CloseResult;
-  closeAll(options?: { discardChanges?: boolean }): CloseResult;
+  /** `includeUnclosable` is for replacing the workspace, as a module switch does. */
+  closeAll(options?: { discardChanges?: boolean; includeUnclosable?: boolean }): CloseResult;
   closeOthers(documentId: string, options?: { discardChanges?: boolean }): CloseResult;
 
   markDirty(documentId: string): void;
@@ -74,7 +77,20 @@ export interface Workspace {
   restoreMetadata(): RestoreEntry[];
   restore(entries: RestoreEntry[], options?: { authorise?: (entry: RestoreEntry) => boolean }): { restored: number; skipped: number };
 
+  /** Access events, for audit. Focus and open are events; typing is not. */
   subscribe(listener: (event: WorkspaceEvent) => void): () => void;
+  /** Snapshot invalidation, for rendering. Fires for every change, audit-worthy or not. */
+  subscribeToChanges(listener: () => void): () => void;
+
+  /**
+   * Replace the policy in place.
+   *
+   * The shell resolves policy from preferences, and preferences live below the
+   * point where the workspace is created; rebuilding the store on every toggle
+   * would drop every open tab. Applies from the next open onwards -- a tab does
+   * not change shape under the user because a setting moved.
+   */
+  setPolicy(rules: Partial<Record<WorkspacePolicyLevel, WorkspacePolicyRule>>): void;
 }
 
 export function createWorkspace(options: {
@@ -83,20 +99,48 @@ export function createWorkspace(options: {
   now?: () => string;
 }): Workspace {
   let session = options.session;
-  const resolved = resolveWorkspacePolicy(options.policy ?? {});
+  let resolved = resolveWorkspacePolicy(options.policy ?? {});
   const now = options.now ?? (() => new Date().toISOString());
 
+  /**
+   * Documents are REPLACED, never mutated.
+   *
+   * React reads this store through useSyncExternalStore and compares snapshots
+   * by identity: a document edited in place is a change React cannot see, and a
+   * getter that builds a fresh array on every call is an infinite render loop.
+   * So `documents` is the snapshot -- it keeps its identity until something
+   * actually changes, and a change replaces only the documents it touched, so
+   * marking one form dirty does not hand every other tab a new object.
+   */
   let documents: WorkspaceDocument[] = [];
   let activeId: string | null = null;
   let counter = 0;
   const listeners = new Set<(event: WorkspaceEvent) => void>();
+  const changeListeners = new Set<() => void>();
 
+  /* Two subscriptions, deliberately. An audit trail and a render trigger are
+     not the same thing: focusing a tab is both, typing in a form is only the
+     second, and an audit log that records keystrokes is the noise §17.8 warns
+     against. */
   const emit = (type: WorkspaceEventType, document: WorkspaceDocument) => {
     const event: WorkspaceEvent = { type, document, at: now() };
     for (const listener of listeners) listener(event);
   };
 
+  const commit = (next: WorkspaceDocument[]) => {
+    documents = next;
+    for (const listener of changeListeners) listener();
+  };
+
   const find = (documentId: string) => documents.find((doc) => doc.documentId === documentId) ?? null;
+
+  /** A new array where the target is ACTIVE and any other ACTIVE falls back. */
+  const withActivated = (list: WorkspaceDocument[], documentId: string, at: string): WorkspaceDocument[] =>
+    list.map((doc) => {
+      if (doc.documentId === documentId) return { ...doc, state: "ACTIVE" as const, lastActivatedAt: at };
+      if (doc.state === "ACTIVE") return { ...doc, state: "BACKGROUND" as const };
+      return doc;
+    });
 
   /**
    * Exactly one document is ACTIVE, and the rest keep their state without
@@ -104,13 +148,9 @@ export function createWorkspace(options: {
    * starts binding in Phase 3; enforcing it here would be enforcing a limit
    * nothing in a tab workspace can reach.
    */
-  const activate = (document: WorkspaceDocument) => {
-    for (const other of documents) {
-      if (other !== document && other.state === "ACTIVE") other.state = "BACKGROUND";
-    }
-    document.state = "ACTIVE";
-    document.lastActivatedAt = now();
-    activeId = document.documentId;
+  const activate = (documentId: string) => {
+    commit(withActivated(documents, documentId, now()));
+    activeId = documentId;
   };
 
   const presentationFor = (requested?: WorkspacePresentation): { mode?: WorkspacePresentation; reason?: string } => {
@@ -125,19 +165,30 @@ export function createWorkspace(options: {
   };
 
   const removeDocument = (document: WorkspaceDocument, announce: boolean) => {
-    documents = documents.filter((doc) => doc !== document);
-    if (announce) emit("close", document);
+    let next = documents.filter((doc) => doc.documentId !== document.documentId);
     if (activeId === document.documentId) {
       activeId = null;
       /* Whatever was used most recently takes over. Deliberately silent: this
          is a consequence of the close, not a second access event, and an audit
          trail full of implicit focus records is the noise §17.8 warns about. */
-      const next = [...documents].sort((a, b) => b.lastActivatedAt.localeCompare(a.lastActivatedAt))[0];
-      if (next) activate(next);
+      const successor = [...next].sort((a, b) => b.lastActivatedAt.localeCompare(a.lastActivatedAt))[0];
+      if (successor) {
+        next = withActivated(next, successor.documentId, now());
+        activeId = successor.documentId;
+      }
     }
+    commit(next);
+    if (announce) emit("close", document);
   };
 
-  const closeMany = (targets: WorkspaceDocument[], discardChanges: boolean): CloseResult => {
+  const setDirty = (documentId: string, dirty: boolean) => {
+    const doc = find(documentId);
+    if (!doc || doc.dirty === dirty) return;
+    commit(documents.map((each) => (each.documentId === documentId ? { ...each, dirty } : each)));
+  };
+
+  const closeMany = (candidates: WorkspaceDocument[], discardChanges: boolean, includeUnclosable = false): CloseResult => {
+    const targets = includeUnclosable ? candidates : candidates.filter((doc) => doc.closable);
     const dirty = targets.filter((doc) => doc.dirty);
     if (dirty.length > 0 && !discardChanges) {
       return { ok: false, reason: `${dirty.length} document(s) have unsaved changes.`, dirtyDocumentIds: dirty.map((doc) => doc.documentId) };
@@ -149,9 +200,10 @@ export function createWorkspace(options: {
   const clear = () => {
     /* Unconditional, dirty or not. A tenant switch or a logout is not a moment
        to ask whether to keep another tenant's record on screen. */
-    for (const doc of [...documents]) emit("close", doc);
-    documents = [];
+    const closing = documents;
+    commit([]);
     activeId = null;
+    for (const doc of closing) emit("close", doc);
   };
 
   return {
@@ -163,8 +215,13 @@ export function createWorkspace(options: {
          twelfth document locks you out of the first eleven. */
       const existing = documents.find((doc) => doc.documentKey === key);
       if (existing) {
-        if (existing.documentId !== activeId) { activate(existing); emit("focus", existing); }
-        return { ok: true, reused: true, document: existing };
+        if (existing.documentId !== activeId) {
+          activate(existing.documentId);
+          emit("focus", find(existing.documentId)!);
+        }
+        /* Re-read: activate replaced the object, and handing back the stale one
+           would give the caller a document whose state says BACKGROUND. */
+        return { ok: true, reused: true, document: find(existing.documentId)! };
       }
 
       const { mode, reason } = presentationFor(request.presentation);
@@ -199,15 +256,20 @@ export function createWorkspace(options: {
         presentation: mode,
         state: "ACTIVE",
         dirty: false,
+        closable: request.closable ?? true,
         security,
         openedAt: now(),
         lastActivatedAt: now(),
       };
 
-      documents.push(document);
-      activate(document);
-      emit("open", document);
-      return { ok: true, document };
+      /* One commit, not two. Appending and then activating would move the
+         snapshot twice for a single user action, and every subscriber would
+         render an intermediate state that never existed on screen. */
+      commit(withActivated([...documents, document], documentId, document.lastActivatedAt));
+      activeId = documentId;
+      const opened = find(documentId)!;
+      emit("open", opened);
+      return { ok: true, document: opened };
     },
 
     focusDocument(documentId) {
@@ -215,14 +277,17 @@ export function createWorkspace(options: {
       if (!document) return false;
       /* Focusing what is already focused is not an access event. */
       if (document.documentId === activeId) return true;
-      activate(document);
-      emit("focus", document);
+      activate(documentId);
+      emit("focus", find(documentId)!);
       return true;
     },
 
     closeDocument(documentId, closeOptions) {
       const document = find(documentId);
       if (!document) return { ok: false, reason: "That document is not open." };
+      /* Checked before the dirty guard: discardChanges answers "may I lose this
+         work", which is a different question from "may this tab go away". */
+      if (!document.closable) return { ok: false, reason: `${document.title} cannot be closed.` };
       if (document.dirty && !closeOptions?.discardChanges) {
         return { ok: false, reason: "This document has unsaved changes.", dirtyDocumentIds: [documentId] };
       }
@@ -231,22 +296,25 @@ export function createWorkspace(options: {
     },
 
     closeAll(closeOptions) {
-      return closeMany([...documents], closeOptions?.discardChanges ?? false);
+      return closeMany([...documents], closeOptions?.discardChanges ?? false, closeOptions?.includeUnclosable ?? false);
     },
 
     closeOthers(documentId, closeOptions) {
       return closeMany(documents.filter((doc) => doc.documentId !== documentId), closeOptions?.discardChanges ?? false);
     },
 
-    markDirty(documentId) { const doc = find(documentId); if (doc) doc.dirty = true; },
-    markClean(documentId) { const doc = find(documentId); if (doc) doc.dirty = false; },
+    /* A no-op does not commit. Otherwise every keystroke in an already-dirty
+       form invalidates the snapshot and re-renders the whole tab bar. */
+    markDirty(documentId) { setDirty(documentId, true); },
+    markClean(documentId) { setDirty(documentId, false); },
 
     suspendDocument(documentId) {
       const document = find(documentId);
       if (!document) return;
-      document.state = "SUSPENDED";
+      if (document.state === "SUSPENDED") return;
+      commit(documents.map((doc) => (doc.documentId === documentId ? { ...doc, state: "SUSPENDED" as const } : doc)));
       if (activeId === documentId) activeId = null;
-      emit("suspend", document);
+      emit("suspend", find(documentId)!);
     },
 
     /**
@@ -262,8 +330,8 @@ export function createWorkspace(options: {
         removeDocument(document, true);
         return { ok: false, reason: "No longer authorised for this record." };
       }
-      activate(document);
-      emit("resume", document);
+      activate(documentId);
+      emit("resume", find(documentId)!);
       return { ok: true, revalidationRequired: true };
     },
 
@@ -273,7 +341,10 @@ export function createWorkspace(options: {
     },
 
     getDocument(documentId) { return find(documentId); },
-    getOpenDocuments() { return [...documents]; },
+    /* The array itself, not a copy: it is the snapshot React compares by
+       identity, and a copy would differ on every call. Treat it as read-only —
+       nothing here mutates it, and neither should a caller. */
+    getOpenDocuments() { return documents; },
     getActiveDocument() { return activeId ? find(activeId) : null; },
 
     switchTenant(tenantId) { clear(); session = { ...session, tenantId }; },
@@ -295,12 +366,13 @@ export function createWorkspace(options: {
     restore(entries, restoreOptions) {
       let restored = 0;
       let skipped = 0;
+      const pending: WorkspaceDocument[] = [];
       for (const entry of entries) {
         /* Rebound to the live session, never trusted as written. A restore blob
            is a file on a shared machine; the tenant and user in it are a claim. */
         if (entry.tenantId !== session.tenantId || entry.userId !== session.userId) { skipped += 1; continue; }
         if (restoreOptions?.authorise && !restoreOptions.authorise(entry)) { skipped += 1; continue; }
-        if (documents.length >= resolved.limits.maxOpenDocuments) { skipped += 1; continue; }
+        if (documents.length + pending.length >= resolved.limits.maxOpenDocuments) { skipped += 1; continue; }
 
         /* The saved mode may not be permitted on this device -- a window saved
            on the desktop restoring into the web shell. Fall back rather than
@@ -309,7 +381,8 @@ export function createWorkspace(options: {
         if (!mode) { skipped += 1; continue; }
 
         const documentId = `w${++counter}`;
-        documents.push({
+        restored += 1;
+        pending.push({
           documentId,
           documentKey: entry.documentKey,
           module: entry.module,
@@ -320,6 +393,7 @@ export function createWorkspace(options: {
           title: `${entry.documentType} ${entry.entityId}`,
           route: entry.route,
           presentation: mode,
+          closable: true,
           /* Suspended, not active. Mounting five live screens at login is the
              performance problem this lifecycle exists to avoid, and none of
              them has any data yet. */
@@ -336,8 +410,10 @@ export function createWorkspace(options: {
           openedAt: now(),
           lastActivatedAt: now(),
         });
-        restored += 1;
       }
+      /* One commit for the batch. Restoring eight documents on login should
+         move the snapshot once, not eight times. */
+      if (pending.length) commit([...documents, ...pending]);
       return { restored, skipped };
     },
 
@@ -345,5 +421,12 @@ export function createWorkspace(options: {
       listeners.add(listener);
       return () => { listeners.delete(listener); };
     },
+
+    subscribeToChanges(listener) {
+      changeListeners.add(listener);
+      return () => { changeListeners.delete(listener); };
+    },
+
+    setPolicy(rules) { resolved = resolveWorkspacePolicy(rules); },
   };
 }

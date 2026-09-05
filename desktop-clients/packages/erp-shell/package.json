@@ -13,6 +13,7 @@
     "@pepbits/erp-config": "*",
     "@pepbits/ops-ui": "*",
     "@pepbits/platform-ports": "*",
+    "@pepbits/workspace-core": "*",
     "lucide-react": "^0.468.0"
   },
   "peerDependencies": {

@@ -19,6 +19,13 @@
        REAL modules with no bundler and no test dependency; a copied resolver in a
        test file is a resolver that can drift from the one that ships.
        Safe because every project here sets noEmit. */
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+
+    /* The jest-dom matchers, declared once for every package rather than in
+       whichever one last grew tests. `npm test` transpiles and does not
+       typecheck, so a package missing this is green in vitest and red in tsc --
+       two tools disagreeing with only one of them watched. That has now caught
+       this repo out three times. */
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   }
 }
