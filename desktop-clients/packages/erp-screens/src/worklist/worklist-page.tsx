@@ -5,7 +5,7 @@ import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizont
 import { getWorklistConfig, FILTER_CLASSIFICATIONS } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
-import { Button, ConfirmDialog, IconButton, Segmented, classifyFailure } from "@pepbits/ops-ui";
+import { Button, ConfirmDialog, IconButton, Segmented, classifyFailure, type Failure, ErrorState } from "@pepbits/ops-ui";
 import { SearchInput } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
@@ -17,6 +17,7 @@ import { InlineAiAction } from "@pepbits/ai-ui";
 import { exportRows } from "./export-rows";
 import { authedFetch } from "@pepbits/auth";
 import { FilterBar } from "./filter-bar";
+import { searchWorklist } from "./search-request";
 import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
@@ -208,7 +209,34 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
     }
   }, [filters, search, page.id, page.title, toast]);
 
-  const pageRows = filtered
+  /**
+   * The server's answer, when it gave one.
+   *
+   * Sensitive filters are POSTed rather than applied here, so a patient name
+   * reaches the search as a request body instead of a query string that nginx,
+   * the gateway and APM would all record. Local filtering stays as the fallback
+   * — a demo without the API up should still filter, and a failed search must
+   * not silently look like an empty result.
+   */
+  const [remote, setRemote] = useState<{ rows: typeof filtered; total: number } | null>(null);
+  const [searchFailure, setSearchFailure] = useState<Failure | null>(null);
+
+  const runSearch = useCallback(async () => {
+    const everything = { ...filters, ...(search.trim() ? { query: search } : {}) };
+    if (Object.keys(everything).length === 0) { setRemote(null); setSearchFailure(null); return; }
+    const result = await searchWorklist(
+      { pageId: page.id, title: page.title, entity: page.entity ?? "record",
+        definitions: [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: FILTER_CLASSIFICATIONS.query }],
+        filters: everything },
+      (path, init) => authedFetch(path, init),
+    );
+    if (result.ok) { setRemote({ rows: (result.rows ?? []) as typeof filtered, total: result.total ?? 0 }); setSearchFailure(null); }
+    else { setRemote(null); setSearchFailure(result.failure ?? null); }
+  }, [filters, search, page.id, page.title, page.entity, basicDefinitions, advancedDefinitions]);
+
+  /* The server's rows when it answered, this page's own when it did not. */
+  const results = remote?.rows ?? filtered;
+  const pageRows = results
     .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
     .map((row) => {
       const applied = edits[String(row[config.primaryKey])];
@@ -298,7 +326,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
             values={filters}
             sensitiveKeys={sensitiveFilterKeys}
             onChange={changeFilter}
-            onApply={() => toast({ title: "Filters applied", message: `${filtered.length} matching records found.`, type: "success" })}
+            onApply={() => void runSearch()}
             onReset={reset}
             onCopyLink={() => { void navigator.clipboard?.writeText(window.location.href); toast({ title: "Link copied", message: "It carries only the filters that may travel in a URL.", type: "success" }); }}
             onSaveView={() => void createSavedView()}
@@ -312,7 +340,18 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           <div className="flex items-center gap-2"><ListFilter className="size-3.5 text-[var(--primary)]" /><span className="text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">Results</span><Badge tone="neutral">{filtered.length} records</Badge>{activeFilterCount || search ? <Badge tone="brand">Filtered</Badge> : null}</div>
           <div className="flex items-center gap-2 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><span>View: <b className="text-[var(--text)]">{preferences.resultView === "table" ? "Table" : "Card grid"}</b></span><span className="h-3 w-px bg-[var(--border)]" /><span>Preview: <b className="text-[var(--text)]">{preferences.previewMode.replaceAll("-", " ")}</b></span></div>
         </div>
-        {pageRows.length ? preferences.resultView === "table" ? (
+        {/* A failed search is a failure, not an empty result: "no records found"
+            for a service that is down sends someone to re-check filters that
+            were never the problem. */}
+        {searchFailure ? (
+          <ErrorState
+            title={searchFailure.title}
+            description={searchFailure.description}
+            referenceId={searchFailure.reference}
+            severity={searchFailure.severity}
+            onRetry={searchFailure.retryable ? () => void runSearch() : undefined}
+          />
+        ) : pageRows.length ? preferences.resultView === "table" ? (
           <DataTable
             onCellCommit={(row, column, next) => {
               const id = String(row[config.primaryKey]);
