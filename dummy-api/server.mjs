@@ -106,6 +106,57 @@ function savePrefs() {
    inside preferences.json: this grows with the number of pages a user visits
    (~200 in PAGE_REGISTRY), and mixing unbounded data into the settings blob
    would make every preference save rewrite all of it. */
+/* ---- saved views -------------------------------------------------------- *
+ *
+ * A shareable link to a filtered list, INCLUDING filters that may never appear
+ * in a URL. The filter definition lives here; the link carries only an opaque
+ * id, so a patient name is not written into nginx access logs, APM traces,
+ * browser history or a Referer header on the way to a colleague.
+ *
+ * Four properties, and each is the reason a plain URL was not enough:
+ *
+ *   opaque         VW_ + 16 hex from randomBytes. Not a hash of the filters,
+ *                  which would be reversible for a small search space -- there
+ *                  are not many MRNs in a tenant, and a rainbow table over them
+ *                  is trivial.
+ *   tenant-scoped  a view is read back only by its own tenant, whatever id is
+ *                  presented. Guessing an id from another tenant gets a 404,
+ *                  the same answer as an id that does not exist.
+ *   audited        who created and who opened, with the FILTER KEYS and never
+ *                  the values. HHS wants enough to examine activity, not a
+ *                  second copy of the clinical data in a log nobody guards.
+ *   expiring       a link mailed to someone stops working. Default 30 days.
+ * ------------------------------------------------------------------------- */
+const VIEWS_FILE = join(DATA_DIR, "saved-views.json");
+const VIEW_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+function loadViews() {
+  try { return JSON.parse(readFileSync(VIEWS_FILE, "utf8")); } catch { return {}; }
+}
+
+let savedViews = loadViews();
+
+function saveViews() {
+  mkdirSync(DATA_DIR, { recursive: true });
+  const tmp = `${VIEWS_FILE}.${process.pid}.tmp`;
+  writeFileSync(tmp, JSON.stringify(savedViews, null, 2) + "\n");
+  renameSync(tmp, VIEWS_FILE);
+  /* Same 0600 as the credential store. These hold the filter values a URL was
+     not allowed to carry, so the file is not more public than the URL would
+     have been. */
+  try { chmodSync(VIEWS_FILE, 0o600); } catch { /* best effort */ }
+}
+
+function newViewId() {
+  return `VW_${randomBytes(8).toString("hex").toUpperCase()}`;
+}
+
+/* Keys only. The whole point of the saved view is that the values do not travel
+   to places that keep logs, and an audit line is such a place. */
+function auditView(action, user, view) {
+  console.log(`[audit] saved-view ${action} tenant=${user.tenantId} user=${user.id} view=${view.id} page=${view.pageId} filters=${Object.keys(view.filters).sort().join(",") || "none"}`);
+}
+
 const LAYOUTS_FILE = join(DATA_DIR, "layouts.json");
 
 function loadLayouts() {
@@ -694,6 +745,59 @@ const server = createServer(async (req, res) => {
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
+  }
+
+  /* ---- saved views ------------------------------------------------------ */
+  if (pathname === "/views" || pathname.startsWith("/views/")) {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    if (pathname === "/views" && req.method === "POST") {
+      const body = await readJson(req).catch(() => null);
+      const pageId = typeof body?.pageId === "string" ? body.pageId : "";
+      const filters = body?.filters && typeof body.filters === "object" ? body.filters : null;
+      if (!pageId || !filters) return send(res, 400, { error: "A saved view needs a pageId and filters." });
+
+      const id = newViewId();
+      const view = {
+        id,
+        /* Stamped from the SESSION, never from the request body. A tenant a
+           client can assert is not isolation. */
+        tenantId: user.tenantId,
+        createdBy: user.id,
+        pageId,
+        label: typeof body.label === "string" && body.label.trim() ? body.label.trim().slice(0, 80) : "Saved view",
+        filters,
+        createdAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + VIEW_TTL_MS).toISOString(),
+      };
+      savedViews[id] = view;
+      saveViews();
+      auditView("created", user, view);
+      /* The id and nothing else. The caller builds the link; the filters stay
+         here. */
+      return send(res, 201, { id, label: view.label, expiresAt: view.expiresAt });
+    }
+
+    if (pathname.startsWith("/views/") && req.method === "GET") {
+      const id = pathname.slice("/views/".length);
+      const view = savedViews[id];
+      /* One answer for "does not exist", "belongs to someone else" and "has
+         expired". A 403 on another tenant's id confirms the id is real, which
+         is how you enumerate them. */
+      const missing = { error: "That saved view is not available." };
+      if (!view || view.tenantId !== user.tenantId) return send(res, 404, missing);
+      if (Date.parse(view.expiresAt) < Date.now()) {
+        delete savedViews[id];
+        saveViews();
+        return send(res, 404, missing);
+      }
+      auditView("opened", user, view);
+      return send(res, 200, { id: view.id, pageId: view.pageId, label: view.label, filters: view.filters, expiresAt: view.expiresAt });
+    }
+
+    return send(res, 405, { error: `${req.method} not allowed on ${pathname}.` });
   }
 
   if (pathname === "/ai/config" || pathname === "/ai/config/credential" || pathname === "/ai/config/credential/verify") {
