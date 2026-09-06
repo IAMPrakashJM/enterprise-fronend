@@ -22,8 +22,8 @@ import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import { storableFilters, partitionFilters, classificationFor } from "@pepbits/erp-config";
-import type { DataColumn, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
+import { storableFilters, partitionFilters, classificationFor, exportAudit, reviewExport } from "@pepbits/erp-config";
+import type { DataColumn, ExportReview, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
 function valueText(value: string | number | boolean) { return String(value).toLowerCase(); }
@@ -127,6 +127,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [confirmArchive, setConfirmArchive] = useState(false);
+  const [pendingExport, setPendingExport] = useState<{ rows: Row[]; what: string; review: ExportReview } | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [previewRow, setPreviewRow] = useState<Record<string, string | number | boolean> | null>(null);
   const [columnOpen, setColumnOpen] = useState(false);
@@ -325,10 +326,36 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
      columns of them may be read. The page never learns what AI does with it,
      and the assistant never reaches in here for more. */
   usePublishAiSources(`worklist:${page.id}`, { "worklist-selection": selectedRows });
+  /**
+   * A file is the one destination this application cannot take back.
+   *
+   * No retention rule reaches it, no revocation does, and nobody is asked again
+   * when it is forwarded. So a column that identifies a person, or says
+   * something clinical, is exported — a ward list with the names removed is not
+   * a ward list, and the person exporting is already reading it on screen — but
+   * only after being told what the file will hold, and the export is recorded
+   * by column key afterwards. Values never reach the audit; see exportAudit.
+   */
+  const writeExport = (rows: Row[], what: string) => {
+    const { filename, review } = exportRows(rows, visibleColumns, format, preferences.exportFormat, page.title);
+    void authedFetch("/exports", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(exportAudit(page.id, review, rows.length)),
+    }).catch(() => {
+      /* A demo API that is down does not undo a file the browser has already
+         written. The gap is recorded in the hardening ledger, not papered over
+         with a toast the user cannot act on. */
+    });
+    const dropped = review.withheld.length ? ` ${review.withheld.length} column${review.withheld.length === 1 ? "" : "s"} withheld.` : "";
+    toast({ title: "Export ready", message: `${rows.length} ${what} saved as ${filename}.${dropped}`, type: "success" });
+  };
+
   const doExport = (rows: Row[], what: string) => {
     if (!rows.length) { toast({ title: "Nothing to export", message: "No records match the current view.", type: "warning" }); return; }
-    const name = exportRows(rows, visibleColumns, format, preferences.exportFormat, page.title);
-    toast({ title: "Export ready", message: `${rows.length} ${what} saved as ${name}.`, type: "success" });
+    const review = reviewExport(visibleColumns);
+    if (!review.silent) { setPendingExport({ rows, what, review }); return; }
+    writeExport(rows, what);
   };
   const archive = () => {
     toast({ title: "Archived", message: `${selected.length} records moved to the archive (mock).`, type: "success" });
@@ -421,6 +448,23 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
 
       <ColumnManager open={columnOpen} onClose={() => setColumnOpen(false)} columns={config.columns} visibleKeys={visibleKeys} onChange={setVisibleKeys} onReset={resetLayout} />
       <ConfirmDialog open={confirmArchive} title={`Archive ${selected.length} records?`} message={<>They will leave every worklist and report until restored. This cannot be undone from the worklist.<br /><br />Turn off <b>Confirm bulk actions</b> in My Preferences to skip this prompt.</>} confirmLabel="Archive" tone="danger" onConfirm={archive} onCancel={() => setConfirmArchive(false)} />
+      <ConfirmDialog
+        open={pendingExport !== null}
+        title={`Export ${pendingExport?.rows.length ?? 0} records to a file?`}
+        confirmLabel="Export"
+        message={<>
+          {pendingExport?.review.declared.length ? (
+            <>The file will contain <b>{pendingExport.review.declared.map((note) => note.label).join(", ")}</b>.
+              {" "}Once saved it is outside this application: no retention rule reaches it, and nobody is asked again when it is forwarded.<br /><br /></>
+          ) : null}
+          {pendingExport?.review.withheld.length ? (
+            <>Held back: <b>{pendingExport.review.withheld.map((note) => note.label).join(", ")}</b>. Nothing of that kind is written to a file.<br /><br /></>
+          ) : null}
+          This export is recorded against your account — by column, never by value.
+        </>}
+        onConfirm={() => { const pending = pendingExport; setPendingExport(null); if (pending) writeExport(pending.rows, pending.what); }}
+        onCancel={() => setPendingExport(null)}
+      />
       <RecordPreview row={previewRow} config={config} onClose={() => setPreviewRow(null)} onView={() => previewRow && view(previewRow)} onEdit={() => previewRow && edit(previewRow)} />
     </div>
   );

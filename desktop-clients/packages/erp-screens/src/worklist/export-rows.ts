@@ -1,4 +1,5 @@
 import * as XLSX from "xlsx";
+import { reviewExport, type ExportReview } from "@pepbits/erp-config";
 import type { DataColumn, ExportFormat, Formatters } from "@pepbits/erp-config";
 
 type Row = Record<string, string | number | boolean>;
@@ -53,9 +54,18 @@ function save(blob: Blob, filename: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
-/** Download the given rows in the user's chosen format. Returns the filename. */
-export function exportRows(rows: Row[], columns: DataColumn[], format: Formatters, kind: ExportFormat, baseName: string): string {
-  const grid = toGrid(rows, columns, format);
+/**
+ * Download the given rows in the user's chosen format.
+ *
+ * The column policy is applied HERE, not by the caller, for the same reason
+ * toQuery applies the URL policy rather than trusting whoever builds the link:
+ * a rule enforced at the point of writing cannot be forgotten by the next
+ * caller. The caller reviews the same columns to decide what to say first; this
+ * decides what actually reaches the file.
+ */
+export function exportRows(rows: Row[], columns: DataColumn[], format: Formatters, kind: ExportFormat, baseName: string): { filename: string; review: ExportReview } {
+  const review = reviewExport(columns);
+  const grid = toGrid(rows, review.carried, format);
   const stamp = new Date().toISOString().slice(0, 10);
   const safe = baseName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   if (kind === "xlsx") {
@@ -65,10 +75,10 @@ export function exportRows(rows: Row[], columns: DataColumn[], format: Formatter
     const out = XLSX.write(book, { bookType: "xlsx", type: "array" }) as ArrayBuffer;
     const name = `${safe}-${stamp}.xlsx`;
     save(new Blob([out], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }), name);
-    return name;
+    return { filename: name, review };
   }
   const name = `${safe}-${stamp}.csv`;
   // BOM so Excel reads UTF-8 (Arabic names, the dirham sign) instead of Latin-1.
   save(new Blob(["﻿" + csvOf(grid)], { type: "text/csv;charset=utf-8" }), name);
-  return name;
+  return { filename: name, review };
 }

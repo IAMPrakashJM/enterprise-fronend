@@ -27,6 +27,7 @@ These are real properties, enforced and checked.
 | D7 | The credential file is `0600` and gitignored | `dummy-api/data/` | `verify:ai-hardening` |
 | D8 | Rate limits are enforced, and admin verification spends from the same budget | `dummy-api` | `verify:ai-limits` |
 | D9 | The tenant comes from the session, never from a request body | `dummy-api` | `verify:ai-hardening` |
+| D10 | Every worklist column is classified, credentials and unclassified columns never reach a file, and nothing sensitive is exported unannounced | `erp-config/src/export-policy.ts` | `verify:export-safety` |
 
 ## Not discharged
 
@@ -37,7 +38,7 @@ Each carries what it actually is, not a euphemism.
 | N1 | **No key vault.** The provider secret is plaintext JSON on disk. | `0600` file, one process | KMS or Vault; the process uses the key without being able to read it out of storage |
 | N2 | **No encryption at rest.** | none | Envelope encryption, keys held elsewhere |
 | N3 | **No key rotation policy.** `rotatedAt` is recorded, never enforced. | a timestamp field | Expiry, forced rotation, overlap window |
-| N4 | **No audit store.** | one `console.log` line per dispatch | Durable, queryable, retained; who / what / which record / which provider / cost / refusals |
+| N4 | **No audit store.** | one `console.log` line per dispatch, per search and per export | Durable, queryable, retained; who / what / which record / which provider / cost / refusals |
 | N5 | **No SERVER-SIDE redaction before egress to a provider.** The client masks identifiers and refuses to send what it did not mask; the service re-checks nothing, and free text still goes as typed. | client-side masking by classification, guarded at dispatch; search logging redacts by key; the service strips nothing | Server-side identifier stripping before any provider call, per data class — a client-side rule protects the honest path, not a modified one |
 | N6 | **No provider allowlist.** Any endpoint an admin configures is obeyed. | free-text endpoint | Approved providers per data class; clinical use cases refused to unapproved ones |
 | N7 | **No PHI-approved provider.** No BAA, no jurisdiction guarantee. | DeepSeek / OpenAI | A provider under contract, and a region that satisfies the tenant's law |
@@ -63,6 +64,18 @@ and masking it quietly would hide the defect while leaving the transparency
 panel describing a request that no longer exists. `verify:ai-egress` fails if a
 use case reads a key nobody classified, if a general use case reads a clinical
 or identifying one, or if the guard stops catching a hand-built context.
+
+**File export.** A worklist writes its visible columns to a file, and a file is
+the one destination nothing here can take back. `credential` and `unclassified`
+columns are refused outright; `phi`, `pii` and `clinical` are exported — a ward
+list with the names removed is not a ward list, and the person exporting is
+already reading it on screen — but only after being told what the file will hold,
+and the export is recorded by column key. Thirty-five worklist columns were
+unclassified when that policy was written, `patient` (an MRN) among them.
+
+The record is a `console.log` line like the other two, which is N4 rather than a
+separate gap. The file itself is beyond every control in this list the moment it
+is written; the confirmation and the audit line are the whole of what remains.
 
 **What is still open, and it is the important half.** All of that runs in the
 browser. A client-side rule protects the honest path; it does not protect

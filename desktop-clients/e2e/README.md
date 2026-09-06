@@ -93,6 +93,11 @@ holds a prompt id and nothing shaped like a prompt or a credential; `:fields`
 inspects without sending; a page the tenant denied offers no assistant at all;
 and a clinical use case cannot be sent until its acknowledgement is given.
 
+**`export.e2e.mjs`** — an ordinary list exports without a question; a list
+holding an MRN says what the file will contain first; declining writes no file
+and records nothing; accepting writes it and records it by column and class, with
+no cell value anywhere in the record.
+
 **`saved-view.e2e.mjs`** — the round trip: a view created through the UI, the
 link carrying only an opaque id, the filters restored into the field they were
 typed into, the handoff taken out of sessionStorage rather than left there, and
