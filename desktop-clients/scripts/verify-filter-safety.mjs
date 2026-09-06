@@ -85,14 +85,19 @@ for (const [classification, probe] of Object.entries(PROBES)) {
 }
 
 /* The KEY is as telling as the value: "?mrn=" in a log says someone searched by
-   MRN even with nothing after the equals sign. */
+   MRN even with nothing after the equals sign.
+
+   Compared as PARAMETER NAMES, not as substrings. A substring test reported
+   `form` as leaked the day `formulary` was classified operational and carried,
+   and it would have missed the mirror image just as quietly. */
+const carriedKeys = new Set(new URLSearchParams(serialised).keys());
 for (const key of keys) {
   if (isUrlSafe({ classification: DATA_CLASSIFICATIONS[key] })) continue;
-  check(!serialised.includes(key), `no ${key} key appears in the query string`);
+  check(!carriedKeys.has(key), `no ${key} key appears in the query string`);
 }
 
 const carried = keys.filter((key) => isUrlSafe({ classification: DATA_CLASSIFICATIONS[key] }));
-check(carried.every((key) => serialised.includes(key)), "operational filters ARE carried", `${carried.length} of ${keys.length}`);
+check(carried.every((key) => carriedKeys.has(key)), "operational filters ARE carried", `${carried.length} of ${keys.length}`);
 
 console.log(failed === 0
   ? "\n  Every filter is classified, and only operational ones reach a URL.\n"

@@ -66,12 +66,12 @@ const csv = async (rows: Array<Record<string, string | number | boolean>>) => {
 
 describe("the file", () => {
   test("is named after the list and the day it was taken", () => {
-    const name = exportRows([], columns, format, "csv", "Customer Master");
-    expect(name).toMatch(/^customer-master-\d{4}-\d{2}-\d{2}\.csv$/);
+    const { filename } = exportRows([], columns, format, "csv", "Customer Master");
+    expect(filename).toMatch(/^customer-master-\d{4}-\d{2}-\d{2}\.csv$/);
   });
 
   test("has no spaces, capitals or punctuation left in its name", () => {
-    expect(exportRows([], columns, format, "csv", "A/R Ageing — 90+ days")).toMatch(/^a-r-ageing-90-days-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect(exportRows([], columns, format, "csv", "A/R Ageing — 90+ days").filename).toMatch(/^a-r-ageing-90-days-\d{4}-\d{2}-\d{2}\.csv$/);
   });
 
   /* Excel reads a BOM-less file as Latin-1, which turns an Arabic name and the
@@ -183,10 +183,53 @@ describe("formula injection", () => {
   });
 });
 
+/**
+ * The column policy is applied HERE, not by the caller.
+ *
+ * Same reason toQuery applies the URL policy rather than trusting whoever
+ * builds the link: a rule enforced at the point of writing cannot be forgotten
+ * by the next caller. The screen reviews the same columns to decide what to say
+ * first; this decides what actually reaches the file.
+ */
+describe("the column policy", () => {
+  const withToken: DataColumn[] = [
+    { key: "id", label: "Id" },
+    { key: "token", label: "Token" },
+    { key: "patient", label: "MRN" },
+  ];
+
+  test("a credential column never reaches the file, even when asked for", async () => {
+    exportRows([{ id: "P-1", token: "tok_live_abcdef", patient: "AV204581" }], withToken, format, "csv", "x");
+    const text = (await blobText(written[0])).replace(/^\ufeff/, "");
+    expect(text).not.toContain("tok_live_abcdef");
+    expect(text.split("\r\n")[0]).toBe("Id,MRN");
+  });
+
+  test("and the caller is told which column was dropped", () => {
+    const { review } = exportRows([], withToken, format, "csv", "x");
+    expect(review.withheld.map((note) => note.key)).toEqual(["token"]);
+    expect(review.declared.map((note) => note.key)).toEqual(["patient"]);
+    expect(review.silent).toBe(false);
+  });
+
+  /* An MRN is exported. Stripping it would make a ward list useless, and the
+     person exporting is already reading it on screen — the control is that they
+     are told and that it is recorded, not that the column disappears. */
+  test("what identifies someone is exported, and declared", async () => {
+    exportRows([{ id: "P-1", patient: "AV204581" }], withToken, format, "csv", "x");
+    expect((await blobText(written[0]))).toContain("AV204581");
+  });
+
+  test("an ordinary export says nothing and drops nothing", () => {
+    const { review } = exportRows([], [{ key: "id", label: "Id" }, { key: "status", label: "Status" }], format, "csv", "x");
+    expect(review).toMatchObject({ declared: [], withheld: [], silent: true });
+  });
+});
+
 describe("the workbook", () => {
   test("is written as xlsx when asked for", () => {
-    const name = exportRows([{ id: "C-1", name: "Acme", outstanding: 100 }], columns, format, "xlsx", "Customer Master");
-    expect(name).toMatch(/\.xlsx$/);
+    const { filename } = exportRows([{ id: "C-1", name: "Acme", outstanding: 100 }], columns, format, "xlsx", "Customer Master");
+    expect(filename).toMatch(/\.xlsx$/);
     expect(written[0].type).toContain("spreadsheetml");
   });
 

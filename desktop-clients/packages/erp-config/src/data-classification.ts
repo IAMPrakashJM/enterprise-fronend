@@ -111,6 +111,89 @@ export const DATA_CLASSIFICATIONS: Record<string, DataClassification> = {
   clinician: "pii",
   admitted: "phi",
 
+  /* Anything that authenticates. No screen offers one today and none should,
+     which is exactly why the class needs members: `credential` was a branch of
+     every policy with nothing that could ever take it, so none of them was
+     really enforcing it. A column called `token` is refused by name now. */
+  token: "credential",
+  apiKey: "credential",
+  secret: "credential",
+  password: "credential",
+
+  /* ---- Worklist columns. ----
+   *
+   * These reach no URL and no AI use case; they are here because a worklist
+   * EXPORTS its columns to a file, and a file is the one egress with no
+   * retention, no audit after the fact and no way to take it back. Thirty-five
+   * of them were unclassified when export started asking, `patient` — which
+   * holds an MRN — among them.
+   *
+   * Some of these are judgement calls and are meant to be argued with: `city`
+   * is part of a postal address and so pii even on a supplier; `position` is a
+   * job title and identifies nobody; `performance` is a rating attached to a
+   * named employee, which makes it personal whatever else it is. */
+  patient: "phi",
+  gender: "phi",
+  /* Dates attached to an individual. `dob` above is the same rule. */
+  consultedOn: "phi",
+  prescribedOn: "phi",
+
+  prescriber: "pii",
+  manager: "pii",
+  contact: "pii",
+  city: "pii",
+  joinDate: "pii",
+  leaveBalance: "pii",
+  performance: "pii",
+
+  chiefComplaint: "clinical",
+  outcome: "clinical",
+  followUp: "clinical",
+  drug: "clinical",
+  dose: "clinical",
+  route: "clinical",
+  duration: "clinical",
+  form: "clinical",
+  atc: "clinical",
+  controlled: "clinical",
+
+  /* Supply and procurement. Goods, money and dates about ORDERS rather than
+     about people — the one judgement here is `country` against `city` above:
+     a country is coarse enough to identify nobody, a city is part of a postal
+     address. That is the same granularity line Safe Harbor draws, and it is why
+     the two sit in different classes despite arriving together. */
+  cost: "operational",
+  price: "operational",
+  margin: "operational",
+  unit: "operational",
+  stock: "operational",
+  reorder: "operational",
+  openPO: "operational",
+  leadTime: "operational",
+  onTime: "operational",
+  quality: "operational",
+  exposure: "operational",
+  warehouse: "operational",
+  orderDate: "operational",
+  requestedDate: "operational",
+  country: "operational",
+
+  /* Stock, money and catalogue metadata. None of it is about a person. */
+  category: "operational",
+  position: "operational",
+  formulary: "operational",
+  onHand: "operational",
+  reorderLevel: "operational",
+  unitCost: "operational",
+  supplier: "operational",
+  nextExpiry: "operational",
+  total: "operational",
+  balance: "operational",
+  paid: "operational",
+  dueDate: "operational",
+  invoiceDate: "operational",
+  updated: "operational",
+
   /* What is wrong with them. Clinical, so: never in a URL, and legible to the
      provider because that is what the use case is for. */
   ward: "clinical",

@@ -1,6 +1,7 @@
 export * from "./types.ts";
 export * from "./filter-policy.ts";
 export * from "./data-classification.ts";
+export * from "./export-policy.ts";
 export * from "./navigation.ts";
 export * from "./entity-schemas.ts";
 export * from "./themes.ts";

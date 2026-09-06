@@ -925,6 +925,43 @@ const server = createServer(async (req, res) => {
     });
   }
 
+  /* ---- export audit ------------------------------------------------------ */
+  /**
+   * A file left the application. This is the only record that it did.
+   *
+   * By COLUMN KEY and by count, never by value — the same rule the search log
+   * keeps, and for a stronger reason: an audit that copied the exported rows
+   * would be a second copy of exactly what the audit exists to govern.
+   *
+   * Re-derived here rather than trusted. A client that has been edited can
+   * claim it exported nothing sensitive, and believing it would record a clean
+   * line for the export that mattered most.
+   */
+  if (pathname === "/exports") {
+    if (req.method !== "POST") return send(res, 405, { error: `${req.method} not allowed on /exports.` });
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    const body = await readJson(req).catch(() => null);
+    const pageId = typeof body?.pageId === "string" ? body.pageId : "";
+    const columns = Array.isArray(body?.columns) ? body.columns.filter((key) => typeof key === "string") : [];
+    if (!pageId) return send(res, 400, { error: "An export record needs a pageId." });
+
+    const declared = columns
+      .map((key) => ({ key, classification: DATA_CLASSIFICATIONS[key] ?? "unclassified" }))
+      .filter((note) => note.classification !== "operational");
+    const rows = Number(body?.rows) || 0;
+    const withheld = Array.isArray(body?.withheld) ? body.withheld.filter((key) => typeof key === "string") : [];
+
+    const summary = declared.map((note) => `${note.key}:${note.classification}`).join(",") || "none";
+    console.log(`[export] ${user.email ?? user.id} tenant=${user.tenantId} page=${pageId} rows=${rows} columns=${columns.length} sensitive=[${summary}]${withheld.length ? ` withheld=[${withheld.join(",")}]` : ""}`);
+
+    /* 202: recorded, and the file was written by the browser before this was
+       ever called. Reporting 201 would imply this endpoint had a say. */
+    return send(res, 202, { recorded: true, sensitiveColumns: declared.length });
+  }
+
   /* ---- reference data ---------------------------------------------------- */
   if (pathname === "/reference") {
     if (req.method !== "GET") return send(res, 405, { error: `${req.method} not allowed on /reference.` });
