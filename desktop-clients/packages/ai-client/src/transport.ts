@@ -47,6 +47,14 @@ export async function dispatchAi(context: AiContext, useCase: AiUseCase): Promis
 
   if (response?.ok && body?.text) return { ok: true, text: body.text, via: "service" };
 
+  /* Accepted, and answered with nothing. Falling through to the status branch
+     below reported this as "The AI service returned 200.", which reads as a bug
+     in the client rather than an empty answer from the provider -- and that is
+     exactly how it was first reported. */
+  if (response?.ok) {
+    return { ok: false, error: body?.error ?? "The AI service answered with no text.", detail: body?.detail, via: "service" };
+  }
+
   /* 409 means no credential is configured: nothing could have been sent, which
      is the ordinary unconfigured state rather than a failure. Everything else
      keeps the service's own message. */
