@@ -13,8 +13,32 @@ function toGrid(rows: Row[], columns: DataColumn[], format: Formatters): string[
   return [header, ...body];
 }
 
+/**
+ * A spreadsheet executes some of what it reads.
+ *
+ * A cell beginning `=`, `+`, `-` or `@` is a FORMULA to Excel, LibreOffice and
+ * Sheets alike — `=cmd|' /C calc'!A0` included, which is a shell command in a
+ * file that looks like a customer list. The value arrives from any field a
+ * person can type into, and nothing between that keyboard and this function
+ * inspects it. An apostrophe is what every one of those programs reads as "the
+ * rest of this cell is text".
+ *
+ * Numbers are exempt, and that exemption is the whole reason this is not a
+ * blanket prefix: an amount of -1500.25 begins with the same character and is
+ * not a formula, and quoting it as text exports a column nobody can total.
+ *
+ * The xlsx path needs none of this — aoa_to_sheet writes a string as a typed
+ * string cell, so a leading `=` there is data rather than an expression.
+ */
+function formulaSafe(value: string): string {
+  return /^[=+\-@\t\r]/.test(value) && !Number.isFinite(Number(value)) ? `'${value}` : value;
+}
+
 function csvOf(grid: string[][]): string {
-  const cell = (value: string) => (/[",\n\r]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value);
+  const cell = (raw: string) => {
+    const value = formulaSafe(raw);
+    return /[",\n\r]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
+  };
   // \r\n so Excel on Windows opens it without a "line ending" prompt.
   return grid.map((line) => line.map(cell).join(",")).join("\r\n");
 }
