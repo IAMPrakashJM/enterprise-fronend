@@ -127,6 +127,78 @@ function savePrefs() {
  *                  second copy of the clinical data in a log nobody guards.
  *   expiring       a link mailed to someone stops working. Default 30 days.
  * ------------------------------------------------------------------------- */
+/* ---- reference data, with per-key failure ------------------------------- *
+ *
+ * An empty dropdown is ambiguous. "This tenant configured nothing" and "this
+ * list is broken today" look identical on screen and mean opposite things — one
+ * is a setup task and the other is an incident, and a user who cannot tell them
+ * apart raises a ticket for the first and ignores the second.
+ *
+ * So the fan-out catches PER KEY: one bad list omits one list instead of 500ing
+ * the whole response, and the keys that failed come back in `failures`. That
+ * field is the entire contract. Without it a client sees `[]` and has to guess.
+ * ------------------------------------------------------------------------- */
+const REFERENCE_SOURCES = {
+  branches: () => BRANCH_REFERENCE,
+  departments: () => DEPARTMENT_REFERENCE,
+  roles: () => ROLE_REFERENCE,
+  /* Deliberately breakable, so the failure path can be exercised without
+     waiting for something to actually break. REFERENCE_FAIL=insuranceNetworks
+     makes this one throw. */
+  insuranceNetworks: () => INSURANCE_REFERENCE,
+};
+
+const BRANCH_REFERENCE = [
+  { value: "hq", label: "Abu Dhabi • Head Office" },
+  { value: "dubai", label: "Dubai • Business Center" },
+  { value: "sharjah", label: "Sharjah • Operations Hub" },
+  { value: "india", label: "Kochi • Delivery Center" },
+];
+const DEPARTMENT_REFERENCE = [
+  { value: "finance", label: "Finance" },
+  { value: "hr", label: "Human Resources" },
+  { value: "clinical", label: "Clinical Services" },
+];
+const ROLE_REFERENCE = [
+  { value: "enterprise-admin", label: "Enterprise Administrator" },
+  { value: "finance-manager", label: "Finance Manager" },
+  { value: "clinician", label: "Clinician" },
+];
+const INSURANCE_REFERENCE = [
+  { value: "daman", label: "Daman" },
+  { value: "thiqa", label: "Thiqa" },
+  { value: "adnic", label: "ADNIC" },
+];
+
+/* Which keys should fail this run. Comma-separated, from the environment, so a
+   demo can show the warning without anyone editing code. */
+const FAILING_REFERENCES = new Set((process.env.REFERENCE_FAIL ?? "").split(",").map((key) => key.trim()).filter(Boolean));
+
+function loadReferences(keys) {
+  const references = {};
+  const failures = [];
+  for (const key of keys) {
+    const source = REFERENCE_SOURCES[key];
+    if (!source) {
+      failures.push({ key, code: "REFERENCE_UNKNOWN" });
+      references[key] = [];
+      continue;
+    }
+    try {
+      if (FAILING_REFERENCES.has(key)) throw new Error("simulated reference failure");
+      references[key] = source();
+    } catch {
+      /* The list comes back EMPTY and the key is named in failures. Omitting
+         the key entirely would make a client crash on `references[key].map`,
+         and returning nothing at all would lose the other 53 lists to one bad
+         column mapping. */
+      references[key] = [];
+      failures.push({ key, code: "REFERENCE_LOAD_FAILED" });
+    }
+  }
+  return { references, failures, partial: failures.length > 0 };
+}
+
 const VIEWS_FILE = join(DATA_DIR, "saved-views.json");
 const VIEW_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -589,7 +661,8 @@ function bearer(req) {
 }
 
 const server = createServer(async (req, res) => {
-  const { pathname } = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
+  const requestUrl = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
+  const { pathname } = requestUrl;
 
   if (req.method === "OPTIONS") {
     res.writeHead(204, CORS);
@@ -745,6 +818,17 @@ const server = createServer(async (req, res) => {
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
+  }
+
+  /* ---- reference data ---------------------------------------------------- */
+  if (pathname === "/reference") {
+    if (req.method !== "GET") return send(res, 405, { error: `${req.method} not allowed on /reference.` });
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const asked = (requestUrl.searchParams.get("keys") ?? "").split(",").map((key) => key.trim()).filter(Boolean);
+    const keys = asked.length > 0 ? asked : Object.keys(REFERENCE_SOURCES);
+    return send(res, 200, loadReferences(keys));
   }
 
   /* ---- saved views ------------------------------------------------------ */

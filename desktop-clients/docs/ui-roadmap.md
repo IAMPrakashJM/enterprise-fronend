@@ -20,7 +20,7 @@ Companion documents: `ui-gap-analysis.md` (why each item is worth doing),
 | P0 | Stat card | Build now | ✅ |
 | P1 | Inline editing | With concurrency + audit | ✅ generic + Number, Select, Date, Status; 409 path still untested against a real API |
 | P1 | Shared filter bar | Reusable framework | ✅ registry, classification, URL rules, saved views |
-| P1 | Reference data notice | With backend support | ✗ — needs the partial-failure contract first |
+| P1 | Reference data notice | With backend support | ✅ both halves — GET /reference with per-key failures, warning + per-field state |
 | P2 | URL filters | URL-safe only | ✅ allowlist, both directions, storage gated too |
 | P2 | Workspace tabs + split | Strongly recommended | ✅ |
 | P3 | Tauri detachable / MDI | Optional | ✅ both, MDI off by default |
@@ -94,10 +94,20 @@ that into one signature is the prop-heavy component §11 says to avoid.
 `Status` takes an optional transition map: a status with nowhere to go is not
 editable at all, rather than editable into itself.
 
-### Phase 5 — reference data health
+### Phase 5 — done
 
-Needs the backend contract first: a response that distinguishes "no data" from
-"this list failed", per key. Neither half exists.
+`GET /reference` fans out and catches PER KEY, so one bad list omits one list
+rather than 500ing the whole response, and the keys that failed come back in
+`failures`. That field is the entire contract — without it a client sees `[]`
+and has to guess.
+
+Two components, because a banner alone is not enough. `ReferenceDataWarning`
+names the lists that failed at the top of the form; `ReferenceField` says it at
+the field, and DISABLES a broken one — leaving it enabled invites someone to
+conclude the value is genuinely absent and save the record without it, which is
+a wrong record written because of a transient outage.
+
+Set `REFERENCE_FAIL=insuranceNetworks` on the demo API to see it.
 
 ### Elsewhere
 
