@@ -8,3 +8,4 @@ export * from "./reports/reports-page";
 export * from "./preferences";
 export * from "./spreadsheet";
 export * from "./library";
+export * from "./worklist/saved-view";

@@ -202,7 +202,7 @@ export function LoadingState({ title = "Loading…", description = "This should 
  * which is what `detail` carries — "ask someone" is only actionable if it says
  * what to ask for.
  */
-export function AccessDenied({ title = "You do not have access", description = "This is not available to your account. Someone with the right permission can open it for you.", detail, action }: {
+export function AccessDenied({ title = "Access not permitted", description = "This is not available to your account. Someone with the right permission can open it for you.", detail, action }: {
   title?: string;
   description?: string;
   detail?: React.ReactNode;
