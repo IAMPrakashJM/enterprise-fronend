@@ -38,22 +38,40 @@ Each carries what it actually is, not a euphemism.
 | N2 | **No encryption at rest.** | none | Envelope encryption, keys held elsewhere |
 | N3 | **No key rotation policy.** `rotatedAt` is recorded, never enforced. | a timestamp field | Expiry, forced rotation, overlap window |
 | N4 | **No audit store.** | one `console.log` line per dispatch | Durable, queryable, retained; who / what / which record / which provider / cost / refusals |
-| N5 | **No redaction before egress to a PROVIDER.** Fields and free text still reach the AI provider as typed. | search logging redacts by key; AI dispatch does not | Server-side identifier stripping before any provider call, per data class |
+| N5 | **No SERVER-SIDE redaction before egress to a provider.** The client masks identifiers and refuses to send what it did not mask; the service re-checks nothing, and free text still goes as typed. | client-side masking by classification, guarded at dispatch; search logging redacts by key; the service strips nothing | Server-side identifier stripping before any provider call, per data class — a client-side rule protects the honest path, not a modified one |
 | N6 | **No provider allowlist.** Any endpoint an admin configures is obeyed. | free-text endpoint | Approved providers per data class; clinical use cases refused to unapproved ones |
 | N7 | **No PHI-approved provider.** No BAA, no jurisdiction guarantee. | DeepSeek / OpenAI | A provider under contract, and a region that satisfies the tenant's law |
 | N8 | **Open CORS.** `Access-Control-Allow-Origin: *`. | any origin may call the API | Origin allowlist per deployment |
 | N9 | **Role check is a demo.** `role === "enterprise-admin"`, from the session object. | one string comparison | The platform's own authorisation |
 | N10 | **Rate limits are per tenant only.** One user can exhaust a tenant's budget. | per-tenant window | Per-user limits inside the tenant limit |
 
-### N5, partly closed
+### N5, narrowed twice
 
-`POST /worklists/search` logs the operational filters by value and the sensitive
-ones **by key only** — `status=Active +redacted[query]`. That is §14's redaction
-table, applied where searches are logged.
+**Search logging.** `POST /worklists/search` logs the operational filters by
+value and the sensitive ones **by key only** — `status=Active +redacted[query]`.
+That is §14's redaction table, applied where searches are logged.
 
-It is not the whole of N5. Nothing redacts what goes to an AI provider: `fields`
-and `userInput` reach `/ai/dispatch` as typed, and a provider is a third party
-where a log line is our own. The row stays open, narrowed.
+**Client-side egress.** Redaction now reads the same classification registry as
+the URL policy, so a field cannot be PHI to one and ordinary to the other. It
+had been exactly that: the registry classified `patientName` as PHI and the
+redaction rules matched only structured identifiers, so a patient name — and,
+on the clinical use cases that actually read them, the treating clinician and
+the admission date — reached the provider in full. Nine keys were affected.
+`dispatchAi` now re-checks the classification of every field on the way out and
+**refuses** rather than repairs: arriving unmasked means assembly was bypassed,
+and masking it quietly would hide the defect while leaving the transparency
+panel describing a request that no longer exists. `verify:ai-egress` fails if a
+use case reads a key nobody classified, if a general use case reads a clinical
+or identifying one, or if the guard stops catching a hand-built context.
+
+**What is still open, and it is the important half.** All of that runs in the
+browser. A client-side rule protects the honest path; it does not protect
+against a modified client, and the service accepts whatever arrives. Free text
+the user types is still sent as typed — deliberately, because silently editing
+someone's own words would make the panel a lie, and the alternative is a server
+that can see what it was sent. Nothing on the server strips identifiers before
+calling a provider, and a provider is a third party where a log line is our own.
+The row stays open.
 
 ## What this means in one sentence
 

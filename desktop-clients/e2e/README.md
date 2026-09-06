@@ -16,9 +16,33 @@ npx playwright install --with-deps chromium
 or point `PLAYWRIGHT_PATH` at an existing copy. The suites say so when it is
 missing rather than failing obscurely.
 
+### Without sudo
+
+`--with-deps` needs root, and Chromium will not start without those shared
+libraries: it exits 127 with `libatk-1.0.so.0: cannot open shared object file`,
+which Playwright reports as "Target page, context or browser has been closed" —
+a long way from the cause. The same trick as the Tauri sysroot works here.
+`apt-get download` and `dpkg -x` both run unprivileged:
+
+```bash
+SYSROOT=~/.local/chromium-sysroot
+apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts \
+  --no-breaks --no-replaces --no-enhances \
+  libatk-bridge2.0-0t64 libatspi2.0-0t64 libcups2t64 libgbm1 libnss3 \
+  libpangocairo-1.0-0 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 \
+  libxrandr2 libasound2t64 | grep -E '^\w' | sed 's/:.*//' | sort -u \
+  | xargs apt-get download
+for d in *.deb; do dpkg -x "$d" "$SYSROOT/root"; done
+export LD_LIBRARY_PATH="$SYSROOT/root/usr/lib/x86_64-linux-gnu:$SYSROOT/root/lib/x86_64-linux-gnu"
+```
+
+Check it with `ldd .../headless_shell | grep 'not found'` before blaming a
+suite. Put the sysroot somewhere durable: the first one was built under `/tmp`
+and had to be built again.
+
 ## Why these are separate from `npm test`
 
-The 460 unit tests run in jsdom in about two seconds and are the ones to run
+The 779 unit tests run in jsdom in about two seconds and are the ones to run
 constantly. These need a running stack, a real browser and about a minute.
 Folding them into `npm test` would mean the fast suite stops being run, which
 costs more than it buys.
@@ -61,6 +85,11 @@ the URL nor localStorage; the bar marks which fields stay out of a link; a
 sensitive filter withdraws copy-link and offers a saved view; the view comes back
 as an opaque `VW_` id carrying no filter values.
 
+**`search-post.e2e.mjs`** — Apply sends a POST, the URL gains no filter at all,
+the typed name travels in the body rather than the query string, the body is
+split by classification, and the request carries the config the table actually
+rendered with.
+
 **`workspace.e2e.mjs`** — exactly one tab is fixed; opening dedupes; a filter and
 a typed value survive leaving the tab and coming back; warm documents stay
 mounted and inert; `Alt+\` splits, the divider answers arrow keys, each pane
@@ -68,12 +97,22 @@ draws its own document, `Alt+Shift+\` collapses.
 
 ## Writing another
 
-Two rules, both learned the hard way.
+Three rules, all learned the hard way.
 
 **Set the state you assert on.** Preferences persist per account, so a suite that
 assumes a default is testing whatever the last run left behind — the workspace
 suite reported no tab strip, correctly, because an earlier session had switched
 floating windows on. Use `setPreference`.
+
+**Check what is actually serving.** A `next start` from an earlier session holds
+port 3100 and answers every route with a 500 against moved source; the suites
+then fail on a locator that has nothing wrong with it. `npm run stop` uses
+`lsof`, which is not installed everywhere — confirm with `ss -ltnp` before
+concluding a suite is broken. Two of the three failures in this session's first
+browser run were that; the third was real, and only a browser found it: moving
+the classification registry left `dummy-api/server.mjs` importing a deleted
+file, so the API would not start at all. Nothing in `npm test`, `typecheck` or
+`build` reads that file.
 
 **Assert invariants, not starting conditions.** "One tab open" tests the route
 the suite took to get there. "Exactly one tab is fixed" is the rule.

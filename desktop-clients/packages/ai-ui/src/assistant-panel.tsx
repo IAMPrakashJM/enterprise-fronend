@@ -151,6 +151,15 @@ export function AssistantPanel() {
                   Mock transport — no provider was contacted.
                 </div>
               ) : null}
+              {/* A refusal is not an answer, and without this it renders as one:
+                  the text below is the same <pre> either way. The dispatch guard
+                  stops the request before anything is contacted, so the panel has
+                  to say that rather than leave a plausible-looking reply. */}
+              {reply?.via === "blocked" ? (
+                <div className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_10%,transparent)] px-2.5 py-1.5 text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--text)]">
+                  Not sent — this request was held back before it left the browser.
+                </div>
+              ) : null}
               <pre className="whitespace-pre-wrap break-words font-sans text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed">{reply?.text ?? reply?.error}</pre>
               <Button className="mt-3" size="sm" variant="secondary" onClick={() => setStage("choose")}>Ask something else</Button>
             </div>

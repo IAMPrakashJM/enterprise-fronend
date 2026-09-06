@@ -36,7 +36,9 @@ export const CLASSIFICATIONS = [
   "unclassified",
 ] as const;
 
-export type FilterClassification = (typeof CLASSIFICATIONS)[number];
+/* Named for what it classifies -- data -- rather than for the first policy
+   that read it. Filters are one of two consumers; see data-classification. */
+export type DataClassification = (typeof CLASSIFICATIONS)[number];
 
 export interface FilterDefinition {
   key: string;
@@ -44,7 +46,7 @@ export interface FilterDefinition {
   type: "text" | "select" | "date";
   options?: string[];
   /** Required in practice: an absent one resolves to "unclassified", which is not url-safe. */
-  classification?: FilterClassification;
+  classification?: DataClassification;
 }
 
 export type FilterValues = Record<string, string>;
@@ -59,7 +61,7 @@ export function isUrlSafe(definition: Pick<FilterDefinition, "classification">):
   return definition.classification === "operational";
 }
 
-export function classificationOf(definitions: FilterDefinition[], key: string): FilterClassification {
+export function classificationOf(definitions: FilterDefinition[], key: string): DataClassification {
   return definitions.find((definition) => definition.key === key)?.classification ?? "unclassified";
 }
 

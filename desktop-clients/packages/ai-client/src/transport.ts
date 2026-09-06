@@ -1,5 +1,6 @@
 import { authedFetch } from "@pepbits/auth";
 import type { AiContext, AiUseCase } from "@pepbits/ai-config";
+import { unredactedFields } from "./guard.ts";
 
 export interface AiReply {
   ok: boolean;
@@ -9,8 +10,9 @@ export interface AiReply {
   error?: string;
   detail?: string;
   /** Which transport answered, shown in the panel so a mock is never mistaken
-      for a real answer. */
-  via: "mock" | "service";
+      for a real answer. `blocked` is neither: nothing was contacted and no
+      answer was produced, and wearing one of the other two would hide that. */
+  via: "mock" | "service" | "blocked";
 }
 
 /**
@@ -26,6 +28,20 @@ export interface AiReply {
  * a real answer. That distinction is the reason this returns `via` at all.
  */
 export async function dispatchAi(context: AiContext, useCase: AiUseCase): Promise<AiReply> {
+  /* Before anything is sent, and before the mock is reached either -- a mock
+     reply for a leaking context would report success for a request that should
+     never have been built. See guard.ts for why this refuses instead of
+     masking. */
+  const leaking = unredactedFields(context);
+  if (leaking.length > 0) {
+    return {
+      ok: false,
+      error: `This request was not sent: ${leaking.join(", ")} ${leaking.length === 1 ? "carries" : "carry"} data that must be masked first.`,
+      detail: "The context reached dispatch without passing through assembly, which is where redaction runs.",
+      via: "blocked",
+    };
+  }
+
   const response = await authedFetch("/ai/dispatch", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

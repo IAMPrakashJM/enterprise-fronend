@@ -69,7 +69,7 @@ export function assembleContext(
           const raw = row[key];
           if (!present(raw)) continue;
           const { value, redacted } = redactField(key, String(raw));
-          fields.push({ label: `${humanise(key)} (${read.source === "page-metrics" ? "figure" : read.source === "inbox-unread" ? "item" : "row"} ${index + 1})`, value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
+          fields.push({ key, label: `${humanise(key)} (${read.source === "page-metrics" ? "figure" : read.source === "inbox-unread" ? "item" : "row"} ${index + 1})`, value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
         }
       });
       continue;
@@ -86,7 +86,7 @@ export function assembleContext(
         continue;
       }
       const { value, redacted } = redactField(key, String(raw));
-      fields.push({ label: humanise(key), value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
+      fields.push({ key, label: humanise(key), value, source: sourceLabel, ...(redacted ? { redacted } : {}) });
     }
   }
 

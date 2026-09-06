@@ -1,4 +1,4 @@
-import type { LanguageKey } from "./types";
+import type { LanguageKey } from "./types.ts";
 
 export const LANGUAGE_OPTIONS: Array<{ value: LanguageKey; label: string; native: string; dir: "ltr" | "rtl" }> = [
   { value: "en", label: "English", native: "English", dir: "ltr" },
