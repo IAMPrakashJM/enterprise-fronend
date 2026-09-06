@@ -230,8 +230,13 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
       /* Holding a shortcut used to append one tab per OS key-repeat event. */
       if (event.repeat) return;
       const target = event.target as HTMLElement | null;
+      /* getAttribute is called through `?.` as well as target. An event
+         dispatched at `window` rather than at an element -- by an assistive
+         tool, an extension, a test -- has a target with no getAttribute, and a
+         throw here leaves the handler dead: every shortcut in the shell stops
+         working, silently, because the listener never reaches the loop. */
       const typing = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA"
-        || target?.getAttribute("contenteditable") === "true";
+        || target?.getAttribute?.("contenteditable") === "true";
 
       /* One loop over the registry, so a shortcut cannot exist in the help panel
          and not in the binding, or the other way round. */
