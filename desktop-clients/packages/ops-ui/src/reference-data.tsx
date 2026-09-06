@@ -57,7 +57,7 @@ export function ReferenceDataWarning({ failures, labels, onRetry, className }: {
       role="status"
       className={cn("flex items-start gap-2.5 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_8%,transparent)] px-3 py-2.5", className)}
     >
-      <TriangleAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-[var(--warning)]" />
+      <TriangleAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-[var(--warning-ink)]" />
       <div className="min-w-0 flex-1 text-[length:calc(10px*var(--fs-scale))] leading-relaxed">
         <b>{names.length === 1 ? "A reference list could not be loaded." : "Some reference lists could not be loaded."}</b>{" "}
         {names.join(", ")} {names.length === 1 ? "is" : "are"} unavailable, so {names.length === 1 ? "that field" : "those fields"} will look empty.
@@ -102,7 +102,7 @@ export function ReferenceField({ label, state, options, value, onChange, require
   return (
     <div className={cn("min-w-0", className)}>
       <label htmlFor={id} className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">
-        {label}{required ? <span className="text-[var(--danger)]">*</span> : null}
+        {label}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}
       </label>
       <select
         id={id}
@@ -119,7 +119,7 @@ export function ReferenceField({ label, state, options, value, onChange, require
         {options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
       </select>
       {note ? (
-        <p id={noteId} className={cn("mt-1 text-[length:calc(9.5px*var(--fs-scale))]", broken ? "font-semibold text-[var(--warning)]" : "text-[var(--text-subtle)]")}>{note}</p>
+        <p id={noteId} className={cn("mt-1 text-[length:calc(9.5px*var(--fs-scale))]", broken ? "font-semibold text-[var(--warning-ink)]" : "text-[var(--text-subtle)]")}>{note}</p>
       ) : null}
     </div>
   );

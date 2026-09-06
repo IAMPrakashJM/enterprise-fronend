@@ -53,7 +53,7 @@ export function StatCard({ label, value, hint, trend, icon, tone = "auto", class
             aria-label={`${trend.delta}, ${trend.direction === "flat" ? "unchanged" : trend.direction}`}
             className={cn(
               "inline-flex items-center gap-1 text-[length:calc(9.5px*var(--fs-scale))] font-extrabold",
-              good === null ? "text-[var(--text-muted)]" : good ? "text-[var(--success)]" : "text-[var(--danger)]",
+              good === null ? "text-[var(--text-muted)]" : good ? "text-[var(--success-ink)]" : "text-[var(--danger-ink)]",
             )}
           >
             {trend.direction === "up" ? <TrendingUp aria-hidden className="size-3.5" /> : trend.direction === "down" ? <TrendingDown aria-hidden className="size-3.5" /> : null}

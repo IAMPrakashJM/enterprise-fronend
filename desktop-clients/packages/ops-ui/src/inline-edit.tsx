@@ -184,7 +184,7 @@ export function InlineEdit({ label, value, display, onCommit, validate, disabled
         <span
           id={problemId}
           role="alert"
-          className="absolute left-0 top-full z-[70] mt-1 w-max max-w-64 rounded-md border border-[var(--danger)] bg-[var(--surface)] px-2 py-1 text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--danger)] shadow-[var(--shadow-md)]"
+          className="absolute left-0 top-full z-[70] mt-1 w-max max-w-64 rounded-md border border-[var(--danger)] bg-[var(--surface)] px-2 py-1 text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--danger-ink)] shadow-[var(--shadow-md)]"
         >
           {problem}
         </span>

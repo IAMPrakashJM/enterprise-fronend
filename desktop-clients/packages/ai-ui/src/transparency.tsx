@@ -87,7 +87,7 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
                     </span>
                     <span className="flex shrink-0 flex-col items-end gap-1">
                       <span className="text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-subtle)]">{field.source}</span>
-                      {field.redacted ? <span className="flex items-center gap-1 text-[length:calc(8.5px*var(--fs-scale))] font-bold text-[var(--warning)]"><EyeOff className="size-3" />redacted</span> : null}
+                      {field.redacted ? <span className="flex items-center gap-1 text-[length:calc(8.5px*var(--fs-scale))] font-bold text-[var(--warning-ink)]"><EyeOff className="size-3" />redacted</span> : null}
                     </span>
                   </li>
                 ))}
@@ -135,7 +135,7 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
           <label className="mb-2.5 flex cursor-pointer items-start gap-2 rounded-xl border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-2.5">
             <input type="checkbox" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} className="mt-0.5 size-3.5 accent-[var(--primary)]" />
             <span className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
-              <TriangleAlert className="mr-1 inline size-3.5 text-[var(--warning)]" />
+              <TriangleAlert className="mr-1 inline size-3.5 text-[var(--warning-ink)]" />
               This is a clinical use case. I confirm the fields above may be sent for record <b>{context.pageId}</b>. The assistant summarises; it does not diagnose.
             </span>
           </label>

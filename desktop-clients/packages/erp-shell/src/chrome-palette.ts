@@ -36,8 +36,13 @@ export function chromePalette(tone: ChromeTone): React.CSSProperties | undefined
     "--surface-2": `color-mix(in srgb, ${text} 10%, ${surface})`,
     "--surface-3": `color-mix(in srgb, ${text} 18%, ${surface})`,
     "--text": text,
-    "--text-muted": `color-mix(in srgb, ${text} 72%, ${surface})`,
-    "--text-subtle": `color-mix(in srgb, ${text} 48%, ${surface})`,
+    /* 85 and 70, not 72 and 48. The original pair looked right and measured
+       3.9:1 and 2.5:1 against the rail — below AA for text of any size, on the
+       one surface a user reads on every screen. Three steps still, just a
+       tighter spread: legibility is the constraint and the hierarchy is the
+       preference. */
+    "--text-muted": `color-mix(in srgb, ${text} 85%, ${surface})`,
+    "--text-subtle": `color-mix(in srgb, ${text} 70%, ${surface})`,
     "--border": `color-mix(in srgb, ${text} 16%, ${surface})`,
     "--border-strong": `color-mix(in srgb, ${text} 30%, ${surface})`,
     /* The active row is primary-tinted against the CHROME, not the page, and

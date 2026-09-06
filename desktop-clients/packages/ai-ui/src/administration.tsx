@@ -101,7 +101,7 @@ export function AiAdministration() {
   if (!config) {
     return (
       <div className="p-8 text-center text-[length:calc(11px*var(--fs-scale))] text-[var(--text-muted)]">
-        {note ? <><b className="text-[var(--danger)]">{note.text}</b>{note.detail ? <div className="mt-1">{note.detail}</div> : null}</> : "Loading the AI configuration…"}
+        {note ? <><b className="text-[var(--danger-ink)]">{note.text}</b>{note.detail ? <div className="mt-1">{note.detail}</div> : null}</> : "Loading the AI configuration…"}
       </div>
     );
   }
@@ -113,7 +113,7 @@ export function AiAdministration() {
       <div className="mx-auto grid max-w-5xl gap-4">
         {!mayWrite ? (
           <div className="flex items-start gap-2.5 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-3">
-            <ShieldAlert className="mt-0.5 size-4 shrink-0 text-[var(--warning)]" />
+            <ShieldAlert className="mt-0.5 size-4 shrink-0 text-[var(--warning-ink)]" />
             <div className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
               <b>Read only for this session.</b> Signed in as <b>{user?.role ?? "an unknown role"}</b>; administrative writes need <b>enterprise-admin</b>.
               The controls below are greyed as a courtesy — the refusal happens on the server, not here.
@@ -126,7 +126,7 @@ export function AiAdministration() {
             note.tone === "ok"
               ? "border-[color-mix(in_srgb,var(--success)_35%,var(--border))] bg-[color-mix(in_srgb,var(--success)_10%,transparent)]"
               : "border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_10%,transparent)]")}>
-            {note.tone === "ok" ? <BadgeCheck className="mt-0.5 size-4 shrink-0 text-[var(--success)]" /> : <CircleAlert className="mt-0.5 size-4 shrink-0 text-[var(--danger)]" />}
+            {note.tone === "ok" ? <BadgeCheck className="mt-0.5 size-4 shrink-0 text-[var(--success-ink)]" /> : <CircleAlert className="mt-0.5 size-4 shrink-0 text-[var(--danger-ink)]" />}
             <div className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed"><b>{note.text}</b>{note.detail ? <div className="mt-0.5 text-[var(--text-muted)]">{note.detail}</div> : null}</div>
           </div>
         ) : null}
@@ -154,7 +154,7 @@ export function AiAdministration() {
             </Row>
             <Row label="Last verified">{credential.lastVerifiedAt ? new Date(credential.lastVerifiedAt).toLocaleString() : "never"}</Row>
             {credential.lastError ? (
-              <Row label="Last error"><span className="text-[var(--danger)]">{credential.lastError}</span></Row>
+              <Row label="Last error"><span className="text-[var(--danger-ink)]">{credential.lastError}</span></Row>
             ) : null}
 
             <div className="mt-3 flex flex-wrap items-end gap-2">

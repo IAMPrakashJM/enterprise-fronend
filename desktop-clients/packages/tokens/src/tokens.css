@@ -46,8 +46,8 @@
   --surface-3: #eef2f7;
   --surface-translucent: rgba(255,255,255,.86);
   --text: #132238;
-  --text-muted: #64748b;
-  --text-subtle: #94a3b8;
+  --text-muted: #4f5f75;
+  --text-subtle: #5f6e84;
   --border: #dfe7f0;
   --border-strong: #cbd5e1;
   --primary: #3156d9;
@@ -82,7 +82,7 @@
   --surface-translucent: rgba(13,22,38,.9);
   --text: #e7eefb;
   --text-muted: #9fb0ca;
-  --text-subtle: #71829d;
+  --text-subtle: #7d8da6;
   --border: #20314b;
   --border-strong: #2f4566;
   --primary: #6d8cff;
@@ -110,8 +110,8 @@
   --surface-3: #e5f1eb;
   --surface-translucent: rgba(255,255,255,.88);
   --text: #173328;
-  --text-muted: #577065;
-  --text-subtle: #8aa095;
+  --text-muted: #486156;
+  --text-subtle: #577065;
   --border: #d5e6dc;
   --border-strong: #b9d5c5;
   --primary: #167a55;
@@ -132,8 +132,8 @@
   --surface-3: #eee5d5;
   --surface-translucent: rgba(255,253,250,.9);
   --text: #3a3026;
-  --text-muted: #75685a;
-  --text-subtle: #a39789;
+  --text-muted: #605448;
+  --text-subtle: #6e6357;
   --border: #e5d9c8;
   --border-strong: #d2c1aa;
   --primary: #8a5b28;
@@ -154,8 +154,8 @@
   --surface-3: #f6e8ed;
   --surface-translucent: rgba(255,255,255,.89);
   --text: #3d2230;
-  --text-muted: #79596a;
-  --text-subtle: #ab8a9a;
+  --text-muted: #705161;
+  --text-subtle: #7f6070;
   --border: #eed7e0;
   --border-strong: #ddb9c8;
   --primary: #ad3f6b;
@@ -176,8 +176,8 @@
   --surface-3: #e4e9ed;
   --surface-translucent: rgba(253,254,254,.9);
   --text: #1f2933;
-  --text-muted: #5d6975;
-  --text-subtle: #8b96a0;
+  --text-muted: #4e5965;
+  --text-subtle: #5e6872;
   --border: #d6dde3;
   --border-strong: #bdc7d0;
   --primary: #3f566b;
@@ -224,7 +224,7 @@
      --text-subtle stays base1: it is decorative (placeholders, dividers'
      labels) and never the only carrier of meaning. */
   --text-muted: #586e75;
-  --text-subtle: #93a1a1;
+  --text-subtle: #4d6b71;
   --border: #e2dbc6;
   --border-strong: #cfc7ae;
   --primary: #2076b2;
@@ -249,8 +249,8 @@
   --surface-3: #ecebfa;
   --surface-translucent: rgba(255,255,255,.88);
   --text: #1e1b3a;
-  --text-muted: #605c85;
-  --text-subtle: #918dae;
+  --text-muted: #5a567e;
+  --text-subtle: #6a6687;
   --border: #e2e0f5;
   --border-strong: #c9c5e6;
   --primary: #4f46e5;
@@ -271,8 +271,8 @@
   --surface-3: #e0f0f2;
   --surface-translucent: rgba(255,255,255,.88);
   --text: #12313a;
-  --text-muted: #4f7079;
-  --text-subtle: #85a3ab;
+  --text-muted: #406069;
+  --text-subtle: #506f77;
   --border: #d1e7eb;
   --border-strong: #b0d3d9;
   --primary: #0e7490;
@@ -293,8 +293,8 @@
   --surface-3: #f7e5da;
   --surface-translucent: rgba(255,252,250,.9);
   --text: #3d2519;
-  --text-muted: #7b5c4b;
-  --text-subtle: #ab8c7b;
+  --text-muted: #6f5242;
+  --text-subtle: #7d6152;
   --border: #f0dccf;
   --border-strong: #dfc0ac;
   --primary: #c2410c;
@@ -316,7 +316,7 @@
   --surface-translucent: rgba(20,20,23,.9);
   --text: #ececf1;
   --text-muted: #a1a1ac;
-  --text-subtle: #71717f;
+  --text-subtle: #8b8b97;
   --border: #2a2a31;
   --border-strong: #3d3d47;
   --primary: #5b6472;
@@ -345,7 +345,7 @@
   --surface-translucent: rgba(27,18,38,.9);
   --text: #f0e9f8;
   --text-muted: #b9a8cd;
-  --text-subtle: #8c7aa3;
+  --text-subtle: #9786ac;
   --border: #35264a;
   --border-strong: #4b3766;
   --primary: #7c3aed;
@@ -373,8 +373,8 @@
   --surface-3: #4c566a;
   --surface-translucent: rgba(59,66,82,.9);
   --text: #eceff4;
-  --text-muted: #ccd4e0;
-  --text-subtle: #9aa6b8;
+  --text-muted: #dfe4ec;
+  --text-subtle: #c5cdd8;
   --border: #4c566a;
   --border-strong: #5d6b82;
   /* Nord's own nord10 is #5e81ac, which gives white button text only 4.03:1 --
@@ -420,6 +420,31 @@
   --sidebar-text: #ffffff;
   --sidebar-surface-light: #ffffff;
   --sidebar-text-light: #000000;
+}
+
+/**
+ * Ink: an accent colour dark enough to read ON a tint of itself.
+ *
+ * A badge paints `--success` text over a 12% wash of `--success`, which is the
+ * same hue at two lightnesses and comes out at 3.7:1 — legible enough to pass
+ * an eye and not enough to pass AA. The accent is right for a fill, a border or
+ * an icon; it is not a text colour on its own background.
+ *
+ * Declared ONCE, here, after every theme, and derived with var() rather than
+ * written out fifteen times. Custom properties resolve at use, so each theme's
+ * own `--success` and `--text` feed this — which also makes it correct in both
+ * directions: mixing toward the theme's text darkens it on a light palette and
+ * lightens it on a dark one, exactly as chromePalette does for the rails.
+ *
+ * 60% was chosen against the worst case in the set (Solarized's amber, the
+ * lowest-contrast accent of the fifteen) rather than against the default theme,
+ * so the ratio holds everywhere instead of only where it was measured.
+ */
+:root {
+  --success-ink: color-mix(in srgb, var(--success) 60%, var(--text));
+  --warning-ink: color-mix(in srgb, var(--warning) 60%, var(--text));
+  --danger-ink: color-mix(in srgb, var(--danger) 60%, var(--text));
+  --info-ink: color-mix(in srgb, var(--info) 60%, var(--text));
 }
 
 * { box-sizing: border-box; }
