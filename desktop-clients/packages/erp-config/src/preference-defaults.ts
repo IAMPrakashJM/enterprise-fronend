@@ -1,5 +1,5 @@
-import { BRANCHES } from "./navigation";
-import type { UserPreferences } from "./types";
+import { BRANCHES } from "./navigation.ts";
+import type { UserPreferences } from "./types.ts";
 
 /* The defaults live here rather than inside ERPProvider so that the validator
    below can share them, and so the shape has one home. */

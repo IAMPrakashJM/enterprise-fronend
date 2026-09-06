@@ -6,6 +6,11 @@
  */
 
 export interface AiContextField {
+  /** The source field key, as the page had it. Required, and not shown: it is
+      what the dispatch guard re-checks the classification against, and a label
+      cannot be used for that -- "Patient Name" is a rendering decision, while
+      `patientName` is the thing the registry classifies. */
+  key: string;
   /** Human label, as the transparency panel prints it. */
   label: string;
   /** The value AFTER redaction. There is no "original" alongside it: the panel

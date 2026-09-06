@@ -1,4 +1,4 @@
-import type { ThemeKey } from "./types";
+import type { ThemeKey } from "./types.ts";
 
 export const THEME_OPTIONS: Array<{
   id: ThemeKey;

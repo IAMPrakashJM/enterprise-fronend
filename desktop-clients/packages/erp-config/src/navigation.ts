@@ -61,7 +61,7 @@ import {
   WalletCards,
   Warehouse,
 } from "lucide-react";
-import type { ModuleDefinition, ModuleKey, PageAiConfig, PageDefinition, PageKind } from "./types";
+import type { ModuleDefinition, ModuleKey, PageAiConfig, PageDefinition, PageKind } from "./types.ts";
 
 export const MODULES: Record<ModuleKey, ModuleDefinition> = {
   hr: {

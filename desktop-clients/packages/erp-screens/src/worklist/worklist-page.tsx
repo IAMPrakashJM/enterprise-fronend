@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
-import { getWorklistConfig, FILTER_CLASSIFICATIONS } from "@pepbits/erp-data";
+import { getWorklistConfig } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
 import { Button, ConfirmDialog, IconButton, Segmented, classifyFailure, type Failure, ErrorState } from "@pepbits/ops-ui";
@@ -22,7 +22,7 @@ import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import { storableFilters, partitionFilters } from "@pepbits/erp-config";
+import { storableFilters, partitionFilters, classificationFor } from "@pepbits/erp-config";
 import type { DataColumn, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
@@ -52,7 +52,7 @@ function filterDefinitions(values: Record<string, string>): FilterDefinition[] {
     key,
     label: key,
     type: "text" as const,
-    classification: FILTER_CLASSIFICATIONS[key] ?? "unclassified",
+    classification: classificationFor(key),
   }));
 }
 /**
@@ -163,7 +163,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
      HOLDS, and only the second decides where the value may go. */
   const toDefinitions = useCallback(
     (source: WorklistConfig["basicFilters"]): FilterDefinition[] =>
-      source.map((filter) => ({ ...filter, classification: FILTER_CLASSIFICATIONS[filter.key] ?? "unclassified" })),
+      source.map((filter) => ({ ...filter, classification: classificationFor(filter.key) })),
     [],
   );
   const basicDefinitions = useMemo(() => toDefinitions(config.basicFilters), [config.basicFilters, toDefinitions]);
@@ -180,7 +180,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const sensitiveFilterKeys = useMemo(() => {
     const everything = { ...filters, ...(search.trim() ? { query: search } : {}) };
     return partitionFilters(
-      [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: FILTER_CLASSIFICATIONS.query }],
+      [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: classificationFor("query") }],
       everything,
     ).sensitiveKeys.sort();
   }, [basicDefinitions, advancedDefinitions, filters, search]);
@@ -226,7 +226,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
     if (Object.keys(everything).length === 0) { setRemote(null); setSearchFailure(null); return; }
     const result = await searchWorklist(
       { pageId: page.id, title: page.title, entity: page.entity ?? "record",
-        definitions: [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: FILTER_CLASSIFICATIONS.query }],
+        definitions: [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: classificationFor("query") }],
         filters: everything },
       (path, init) => authedFetch(path, init),
     );

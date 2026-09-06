@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@pepbits/ai-config": "*",
-    "@pepbits/auth": "*"
+    "@pepbits/auth": "*",
+    "@pepbits/erp-config": "*"
   },
   "peerDependencies": {
     "react": ">=19"

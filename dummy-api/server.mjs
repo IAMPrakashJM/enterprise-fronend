@@ -146,7 +146,7 @@ function savePrefs() {
  * no search.
  * ------------------------------------------------------------------------- */
 import { getWorklistConfig } from "../desktop-clients/packages/erp-data/src/mock.ts";
-import { FILTER_CLASSIFICATIONS } from "../desktop-clients/packages/erp-data/src/filter-classification.ts";
+import { DATA_CLASSIFICATIONS } from "../desktop-clients/packages/erp-config/src/data-classification.ts";
 
 /* The redaction table, as a function. A value never reaches a log; a key does,
    because "someone searched by MRN" is what an audit needs and "AV204581" is
@@ -166,7 +166,7 @@ function partitionOnServer(filters) {
   const sensitive = {};
   for (const [key, value] of Object.entries(filters ?? {})) {
     if (typeof value !== "string" || !value.trim()) continue;
-    if (FILTER_CLASSIFICATIONS[key] === "operational") safe[key] = value;
+    if (DATA_CLASSIFICATIONS[key] === "operational") safe[key] = value;
     else sensitive[key] = value;
   }
   return { safe, sensitive };

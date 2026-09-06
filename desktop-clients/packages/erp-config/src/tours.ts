@@ -1,5 +1,5 @@
-import type { PageKind } from "./types";
-import { THEME_OPTIONS } from "./themes";
+import type { PageKind } from "./types.ts";
+import { THEME_OPTIONS } from "./themes.ts";
 
 /**
  * Guided tours, one per page kind. Each step names a `data-tour` anchor on the

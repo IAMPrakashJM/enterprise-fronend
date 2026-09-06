@@ -1,4 +1,4 @@
-import type { DataColumn, UserPreferences } from "./types";
+import type { DataColumn, UserPreferences } from "./types.ts";
 
 /* Value formatting lives HERE, not in ops-ui, for one reason: it has to read
    preferences, and ops-ui depends on nothing by design -- that is what keeps it

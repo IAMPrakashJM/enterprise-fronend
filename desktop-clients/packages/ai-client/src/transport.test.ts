@@ -27,8 +27,8 @@ const context: AiContext = {
   pageId: "customer-master",
   capturedAt: "2026-09-06T00:00:00.000Z",
   fields: [
-    { label: "Id", value: "C-100", source: "This record" },
-    { label: "Email", value: "a••••@nexora.ae", source: "This record", redacted: true },
+    { key: "id", label: "Id", value: "C-100", source: "This record" },
+    { key: "email", label: "Email", value: "a••••@nexora.ae", source: "This record", redacted: true },
   ],
 };
 
@@ -131,6 +131,71 @@ describe("what comes back", () => {
     const result = await dispatchAi(context, useCase);
     expect(result.ok).toBe(false);
     expect(result.via).toBe("service");
+  });
+});
+
+/**
+ * The refusal.
+ *
+ * Nothing is masked here and nothing is sent: a sensitive field arriving
+ * unredacted means assembly was bypassed, and repairing it quietly would hide
+ * the defect while leaving the panel showing the user a value the request no
+ * longer carries.
+ */
+describe("the guard", () => {
+  const leaking = {
+    ...context,
+    fields: [...context.fields, { key: "patientName", label: "Patient Name", value: "Aisha Rahman", source: "This record" }],
+  };
+
+  test("refuses to send a context carrying an unredacted identifier", async () => {
+    authedFetch.mockResolvedValue(reply(200, { text: "ok" }));
+    const result = await dispatchAi(leaking, useCase);
+    expect(result.ok).toBe(false);
+    expect(authedFetch).not.toHaveBeenCalled();
+  });
+
+  test("names what it refused, so it can be found and fixed", async () => {
+    authedFetch.mockResolvedValue(reply(200, { text: "ok" }));
+    const result = await dispatchAi(leaking, useCase);
+    expect(result.error).toContain("patientName");
+  });
+
+  /* Not "service" and not "mock": nothing was contacted, and no answer was
+     produced. A refusal that reported itself as either would be a third state
+     wearing one of the two the panel already knows how to render. */
+  test("says it was blocked here, rather than borrowing another outcome", async () => {
+    authedFetch.mockResolvedValue(reply(200, { text: "ok" }));
+    expect((await dispatchAi(leaking, useCase)).via).toBe("blocked");
+  });
+
+  test("does not repair the value on the way past", async () => {
+    authedFetch.mockResolvedValue(reply(200, { text: "ok" }));
+    const result = await dispatchAi(leaking, useCase);
+    expect(JSON.stringify(result)).not.toContain("••••");
+    /* And the caller's context is untouched, so the panel still describes what
+       the user was shown. */
+    expect(leaking.fields.at(-1)?.value).toBe("Aisha Rahman");
+  });
+
+  test("a properly redacted identifier is sent, not refused", async () => {
+    authedFetch.mockResolvedValue(reply(200, { text: "ok" }));
+    const masked = {
+      ...context,
+      fields: [...context.fields, { key: "patientName", label: "Patient Name", value: "••••••••", source: "This record", redacted: true }],
+    };
+    expect((await dispatchAi(masked, useCase)).ok).toBe(true);
+    expect(authedFetch).toHaveBeenCalledTimes(1);
+  });
+
+  test("clinical content is sent, because the answer depends on it", async () => {
+    authedFetch.mockResolvedValue(reply(200, { text: "ok" }));
+    const clinical = {
+      ...context,
+      fields: [{ key: "primaryDiagnosis", label: "Primary Diagnosis", value: "Community-acquired pneumonia", source: "This record" }],
+    };
+    expect((await dispatchAi(clinical, useCase)).ok).toBe(true);
+    expect(JSON.parse(authedFetch.mock.calls[0][1].body as string).fields[0].value).toBe("Community-acquired pneumonia");
   });
 });
 

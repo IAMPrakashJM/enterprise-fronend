@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import { DATA_CLASSIFICATIONS } from "@pepbits/erp-config";
 import { redactField } from "./redact.ts";
 
 /**
@@ -110,5 +111,67 @@ describe("the tail mask", () => {
     const short = redactField("accountNumber", "0001234567890").value;
     const long = redactField("accountNumber", `000${"1".repeat(40)}7890`).value;
     expect(long).toHaveLength(short.length);
+  });
+});
+
+/**
+ * The registry decides WHETHER a field is masked; the shape rules above decide
+ * HOW. Before this, the two lists were independent and had drifted: the policy
+ * classified `patientName` as PHI and nothing in this file matched it, so a
+ * patient's name reached the provider in full.
+ */
+describe("against the classification registry", () => {
+  const sensitive = Object.entries(DATA_CLASSIFICATIONS)
+    .filter(([, classification]) => classification === "phi" || classification === "pii" || classification === "credential")
+    .map(([key]) => key);
+
+  test("there is something to check", () => {
+    expect(sensitive.length).toBeGreaterThan(10);
+  });
+
+  test.each(sensitive)("%s is masked, because the registry says it identifies someone", (key) => {
+    const { value, redacted } = redactField(key, "Aisha Rahman 784-1984-1234567-1");
+    expect(redacted).toBe(true);
+    expect(value).not.toContain("Aisha");
+    expect(value).not.toContain("1984");
+  });
+
+  const operational = Object.entries(DATA_CLASSIFICATIONS)
+    .filter(([, classification]) => classification === "operational")
+    .map(([key]) => key);
+
+  test.each(operational)("%s is left alone, because it identifies nobody", (key) => {
+    expect(redactField(key, "Overdue")).toEqual({ value: "Overdue", redacted: false });
+  });
+
+  /* Clinical content is NOT masked. The use case that reads a diagnosis exists
+     to reason about the diagnosis; a masked one makes the feature pointless
+     while protecting nobody, since the person it belongs to is already masked.
+     It is governed by the clinical gate and its named-record confirmation
+     instead -- and it still may not be written to a URL. */
+  const clinical = Object.entries(DATA_CLASSIFICATIONS)
+    .filter(([, classification]) => classification === "clinical")
+    .map(([key]) => key);
+
+  test.each(clinical)("%s stays legible, because the answer depends on it", (key) => {
+    expect(redactField(key, "Community-acquired pneumonia")).toEqual({
+      value: "Community-acquired pneumonia",
+      redacted: false,
+    });
+  });
+
+  test("the registry wins over a shape that happens to match", () => {
+    /* `policy` is in the shape list because an insurance policy number is one.
+       If a key were ever classified operational and still matched a shape, the
+       classification is the decision and the shape is the guess. */
+    expect(redactField("status", "policy")).toEqual({ value: "policy", redacted: false });
+  });
+
+  test("a key the registry has never heard of still meets the shape rules", () => {
+    /* The registry cannot list every field on every future page, so an
+       unclassified key is matched by name shape rather than waved through. */
+    expect(redactField("beneficiaryIban", "AE070331234567890123456").redacted).toBe(true);
+    expect(redactField("guardianPassport", "N1234567").redacted).toBe(true);
+    expect(redactField("secondaryEmail", "a@b.com").redacted).toBe(true);
   });
 });

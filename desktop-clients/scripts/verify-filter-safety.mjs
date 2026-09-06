@@ -12,7 +12,7 @@
  * Runs the REAL modules through Node's type stripping, so there is no second
  * copy of the rule to drift from the one that ships.
  */
-import { FILTER_CLASSIFICATIONS } from "../packages/erp-data/src/filter-classification.ts";
+import { DATA_CLASSIFICATIONS } from "../packages/erp-config/src/data-classification.ts";
 import { CLASSIFICATIONS, isUrlSafe, toQuery } from "../packages/erp-config/src/filter-policy.ts";
 
 let failed = 0;
@@ -44,21 +44,21 @@ const POLICY = {
 console.log("\n  the registry agrees with the written policy\n");
 
 for (const key of POLICY.operational) {
-  const classification = FILTER_CLASSIFICATIONS[key];
+  const classification = DATA_CLASSIFICATIONS[key];
   check(classification === "operational", `${key} is operational`, classification ?? "MISSING");
 }
 for (const key of POLICY.neverInUrl) {
-  const classification = FILTER_CLASSIFICATIONS[key];
+  const classification = DATA_CLASSIFICATIONS[key];
   check(classification !== undefined && !isUrlSafe({ classification }), `${key} never reaches a URL`, classification ?? "MISSING");
 }
 
 console.log("\n  every filter key carries a classification\n");
 
-const keys = Object.keys(FILTER_CLASSIFICATIONS).sort();
+const keys = Object.keys(DATA_CLASSIFICATIONS).sort();
 check(keys.length > 0, "the registry is not empty", `${keys.length} keys`);
 
 for (const key of keys) {
-  const classification = FILTER_CLASSIFICATIONS[key];
+  const classification = DATA_CLASSIFICATIONS[key];
   check(CLASSIFICATIONS.includes(classification), `${key}`, classification);
 }
 
@@ -75,8 +75,8 @@ const PROBES = {
   unclassified: "UNCLASSIFIED_PROBE",
 };
 
-const definitions = keys.map((key) => ({ key, label: key, type: "text", classification: FILTER_CLASSIFICATIONS[key] }));
-const values = Object.fromEntries(keys.map((key) => [key, PROBES[FILTER_CLASSIFICATIONS[key]]]));
+const definitions = keys.map((key) => ({ key, label: key, type: "text", classification: DATA_CLASSIFICATIONS[key] }));
+const values = Object.fromEntries(keys.map((key) => [key, PROBES[DATA_CLASSIFICATIONS[key]]]));
 const serialised = toQuery(definitions, values).toString();
 
 for (const [classification, probe] of Object.entries(PROBES)) {
@@ -87,11 +87,11 @@ for (const [classification, probe] of Object.entries(PROBES)) {
 /* The KEY is as telling as the value: "?mrn=" in a log says someone searched by
    MRN even with nothing after the equals sign. */
 for (const key of keys) {
-  if (isUrlSafe({ classification: FILTER_CLASSIFICATIONS[key] })) continue;
+  if (isUrlSafe({ classification: DATA_CLASSIFICATIONS[key] })) continue;
   check(!serialised.includes(key), `no ${key} key appears in the query string`);
 }
 
-const carried = keys.filter((key) => isUrlSafe({ classification: FILTER_CLASSIFICATIONS[key] }));
+const carried = keys.filter((key) => isUrlSafe({ classification: DATA_CLASSIFICATIONS[key] }));
 check(carried.every((key) => serialised.includes(key)), "operational filters ARE carried", `${carried.length} of ${keys.length}`);
 
 console.log(failed === 0

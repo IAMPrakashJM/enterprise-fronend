@@ -1,3 +1,5 @@
+import { classificationFor } from "@pepbits/erp-config";
+
 /**
  * Redaction, applied during assembly rather than at dispatch.
  *
@@ -6,10 +8,32 @@
  * user's favour, but still a panel that does not describe the request. Running
  * it here means the panel renders the redacted value because that IS the value.
  *
- * Deliberately conservative and dumb: name-based rules, no content sniffing. A
- * clever matcher that redacts by shape would eventually redact a customer name
- * that looks like an account number, and a user who sees their own data mangled
- * stops trusting the panel.
+ * Two decisions, taken by two different things:
+ *
+ *   WHETHER to mask — the classification registry, which is also what decides
+ *                     whether a key may appear in a URL. One table, so a field
+ *                     cannot be PHI to the filter policy and ordinary to this
+ *                     one. It was exactly that, until this file started reading
+ *                     it: the registry classified `patientName` as PHI and
+ *                     nothing here matched the name, so it reached the provider
+ *                     in full — along with the treating clinician and the
+ *                     admission date, both of which a clinical use case reads.
+ *
+ *   HOW to mask     — the shape rules below, matched on the key. They also
+ *                     serve as the fallback for a key the registry has never
+ *                     heard of, because no table lists every field on every
+ *                     future page and waving an unknown one through is the
+ *                     wrong default.
+ *
+ * Clinical content is deliberately NOT masked. A use case that reads a
+ * diagnosis exists to reason about the diagnosis; masking it makes the feature
+ * pointless while protecting nobody, given that the person it belongs to is
+ * masked. It is governed by the clinical gate and its named-record
+ * confirmation, and it still may not be written to a URL.
+ *
+ * Matching is by NAME, never by content. A matcher that redacted by shape would
+ * eventually redact a customer name that looks like an account number, and a
+ * user who sees their own data mangled stops trusting the panel.
  */
 
 export interface Redaction {
@@ -50,8 +74,32 @@ function maskEmail(value: string): string {
   return `${head}${"•".repeat(Math.max(2, name.length - 1))}${value.slice(at)}`;
 }
 
+/** The mask a key's shape asks for, or the strongest one if none matches. */
+function maskFor(lower: string): (value: string) => string {
+  for (const rule of SENSITIVE) {
+    if (rule.test.test(lower)) return rule.mask;
+  }
+  /* No shape recognised the key, but the registry says it identifies someone.
+     Remove it entirely rather than guess how much of it is safe to show: a
+     name is not a number with a recognisable tail. */
+  return maskAll;
+}
+
+/** True for the classifications that must never reach a model vendor as typed. */
+export function mustRedact(key: string): boolean {
+  const classification = classificationFor(key);
+  return classification === "phi" || classification === "pii" || classification === "credential";
+}
+
 export function redactField(key: string, value: string): Redaction {
   const lower = key.toLowerCase();
+  if (mustRedact(key)) return { value: maskFor(lower)(value), redacted: true };
+
+  /* Classified, and classified as something that may travel: operational, or
+     clinical content the use case exists to reason about. The classification is
+     a decision; a shape rule that also matched would only be a guess. */
+  if (classificationFor(key) !== "unclassified") return { value, redacted: false };
+
   for (const rule of SENSITIVE) {
     if (rule.test.test(lower)) return { value: rule.mask(value), redacted: true };
   }
