@@ -33,8 +33,15 @@ import type { DataColumn } from "./types.ts";
  *                 is a decision rather than a surprise.
  */
 
-/** Never written to a file, whoever is asking. */
-const REFUSED: DataClassification[] = ["credential", "unclassified"];
+/**
+ * Never leaves as a document, whoever is asking — file or paper.
+ *
+ * Exported so the print stylesheet and its verify check read the same list: the
+ * CSS rule that keeps these off a printed page is the ONLY control a
+ * browser-initiated print respects, because `beforeprint` cannot cancel one.
+ */
+export const NEVER_IN_A_DOCUMENT: DataClassification[] = ["credential", "unclassified"];
+const REFUSED = NEVER_IN_A_DOCUMENT;
 
 /** Written, but said out loud first and recorded afterwards. */
 const DECLARED: DataClassification[] = ["phi", "pii", "clinical"];
@@ -75,8 +82,12 @@ export function reviewExport(columns: DataColumn[]): ExportReview {
   return { carried, declared, withheld, silent: declared.length === 0 && withheld.length === 0 };
 }
 
+/** How the data left. Both are documents; only one of them can be recalled. */
+export type EgressVia = "file" | "print";
+
 export interface ExportAudit {
   pageId: string;
+  via: EgressVia;
   rows: number;
   columns: string[];
   declared: Array<{ key: string; classification: DataClassification }>;
@@ -91,9 +102,10 @@ export interface ExportAudit {
  * what it must not keep. Built from the COLUMNS, so there is nowhere in the
  * shape for a value even by accident.
  */
-export function exportAudit(pageId: string, review: ExportReview, rows: number): ExportAudit {
+export function exportAudit(pageId: string, review: ExportReview, rows: number, via: EgressVia = "file"): ExportAudit {
   return {
     pageId,
+    via,
     rows,
     columns: review.carried.map((column) => column.key),
     declared: review.declared.map(({ key, classification }) => ({ key, classification })),

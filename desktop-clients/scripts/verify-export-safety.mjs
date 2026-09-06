@@ -19,9 +19,10 @@
  * copy of the rule to drift from the one that ships.
  */
 import { DATA_CLASSIFICATIONS, classificationFor } from "../packages/erp-config/src/data-classification.ts";
-import { exportAudit, reviewExport } from "../packages/erp-config/src/export-policy.ts";
+import { NEVER_IN_A_DOCUMENT, exportAudit, reviewExport } from "../packages/erp-config/src/export-policy.ts";
 import { PAGE_REGISTRY } from "../packages/erp-config/src/navigation.ts";
 import { getWorklistConfig } from "../packages/erp-data/src/mock.ts";
+import { readFileSync } from "node:fs";
 
 let failed = 0;
 const check = (ok, name, detail = "") => {
@@ -118,7 +119,42 @@ check(!reviewExport([{ key: "id", label: "Id" }, { key: "mysteryColumn", label: 
 check(reviewExport([{ key: "id", label: "Id" }, { key: "status", label: "Status" }]).silent,
   "an ordinary list does not");
 
+/**
+ * Paper.
+ *
+ * The same policy over a destination that cannot be recalled, and the one path
+ * script does not control: a browser-initiated print cannot be cancelled, so
+ * `beforeprint` can record it and nothing more. What actually keeps a class off
+ * the page is a CSS rule, and what identifies the sheet is a banner already in
+ * the document. Both are checked by reading the files, because neither is
+ * reachable by calling a function.
+ */
+console.log("\n  a printed sheet is governed by the document, not by script\n");
+
+const css = readFileSync(new URL("../packages/tokens/src/tokens.css", import.meta.url), "utf8");
+const printBlock = css.slice(css.indexOf("@media print"));
+check(printBlock.length > 0, "there is a print stylesheet");
+for (const classification of NEVER_IN_A_DOCUMENT) {
+  check(printBlock.includes(`[data-classification="${classification}"]`), `the stylesheet refuses ${classification}`);
+}
+check(/\[data-classification=[^\]]*\][^{]*\{[^}]*display:\s*none/.test(printBlock), "and refuses it by removing it, not by hiding it visually");
+
+/* The rule is worthless if nothing carries the attribute. */
+const table = readFileSync(new URL("../packages/erp-screens/src/worklist/data-table.tsx", import.meta.url), "utf8");
+check((table.match(/data-classification=\{classificationFor\(column\.key\)\}/g) ?? []).length >= 2,
+  "every header and cell is stamped with its class");
+
+/* And the banner has to exist in the document rather than be conjured when
+   printing starts, because the print that matters is the one nobody announced. */
+const worklist = readFileSync(new URL("../packages/erp-screens/src/worklist/worklist-page.tsx", import.meta.url), "utf8");
+check(worklist.includes('className="print-only'), "the sheet carries a banner that is always in the document");
+check(/beforeprint/.test(worklist), "and an unannounced print is still recorded");
+check(/exportAudit\(.{0,140}"print"/.test(worklist.replace(/\s+/g, " ")), "as a print rather than as a file");
+
+check(!/window\.addEventListener\("beforeprint"[\s\S]{0,400}preventDefault/.test(worklist),
+  "and nothing pretends it can cancel one");
+
 console.log(failed === 0
-  ? "\n  Every worklist column is classified, and nothing sensitive reaches a file unannounced.\n"
+  ? "\n  Every worklist column is classified, and nothing sensitive leaves as a document unannounced.\n"
   : `\n  ${failed} check(s) failed.\n`);
 process.exit(failed === 0 ? 0 : 1);

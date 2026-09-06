@@ -463,8 +463,26 @@ button { cursor: pointer; }
 .help-pulse { animation: nex-pulse-ring 2.1s infinite; }
 [data-reduced-motion="true"] *, [data-reduced-motion="true"] *::before, [data-reduced-motion="true"] *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
 
+/* Hidden on screen; the print block below reveals it. Declared out here so the
+   element exists in the document at all times — a banner conjured up by script
+   when printing starts would not be there for a print the script never saw. */
+.print-only { display: none; }
+
 @media print {
   body { overflow: visible; background: white; color: black; }
   .no-print { display: none !important; }
   .print-only { display: block !important; }
+
+  /* The classes that may never leave as a document.
+   *
+   * In CSS, and not in script, because a browser-initiated print cannot be
+   * stopped: `beforeprint` fires and nothing it does can cancel the print. A
+   * confirmation dialog governs the deliberate path; this governs Ctrl+P, which
+   * is the path nobody designed and everybody uses. It has to hold with the
+   * application's JavaScript already finished running.
+   *
+   * The list is NEVER_IN_A_DOCUMENT in export-policy.ts, and
+   * verify:export-safety fails if the two stop agreeing. */
+  [data-classification="credential"],
+  [data-classification="unclassified"] { display: none !important; }
 }

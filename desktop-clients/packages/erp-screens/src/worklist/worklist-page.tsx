@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, Printer, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
 import { getWorklistConfig } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
@@ -15,7 +15,7 @@ import { useColumnLayout } from "./use-column-layout";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { InlineAiAction } from "@pepbits/ai-ui";
 import { exportRows } from "./export-rows";
-import { authedFetch } from "@pepbits/auth";
+import { authedFetch, useSession } from "@pepbits/auth";
 import { FilterBar } from "./filter-bar";
 import { searchWorklist } from "./search-request";
 import { DataTable } from "./data-table";
@@ -23,7 +23,7 @@ import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
 import { storableFilters, partitionFilters, classificationFor, exportAudit, reviewExport } from "@pepbits/erp-config";
-import type { DataColumn, ExportReview, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
+import type { DataColumn, EgressVia, ExportReview, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
 function valueText(value: string | number | boolean) { return String(value).toLowerCase(); }
@@ -122,12 +122,13 @@ function rowMatches(row: Row, term: string, mode: "contains" | "starts-with" | "
 
 export function WorklistPage({ page }: { page: PageDefinition }) {
   const { preferences, updatePreference, toast, format } = useERP();
+  const { user } = useSession();
   const navigation = useNavigation();
   const config = useMemo(() => getWorklistConfig(page.id, page.title, page.entity), [page.entity, page.id, page.title]);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [confirmArchive, setConfirmArchive] = useState(false);
-  const [pendingExport, setPendingExport] = useState<{ rows: Row[]; what: string; review: ExportReview } | null>(null);
+  const [pendingEgress, setPendingEgress] = useState<{ rows: Row[]; what: string; review: ExportReview; via: EgressVia } | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
   const [previewRow, setPreviewRow] = useState<Record<string, string | number | boolean> | null>(null);
   const [columnOpen, setColumnOpen] = useState(false);
@@ -354,9 +355,48 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const doExport = (rows: Row[], what: string) => {
     if (!rows.length) { toast({ title: "Nothing to export", message: "No records match the current view.", type: "warning" }); return; }
     const review = reviewExport(visibleColumns);
-    if (!review.silent) { setPendingExport({ rows, what, review }); return; }
+    if (!review.silent) { setPendingEgress({ rows, what, review, via: "file" }); return; }
     writeExport(rows, what);
   };
+
+  /**
+   * Paper is a document too, and the one that cannot be recalled at all.
+   *
+   * Two paths reach it and they need different controls. This one is deliberate
+   * and is governed exactly like an export — the same review, the same
+   * confirmation. The other is Ctrl+P, which no script can intercept: a
+   * `beforeprint` handler runs but cannot cancel the print, so what governs it
+   * is the print stylesheet (which refuses a class outright) and the banner
+   * below (which is in the document before anyone asks). The listener records.
+   */
+  const doPrint = (rows: Row[]) => {
+    const review = reviewExport(visibleColumns);
+    if (!review.silent) { setPendingEgress({ rows, what: "records", review, via: "print" }); return; }
+    window.print();
+  };
+
+  /* The same review the confirmation uses, so the banner cannot describe a
+     different sheet from the one the dialog described. */
+  const printReview = useMemo(() => reviewExport(visibleColumns), [visibleColumns]);
+
+  const latestPrint = useRef({ pageId: page.id, columns: visibleColumns, rows: 0 });
+  latestPrint.current = { pageId: page.id, columns: visibleColumns, rows: filtered.length };
+
+  useEffect(() => {
+    /* Read through a ref so the listener is bound once. Re-subscribing on every
+       filter keystroke would be harmless and is still the kind of churn that
+       hides a leak later. */
+    const record = () => {
+      const { pageId, columns, rows } = latestPrint.current;
+      void authedFetch("/exports", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(exportAudit(pageId, reviewExport(columns), rows, "print")),
+      }).catch(() => { /* the sheet is already printing; nothing here can stop it */ });
+    };
+    window.addEventListener("beforeprint", record);
+    return () => window.removeEventListener("beforeprint", record);
+  }, []);
   const archive = () => {
     toast({ title: "Archived", message: `${selected.length} records moved to the archive (mock).`, type: "success" });
     setSelected([]);
@@ -367,7 +407,25 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
+
+      {/* A printed sheet has no headers, no footers and no provenance: found on
+          a desk, it is an anonymous list of patients. This says whose it is,
+          when it was taken and what is on it — and it lives in the document at
+          all times, hidden on screen, because a banner added by script when
+          printing begins would be absent from the print that script never saw.
+          See tokens.css for why Ctrl+P cannot be intercepted. */}
+      <div className="print-only mb-3 border-b-2 border-black pb-2 text-black">
+        <div className="text-[11px] font-black uppercase tracking-[.14em]">{page.title}</div>
+        <div className="mt-1 text-[9px] leading-relaxed">
+          Printed by {user?.name ?? "an unidentified user"}{user?.email ? ` (${user.email})` : ""} · tenant {user?.tenantId ?? "unknown"} · {new Date().toLocaleString()} · {filtered.length} records
+        </div>
+        {printReview.declared.length ? (
+          <div className="mt-1 text-[9px] font-bold leading-relaxed">
+            Contains {printReview.declared.map((note) => note.label).join(", ")}.
+            {printReview.declared.some((note) => note.classification === "phi") ? " Patient-identifying information — handle under the tenant's retention policy." : ""}
+          </div>
+        ) : null}
+      </div>      <div className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
         <div data-tour="search" className="min-w-[240px] flex-1 lg:max-w-xl"><SearchInput value={search} onChange={(value) => { setSearch(value); persist(value, filters); setPageNumber(1); }} className="w-full" placeholder={`Search ${page.title.toLowerCase()} by ID, name or any visible value…`} /></div>
         <Button data-tour="new" variant="primary" leftIcon={<Plus className="size-3.5" />} onClick={() => openRecord({ pageId: page.id, mode: "new", title: `New ${page.title.replace(/ (Master|Worklist)$/i, "")}` })}>New</Button>
         <div className="hidden h-7 w-px bg-[var(--border)] md:block" />
@@ -392,7 +450,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           <IconButton data-tour="columns" label="Choose columns" onClick={() => setColumnOpen(true)}><Columns3 className="size-4" /></IconButton>
           <IconButton label="Refresh results" onClick={() => toast({ title: "Worklist refreshed", message: `${filtered.length} mock records synchronized.`, type: "info" })}><RefreshCw className="size-4" /></IconButton>
           <ActionMenu trigger={<IconButton label="More worklist actions"><MoreHorizontal className="size-4" /></IconButton>}>
-            {(close) => <><MenuButton icon={<Download className="size-3.5" />} label={`Export visible records (${preferences.exportFormat.toUpperCase()})`} onClick={() => { doExport(filtered, "records"); close(); }} /><MenuButton icon={<Upload className="size-3.5" />} label="Import records" onClick={() => { navigation.open({ pageId: "spreadsheet-studio" }); close(); }} /><MenuButton icon={<Settings2 className="size-3.5" />} label="Page preferences" onClick={() => { navigation.open({ pageId: "preferences" }); close(); }} /></>}
+            {(close) => <><MenuButton icon={<Download className="size-3.5" />} label={`Export visible records (${preferences.exportFormat.toUpperCase()})`} onClick={() => { doExport(filtered, "records"); close(); }} /><MenuButton icon={<Printer className="size-3.5" />} label="Print this list" onClick={() => { doPrint(filtered); close(); }} /><MenuButton icon={<Upload className="size-3.5" />} label="Import records" onClick={() => { navigation.open({ pageId: "spreadsheet-studio" }); close(); }} /><MenuButton icon={<Settings2 className="size-3.5" />} label="Page preferences" onClick={() => { navigation.open({ pageId: "preferences" }); close(); }} /></>}
           </ActionMenu>
         </div>
       </div>
@@ -449,21 +507,29 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
       <ColumnManager open={columnOpen} onClose={() => setColumnOpen(false)} columns={config.columns} visibleKeys={visibleKeys} onChange={setVisibleKeys} onReset={resetLayout} />
       <ConfirmDialog open={confirmArchive} title={`Archive ${selected.length} records?`} message={<>They will leave every worklist and report until restored. This cannot be undone from the worklist.<br /><br />Turn off <b>Confirm bulk actions</b> in My Preferences to skip this prompt.</>} confirmLabel="Archive" tone="danger" onConfirm={archive} onCancel={() => setConfirmArchive(false)} />
       <ConfirmDialog
-        open={pendingExport !== null}
-        title={`Export ${pendingExport?.rows.length ?? 0} records to a file?`}
-        confirmLabel="Export"
+        open={pendingEgress !== null}
+        title={pendingEgress?.via === "print"
+          ? `Print ${pendingEgress?.rows.length ?? 0} records?`
+          : `Export ${pendingEgress?.rows.length ?? 0} records to a file?`}
+        confirmLabel={pendingEgress?.via === "print" ? "Print" : "Export"}
         message={<>
-          {pendingExport?.review.declared.length ? (
-            <>The file will contain <b>{pendingExport.review.declared.map((note) => note.label).join(", ")}</b>.
-              {" "}Once saved it is outside this application: no retention rule reaches it, and nobody is asked again when it is forwarded.<br /><br /></>
+          {pendingEgress?.review.declared.length ? (
+            <>The {pendingEgress.via === "print" ? "printout" : "file"} will contain <b>{pendingEgress.review.declared.map((note) => note.label).join(", ")}</b>.
+              {" "}Once {pendingEgress.via === "print" ? "printed" : "saved"} it is outside this application: no retention rule reaches it, and nobody is asked again when it is {pendingEgress.via === "print" ? "carried out of the building" : "forwarded"}.<br /><br /></>
           ) : null}
-          {pendingExport?.review.withheld.length ? (
-            <>Held back: <b>{pendingExport.review.withheld.map((note) => note.label).join(", ")}</b>. Nothing of that kind is written to a file.<br /><br /></>
+          {pendingEgress?.review.withheld.length ? (
+            <>Held back: <b>{pendingEgress.review.withheld.map((note) => note.label).join(", ")}</b>. Nothing of that kind leaves as a document.<br /><br /></>
           ) : null}
-          This export is recorded against your account — by column, never by value.
+          This is recorded against your account — by column, never by value.
         </>}
-        onConfirm={() => { const pending = pendingExport; setPendingExport(null); if (pending) writeExport(pending.rows, pending.what); }}
-        onCancel={() => setPendingExport(null)}
+        onConfirm={() => {
+          const pending = pendingEgress;
+          setPendingEgress(null);
+          if (!pending) return;
+          if (pending.via === "print") window.print();
+          else writeExport(pending.rows, pending.what);
+        }}
+        onCancel={() => setPendingEgress(null)}
       />
       <RecordPreview row={previewRow} config={config} onClose={() => setPreviewRow(null)} onView={() => previewRow && view(previewRow)} onEdit={() => previewRow && edit(previewRow)} />
     </div>

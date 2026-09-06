@@ -71,8 +71,10 @@ export function reporter(title) {
 }
 
 /** Signs in and returns a page. The demo shell has one account. */
-export async function signIn(browser, url = BASE, viewport = { width: 1500, height: 950 }) {
-  const page = await browser.newPage({ viewport });
+export async function signIn(browser, url = BASE, viewport = { width: 1500, height: 950 }, context) {
+  /* A caller that needs an init script — anything stubbing a browser API before
+     the first byte of the app runs — makes its own context and passes it. */
+  const page = context ? await context.newPage() : await browser.newPage({ viewport });
   const errors = [];
   page.on("pageerror", (error) => errors.push(`PAGEERROR: ${error.message.slice(0, 180)}`));
   page.on("console", (message) => { if (message.type() === "error") errors.push(`CONSOLE: ${message.text().slice(0, 180)}`); });

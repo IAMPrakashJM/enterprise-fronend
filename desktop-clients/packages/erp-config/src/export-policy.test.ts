@@ -107,6 +107,14 @@ describe("exportAudit", () => {
     expect(audit.columns).toEqual(["id", "status", "patient", "prescriber", "drug"]);
   });
 
+  /* A file and a printed sheet are both documents and both leave, so both are
+     recorded — but they are not the same event, and a review that could not
+     tell them apart would be looking for a file that never existed. */
+  test("says how it left, and assumes a file when nobody says", () => {
+    expect(exportAudit("prescription-queue", review, 96).via).toBe("file");
+    expect(exportAudit("prescription-queue", review, 96, "print").via).toBe("print");
+  });
+
   test("names the sensitive columns by key and class", () => {
     expect(exportAudit("prescription-queue", review, 96).declared).toEqual([
       { key: "patient", classification: "phi" },
@@ -124,6 +132,6 @@ describe("exportAudit", () => {
     /* There is nowhere in the shape for one, which is the point: the audit is
        built from the COLUMNS and never sees a row. */
     expect(JSON.stringify(audit)).not.toMatch(/AV204581|Maya|Thomas/);
-    expect(Object.keys(audit).sort()).toEqual(["columns", "declared", "pageId", "rows", "withheld"]);
+    expect(Object.keys(audit).sort()).toEqual(["columns", "declared", "pageId", "rows", "via", "withheld"]);
   });
 });
