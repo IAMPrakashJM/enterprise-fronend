@@ -16,6 +16,10 @@ npx playwright install --with-deps chromium
 or point `PLAYWRIGHT_PATH` at an existing copy. The suites say so when it is
 missing rather than failing obscurely.
 
+`axe-core` IS a dependency, unlike Playwright: it is a couple of megabytes
+rather than a browser, so `npm ci` already has it and the accessibility check
+runs without anyone installing anything.
+
 ### Without sudo
 
 `--with-deps` needs root, and Chromium will not start without those shared
@@ -63,6 +67,7 @@ rebuilt. Every bug below was green in the unit suite at the moment it was found.
 | A patient name reaching `localStorage` via `filters.query` | The unit tests exercised the read path; the write path's gate had silently failed to apply |
 | The search box not counting toward the share decision | It is separate state, outside the component under test |
 | Whether a column is actually removed from a printed page | jsdom has no stylesheets, no computed styles and no print media |
+| Text at 2.5:1 on the sidebar, and one label at 1.29:1 — dark on dark | Contrast is a computed colour against a computed background; jsdom has neither |
 | A saved view applying no filters at all | The redirect wrote them to sessionStorage and nothing read them — two routes, neither wrong on its own |
 | A patient name left in sessionStorage for the life of the tab | Same handoff; a unit test of either route sees only its own half |
 
@@ -98,6 +103,12 @@ and a clinical use case cannot be sent until its acknowledgement is given.
 holding an MRN says what the file will contain first; declining writes no file
 and records nothing; accepting writes it and records it by column and class, with
 no cell value anywhere in the record.
+
+**`a11y.e2e.mjs`** — axe-core over sign-in, a worklist, a record, preferences,
+a consultation, the assistant panel and the command palette, held to WCAG 2.1 A
+and AA. Every screen proves it loaded before it is audited: the first version
+navigated by palette and double-click, checked neither, and quietly audited the
+previous page twice.
 
 **`print.e2e.mjs`** — the banner is in the document before anyone asks and
 appears only under print media, naming who printed the sheet, for which tenant,

@@ -19,9 +19,9 @@ interface BaseFieldProps {
 export function FieldShell({ label, hint, error, required, className, children }: BaseFieldProps & { children: React.ReactNode }) {
   return (
     <label className={cn("block min-w-0", className)}>
-      {label ? <span className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{label}{required ? <span className="text-[var(--danger)]">*</span> : null}</span> : null}
+      {label ? <span className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{label}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}</span> : null}
       {children}
-      {error ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger)]">{error}</span> : hint ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{hint}</span> : null}
+      {error ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger-ink)]">{error}</span> : hint ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{hint}</span> : null}
     </label>
   );
 }

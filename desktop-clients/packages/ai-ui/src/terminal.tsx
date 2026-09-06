@@ -96,7 +96,7 @@ export function AiTerminal({ assistant }: { assistant: Assistant }) {
           <pre key={index} className={cn("whitespace-pre-wrap break-words",
             line.kind === "in" && "text-[var(--primary-strong)]",
             line.kind === "note" && "text-[var(--text-muted)]",
-            line.kind === "error" && "text-[var(--danger)]",
+            line.kind === "error" && "text-[var(--danger-ink)]",
           )}>{line.kind === "in" ? `> ${line.text}` : line.text}</pre>
         ))}
         {busy ? <pre className="text-[var(--text-muted)]">working…</pre> : null}

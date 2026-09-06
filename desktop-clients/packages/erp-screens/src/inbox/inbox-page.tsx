@@ -46,9 +46,9 @@ const KIND_ICON: Record<NotificationKind, React.ComponentType<{ className?: stri
 };
 
 const KIND_WASH: Record<NotificationKind, string> = {
-  warning: "bg-[color-mix(in_srgb,var(--warning)_14%,transparent)] text-[var(--warning)]",
-  danger: "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger)]",
-  success: "bg-[color-mix(in_srgb,var(--success)_14%,transparent)] text-[var(--success)]",
+  warning: "bg-[color-mix(in_srgb,var(--warning)_14%,transparent)] text-[var(--warning-ink)]",
+  danger: "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger-ink)]",
+  success: "bg-[color-mix(in_srgb,var(--success)_14%,transparent)] text-[var(--success-ink)]",
   info: "bg-[var(--primary-soft)] text-[var(--primary)]",
 };
 

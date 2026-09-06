@@ -192,7 +192,7 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
 
         <span className="font-mono text-[length:calc(13px*var(--fs-scale))] font-black tabular-nums">{clock}</span>
         {state === "recording" ? (
-          <span className="flex items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-bold text-[var(--danger)]">
+          <span className="flex items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-bold text-[var(--danger-ink)]">
             <Circle className="size-2 animate-pulse fill-current" /> Recording
           </span>
         ) : state === "paused" ? <Badge tone="warning">paused</Badge>
@@ -219,7 +219,7 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
 
       {problem ? (
         <div className="flex items-start gap-2 rounded-lg border border-[color-mix(in_srgb,var(--danger)_30%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_7%,transparent)] p-2.5 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
-          <MicOff className="mt-0.5 size-3.5 shrink-0 text-[var(--danger)]" />
+          <MicOff className="mt-0.5 size-3.5 shrink-0 text-[var(--danger-ink)]" />
           <span>{problem}</span>
         </div>
       ) : null}
@@ -238,7 +238,7 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
         ) : segments.map((s) => (
           <div key={s.sequence} className={cn("mb-1.5 grid grid-cols-[70px_1fr] gap-2 text-[length:calc(10px*var(--fs-scale))] leading-relaxed", !s.final && "opacity-60")}>
             <span className={cn("text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.06em]",
-              s.speaker === "DOCTOR" ? "text-[var(--primary)]" : "text-[var(--success)]")}>{s.speaker}</span>
+              s.speaker === "DOCTOR" ? "text-[var(--primary)]" : "text-[var(--success-ink)]")}>{s.speaker}</span>
             <span>{s.text}{!s.final ? <span className="ms-1 text-[var(--text-subtle)]">(interim)</span> : null}</span>
           </div>
         ))}

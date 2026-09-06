@@ -95,7 +95,7 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, onChan
       <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] px-3 py-2">
         {holdingBack ? (
           <p className="mr-auto flex items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">
-            <Lock aria-hidden className="size-3.5 shrink-0 text-[var(--warning)]" />
+            <Lock aria-hidden className="size-3.5 shrink-0 text-[var(--warning-ink)]" />
             {sensitiveKeys.length} filter{sensitiveKeys.length === 1 ? "" : "s"} cannot be put in a link. Save a view to share this.
           </p>
         ) : <span className="mr-auto" />}

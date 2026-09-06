@@ -228,14 +228,14 @@ export function Sidebar() {
             <Command className="relative size-4" />
           </button>
         )}
-        {expanded ? <div className="min-w-0 flex-1"><div className="truncate text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary)]">ONE</span></div><div className="truncate text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] text-[var(--text-subtle)]">Enterprise ERP</div></div> : null}
+        {expanded ? <div className="min-w-0 flex-1"><div className="truncate text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary-strong)]">ONE</span></div><div className="truncate text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] text-[var(--text-subtle)]">Enterprise ERP</div></div> : null}
         {expanded ? <button type="button" title={preferences.sidebarPinned ? "Unpin sidebar" : "Pin sidebar"} onClick={() => updatePreference("sidebarPinned", !preferences.sidebarPinned)} className={cn("focus-ring flex size-8 items-center justify-center rounded-lg border transition", preferences.sidebarPinned ? "border-[color-mix(in_srgb,var(--primary)_25%,transparent)] bg-[var(--primary-soft)] text-[var(--primary)]" : "border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--surface-2)]")}>{preferences.sidebarPinned ? <PinOff className="size-3.5" /> : <Pin className="size-3.5" />}</button> : null}
       </div>
 
       <div className="shrink-0 border-b border-[var(--border)] px-3 py-3">
         <div className={cn("flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface-2)]", expanded ? "gap-2 px-2.5 py-2" : "justify-center p-1.5")}>
           <div className="flex size-7 shrink-0 items-center justify-center rounded-lg text-[length:calc(10px*var(--fs-scale))] font-black text-white" style={{ background: module.accent }}>{brandLetters}</div>
-          {expanded ? <div className="min-w-0"><div className="truncate text-[length:calc(11px*var(--fs-scale))] font-extrabold">{module.label}</div><div className="truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">Module navigation</div></div> : null}
+          {expanded ? <div className="min-w-0"><div className="truncate text-[length:calc(11px*var(--fs-scale))] font-extrabold text-[var(--text)]">{module.label}</div><div className="truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">Module navigation</div></div> : null}
         </div>
       </div>
 

@@ -26,7 +26,7 @@ function PreviewContent({ row, config }: { row: Record<string, string | number |
           return <div key={key} className="min-w-0"><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.09em] text-[var(--text-subtle)]">{column?.label ?? key.replace(/([A-Z])/g, " $1")}</div><div className="mt-1 truncate text-[length:calc(10.5px*var(--fs-scale))] font-bold text-[var(--text)]" title={output}>{output}</div></div>;
         })}
       </div>
-      <div className="mt-4 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]"><ShieldCheck className="size-4 shrink-0 text-[var(--success)]" /><span>Visibility is filtered by your current role, branch and field-level permissions.</span></div>
+      <div className="mt-4 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]"><ShieldCheck className="size-4 shrink-0 text-[var(--success-ink)]" /><span>Visibility is filtered by your current role, branch and field-level permissions.</span></div>
     </div>
   );
 }

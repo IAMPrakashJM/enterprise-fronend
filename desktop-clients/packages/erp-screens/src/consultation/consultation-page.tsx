@@ -217,7 +217,7 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
 
           {composed.warnings.length ? (
             <div className="mt-3 flex items-start gap-2.5 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-3">
-              <TriangleAlert className="mt-0.5 size-4 shrink-0 text-[var(--warning)]" />
+              <TriangleAlert className="mt-0.5 size-4 shrink-0 text-[var(--warning-ink)]" />
               <div className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
                 <b>Unusual combination — allowed, not blocked.</b>
                 <ul className="mt-1 list-disc ps-4">{composed.warnings.map((w) => <li key={w}>{w}</li>)}</ul>
@@ -308,7 +308,7 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
         <div className="nex-scrollbar min-h-0 overflow-y-auto bg-[var(--surface-2)] p-3">
           {composed.warnings.length ? (
             <div className="mb-3 flex items-start gap-2.5 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-3">
-              <TriangleAlert className="mt-0.5 size-4 shrink-0 text-[var(--warning)]" />
+              <TriangleAlert className="mt-0.5 size-4 shrink-0 text-[var(--warning-ink)]" />
               <div className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
                 {composed.warnings.map((w) => <div key={w}>{w}</div>)}
               </div>
@@ -563,7 +563,7 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
 
           <div className="rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--danger)_25%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_6%,transparent)] p-3">
             <div className="mb-1.5 flex items-center gap-1.5 text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">
-              <CircleAlert className="size-3.5 text-[var(--danger)]" /> Scope of this screen
+              <CircleAlert className="size-3.5 text-[var(--danger-ink)]" /> Scope of this screen
             </div>
             <div className="text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">
               A documentation template, not clinical decision support. Prompts describe what a note of this shape usually records; they are not advice, and instruments are offered with the conditions under which they apply rather than as fields to complete.

@@ -17,10 +17,10 @@ export function initialsOf(name: string): string {
    "wherever" fails against a light surface. */
 const WASHES = [
   "bg-[color-mix(in_srgb,var(--primary)_16%,transparent)] text-[var(--primary-strong)]",
-  "bg-[color-mix(in_srgb,var(--success)_16%,transparent)] text-[var(--success)]",
-  "bg-[color-mix(in_srgb,var(--warning)_18%,transparent)] text-[var(--warning)]",
+  "bg-[color-mix(in_srgb,var(--success)_16%,transparent)] text-[var(--success-ink)]",
+  "bg-[color-mix(in_srgb,var(--warning)_18%,transparent)] text-[var(--warning-ink)]",
   "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]",
-  "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger)]",
+  "bg-[color-mix(in_srgb,var(--danger)_14%,transparent)] text-[var(--danger-ink)]",
 ];
 
 /* From the NAME, never a row index. A colour is a memory aid, and one that

@@ -23,9 +23,9 @@ function StatePanel({ icon, tone, title, description, detail, reference, action,
   status?: boolean;
 }) {
   const badge = tone === "danger"
-    ? "bg-[color-mix(in_srgb,var(--danger)_12%,transparent)] text-[var(--danger)]"
+    ? "bg-[color-mix(in_srgb,var(--danger)_12%,transparent)] text-[var(--danger-ink)]"
     : tone === "warning"
-      ? "bg-[color-mix(in_srgb,var(--warning)_14%,transparent)] text-[var(--warning)]"
+      ? "bg-[color-mix(in_srgb,var(--warning)_14%,transparent)] text-[var(--warning-ink)]"
       : "bg-[var(--surface-3)] text-[var(--text-muted)]";
   return (
     /* role=alert on the two that report a problem: a failure a screen reader

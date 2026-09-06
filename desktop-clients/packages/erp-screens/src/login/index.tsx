@@ -94,7 +94,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
             />
 
             {error ? (
-              <div role="alert" className="rounded-xl border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_8%,transparent)] px-3 py-2 text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger)]">
+              <div role="alert" className="rounded-xl border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_8%,transparent)] px-3 py-2 text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger-ink)]">
                 {error}
               </div>
             ) : null}
