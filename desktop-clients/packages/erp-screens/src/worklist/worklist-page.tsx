@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
-import { getWorklistConfig } from "@pepbits/erp-data";
+import { getWorklistConfig, FILTER_CLASSIFICATIONS } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
 import { Button, ConfirmDialog, IconButton, Segmented } from "@pepbits/ops-ui";
@@ -20,7 +20,8 @@ import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import type { DataColumn, PageDefinition, ResultView } from "@pepbits/erp-config";
+import { storableFilters } from "@pepbits/erp-config";
+import type { DataColumn, PageDefinition, ResultView, FilterDefinition } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
 function valueText(value: string | number | boolean) { return String(value).toLowerCase(); }
@@ -32,11 +33,42 @@ type SavedFilters = { search: string; filters: Record<string, string> };
    [search, filters]: an effect fires on the page-change reset too, and would
    save page A's filters under page B's key for one render before the reset
    landed. Last write wins, but the transient wrong write is still a bug. */
+/* Filtered on the way IN as well as out: whatever is on disk may have been
+   written by a build from before this rule existed. */
 function readFilters(pageId: string): SavedFilters | null {
-  try { const raw = window.localStorage.getItem(`nexora-filters:${pageId}`); return raw ? (JSON.parse(raw) as SavedFilters) : null; } catch { return null; }
+  try {
+    const raw = window.localStorage.getItem(`nexora-filters:${pageId}`);
+    if (!raw) return null;
+    const saved = JSON.parse(raw) as SavedFilters;
+    return { search: "", filters: storableFilters(filterDefinitions(saved.filters ?? {}), saved.filters ?? {}) };
+  } catch { return null; }
 }
+
+/* The registry, shaped as definitions for whichever keys are in play. */
+function filterDefinitions(values: Record<string, string>): FilterDefinition[] {
+  return Object.keys(values).map((key) => ({
+    key,
+    label: key,
+    type: "text" as const,
+    classification: FILTER_CLASSIFICATIONS[key] ?? "unclassified",
+  }));
+}
+/**
+ * The same allowlist that guards the URL guards this.
+ *
+ * localStorage is not a safer place than a query string — it is unencrypted, it
+ * survives logout, and it outlives the session that was authorised to see the
+ * value. §17.7 asks for the minimum to be kept there.
+ *
+ * `search` is dropped outright, and `query` is classified phi for the same
+ * reason: both are free-text boxes a user can type anything into, which makes
+ * them the single most likely place for a patient name to arrive by accident.
+ * That is exactly what a browser check found here — the search box was blanked
+ * while the same text went on reaching disk as filters.query.
+ */
 function writeFilters(pageId: string, saved: SavedFilters) {
-  try { window.localStorage.setItem(`nexora-filters:${pageId}`, JSON.stringify(saved)); } catch { /* storage unavailable */ }
+  const safe = { search: "", filters: storableFilters(filterDefinitions(saved.filters ?? {}), saved.filters ?? {}) };
+  try { window.localStorage.setItem(`nexora-filters:${pageId}`, JSON.stringify(safe)); } catch { /* storage unavailable */ }
 }
 function clearFilters(pageId: string) {
   try { window.localStorage.removeItem(`nexora-filters:${pageId}`); } catch { /* storage unavailable */ }

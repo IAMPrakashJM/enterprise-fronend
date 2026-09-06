@@ -1,4 +1,5 @@
 export * from "./types";
+export * from "./filter-policy";
 export * from "./navigation";
 export * from "./entity-schemas";
 export * from "./themes";
