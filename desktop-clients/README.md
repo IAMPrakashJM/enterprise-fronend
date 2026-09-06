@@ -82,6 +82,7 @@ npm run verify:ai-gates  # the AI access rules, including the escalation cases
 npm run verify:ai-credential  # a provider token never comes back (needs the API up)
 npm run verify:ai-context     # assembly reads only what a use case names
 npm run verify:ai-modes       # panel, terminal and inline share one engine
+npm run verify:ai-hardening   # the hardening ledger still matches the code
 ```
 
 Add `--css` to also diff the emitted stylesheet against a baseline build:
@@ -153,5 +154,7 @@ build log.
 - `docs/superpowers/plans/2026-09-03-nexora-monorepo.md` — the implementation plan
 - `docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md` — the gated AI assistant, draft
 - `docs/superpowers/plans/2026-09-03-contextual-ai-assistant.md` — its seven-task plan
+- `docs/ai-service-contract.md` — what a real AI service must implement, and what dummy-api does instead
+- `docs/ai-hardening-ledger.md` — what is discharged, what is not, and what the gaps would take
 - `docs/running-tauri.md` — running the desktop app as a real Tauri window, and what a headless machine can and cannot show you
 - `docs/ui-gap-analysis.md` — what AllyVORA's provider-web has that this does not, with the cost and the case against each
