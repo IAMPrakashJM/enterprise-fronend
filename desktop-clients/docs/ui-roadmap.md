@@ -18,7 +18,7 @@ Companion documents: `ui-gap-analysis.md` (why each item is worth doing),
 | P0 | Segmented control | Build now | ✅ |
 | P0 | Avatar | Build now | ✅ |
 | P0 | Stat card | Build now | ✅ |
-| P1 | Inline editing | With concurrency + audit | **Partial** — one generic editor ✅; typed variants ✗; 409 path untested against a real API |
+| P1 | Inline editing | With concurrency + audit | ✅ generic + Number, Select, Date, Status; 409 path still untested against a real API |
 | P1 | Shared filter bar | Reusable framework | ✅ registry, classification, URL rules, saved views |
 | P1 | Reference data notice | With backend support | ✗ — needs the partial-failure contract first |
 | P2 | URL filters | URL-safe only | ✅ allowlist, both directions, storage gated too |
@@ -84,11 +84,15 @@ failure into "something went wrong", which §3 names as the thing to avoid.
 button; 403, 404, 409, 422 and 401 do not. ConflictState offers *reload* —
 retrying sends the same stale version and gets the same refusal.
 
-### Phase 3 — typed inline editors
+### Phase 3 — done
 
-One generic `InlineEdit` exists. The roadmap asks for `InlineEditableNumber`,
-`Select`, `Date` and `Status`, each with its own validation and keyboard
-behaviour.
+Four typed editors over one state machine. The control is a render prop rather
+than a `type` discriminator with a dozen companion props — a number needs
+min/max/step, a select needs options, a date needs a window, and folding all of
+that into one signature is the prop-heavy component §11 says to avoid.
+
+`Status` takes an optional transition map: a status with nowhere to go is not
+editable at all, rather than editable into itself.
 
 ### Phase 5 — reference data health
 
