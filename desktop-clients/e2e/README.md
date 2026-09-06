@@ -62,6 +62,8 @@ rebuilt. Every bug below was green in the unit suite at the moment it was found.
 | A detached window with no `NavigationProvider` — every window blank | It threw into a console nobody was reading |
 | A patient name reaching `localStorage` via `filters.query` | The unit tests exercised the read path; the write path's gate had silently failed to apply |
 | The search box not counting toward the share decision | It is separate state, outside the component under test |
+| A saved view applying no filters at all | The redirect wrote them to sessionStorage and nothing read them — two routes, neither wrong on its own |
+| A patient name left in sessionStorage for the life of the tab | Same handoff; a unit test of either route sees only its own half |
 
 That last pair is the reason this directory is committed rather than living in a
 scratch folder: the PHI guarantee is the one this repository most needs to keep,
@@ -84,6 +86,17 @@ answering `/_next/hmr` and the shell never hydrated at all.
 the URL nor localStorage; the bar marks which fields stay out of a link; a
 sensitive filter withdraws copy-link and offers a saved view; the view comes back
 as an opaque `VW_` id carrying no filter values.
+
+**`ai-dispatch.e2e.mjs`** — what the transparency panel shows is what the
+request carries, compared field by field against the intercepted body; the body
+holds a prompt id and nothing shaped like a prompt or a credential; `:fields`
+inspects without sending; a page the tenant denied offers no assistant at all;
+and a clinical use case cannot be sent until its acknowledgement is given.
+
+**`saved-view.e2e.mjs`** — the round trip: a view created through the UI, the
+link carrying only an opaque id, the filters restored into the field they were
+typed into, the handoff taken out of sessionStorage rather than left there, and
+one refusal for an id that is unknown, expired or someone else's.
 
 **`search-post.e2e.mjs`** — Apply sends a POST, the URL gains no filter at all,
 the typed name travels in the body rather than the query string, the body is
@@ -116,3 +129,10 @@ file, so the API would not start at all. Nothing in `npm test`, `typecheck` or
 
 **Assert invariants, not starting conditions.** "One tab open" tests the route
 the suite took to get there. "Exactly one tab is fixed" is the rule.
+
+**Beware an expectation that is already true.** The saved-view suite first
+asserted "the list is filtered" by counting table rows — which are capped by the
+page size, so the count was the same filtered or not. The same trap in reverse
+sank a unit test in the same session: a hook that starts on its defaults makes
+"it falls back to the defaults" true before the load has been attempted. Capture
+the before value and assert the change, not the state.

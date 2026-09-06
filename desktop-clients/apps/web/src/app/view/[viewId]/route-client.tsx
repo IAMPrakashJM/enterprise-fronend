@@ -16,9 +16,13 @@ export function SavedViewRoute({ viewId }: { viewId: string }) {
        it in the history means Back re-fetches it and Forward lands on a screen
        whose filters have already been applied elsewhere. */
     router.replace(`/${page.module}/${view.pageId}`);
-    /* The filters travel in memory, never through the URL that receives them —
-       which would undo the whole point of having been given an id. */
-    window.sessionStorage.setItem("nexora-pending-view", JSON.stringify(view.filters));
+    /* The filters travel out of band, never through the URL that receives them —
+       which would undo the whole point of having been given an id. The page id
+       travels with them so the worklist can check the handoff is meant for it,
+       and the worklist TAKES the entry rather than reading it: sessionStorage is
+       a web store, not memory, and a patient name must not sit in one for the
+       life of the tab. */
+    window.sessionStorage.setItem("nexora-pending-view", JSON.stringify({ pageId: view.pageId, filters: view.filters }));
   }, [router]);
 
   return (

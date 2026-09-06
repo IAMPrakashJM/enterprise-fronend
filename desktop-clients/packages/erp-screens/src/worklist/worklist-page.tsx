@@ -76,6 +76,40 @@ function clearFilters(pageId: string) {
   try { window.localStorage.removeItem(`nexora-filters:${pageId}`); } catch { /* storage unavailable */ }
 }
 
+const PENDING_VIEW = "nexora-pending-view";
+
+/**
+ * The handoff from a saved view.
+ *
+ * A view exists to carry the filters a URL may NOT, so they cannot ride in the
+ * redirect that opens the worklist. sessionStorage is the only channel between
+ * two routes of one tab — and it is a web store rather than memory, so this
+ * TAKES: the entry is removed before it is used, and a patient name does not
+ * sit in a store for the life of the tab.
+ *
+ * Removed even when it is not for this page. The handoff is a one-shot for the
+ * redirect that immediately follows, so an entry arriving anywhere else was
+ * never going to be consumed as intended, and keeping PHI on the chance that it
+ * might be is the wrong way round.
+ *
+ * Nothing read this at all until it was noticed in a browser: the view resolved,
+ * the redirect landed, and the worklist showed every row unfiltered while the
+ * name it was filtered by stayed in the store.
+ */
+function takePendingView(pageId: string): Record<string, string> | null {
+  let raw: string | null = null;
+  try {
+    raw = window.sessionStorage.getItem(PENDING_VIEW);
+    if (raw !== null) window.sessionStorage.removeItem(PENDING_VIEW);
+  } catch { return null; }
+  if (!raw) return null;
+  try {
+    const pending = JSON.parse(raw) as { pageId?: string; filters?: Record<string, string> };
+    if (pending.pageId !== pageId || !pending.filters) return null;
+    return pending.filters;
+  } catch { return null; }
+}
+
 /* "smart" matches every whitespace-separated token somewhere in the ROW, so
    "dubai active" finds a Dubai customer whose status is Active even though no
    single cell contains both words. The other two modes test each cell alone. */
@@ -107,12 +141,32 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
     /* Every worklist shares this one component instance, so a page change must
        reset what the previous page left behind -- and, when remembering, restore
        what THIS page had. */
-    const saved = preferences.rememberFilters ? readFilters(page.id) : null;
-    setSearch(saved?.search ?? "");
-    setFilters(saved?.filters ?? {});
+    /* A saved view wins over whatever this page remembered: it is an explicit
+       act, and the point of following the link is to see what it holds.
+       Restored by KEY: anything this page declares as a filter goes back to the
+       filter bar it was typed into, and only a key the page has no filter for
+       falls through to the search box above. Routing everything to the search
+       box instead put a value typed in the keyword field back somewhere else,
+       which filters the same rows and still reads as the wrong answer. */
+    const pending = takePendingView(page.id);
+    if (pending) {
+      const declared = new Set([...config.basicFilters, ...config.advancedFilters].map((filter) => filter.key));
+      const restored: Record<string, string> = {};
+      let restoredSearch = "";
+      for (const [key, value] of Object.entries(pending)) {
+        if (declared.has(key)) restored[key] = value;
+        else if (key === "query") restoredSearch = value;
+      }
+      setSearch(restoredSearch);
+      setFilters(restored);
+    } else {
+      const saved = preferences.rememberFilters ? readFilters(page.id) : null;
+      setSearch(saved?.search ?? "");
+      setFilters(saved?.filters ?? {});
+    }
     setPageNumber(1);
     setSelected([]);
-  }, [page.id, preferences.rememberFilters]);
+  }, [config.advancedFilters, config.basicFilters, page.id, preferences.rememberFilters]);
 
   const persist = (nextSearch: string, nextFilters: Record<string, string>) => {
     if (preferences.rememberFilters) writeFilters(page.id, { search: nextSearch, filters: nextFilters });
