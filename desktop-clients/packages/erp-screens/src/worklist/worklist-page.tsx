@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
 import { getWorklistConfig, FILTER_CLASSIFICATIONS } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
@@ -15,13 +15,14 @@ import { useColumnLayout } from "./use-column-layout";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { InlineAiAction } from "@pepbits/ai-ui";
 import { exportRows } from "./export-rows";
-import { FilterPanel } from "./filter-panel";
+import { authedFetch } from "@pepbits/auth";
+import { FilterBar } from "./filter-bar";
 import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import { storableFilters } from "@pepbits/erp-config";
-import type { DataColumn, PageDefinition, ResultView, FilterDefinition } from "@pepbits/erp-config";
+import { storableFilters, partitionFilters } from "@pepbits/erp-config";
+import type { DataColumn, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
 function valueText(value: string | number | boolean) { return String(value).toLowerCase(); }
@@ -91,7 +92,6 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [confirmArchive, setConfirmArchive] = useState(false);
-  const [advancedOpen, setAdvancedOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [previewRow, setPreviewRow] = useState<Record<string, string | number | boolean> | null>(null);
   const [columnOpen, setColumnOpen] = useState(false);
@@ -156,6 +156,52 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
    */
   const [edits, setEdits] = useState<Record<string, Record<string, string>>>({});
   useEffect(() => { setEdits({}); }, [page.id]);
+
+  /* Definitions, from the worklist config plus the classification registry.
+     The config says what a filter IS on screen; the registry says what it
+     HOLDS, and only the second decides where the value may go. */
+  const toDefinitions = useCallback(
+    (source: WorklistConfig["basicFilters"]): FilterDefinition[] =>
+      source.map((filter) => ({ ...filter, classification: FILTER_CLASSIFICATIONS[filter.key] ?? "unclassified" })),
+    [],
+  );
+  const basicDefinitions = useMemo(() => toDefinitions(config.basicFilters), [config.basicFilters, toDefinitions]);
+  const advancedDefinitions = useMemo(() => toDefinitions(config.advancedFilters), [config.advancedFilters, toDefinitions]);
+  /**
+   * What is being held back, INCLUDING the search box above the bar.
+   *
+   * That box is separate state and is not one of the config's filters, so it
+   * was not reaching the share decision at all: someone could type a name into
+   * it and still be offered a copy-link. It is free text a user can type
+   * anything into, which is exactly why `query` is classified phi — and the
+   * decision has to see it.
+   */
+  const sensitiveFilterKeys = useMemo(() => {
+    const everything = { ...filters, ...(search.trim() ? { query: search } : {}) };
+    return partitionFilters(
+      [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: FILTER_CLASSIFICATIONS.query }],
+      everything,
+    ).sensitiveKeys.sort();
+  }, [basicDefinitions, advancedDefinitions, filters, search]);
+
+  /* The sharing branch. A view holds the filters a URL may not, so the link is
+     an opaque id and the values stay on the server. */
+  const createSavedView = useCallback(async () => {
+    try {
+      const response = await authedFetch("/views", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ pageId: page.id, label: `${page.title} — filtered`, filters: { ...filters, ...(search.trim() ? { query: search } : {}) } }),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      const view = (await response.json()) as { id: string };
+      const link = `${window.location.origin}/view/${view.id}`;
+      await navigator.clipboard?.writeText(link).catch(() => undefined);
+      toast({ title: "Saved view created", message: `${view.id} — the link carries no filter values.`, type: "success" });
+    } catch {
+      toast({ title: "Could not create the saved view", message: "The view service did not accept it.", type: "error" });
+    }
+  }, [filters, search, page.id, page.title, toast]);
 
   const pageRows = filtered
     .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
@@ -237,7 +283,22 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
         </div>
       </div>
 
-      <div data-tour="filters"><FilterPanel config={config} values={filters} onChange={changeFilter} advancedOpen={advancedOpen} onAdvancedToggle={() => setAdvancedOpen((previous) => !previous)} onApply={() => toast({ title: "Filters applied", message: `${filtered.length} matching records found.`, type: "success" })} onReset={reset} activeFilterCount={activeFilterCount} /></div>
+        {/* The shared bar, driven by the classification registry. It replaces a
+            panel that rendered the same controls with no idea what any of them
+            held — which is how a patient name reached localStorage. */}
+        <div data-tour="filters">
+          <FilterBar
+            definitions={basicDefinitions}
+            advanced={advancedDefinitions}
+            values={filters}
+            sensitiveKeys={sensitiveFilterKeys}
+            onChange={changeFilter}
+            onApply={() => toast({ title: "Filters applied", message: `${filtered.length} matching records found.`, type: "success" })}
+            onReset={reset}
+            onCopyLink={() => { void navigator.clipboard?.writeText(window.location.href); toast({ title: "Link copied", message: "It carries only the filters that may travel in a URL.", type: "success" }); }}
+            onSaveView={() => void createSavedView()}
+          />
+        </div>
 
       {selected.length ? <div className="animate-slide-up flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--primary-soft)] px-3 py-2"><Badge tone="brand">{selected.length} selected</Badge><span className="text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">Bulk operations apply only to records you can update.</span><div className="ml-auto flex gap-1.5"><Button size="xs" variant="secondary" leftIcon={<Archive className="size-3" />} onClick={() => preferences.confirmBulkActions ? setConfirmArchive(true) : archive()}>Archive</Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />} onClick={() => doExport(selectedRows, "selected records")}>Export</Button><InlineAiAction useCaseId="worklist.summarise-selection" label="Summarise" /><Button size="xs" variant="ghost" leftIcon={<FilterX className="size-3" />} onClick={() => setSelected([])}>Clear</Button></div></div> : null}
 

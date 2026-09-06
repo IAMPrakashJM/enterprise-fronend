@@ -75,8 +75,9 @@ lsof -ti tcp:3100 tcp:3101 | xargs kill
 ## Verify
 
 ```bash
-npm test                 # 116 component tests -- does the screen come out right?
+npm test                 # unit tests, jsdom, ~2s -- does the screen come out right?
 npx turbo run build      # both apps
+npm run e2e              # browser checks — needs the stack up, see e2e/README.md
 npm run verify:parity    # moved files still identical to the pre-migration originals
 npm run verify:ai-gates  # the AI access rules, including the escalation cases
 npm run verify:ai-credential  # a provider token never comes back (needs the API up)
