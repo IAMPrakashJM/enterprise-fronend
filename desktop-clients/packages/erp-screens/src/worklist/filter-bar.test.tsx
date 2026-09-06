@@ -67,6 +67,66 @@ describe("FilterBar", () => {
       render_({ onCopyLink: noop, onSaveView: noop });
       expect(screen.queryByRole("button", { name: /copy link|saved view/i })).toBeNull();
     });
+
+    /* A worklist's search box lives ABOVE this bar and is not one of `values`,
+       so a name typed into it made the share row vanish entirely — nothing to
+       copy, and no offer to save the view that could carry it. */
+    test("something held back is something to share, even from outside this bar", () => {
+      render_({ values: {}, sensitiveKeys: ["query"], onCopyLink: noop, onSaveView: noop });
+      expect(screen.getByRole("button", { name: /saved view/i })).toBeVisible();
+      expect(screen.queryByRole("button", { name: /copy link/i })).toBeNull();
+    });
+  });
+
+  /* The advanced group the old FilterPanel had. Collapsed by default, because
+     six more controls open on every worklist is six more things between the
+     user and the table. */
+  describe("advanced filters", () => {
+    const advanced: FilterDefinition[] = [
+      { key: "owner", label: "Owner", type: "select", options: ["All", "Maya"], classification: "operational" },
+      { key: "mrn", label: "MRN", type: "text", classification: "phi" },
+    ];
+
+    test("are hidden until asked for", () => {
+      render_({ advanced });
+      expect(screen.queryByLabelText("Owner")).toBeNull();
+      expect(screen.getByRole("button", { name: /advanced/i })).toHaveAttribute("aria-expanded", "false");
+    });
+
+    test("open on request", async () => {
+      render_({ advanced });
+      await userEvent.click(screen.getByRole("button", { name: /advanced/i }));
+      expect(screen.getByLabelText("Owner")).toBeVisible();
+      expect(screen.getByRole("button", { name: /advanced/i })).toHaveAttribute("aria-expanded", "true");
+    });
+
+    /* A filter set in a collapsed section is a filtered list with nothing on
+       screen saying why. */
+    test("say how many are set while closed", () => {
+      render_({ advanced, values: { owner: "Maya", mrn: "AV204581" } });
+      expect(screen.getByRole("button", { name: /advanced/i })).toHaveAccessibleName(/2/);
+    });
+
+    test("a sensitive advanced filter is marked like any other", async () => {
+      render_({ advanced });
+      await userEvent.click(screen.getByRole("button", { name: /advanced/i }));
+      expect(screen.getByLabelText("MRN")).toHaveAccessibleDescription(/not.*(link|url)/i);
+    });
+
+    /* And it counts toward the share decision — the branch does not care which
+       section a sensitive filter came from. */
+    test("a sensitive advanced filter forces the saved-view path", () => {
+      render_({ advanced, values: { mrn: "AV204581" }, sensitiveKeys: ["mrn"], onCopyLink: noop, onSaveView: noop });
+      expect(screen.queryByRole("button", { name: /copy link/i })).toBeNull();
+      expect(screen.getByRole("button", { name: /saved view/i })).toBeVisible();
+    });
+  });
+
+  test("apply is offered when the caller wants one", async () => {
+    const onApply = vi.fn();
+    render_({ onApply });
+    await userEvent.click(screen.getByRole("button", { name: /^apply$/i }));
+    expect(onApply).toHaveBeenCalledOnce();
   });
 
   test("reset clears everything", async () => {
