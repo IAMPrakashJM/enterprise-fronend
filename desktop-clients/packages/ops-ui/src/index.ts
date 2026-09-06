@@ -5,6 +5,7 @@ export * from "./card";
 export * from "./cn";
 export * from "./dropdown";
 export * from "./empty-state";
+export * from "./error-mapper";
 export * from "./form-controls";
 export * from "./inline-edit";
 export * from "./nav-link";

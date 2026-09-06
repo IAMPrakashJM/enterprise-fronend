@@ -5,7 +5,7 @@ import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizont
 import { getWorklistConfig, FILTER_CLASSIFICATIONS } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
-import { Button, ConfirmDialog, IconButton, Segmented } from "@pepbits/ops-ui";
+import { Button, ConfirmDialog, IconButton, Segmented, classifyFailure } from "@pepbits/ops-ui";
 import { SearchInput } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
@@ -198,8 +198,13 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
       const link = `${window.location.origin}/view/${view.id}`;
       await navigator.clipboard?.writeText(link).catch(() => undefined);
       toast({ title: "Saved view created", message: `${view.id} — the link carries no filter values.`, type: "success" });
-    } catch {
-      toast({ title: "Could not create the saved view", message: "The view service did not accept it.", type: "error" });
+    } catch (error) {
+      /* Through the mapper, so a 403 on a saved view reads as a refusal rather
+         than as a broken service — and the reference gives support something to
+         trace, since the detail never reaches the screen. */
+      const status = Number(error instanceof Error ? error.message : NaN);
+      const failure = classifyFailure(Number.isFinite(status) ? { status } : { networkError: true });
+      toast({ title: failure.title, message: `${failure.description} Reference: ${failure.reference}`, type: "error" });
     }
   }, [filters, search, page.id, page.title, toast]);
 
