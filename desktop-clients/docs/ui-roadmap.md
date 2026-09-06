@@ -111,10 +111,10 @@ Set `REFERENCE_FAIL=insuranceNetworks` on the demo API to see it.
 
 ### Elsewhere
 
-```
-POST search API       ✗   sensitive filters are filtered client-side, because
-                          the rows are generated client-side
-```
+Nothing. `POST /worklists/search` is the last row, and it is done: the two
+halves travel in a body, the server re-partitions rather than trusting the
+caller, and the log records the safe half by value and the sensitive half by key
+— `status=Active +redacted[query]`.
 
 The `/view/:id` route is done. The URL carries the id and NOTHING else — no page,
 no module, no tenant. A page name in the link would tell nginx, APM and browser

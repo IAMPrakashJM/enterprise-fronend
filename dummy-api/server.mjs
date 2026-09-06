@@ -127,6 +127,62 @@ function savePrefs() {
  *                  second copy of the clinical data in a log nobody guards.
  *   expiring       a link mailed to someone stops working. Default 30 days.
  * ------------------------------------------------------------------------- */
+/* ---- worklist search ---------------------------------------------------- *
+ *
+ * A POST, and that is the whole point. A GET puts the filters in the request
+ * line, and the request line is what nginx, the API gateway, APM, OpenTelemetry
+ * and every cloud log record — so moving a patient name out of the visible URL
+ * and leaving it in a GET query changes nothing downstream. HTTPS protects the
+ * wire and nothing after the terminator.
+ *
+ * The body arrives in two halves because they are treated differently: the safe
+ * half is logged, the sensitive half is logged BY KEY ONLY. That is the same
+ * rule the saved-view audit follows, and §14's redaction table in the roadmap.
+ *
+ * Rows come from the REAL generator in packages/erp-data, imported through
+ * Node's type stripping exactly as the verify scripts import the real gate
+ * resolver. A second copy of the data here would drift from the one the client
+ * renders, and a search that disagrees with the table it filters is worse than
+ * no search.
+ * ------------------------------------------------------------------------- */
+import { getWorklistConfig } from "../desktop-clients/packages/erp-data/src/mock.ts";
+import { FILTER_CLASSIFICATIONS } from "../desktop-clients/packages/erp-data/src/filter-classification.ts";
+
+/* The redaction table, as a function. A value never reaches a log; a key does,
+   because "someone searched by MRN" is what an audit needs and "AV204581" is
+   what it must not keep. */
+function loggableFilters(safe, sensitive) {
+  const safePart = Object.entries(safe).map(([key, value]) => `${key}=${value}`).join(" ");
+  const sensitiveKeys = Object.keys(sensitive).sort().join(",");
+  return `${safePart}${sensitiveKeys ? ` +redacted[${sensitiveKeys}]` : ""}`;
+}
+
+/* Every filter the client sends is checked against the registry here too. A
+   client that has been edited can put a patient name in `safeFilters` and it
+   would be logged in full — so the server decides which half a key belongs to,
+   not the caller. */
+function partitionOnServer(filters) {
+  const safe = {};
+  const sensitive = {};
+  for (const [key, value] of Object.entries(filters ?? {})) {
+    if (typeof value !== "string" || !value.trim()) continue;
+    if (FILTER_CLASSIFICATIONS[key] === "operational") safe[key] = value;
+    else sensitive[key] = value;
+  }
+  return { safe, sensitive };
+}
+
+function matchesRow(row, key, value) {
+  const needle = value.trim().toLowerCase();
+  if (!needle) return true;
+  /* `query` is the free-text box: it searches every visible field, which is
+     exactly why it is classified phi rather than operational. */
+  if (key === "query") return Object.values(row).some((field) => String(field).toLowerCase().includes(needle));
+  const field = row[key];
+  if (field === undefined) return true;
+  return String(field).toLowerCase().includes(needle);
+}
+
 /* ---- reference data, with per-key failure ------------------------------- *
  *
  * An empty dropdown is ambiguous. "This tenant configured nothing" and "this
@@ -818,6 +874,55 @@ const server = createServer(async (req, res) => {
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
+  }
+
+  /* ---- worklist search --------------------------------------------------- */
+  if (pathname === "/worklists/search") {
+    if (req.method !== "POST") return send(res, 405, { error: `${req.method} not allowed on /worklists/search.` });
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    const body = await readJson(req).catch(() => null);
+    const pageId = typeof body?.pageId === "string" ? body.pageId : "";
+    if (!pageId) return send(res, 400, { error: "A search needs a pageId." });
+
+    /* Re-partitioned here rather than trusted. A client that has been edited
+       can put a patient name in safeFilters, and believing it would log the
+       value in full. */
+    const declared = { ...(body?.safeFilters ?? {}), ...(body?.sensitiveFilters ?? {}) };
+    const { safe, sensitive } = partitionOnServer(declared);
+
+    /* The generator keys off title and entity as well as pageId, so calling it
+       with the id alone builds a DIFFERENT dataset — 88 generic rows instead of
+       the 96 the client is showing. A search that disagrees with the table it
+       filters is worse than no search, and this one silently returned zero for
+       a customer that was on screen. The caller passes what it rendered with. */
+    const title = typeof body?.title === "string" && body.title ? body.title : pageId;
+    const entity = typeof body?.entity === "string" && body.entity ? body.entity : "record";
+
+    let config;
+    try {
+      config = getWorklistConfig(pageId, title, entity);
+    } catch {
+      return send(res, 404, { error: "That worklist does not exist." });
+    }
+
+    const filters = { ...safe, ...sensitive };
+    const rows = config.rows.filter((row) => Object.entries(filters).every(([key, value]) => matchesRow(row, key, value)));
+
+    console.log(`[search] ${user.email ?? user.id} tenant=${user.tenantId} page=${pageId} ${loggableFilters(safe, sensitive)} -> ${rows.length}/${config.rows.length}`);
+
+    const limit = Math.min(Number(body?.limit) || 200, 500);
+    return send(res, 200, {
+      pageId,
+      total: rows.length,
+      rows: rows.slice(0, limit),
+      /* Echoed so a client can show what was applied without holding it in a
+         URL. Keys only for the sensitive half, for the same reason the log
+         does: this response passes through the same proxies. */
+      applied: { safe, sensitiveKeys: Object.keys(sensitive).sort() },
+    });
   }
 
   /* ---- reference data ---------------------------------------------------- */

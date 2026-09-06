@@ -38,12 +38,22 @@ Each carries what it actually is, not a euphemism.
 | N2 | **No encryption at rest.** | none | Envelope encryption, keys held elsewhere |
 | N3 | **No key rotation policy.** `rotatedAt` is recorded, never enforced. | a timestamp field | Expiry, forced rotation, overlap window |
 | N4 | **No audit store.** | one `console.log` line per dispatch | Durable, queryable, retained; who / what / which record / which provider / cost / refusals |
-| N5 | **No redaction before egress.** Fields and free text reach the provider as typed. | none | Server-side identifier stripping, per data class |
+| N5 | **No redaction before egress to a PROVIDER.** Fields and free text still reach the AI provider as typed. | search logging redacts by key; AI dispatch does not | Server-side identifier stripping before any provider call, per data class |
 | N6 | **No provider allowlist.** Any endpoint an admin configures is obeyed. | free-text endpoint | Approved providers per data class; clinical use cases refused to unapproved ones |
 | N7 | **No PHI-approved provider.** No BAA, no jurisdiction guarantee. | DeepSeek / OpenAI | A provider under contract, and a region that satisfies the tenant's law |
 | N8 | **Open CORS.** `Access-Control-Allow-Origin: *`. | any origin may call the API | Origin allowlist per deployment |
 | N9 | **Role check is a demo.** `role === "enterprise-admin"`, from the session object. | one string comparison | The platform's own authorisation |
 | N10 | **Rate limits are per tenant only.** One user can exhaust a tenant's budget. | per-tenant window | Per-user limits inside the tenant limit |
+
+### N5, partly closed
+
+`POST /worklists/search` logs the operational filters by value and the sensitive
+ones **by key only** — `status=Active +redacted[query]`. That is §14's redaction
+table, applied where searches are logged.
+
+It is not the whole of N5. Nothing redacts what goes to an AI provider: `fields`
+and `userInput` reach `/ai/dispatch` as typed, and a provider is a third party
+where a log line is our own. The row stays open, narrowed.
 
 ## What this means in one sentence
 

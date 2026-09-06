@@ -94,12 +94,20 @@ const declared = [
   },
   {
     id: "N5",
-    claim: "nothing is redacted before egress",
-    /* Comments stripped first. The word "redacted" appears in a comment
-       describing what the CLIENT assembles, and matching prose made this
-       report a gap as closed that was never open — which is precisely the
-       failure this script exists to catch, caught on itself. */
-    stillTrue: () => !/redact|scrub|deidentif/i.test(withoutComments(server)),
+    claim: "nothing is redacted before egress to a provider",
+    /* Scoped to the AI dispatch path, not the whole file. Search logging DOES
+       redact by key now, and a whole-file match reported N5 as closed on the
+       strength of it — which was half true and therefore misleading. The open
+       half is that nothing strips identifiers from what reaches a provider.
+
+       Comments are stripped too: the word "redacted" appears in one describing
+       what the client assembles, and matching prose once reported this gap as
+       closed when it had never been open. */
+    stillTrue: () => {
+      const source = withoutComments(server);
+      const dispatch = source.slice(source.indexOf('pathname === "/ai/dispatch"'));
+      return !/redact|scrub|deidentif/i.test(dispatch);
+    },
   },
   {
     id: "N6",
