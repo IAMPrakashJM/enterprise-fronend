@@ -73,3 +73,90 @@ jobs:
             desktop-clients/**/*.log
           retention-days: 7
           if-no-files-found: ignore
+
+  # A separate job, so "the unit suite is fine but the browser disagrees" is a
+  # distinguishable answer rather than one red tick covering both. It needs the
+  # whole stack up and a real browser, which is why it is not folded into the
+  # step above.
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Only after the fast checks pass. Burning a browser download on a build
+    # that does not typecheck tells you nothing you did not already know.
+    needs: check
+
+    defaults:
+      run:
+        working-directory: desktop-clients
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: desktop-clients/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      # --with-deps because a GitHub runner has none of the shared libraries a
+      # headless Chromium links against, and the failure without it is a bare
+      # "error while loading shared libraries" a long way from its cause.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # The BUILT shells, not dev servers. Two reasons, and the second was
+      # learned the hard way: a production build is what actually ships, so a
+      # browser check against `next dev` proves something nobody deploys — and
+      # `next dev`'s HMR websocket is fragile against anything else on the box.
+      # On the machine this was written on, a speech-gateway upgrade handler was
+      # answering /_next/hmr, and the shell never hydrated at all.
+      - name: Build the shells
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:3200
+          VITE_API_URL: http://127.0.0.1:3200
+        run: npx turbo run build --filter=web --filter=desktop
+
+      - name: Start the stack
+        run: |
+          node ../dummy-api/server.mjs > /tmp/api.log 2>&1 &
+          # Each from its own directory: both resolve their root relative to
+          # cwd, and `vite preview` invoked from the workspace root serves the
+          # wrong tree and answers 404 to everything.
+          (cd apps/web && npx next start --port 3100 > /tmp/web.log 2>&1 &)
+          (cd apps/desktop && npx vite preview --port 3101 --strictPort > /tmp/desktop.log 2>&1 &)
+          # Each service is asked for an endpoint it actually serves. The API
+          # 404s on "/" by design — it has no index — so waiting for a 200 there
+          # waits for ever against a service that came up in a second.
+          wait_for() {
+            for attempt in $(seq 1 90); do
+              code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 2 "$1" || true)
+              case "$code" in
+                200|307) echo "  $1 up after ${attempt}s"; return 0 ;;
+              esac
+              sleep 1
+            done
+            echo "  $1 never came up"; tail -40 /tmp/api.log /tmp/web.log /tmp/desktop.log; return 1
+          }
+          wait_for http://127.0.0.1:3200/health
+          wait_for http://127.0.0.1:3100/
+          wait_for http://127.0.0.1:3101/
+
+      - name: Browser checks
+        run: npm run e2e
+
+      # The stack log is where a failure explains itself when the suite only
+      # says a selector timed out.
+      - name: Upload the stack log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stack-logs
+          path: |
+            /tmp/api.log
+            /tmp/web.log
+            /tmp/desktop.log
+          retention-days: 7
+          if-no-files-found: ignore
