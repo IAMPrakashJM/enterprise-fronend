@@ -43,6 +43,17 @@ That last pair is the reason this directory is committed rather than living in a
 scratch folder: the PHI guarantee is the one this repository most needs to keep,
 and it was being proved by a script that would not have survived the session.
 
+## In CI
+
+The  job builds both shells, starts them with the API, and runs these —
+after the fast checks pass, so a browser download is not spent on a build that
+does not typecheck.
+
+It serves the BUILT shells rather than dev servers. A check against `next dev`
+proves something nobody deploys, and HMR is fragile against anything else on the
+machine: on the box this was written on, a speech-gateway websocket handler was
+answering `/_next/hmr` and the shell never hydrated at all.
+
 ## The suites
 
 **`phi-safety.e2e.mjs`** — a patient name typed into a worklist reaches neither
