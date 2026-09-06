@@ -102,10 +102,16 @@ Needs the backend contract first: a response that distinguishes "no data" from
 ### Elsewhere
 
 ```
-/view/:id route       ✗   POST /views works; the link it returns opens nothing
 POST search API       ✗   sensitive filters are filtered client-side, because
                           the rows are generated client-side
 ```
+
+The `/view/:id` route is done. The URL carries the id and NOTHING else — no page,
+no module, no tenant. A page name in the link would tell nginx, APM and browser
+history which worklist someone opened, which is the same class of leak the
+opaque id exists to close: it would remove the patient name and leave the ward.
+The filters travel from the route to the worklist in session storage, never
+through the URL that receives them.
 
 ## Rules this repository already follows
 

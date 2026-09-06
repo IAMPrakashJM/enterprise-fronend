@@ -56,7 +56,7 @@ describe("ErrorState", () => {
 describe("AccessDenied", () => {
   test("says what is refused, not what broke", () => {
     render(<AccessDenied />);
-    expect(screen.getByText(/do not have access/i)).toBeVisible();
+    expect(screen.getByText(/Access not permitted/i)).toBeVisible();
     expect(screen.queryByText(/went wrong/i)).toBeNull();
   });
 
