@@ -953,13 +953,17 @@ const server = createServer(async (req, res) => {
       .filter((note) => note.classification !== "operational");
     const rows = Number(body?.rows) || 0;
     const withheld = Array.isArray(body?.withheld) ? body.withheld.filter((key) => typeof key === "string") : [];
+    /* A file and a printed sheet are different events. A review looking for the
+       file that walked out of the building would otherwise never find it,
+       because there was never a file. */
+    const via = body?.via === "print" ? "print" : "file";
 
     const summary = declared.map((note) => `${note.key}:${note.classification}`).join(",") || "none";
-    console.log(`[export] ${user.email ?? user.id} tenant=${user.tenantId} page=${pageId} rows=${rows} columns=${columns.length} sensitive=[${summary}]${withheld.length ? ` withheld=[${withheld.join(",")}]` : ""}`);
+    console.log(`[export] ${user.email ?? user.id} tenant=${user.tenantId} via=${via} page=${pageId} rows=${rows} columns=${columns.length} sensitive=[${summary}]${withheld.length ? ` withheld=[${withheld.join(",")}]` : ""}`);
 
     /* 202: recorded, and the file was written by the browser before this was
        ever called. Reporting 201 would imply this endpoint had a say. */
-    return send(res, 202, { recorded: true, sensitiveColumns: declared.length });
+    return send(res, 202, { recorded: true, via, sensitiveColumns: declared.length });
   }
 
   /* ---- reference data ---------------------------------------------------- */

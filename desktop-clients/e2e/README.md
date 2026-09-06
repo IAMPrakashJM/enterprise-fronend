@@ -62,6 +62,7 @@ rebuilt. Every bug below was green in the unit suite at the moment it was found.
 | A detached window with no `NavigationProvider` — every window blank | It threw into a console nobody was reading |
 | A patient name reaching `localStorage` via `filters.query` | The unit tests exercised the read path; the write path's gate had silently failed to apply |
 | The search box not counting toward the share decision | It is separate state, outside the component under test |
+| Whether a column is actually removed from a printed page | jsdom has no stylesheets, no computed styles and no print media |
 | A saved view applying no filters at all | The redirect wrote them to sessionStorage and nothing read them — two routes, neither wrong on its own |
 | A patient name left in sessionStorage for the life of the tab | Same handoff; a unit test of either route sees only its own half |
 
@@ -97,6 +98,13 @@ and a clinical use case cannot be sent until its acknowledgement is given.
 holding an MRN says what the file will contain first; declining writes no file
 and records nothing; accepting writes it and records it by column and class, with
 no cell value anywhere in the record.
+
+**`print.e2e.mjs`** — the banner is in the document before anyone asks and
+appears only under print media, naming who printed the sheet, for which tenant,
+how many records and what kind of data; the chrome does not print; a credential
+or unclassified column is REMOVED from the page rather than hidden; an
+unannounced print is still recorded, as a print rather than as a file; and
+choosing to print asks the same question exporting does.
 
 **`saved-view.e2e.mjs`** — the round trip: a view created through the UI, the
 link carrying only an opaque id, the filters restored into the field they were

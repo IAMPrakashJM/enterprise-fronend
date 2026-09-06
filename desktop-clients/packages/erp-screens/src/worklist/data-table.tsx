@@ -6,6 +6,9 @@ import { cn, InlineEdit } from "@pepbits/ops-ui";
 import { StatusBadge } from "@pepbits/ops-ui";
 import { IconButton } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
+/* Stamped on every header and cell so the print stylesheet can refuse a class
+   without JavaScript: see tokens.css. */
+import { classificationFor } from "@pepbits/erp-config";
 import type { DataColumn, Density, Formatters } from "@pepbits/erp-config";
 
 /**
@@ -76,7 +79,7 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
             <th className="w-10 px-3 py-2"><input aria-label="Select all visible records" type="checkbox" checked={allSelected} onChange={onToggleAll} className="size-3.5 accent-[var(--primary)]" /></th>
             {columns.map((column) => {
               const active = sort?.key === column.key;
-              return <th key={column.key} style={{ minWidth: column.width }} className="px-3 py-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]"><button type="button" disabled={!column.sortable} onClick={() => onSort(column)} className="focus-ring inline-flex items-center gap-1 rounded-md transition hover:text-[var(--text)] disabled:cursor-default">{column.label}{column.sortable ? active ? sort?.direction === "asc" ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" /> : <ArrowUpDown className="size-3 opacity-45" /> : null}</button></th>;
+              return <th key={column.key} data-classification={classificationFor(column.key)} style={{ minWidth: column.width }} className="px-3 py-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]"><button type="button" disabled={!column.sortable} onClick={() => onSort(column)} className="focus-ring inline-flex items-center gap-1 rounded-md transition hover:text-[var(--text)] disabled:cursor-default">{column.label}{column.sortable ? active ? sort?.direction === "asc" ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" /> : <ArrowUpDown className="size-3 opacity-45" /> : null}</button></th>;
             })}
             <th className="sticky right-0 w-28 bg-[var(--surface-2)] px-3 py-2 text-right text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]">Actions</th>
           </tr>
@@ -91,7 +94,7 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
             return (
               <tr key={id} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
                 <td className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><input aria-label={`Select ${id}`} type="checkbox" checked={checked} onChange={() => onToggle(id)} className="size-3.5 accent-[var(--primary)]" /></td>
-                {columns.map((column, index) => <td key={column.key} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
+                {columns.map((column, index) => <td key={column.key} data-classification={classificationFor(column.key)} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
                     /* stopPropagation: the cell opens the record preview, and
                        clicking into an editor must not also open a drawer over
                        the thing being edited. */
