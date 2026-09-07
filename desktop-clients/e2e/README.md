@@ -104,6 +104,14 @@ holding an MRN says what the file will contain first; declining writes no file
 and records nothing; accepting writes it and records it by column and class, with
 no cell value anywhere in the record.
 
+**`inline-conflict.e2e.mjs`** — one cell and two writers: an edit from the
+current value is accepted, a second writer changes it behind the page, and the
+next write is refused rather than merged, naming both values and the record;
+Reload adopts theirs. Also that the reports screen draws the shared filter bar.
+The suite restores the cell at the end, because the server holds edits in memory
+for the life of the process and a suite that cannot be run twice is a suite
+somebody will run twice.
+
 **`a11y.e2e.mjs`** — axe-core over sign-in, a worklist, a record, preferences,
 a consultation, the assistant panel and the command palette, held to WCAG 2.1 A
 and AA. Every screen proves it loaded before it is audited: the first version
@@ -140,6 +148,28 @@ Three rules, all learned the hard way.
 assumes a default is testing whatever the last run left behind — the workspace
 suite reported no tab strip, correctly, because an earlier session had switched
 floating windows on. Use `setPreference`.
+
+**Check which API the shell was BUILT against.** `NEXT_PUBLIC_*` is inlined by
+`next build`, not read at runtime, and `apps/web/.env.local` points at the
+deployed API. Passing `NEXT_PUBLIC_API_URL` to `next start` therefore does
+nothing, and every local browser run in this session was talking to
+`front-design.pepbits.com` rather than to the dummy API on :3200. No suite gave
+a false pass — the deployed API implements the same contract, and the newer
+assertions read the request the browser sent rather than the answer — but the
+first endpoint that existed only locally failed with no explanation. Build with
+the variable set:
+
+```bash
+NEXT_PUBLIC_API_URL=http://127.0.0.1:3200 VITE_API_URL=http://127.0.0.1:3200 npm run build
+```
+
+CI is unaffected: `.env.local` is gitignored and the workflow sets the variable
+on the build step.
+
+**A method the preflight does not name never leaves the browser.** `PATCH` was
+missing from the API's `Access-Control-Allow-Methods`, so the request was
+dropped, nothing was logged anywhere, and the only symptom was a cell that would
+not save.
 
 **Check what is actually serving.** A `next start` from an earlier session holds
 port 3100 and answers every route with a 500 against moved source; the suites

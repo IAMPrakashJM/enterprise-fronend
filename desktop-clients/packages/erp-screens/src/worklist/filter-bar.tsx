@@ -2,7 +2,8 @@
 
 import React, { useId, useState } from "react";
 import { ChevronDown, Link2, Lock, RotateCcw, Share2, SlidersHorizontal } from "lucide-react";
-import { Button, Input, Select, cn } from "@pepbits/ops-ui";
+import { Button, Input, ReferenceDataWarning, ReferenceField, Select, cn, referenceStateOf } from "@pepbits/ops-ui";
+import type { ReferenceResponse } from "@pepbits/ops-ui";
 import { isUrlSafe, type FilterDefinition, type FilterValues } from "@pepbits/erp-config";
 
 /**
@@ -13,15 +14,27 @@ import { isUrlSafe, type FilterDefinition, type FilterValues } from "@pepbits/er
  * offered. Both matter — a user who cannot tell which filters survive sharing
  * finds out by sharing one that does not.
  */
-export function FilterBar({ definitions, advanced, values, sensitiveKeys, onChange, onReset, onApply, onCopyLink, onSaveView, className }: {
+export function FilterBar({ definitions, advanced, values, sensitiveKeys, reference, referenceKeys, onChange, onReset, onApply, onRetryReference, onCopyLink, onSaveView, className }: {
   definitions: FilterDefinition[];
   /** A second group, collapsed by default. Classified exactly like the first. */
   advanced?: FilterDefinition[];
   values: FilterValues;
   sensitiveKeys: string[];
+  /**
+   * Lists that came from the server, and which of them failed.
+   *
+   * A select whose options are static needs none of this. One whose options are
+   * reference data does: an empty branch dropdown means either "this tenant has
+   * no branches" or "the branch service is down", and those look identical and
+   * mean opposite things.
+   */
+  reference?: ReferenceResponse;
+  /** Filter key to reference key, for the selects that are fed from the server. */
+  referenceKeys?: Record<string, string>;
   onChange: (key: string, value: string) => void;
   onReset: () => void;
   onApply?: () => void;
+  onRetryReference?: () => void;
   onCopyLink?: () => void;
   onSaveView?: () => void;
   className?: string;
@@ -38,6 +51,16 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, onChan
      list with nothing on screen saying why. */
   const advancedSet = (advanced ?? []).filter((definition) => (values[definition.key] ?? "").trim() !== "").length;
 
+  /* Only the failures for lists this bar actually shows. A page asking for four
+     reference lists and rendering one of them must not report the other three's
+     outages over a filter nobody can see. */
+  const shown = new Set(Object.values(referenceKeys ?? {}));
+  const failures = (reference?.failures ?? []).filter((failure) => shown.has(failure.key));
+  const referenceLabels = Object.fromEntries(
+    Object.entries(referenceKeys ?? {}).map(([filterKey, referenceKey]) =>
+      [referenceKey, [...definitions, ...(advanced ?? [])].find((definition) => definition.key === filterKey)?.label ?? referenceKey]),
+  );
+
   const renderField = (definition: FilterDefinition) => {
     const sensitive = !isUrlSafe(definition);
     const noteId = `${base}-${definition.key}-note`;
@@ -46,9 +69,21 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, onChan
       value: values[definition.key] ?? "",
       "aria-describedby": sensitive ? noteId : undefined,
     };
+    const referenceKey = referenceKeys?.[definition.key];
     return (
       <div key={definition.key} className="min-w-0">
-        {definition.type === "select" ? (
+        {referenceKey && reference ? (
+          /* Server-fed: the state of the list is part of the control, so an
+             outage disables it rather than showing an empty dropdown that reads
+             as "none configured". */
+          <ReferenceField
+            label={definition.label}
+            state={referenceStateOf(reference, referenceKey)}
+            options={reference.references[referenceKey] ?? []}
+            value={values[definition.key] ?? ""}
+            onChange={(next) => onChange(definition.key, next)}
+          />
+        ) : definition.type === "select" ? (
           <Select {...common} options={(definition.options ?? []).filter((o) => o !== "All").map((o) => ({ label: o, value: o }))} placeholder="All" onChange={(event) => onChange(definition.key, event.target.value)} />
         ) : (
           <Input {...common} type={definition.type === "date" ? "date" : "text"} placeholder={definition.type === "date" ? undefined : `Enter ${definition.label.toLowerCase()}`} onChange={(event) => onChange(definition.key, event.target.value)} />
@@ -68,6 +103,13 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, onChan
 
   return (
     <section className={cn("rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]", className)}>
+      {failures.length ? (
+        /* The banner names every broken list; the field says it again at the
+           control. A user looking at an empty dropdown is looking at the field,
+           not at a banner that may have scrolled away. */
+        <ReferenceDataWarning className="m-3 mb-0" failures={failures} labels={referenceLabels} onRetry={onRetryReference} />
+      ) : null}
+
       <div className="grid gap-3 p-3 md:grid-cols-3">
         {definitions.map(renderField)}
       </div>

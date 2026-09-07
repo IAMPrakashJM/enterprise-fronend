@@ -5,7 +5,7 @@ import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizont
 import { getWorklistConfig } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
-import { Button, ConfirmDialog, IconButton, Segmented, classifyFailure, type Failure, ErrorState } from "@pepbits/ops-ui";
+import { Button, ConfirmDialog, ConflictState, IconButton, Segmented, classifyFailure, type Failure, type ReferenceResponse, ErrorState } from "@pepbits/ops-ui";
 import { SearchInput } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
@@ -129,6 +129,28 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const [filters, setFilters] = useState<Record<string, string>>({});
   const [confirmArchive, setConfirmArchive] = useState(false);
   const [pendingEgress, setPendingEgress] = useState<{ rows: Row[]; what: string; review: ExportReview; via: EgressVia } | null>(null);
+
+  /**
+   * The lists the server owns, and which of them failed.
+   *
+   * `branch` is a reference list, not a fixed set of options. An empty branch
+   * dropdown means "this tenant has no branches" or "the branch service is
+   * down" — identical on screen, opposite in meaning, one a setup task and one
+   * an incident. The bar can only tell them apart if the failure travels with
+   * the data.
+   *
+   * A failed FETCH leaves this null and the bar falls back to the config's own
+   * options: no information about the lists is not the same as information that
+   * they are broken.
+   */
+  const [reference, setReference] = useState<ReferenceResponse | null>(null);
+  const loadReference = useCallback(() => {
+    void authedFetch("/reference?keys=branches")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((body) => setReference((body as ReferenceResponse | null) ?? null))
+      .catch(() => setReference(null));
+  }, []);
+  useEffect(() => loadReference(), [loadReference]);
   const [selected, setSelected] = useState<string[]>([]);
   const [previewRow, setPreviewRow] = useState<Record<string, string | number | boolean> | null>(null);
   const [columnOpen, setColumnOpen] = useState(false);
@@ -213,6 +235,18 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
    */
   const [edits, setEdits] = useState<Record<string, Record<string, string>>>({});
   useEffect(() => { setEdits({}); }, [page.id]);
+
+  /**
+   * The answer to two people editing one cell.
+   *
+   * The gap analysis raised this against inline editing and said the decision
+   * had to be made before the component was written rather than after. It was
+   * written first and the decision is being made now: the write is REFUSED, not
+   * merged and not overwritten. Last-write-wins loses somebody's work silently,
+   * which is the one outcome nobody can detect afterwards.
+   */
+  const [conflict, setConflict] = useState<{ id: string; key: string; label: string; theirs: string; mine: string } | null>(null);
+  useEffect(() => { setConflict(null); }, [page.id]);
 
   /* Definitions, from the worklist config plus the classification registry.
      The config says what a filter IS on screen; the registry says what it
@@ -460,6 +494,9 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
             held — which is how a patient name reached localStorage. */}
         <div data-tour="filters">
           <FilterBar
+            reference={reference ?? undefined}
+            referenceKeys={{ branch: "branches" }}
+            onRetryReference={loadReference}
             definitions={basicDefinitions}
             advanced={advancedDefinitions}
             values={filters}
@@ -482,6 +519,21 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
         {/* A failed search is a failure, not an empty result: "no records found"
             for a service that is down sends someone to re-check filters that
             were never the problem. */}
+        {conflict ? (
+          /* Above the table rather than in place of it: one cell lost a race and
+             the other ninety-five rows are fine. Replacing the list would be a
+             bigger claim than the failure supports. */
+          <div className="mb-3"><ConflictState
+            title={`${conflict.label} was changed by someone else`}
+            description={`You typed "${conflict.mine}". It now says "${conflict.theirs}". Your change was not saved.`}
+            detail={`Record ${conflict.id}`}
+            onReload={() => {
+              setEdits((current) => ({ ...current, [conflict.id]: { ...current[conflict.id], [conflict.key]: conflict.theirs } }));
+              setConflict(null);
+            }}
+            action={<Button variant="ghost" onClick={() => setConflict(null)}>Dismiss</Button>}
+          /></div>
+        ) : null}
         {searchFailure ? (
           <ErrorState
             title={searchFailure.title}
@@ -492,8 +544,29 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           />
         ) : pageRows.length ? preferences.resultView === "table" ? (
           <DataTable
-            onCellCommit={(row, column, next) => {
+            onCellCommit={async (row, column, next) => {
               const id = String(row[config.primaryKey]);
+              /* What this browser believes the cell says — the local edit if
+                 there is one, otherwise what the row was generated with. That
+                 is the value the user was editing FROM, which is the thing the
+                 server compares against. */
+              const seen = String(edits[id]?.[column.key] ?? row[column.key] ?? "");
+              const response = await authedFetch(`/worklists/${encodeURIComponent(page.id)}/${encodeURIComponent(id)}`, {
+                method: "PATCH",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ column: column.key, value: next, seen, title: page.title, entity: page.entity }),
+              }).catch(() => null);
+
+              if (response?.status === 409) {
+                const body = (await response.json().catch(() => null)) as { current?: { value?: string } } | null;
+                setConflict({ id, key: column.key, label: column.label, theirs: String(body?.current?.value ?? ""), mine: next });
+                return;
+              }
+              if (!response?.ok) {
+                const failure = classifyFailure(response ? { status: response.status } : { networkError: true });
+                toast({ type: "error", title: failure.title, message: `${failure.description} Reference: ${failure.reference}` });
+                return;
+              }
               setEdits((current) => ({ ...current, [id]: { ...current[id], [column.key]: next } }));
               toast({ type: "success", title: `${column.label} updated`, message: `${id} · ${next}` });
             }}
