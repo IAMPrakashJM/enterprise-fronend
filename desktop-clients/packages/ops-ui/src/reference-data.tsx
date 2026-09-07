@@ -3,6 +3,7 @@
 import React from "react";
 import { TriangleAlert } from "lucide-react";
 import { Button } from "./button";
+import { Select } from "./form-controls";
 import { cn } from "./cn";
 
 export interface ReferenceFailure { key: string; code: string }
@@ -90,37 +91,34 @@ export function ReferenceField({ label, state, options, value, onChange, require
   required?: boolean;
   className?: string;
 }) {
-  const id = React.useId();
-  const noteId = `${id}-note`;
   const broken = state === "failed";
   const note = broken
     ? `${label} could not be loaded. Try again, or leave this for now.`
     : state === "empty"
-      ? `None configured yet.`
+      ? "None configured yet."
       : undefined;
 
+  /* The shared Select, not a second one.
+   *
+   * This was written with its own <select> and its own label markup, and its
+   * class string was a near-copy of the shared field's — missing the inset
+   * shadow, the hover border and the placeholder colour. So a dropdown fed from
+   * the server looked almost, but not quite, like every other dropdown on the
+   * same screen. The only thing this control genuinely adds is what it does
+   * when the list is BROKEN: a warning border, a disabled control and a note
+   * saying which list failed. */
   return (
-    <div className={cn("min-w-0", className)}>
-      <label htmlFor={id} className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">
-        {label}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}
-      </label>
-      <select
-        id={id}
-        disabled={broken}
-        aria-describedby={note ? noteId : undefined}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className={cn(
-          "focus-ring h-9 w-full rounded-[10px] border bg-[var(--surface)] px-3 text-[length:calc(12px*var(--fs-scale))] font-medium text-[var(--text)] outline-none transition disabled:cursor-not-allowed disabled:bg-[var(--surface-2)] disabled:text-[var(--text-subtle)]",
-          broken ? "border-[color-mix(in_srgb,var(--warning)_45%,var(--border))]" : "border-[var(--border)]",
-        )}
-      >
-        <option value="">{broken ? "Unavailable" : "Select…"}</option>
-        {options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-      </select>
-      {note ? (
-        <p id={noteId} className={cn("mt-1 text-[length:calc(9.5px*var(--fs-scale))]", broken ? "font-semibold text-[var(--warning-ink)]" : "text-[var(--text-subtle)]")}>{note}</p>
-      ) : null}
-    </div>
+    <Select
+      className={className}
+      label={label}
+      required={required}
+      hint={broken ? undefined : note}
+      error={broken ? note : undefined}
+      disabled={broken}
+      options={options}
+      value={value}
+      placeholder={broken ? "Unavailable" : "Select…"}
+      onChange={(event) => onChange(event.target.value)}
+    />
   );
 }
