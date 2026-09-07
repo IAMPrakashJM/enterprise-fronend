@@ -5,7 +5,7 @@ import {
   BellRing, CheckCircle2, Clock3, Coins, Download, Languages, MonitorCog, PanelLeft,
   PanelTop, RotateCcw, Search, Settings2, SlidersHorizontal, Sparkles, Table2, Upload,
 } from "lucide-react";
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, RangeInput, Select, Tabs, Toggle, cn } from "@pepbits/ops-ui";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, FilePicker, RangeInput, SearchInput, Select, Tabs, Toggle, cn } from "@pepbits/ops-ui";
 import {
   DEFAULT_PREFERENCES, LANGUAGE_OPTIONS, THEME_OPTIONS, changedPreferenceCount,
   preferenceOverrides, sanitizePreferences,
@@ -247,13 +247,15 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           <div className="flex items-center gap-2"><SlidersHorizontal className="size-4 text-[var(--primary)]" /><h2 className="text-[length:calc(13px*var(--fs-scale))] font-black">My Preferences</h2>{changed ? <Badge tone="brand">{changed} changed</Badge> : <Badge tone="neutral">All defaults</Badge>}</div>
           <p className="mt-1 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">Saved to your account and applied everywhere the moment you change them.</p>
         </div>
-        <label className="relative ml-auto min-w-[220px] flex-1 lg:max-w-xs">
-          <Search className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-subtle)]" />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search settings…" className="focus-ring h-9 w-full rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] pl-8 pr-3 text-[length:calc(10.5px*var(--fs-scale))] font-semibold text-[var(--text)] placeholder:text-[var(--text-subtle)]" />
-        </label>
+        <SearchInput
+          className="ml-auto min-w-[220px] flex-1 lg:max-w-xs"
+          aria-label="Search settings"
+          placeholder="Search settings…"
+          value={query}
+          onChange={setQuery}
+        />
         <div className="flex flex-wrap gap-2">
-          <input ref={fileInput} type="file" accept="application/json,.json" hidden onChange={(event) => { const file = event.target.files?.[0]; if (file) void importJson(file); event.target.value = ""; }} />
-          <Button variant="secondary" leftIcon={<Upload className="size-3.5" />} onClick={() => fileInput.current?.click()}>Import</Button>
+          <FilePicker accept="application/json,.json" icon={<Upload className="size-3.5" />} label="Import" onFile={(file) => void importJson(file)} />
           <Button variant="secondary" leftIcon={<Download className="size-3.5" />} onClick={exportJson}>Export</Button>
           <Button variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} onClick={() => { resetPreferences(); toast({ title: "Defaults restored", message: "Every preference is back to its default.", type: "info" }); }}>Restore defaults</Button>
         </div>

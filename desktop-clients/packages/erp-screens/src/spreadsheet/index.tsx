@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { Download, Upload, WandSparkles } from "lucide-react";
-import { Badge, Button, Card, Input, cn } from "@pepbits/ops-ui";
+import { Badge, Button, Card, FilePicker, Input, cn } from "@pepbits/ops-ui";
 import { useERP } from "@pepbits/erp-shell";
 
 type SheetCell = string | number;
@@ -66,8 +66,7 @@ export function SpreadsheetPage() {
   return (
     <div className="flex w-full flex-col gap-3">
       <div data-tour="sheet-tools" className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
-        <Button variant="primary" leftIcon={<Upload className="size-3.5" />} onClick={() => inputRef.current?.click()}>Import Excel / CSV</Button>
-        <input ref={inputRef} className="hidden" type="file" accept=".xlsx,.xls,.csv" onChange={(event) => { const file = event.target.files?.[0]; if (file) void importFile(file); event.currentTarget.value = ""; }} />
+        <FilePicker variant="primary" accept=".xlsx,.xls,.csv" icon={<Upload className="size-3.5" />} label="Import Excel / CSV" onFile={(file) => void importFile(file)} />
         <Button leftIcon={<Download className="size-3.5" />} onClick={exportWorkbook}>Export workbook</Button>
         <Button variant="secondary" leftIcon={<WandSparkles className="size-3.5" />} onClick={recalculate}>Recalculate costs</Button>
         <div className="ml-auto flex items-center gap-2"><Badge tone="brand">{rows.length} rows</Badge><Badge tone="success">AED {total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Badge></div>

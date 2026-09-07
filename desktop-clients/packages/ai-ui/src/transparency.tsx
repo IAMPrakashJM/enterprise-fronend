@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Database, EyeOff, Route, ShieldCheck, TriangleAlert } from "lucide-react";
-import { Badge, Button, cn } from "@pepbits/ops-ui";
+import { Badge, Button, Checkbox, cn } from "@pepbits/ops-ui";
 import type { AiConfig, AiContext, AiUseCase, Gate } from "@pepbits/ai-config";
 
 type Tab = "data" | "flow" | "policy";
@@ -133,7 +133,7 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
       <div className="shrink-0 border-t border-[var(--border)] px-4 py-3">
         {clinical ? (
           <label className="mb-2.5 flex cursor-pointer items-start gap-2 rounded-xl border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-2.5">
-            <input type="checkbox" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} className="mt-0.5 size-3.5 accent-[var(--primary)]" />
+            <Checkbox className="mt-0.5" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} />
             <span className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
               <TriangleAlert className="mr-1 inline size-3.5 text-[var(--warning-ink)]" />
               This is a clinical use case. I confirm the fields above may be sent for record <b>{context.pageId}</b>. The assistant summarises; it does not diagnose.

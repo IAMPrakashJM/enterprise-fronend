@@ -11,7 +11,7 @@ import { TransparencyPanel, useAssistant } from "@pepbits/ai-ui";
 import { ConsultationRecorder } from "./recorder";
 import type { ConsultationOption, EmElementLevel, EmPatientType, PageDefinition } from "@pepbits/erp-config";
 import { useERP } from "@pepbits/erp-shell";
-import { Badge, Button, IconButton, Input, Textarea, cn } from "@pepbits/ops-ui";
+import { Badge, Button, Checkbox, IconButton, Input, Radio, Textarea, cn } from "@pepbits/ops-ui";
 
 /**
  * The dynamic consultation engine.
@@ -78,7 +78,7 @@ function Section({ id, index, title, subtitle, source, required, children }: {
 
 const CheckLine = ({ children }: { children: React.ReactNode }) => (
   <label className="flex items-center gap-2 py-1 text-[length:calc(10px*var(--fs-scale))] text-[var(--text-muted)]">
-    <input type="checkbox" className="accent-[var(--primary)]" />{children}
+    <Checkbox />{children}
   </label>
 );
 
@@ -461,7 +461,7 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
                           <div className="grid gap-1">
                             {el.options.map((o) => (
                               <label key={o.value} className="flex items-start gap-2 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
-                                <input type="radio" className="mt-0.5 accent-[var(--primary)]" name={`em-${el.id}`}
+                                <Radio className="mt-0.5" name={`em-${el.id}`}
                                   checked={em[el.id] === o.value} onChange={() => setEm((p) => ({ ...p, [el.id]: o.value }))} />
                                 <span><b className="capitalize">{o.value}</b> — {o.label}</span>
                               </label>

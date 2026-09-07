@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, Eye, MoreHorizontal, Pencil, SquareArrowOutUpRight } from "lucide-react";
-import { cn, InlineEdit } from "@pepbits/ops-ui";
+import { Checkbox, cn, InlineEdit } from "@pepbits/ops-ui";
 import { StatusBadge } from "@pepbits/ops-ui";
 import { IconButton } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
@@ -76,7 +76,7 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
       <table className="w-full min-w-[920px] border-collapse text-left">
         <thead className={cn("z-10 bg-[var(--surface-2)] shadow-[0_1px_0_var(--border)]", stickyHeader && "sticky top-0")}>
           <tr>
-            <th className="w-10 px-3 py-2"><input aria-label="Select all visible records" type="checkbox" checked={allSelected} onChange={onToggleAll} className="size-3.5 accent-[var(--primary)]" /></th>
+            <th className="w-10 px-3 py-2"><Checkbox aria-label="Select all visible records" checked={allSelected} indeterminate={selected.length > 0 && !allSelected} onChange={onToggleAll} /></th>
             {columns.map((column) => {
               const active = sort?.key === column.key;
               return <th key={column.key} data-classification={classificationFor(column.key)} style={{ minWidth: column.width }} className="px-3 py-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]"><button type="button" disabled={!column.sortable} onClick={() => onSort(column)} className="focus-ring inline-flex items-center gap-1 rounded-md transition hover:text-[var(--text)] disabled:cursor-default">{column.label}{column.sortable ? active ? sort?.direction === "asc" ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" /> : <ArrowUpDown className="size-3 opacity-45" /> : null}</button></th>;
@@ -93,7 +93,7 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
             const stripe = zebra && rowIndex % 2 === 1 && !checked ? "bg-[color-mix(in_srgb,var(--surface-2)_60%,transparent)]" : undefined;
             return (
               <tr key={id} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
-                <td className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><input aria-label={`Select ${id}`} type="checkbox" checked={checked} onChange={() => onToggle(id)} className="size-3.5 accent-[var(--primary)]" /></td>
+                <td className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><Checkbox aria-label={`Select ${id}`} checked={checked} onChange={() => onToggle(id)} /></td>
                 {columns.map((column, index) => <td key={column.key} data-classification={classificationFor(column.key)} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
                     /* stopPropagation: the cell opens the record preview, and
                        clicking into an editor must not also open a drawer over
