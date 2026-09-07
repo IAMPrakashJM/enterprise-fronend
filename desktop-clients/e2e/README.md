@@ -149,6 +149,20 @@ assumes a default is testing whatever the last run left behind — the workspace
 suite reported no tab strip, correctly, because an earlier session had switched
 floating windows on. Use `setPreference`.
 
+**And `npm run verify` checks the artefact.** Each build writes a `BUILD_API`
+stamp naming the API it was made for, and `verify:deployable` compares it to the
+app's env file. It exists because this working tree is also the deployment —
+nginx serves `apps/web/.next` from here — so a build made for a local experiment
+goes live at the next request. One did: the public site loaded, looked fine, and
+told every visitor's browser to call `127.0.0.1:3200` on their own machine.
+
+Reading the API back out of the bundle was tried first and abandoned twice.
+Neither bundler prunes its output, and turbo restores a cache entry by adding
+its files rather than replacing the directory, so a chunk from an older build
+with a different API in it survives every rebuild and reads as the truth. The
+stamp is inside the cached output, so restoring an entry restores the stamp that
+belongs to it.
+
 **The harness checks this for you now.** `signIn` reads the API base out of the
 first request the shell actually makes and fails the suite — exit 2, before any
 assertion — when it is not the one the suites are asserting against. It is
