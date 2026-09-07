@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BarChart3, CalendarClock, ChevronDown, Clock3, Download, FileSpreadsheet, FileText, Filter, Mail, Play, Printer, RotateCcw, Save, Send, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useERP } from "@pepbits/erp-shell";
 import { usePublishAiSources } from "@pepbits/ai-client";
@@ -9,6 +9,10 @@ import { Button } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
 import { Card, CardHeader, CardTitle } from "@pepbits/ops-ui";
 import { Input, MultiSelect, Select, Toggle } from "@pepbits/ops-ui";
+import type { ReferenceResponse } from "@pepbits/ops-ui";
+import { authedFetch } from "@pepbits/auth";
+import { classificationFor, partitionFilters, type FilterDefinition, type FilterValues } from "@pepbits/erp-config";
+import { FilterBar } from "../worklist/filter-bar";
 import { Modal } from "@pepbits/ops-ui";
 import { cn } from "@pepbits/ops-ui";
 import type { Formatters, PageDefinition } from "@pepbits/erp-config";
@@ -39,26 +43,77 @@ export function ReportsPage({ page }: { page: PageDefinition }) {
   /* The rows the report is currently showing. The report is the figures, so
      this is the whole of what the page has to offer. */
   usePublishAiSources(`report:${page.id}`, { "page-metrics": reportRows });
-  const [from, setFrom] = useState("2026-09-01");
-  const [to, setTo] = useState("2026-09-30");
   const [running, setRunning] = useState(false);
+
+  /**
+   * The same bar the worklist uses.
+   *
+   * This screen had its own: a strip of filters, a collapsible "Advanced
+   * filters" section with the same chevron, and its own idea of which of them
+   * could be shared. Two copies of one pattern, and only one of them knew about
+   * the classification registry — so a report's filters were offered as a link
+   * without anything having decided they could be.
+   */
+  const [filters, setFilters] = useState<FilterValues>({ view: "summary", from: "2026-09-01", to: "2026-09-30", preset: "mtd", currency: "AED", comparison: "budget", aggregation: "branch" });
+  const setFilter = (key: string, value: string) => setFilters((current) => ({ ...current, [key]: value }));
+
+  const definition = (key: string, label: string, type: FilterDefinition["type"], options?: string[]): FilterDefinition =>
+    ({ key, label, type, options, classification: classificationFor(key) });
+
+  const basic: FilterDefinition[] = [
+    definition("view", "Report view", "select", [`${page.title} • Summary`, `${page.title} • Detailed`, `${page.title} • Exceptions`]),
+    definition("from", "From date", "date"),
+    definition("to", "To date", "date"),
+    definition("preset", "Date preset", "select", ["Month to date", "Previous month", "Quarter to date", "Year to date", "Custom"]),
+  ];
+  const advancedFilters: FilterDefinition[] = [
+    definition("branch", "Branch", "select"),
+    definition("currency", "Currency", "select", ["AED", "USD"]),
+    definition("comparison", "Comparison", "select", ["Budget", "Previous period", "Previous year"]),
+    definition("aggregation", "Aggregation", "select", ["Branch", "Department", "Customer", "Month"]),
+    definition("minimum", "Minimum value", "text"),
+  ];
+
+  const sensitiveKeys = useMemo(
+    () => partitionFilters([...basic, ...advancedFilters], filters).sensitiveKeys,
+    [filters],
+  );
+
+  const [reference, setReference] = useState<ReferenceResponse | null>(null);
+  const loadReference = useCallback(() => {
+    void authedFetch("/reference?keys=branches")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((body) => setReference((body as ReferenceResponse | null) ?? null))
+      .catch(() => setReference(null));
+  }, []);
+  useEffect(() => loadReference(), [loadReference]);
   const totals = useMemo(() => ({ current: reportRows.reduce((sum, row) => sum + row.current, 0), previous: reportRows.reduce((sum, row) => sum + row.previous, 0), budget: reportRows.reduce((sum, row) => sum + row.budget, 0) }), []);
   const variance = totals.current - totals.budget;
   const run = () => { setRunning(true); window.setTimeout(() => { setRunning(false); toast({ title: "Report refreshed", message: `${page.title} completed using the selected filters.`, type: "success" }); }, 450); };
   return (
     <div className="flex w-full flex-col gap-3">
-      <Card className="overflow-hidden">
-        <div className="grid gap-3 p-3 md:grid-cols-2 xl:grid-cols-[1fr_150px_150px_190px_auto]">
-          <Select data-tour="report-list" label="Report view" value="summary" options={[{ label: `${page.title} • Summary`, value: "summary" }, { label: `${page.title} • Detailed`, value: "detail" }, { label: `${page.title} • Exceptions`, value: "exceptions" }]} onChange={() => undefined} />
-          <Input data-tour="report-filters" label="From date" type="date" value={from} onChange={(event) => setFrom(event.target.value)} />
-          <Input label="To date" type="date" value={to} onChange={(event) => setTo(event.target.value)} />
-          <Select label="Date preset" value="mtd" options={[{ label: "Month to date", value: "mtd" }, { label: "Previous month", value: "previous" }, { label: "Quarter to date", value: "qtd" }, { label: "Year to date", value: "ytd" }, { label: "Custom", value: "custom" }]} onChange={() => undefined} />
-          <div data-tour="report-actions" className="flex items-end gap-1.5"><InlineAiAction useCaseId="report.summarise" label="Summarise" /><Button variant="primary" leftIcon={<Play className="size-3.5" />} loading={running} onClick={run}>Run report</Button><Button variant="secondary" leftIcon={<CalendarClock className="size-3.5" />} onClick={() => setScheduleOpen(true)}>Schedule</Button></div>
+      <div className="flex flex-col gap-2">
+        <FilterBar
+          definitions={basic}
+          advanced={advancedFilters}
+          values={filters}
+          sensitiveKeys={sensitiveKeys}
+          reference={reference ?? undefined}
+          referenceKeys={{ branch: "branches" }}
+          onRetryReference={loadReference}
+          onChange={setFilter}
+          onApply={run}
+          onReset={() => setFilters({})}
+          onCopyLink={() => { void navigator.clipboard?.writeText(window.location.href); toast({ title: "Link copied", message: "It carries only the filters that may travel in a URL.", type: "success" }); }}
+        />
+        <div data-tour="report-actions" className="flex flex-wrap items-center justify-end gap-1.5">
+          <InlineAiAction useCaseId="report.summarise" label="Summarise" />
+          <Button variant="primary" leftIcon={<Play className="size-3.5" />} loading={running} onClick={run}>Run report</Button>
+          <Button variant="secondary" leftIcon={<CalendarClock className="size-3.5" />} onClick={() => setScheduleOpen(true)}>Schedule</Button>
         </div>
-        <div className="border-t border-[var(--border)] px-3 py-2"><button type="button" onClick={() => setAdvanced((value) => !value)} className="flex w-full items-center justify-between text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]"><span className="flex items-center gap-2"><SlidersHorizontal className="size-3.5" />Advanced filters <Badge tone="neutral">collapsed by default</Badge></span><ChevronDown className={cn("size-3.5 transition", advanced && "rotate-180")} /></button>{advanced ? <div className="animate-slide-up mt-3 grid gap-3 border-t border-dashed border-[var(--border)] pt-3 md:grid-cols-2 xl:grid-cols-5"><MultiSelect label="Branches" value={["hq", "dubai", "sharjah"]} onChange={() => undefined} options={[{ label: "Abu Dhabi HQ", value: "hq" }, { label: "Dubai Center", value: "dubai" }, { label: "Sharjah Hub", value: "sharjah" }, { label: "Kochi Delivery", value: "kochi" }]} /><Select label="Currency" value="AED" options={[{ label: "AED", value: "AED" }, { label: "USD", value: "USD" }]} onChange={() => undefined} /><Select label="Comparison" value="budget" options={[{ label: "Budget", value: "budget" }, { label: "Previous period", value: "previous" }, { label: "Previous year", value: "year" }]} onChange={() => undefined} /><Select label="Aggregation" value="branch" options={[{ label: "Branch", value: "branch" }, { label: "Department", value: "department" }, { label: "Customer", value: "customer" }, { label: "Month", value: "month" }]} onChange={() => undefined} /><Input label="Minimum value" type="number" placeholder="No minimum" /></div> : null}</div>
-      </Card>
+      </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow-sm)]"><div className="flex items-center gap-2 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><Badge tone="success"><span className="size-1.5 rounded-full bg-current" />Ready</Badge><span>{from} to {to}</span><span className="h-3 w-px bg-[var(--border)]" /><span>4 branches • 18,426 source records</span><span className="hidden items-center gap-1 lg:flex"><Clock3 className="size-3" />Generated 17:42 GST</span></div><div className="flex gap-1"><Button size="xs" variant="ghost" leftIcon={<Save className="size-3" />}>Save view</Button><Button size="xs" variant="ghost" leftIcon={<Printer className="size-3" />}>Print</Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />}>Export</Button></div></div>
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 shadow-[var(--shadow-sm)]"><div className="flex items-center gap-2 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><Badge tone="success"><span className="size-1.5 rounded-full bg-current" />Ready</Badge><span>{filters.from ?? "—"} to {filters.to ?? "—"}</span><span className="h-3 w-px bg-[var(--border)]" /><span>4 branches • 18,426 source records</span><span className="hidden items-center gap-1 lg:flex"><Clock3 className="size-3" />Generated 17:42 GST</span></div><div className="flex gap-1"><Button size="xs" variant="ghost" leftIcon={<Save className="size-3" />}>Save view</Button><Button size="xs" variant="ghost" leftIcon={<Printer className="size-3" />}>Print</Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />}>Export</Button></div></div>
 
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">{[
         ["Current period", format.money(totals.current), "+8.7% vs prior", "success"],

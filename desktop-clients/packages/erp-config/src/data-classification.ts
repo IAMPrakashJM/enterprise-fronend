@@ -157,6 +157,17 @@ export const DATA_CLASSIFICATIONS: Record<string, DataClassification> = {
   atc: "clinical",
   controlled: "clinical",
 
+  /* Report parameters. A view, a period preset, a currency, a comparison basis
+     and an aggregation are all statements about how figures are arranged; none
+     of them is about a person, so all of them may travel in a link — which is
+     the whole point of a report you can send someone. */
+  view: "operational",
+  preset: "operational",
+  currency: "operational",
+  comparison: "operational",
+  aggregation: "operational",
+  minimum: "operational",
+
   /* Supply and procurement. Goods, money and dates about ORDERS rather than
      about people — the one judgement here is `country` against `city` above:
      a country is coarse enough to identify nobody, a city is part of a postal

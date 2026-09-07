@@ -136,3 +136,92 @@ describe("FilterBar", () => {
     expect(onReset).toHaveBeenCalledOnce();
   });
 });
+
+/**
+ * Reference-fed selects.
+ *
+ * A select whose options are static needs none of this. One fed from the server
+ * does: an empty branch dropdown means "this tenant has no branches" or "the
+ * branch service is down", which look identical and mean opposite things — one
+ * a setup task, one an incident.
+ */
+describe("reference data", () => {
+  const healthy = {
+    references: { branches: [{ value: "hq", label: "Abu Dhabi HQ" }, { value: "dubai", label: "Dubai" }] },
+    failures: [],
+  };
+  const broken = { references: { branches: [] }, failures: [{ key: "branches", code: "REFERENCE_LOAD_FAILED" }] };
+  const keys = { branch: "branches" };
+
+  test("a healthy list supplies the options the server sent", () => {
+    render_({ reference: healthy, referenceKeys: keys });
+    expect(screen.getByRole("option", { name: "Abu Dhabi HQ" })).toBeInTheDocument();
+    /* And the config's own options are not used for that field. */
+    expect(screen.queryByRole("option", { name: "AD01" })).toBeNull();
+  });
+
+  test("a healthy list says nothing", () => {
+    render_({ reference: healthy, referenceKeys: keys });
+    expect(screen.queryByRole("status")).toBeNull();
+  });
+
+  /* Naming it is the point. "Some reference data is unavailable" leaves the
+     user to work out which of the dropdowns is lying, and they will guess
+     whichever is empty — which may be the one that is genuinely empty. */
+  test("a broken list is named, by the label the user can see", () => {
+    render_({ reference: broken, referenceKeys: keys });
+    const notice = screen.getByRole("status");
+    expect(notice).toHaveTextContent("could not be loaded");
+    expect(notice).toHaveTextContent("Branch");
+  });
+
+  /* A failed list DISABLES the control. Leaving it enabled invites someone to
+     conclude the value is genuinely absent and save without it, which is a
+     wrong record written because of a transient outage. */
+  test("and the field it belongs to is disabled and says so", () => {
+    render_({ reference: broken, referenceKeys: keys });
+    expect(screen.getByLabelText("Branch")).toBeDisabled();
+    /* Said twice on purpose — once in the banner and once at the control. A
+       user staring at an empty dropdown is looking at the field, not at a
+       banner that may have scrolled away. */
+    expect(screen.getByText(/^Branch could not be loaded/)).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("could not be loaded");
+  });
+
+  test("the other filters are untouched by one list failing", () => {
+    render_({ reference: broken, referenceKeys: keys });
+    expect(screen.getByLabelText("Status")).toBeEnabled();
+    expect(screen.getByLabelText("Patient name")).toBeEnabled();
+  });
+
+  test("retrying is offered, and reports back", async () => {
+    const onRetryReference = vi.fn();
+    render_({ reference: broken, referenceKeys: keys, onRetryReference });
+    await userEvent.click(screen.getByRole("button", { name: "Try again" }));
+    expect(onRetryReference).toHaveBeenCalledTimes(1);
+  });
+
+  /* A failure for a list this bar does not show is not this bar's business. */
+  test("a failure for a list nobody is showing is not reported", () => {
+    render_({
+      reference: { references: { branches: healthy.references.branches }, failures: [{ key: "insuranceNetworks", code: "REFERENCE_LOAD_FAILED" }] },
+      referenceKeys: keys,
+    });
+    expect(screen.queryByRole("status")).toBeNull();
+  });
+
+  /* No reference response at all is not the same as one that says the lists are
+     broken: with nothing known, the bar behaves exactly as it did before. */
+  test("with no reference response the field falls back to its configured options", () => {
+    render_({ referenceKeys: keys });
+    expect(screen.getByRole("option", { name: "AD01" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Branch")).toBeEnabled();
+  });
+
+  test("selecting a server-sent option reports the filter key and the value", async () => {
+    const onChange = vi.fn();
+    render_({ reference: healthy, referenceKeys: keys, onChange });
+    await userEvent.selectOptions(screen.getByLabelText("Branch"), "dubai");
+    expect(onChange).toHaveBeenCalledWith("branch", "dubai");
+  });
+});

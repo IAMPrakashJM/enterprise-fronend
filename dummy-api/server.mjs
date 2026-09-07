@@ -255,6 +255,10 @@ function loadReferences(keys) {
   return { references, failures, partial: failures.length > 0 };
 }
 
+/* Cell edits, in memory and per tenant. See the PATCH handler for why they are
+   not persisted. */
+const cellEdits = new Map();
+
 const VIEWS_FILE = join(DATA_DIR, "saved-views.json");
 const VIEW_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -681,7 +685,10 @@ async function callProvider(config, secret, messages) {
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    /* PATCH is here because a browser silently drops a method the preflight does
+     not name: the request never leaves, nothing is logged, and the only symptom
+     is a cell that will not save. */
+  "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
   "Access-Control-Max-Age": "86400",
 };
@@ -909,7 +916,16 @@ const server = createServer(async (req, res) => {
     }
 
     const filters = { ...safe, ...sensitive };
-    const rows = config.rows.filter((row) => Object.entries(filters).every(([key, value]) => matchesRow(row, key, value)));
+    /* Cell edits applied before filtering, not after: a row edited into a
+       status is a row that status now matches. Without this the store was
+       written by PATCH and read by nobody, so the server's idea of a cell and
+       the client's diverged permanently and every later edit looked like a
+       conflict. */
+    const edited = config.rows.map((row) => {
+      const held = cellEdits.get(`${user.tenantId}:${pageId}:${String(row[config.primaryKey])}`);
+      return held ? { ...row, ...held.values } : row;
+    });
+    const rows = edited.filter((row) => Object.entries(filters).every(([key, value]) => matchesRow(row, key, value)));
 
     console.log(`[search] ${user.email ?? user.id} tenant=${user.tenantId} page=${pageId} ${loggableFilters(safe, sensitive)} -> ${rows.length}/${config.rows.length}`);
 
@@ -923,6 +939,68 @@ const server = createServer(async (req, res) => {
          does: this response passes through the same proxies. */
       applied: { safe, sensitiveKeys: Object.keys(sensitive).sort() },
     });
+  }
+
+  /* ---- inline cell edits -------------------------------------------------- */
+  /**
+   * One cell, changed in place, with an answer for two people changing it at once.
+   *
+   * Compare-and-swap on the FIELD: the client sends the value it was editing
+   * from, and the write is refused if the cell no longer says that. A version
+   * stamp would be the other way to do it and needs one that exists on every
+   * row — these are generated and only some carry an `updated` column, so the
+   * value the user was looking at is both simpler and the thing they would
+   * actually be surprised by.
+   *
+   * Refused, not merged and not overwritten. Last-write-wins loses somebody's
+   * work silently, which is the one outcome nobody can detect afterwards; the
+   * refusal carries the current value so the user is not left to reload and
+   * compare by eye.
+   *
+   * Held in memory only. The rows are generated rather than stored, so this
+   * keeps the edits beside them; a restart forgets both, which is honest for a
+   * prototype and is what the hardening ledger says about persistence anyway.
+   */
+  if (pathname.startsWith("/worklists/") && pathname !== "/worklists/search" && req.method === "PATCH") {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+
+    const [, , pageId, recordId] = pathname.split("/");
+    if (!pageId || !recordId) return send(res, 400, { error: "An edit needs a page and a record." });
+
+    const body = await readJson(req).catch(() => null);
+    const column = typeof body?.column === "string" ? body.column : "";
+    const value = typeof body?.value === "string" ? body.value : "";
+    const seen = typeof body?.seen === "string" ? body.seen : "";
+    if (!column) return send(res, 400, { error: "An edit needs a column." });
+
+    const key = `${user.tenantId}:${pageId}:${recordId}`;
+    const held = cellEdits.get(key);
+
+    /* The row as generated, so a first edit has a stamp to compare against
+       without anything having been written yet. */
+    let original;
+    try {
+      const config = getWorklistConfig(pageId, typeof body?.title === "string" && body.title ? body.title : pageId, typeof body?.entity === "string" && body.entity ? body.entity : "record");
+      original = config.rows.find((row) => String(row[config.primaryKey]) === recordId);
+    } catch { original = undefined; }
+    if (!original) return send(res, 404, { error: "That record is not on this list." });
+
+    const current = held?.values?.[column] ?? String(original[column] ?? "");
+    if (seen !== current) {
+      /* By column and by record, never the values: an audit line that quotes a
+         cell is a copy of the cell. */
+      console.log(`[edit] ${user.email ?? user.id} REFUSED ${pageId}/${recordId}.${column} — stale`);
+      return send(res, 409, {
+        error: "Someone changed this while you were editing.",
+        current: { column, value: current },
+      });
+    }
+
+    cellEdits.set(key, { values: { ...(held?.values ?? {}), [column]: value } });
+    console.log(`[edit] ${user.email ?? user.id} ${pageId}/${recordId}.${column}`);
+    return send(res, 200, { column, value });
   }
 
   /* ---- export audit ------------------------------------------------------ */

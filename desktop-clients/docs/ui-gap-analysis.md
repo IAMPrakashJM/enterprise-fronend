@@ -1,6 +1,6 @@
 # UI gap analysis — AllyVORA provider-web vs. this repo
 
-_5 September 2026._
+_5 September 2026. What shipped recorded 7 September 2026._
 
 What the other codebase has at the **design and app-feel** level that this one does not,
 what each thing would cost, and — for several of them — why not to build it.
@@ -45,20 +45,20 @@ Reference: `/home/pepadmin/ap/allyvora-platform/frontend/provider-web`.
 
 ## Summary
 
-| # | Feature | Effort | Verdict |
-|---|---|---|---|
-| 1 | MDI windows | ~1 week | **Ask why they stopped using it first** |
-| 2 | Inline editing | 1–2 days | **Best value on the list** |
-| 3 | Filters in the URL | 1 day | Needs a PHI decision first |
-| 4 | Error and denied states | half day | Do now |
-| 5 | Segmented control | half day | Do now |
-| 6 | Slider | half day | Skip |
-| 7 | Avatar | half day | Do now |
-| 8 | Stat card | half day | Do now |
-| 9 | Shared filter bar | 1–2 days | Worth it, budget carefully |
-| 10 | Reference-data notice | 1 day | Backend change first |
-| 11 | Sandbox app | 1 day | Skip for now |
-| 12 | Section wizard | 2–3 days | **Don't** — see below |
+| # | Feature | Effort | Verdict | Shipped |
+|---|---|---|---|---|
+| 1 | MDI windows | ~1 week | **Ask why they stopped using it first** | Yes, as an **option** — see below |
+| 2 | Inline editing | 1–2 days | **Best value on the list** | Yes, with a conflict answer |
+| 3 | Filters in the URL | 1 day | Needs a PHI decision first | Yes, and the decision went further |
+| 4 | Error and denied states | half day | Do now | Yes — five states |
+| 5 | Segmented control | half day | Do now | Yes |
+| 6 | Slider | half day | Skip | No, as recommended |
+| 7 | Avatar | half day | Do now | Yes |
+| 8 | Stat card | half day | Do now | Yes |
+| 9 | Shared filter bar | 1–2 days | Worth it, budget carefully | Yes — worklist and reports |
+| 10 | Reference-data notice | 1 day | Backend change first | Yes, both halves |
+| 11 | Sandbox app | 1 day | Skip for now | No, as recommended |
+| 12 | Section wizard | 2–3 days | **Don't** — see below | No, as recommended |
 
 ---
 
@@ -246,8 +246,11 @@ The search-and-filter strip as a reusable component rather than part of one scre
 
 **Example.** The same bar over reports, the inbox and the pharmacy list.
 
-**Use case.** Ours lives inside the worklist screen
-(`erp-screens/src/worklist/filter-panel.tsx`), so nothing else can use it.
+**Use case.** Ours lived inside the worklist screen, so nothing else could use
+it. It is now `erp-screens/src/worklist/filter-bar.tsx`, exported from the
+package, and the reports screen uses it — that screen had built its own: the
+same strip, the same collapsible advanced section, the same chevron, and no
+idea the classification registry existed.
 
 **Advantage.** Real reuse, and one place to fix filtering behaviour.
 
@@ -322,6 +325,48 @@ file rather than a stack trace.
    dropped it. Desktop shell only.
 5. **3 — filters in the URL**, once someone has decided which filters may appear in a URL.
 6. **6, 11, 12** — leave.
+
+---
+
+## What shipped
+
+_Recorded 7 September 2026._
+
+Nine of the twelve are built. The three that are not are the three this document
+said not to build, and nothing has happened since that argues for a slider, a
+sandbox or a wizard engine at one wizard.
+
+Three of them went further than the entry asked for:
+
+**3 — filters in the URL.** The entry said the PHI decision was not the
+frontend's to make alone. It was made: an explicit allowlist, classification held
+once in a registry, guarded on read as well as write because a URL is user input,
+the same allowlist governing device storage, a POST search so the sensitive half
+travels in a body, and saved views so a filtered list can still be shared. Four
+more egress paths were brought under the same registry afterwards — the AI
+provider, file export and printing — which is not what this entry asked for and
+is where it led.
+
+**2 — inline editing.** The entry's drawback said the conflict rule had to be
+decided before the component was written. It was written first and the rule was
+decided afterwards, which is the wrong order and worth admitting: the second
+write is **refused**, with the current value attached, because last-write-wins
+loses somebody's work silently and that is the one outcome nobody can detect
+later.
+
+**1 — MDI windows.** The question this entry asked — why did their current
+desktop app drop it — was never put to them. What happened instead is that MDI
+was built as an **option**, off by default, so nothing depends on it and turning
+it off costs nothing. That is a smaller commitment than the entry warned about,
+but it is not an answer to the question, and the question is still worth asking.
+
+Two things this document's own method caught on our side. It set the standard —
+*"a package can be complete, tested and imported by nothing anyone still runs"* —
+and by that standard the reference-data notice was built, tested, exported and
+used by no screen for two days, and the filter bar was extracted and left
+unexported, which made it reusable in principle and reachable by exactly one
+caller. Both are now wired to real screens. `ConflictState` was the third, and it
+found its home in the inline-edit conflict above.
 
 ## Where we are ahead
 

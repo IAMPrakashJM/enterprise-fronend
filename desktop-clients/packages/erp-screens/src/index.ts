@@ -1,5 +1,9 @@
 export * from "./page-renderer";
 export * from "./login";
+/* The bar itself, not only the screen that first needed it. Extracting it
+   and leaving it unexported made it reusable in principle and reachable by
+   exactly one caller. */
+export * from "./worklist/filter-bar";
 export * from "./worklist/worklist-page";
 export * from "./forms/dynamic-record-form";
 export * from "./dashboard/module-dashboard";
