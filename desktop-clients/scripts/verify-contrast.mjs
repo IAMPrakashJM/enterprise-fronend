@@ -23,7 +23,12 @@ const check = (ok, name, detail = "") => {
   if (!ok) failed += 1;
 };
 
-const css = readFileSync(new URL("../packages/tokens/src/tokens.css", import.meta.url), "utf8");
+/* Comments stripped before parsing. A declaration preceded by a block comment
+   is otherwise glued to it — there is no semicolon between the two — and the
+   token disappears from the parse rather than failing loudly, which is how a
+   fill token that was present read as missing. */
+const css = readFileSync(new URL("../packages/tokens/src/tokens.css", import.meta.url), "utf8")
+  .replace(/\/\*[\s\S]*?\*\//g, "");
 
 /* Relative luminance and contrast, straight from WCAG 2.1. */
 function luminance(hex) {
@@ -104,7 +109,53 @@ for (const { label, declarations } of all) {
   check(steps[0] > steps[1] && steps[1] > steps[2], `${label}`, steps.map((step) => step.toFixed(1)).join(" > "));
 }
 
+/**
+ * And white reads on every accent a button is filled with.
+ *
+ * The three -fill tokens exist because the plain accent does not: white on
+ * nexora's success is 4.35:1 and on midnight's is 1.92:1, which is not a near
+ * miss. They are computed per theme rather than derived, because the derivation
+ * that works for a foreground gives the wrong answer on a dark palette — see
+ * tokens.css.
+ *
+ * A theme that declares the accent must declare the fill. One that inherits the
+ * accent inherits the fill with it, which is why this only asks of the blocks
+ * that redeclare.
+ */
+console.log("\n  and white reads on every accent that carries it\n");
+
+const FILLED = ["--primary", "--danger", "--success"];
+
+for (const { label, declarations } of all) {
+  const missing = FILLED.filter((token) => declarations[token] && !declarations[`${token}-fill`]);
+  check(missing.length === 0, `${label} declares a fill for every accent it redefines`, missing.join(" "));
+
+  const weak = FILLED
+    .filter((token) => declarations[`${token}-fill`])
+    .map((token) => [token, contrast("#ffffff", declarations[`${token}-fill`])])
+    .filter(([, ratio]) => ratio < MINIMUM);
+  check(weak.length === 0, `${label} · white on a filled accent`, weak.map(([token, ratio]) => `${token.slice(2)} ${ratio.toFixed(2)}`).join(" · "));
+}
+
+/**
+ * The module marks, which are a third place colours live.
+ *
+ * Each module's badge is its accent with white letters on it. The colours are
+ * in the navigation registry rather than the stylesheet, so neither axe (which
+ * sees one theme's rendered page) nor the theme checks above would have found
+ * them — four of the eight were below AA, the worst at 3.29:1.
+ */
+console.log("\n  and on every module mark\n");
+
+const navigation = readFileSync(new URL("../packages/erp-config/src/navigation.ts", import.meta.url), "utf8");
+const accents = [...navigation.matchAll(/accent:\s*"(#[0-9a-fA-F]{6})"/g)].map((match) => match[1]);
+check(accents.length >= 5, "the registry gives each module a mark", `${accents.length} modules`);
+for (const accent of accents) {
+  const ratio = contrast("#ffffff", accent);
+  check(ratio >= MINIMUM, `white on ${accent}`, ratio.toFixed(2));
+}
+
 console.log(failed === 0
-  ? "\n  Every theme's text meets AA on every surface it paints, and still reads as three steps.\n"
+  ? "\n  Every theme's text meets AA on every surface it paints, white reads on every filled accent, and the three steps still descend.\n"
   : `\n  ${failed} check(s) failed.\n`);
 process.exit(failed === 0 ? 0 : 1);

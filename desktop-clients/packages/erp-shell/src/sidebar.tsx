@@ -211,7 +211,7 @@ export function Sidebar() {
       >
       <div className="flex h-[var(--header-height)] shrink-0 items-center gap-3 border-b border-[var(--border)] px-3">
         {byHover ? (
-          <div className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[var(--primary)] text-white shadow-md">
+          <div className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[var(--primary-fill)] text-white shadow-md">
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,.38),transparent_42%)]" />
             <Command className="relative size-4" />
           </div>
@@ -222,7 +222,7 @@ export function Sidebar() {
             aria-label={expanded ? "Collapse navigation" : "Expand navigation"}
             title={expanded ? "Collapse navigation" : "Expand navigation"}
             onClick={() => setLatched((previous) => !previous)}
-            className="focus-ring relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[var(--primary)] text-white shadow-md"
+            className="focus-ring relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-[var(--primary-fill)] text-white shadow-md"
           >
             <span className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,.38),transparent_42%)]" />
             <Command className="relative size-4" />

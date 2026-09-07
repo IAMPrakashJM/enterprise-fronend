@@ -17,6 +17,8 @@ import { createRequire } from "node:module";
 
 export const BASE = process.env.E2E_BASE ?? "http://127.0.0.1:3100";
 export const DESKTOP = process.env.E2E_DESKTOP ?? "http://127.0.0.1:3101";
+/** The API these suites intend to assert against. */
+export const API = process.env.E2E_API ?? "http://127.0.0.1:3200";
 
 export function loadPlaywright() {
   const require = createRequire(import.meta.url);
@@ -70,11 +72,61 @@ export function reporter(title) {
   };
 }
 
+/**
+ * Which API the shell was BUILT against, observed rather than assumed.
+ *
+ * `NEXT_PUBLIC_*` is inlined by `next build`, not read at runtime, and
+ * apps/web/.env.local points at the deployed API — so setting the variable on
+ * `next start` does nothing and the shell keeps calling whatever host it was
+ * last built for. Nine suites ran against front-design.pepbits.com for a whole
+ * session before an endpoint that existed only locally failed with no
+ * explanation at all.
+ *
+ * Read from the first request the shell actually makes rather than from the
+ * build output: it reports where the application talks, which is the question,
+ * and it does not need to know how the bundle is laid out.
+ */
+function watchApi(page) {
+  const seen = { base: null };
+  page.on("request", (request) => {
+    if (seen.base) return;
+    const match = /^(.*?)\/auth\//.exec(request.url());
+    if (match) seen.base = match[1];
+  });
+  return seen;
+}
+
+/**
+ * Fail loudly when the shell is talking to somewhere else.
+ *
+ * Loudly, and before any assertion runs: a suite pointed at the wrong API does
+ * not fail, it passes — the deployed shell implements the same contract, so
+ * everything agrees right up until the first endpoint that only exists locally.
+ */
+export function requireApi(observed) {
+  if (!observed || observed === API) return;
+  console.error(`
+  The shell under test is calling a different API.
+
+    it calls   ${observed}
+    suites use ${API}
+
+  NEXT_PUBLIC_* is inlined at BUILD time, so setting it on \`next start\` does
+  nothing. Rebuild against the API you mean to test:
+
+    NEXT_PUBLIC_API_URL=${API} VITE_API_URL=${API} npm run build
+
+  or set E2E_API=${observed} if that is genuinely what you meant.
+`);
+  process.exit(2);
+}
+
 /** Signs in and returns a page. The demo shell has one account. */
 export async function signIn(browser, url = BASE, viewport = { width: 1500, height: 950 }, context) {
   /* A caller that needs an init script — anything stubbing a browser API before
      the first byte of the app runs — makes its own context and passes it. */
   const page = context ? await context.newPage() : await browser.newPage({ viewport });
+  const api = watchApi(page);
   const errors = [];
   page.on("pageerror", (error) => errors.push(`PAGEERROR: ${error.message.slice(0, 180)}`));
   page.on("console", (message) => { if (message.type() === "error") errors.push(`CONSOLE: ${message.text().slice(0, 180)}`); });
@@ -87,7 +139,10 @@ export async function signIn(browser, url = BASE, viewport = { width: 1500, heig
     await page.keyboard.press("Enter");
     await page.waitForTimeout(6000);
   }
-  return { page, errors };
+  /* Checked HERE rather than left to each suite: a guard every caller has to
+     remember is a guard that gets forgotten by the tenth caller. */
+  requireApi(api.base);
+  return { page, errors, apiBase: api.base };
 }
 
 /** Ctrl+K, type, pick a result. The one navigation path that works everywhere. */

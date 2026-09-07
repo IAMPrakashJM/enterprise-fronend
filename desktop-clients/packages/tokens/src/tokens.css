@@ -40,6 +40,9 @@
    preview card would reset --radius and --font-ui back to the stylesheet's
    defaults over the values the provider set on <html>. */
 :root, [data-theme="nexora"] {
+  --primary-fill: #3156d9;
+  --danger-fill: #d83444;
+  --success-fill: #13855d;
   --bg: #f4f7fb;
   --surface: #ffffff;
   --surface-2: #f8fafc;
@@ -72,6 +75,27 @@
      'surface' tone already, so this is deliberately a shade off it. */
   --sidebar-surface-light: #eef3fb;
   --sidebar-text-light: #132238;
+  /* Fill: the accent, dark enough that WHITE reads on it.
+   *
+   * The counterpart to the -ink family below. Ink is an accent used as text on
+   * a surface and is derived, because mixing toward the theme's own --text
+   * darkens it on a light palette and lightens it on a dark one — which is
+   * exactly right for a foreground. A background carrying white text wants the
+   * opposite on a dark theme, so the same derivation gives the wrong answer
+   * there: nord's success mixed toward its near-white text is a pale green, and
+   * white on pale green is 2:1.
+   *
+   * So these are computed per theme and written out, the same way the readable
+   * text tokens were: each is its own accent taken toward #0b1220 only as far
+   * as 4.6:1 against white requires, so a theme whose accent already passes
+   * keeps it unchanged. verify:contrast fails if any of them stops passing.
+   *
+   * Only three, because only three are ever a solid fill under white text.
+   * `--warning`, `--info` and `--accent` are borders, icons and washes; giving
+   * them a fill token would be adding members to a family nothing imports. */
+  --primary-fill: #3156d9;
+  --danger-fill: #d83444;
+  --success-fill: #13855d;
 }
 
 [data-theme="midnight"] {
@@ -101,6 +125,9 @@
   --sidebar-text: #c8d5ec;
   --sidebar-surface-light: #e8edf7;
   --sidebar-text-light: #0d1626;
+  --primary-fill: #556fc9;
+  --danger-fill: #b55568;
+  --success-fill: #238266;
 }
 
 [data-theme="emerald"] {
@@ -123,6 +150,7 @@
   --sidebar-text: #cfe6da;
   --sidebar-surface-light: #eaf4ee;
   --sidebar-text-light: #123326;
+  --primary-fill: #167a55;
 }
 
 [data-theme="sand"] {
@@ -145,6 +173,7 @@
   --sidebar-text: #e8dcc8;
   --sidebar-surface-light: #f5eee1;
   --sidebar-text-light: #33291d;
+  --primary-fill: #8a5b28;
 }
 
 [data-theme="rose"] {
@@ -167,6 +196,7 @@
   --sidebar-text: #edd8e2;
   --sidebar-surface-light: #f9ecf1;
   --sidebar-text-light: #33202b;
+  --primary-fill: #ad3f6b;
 }
 
 [data-theme="slate"] {
@@ -189,6 +219,7 @@
   --sidebar-text: #d4dde5;
   --sidebar-surface-light: #eef1f4;
   --sidebar-text-light: #1f2933;
+  --primary-fill: #3f566b;
 }
 
 /* --- added 2026-09-03 ------------------------------------------------------
@@ -223,7 +254,7 @@
      is the palette's next step down, so 4.99:1 without leaving Solarized.
      --text-subtle stays base1: it is decorative (placeholders, dividers'
      labels) and never the only carrier of meaning. */
-  --text-muted: #586e75;
+  --text-muted: #3e5c65;
   --text-subtle: #4d6b71;
   --border: #e2dbc6;
   --border-strong: #cfc7ae;
@@ -240,6 +271,9 @@
   --sidebar-text: #eee8d5;
   --sidebar-surface-light: #eee8d5;
   --sidebar-text-light: #073642;
+  --primary-fill: #2076b2;
+  --danger-fill: #dc322f;
+  --success-fill: #6a7a00;
 }
 
 [data-theme="indigo"] {
@@ -262,6 +296,7 @@
   --sidebar-text: #ddd9f5;
   --sidebar-surface-light: #edecfa;
   --sidebar-text-light: #1e1b3a;
+  --primary-fill: #4f46e5;
 }
 
 [data-theme="lagoon"] {
@@ -284,6 +319,7 @@
   --sidebar-text: #cfe6ec;
   --sidebar-surface-light: #e7f2f4;
   --sidebar-text-light: #0d2a33;
+  --primary-fill: #0e7490;
 }
 
 [data-theme="sunset"] {
@@ -306,6 +342,7 @@
   --sidebar-text: #f2ddd0;
   --sidebar-surface-light: #faeade;
   --sidebar-text-light: #331d13;
+  --primary-fill: #c2410c;
 }
 
 [data-theme="graphite"] {
@@ -335,6 +372,9 @@
   --sidebar-text: #d4d4dc;
   --sidebar-surface-light: #ededf0;
   --sidebar-text-light: #08080a;
+  --primary-fill: #5b6472;
+  --danger-fill: #b1596c;
+  --success-fill: #398068;
 }
 
 [data-theme="plum"] {
@@ -364,9 +404,13 @@
   --sidebar-text: #ddd0ee;
   --sidebar-surface-light: #f0eaf7;
   --sidebar-text-light: #100a18;
+  --primary-fill: #7c3aed;
+  --danger-fill: #b55568;
+  --success-fill: #238266;
 }
 
 [data-theme="nord"] {
+  --primary-fill: #55759c;
   --bg: #2e3440;
   --surface: #3b4252;
   --surface-2: #434c5e;
@@ -395,6 +439,8 @@
   --sidebar-text: #d8dee9;
   --sidebar-surface-light: #e5e9f0;
   --sidebar-text-light: #2e3440;
+  --danger-fill: #956771;
+  --success-fill: #667961;
 }
 
 [data-theme="contrast"] {
@@ -420,6 +466,7 @@
   --sidebar-text: #ffffff;
   --sidebar-surface-light: #ffffff;
   --sidebar-text-light: #000000;
+  --primary-fill: #0037ff;
 }
 
 /**

@@ -8,11 +8,11 @@ export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "succ
 export type ButtonSize = "xs" | "sm" | "md" | "lg";
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "border-transparent bg-[var(--primary)] text-white shadow-sm hover:bg-[var(--primary-strong)]",
+  primary: "border-transparent bg-[var(--primary-fill)] text-white shadow-sm hover:bg-[var(--primary-strong)]",
   secondary: "border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)]",
   ghost: "border-transparent bg-transparent text-[var(--text-muted)] hover:bg-[var(--surface-3)] hover:text-[var(--text)]",
-  danger: "border-transparent bg-[var(--danger)] text-white hover:brightness-95",
-  success: "border-transparent bg-[var(--success)] text-white hover:brightness-95",
+  danger: "border-transparent bg-[var(--danger-fill)] text-white hover:brightness-95",
+  success: "border-transparent bg-[var(--success-fill)] text-white hover:brightness-95",
   outline: "border-[var(--border-strong)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)]",
 };
 

@@ -97,7 +97,7 @@ function Segmented<T extends string>({ value, options, onChange, label }: { valu
         return (
           <button key={option.value} type="button" role="radio" aria-checked={active} onClick={() => onChange(option.value)}
             className={cn("focus-ring h-8 flex-1 whitespace-nowrap rounded-lg px-2 text-[length:calc(10.5px*var(--fs-scale))] font-bold transition",
-              active ? "bg-[var(--primary)] text-white shadow-sm" : "text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text)]")}>
+              active ? "bg-[var(--primary-fill)] text-white shadow-sm" : "text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text)]")}>
             {option.label}
           </button>
         );

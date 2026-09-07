@@ -8,7 +8,7 @@
  * silently failed to apply. Only a browser could see that, because only a
  * browser has a real localStorage with real values in it.
  */
-import { BASE, loadPlaywright, openViaPalette, reporter, requireShell, signIn } from "./harness.mjs";
+import { API, BASE, loadPlaywright, openViaPalette, reporter, requireShell, signIn } from "./harness.mjs";
 
 const NAME = "Maya Thomas";
 const LEAKS = [/Maya/i, /Thomas/i];
@@ -70,7 +70,7 @@ const view = await page.evaluate(async (base) => {
     body: JSON.stringify({ pageId: "customer-master", label: "Follow-ups", filters: { status: "waiting", patientName: "Maya Thomas" } }),
   });
   return { status: response.status, body: await response.json() };
-}, "http://127.0.0.1:3200");
+}, API);
 
 t.say(`a saved view is created (${view.status})`, view.status === 201);
 t.say(`its id is opaque (${view.body.id})`, /^VW_[0-9A-F]{16}$/.test(view.body.id ?? ""));

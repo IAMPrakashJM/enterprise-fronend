@@ -10,9 +10,8 @@
  * Only a browser can show this: it needs a real second writer changing the cell
  * behind a page that is still displaying the old value.
  */
-import { BASE, loadPlaywright, reporter, requireShell, signIn } from "./harness.mjs";
+import { API, BASE, loadPlaywright, reporter, requireShell, signIn } from "./harness.mjs";
 
-const API = process.env.E2E_API ?? "http://127.0.0.1:3200";
 
 const { chromium } = loadPlaywright();
 await requireShell(BASE);

@@ -162,7 +162,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
             {(["all", "unread"] as const).map((value) => (
               <button key={value} type="button" onClick={() => setFilter(value)}
                 className={cn("focus-ring px-2.5 py-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-bold capitalize transition",
-                  filter === value ? "bg-[var(--primary)] text-white" : "bg-[var(--surface)] text-[var(--text-muted)] hover:bg-[var(--surface-2)]")}>
+                  filter === value ? "bg-[var(--primary-fill)] text-white" : "bg-[var(--surface)] text-[var(--text-muted)] hover:bg-[var(--surface-2)]")}>
                 {value}
               </button>
             ))}

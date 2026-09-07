@@ -31,7 +31,7 @@ function Spotlight({ spot, title }: { spot: Spot; title: string }) {
           everything except its own box, with no second overlay to z-order. */}
       <div aria-hidden className="pointer-events-none fixed z-[65] rounded-xl border-2 border-[var(--primary)] transition-all duration-300"
         style={{ left: spot.x, top: spot.y, width: spot.w, height: spot.h, boxShadow: "0 0 0 9999px rgba(0,0,0,.38)" }} />
-      <div aria-hidden className="pointer-events-none fixed z-[66] rounded-lg bg-[var(--primary)] px-2 py-0.5 text-[length:calc(10.5px*var(--fs-scale))] font-bold text-white shadow-[var(--shadow-md)] transition-all duration-300"
+      <div aria-hidden className="pointer-events-none fixed z-[66] rounded-lg bg-[var(--primary-fill)] px-2 py-0.5 text-[length:calc(10.5px*var(--fs-scale))] font-bold text-white shadow-[var(--shadow-md)] transition-all duration-300"
         style={{ left: spot.x, top: spot.y + spot.h + 8 }}>{title}</div>
     </>
   );
@@ -124,7 +124,7 @@ export function HelpAssistant() {
   return (
     <>
       <button type="button" aria-label="Open page helper" title="Help (?)" onClick={() => setHelpOpen(!helpOpen)}
-        className="help-pulse no-print fixed bottom-12 right-5 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
+        className="help-pulse no-print fixed bottom-12 right-5 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary-fill)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
         <CircleHelp className="size-5" />
       </button>
 
@@ -151,7 +151,7 @@ export function HelpAssistant() {
               <div className="h-[3px] overflow-hidden rounded-sm bg-[var(--surface-3)]"><div className="h-full bg-[var(--primary)] transition-[width] duration-300" style={{ width: `${steps.length ? ((step + 1) / steps.length) * 100 : 0}%` }} /></div>
               {current ? (
                 <div className="flex min-h-[90px] items-start gap-3 rounded-xl bg-[var(--surface-2)] p-3">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--primary)] font-mono text-[length:calc(11px*var(--fs-scale))] font-black text-white">{step + 1}</span>
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[var(--primary-fill)] font-mono text-[length:calc(11px*var(--fs-scale))] font-black text-white">{step + 1}</span>
                   <span className="flex min-w-0 flex-col gap-1">
                     <span className="text-[length:calc(12px*var(--fs-scale))] font-black">{current.title}</span>
                     <span className="text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{current.text}</span>
