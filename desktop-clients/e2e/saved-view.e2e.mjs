@@ -9,11 +9,10 @@
  * view resolved, the worklist opened, and every row showed unfiltered while the
  * name it was filtered by stayed in the store.
  */
-import { BASE, loadPlaywright, openViaPalette, reporter, requireShell, signIn } from "./harness.mjs";
+import { API, BASE, loadPlaywright, openViaPalette, reporter, requireShell, signIn } from "./harness.mjs";
 
 const NAME = "Maya Thomas";
 const LEAKS = [/Maya/i, /Thomas/i];
-const API = process.env.E2E_API ?? "http://127.0.0.1:3200";
 
 const { chromium } = loadPlaywright();
 await requireShell(BASE);

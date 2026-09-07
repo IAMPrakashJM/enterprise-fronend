@@ -69,6 +69,10 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
     label: "Human Resources",
     shortLabel: "HR",
     description: "People, organization, attendance, leave and talent operations",
+    /* Each module's mark is this colour with WHITE letters on it, so every accent
+       here has to clear 4.5:1 against white — four of the eight did not, the
+       worst at 3.29:1. Darkened only as far as that needed, so the hue each
+       module is recognised by is unchanged. verify:contrast checks them. */
     accent: "#6d5ce7",
     icon: UsersRound,
     navigation: [
@@ -140,7 +144,7 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
     label: "Finance & Accounting",
     shortLabel: "Finance",
     description: "Billing, ledger, receivables, payables, taxation and financial control",
-    accent: "#0f8b6d",
+    accent: "#0f8468",
     icon: Landmark,
     navigation: [
       { id: "fin-overview", label: "Overview", items: [{ id: "finance-dashboard", label: "Finance Dashboard", icon: LayoutDashboard, pageId: "finance-dashboard" }] },
@@ -202,7 +206,7 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
     label: "Payroll",
     shortLabel: "Payroll",
     description: "Earnings, deductions, payroll processing, settlements and statutory outputs",
-    accent: "#db6a2b",
+    accent: "#b65a29",
     icon: Banknote,
     navigation: [
       { id: "pay-overview", label: "Overview", items: [{ id: "payroll-dashboard", label: "Payroll Dashboard", icon: LayoutDashboard, pageId: "payroll-dashboard" }] },
@@ -305,7 +309,7 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
     label: "Supply Chain",
     shortLabel: "Supply",
     description: "Procurement, inventory, warehouses, logistics and supplier collaboration",
-    accent: "#b7791f",
+    accent: "#9d6a1f",
     icon: Truck,
     navigation: [
       { id: "supply-overview", label: "Overview", items: [{ id: "supply-dashboard", label: "Supply Chain Dashboard", icon: LayoutDashboard, pageId: "supply-dashboard" }] },
@@ -361,7 +365,7 @@ export const MODULES: Record<ModuleKey, ModuleDefinition> = {
     label: "Healthcare",
     shortLabel: "HC",
     description: "Patient administration, clinical workflow and revenue cycle",
-    accent: "#0e9f8f",
+    accent: "#0d8379",
     icon: HeartPulse,
     navigation: [
       { id: "hc-overview", label: "Overview", items: [{ id: "healthcare-dashboard", label: "Healthcare Dashboard", icon: LayoutDashboard, pageId: "healthcare-dashboard" }] },

@@ -372,7 +372,10 @@ found its home in the inline-edit conflict above.
 
 Worth recording, so this document is not read as a list of everything we lack:
 
-- **Theming** — fourteen palettes against their fixed one.
+- **Theming** — fourteen palettes against their fixed one, and since September
+  every one of them measured: text against every surface it paints, white
+  against every accent it fills, checked by `verify:contrast` rather than by
+  eye.
 - **Preferences** — substantially deeper, and all of it persisted per user.
 - **The AI layer** — eight access gates, deny-wins resolution, clinical-module separation
   and PHI entity rules. They have no equivalent.

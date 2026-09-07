@@ -95,7 +95,7 @@ export function AssistantPanel() {
           button itself is untouched -- this one was moved to meet it. */}
       <button type="button" aria-label="Open the AI assistant" title={`AI assistant — ${useCases.length} available here`}
         onClick={() => openAssistant(!open)}
-        className="no-print fixed bottom-12 right-20 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
+        className="no-print fixed bottom-12 right-20 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary-fill)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
         <Sparkles className="size-5" />
       </button>
 

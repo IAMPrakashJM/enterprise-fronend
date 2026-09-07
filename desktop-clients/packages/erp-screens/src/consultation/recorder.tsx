@@ -204,7 +204,7 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
             {(["en", "ar"] as const).map((l) => (
               <button key={l} type="button" onClick={() => setLanguage(l)}
                 className={cn("focus-ring px-2.5 py-1 text-[length:calc(9.5px*var(--fs-scale))] font-bold uppercase transition",
-                  language === l ? "bg-[var(--primary)] text-white" : "bg-[var(--surface)] text-[var(--text-muted)]")}>
+                  language === l ? "bg-[var(--primary-fill)] text-white" : "bg-[var(--surface)] text-[var(--text-muted)]")}>
                 {l}
               </button>
             ))}

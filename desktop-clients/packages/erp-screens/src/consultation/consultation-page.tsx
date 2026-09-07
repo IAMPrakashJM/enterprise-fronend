@@ -194,7 +194,7 @@ export function ConsultationPage({ page }: { page: PageDefinition }) {
                 className={cn("focus-ring flex items-center gap-2 rounded-[var(--radius)] border px-2.5 py-2 text-left transition",
                   i === step ? "border-[var(--primary)] bg-[var(--primary-soft)]" : "border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-2)]")}>
                 <span className={cn("flex size-5 shrink-0 items-center justify-center rounded-full text-[length:calc(8.5px*var(--fs-scale))] font-black",
-                  i < step ? "bg-[var(--success)] text-white" : i === step ? "bg-[var(--primary)] text-white" : "bg-[var(--surface-3)] text-[var(--text-muted)]")}>
+                  i < step ? "bg-[var(--success-fill)] text-white" : i === step ? "bg-[var(--primary-fill)] text-white" : "bg-[var(--surface-3)] text-[var(--text-muted)]")}>
                   {i < step ? "✓" : i + 1}
                 </span>
                 <span className="min-w-0">

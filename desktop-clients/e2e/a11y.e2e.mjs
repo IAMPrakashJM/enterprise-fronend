@@ -24,25 +24,13 @@ import { audit, report } from "./a11y.mjs";
  * and every entry is printed on every run so it cannot quietly become
  * furniture.
  *
- * `color-contrast` is here for ONE cause: white text on a solid accent fill —
- * the completed-step markers and the success button. The accent is light enough
- * that white on it lands at 4.25:1 in the default theme and as low as 1.92:1 in
- * the dark ones. Fixing it means either darkening every accent in fourteen
- * palettes or introducing a separate fill token, both of which change how the
- * product looks; that is a decision to take deliberately rather than a defect to
- * quietly patch. Every other contrast failure axe found — 23 of the original 24
- * nodes — is fixed.
+ * It is EMPTY, which is the state it was written to reach. `color-contrast` was
+ * in it for one cause — white text on a solid accent fill — and that is now
+ * closed: three per-theme `-fill` tokens, and the four module marks that were
+ * a third place colours lived. Anything appearing here again should be argued
+ * about rather than added.
  */
-const BASELINE = {
-  /* Preferences is not listed: it has none, and an entry nothing fires is the
-     beginning of a list nobody reads. */
-  "worklist": ["color-contrast"],
-  "record": ["color-contrast"],
-  "consultation": ["color-contrast"],
-  "assistant": [],
-  "sign-in": [],
-  "command palette": [],
-};
+const BASELINE = {};
 
 const { chromium } = loadPlaywright();
 await requireShell(BASE);

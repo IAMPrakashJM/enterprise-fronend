@@ -149,6 +149,12 @@ assumes a default is testing whatever the last run left behind — the workspace
 suite reported no tab strip, correctly, because an earlier session had switched
 floating windows on. Use `setPreference`.
 
+**The harness checks this for you now.** `signIn` reads the API base out of the
+first request the shell actually makes and fails the suite — exit 2, before any
+assertion — when it is not the one the suites are asserting against. It is
+checked there rather than by each suite, because a guard every caller has to
+remember is a guard the tenth caller forgets.
+
 **Check which API the shell was BUILT against.** `NEXT_PUBLIC_*` is inlined by
 `next build`, not read at runtime, and `apps/web/.env.local` points at the
 deployed API. Passing `NEXT_PUBLIC_API_URL` to `next start` therefore does

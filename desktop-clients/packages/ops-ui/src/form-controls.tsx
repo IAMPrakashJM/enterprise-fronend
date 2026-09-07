@@ -115,7 +115,7 @@ export function MultiSelect({ label, hint, required, options, value, onChange, p
             <div className="nex-scrollbar max-h-52 overflow-auto p-1.5">
               {filtered.map((option) => {
                 const selected = value.includes(option.value);
-                return <button key={option.value} type="button" onClick={() => toggle(option.value)} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[length:calc(11px*var(--fs-scale))] font-medium hover:bg-[var(--surface-2)]"><span className={cn("flex size-4 items-center justify-center rounded border", selected ? "border-[var(--primary)] bg-[var(--primary)] text-white" : "border-[var(--border-strong)]")}><Check className={cn("size-3", !selected && "opacity-0")} /></span><span className="flex-1">{option.label}</span></button>;
+                return <button key={option.value} type="button" onClick={() => toggle(option.value)} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[length:calc(11px*var(--fs-scale))] font-medium hover:bg-[var(--surface-2)]"><span className={cn("flex size-4 items-center justify-center rounded border", selected ? "border-[var(--primary)] bg-[var(--primary-fill)] text-white" : "border-[var(--border-strong)]")}><Check className={cn("size-3", !selected && "opacity-0")} /></span><span className="flex-1">{option.label}</span></button>;
               })}
               {!filtered.length ? <div className="px-3 py-5 text-center text-[length:calc(11px*var(--fs-scale))] text-[var(--text-subtle)]">No matching options</div> : null}
             </div>

@@ -38,7 +38,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
     <div className="flex min-h-dvh w-full items-center justify-center bg-[var(--bg)] p-4">
       <div className="grid w-full max-w-4xl overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)] lg:grid-cols-2">
 
-        <div className="relative hidden flex-col justify-between overflow-hidden bg-[var(--primary)] p-8 text-white lg:flex">
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-[var(--primary-fill)] p-8 text-white lg:flex">
           <span className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(255,255,255,.28),transparent_46%)]" />
           <div className="relative">
             <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
         <div className="p-6 sm:p-8">
           <div className="lg:hidden">
             <div className="flex items-center gap-2.5">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-[var(--primary)] text-white"><Command className="size-4" /></span>
+              <span className="flex size-9 items-center justify-center rounded-xl bg-[var(--primary-fill)] text-white"><Command className="size-4" /></span>
               <div className="text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary)]">ONE</span></div>
             </div>
             <div className="my-5 h-px bg-[var(--border)]" />
@@ -149,7 +149,7 @@ export function SessionSplash() {
   return (
     <div className="flex min-h-dvh w-full items-center justify-center bg-[var(--bg)]">
       <div className="flex flex-col items-center gap-3">
-        <span className="flex size-12 animate-pulse items-center justify-center rounded-[15px] bg-[var(--primary)] text-white shadow-[var(--shadow-md)]">
+        <span className="flex size-12 animate-pulse items-center justify-center rounded-[15px] bg-[var(--primary-fill)] text-white shadow-[var(--shadow-md)]">
           <Command className="size-6" />
         </span>
         <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">Restoring your session…</span>
