@@ -58,7 +58,9 @@ pub fn run() {
           if std::fs::remove_file(trigger).is_ok() {
             std::thread::spawn(|| {
               let _ = std::panic::catch_unwind(|| panic!("Sentinel isolated recovery test"));
-              std::process::exit(86);
+              // An abrupt crash must not race GTK/WebKit process-exit handlers.
+              // The real panic hook above runs before the intentional abort.
+              std::process::abort();
             });
           }
         }

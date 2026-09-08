@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
 import {once} from 'node:events';
-import {mkdtempSync,writeFileSync,rmSync,mkdirSync,openSync,closeSync} from 'node:fs';
+import {mkdtempSync,writeFileSync,rmSync,mkdirSync,openSync,closeSync,readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {resolve,join} from 'node:path';
 const driver=process.env.TAURI_DRIVER_URL??'http://127.0.0.1:4444';
@@ -16,7 +16,7 @@ const application=join(scratch,'launch');
 const quote=value=>"'"+value.replaceAll("'", "'\"'\"'")+"'";
 const folders=Object.fromEntries(['DATA','CONFIG','CACHE'].map(name=>[name,join(scratch,name.toLowerCase())]));
 for(const folder of Object.values(folders))mkdirSync(folder,{recursive:true});
-writeFileSync(application,'#!/bin/sh\n'+Object.entries(folders).map(([name,path])=>'export XDG_'+name+'_HOME='+quote(path)).join('\n')+'\nexec '+quote(binary)+'\n',{mode:0o700});
+writeFileSync(application,'#!/bin/sh\nulimit -c 0\n'+Object.entries(folders).map(([name,path])=>'export XDG_'+name+'_HOME='+quote(path)).join('\n')+'\nexec '+quote(binary)+'\n',{mode:0o700});
 let session;
 async function wd(path,body,method=body===undefined?'GET':'POST'){
  const response=await fetch(`${driver}/session/${session}${path}`,{method,headers:{'Content-Type':'application/json'},...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(30000)});
@@ -31,12 +31,13 @@ try{
  const log=openSync('/tmp/native-sentinel-panic.log','w');
  const child=spawn(application,[],{env:{...process.env,NEXORA_SENTINEL_TEST_PANIC_ONCE:trigger},stdio:['ignore',log,log]});closeSync(log);
  const deadline=setTimeout(()=>child.kill('SIGKILL'),30000);
- const [code,signal]=await once(child,'exit');clearTimeout(deadline);assert.equal(code,86,`Debug panic hook must run and exit the native process (signal=${signal}; see /tmp/native-sentinel-panic.log)`);
+ const [code,signal]=await once(child,'exit');clearTimeout(deadline);assert.equal(code,null);assert.equal(signal,'SIGABRT',`Debug panic must terminate abruptly after its hook (see /tmp/native-sentinel-panic.log)`);assert.match(readFileSync('/tmp/native-sentinel-panic.log','utf8'),/Sentinel isolated recovery test/);
  const response=await fetch(driver+'/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({capabilities:{alwaysMatch:{'tauri:options':{application}}}})});
  const result=await response.json();assert.ok(response.ok,JSON.stringify(result));session=result.value.sessionId;
  await until(()=>js('return document.readyState==="complete"'),'webview');
  await js('localStorage.clear();sessionStorage.clear();window.__reloading=true;location.reload();return true;');
  await until(()=>js('return !window.__reloading && !!document.querySelector("input[type=password]")'),'fresh login');
+ await js(`const original=window.fetch.bind(window);window.fetch=(input,init)=>{const url=typeof input==='string'?input:input.url;const target=new URL(url,location.href);if((target.pathname.includes('/auth/')||target.pathname.includes('/monitoring/'))&&target.origin!==${JSON.stringify(api)})throw Error('Native API target mismatch');return original(input,init);};return true;`);
  assert.equal(await invoke('sentinel_pending_failure'),true,'Panic must survive process restart');
  for(const [selector,text] of [['input[placeholder="user1"]','admin'],['input[type=password]','admin']])await wd(`/element/${await element(selector)}/value`,{text});
  await wd(`/element/${await element('button[type=submit]')}/click`,{});
