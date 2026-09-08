@@ -10,6 +10,7 @@ for the ones that are not ours to do — who they are waiting on.
 
 Forms, import mappings and approval comments now use the shared durable draft engine,
 with explicit restoration and mandatory tenant storage, retention and exclusion rules.
+Deployed to both demo sites after all six CI jobs passed; live controls/API checks passed.
 See [shared draft recovery](shared-draft-recovery.md) for user flows, API integration,
 conflicts, storage limits and verification.
 

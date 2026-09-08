@@ -81,3 +81,13 @@ For a production multi-host API, use transactional storage for business records,
 Tests cover policy authorization and scope, recursive mandatory exclusions, retroactive scrubbing, retention, restart persistence, concurrent revisions, disabled storage, safe partial restoration, incompatible schemas, same-operation retries and completion racing an in-flight draft save.
 
 `e2e/drafts.mjs` verifies actual reload recovery in forms, imports and approvals; explicit discard; absence of draft values in browser storage; and the administrator controls. It runs with an isolated API data directory. Catalogs and recovery controls support English, Arabic, Hindi and Malayalam. New wording is marked Pending in `docs/localization-review/drafts-*-review.csv` for native-speaker review.
+
+## Verified release — 8 September 2026
+
+Code commit `1df8ee95e5646aa062a034f5133b054194e8ed65` passed all six jobs in [GitHub Actions run 34265737466](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34265737466): 1,440 unit tests in 90 files, 55 API tests and 33 runtime suites (9 browser, 19 feature, 1 navigation, 1 product and 3 native Linux). Type checks, production builds, localization and repository verification also passed.
+
+Release `20260908185346517-40b515a2` is active on both [web demo](https://front-design.pepbits.com) and [desktop browser demo](https://desktop.front-design.pepbits.com). Public browser checks verified the administrator draft controls, authenticated draft reads, all four language catalogs and zero runtime errors. Separate probes confirmed HTTP success for HTML, API health, login, navigation and localization. Live checks made no policy or business-record changes; mutation and reload-recovery tests ran against isolated fixtures.
+
+![Draft recovery policy on the live web demo](images/drafts/live-policy.png)
+
+The previous frontend release is retained at `.deploy/releases/20260908174722609-72db4f3d`. API source and pre-deployment data backups are retained locally under `.deploy/api-backups/20260908185346517-40b515a2/`. Backup contents are not committed. Native Linux runtime checks passed; this deployment did not publish a new native installer. Native-speaker review of new wording remains pending.
