@@ -38,17 +38,6 @@ pub fn run() {
         let _ = handle.emit("sentinel-native-error", ());
         previous(info);
       }));
-      // Local/CI fault injection is absent from release builds. A one-use file
-      // prevents a crash loop when the same executable is restarted.
-      #[cfg(debug_assertions)]
-      if let Some(trigger) = std::env::var_os("NEXORA_SENTINEL_TEST_PANIC_ONCE") {
-        if std::fs::remove_file(trigger).is_ok() {
-          std::thread::spawn(|| {
-            let _ = std::panic::catch_unwind(|| panic!("Sentinel isolated recovery test"));
-            std::process::exit(86);
-          });
-        }
-      }
       if cfg!(debug_assertions) {
         app.handle().plugin(
           tauri_plugin_log::Builder::default()
@@ -58,6 +47,23 @@ pub fn run() {
       }
       Ok(())
     })
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+    .build(tauri::generate_context!())
+    .expect("error while building tauri application")
+    .run(|_app, event| {
+      // The test must crash an initialized app, not race GTK/WebKit startup.
+      // This one-use fault trigger is absent from release builds.
+      #[cfg(debug_assertions)]
+      if matches!(event, tauri::RunEvent::Ready) {
+        if let Some(trigger) = std::env::var_os("NEXORA_SENTINEL_TEST_PANIC_ONCE") {
+          if std::fs::remove_file(trigger).is_ok() {
+            std::thread::spawn(|| {
+              let _ = std::panic::catch_unwind(|| panic!("Sentinel isolated recovery test"));
+              std::process::exit(86);
+            });
+          }
+        }
+      }
+      #[cfg(not(debug_assertions))]
+      let _ = event;
+    });
 }
