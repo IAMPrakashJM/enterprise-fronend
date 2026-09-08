@@ -93,3 +93,7 @@ Automated coverage includes store and HTTP permission enforcement, tenant/produc
 Local validation: 1,399 unit tests and 40 API tests passed; the preference-policy browser suite passed. Type checking, both production builds, and the repository verification suite passed. All jobs in [remote CI run 34231858793](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34231858793) passed, including all 28 registered browser/native suites. Application commit `6e7ad75` was deployed as release `20260908132518280-e399b58e` on both demo sites. Public HTTP checks verified health, login, navigation, catalogs and policy permissions; browser checks verified all 53 settings in both administrator editors without runtime errors. The initial desktop browser login check timed out; a fresh isolated rerun passed. No live tenant policies were changed during these checks.
 
 The editor has English, Arabic, Hindi, and Malayalam copy. Native-speaker sign-off remains a separate review task. Production identity provisioning, distributed storage, and any push-notification transport must be supplied by the integrating application. Role-specific policies and limiting users to a subset of allowed values are not implemented; this version supports tenant/application defaults and locks.
+
+The six-group editor was subsequently deployed with application commit `0863354`
+as release `20260908162629872-aaba59f3`. Remote CI and live checks on both sites
+verified all six groups and 53 settings. See the [release report and screenshot](sentinel-deployment-2026-09-08.md).

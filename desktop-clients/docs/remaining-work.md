@@ -10,15 +10,17 @@ for the ones that are not ours to do — who they are waiting on.
 
 The local demo collector, monitoring API and administrator incident screen are
 implemented. See [Sentinel monitoring](sentinel-monitoring.md) for capture points,
-privacy constraints, tests and native runtime limitations. Not yet deployed.
+privacy constraints, tests and native runtime limitations. Deployed on both demo sites;
+see the [verified release](sentinel-deployment-2026-09-08.md).
 
 ## Documentation Center — 8 September 2026
 
 A shared, versioned documentation viewer, release/patch archive and persistent
-change notices are implemented locally. See the [integration guide](documentation-center-integration.md)
+change notices are implemented. See the [integration guide](documentation-center-integration.md)
 and [page coverage](documentation-coverage.md) for exact scope: 179 references,
 four initial authored workflows, and the remaining content/review work.
-This implementation has not yet been deployed.
+Deployed as release `20260908162629872-aaba59f3` on both demo sites. Detailed
+content and native/domain review remain pending as documented.
 
 ## Engineering review follow-up — 8 September 2026
 
