@@ -45,7 +45,7 @@ export function defineProduct(input: {
   const modules = Object.fromEntries(input.enabledModules.map((key) => [key, MODULES[key]]));
   // These shell utilities are catalogued under Library in the original demo.
   // Keep them reachable even in a product that does not include the gallery.
-  const utilities = new Set(["preferences", "notifications", "messages", "ai-administration", "documentation-center", "error-monitor"]);
+  const utilities = new Set(["preferences", "notifications", "messages", "ai-administration", "documentation-center", "error-monitor", "draft-recovery"]);
   const pages = Object.fromEntries(Object.entries(PAGE_REGISTRY)
     .filter(([id, page]) => utilities.has(id) || page.module === "shared" || input.enabledModules.includes(page.module))
     .map(([id, page]) => [id, utilities.has(id) ? { ...page, module: "shared" as const } : page]));

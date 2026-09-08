@@ -50,6 +50,22 @@ export function createRecordStore(file, {draftPolicy, now=()=>Date.now()}={}) {
       const [tenantId,key]=JSON.parse(id);let product;try{product=JSON.parse(key)[0];}catch{continue;}
       const scope=JSON.stringify([tenantId,product]);if(seen.has(scope))continue;seen.add(scope);const user={tenantId};scrub(user,product,draftPolicy(user,product));
     }},
+    draftKey(user,product,reference){
+      for(const [id,entry] of Object.entries(data)){
+        const [tenant,key]=JSON.parse(id);let app;try{app=JSON.parse(key)[0];}catch{continue;}
+        if(tenant===user.tenantId&&app===product&&entry.drafts?.[user.id]&&createHash('sha256').update(JSON.stringify([tenant,user.id,key])).digest('hex')===reference)return key;
+      }
+      return null;
+    },
+    draftIndex(user,product) {
+      if(draftPolicy)scrub(user,product,draftPolicy(user,product));
+      return Object.entries(data).flatMap(([id,entry])=>{
+        const [tenant,key]=JSON.parse(id);let parts;try{parts=JSON.parse(key);}catch{return [];}
+        const snapshot=entry.drafts?.[user.id]?.snapshot;
+        if(tenant!==user.tenantId||parts[0]!==product||!snapshot)return [];
+        return [{key,id:createHash('sha256').update(JSON.stringify([tenant,user.id,key])).digest('hex'),version:snapshot.version,savedAt:snapshot.savedAt,baseVersion:snapshot.baseVersion,recordVersion:entry.record?.version??0,schemaVersion:snapshot.schemaVersion??1,context:snapshot.values?.context,payloadVersion:snapshot.values?.schemaVersion}];
+      });
+    },
     list(user, scope) {
       const [product, prefix] = JSON.parse(scope);
       if (typeof product !== 'string' || typeof prefix !== 'string' || !prefix) throw new Error('Invalid scope');

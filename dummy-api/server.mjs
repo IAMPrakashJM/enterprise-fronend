@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createDraftCenter} from "./draft-center.mjs";
 import {createDraftPolicyStore} from "./draft-policy-store.mjs";
 import {createMonitoringStore} from "./monitoring-store.mjs";
 import {createDocumentationStore} from "./documentation-store.mjs";
@@ -125,6 +126,27 @@ const approvalStore=createApprovalStore(join(process.env.RECORD_DATA_DIR ?? DATA
     if(!Object.hasOwn(PAGE_REGISTRY,pageId))return null;
     const page=PAGE_REGISTRY[pageId],config=getWorklistConfig(pageId,page.title,page.entity);
     return rowsWithSaved(user,product,pageId,config).find(row=>String(row[config.primaryKey])===id)??null;
+  },
+});
+const draftCenter=createDraftCenter({records:recordStore,policy:(...args)=>draftPolicies.read(...args),
+  labels:(user,product,language)=>{
+    const nav=applicationConfig.navigation(user,product),locale=applicationConfig.localization(user,product,language);if(nav.status!==200||locale.status!==200)return {};
+    return Object.fromEntries(nav.body.pages.map(page=>[page.id,locale.body.messages[page.titleKey]??page.id]));
+  },
+  access:(user,product,{kind,pageId,recordId})=>{
+    const nav=applicationConfig.navigation(user,product);if(nav.status!==200||!nav.body.pages.some(p=>p.id===pageId))return false;
+    const page=PAGE_REGISTRY[pageId];if(!page)return false;
+    if(kind==='import')return !!getImportDefinition(page.entity);
+    if(kind==='approval'&&pageId!=='customer-master')return false;
+    if(recordId==='new'||kind==='approval'&&recordId==='inbox')return true;
+    if(page.kind==='worklist'||page.kind==='form'){
+      const config=getWorklistConfig(pageId,page.title,page.entity);return rowsWithSaved(user,product,pageId,config).some(row=>String(row[config.primaryKey])===recordId);
+    }
+    return ['billing','consultation'].includes(page.kind);
+  },
+  context:(user,product,pageId,recordId)=>{
+    const result=approvalStore.handle(user,{scope:[product,pageId],action:'read',...(recordId==='inbox'?{}:{recordId})});if(result.status!==200)return undefined;
+    const data=result.body;return createHash('sha256').update(JSON.stringify([data.config.version,data.items.map(i=>[i.recordId,i.version,i.recordChanged])])).digest('hex');
   },
 });
 const importStore = createImportStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"imports.json"),{
@@ -873,6 +895,13 @@ const server = createServer(async (req, res) => {
     const token = bearer(req);
     if (token) sessions.delete(token);
     return send(res,204);
+  }
+
+  if(pathname==="/draft-center"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    const input=await readJson(req).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
+    const result=draftCenter.handle(user,product,input);return send(res,result.status,result.body,{'Cache-Control':'no-store'});
   }
 
   if(pathname==="/draft-policy"||pathname==="/drafts"){

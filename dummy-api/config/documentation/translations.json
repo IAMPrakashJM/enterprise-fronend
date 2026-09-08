@@ -27,7 +27,11 @@
     "Historical page-guide snapshots were not captured.": "لم تُحفظ نسخ تاريخية من أدلة الصفحات.",
     "Scheduled reports and server controls": "التقارير المجدولة وضوابط الخادم",
     "Scheduled in-app CSV reports and persistent audit events were deployed. Provider credentials use encrypted storage.": "نُشرت تقارير CSV المجدولة داخل التطبيق وأحداث تدقيق دائمة. تُخزن بيانات اعتماد المزود بشكل مشفر.",
-    "External email delivery and native-speaker review were not completed in this release.": "لم يكتمل إرسال البريد الخارجي ومراجعة المتحدثين الأصليين في هذا الإصدار."
+    "External email delivery and native-speaker review were not completed in this release.": "لم يكتمل إرسال البريد الخارجي ومراجعة المتحدثين الأصليين في هذا الإصدار.",
+    "Find and resume your unfinished work.": "اعثر على عملك غير المكتمل وتابعه.",
+    "Opening never submits a record or approval. Reselect CSV files to restore mappings. Refresh if another window changed a draft. Each application has its own recovery center.": "لا يؤدي الفتح إلى إرسال سجل أو موافقة. أعد اختيار ملفات CSV لاستعادة تعيين الأعمدة. حدّث إذا غيّرت نافذة أخرى المسودة. لكل تطبيق مركز استعادة خاص به.",
+    "Draft storage is enabled by your tenant policy. Only service-acknowledged changes are recoverable.": "تخزين المسودات مفعّل وفق سياسة المؤسسة. يمكن استعادة التغييرات التي أكدت الخدمة حفظها فقط.",
+    "Draft Recovery Center": "مركز استعادة المسودات"
   },
   "hi": {
     "Use Customer Master to find and maintain customer records.": "ग्राहकों के रिकॉर्ड खोजने और बनाए रखने के लिए ग्राहक मास्टर का उपयोग करें।",
@@ -57,7 +61,11 @@
     "Historical page-guide snapshots were not captured.": "पुराने पृष्ठ मार्गदर्शिका स्नैपशॉट उपलब्ध नहीं हैं।",
     "Scheduled reports and server controls": "अनुसूचित रिपोर्ट और सर्वर नियंत्रण",
     "Scheduled in-app CSV reports and persistent audit events were deployed. Provider credentials use encrypted storage.": "ऐप में अनुसूचित CSV रिपोर्ट और स्थायी ऑडिट घटनाएँ लागू की गईं। प्रदाता क्रेडेंशियल एन्क्रिप्टेड स्टोरेज में रखे जाते हैं।",
-    "External email delivery and native-speaker review were not completed in this release.": "इस रिलीज़ में बाहरी ईमेल वितरण और मातृभाषी समीक्षा पूरी नहीं हुई थी।"
+    "External email delivery and native-speaker review were not completed in this release.": "इस रिलीज़ में बाहरी ईमेल वितरण और मातृभाषी समीक्षा पूरी नहीं हुई थी।",
+    "Find and resume your unfinished work.": "अपना अधूरा काम खोजें और जारी रखें।",
+    "Opening never submits a record or approval. Reselect CSV files to restore mappings. Refresh if another window changed a draft. Each application has its own recovery center.": "खोलने से रिकॉर्ड या अनुमोदन सबमिट नहीं होता। मैपिंग बहाल करने के लिए CSV फ़ाइल फिर चुनें। दूसरी विंडो में ड्राफ़्ट बदलने पर रीफ़्रेश करें। प्रत्येक एप्लिकेशन का अपना पुनर्प्राप्ति केंद्र है।",
+    "Draft storage is enabled by your tenant policy. Only service-acknowledged changes are recoverable.": "टेनेंट नीति के अनुसार ड्राफ़्ट संग्रहण चालू है। केवल सेवा द्वारा सहेजे जाने की पुष्टि वाले बदलाव बहाल हो सकते हैं।",
+    "Draft Recovery Center": "ड्राफ़्ट पुनर्प्राप्ति केंद्र"
   },
   "ml": {
     "Use Customer Master to find and maintain customer records.": "ഉപഭോക്തൃ രേഖകൾ കണ്ടെത്താനും പരിപാലിക്കാനും കസ്റ്റമർ മാസ്റ്റർ ഉപയോഗിക്കുക.",
@@ -87,6 +95,10 @@
     "Historical page-guide snapshots were not captured.": "പഴയ പേജ് മാർഗ്ഗനിർദ്ദേശങ്ങളുടെ പകർപ്പുകൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
     "Scheduled reports and server controls": "ക്രമീകരിച്ച റിപ്പോർട്ടുകളും സെർവർ നിയന്ത്രണങ്ങളും",
     "Scheduled in-app CSV reports and persistent audit events were deployed. Provider credentials use encrypted storage.": "ആപ്പിനുള്ളിലെ സമയക്രമപ്പെടുത്തിയ CSV റിപ്പോർട്ടുകളും സ്ഥിരമായ ഓഡിറ്റ് രേഖകളും വിന്യസിച്ചു. സേവനദാതാവിന്റെ ക്രെഡൻഷ്യലുകൾ എൻക്രിപ്റ്റ് ചെയ്ത് സൂക്ഷിക്കുന്നു.",
-    "External email delivery and native-speaker review were not completed in this release.": "ഈ പതിപ്പിൽ ബാഹ്യ ഇമെയിൽ വിതരണം, മാതൃഭാഷാ അവലോകനം എന്നിവ പൂർത്തിയായിരുന്നില്ല."
+    "External email delivery and native-speaker review were not completed in this release.": "ഈ പതിപ്പിൽ ബാഹ്യ ഇമെയിൽ വിതരണം, മാതൃഭാഷാ അവലോകനം എന്നിവ പൂർത്തിയായിരുന്നില്ല.",
+    "Find and resume your unfinished work.": "പൂർത്തിയാകാത്ത ജോലി കണ്ടെത്തി തുടരുക.",
+    "Opening never submits a record or approval. Reselect CSV files to restore mappings. Refresh if another window changed a draft. Each application has its own recovery center.": "തുറക്കുന്നത് രേഖയോ അംഗീകാരമോ സമർപ്പിക്കില്ല. മാപ്പിംഗ് പുനഃസ്ഥാപിക്കാൻ CSV ഫയൽ വീണ്ടും തിരഞ്ഞെടുക്കുക. മറ്റൊരു വിൻഡോ ഡ്രാഫ്റ്റ് മാറ്റിയാൽ പുതുക്കുക. ഓരോ ആപ്ലിക്കേഷനും സ്വന്തം വീണ്ടെടുക്കൽ കേന്ദ്രമുണ്ട്.",
+    "Draft storage is enabled by your tenant policy. Only service-acknowledged changes are recoverable.": "ടെനന്റ് നയം ഡ്രാഫ്റ്റ് സംഭരണം അനുവദിക്കുന്നു. സേവനം സംരക്ഷിച്ചതായി സ്ഥിരീകരിച്ച മാറ്റങ്ങൾ മാത്രമേ വീണ്ടെടുക്കാനാകൂ.",
+    "Draft Recovery Center": "ഡ്രാഫ്റ്റ് വീണ്ടെടുക്കൽ കേന്ദ്രം"
   }
 }

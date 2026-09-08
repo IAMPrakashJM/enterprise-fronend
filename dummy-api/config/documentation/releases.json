@@ -456,7 +456,8 @@
         "messages",
         "ai-administration",
         "documentation-center",
-        "error-monitor"
+        "error-monitor",
+        "draft-recovery"
       ],
       "knownIssues": [
         "Most page guides are schema-based references awaiting detailed workflow authoring.",
@@ -34857,6 +34858,34 @@
           ],
           "fields": [],
           "tour": []
+        },
+        "draft-recovery": {
+          "pageId": "draft-recovery",
+          "module": "shared",
+          "title": "Draft Recovery Center",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "purpose",
+              "title": "Purpose",
+              "paragraphs": [
+                "Find and resume your unfinished work."
+              ]
+            },
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Opening never submits a record or approval. Reselect CSV files to restore mappings. Refresh if another window changed a draft. Each application has its own recovery center.",
+                "Draft storage is enabled by your tenant policy. Only service-acknowledged changes are recoverable."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
         }
       },
       "guidePageIds": [
@@ -35038,7 +35067,8 @@
         "messages",
         "ai-administration",
         "documentation-center",
-        "error-monitor"
+        "error-monitor",
+        "draft-recovery"
       ],
       "sections": [
         {
@@ -35072,6 +35102,16 @@
       "category": "feature",
       "title": "Documentation Center",
       "summary": "Browse page guides, release history and change explanations.",
+      "requiresAcknowledgment": false
+    },
+    {
+      "id": "draft-recovery-center",
+      "revision": 1,
+      "releaseId": "2026-09-08-documentation",
+      "pageId": "draft-recovery",
+      "sectionId": "workflow",
+      "title": "Draft Recovery Center",
+      "summary": "Find and resume your unfinished work.",
       "requiresAcknowledgment": false
     }
   ]

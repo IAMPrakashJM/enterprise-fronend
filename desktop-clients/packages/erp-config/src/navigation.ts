@@ -785,3 +785,5 @@ export const HEADER_QUICK_PAGES = [
   { id: "payroll-run", label: "Payroll run", icon: HandCoins },
   { id: "activity", label: "Activity", icon: Activity },
 ];
+
+PAGE_REGISTRY["draft-recovery"] = {id:"draft-recovery",title:"Draft Recovery Center",subtitle:"Find and resume your unfinished work.",kind:"library",module:"shared",icon:BookOpen};

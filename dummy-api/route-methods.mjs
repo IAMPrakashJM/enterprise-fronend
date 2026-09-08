@@ -1,7 +1,7 @@
 /** One method contract for registered routes; unknown paths remain 404. */
 const methods = new Map(Object.entries({
   '/auth/login': ['POST'], '/auth/me': ['GET'], '/auth/logout': ['POST'],
-  '/drafts':['POST'], '/draft-policy':['GET','PUT'],
+  '/draft-center':['POST'], '/drafts':['POST'], '/draft-policy':['GET','PUT'],
   '/records': ['GET'], '/navigation': ['GET'], '/localization': ['GET'],
   '/monitoring/events': ['POST'], '/monitoring/incidents':['GET'],
   '/documentation': ['GET'], '/documentation/state': ['PUT'],

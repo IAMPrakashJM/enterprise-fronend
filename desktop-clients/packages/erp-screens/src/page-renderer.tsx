@@ -1,5 +1,6 @@
 "use client";
 
+import {DraftRecoveryCenter} from "./drafts/draft-center";
 import { RecordApproval } from "./approvals/approval-workspace";
 import { RecordPanelsPanel } from "./records/record-panels";
 import React from "react";
@@ -49,6 +50,7 @@ export function SkeletonFor({ kind }: { kind: string }) {
 export function PageRenderer({ target, showTabPreferences = true }: { target: NavigationTarget; showTabPreferences?: boolean }) {
   const product = useProduct();
   const page = product.pages[target.pageId];
+  if(page && target.pageId==="draft-recovery")return <DraftRecoveryCenter />;
   if(page && target.pageId==="error-monitor")return <ErrorMonitor />;
   if(page && target.pageId==="documentation-center")return <DocumentationCenter />;
   /* A page id with no entry is a configuration fault, not an empty result, and

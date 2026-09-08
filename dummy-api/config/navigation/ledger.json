@@ -54,6 +54,11 @@
       "roles": [
         "enterprise-admin"
       ]
+    },
+    {
+      "id": "draft-recovery",
+      "titleKey": "Draft Recovery Center",
+      "subtitleKey": "Find and resume your unfinished work."
     }
   ],
   "nodes": [
@@ -126,6 +131,15 @@
         "enterprise-admin"
       ],
       "icon": "Activity"
+    },
+    {
+      "id": "draft-recovery",
+      "kind": "page",
+      "parentId": "section.finance.fin-overview",
+      "pageId": "draft-recovery",
+      "labelKey": "Draft Recovery Center",
+      "order": 1001,
+      "icon": "BookOpen"
     }
   ]
 }

@@ -203,5 +203,7 @@
   "Invalid draft policy.": "draft.invalidPolicy",
   "Draft policy changed. Reload before saving.": "draft.policyConflict",
   "Invalid draft request.": "draft.invalidRequest",
-  "Draft page is not available.": "draft.pageDenied"
+  "Draft page is not available.": "draft.pageDenied",
+  "Draft is no longer available.": "center.gone",
+  "Draft changed. Refresh the recovery center.": "center.conflict"
 }
