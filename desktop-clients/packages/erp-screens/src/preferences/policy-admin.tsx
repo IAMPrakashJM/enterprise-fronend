@@ -1,4 +1,5 @@
 "use client";
+import {DraftPolicyAdmin} from "./draft-policy-admin";
 import React,{useEffect,useState} from 'react';
 import {DEFAULT_PREFERENCES, PREFERENCE_OPTIONS, PREFERENCE_RANGES, EMPTY_PREFERENCE_POLICY, parsePreferencePolicy, type PreferenceKey, type PreferencePolicy} from '@pepbits/erp-config';
 import {useERP,useProduct} from '@pepbits/erp-shell';
@@ -81,7 +82,7 @@ export function PreferencePolicyAdmin() {
  const label=(key:string)=>t(`preference.label.${key}`);
  const query=search.trim().toLocaleLowerCase();
  const groups=POLICY_GROUPS.map((title,index)=>({title,id:`preference-policy-group-${index}`,keys:(Object.keys(POLICY_GROUP_BY_KEY) as PreferenceKey[]).filter(key=>POLICY_GROUP_BY_KEY[key]===title && (!query || label(key).toLocaleLowerCase().includes(query) || t(title).toLocaleLowerCase().includes(query)))})).filter(group=>group.keys.length>0);
- return <Card className="flex min-w-0 flex-col gap-3 p-4">
+ return <><DraftPolicyAdmin/><Card className="flex min-w-0 flex-col gap-3 p-4">
   <p className="font-bold"><LocalizedText message="Preference policies" /> — {product.name}</p>
   <p className="text-sm"><LocalizedText message="Set defaults and lock settings for everyone in this tenant and application. Unlocking restores personal choices." /></p>
   {error?<p role="alert"><LocalizedText message={error} /></p>:null}
@@ -104,5 +105,5 @@ export function PreferencePolicyAdmin() {
   </section>)}
   <p className="font-bold"><LocalizedText message="Policy history" /></p>
   {history.map(item=><p key={item.revision} className="text-sm">{item.revision} · {item.actor} · {item.at}</p>)}
- </Card>;
+ </Card></>;
 }

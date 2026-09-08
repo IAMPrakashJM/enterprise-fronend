@@ -1,3 +1,4 @@
+import {mergeDraftValues,type DraftPolicy} from "@pepbits/erp-config";
 /** Replace this transport when connecting a product's own record service. */
 export interface RecordSnapshot<T> {
     values: T;
@@ -5,12 +6,16 @@ export interface RecordSnapshot<T> {
     savedAt: string;
 }
 export interface DraftSnapshot<T> {
+    schemaVersion?:number;
+    excludedFields?:string[];
+    disabled?:boolean;
     values: T;
     baseVersion: number;
     version: number;
     savedAt: string;
 }
 export interface RecordBundle<T> {
+    draftPolicy?:DraftPolicy;
     record: RecordSnapshot<T> | null;
     draft: DraftSnapshot<T> | null;
     draftVersion: number;
@@ -63,7 +68,7 @@ export function createHttpRecordAdapter(fetcher: (path: string, init?: RequestIn
             throw new Error("The record service returned an invalid response.");
         const snapshot = (value: any, draft = false) => value && typeof value === "object" &&
             value.values && typeof value.values === "object" && !Array.isArray(value.values) &&
-            Number.isSafeInteger(value.version) && value.version > 0 &&
+            Number.isSafeInteger(value.version) && (value.version > 0 || value.disabled===true && value.version===0) &&
             typeof value.savedAt === "string" && Number.isFinite(Date.parse(value.savedAt)) &&
             (!draft || (Number.isSafeInteger(value.baseVersion) && value.baseVersion >= 0));
         const valid = action === "/draft" ? snapshot(result, true) :
@@ -100,6 +105,10 @@ export function createHttpRecordAdapter(fetcher: (path: string, init?: RequestIn
     };
 }
 export interface EditorState<T> {
+    draftPolicy?:DraftPolicy;
+    draftSavedAt?:string;
+    incompatibleDraft?:boolean;
+    excludedFields?:string[];
     values: T;
     baseline: T;
     version: number;
@@ -171,10 +180,14 @@ export class RecordEditor<T> {
             const result = await this.adapter.load<T>(this.key);
             if (result.record)
                 assertShape(this.state.baseline, result.record.values);
-            if (result.draft)
-                assertShape(this.state.baseline, result.draft.values);
+            let incompatibleDraft=false;
+            if(result.draft){
+                result.draft={...result.draft,values:mergeDraftValues(result.record?.values??this.state.baseline,result.draft.values)};
+                try{assertShape(this.state.baseline,result.draft.values);if((result.draft.schemaVersion??1)!==1)incompatibleDraft=true;}catch{incompatibleDraft=true;}
+            }
             const baseline = result.record?.values ?? this.state.baseline;
             this.patch({ baseline, values: baseline, version: result.record?.version ?? 0,
+                draftPolicy:result.draftPolicy,incompatibleDraft,excludedFields:result.draft?.excludedFields,
                 draftVersion: result.draftVersion, recovery: result.draft,
                 lastSaved: result.record?.savedAt ?? null, conflict: false, rejected: false, reviewed: false, ready: true, loading: false });
         }
@@ -192,7 +205,7 @@ export class RecordEditor<T> {
     };
     private schedule() {
         clearTimeout(this.timer);
-        if (this.active && !this.closing && this.dirty && !this.state.error && !this.state.busy && !this.state.conflict && !this.state.recovery) {
+        if (this.state.draftPolicy?.enabled!==false && this.active && !this.closing && this.dirty && !this.state.error && !this.state.busy && !this.state.conflict && !this.state.recovery) {
             this.timer = setTimeout(() => void this.saveDraft(), 800);
         }
     }
@@ -221,13 +234,15 @@ export class RecordEditor<T> {
         return this.inFlight;
     }
     saveDraft = async () => {
+        if(this.state.draftPolicy?.enabled===false || !this.dirty)return;
         if (!this.state.ready || this.state.loading || this.state.busy || this.state.recovery || this.state.error || this.state.conflict)
             return;
         const { values, version, draftVersion } = this.state;
         const id = operationId();
         await this.run(async () => {
             const draft = await this.adapter.draft(this.key, values, version, draftVersion, id);
-            this.patch({ draftVersion: draft.version, draftSaved: equal(values, this.state.values) });
+            this.patch({ draftVersion: draft.version, draftSaved: !draft.disabled&&equal(values, this.state.values),draftSavedAt:draft.disabled?undefined:draft.savedAt,excludedFields:draft.excludedFields,
+                ...(draft.disabled?{draftPolicy:{revision:0,retentionDays:7,excludedFields:[],...this.state.draftPolicy,enabled:false}}:{}) });
         });
     };
     save = async () => {
@@ -260,7 +275,7 @@ export class RecordEditor<T> {
     };
     restore = () => {
         const draft = this.state.recovery;
-        if (!draft)
+        if (!draft || this.state.incompatibleDraft)
             return;
         this.patch({ values: draft.values, recovery: null, draftSaved: true,
             conflict: draft.baseVersion !== this.state.version,
@@ -285,8 +300,7 @@ export class RecordEditor<T> {
             const latest = await this.adapter.load<T>(this.key);
             if (latest.record)
                 assertShape(this.state.baseline, latest.record.values);
-            if (latest.draft)
-                assertShape(this.state.baseline, latest.draft.values);
+            if(latest.draft)latest.draft={...latest.draft,values:mergeDraftValues(latest.record?.values??this.state.baseline,latest.draft.values)};
             this.patch({ baseline: latest.record?.values ?? this.state.baseline, version: latest.record?.version ?? 0,
                 draftVersion: latest.draftVersion, lastSaved: latest.record?.savedAt ?? null, conflict: true,
                 remoteDraft: latest.draft, reviewed: true, error: "Compare your edits with the saved values, then choose which version to keep." });

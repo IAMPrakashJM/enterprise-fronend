@@ -6,6 +6,13 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Shared durable drafts — 8 September 2026
+
+Forms, import mappings and approval comments now use the shared durable draft engine,
+with explicit restoration and mandatory tenant storage, retention and exclusion rules.
+See [shared draft recovery](shared-draft-recovery.md) for user flows, API integration,
+conflicts, storage limits and verification.
+
 ## User-facing error recovery — 8 September 2026
 
 Localized recovery messages/actions, retained in-memory work through recoverable

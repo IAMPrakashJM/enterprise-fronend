@@ -7,8 +7,9 @@ import type {ApprovalData} from '@pepbits/erp-data';
 vi.mock('@pepbits/auth',()=>({useSession:()=>({user:{id:'requester',tenantId:'tenant',role:'operations-analyst'}}),readToken:()=> 'token',authedFetch:vi.fn(),reportOperationFailure:vi.fn(),reportSentinelFailure:vi.fn()}));
 vi.mock('@pepbits/erp-shell',()=>({useProduct:()=>({id:'test'})}));
 vi.mock('@pepbits/platform-ports',()=>({useNavigation:()=>({open:vi.fn()})}));
+const drafts={load:vi.fn().mockResolvedValue({draft:null,draftVersion:0,draftPolicy:{enabled:true,revision:0,retentionDays:7,excludedFields:[]}}),save:vi.fn(),discard:vi.fn().mockResolvedValue(undefined)};
 const empty:ApprovalData={config:{version:0,stages:[{name:'Finance',roles:['finance-manager']}]},canConfigure:false,items:[],notifications:[]};
-function setup(data=empty,recordId?:string){const adapter={read:vi.fn().mockResolvedValue(data),change:vi.fn().mockResolvedValue(data)};render(<ProductServicesProvider services={{approvals:adapter}}><ApprovalWorkspace pageId="customer-master" recordId={recordId}/></ProductServicesProvider>);return adapter;}
+function setup(data=empty,recordId?:string){const adapter={read:vi.fn().mockResolvedValue(data),change:vi.fn().mockResolvedValue(data)};render(<ProductServicesProvider services={{approvals:adapter,drafts}}><ApprovalWorkspace pageId="customer-master" recordId={recordId}/></ProductServicesProvider>);return adapter;}
 test('submission requires a comment and confirmation; unknown outcomes reuse the operation id',async()=>{
  const adapter=setup(empty,'A');await waitFor(()=>expect(screen.getByLabelText('Approval comment')).toBeEnabled());expect(screen.getByRole('button',{name:'Submit for approval'})).toBeDisabled();
  fireEvent.change(screen.getByLabelText('Approval comment'),{target:{value:'Please review'}});fireEvent.click(screen.getByRole('button',{name:'Submit for approval'}));expect(adapter.change).not.toHaveBeenCalled();adapter.change.mockRejectedValueOnce(new Error('Connection lost'));
@@ -35,6 +36,6 @@ test.each([408,429,503])('HTTP %i retains the comment and retries the identical 
 
 test('return from a failed inbox delegates to its owning dialog',async()=>{
  const {ApprovalError}=await import('@pepbits/erp-data');const onReturn=vi.fn(),adapter={read:vi.fn().mockRejectedValue(new ApprovalError('PRIVATE',403)),change:vi.fn()};
- render(<ProductServicesProvider services={{approvals:adapter}}><ApprovalWorkspace pageId="customer-master" onReturn={onReturn}/></ProductServicesProvider>);
+ render(<ProductServicesProvider services={{approvals:adapter,drafts}}><ApprovalWorkspace pageId="customer-master" onReturn={onReturn}/></ProductServicesProvider>);
  await screen.findByRole('alert');fireEvent.click(screen.getByRole('button',{name:'Return to page'}));expect(onReturn).toHaveBeenCalledOnce();expect(adapter.change).not.toHaveBeenCalled();
 });

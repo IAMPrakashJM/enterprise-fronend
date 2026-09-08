@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {mkdtempSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {createServer} from 'node:net';
+test('shared draft HTTP authorization, payload restrictions and mandatory tenant policy',async t=>{
+ const socket=createServer();await new Promise(r=>socket.listen(0,'127.0.0.1',r));const port=socket.address().port;await new Promise(r=>socket.close(r));const dir=mkdtempSync(join(tmpdir(),'draft-http-'));
+ const child=spawn(process.execPath,[new URL('./server.mjs',import.meta.url).pathname],{env:{...process.env,PORT:String(port),NEXORA_DATA_DIR:dir,RECORD_DATA_DIR:dir},stdio:'ignore'});
+ t.after(async()=>{if(child.exitCode===null){child.kill();await new Promise(r=>child.once('exit',r));}rmSync(dir,{recursive:true,force:true});});
+ const base=`http://127.0.0.1:${port}`;for(let i=0;i<100;i++){try{await fetch(base+'/health');break;}catch{await new Promise(r=>setTimeout(r,50));}}
+ const login=async username=>(await(await fetch(base+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password:username})})).json()).token;
+ const admin=await login('admin'),user=await login('user1');
+ const request=(path,token,body,product='nexora')=>fetch(base+path,{method:body?(path==='/draft-policy'?'PUT':'POST'):'GET',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json','X-Product-Id':product},...(body?{body:JSON.stringify(body)}:{})});
+ const scope={kind:'approval',pageId:'customer-master',recordId:'CUS-02401'};
+ const write={...scope,action:'draft',version:0,operationId:'first',values:{schemaVersion:1,context:'a'.repeat(64),data:{comment:'restore me'}}};
+ assert.equal((await request('/drafts','invalid',write)).status,401);assert.equal((await request('/drafts',admin,write,'not-a-product')).status,403);
+ assert.equal((await request('/drafts',admin,{...write,pageId:'missing'})).status,403);
+ assert.equal((await request('/drafts',admin,{...write,values:{...write.values,data:{comment:'x',csv:'NEVER'}}})).status,400);
+ assert.equal((await request('/drafts',admin,write)).status,200);assert.equal((await request('/drafts',admin,write)).status,200);
+ assert.equal((await(await request('/drafts',user,{...scope,action:'load'})).json()).draft,null);
+ assert.equal((await(await request('/drafts',admin,{...scope,action:'load'})).json()).draft.values.data.comment,'restore me');
+ const policy=(await(await request('/draft-policy',admin)).json()).policy;
+ assert.equal((await request('/draft-policy',user,{...policy,enabled:false})).status,403);
+ assert.equal((await request('/draft-policy',admin,{...policy,excludedFields:['comment']})).status,200);
+ assert.deepEqual((await(await request('/drafts',admin,{...scope,action:'load'})).json()).draft.values.data,{});
+ assert.equal((await request('/drafts',admin,{...write,version:1,operationId:'stale'})).status,409);
+ assert.equal((await request('/drafts',admin,{...scope,action:'discard',version:2,operationId:'discard'})).status,204);
+ assert.equal((await(await request('/drafts',admin,{...scope,action:'load'})).json()).draft,null);
+});

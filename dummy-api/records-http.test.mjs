@@ -15,16 +15,16 @@ test('authenticated HTTP record lifecycle, isolation and conflicts', async t => 
   for (let i=0;i<100;i++) { try { await fetch(base); break; } catch { await new Promise(r=>setTimeout(r,50)); } }
   const login = async username => (await (await fetch(base+'/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ username, password:username }) })).json()).token;
   const one = await login('user1'), two = await login('user2');
-  const key = JSON.stringify(['test-product', 'form:customer:new']);
+  const key = JSON.stringify(['nexora', 'http-test:customer:new']);
   const path = '/records/'+encodeURIComponent(key);
   const request = (token, suffix='', body) => fetch(base+path+suffix, { method:body?'PUT':'GET', headers:{ Authorization:`Bearer ${token}`, 'Content-Type':'application/json' }, ...(body?{body:JSON.stringify(body)}:{}) });
   assert.equal((await request('invalid')).status,401);
   assert.equal((await request(one,'/draft',{ values:{name:'draft'}, version:0, baseVersion:0, operationId:'draft1' })).status,200);
   assert.equal((await (await request(two)).json()).draft,null);
-  const destinationKey=JSON.stringify(['test-product','form:customer:generated']);
+  const destinationKey=JSON.stringify(['nexora','http-test:customer:generated']);
   const created=await request(one,'/create',{ values:{name:'created'}, version:0, draftVersion:1, destinationKey, operationId:'create1' });
   assert.equal(created.status,200);
-  const list=await fetch(base+'/records?scope='+encodeURIComponent(JSON.stringify(['test-product','form:customer:'])),{headers:{Authorization:`Bearer ${two}`}});
+  const list=await fetch(base+'/records?scope='+encodeURIComponent(JSON.stringify(['nexora','http-test:customer:'])),{headers:{Authorization:`Bearer ${two}`}});
   assert.equal((await list.json()).records[0].record.values.name,'created');
   assert.equal((await request(one,'/draft',{ values:{name:'stale'}, version:1, baseVersion:0, operationId:'draft2' })).status,409);
   const post = (path, body) => fetch(base+path,{method:'POST',headers:{Authorization:`Bearer ${two}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -41,7 +41,7 @@ test('authenticated HTTP record lifecycle, isolation and conflicts', async t => 
   assert.equal(refreshed.rows.some(row=>row.id===id),false);
   const filtered=await (await post('/worklists/search',{...search,sensitiveFilters:{query:second.rows[0].id},queryMode:'exact',page:99})).json();
   assert.equal(filtered.total,1);assert.equal(filtered.page,1);
-  const invalidKey=encodeURIComponent(JSON.stringify(['http-test','form:customer-master:test']));
+  const invalidKey=encodeURIComponent(JSON.stringify(['nexora','form:customer-master:test']));
   const invalid=await fetch(base+'/records/'+invalidKey,{method:'PUT',headers:{Authorization:`Bearer ${two}`,'Content-Type':'application/json'},body:JSON.stringify({values:{legalName:''},version:0,draftVersion:0,operationId:'invalid'})});
   assert.equal(invalid.status,422);assert.ok((await invalid.json()).fieldErrors.legalName);
   const panelScope=['http-test','customer-master','CUS-02401'];

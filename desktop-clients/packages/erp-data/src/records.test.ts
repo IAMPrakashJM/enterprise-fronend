@@ -90,3 +90,15 @@ test('definitively rejected values can be corrected without retrying the rejecte
   expect(adapter.save.mock.calls[1][1]).toEqual({ name: 'corrected' });
   expect(adapter.save.mock.calls[1][4]).not.toBe(adapter.save.mock.calls[0][4]); editor.stop();
 });
+
+test('redacted partial drafts restore against current defaults and incompatible drafts can be discarded',async()=>{
+ const {adapter,editor}=setup();editor.stop();
+ adapter.load.mockResolvedValue({...empty(),draft:{values:{},baseVersion:0,version:1,savedAt:'2026-09-08T00:00:00Z',excludedFields:['name']},draftVersion:1} as any);
+ const partial=new RecordEditor(adapter as RecordAdapter,'record',{name:'initial'});partial.start();await vi.waitFor(()=>expect(partial.snapshot().recovery).not.toBeNull());partial.restore();expect(partial.snapshot().values).toEqual({name:'initial'});partial.stop();
+ adapter.load.mockResolvedValue({...empty(),draft:{values:{name:'old'},schemaVersion:99,baseVersion:0,version:1,savedAt:'2026-09-08T00:00:00Z'},draftVersion:1} as any);
+ const stale=new RecordEditor(adapter as RecordAdapter,'record',{name:'initial'});stale.start();await vi.waitFor(()=>expect(stale.snapshot().incompatibleDraft).toBe(true));stale.restore();expect(stale.snapshot().values.name).toBe('initial');adapter.load.mockResolvedValue(empty());await stale.discard();expect(stale.snapshot().recovery).toBeNull();stale.stop();
+});
+test('disabled tenant draft storage prevents autosave without blocking business save',async()=>{
+ const {adapter,editor}=setup();editor.stop();adapter.load.mockResolvedValue({...empty(),draftPolicy:{revision:1,enabled:false,retentionDays:7,excludedFields:[]}} as any);
+ const disabled=new RecordEditor(adapter as RecordAdapter,'record',{name:'initial'});disabled.start();await vi.waitFor(()=>expect(disabled.snapshot().ready).toBe(true));disabled.update({name:'edited'});await disabled.saveDraft();expect(adapter.draft).not.toHaveBeenCalled();expect(await disabled.save()).toBe(true);disabled.stop();
+});

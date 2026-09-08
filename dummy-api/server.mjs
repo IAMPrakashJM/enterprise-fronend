@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createDraftPolicyStore} from "./draft-policy-store.mjs";
 import {createMonitoringStore} from "./monitoring-store.mjs";
 import {createDocumentationStore} from "./documentation-store.mjs";
 import {createPreferenceStore,canManagePreferences} from "./preference-store.mjs";
@@ -113,7 +114,12 @@ setInterval(() => {try {auditStore.prune();} catch {console.error("Audit retenti
 const perUserLimiter = createUserLimiter();
 const recordPanelsStore = createRecordPanelsStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"record-panels.json"));
 const workspaceStore = createWorkspaceStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "workspaces.json"));
-const recordStore = createRecordStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "records.json"));
+const draftPolicies=createDraftPolicyStore(join(DATA_DIR,"draft-policy.sqlite"),{
+  scrub:(...args)=>recordStore.scrub(...args),audit:(...args)=>auditStore.append(...args),
+});
+const recordStore = createRecordStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "records.json"),{draftPolicy:(user,product)=>draftPolicies.read(user,product)});
+recordStore.prune();
+setInterval(()=>{try{recordStore.prune();}catch{console.error("Draft retention failed");}},3600000).unref();
 const approvalStore=createApprovalStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"approvals.json"),{
   record:(user,product,pageId,id)=>{
     if(!Object.hasOwn(PAGE_REGISTRY,pageId))return null;
@@ -869,10 +875,34 @@ const server = createServer(async (req, res) => {
     return send(res,204);
   }
 
+  if(pathname==="/draft-policy"||pathname==="/drafts"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    const product=req.headers["x-product-id"]??"nexora",nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(pathname==="/draft-policy"){
+      if(req.method==="GET")return send(res,200,{policy:draftPolicies.read(user,product),canManage:canManagePreferences(user)},{"Cache-Control":"no-store"});
+      const input=await readJson(req).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
+      const result=draftPolicies.write(user,product,input);return send(res,result.status,result.body);
+    }
+    const input=await readJson(req,262144).catch(()=>null);
+    if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
+    if(!input||!['import','approval'].includes(input.kind)||typeof input.pageId!=="string"||typeof input.recordId!=="string"||!input.recordId||input.recordId.length>150||!['load','draft','discard'].includes(input.action))return send(res,400,{error:"Invalid draft request."});
+    if(!nav.body.pages.some(p=>p.id===input.pageId))return send(res,403,{error:"Draft page is not available."});
+    if(input.action==='draft'){
+      const v=input.values;
+      if(!v||v.schemaVersion!==1||typeof v.context!=="string"||!/^[a-f0-9]{64}$/.test(v.context)||!v.data||typeof v.data!=='object'||Array.isArray(v.data)||Object.keys(v).some(k=>!['schemaVersion','context','data'].includes(k)))return send(res,400,{error:"Invalid draft request."});
+      if(input.kind==='approval'&&(Object.keys(v.data).some(k=>k!=='comment')||typeof v.data.comment!=='string'||v.data.comment.length>4000))return send(res,400,{error:"Invalid draft request."});
+      if(input.kind==='import'&&(Object.keys(v.data).some(k=>k!=='mapping')||!v.data.mapping||typeof v.data.mapping!=='object'||Array.isArray(v.data.mapping)||Object.entries(v.data.mapping).some(([k,v])=>!/^[a-zA-Z][\w.-]{0,99}$/.test(k)||typeof v!=='string'||!/^\d{0,4}$/.test(v))))return send(res,400,{error:"Invalid draft request."});
+    }
+    const key=JSON.stringify([product,`$draft:${input.kind}:${JSON.stringify([input.pageId,input.recordId])}`]);
+    const result=recordStore.handle(user,key,input.action,input.action==='load'?undefined:{...input,baseVersion:0});
+    return send(res,result.status,result.body,{"Cache-Control":"no-store"});
+  }
+
   if (pathname === "/records" && req.method === "GET") {
     const user = sessions.get(bearer(req));
     if (!user) return send(res, 401, { error: "Not signed in." });
-    try { return send(res, 200, { records: recordStore.list(user, requestUrl.searchParams.get("scope")) }); }
+    try { const scope=requestUrl.searchParams.get("scope"),product=JSON.parse(scope)[0],nav=applicationConfig.navigation(user,product);if(nav.status!==200)return send(res,nav.status,{error:nav.error});return send(res,200,{records:recordStore.list(user,scope)}); }
     catch { return send(res, 400, { error: "Invalid record scope." }); }
   }
 
@@ -884,6 +914,9 @@ const server = createServer(async (req, res) => {
     if (!match) return send(res, 404, { error: "Unknown record route." });
     let key;
     try { key = decodeURIComponent(match[1]); } catch { return send(res, 400, { error: "Invalid record key." }); }
+    let recordScope;try{recordScope=JSON.parse(key);if(!Array.isArray(recordScope)||recordScope.length!==2||recordScope.some(v=>typeof v!=='string')||recordScope[1].startsWith('$draft:'))throw new Error();}catch{return send(res,400,{error:"Invalid record key."});}
+    const recordAccess=applicationConfig.navigation(user,recordScope[0]);if(recordAccess.status!==200)return send(res,recordAccess.status,{error:recordAccess.error});
+    const recordPage=recordScope[1].split(':')[1];if(['form','billing','consultation'].includes(recordScope[1].split(':')[0])&&!recordAccess.body.pages.some(p=>p.id===recordPage))return send(res,403,{error:"Draft page is not available."});
     if (!key || key.length > 300) return send(res, 400, { error: "Invalid record key." });
     const action = req.method === "GET" && !match[2] ? "load" : req.method === "PUT" ? (match[2] ?? "save") : null;
     if (!action) return send(res, 405, { error: "Method not allowed." });
@@ -892,6 +925,7 @@ const server = createServer(async (req, res) => {
       try { body = await readJson(req, 262_144); } catch { return send(res, 400, { error: "Invalid or oversized record." }); }
     }
     if (sessions.get(token) !== user) return send(res, 401, { error: "Session ended." });
+    if(action==='create'){try{const destination=JSON.parse(body.destinationKey);if(!Array.isArray(destination)||destination.length!==2||destination[0]!==recordScope[0]||typeof destination[1]!=='string'||destination[1].startsWith('$draft:')||destination[1].split(':').slice(0,2).join(':')!==recordScope[1].split(':').slice(0,2).join(':'))throw new Error();}catch{return send(res,400,{error:"Invalid destination key."});}}
     try {
       if (["save", "create"].includes(action) && body?.values && typeof body.values === "object") {
         let definition;

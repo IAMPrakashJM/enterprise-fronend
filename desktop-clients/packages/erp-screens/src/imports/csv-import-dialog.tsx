@@ -1,4 +1,6 @@
 "use client";
+import {useSharedDraft,DraftRecovery} from "../drafts/use-shared-draft";
+import {draftContext} from "@pepbits/erp-data";
 import {RecoveryNotice,failureFromError,type Failure} from "@pepbits/ops-ui";
 import {readToken,reportOperationFailure} from "@pepbits/auth";
 import { TableContainer } from "@pepbits/ops-ui";
@@ -18,6 +20,8 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  const fields=definition?.schema.sections.flatMap(section=>section.fields)??[];
  const [csv,setCsv]=useState<ReturnType<typeof parseCsv>|null>(null),[filename,setFilename]=useState(''),[mapping,setMapping]=useState<Record<string,string>>({});
  const [job,setJob]=useState<ImportJob|null>(null),[error,setError]=useState<string|null>(null),[busy,setBusy]=useState(false),[confirm,setConfirm]=useState(false),[view,setView]=useState<'upload'|'mapping'|'review'>('upload');
+ const [context,setContext]=useState('');
+ const draft=useSharedDraft({productId,pageId:page.id,recordId:'mapping',kind:'import'},open,csv&&context?{schemaVersion:1,context,data:{mapping}}:null);
  const [filter,setFilter]=useState<'all'|'errors'>('all');
  const [failure,setFailure]=useState<Failure|null>(null);const retryAction=useRef<()=>void>(()=>{});
  const fail=(e:unknown)=>{setFailure(failureFromError(e));};
@@ -36,6 +40,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
    if(file.size>2*1024*1024||!file.name.toLowerCase().endsWith('.csv'))throw new Error('Choose a UTF-8 .csv file up to 2 MB.');
    const parsed=parseCsv(new TextDecoder('utf-8',{fatal:true}).decode(await file.arrayBuffer()));
    if(!active.current||version!==generation.current)return;
+   const hash=await draftContext(parsed.headers);if(!active.current||version!==generation.current)return;setContext(hash);
    setCsv(parsed);setFilename(file.name);setMapping(suggestMapping(parsed.headers,fields));setJob(null);preview.current=null;setView('mapping');
   }catch(e){reportOperationFailure();if(active.current&&version===generation.current)setError((e as Error).message);}
   finally{if(active.current&&version===generation.current)setBusy(false);}
@@ -49,7 +54,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  const run=async(retry=false)=>{
   if(!job||lock.current)return;lock.current=true;stop.current=false;setBusy(true);setConfirm(false);setError(null);setFailure(null);
   try{
-   let next=await adapter.run(job.id,retry);if(!active.current)return;setJob(next);latest.current.onImported();
+   let next=await adapter.run(job.id,retry);if(!active.current)return;setJob(next);void draft.discard();latest.current.onImported();
    while(!stop.current&&active.current&&next.rows.some(row=>row.status==='pending')){next=await adapter.run(job.id);if(active.current){setJob(next);latest.current.onImported();}}
   }catch(e){reportOperationFailure();if(active.current){fail(e);retryAction.current=()=>void run(retry);}}
   finally{lock.current=false;if(active.current){setBusy(false);if(closing.current)latest.current.onClose();}}
@@ -67,6 +72,10 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  return <>
  <Modal open={open} onClose={close} title={t("Import {page}",{page:t(page.title)})} subtitle="ui.upload.csv.map.columns.review.validation.confirm.results.e725ed21" size="xl">
   <div className="space-y-4 p-5">
+   <DraftRecovery draft={draft} context={context} canRestore={!!csv&&context===draft.recovery?.values.context} onRestore={value=>{
+    const allowed=new Set(fields.map(f=>f.id));setMapping(Object.fromEntries(Object.entries(value.mapping??{}).filter(([key,index])=>allowed.has(key)&&typeof index==='string'&&(index===''||Number(index)<(csv?.headers.length??0)))));preview.current=null;setJob(null);setView('mapping');
+   }}/>
+   {draft.recovery&&!csv?<p>{t('draft.reselectFile')}</p>:null}
    {failure?<RecoveryNotice sessionRestored={!!readToken()} failure={failure} preservesValues busy={busy} onRetry={()=>retryAction.current()} onReturn={close}/>:null}
    {error?<div role="alert" className="rounded-lg border border-[var(--border)] p-3 text-[var(--danger-ink)]">{localizeImportError(error,t)}</div>:null}
    {view==='upload'?<><p><LocalizedText message="ui.create.new.records.from.utf.8.csv.existing.records.are.n.e8ccc310" /></p><Input type="file" accept=".csv,text/csv" label="ui.upload.csv.file.032e2024" disabled={busy} onChange={event=>{void readFile(event.target.files?.[0]);event.target.value='';}} /></>:null}
@@ -75,7 +84,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
     <TableContainer tabIndex={0} role="region" aria-label={translateCopy("ui.csv.row.preview.e4755004")} className="max-h-48 rounded-lg border border-[var(--border)]"><Table className="w-full text-left text-sm"><TableCaption className="p-2 text-left"><LocalizedText message="ui.csv.preview.first.5.data.rows.ecc688e2" /></TableCaption><TableHeader><TableRow>{csv.headers.map(header=><TableHead className="p-2" key={header}>{header}</TableHead>)}</TableRow></TableHeader><TableBody>{csv.rows.slice(0,5).map((row,index)=><TableRow key={index}>{row.map((value,column)=><TableCell key={column} className="max-w-64 break-words border-t border-[var(--border)] p-2">{value}</TableCell>)}</TableRow>)}</TableBody></Table></TableContainer>
     <div className="grid max-h-72 gap-3 overflow-auto md:grid-cols-2 lg:grid-cols-3">{fields.map(field=><Select key={field.id} label={t(field.label)} required={field.required} hint={field.defaultValue!==undefined?t("Unmapped default: {value}",{value:String(field.defaultValue)}):field.options?.length?t("Values: {values}",{values:field.options.map(option=>option.value).join(", ")}):undefined} value={mapping[field.id]??''} disabled={busy} placeholder="ui.do.not.import.this.field.278b4151" options={csv.headers.map((header,index)=>({label:header,value:String(index)}))} onChange={event=>{setMapping(previous=>({...previous,[field.id]:event.target.value}));preview.current=null;}} />)}</div>
     {missing.length?<p role="status"><LocalizedText message="ui.map.required.fields.ac41d1c5" />{" "}{missing.map(field=>t(field.label)).join(', ')}.</p>:null}
-    <div className="flex gap-2"><Button disabled={busy} onClick={()=>setView('upload')}><LocalizedText message="ui.choose.another.file.26eac8f8" /></Button><Button disabled={busy||!!missing.length} onClick={()=>void validate()}><LocalizedText message="ui.validate.mapped.rows.ecc729da" /></Button></div>
+    <div className="flex gap-2"><Button disabled={busy} onClick={()=>setView('upload')}><LocalizedText message="ui.choose.another.file.26eac8f8" /></Button><Button disabled={busy||!!missing.length||!!draft.recovery} onClick={()=>void validate()}><LocalizedText message="ui.validate.mapped.rows.ecc729da" /></Button></div>
    </>:null}
    {view==='review'&&job?<>
     <p>{t("Rows: {total} · Ready: {ready} · Imported: {success} · Invalid: {invalid} · Failed: {failed}",{total:job.rows.length,ready:counts.pending,success:counts.success,invalid:counts.invalid,failed:counts.failed})}</p>
@@ -87,7 +96,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
       {counts.pending?<Button onClick={()=>job.confirmed?void run():setConfirm(true)}>{job.confirmed?<LocalizedText message="ui.resume.import.f12822f9" />:t("Import valid rows: {count}",{count:counts.pending})}</Button>:null}
       {job.rows.some(row=>row.status==='failed'&&row.retryable)?<Button onClick={()=>void run(true)}><LocalizedText message="ui.retry.failed.rows.6160b90e" /></Button>:null}
       {!job.confirmed&&csv?<Button onClick={()=>{setView('mapping');setJob(null);preview.current=null;}}><LocalizedText message="ui.change.mapping.6872ef3c" /></Button>:null}
-      <Button disabled={job.confirmed&&(counts.pending>0||job.rows.some(row=>row.status==='failed'&&row.retryable))} onClick={()=>{setView('upload');setJob(null);setCsv(null);preview.current=null;setError(null);setFailure(null);}}><LocalizedText message="ui.start.new.import.eabc7445" /></Button>
+      <Button disabled={job.confirmed&&(counts.pending>0||job.rows.some(row=>row.status==='failed'&&row.retryable))} onClick={()=>{setView('upload');setJob(null);setCsv(null);setContext('');void draft.discard();preview.current=null;setError(null);setFailure(null);}}><LocalizedText message="ui.start.new.import.eabc7445" /></Button>
      </>}
     </div>
    </>:null}

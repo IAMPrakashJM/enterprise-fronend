@@ -2,6 +2,8 @@
 
 The shared frontend now gives users localized explanations and recovery actions for failed requests. English, Arabic, Hindi and Malayalam follow the effective language preference. This implementation uses the existing demo API and Sentinel collector.
 
+For acknowledged drafts that survive reopening, see [shared draft recovery](shared-draft-recovery.md). It adds tenant-controlled service persistence for forms, import mappings and approval comments. Unacknowledged edits still depend on the open window.
+
 ## What users see
 
 | Failure | Explanation and action |

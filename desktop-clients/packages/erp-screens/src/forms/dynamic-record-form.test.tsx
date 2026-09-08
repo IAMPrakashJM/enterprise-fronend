@@ -12,7 +12,7 @@ import type { RecordAdapter } from "@pepbits/erp-data";
 const { toast, schema } = vi.hoisted(() => ({ toast: vi.fn(), schema: { singular: "Customer", sections: [{ id: "details", title: "Details", fields: [{ id: "name", label: "Name", type: "text", required: true, defaultValue: "Alice" }] }] } }));
 vi.mock("@pepbits/erp-shell", () => ({ useERP: () => ({ preferences: { formNavigation: "tabs" }, toast, format:createFormatters(DEFAULT_PREFERENCES) }), useProduct: () => ({ id: "test" }) }));
 vi.mock("@pepbits/auth", () => ({ useSession: () => ({ user: { id: "u", tenantId: "t" } }), readToken: () => "token", authedFetch: vi.fn() }));
-vi.mock("@pepbits/erp-config", async () => ({ ...await import("../../../erp-config/src/form-rules"), ...await import("../../../erp-config/src/i18n"), getEntitySchema: () => schema }));
+vi.mock("@pepbits/erp-config", async () => ({ ...await import("../../../erp-config/src/form-rules"), ...await import("../../../erp-config/src/draft-policy"), ...await import("../../../erp-config/src/i18n"), getEntitySchema: () => schema }));
 vi.mock("@pepbits/erp-data", async () => ({ ...await import("../../../erp-data/src/records"), getWorklistConfig: () => ({ rows: [], primaryKey: "id" }) }));
 vi.mock("@pepbits/ai-client", () => ({ usePublishAiSources: () => undefined }));
 vi.mock("@pepbits/ai-ui", () => ({ InlineAiAction: () => null }));

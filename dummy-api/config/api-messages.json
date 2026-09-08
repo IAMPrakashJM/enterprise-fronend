@@ -199,5 +199,9 @@
   "Last seen": "Last seen",
   "Incident details": "Incident details",
   "Incident reference": "Incident reference",
-  "Reference": "Reference"
+  "Reference": "Reference",
+  "Invalid draft policy.": "draft.invalidPolicy",
+  "Draft policy changed. Reload before saving.": "draft.policyConflict",
+  "Invalid draft request.": "draft.invalidRequest",
+  "Draft page is not available.": "draft.pageDenied"
 }
