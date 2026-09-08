@@ -23,7 +23,7 @@ export function loadFallbackLanguage(language:LanguageKey):Promise<void> {
  return pending.get(language)!;
 }
 `],
- ['desktop-clients/packages/ops-ui/src/messages.en.ts',`// Generated English fallback for standalone UI components; backend catalogs remain canonical.\nexport const ENGLISH_MESSAGES: Record<string,string> = ${JSON.stringify(Object.fromEntries(Object.entries(catalogs.en).filter(([key])=>key.startsWith('ui.'))),null,2)};\n`],
+ ['desktop-clients/packages/ops-ui/src/messages.en.ts',`// Generated English fallback for standalone UI components; backend catalogs remain canonical.\nexport const ENGLISH_MESSAGES: Record<string,string> = ${JSON.stringify(Object.fromEntries(Object.entries(catalogs.en).filter(([key])=>key.startsWith('ui.')||key.startsWith('recovery.'))),null,2)};\n`],
 ];
 mkdirSync(new URL("desktop-clients/packages/erp-config/src/locales/",root),{recursive:true});
 let stale=false;for(const [file,content] of outputs){const url=new URL(file,root);if(process.argv.includes('--check')){if(readFileSync(url,'utf8')!==content){console.error(`${file} is stale`);stale=true;}}else writeFileSync(url,content);}if(stale)process.exitCode=1;

@@ -845,5 +845,22 @@ export const ENGLISH_MESSAGES: Record<string,string> = {
   "ui.components.dates": "Date and time",
   "ui.components.dates.help": "Calendar, date ranges and date/time inputs",
   "ui.components.values": "Data display",
-  "ui.components.values.help": "Formatted values and labeled record details"
+  "ui.components.values.help": "Formatted values and labeled record details",
+  "recovery.network": "Check your connection. The result is not confirmed; check the record before starting a new operation.",
+  "recovery.timeout": "The service did not respond in time. The operation may have completed; retry the same action to check its result.",
+  "recovery.retained": "Your values are still here. Keep this page open while recovering.",
+  "recovery.session": "Sign in with the same account to continue with your unsaved work. Do not reload or close this window.",
+  "recovery.sameUser": "Use the same account and access role to recover this work. Sign out to use a different account.",
+  "recovery.return": "Return to page",
+  "recovery.discardSignOut": "Discard unsaved work and sign out",
+  "recovery.discardConfirm": "Discard the work kept in this window and sign out? Unsaved values may be lost.",
+  "recovery.rateTitle": "Too many requests",
+  "recovery.rate": "Wait a moment, then retry the same action.",
+  "recovery.exportAudit": "The file was generated, but its audit entry was not confirmed. Retry records the audit only; it does not download another file.",
+  "recovery.resumeTitle": "You are signed in again",
+  "recovery.resume": "Your work is still here. Retry the pending action when you are ready.",
+  "recovery.signInUnavailable": "Sign-in is temporarily unavailable. Please try again.",
+  "recovery.signInFailed": "Sign-in failed. Check your username and password.",
+  "recovery.exportTitle": "The file could not be generated",
+  "recovery.exportFailed": "Check your browser downloads, then retry if the file is missing. Your selected rows are unchanged."
 };
