@@ -5,6 +5,8 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import {
   DEFAULT_PREFERENCES, LANGUAGE_OPTIONS, LANGUAGE_LOCALES, MODULES, PAGE_REGISTRY,
   createFormatters, preferenceOverrides, sanitizePreferences, translate, loadFallbackLanguage,
+  EMPTY_PREFERENCE_POLICY, parsePreferencePolicy, policyDefaults, editablePreferenceOverrides, effectivePreferences,
+  type PreferencePolicy,
   SHORTCUTS,
   SIDEBAR_SEARCH_EVENT,
   matchesShortcut,
@@ -13,7 +15,7 @@ import {
 import type { Formatters, ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { authedFetch, useSession } from "@pepbits/auth";
-import { useProduct, useProductLanguageLoader } from "./product-context";
+import { useProduct, useProductLanguageLoader, useProductPreferenceRequest } from "./product-context";
 import { useOptionalWorkspace } from "@pepbits/workspace-core";
 
 
@@ -47,6 +49,10 @@ interface ERPContextValue {
   module: (typeof MODULES)[ModuleKey];
   preferences: UserPreferences;
   preferencesAvailable: boolean;
+  preferencePolicy: PreferencePolicy;
+  canManagePreferencePolicy: boolean;
+  refreshPreferences: () => Promise<void>;
+  preferenceSaveError: string;
   updatePreference: <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => void;
   updatePreferences: (next: Partial<UserPreferences>) => void;
   resetPreferences: () => void;
@@ -93,6 +99,7 @@ export function skeletonsPreferred(): boolean {
 
 export function ERPProvider({ children, fallback = null }: { children: React.ReactNode; fallback?: React.ReactNode }) {
   const product = useProduct();
+  const preferenceRequest=useProductPreferenceRequest()??authedFetch;
   const loadProductLanguage = useProductLanguageLoader();
   const languageRequest = useRef(0);
   useEffect(() => () => { languageRequest.current++; }, []);
@@ -129,11 +136,43 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
   const [loaded, setLoaded] = useState(false);
   const [preferencesAvailable, setPreferencesAvailable] = useState(false);
   const [preferencesEdited, setPreferencesEdited] = useState(false);
+  const [preferencePolicy,setPreferencePolicy]=useState<PreferencePolicy>(EMPTY_PREFERENCE_POLICY);
+  const policyRef=useRef(preferencePolicy);policyRef.current=preferencePolicy;
+  const [canManagePreferencePolicy,setCanManagePreferencePolicy]=useState(false);
+  const [preferenceSaveError,setPreferenceSaveError]=useState("");
+  const userRevision=useRef<number|undefined>(undefined);
+  const generation=useRef(0);
+  const saving=useRef(false);
+  const [saveAttempt,setSaveAttempt]=useState(0);
+  const alive=useRef(true);
+  useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
+  const requestPreferences=useCallback((init?:RequestInit)=>preferenceRequest("/preferences",{...init,headers:{...init?.headers,"X-Product-Id":product.id}}),[product.id,preferenceRequest]);
+  const acceptSnapshot=useCallback(async(body:{preferences?:unknown;policy?:unknown;userRevision?:number;canManage?:boolean})=>{
+    const policy=body.policy?parsePreferencePolicy(body.policy):EMPTY_PREFERENCE_POLICY;
+    if(policy.revision<policyRef.current.revision)return;
+    if(policy.revision===policyRef.current.revision && body.userRevision!==undefined && userRevision.current!==undefined && body.userRevision<userRevision.current)return;
+    const next=effectivePreferences(sanitizePreferences(body.preferences),policy);
+    const request=++languageRequest.current;
+    await (loadProductLanguage?loadProductLanguage(next.language):loadFallbackLanguage(next.language));
+    if(!alive.current || request!==languageRequest.current)return;
+    policyRef.current=policy;userRevision.current=body.userRevision;
+    generation.current++;
+    setPreferencesEdited(false);setPreferencePolicy(policy);setCanManagePreferencePolicy(body.canManage===true);
+    setPreferences(next);setPreferencesAvailable(true);
+  },[loadProductLanguage]);
+  const refreshPreferences=useCallback(async()=>{
+    // Stop pending writes until the current server policy has been loaded.
+    generation.current++;setPreferencesEdited(false);setPreferencesAvailable(false);
+    try {
+      const response=await requestPreferences();if(!response.ok)throw new Error("Could not refresh preferences.");
+      await acceptSnapshot(await response.json());setPreferenceSaveError("");
+    }catch {if(alive.current)setPreferenceSaveError("Could not refresh preferences.");}
+  },[requestPreferences,acceptSnapshot]);
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const response = await authedFetch("/preferences");
+        const response = await requestPreferences();
         if (cancelled) return;
         if (response.ok) {
           const body = (await response.json()) as { preferences?: unknown };
@@ -144,11 +183,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
              hand-edited preferences.json, used to reach the shell verbatim and
              set data-theme to a selector no stylesheet defines. */
           if (!cancelled) {
-            const next = sanitizePreferences(body.preferences);
-            await (loadProductLanguage ? loadProductLanguage(next.language) : loadFallbackLanguage(next.language));
-            if (cancelled) return;
-            setPreferences(next);
-            setPreferencesAvailable(true);
+            await acceptSnapshot(body);
           }
         }
       } catch {
@@ -160,19 +195,44 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     return () => { cancelled = true; };
   }, []);
 
-  /* A failed read must never turn defaults into a replacement for saved settings.
-     Mounting with a valid response also needs no write-back. */
+  // Writes are serialized; a later edit waits for the preceding user revision.
   useEffect(() => {
     if (!preferencesAvailable || !preferencesEdited) return;
-    const timer = window.setTimeout(() => {
-      void authedFetch("/preferences", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ preferences: preferenceOverrides(preferences) }),
-      }).catch(() => undefined);
-    }, 400);
-    return () => window.clearTimeout(timer);
-  }, [preferencesAvailable, preferencesEdited, preferences]);
+    const timer=window.setTimeout(async()=>{
+      if(saving.current)return;
+      saving.current=true;const version=generation.current;
+      try {
+        const response=await requestPreferences({method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+          preferences:editablePreferenceOverrides(preferences,policyRef.current),policyRevision:policyRef.current.revision,userRevision:userRevision.current,
+        })});
+        if(!response.ok) {
+          if([400,403,409].includes(response.status)) {
+            await refreshPreferences();
+            if(alive.current)setPreferenceSaveError("Preferences changed. The current administrator policy has been applied.");
+          }else throw new Error("Could not save preferences. Retry your changes.");
+          return;
+        }
+        const body=await response.json().catch(()=>null);
+        if(!alive.current)return;
+        if(body?.userRevision!==undefined)userRevision.current=body.userRevision;
+        setPreferenceSaveError("");
+        if(version===generation.current)setPreferencesEdited(false);
+      }catch {if(alive.current)setPreferenceSaveError("Could not save preferences. Retry your changes.");}
+      finally {
+        saving.current=false;
+        if(alive.current && version!==generation.current)setSaveAttempt(value=>value+1);
+      }
+    },400);
+    return()=>window.clearTimeout(timer);
+  },[preferencesAvailable,preferencesEdited,preferences,saveAttempt,requestPreferences,refreshPreferences]);
+
+  useEffect(()=>{
+    const refresh=()=>{if(document.visibilityState!=="hidden" && !saving.current && !preferencesEdited)void refreshPreferences();};
+    window.addEventListener("focus",refresh);
+    window.addEventListener("nexora-preference-policy-changed",refresh);
+    const timer=window.setInterval(refresh,60000);
+    return()=>{window.removeEventListener("focus",refresh);window.removeEventListener("nexora-preference-policy-changed",refresh);window.clearInterval(timer);};
+  },[refreshPreferences,preferencesEdited]);
 
   useEffect(() => {
     if (!preferencesAvailable) return;
@@ -202,7 +262,13 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
   }, [currentModule]);
 
   const updatePreferences = useCallback((next: Partial<UserPreferences>) => {
-    const {language, ...otherPreferences} = next;
+    if(!preferencesAvailable)return;
+    const blocked=Object.entries(next).filter(([key,value])=>policyRef.current.rules[key as keyof UserPreferences]?.locked && preferences[key as keyof UserPreferences]!==value);
+    if(blocked.length)setToasts(previous=>[...previous,{id:`policy-${Date.now()}`,title:"Managed by your administrator",message:"Locked preferences were not changed.",type:"info" as const}].slice(-preferences.maxVisibleToasts));
+    const allowed=Object.fromEntries(Object.entries(next).filter(([key])=>!policyRef.current.rules[key as keyof UserPreferences]?.locked));
+    if(!Object.keys(allowed).length)return;
+    generation.current++;
+    const {language, ...otherPreferences} = allowed as Partial<UserPreferences>;
     // An unrelated preference edit must neither cancel a language request nor
     // be overwritten when its catalog eventually arrives.
     if (Object.keys(otherPreferences).length) {
@@ -212,7 +278,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     if (!language) return;
     const request = ++languageRequest.current;
     const apply = () => {
-      if (request !== languageRequest.current) return;
+      if (request !== languageRequest.current || policyRef.current.rules.language?.locked) return;
       setPreferencesEdited(true);
       setPreferences(previous => ({...previous, language}));
     };
@@ -223,13 +289,13 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
         setToasts(previous => [...previous, {id: `language-${request}`, title: "Could not load language", message: "Your current language was kept. Please try again.", type: "error" as const}].slice(-preferences.maxVisibleToasts));
       });
     } else apply();
-  }, [loadProductLanguage, preferences.language, preferences.maxVisibleToasts]);
+  }, [loadProductLanguage, preferences, preferencesAvailable]);
 
   const updatePreference = useCallback(<K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     updatePreferences({[key]: value});
   }, [updatePreferences]);
 
-  const resetPreferences = useCallback(() => { languageRequest.current++; setPreferencesEdited(true); setPreferences(DEFAULT_PREFERENCES); }, []);
+  const resetPreferences = useCallback(() => { updatePreferences(policyDefaults(policyRef.current)); }, [updatePreferences]);
 
   const toast = useCallback((nextToast: Omit<ToastItem, "id">) => {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -307,6 +373,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     module: product.modules[currentModule] ?? product.modules[product.defaultModule]!,
     preferences,
     preferencesAvailable,
+    preferencePolicy,canManagePreferencePolicy,refreshPreferences,preferenceSaveError,
     updatePreference,
     updatePreferences,
     resetPreferences,
@@ -324,7 +391,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     documentationOpen,
     setDocumentationOpen,
     t,
-  }), [product, branch, commandOpen, currentModule, dismissToast, documentationOpen, format, helpOpen, preferences, preferencesAvailable, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
+  }), [preferencePolicy,canManagePreferencePolicy,refreshPreferences,preferenceSaveError,product, branch, commandOpen, currentModule, dismissToast, documentationOpen, format, helpOpen, preferences, preferencesAvailable, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
 
   if (!loaded) return <>{fallback}</>;
 

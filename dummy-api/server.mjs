@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createPreferenceStore,canManagePreferences} from "./preference-store.mjs";
 import {createReportScheduler} from "./report-scheduler.mjs";
 import {reportRows} from "../desktop-clients/packages/erp-data/src/report-data.ts";
 import {createAuditStore} from "./audit-store.mjs";
@@ -82,6 +83,7 @@ const ACCOUNTS = [
     password: "admin",
     user: {
       id: "USR-00301",
+      permissions: ["preferences:manage"],
       name: "Prakash Mathew",
       email: "prakash@nexora.example",
       initials: "PM",
@@ -163,6 +165,10 @@ function loadPrefs() {
 }
 
 const preferences = loadPrefs();
+const preferenceStore=createPreferenceStore(join(DATA_DIR,"preferences.sqlite"),{
+ legacy:(user,product)=>product==="nexora"&&ACCOUNTS.some(account=>account.user.id===user.id&&account.user.tenantId===user.tenantId)?preferences[user.id]??{}:{},
+ audit:(...args)=>auditStore.append(...args),
+});
 
 /* Temp file + rename, so a crash mid-write cannot leave a truncated JSON file that
    then fails to parse on the next boot and silently drops everyone's settings. */
@@ -753,7 +759,7 @@ const CORS = {
      not name: the request never leaves, nothing is logged, and the only symptom
      is a cell that will not save. */
   "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, If-None-Match",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, If-None-Match, X-Product-Id",
   "Access-Control-Expose-Headers": "ETag",
   "Access-Control-Max-Age": "86400",
 };
@@ -912,40 +918,17 @@ const server = createServer(async (req, res) => {
     return send(res,200,result.body,headers);
   }
 
-  if (pathname === "/preferences") {
-    const token = bearer(req);
-    const user = token ? sessions.get(token) : undefined;
-    if (!user) return send(res, 401, { error: "Not signed in." });
-
-    if (req.method === "GET") {
-      /* Empty on a first login by design: the client merges this over its own
-         defaults, so an absent key means "still default" rather than "unset". */
-      return send(res, 200, { preferences: preferences[user.id] ?? {} });
-    }
-
-    if (req.method === "PUT") {
-      let body;
-      try {
-        body = await readJson(req);
-      } catch {
-        return send(res, 400, { error: "Malformed request body." });
-      }
-      const next = body.preferences;
-      if (next === null || typeof next !== "object" || Array.isArray(next)) {
-        return send(res, 400, { error: "Expected { preferences: object }." });
-      }
-      preferences[user.id] = next;
-      try {
-        savePrefs();
-      } catch (error) {
-        console.error("[prefs] write failed:", error.message);
-        return send(res, 500, { error: "Could not persist preferences." });
-      }
-      console.log(`[prefs] ${user.id} saved ${Object.keys(next).length} override(s)`);
-      return send(res,204);
-    }
-
-    return send(res, 405, { error: `${req.method} not allowed on /preferences.` });
+  if (pathname === "/preferences" || pathname === "/preference-policy") {
+    const user=sessions.get(bearer(req));
+    if(!user)return send(res,401,{error:"Not signed in."});
+    const productId=req.headers["x-product-id"] ?? requestUrl.searchParams.get("productId") ?? "nexora";
+    const available=applicationConfig.navigation(user,productId);
+    if(available.status!==200)return send(res,available.status,{error:available.error});
+    if(pathname==="/preference-policy"&&!canManagePreferences(user))return send(res,403,{error:"Only a tenant administrator can manage preference policies."});
+    if(req.method==="GET")return send(res,200,pathname==="/preferences"?preferenceStore.read(user,productId):preferenceStore.policy(user,productId));
+    const body=await readJson(req).catch(()=>null);
+    const result=pathname==="/preferences"?preferenceStore.write(user,productId,body):preferenceStore.writePolicy(user,productId,body);
+    return send(res,result.status,result.body);
   }
 
   if (pathname === "/layouts") {

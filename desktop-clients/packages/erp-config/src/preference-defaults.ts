@@ -70,7 +70,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
     disagree about which themes exist. */
 const THEME_IDS = ["nexora", "midnight", "emerald", "sand", "rose", "slate", "contrast", "indigo", "lagoon", "sunset", "graphite", "plum", "nord", "solarized"] as const;
 
-const ALLOWED: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = {
+export const PREFERENCE_OPTIONS: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = {
   theme: THEME_IDS,
   formNavigation: ["rail", "tabs", "wizard"],
   resultView: ["table", "cards"],
@@ -109,7 +109,7 @@ const ALLOWED: Partial<Record<keyof UserPreferences, ReadonlyArray<unknown>>> = 
 /** Numeric keys are clamped rather than rejected: a font size of 40 from a
     hand-edited file becomes 16, not the default, because "as big as allowed" is
     closer to what the author meant than "back to normal". */
-const NUMERIC_RANGE: Partial<Record<keyof UserPreferences, readonly [number, number]>> = {
+export const PREFERENCE_RANGES: Partial<Record<keyof UserPreferences, readonly [number, number]>> = {
   fontSizeBase: [11, 16],
   fontSizeForm: [11, 17],
   fontSizeResult: [10, 16],
@@ -134,14 +134,14 @@ export function sanitizePreferences(stored: unknown): UserPreferences {
   if (stored === null || typeof stored !== "object" || Array.isArray(stored)) return result;
 
   for (const [key, value] of Object.entries(stored as Record<string, unknown>)) {
-    if (!(key in DEFAULT_PREFERENCES)) continue;              // unknown key
+    if (!Object.hasOwn(DEFAULT_PREFERENCES, key)) continue;              // unknown key
     const typed = key as keyof UserPreferences;
-    const allowed = ALLOWED[typed];
+    const allowed = PREFERENCE_OPTIONS[typed];
     if (allowed) {
       if (allowed.includes(value)) (result as Record<string, unknown>)[key] = value;
       continue;
     }
-    const range = NUMERIC_RANGE[typed];
+    const range = PREFERENCE_RANGES[typed];
     if (range) {
       if (typeof value === "number" && Number.isFinite(value)) {
         (result as Record<string, unknown>)[key] = Math.min(range[1], Math.max(range[0], value));

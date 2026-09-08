@@ -4,7 +4,7 @@ const root=new URL('../../../',import.meta.url);
 const catalogs=Object.fromEntries(['en','ar','hi','ml'].map(language=>[language,JSON.parse(readFileSync(new URL(`dummy-api/config/localization/shared/${language}.json`,root),'utf8')).messages]));
 // Navigation and schema namespaces are delivered by bootstrap; don't bundle their
 // thousands of per-page aliases into the standalone component fallback.
-const fallbackKeys=Object.keys(catalogs.en).filter(key=>key.startsWith('ui.')||key.startsWith('api.')||key===catalogs.en[key]);
+const fallbackKeys=Object.keys(catalogs.en).filter(key=>key.startsWith('ui.')||key.startsWith('preference.')||key.startsWith('api.')||key===catalogs.en[key]);
 const uiCatalogs=Object.fromEntries(Object.entries(catalogs).map(([language,messages])=>[language,Object.fromEntries(fallbackKeys.map(key=>[key,messages[key]]))]));
 const outputs=[
  ...Object.entries(uiCatalogs).map(([language,messages])=>[

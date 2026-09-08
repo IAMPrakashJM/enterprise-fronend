@@ -8,6 +8,11 @@ for the ones that are not ours to do — who they are waiting on.
 
 ## Engineering review follow-up — 8 September 2026
 
+Tenant/application preference defaults and administrator locks are implemented
+and locally validated. See [tenant preference policies](tenant-preference-policies.md)
+for the user workflow, API contracts, storage and production integration boundaries.
+This preference-policy change has not yet been deployed.
+
 The review's CI coverage, catalog bundle/loading, API method handling and costing
 import/export issues have passed remote CI and been deployed. See the
 [verified corrections and implementation](review-follow-up-2026-09-08.md).

@@ -2,7 +2,7 @@
 const methods = new Map(Object.entries({
   '/auth/login': ['POST'], '/auth/me': ['GET'], '/auth/logout': ['POST'],
   '/records': ['GET'], '/navigation': ['GET'], '/localization': ['GET'],
-  '/preferences': ['GET','PUT'], '/layouts': ['GET','PUT'], '/ai/policy': ['GET','PUT'],
+  '/preferences': ['GET','PUT'], '/preference-policy': ['GET','PUT'], '/layouts': ['GET','PUT'], '/ai/policy': ['GET','PUT'],
   '/approvals': ['POST'], '/imports': ['POST'], '/record-panels': ['POST'],
   '/personal-views': ['POST'], '/worklists/archive': ['POST'], '/worklists/search': ['POST'],
   '/exports': ['POST'], '/reference': ['GET'], '/views': ['POST'],

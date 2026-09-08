@@ -20,3 +20,4 @@ export * from "./form-rules.ts";
 export * from './imports.ts';
 
 export * from "./application-config.ts";
+export * from './preference-policy.ts';

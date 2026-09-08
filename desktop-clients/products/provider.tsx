@@ -23,7 +23,7 @@ export function ApplicationProductProvider({children}: {children: React.ReactNod
     const controller = new AbortController(); let active = true;
     const request = services.request ?? authedFetch;
     const read = async (path: string) => {
-      const response = await request(path, {signal:controller.signal});
+      const response = await request(path, {signal:controller.signal, headers:{"X-Product-Id":product.id}});
       if (!response.ok) throw new Error(`Application configuration could not be loaded (${response.status}).`);
       return response.json();
     };
@@ -58,7 +58,7 @@ export function ApplicationProductProvider({children}: {children: React.ReactNod
   }, [identity, state.navigation, token]);
 
   if (user && (state.identity !== identity || !state.product)) return <main className="grid min-h-dvh place-items-center bg-[var(--bg)] p-6 text-[var(--text)]"><div role={state.identity === identity && state.error ? 'alert' : 'status'} className="space-y-3 text-center"><p>{state.identity === identity && state.error ? state.error : 'Loading application menus and languages…'}</p>{state.identity === identity && state.error ? <button type="button" className="rounded border px-4 py-2" onClick={() => retry(value => value + 1)}>Retry loading application</button> : null}</div></main>;
-  return <ProductProvider product={user ? state.product! : product} role={user?.role} loadLanguage={user ? loadLanguage : undefined}>
+  return <ProductProvider preferenceRequest={services.request} product={user ? state.product! : product} role={user?.role} loadLanguage={user ? loadLanguage : undefined}>
     <ProductServicesProvider services={services}>{children}</ProductServicesProvider>
   </ProductProvider>;
 }

@@ -3013,3 +3013,172 @@ Scheduled demo summaries are delivered here as CSV. Times use UTC. Email deliver
 Delivery time (UTC),Delivery time (UTC),വിതരണ സമയം (UTC),,Pending,,AI-authored; native review required
 Next run (UTC),Next run (UTC),അടുത്ത പ്രവർത്തനം (UTC),,Pending,,AI-authored; native review required
 Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,വിതരണം ചെയ്ത റിപ്പോർട്ടുകൾ 30 ദിവസം സൂക്ഷിക്കും. പരാജയപ്പെട്ട വിതരണങ്ങൾ സ്വയമേവ അഞ്ച് തവണ വരെ വീണ്ടും ശ്രമിക്കും.,,Pending,,AI-authored; native review required
+Keyboard shortcuts,Keyboard shortcuts,കീബോർഡ് കുറുക്കുവഴികൾ,,Pending,,Tenant preference policy controls
+Open records,Open records,റെക്കോർഡുകൾ തുറക്കുക,,Pending,,Tenant preference policy controls
+Loading skeletons,Loading skeletons,ലോഡിംഗ് സൂചനകൾ,,Pending,,Tenant preference policy controls
+Preference policies,Preference policies,മുൻഗണനാ നയങ്ങൾ,,Pending,,Tenant preference policy controls
+Managed by your administrator,Managed by your administrator,അഡ്മിനിസ്ട്രേറ്റർ നിയന്ത്രിക്കുന്നത്,,Pending,,Tenant preference policy controls
+Locked preferences were not changed.,Locked preferences were not changed.,ലോക്ക് ചെയ്ത മുൻഗണനകൾ മാറ്റിയിട്ടില്ല.,,Pending,,Tenant preference policy controls
+Set defaults and lock settings for everyone in this tenant and application. Unlocking restores personal choices.,Set defaults and lock settings for everyone in this tenant and application. Unlocking restores personal choices.,ഈ സ്ഥാപനത്തിലെയും ആപ്പിലെയും എല്ലാവർക്കുമായി സ്ഥിരമൂല്യങ്ങൾ നിശ്ചയിക്കുകയും ക്രമീകരണങ്ങൾ ലോക്ക് ചെയ്യുകയും ചെയ്യുക. അൺലോക്ക് ചെയ്യുമ്പോൾ വ്യക്തിഗത തിരഞ്ഞെടുപ്പുകൾ പുനഃസ്ഥാപിക്കും.,,Pending,,Tenant preference policy controls
+Could not load preference policy.,Could not load preference policy.,മുൻഗണനാ നയം ലോഡ് ചെയ്യാനായില്ല.,,Pending,,Tenant preference policy controls
+Could not save preference policy.,Could not save preference policy.,മുൻഗണനാ നയം സംരക്ഷിക്കാനായില്ല.,,Pending,,Tenant preference policy controls
+Preference policy changed. Reload before saving.,Preference policy changed. Reload before saving.,മുൻഗണനാ നയം മാറി. സംരക്ഷിക്കുന്നതിന് മുമ്പ് വീണ്ടും ലോഡ് ചെയ്യുക.,,Pending,,Tenant preference policy controls
+Preference policy saved.,Preference policy saved.,മുൻഗണനാ നയം സംരക്ഷിച്ചു.,,Pending,,Tenant preference policy controls
+Save policy,Save policy,നയം സംരക്ഷിക്കുക,,Pending,,Tenant preference policy controls
+Preference,Preference,മുൻഗണന,,Pending,,Tenant preference policy controls
+Default or locked value,Default or locked value,സ്ഥിരമൂല്യം അല്ലെങ്കിൽ ലോക്ക് ചെയ്ത മൂല്യം,,Pending,,Tenant preference policy controls
+Use application default,Use application default,ആപ്പിന്റെ സ്ഥിരമൂല്യം ഉപയോഗിക്കുക,,Pending,,Tenant preference policy controls
+Policy history,Policy history,നയ ചരിത്രം,,Pending,,Tenant preference policy controls
+Reload preferences,Reload preferences,മുൻഗണനകൾ വീണ്ടും ലോഡ് ചെയ്യുക,,Pending,,Tenant preference policy controls
+Could not refresh preferences.,Could not refresh preferences.,മുൻഗണനകൾ പുതുക്കാനായില്ല.,,Pending,,Tenant preference policy controls
+Could not save preferences. Retry your changes.,Could not save preferences. Retry your changes.,മുൻഗണനകൾ സംരക്ഷിക്കാനായില്ല. മാറ്റങ്ങൾ വീണ്ടും ശ്രമിക്കുക.,,Pending,,Tenant preference policy controls
+Preferences changed. The current administrator policy has been applied.,Preferences changed. The current administrator policy has been applied.,മുൻഗണനകൾ മാറി. നിലവിലെ അഡ്മിനിസ്ട്രേറ്റർ നയം പ്രയോഗിച്ചു.,,Pending,,Tenant preference policy controls
+Only a tenant administrator can manage preference policies.,Only a tenant administrator can manage preference policies.,സ്ഥാപനത്തിന്റെ അഡ്മിനിസ്ട്രേറ്റർക്ക് മാത്രമേ മുൻഗണനാ നയങ്ങൾ നിയന്ത്രിക്കാനാകൂ.,,Pending,,Tenant preference policy controls
+Invalid preference policy.,Invalid preference policy.,മുൻഗണനാ നയം അസാധുവാണ്.,,Pending,,Tenant preference policy controls
+Invalid preference values.,Invalid preference values.,മുൻഗണനാ മൂല്യങ്ങൾ അസാധുവാണ്.,,Pending,,Tenant preference policy controls
+This preference is managed by your administrator.,This preference is managed by your administrator.,ഈ മുൻഗണന അഡ്മിനിസ്ട്രേറ്റർ നിയന്ത്രിക്കുന്നു.,,Pending,,Tenant preference policy controls
+Preferences changed in another session. Reload before saving.,Preferences changed in another session. Reload before saving.,മറ്റൊരു സെഷനിൽ മുൻഗണനകൾ മാറി. സംരക്ഷിക്കുന്നതിന് മുമ്പ് വീണ്ടും ലോഡ് ചെയ്യുക.,,Pending,,Tenant preference policy controls
+preference.label.theme,Theme,തീം,,Pending,,Tenant preference policy controls
+preference.label.formNavigation,Record form style,റെക്കോർഡ് ഫോം ശൈലി,,Pending,,Tenant preference policy controls
+preference.option.formNavigation.rail,Rail,സൈഡ് റെയിൽ,,Pending,,Tenant preference policy controls
+preference.option.formNavigation.tabs,Tabs,ടാബുകൾ,,Pending,,Tenant preference policy controls
+preference.option.formNavigation.wizard,Wizard,വിസാർഡ്,,Pending,,Tenant preference policy controls
+preference.label.resultView,Worklist result view,പ്രവർത്തന പട്ടിക ഫല കാഴ്ച,,Pending,,Tenant preference policy controls
+preference.option.resultView.table,Table,പട്ടിക,,Pending,,Tenant preference policy controls
+preference.option.resultView.cards,Card grid,കാർഡ് ഗ്രിഡ്,,Pending,,Tenant preference policy controls
+preference.label.previewMode,Quick view style,ദ്രുത കാഴ്ച ശൈലി,,Pending,,Tenant preference policy controls
+preference.option.previewMode.center-card,Centered record card,മധ്യത്തിലുള്ള റെക്കോർഡ് കാർഡ്,,Pending,,Tenant preference policy controls
+preference.option.previewMode.center-modal,Center modal,മധ്യത്തിലെ ഡയലോഗ്,,Pending,,Tenant preference policy controls
+preference.option.previewMode.left-drawer,Left side panel,ഇടത് പാനൽ,,Pending,,Tenant preference policy controls
+preference.option.previewMode.right-drawer,Right side panel,വലത് പാനൽ,,Pending,,Tenant preference policy controls
+preference.label.sidebarPlacement,Position,സ്ഥാനം,,Pending,,Tenant preference policy controls
+preference.option.sidebarPlacement.left,Left,ഇടത്,,Pending,,Tenant preference policy controls
+preference.option.sidebarPlacement.right,Right,വലത്,,Pending,,Tenant preference policy controls
+preference.label.sidebarPinned,Pinned open,തുറന്ന നിലയിൽ പിൻ ചെയ്തു,,Pending,,Tenant preference policy controls
+preference.label.density,Density,സാന്ദ്രത,,Pending,,Tenant preference policy controls
+preference.option.density.compact,Compact,ഒതുക്കമുള്ളത്,,Pending,,Tenant preference policy controls
+preference.option.density.comfortable,Comfortable,സൗകര്യപ്രദം,,Pending,,Tenant preference policy controls
+preference.option.density.spacious,Spacious,വിശാലം,,Pending,,Tenant preference policy controls
+preference.label.pageSize,Default rows per page,ഓരോ പേജിലെയും ഡിഫോൾട്ട് വരികൾ,,Pending,,Tenant preference policy controls
+preference.option.pageSize.10,10,10,,Pending,,Tenant preference policy controls
+preference.option.pageSize.20,20,20,,Pending,,Tenant preference policy controls
+preference.option.pageSize.50,50,50,,Pending,,Tenant preference policy controls
+preference.option.pageSize.100,100,100,,Pending,,Tenant preference policy controls
+preference.label.fontFamily,Font family,ഫോണ്ട് കുടുംബം,,Pending,,Tenant preference policy controls
+preference.option.fontFamily.inter,Inter (default),Inter (ഡിഫോൾട്ട്),,Pending,,Tenant preference policy controls
+preference.option.fontFamily.system,System UI,സിസ്റ്റം യുഐ,,Pending,,Tenant preference policy controls
+preference.option.fontFamily.georgia,Georgia (serif),Georgia (സെരിഫ്),,Pending,,Tenant preference policy controls
+preference.label.fontSizeBase,Base font size,അടിസ്ഥാന ഫോണ്ട് വലുപ്പം,,Pending,,Tenant preference policy controls
+preference.label.fontSizeForm,Form field size,ഫോം ഫീൽഡ് വലുപ്പം,,Pending,,Tenant preference policy controls
+preference.label.fontSizeResult,Result / table size,ഫലം / പട്ടിക വലുപ്പം,,Pending,,Tenant preference policy controls
+preference.label.toastPosition,Position,സ്ഥാനം,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.top-left,Top left,മുകളിൽ ഇടത്,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.top-center,Top center,മുകളിൽ മധ്യത്തിൽ,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.top-right,Top right,മുകളിൽ വലത്,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.bottom-left,Bottom left,താഴെ ഇടത്,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.bottom-center,Bottom center,താഴെ മധ്യത്തിൽ,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.bottom-right,Bottom right,താഴെ വലത്,,Pending,,Tenant preference policy controls
+preference.label.toastDuration,Duration,ദൈർഘ്യം,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.2000,2 seconds,2 സെക്കൻഡ്,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.3500,3.5 seconds,3.5 സെക്കൻഡ്,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.5000,5 seconds,5 സെക്കൻഡ്,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.8000,8 seconds,8 സെക്കൻഡ്,,Pending,,Tenant preference policy controls
+preference.label.toastStyle,Style,ശൈലി,,Pending,,Tenant preference policy controls
+preference.option.toastStyle.solid,Solid — filled with its colour,നിറഞ്ഞത് — സ്വന്തം നിറത്തിൽ,,Pending,,Tenant preference policy controls
+preference.option.toastStyle.light,Light — tinted icon on a surface,ഇളം — പശ്ചാത്തലത്തിൽ നിറമുള്ള ഐക്കൺ,,Pending,,Tenant preference policy controls
+preference.label.helperEnabled,Help assistant button,സഹായ അസിസ്റ്റന്റ് ബട്ടൺ,,Pending,,Tenant preference policy controls
+preference.label.documentationEnabled,Documentation panel on pages,പേജുകളിലെ ഡോക്യുമെന്റേഷൻ പാനൽ,,Pending,,Tenant preference policy controls
+preference.label.reducedMotion,Animations,ആനിമേഷനുകൾ,,Pending,,Tenant preference policy controls
+preference.label.language,Language,ഭാഷ,,Pending,,Tenant preference policy controls
+preference.option.language.en,English,ഇംഗ്ലീഷ്,,Pending,,Tenant preference policy controls
+preference.option.language.ar,Arabic,അറബിക്,,Pending,,Tenant preference policy controls
+preference.option.language.hi,Hindi,ഹിന്ദി,,Pending,,Tenant preference policy controls
+preference.option.language.ml,Malayalam,മലയാളം,,Pending,,Tenant preference policy controls
+preference.label.billingLayout,Billing workspace layout,ബില്ലിംഗ് വർക്ക്‌സ്‌പേസ് വിന്യാസം,,Pending,,Tenant preference policy controls
+preference.option.billingLayout.workspace,Workspace tabs,വർക്ക്‌സ്‌പേസ് ടാബുകൾ,,Pending,,Tenant preference policy controls
+preference.option.billingLayout.vertical,Vertical sections,ലംബ വിഭാഗങ്ങൾ,,Pending,,Tenant preference policy controls
+preference.option.billingLayout.split,Split header and lines,ഹെഡറും ലൈനുകളും വിഭജിക്കുക,,Pending,,Tenant preference policy controls
+preference.label.globalSearchMode,Search matching,തിരച്ചിൽ പൊരുത്തം,,Pending,,Tenant preference policy controls
+preference.option.globalSearchMode.contains,"Contains — the phrase, in any cell",ഉൾപ്പെടുന്നു — ഏതെങ്കിലും സെല്ലിൽ ആ വാചകം,,Pending,,Tenant preference policy controls
+preference.option.globalSearchMode.starts-with,Starts with — a cell begins with it,ആരംഭിക്കുന്നത് — സെൽ ഇതിൽ തുടങ്ങുന്നു,,Pending,,Tenant preference policy controls
+preference.option.globalSearchMode.smart,"Smart — every word, anywhere in the row",സ്മാർട്ട് — ഓരോ വാക്കും വരിയിൽ എവിടെയെങ്കിലും,,Pending,,Tenant preference policy controls
+preference.label.rememberFilters,Remember filters and search,ഫിൽട്ടറുകളും തിരച്ചിലും ഓർത്തുവയ്ക്കുക,,Pending,,Tenant preference policy controls
+preference.label.openRecordsInTabs,Open records in tabs,രേഖകൾ ടാബുകളിൽ തുറക്കുക,,Pending,,Tenant preference policy controls
+preference.label.showKeyboardHints,Keyboard shortcut hints,കീബോർഡ് കുറുക്കുവഴി സൂചനകൾ,,Pending,,Tenant preference policy controls
+preference.label.floatingWindows,Floating windows,ഫ്ലോട്ടിംഗ് വിൻഡോകൾ,,Pending,,Tenant preference policy controls
+preference.label.openRecordsIn,Open records,റെക്കോർഡുകൾ തുറക്കുക,,Pending,,Tenant preference policy controls
+preference.option.openRecordsIn.new-tab,Open records in a new tab,രേഖകൾ പുതിയ ടാബിൽ തുറക്കുക,,Pending,,Tenant preference policy controls
+preference.option.openRecordsIn.same-tab,Open records in place,രേഖകൾ അതേ സ്ഥാനത്ത് തുറക്കുക,,Pending,,Tenant preference policy controls
+preference.label.dateFormat,Date format,തീയതി ഫോർമാറ്റ്,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.iso,2026-09-03 — ISO,2026-09-03 — ISO ഫോർമാറ്റ്,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.dmy,03/09/2026 — day first,03/09/2026 — ദിവസം ആദ്യം,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.mdy,09/03/2026 — month first,09/03/2026 — മാസം ആദ്യം,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.medium,03 Sep 2026,03 സെപ്റ്റംബർ 2026,,Pending,,Tenant preference policy controls
+preference.label.numberLocale,Number format,സംഖ്യാ ഫോർമാറ്റ്,,Pending,,Tenant preference policy controls
+preference.option.numberLocale.en-US,"1,234,567.89","1,234,567.89",,Pending,,Tenant preference policy controls
+preference.option.numberLocale.de-DE,"1.234.567,89","1.234.567,89",,Pending,,Tenant preference policy controls
+preference.option.numberLocale.fr-FR,"1 234 567,89","1 234 567,89",,Pending,,Tenant preference policy controls
+preference.option.numberLocale.en-IN,"12,34,567.89 — lakh/crore","12,34,567.89 — ലക്ഷം/കോടി",,Pending,,Tenant preference policy controls
+preference.label.currencyCode,Currency,കറൻസി,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.AED,AED — UAE dirham,AED — യുഎഇ ദിർഹം,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.USD,USD — US dollar,USD — യുഎസ് ഡോളർ,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.EUR,EUR — Euro,EUR — യൂറോ,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.INR,INR — Indian rupee,INR — ഇന്ത്യൻ രൂപ,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.GBP,GBP — Pound sterling,GBP — പൗണ്ട് സ്റ്റെർലിംഗ്,,Pending,,Tenant preference policy controls
+preference.label.decimalPlaces,Decimal places,ദശാംശ സ്ഥാനങ്ങൾ,,Pending,,Tenant preference policy controls
+preference.option.decimalPlaces.0,"None — 1,200","ഒന്നുമില്ല — 1,200",,Pending,,Tenant preference policy controls
+preference.option.decimalPlaces.2,"Two — 1,200.00","രണ്ട് — 1,200.00",,Pending,,Tenant preference policy controls
+preference.option.decimalPlaces.3,"Three — 1,200.000","മൂന്ന് — 1,200.000",,Pending,,Tenant preference policy controls
+preference.label.columnLayoutScope,Column layout is saved,നിരകളുടെ വിന്യാസം സംരക്ഷിച്ചു,,Pending,,Tenant preference policy controls
+preference.option.columnLayoutScope.browser,For this browser only,ഈ ബ്രൗസറിന് മാത്രം,,Pending,,Tenant preference policy controls
+preference.option.columnLayoutScope.account,To my account,എന്റെ അക്കൗണ്ടിലേക്ക്,,Pending,,Tenant preference policy controls
+preference.label.sidebarExpandOn,Expands on,വികസിക്കുന്നത്,,Pending,,Tenant preference policy controls
+preference.option.sidebarExpandOn.hover,Hover,മൗസ് മുകളിൽ വയ്ക്കൽ,,Pending,,Tenant preference policy controls
+preference.option.sidebarExpandOn.click,Click,ക്ലിക്ക്,,Pending,,Tenant preference policy controls
+preference.label.sidebarFocusExpand,Opens on keyboard focus,കീബോർഡ് ഫോക്കസിൽ തുറക്കുന്നു,,Pending,,Tenant preference policy controls
+preference.label.keyboardShortcuts,Keyboard shortcuts,കീബോർഡ് കുറുക്കുവഴികൾ,,Pending,,Tenant preference policy controls
+preference.label.loadingSkeletons,Loading skeletons,ലോഡിംഗ് സൂചനകൾ,,Pending,,Tenant preference policy controls
+preference.label.sidebarTone,Rail tone,റെയിൽ വർണ്ണശൈലി,,Pending,,Tenant preference policy controls
+preference.option.sidebarTone.surface,Match,പൊരുത്തം,,Pending,,Tenant preference policy controls
+preference.option.sidebarTone.light,Light,ഇളംനിറം,,Pending,,Tenant preference policy controls
+preference.option.sidebarTone.contrast,Deep,കടുംനിറം,,Pending,,Tenant preference policy controls
+preference.label.sidebarTheme,Rail theme,റെയിൽ തീം,,Pending,,Tenant preference policy controls
+preference.option.sidebarTheme.match,Match the page theme,പേജ് തീമുമായി പൊരുത്തപ്പെടുത്തുക,,Pending,,Tenant preference policy controls
+preference.label.headerTone,Bar tone,ബാർ വർണ്ണശൈലി,,Pending,,Tenant preference policy controls
+preference.option.headerTone.surface,Match,പൊരുത്തം,,Pending,,Tenant preference policy controls
+preference.option.headerTone.light,Light,ഇളംനിറം,,Pending,,Tenant preference policy controls
+preference.option.headerTone.contrast,Deep,കടുംനിറം,,Pending,,Tenant preference policy controls
+preference.label.headerTheme,Bar theme,ബാർ തീം,,Pending,,Tenant preference policy controls
+preference.option.headerTheme.match,Match the page theme,പേജ് തീമുമായി പൊരുത്തപ്പെടുത്തുക,,Pending,,Tenant preference policy controls
+preference.label.maxVisibleToasts,On screen at once,ഒരേസമയം സ്ക്രീനിൽ,,Pending,,Tenant preference policy controls
+preference.option.maxVisibleToasts.1,1 — newest only,1 — ഏറ്റവും പുതിയത് മാത്രം,,Pending,,Tenant preference policy controls
+preference.option.maxVisibleToasts.3,3,3,,Pending,,Tenant preference policy controls
+preference.option.maxVisibleToasts.5,5,5,,Pending,,Tenant preference policy controls
+preference.label.timeFormat,Time format,സമയ ഫോർമാറ്റ്,,Pending,,Tenant preference policy controls
+preference.option.timeFormat.12h,12-hour — 2:30 PM,12 മണിക്കൂർ — ഉച്ചയ്ക്ക് 2:30,,Pending,,Tenant preference policy controls
+preference.option.timeFormat.24h,24-hour — 14:30,24 മണിക്കൂർ — 14:30,,Pending,,Tenant preference policy controls
+preference.label.currencyDisplay,Currency shown as,കറൻസി കാണിക്കുന്നത്,,Pending,,Tenant preference policy controls
+preference.option.currencyDisplay.symbol,"Symbol — د.إ1,200","ചിഹ്നം — د.إ1,200",,Pending,,Tenant preference policy controls
+preference.option.currencyDisplay.code,"Code — AED 1,200","കോഡ് — AED 1,200",,Pending,,Tenant preference policy controls
+preference.option.currencyDisplay.none,"Number only — 1,200","സംഖ്യ മാത്രം — 1,200",,Pending,,Tenant preference policy controls
+preference.label.negativeStyle,Negative amounts,നെഗറ്റീവ് തുകകൾ,,Pending,,Tenant preference policy controls
+preference.option.negativeStyle.minus,"Minus sign — -1,200","മൈനസ് ചിഹ്നം — -1,200",,Pending,,Tenant preference policy controls
+preference.option.negativeStyle.parentheses,"Parentheses — (1,200)","ബ്രാക്കറ്റുകൾ — (1,200)",,Pending,,Tenant preference policy controls
+preference.label.cornerRadius,Corner radius,കോണുകളുടെ വൃത്താകൃതി,,Pending,,Tenant preference policy controls
+preference.label.landingPage,Start on,ആരംഭിക്കുന്നത്,,Pending,,Tenant preference policy controls
+preference.option.landingPage.last-visited,The page I last had open,അവസാനം തുറന്ന പേജ്,,Pending,,Tenant preference policy controls
+preference.option.landingPage.module-dashboard,The current module's dashboard,നിലവിലെ മൊഡ്യൂളിന്റെ ഡാഷ്ബോർഡ്,,Pending,,Tenant preference policy controls
+preference.label.stickyTableHeader,Sticky header,സ്ഥിര ഹെഡർ,,Pending,,Tenant preference policy controls
+preference.label.zebraStripes,Zebra stripes,ഒന്നിടവിട്ട വരികളുടെ നിറം,,Pending,,Tenant preference policy controls
+preference.label.wrapCellText,Wrap long text,നീണ്ട വാചകം വരികളായി കാണിക്കുക,,Pending,,Tenant preference policy controls
+preference.label.confirmBulkActions,Confirm bulk actions,കൂട്ടനടപടികൾ സ്ഥിരീകരിക്കുക,,Pending,,Tenant preference policy controls
+preference.label.exportFormat,Export format,എക്സ്പോർട്ട് ഫോർമാറ്റ്,,Pending,,Tenant preference policy controls
+preference.option.exportFormat.csv,CSV — opens anywhere,CSV — എവിടെയും തുറക്കാം,,Pending,,Tenant preference policy controls
+preference.option.exportFormat.xlsx,Excel workbook (.xlsx),Excel വർക്ക്ബുക്ക് (.xlsx),,Pending,,Tenant preference policy controls
+preference.label.clockSeconds,Show seconds,സെക്കൻഡുകൾ കാണിക്കുക,,Pending,,Tenant preference policy controls
+preference.label.clockZone,Time zone,സമയ മേഖല,,Pending,,Tenant preference policy controls
+preference.option.clockZone.browser,This device,ഈ ഉപകരണം,,Pending,,Tenant preference policy controls
+preference.option.clockZone.branch,Selected branch,തിരഞ്ഞെടുത്ത ശാഖ,,Pending,,Tenant preference policy controls
+preference.label.docsPosition,Documentation position,ഡോക്യുമെന്റേഷന്റെ സ്ഥാനം,,Pending,,Tenant preference policy controls
+preference.option.docsPosition.left,Left,ഇടത്,,Pending,,Tenant preference policy controls
+preference.option.docsPosition.right,Right,വലത്,,Pending,,Tenant preference policy controls

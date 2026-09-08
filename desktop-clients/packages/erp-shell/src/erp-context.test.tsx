@@ -80,7 +80,7 @@ beforeEach(() => {
   window.localStorage.clear();
 });
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {vi.useRealTimers();vi.restoreAllMocks();});
 
 describe("loading preferences", () => {
   /* The fallback is the whole reason the provider gates on `loaded`: painting
@@ -98,7 +98,7 @@ describe("loading preferences", () => {
   test("reads them from the server, not from storage", async () => {
     mount();
     await ready();
-    expect(authedFetch).toHaveBeenCalledWith("/preferences");
+    expect(authedFetch).toHaveBeenCalledWith("/preferences",{headers:{"X-Product-Id":"nexora"}});
   });
 
   /* Validated, not spread. A theme id removed in a later release, or a
@@ -331,7 +331,7 @@ describe("preference write safety", () => {
     await act(async () => { screen.getByText("dark").click(); });
     await act(async () => { vi.advanceTimersByTime(1000); });
     expect(writes()).toHaveLength(0);
-    expect(document.documentElement.dataset.theme).toBe("midnight");
+    expect(document.documentElement.dataset.theme).toBe("nexora");
   });
   test("loading alone does not write; explicit edits do, including reverting to defaults", async () => {
     mount(); await ready();
@@ -368,4 +368,45 @@ test("a pending language switch preserves a later theme edit", async () => {
   await act(async () => { release(); await pending; });
   expect(context.preferences.language).toBe("ar");
   expect(context.preferences.theme).toBe("midnight");
+});
+
+test("locked preferences resist shared updates and resets without writing an override",async()=>{
+ authedFetch.mockImplementation(()=>Promise.resolve(new Response(JSON.stringify({preferences:{},policy:{revision:1,rules:{theme:{value:'sand',locked:true}}},userRevision:0}))));
+ mount();await ready();expect(screen.getByTestId('theme')).toHaveTextContent('sand');vi.useFakeTimers();
+ await act(async()=>{screen.getByText('dark').click();});
+ expect(screen.getByTestId('theme')).toHaveTextContent('sand');
+ await act(async()=>{screen.getByText('reset preferences').click();vi.advanceTimersByTime(400);});
+ const writes=authedFetch.mock.calls.filter(([,init])=>init?.method==='PUT');
+ for(const [,init] of writes)expect(JSON.parse(init.body).preferences.theme).toBeUndefined();
+ expect(screen.getByTestId('theme')).toHaveTextContent('sand');
+});
+
+test("a refreshed language lock cancels a pending personal language switch",async()=>{
+ let release!:()=>void;const pending=new Promise<void>(resolve=>{release=resolve;});
+ const loadLanguage=(language:string)=>language==='ar'?pending:Promise.resolve();let revision=0;
+ authedFetch.mockImplementation(()=>Promise.resolve(new Response(JSON.stringify({preferences:{},policy:{revision,rules:revision?{language:{value:'hi',locked:true}}:{}}}))));
+ function LanguageProbe(){const erp=useERP();return <><output data-testid="policy-language">{erp.preferences.language}</output><output data-testid="policy-ready">{String(erp.preferencesAvailable)}</output><button onClick={()=>erp.updatePreference('language','ar')}>arabic</button><button onClick={()=>void erp.refreshPreferences()}>refresh policy</button></>;}
+ render(<NavigationProvider value={navigation()}><ProductProvider product={NEXORA_PRODUCT} loadLanguage={loadLanguage}><ERPProvider><LanguageProbe /></ERPProvider></ProductProvider></NavigationProvider>);
+ await waitFor(()=>expect(screen.getByTestId('policy-ready')).toHaveTextContent('true'));
+ await act(async()=>{screen.getByText('arabic').click();});revision=1;
+ await act(async()=>{screen.getByText('refresh policy').click();});
+ await waitFor(()=>expect(screen.getByTestId('policy-language')).toHaveTextContent('hi'));
+ await act(async()=>{release();await pending;});expect(screen.getByTestId('policy-language')).toHaveTextContent('hi');
+});
+
+test("preference saves serialize later edits against the latest server revision",async()=>{
+ let finish!: (response:Response)=>void;let puts=0;
+ authedFetch.mockImplementation((_path,init)=>{
+  if(init?.method!=='PUT')return Promise.resolve(new Response(JSON.stringify({preferences:{},userRevision:0,policy:{revision:0,rules:{}}})));
+  if(++puts===1)return new Promise<Response>(resolve=>{finish=resolve;});
+  return Promise.resolve(new Response(JSON.stringify({userRevision:2})));
+ });
+ function FontProbe(){const erp=useERP();return <><output data-testid="policy-ready">{String(erp.preferencesAvailable)}</output><button onClick={()=>erp.updatePreference('fontSizeBase',14)}>font14</button><button onClick={()=>erp.updatePreference('fontSizeBase',15)}>font15</button></>;}
+ render(<NavigationProvider value={navigation()}><ERPProvider><FontProbe /></ERPProvider></NavigationProvider>);
+ await waitFor(()=>expect(screen.getByTestId('policy-ready')).toHaveTextContent('true'));vi.useFakeTimers();
+ await act(async()=>{screen.getByText('font14').click();});await act(async()=>{vi.advanceTimersByTime(400);});
+ await act(async()=>{screen.getByText('font15').click();});await act(async()=>{vi.advanceTimersByTime(400);});expect(puts).toBe(1);
+ await act(async()=>{finish(new Response(JSON.stringify({userRevision:1})));});await act(async()=>{vi.advanceTimersByTime(400);});
+ const writes=authedFetch.mock.calls.filter(([,init])=>init?.method==='PUT');expect(writes).toHaveLength(2);
+ expect(JSON.parse(writes[1][1].body)).toMatchObject({userRevision:1,preferences:{fontSizeBase:15}});
 });

@@ -3013,3 +3013,172 @@ Scheduled demo summaries are delivered here as CSV. Times use UTC. Email deliver
 Delivery time (UTC),Delivery time (UTC),वितरण समय (UTC),,Pending,,AI-authored; native review required
 Next run (UTC),Next run (UTC),अगला रन (UTC),,Pending,,AI-authored; native review required
 Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,वितरित रिपोर्ट 30 दिनों तक रखी जाती हैं। विफल वितरण के लिए स्वचालित रूप से अधिकतम पाँच प्रयास होते हैं।,,Pending,,AI-authored; native review required
+Keyboard shortcuts,Keyboard shortcuts,कीबोर्ड शॉर्टकट,,Pending,,Tenant preference policy controls
+Open records,Open records,रिकॉर्ड खोलें,,Pending,,Tenant preference policy controls
+Loading skeletons,Loading skeletons,लोडिंग संकेत,,Pending,,Tenant preference policy controls
+Preference policies,Preference policies,प्राथमिकता नीतियाँ,,Pending,,Tenant preference policy controls
+Managed by your administrator,Managed by your administrator,आपके व्यवस्थापक द्वारा नियंत्रित,,Pending,,Tenant preference policy controls
+Locked preferences were not changed.,Locked preferences were not changed.,लॉक की गई प्राथमिकताएँ नहीं बदली गईं।,,Pending,,Tenant preference policy controls
+Set defaults and lock settings for everyone in this tenant and application. Unlocking restores personal choices.,Set defaults and lock settings for everyone in this tenant and application. Unlocking restores personal choices.,इस टेनेंट और ऐप के सभी उपयोगकर्ताओं के लिए डिफ़ॉल्ट तय करें और सेटिंग लॉक करें। अनलॉक करने पर निजी विकल्प वापस आते हैं।,,Pending,,Tenant preference policy controls
+Could not load preference policy.,Could not load preference policy.,प्राथमिकता नीति लोड नहीं हो सकी।,,Pending,,Tenant preference policy controls
+Could not save preference policy.,Could not save preference policy.,प्राथमिकता नीति सहेजी नहीं जा सकी।,,Pending,,Tenant preference policy controls
+Preference policy changed. Reload before saving.,Preference policy changed. Reload before saving.,प्राथमिकता नीति बदल गई है। सहेजने से पहले फिर लोड करें।,,Pending,,Tenant preference policy controls
+Preference policy saved.,Preference policy saved.,प्राथमिकता नीति सहेजी गई।,,Pending,,Tenant preference policy controls
+Save policy,Save policy,नीति सहेजें,,Pending,,Tenant preference policy controls
+Preference,Preference,प्राथमिकता,,Pending,,Tenant preference policy controls
+Default or locked value,Default or locked value,डिफ़ॉल्ट या लॉक किया गया मान,,Pending,,Tenant preference policy controls
+Use application default,Use application default,ऐप का डिफ़ॉल्ट उपयोग करें,,Pending,,Tenant preference policy controls
+Policy history,Policy history,नीति इतिहास,,Pending,,Tenant preference policy controls
+Reload preferences,Reload preferences,प्राथमिकताएँ फिर लोड करें,,Pending,,Tenant preference policy controls
+Could not refresh preferences.,Could not refresh preferences.,प्राथमिकताएँ रीफ़्रेश नहीं हो सकीं।,,Pending,,Tenant preference policy controls
+Could not save preferences. Retry your changes.,Could not save preferences. Retry your changes.,प्राथमिकताएँ सहेजी नहीं जा सकीं। बदलाव फिर आज़माएँ।,,Pending,,Tenant preference policy controls
+Preferences changed. The current administrator policy has been applied.,Preferences changed. The current administrator policy has been applied.,प्राथमिकताएँ बदल गई हैं। व्यवस्थापक की वर्तमान नीति लागू की गई है।,,Pending,,Tenant preference policy controls
+Only a tenant administrator can manage preference policies.,Only a tenant administrator can manage preference policies.,केवल टेनेंट व्यवस्थापक प्राथमिकता नीतियाँ प्रबंधित कर सकता है।,,Pending,,Tenant preference policy controls
+Invalid preference policy.,Invalid preference policy.,प्राथमिकता नीति अमान्य है।,,Pending,,Tenant preference policy controls
+Invalid preference values.,Invalid preference values.,प्राथमिकता के मान अमान्य हैं।,,Pending,,Tenant preference policy controls
+This preference is managed by your administrator.,This preference is managed by your administrator.,यह प्राथमिकता आपके व्यवस्थापक द्वारा नियंत्रित है।,,Pending,,Tenant preference policy controls
+Preferences changed in another session. Reload before saving.,Preferences changed in another session. Reload before saving.,प्राथमिकताएँ दूसरे सत्र में बदल गई हैं। सहेजने से पहले फिर लोड करें।,,Pending,,Tenant preference policy controls
+preference.label.theme,Theme,थीम,,Pending,,Tenant preference policy controls
+preference.label.formNavigation,Record form style,रिकॉर्ड फ़ॉर्म शैली,,Pending,,Tenant preference policy controls
+preference.option.formNavigation.rail,Rail,साइड रेल,,Pending,,Tenant preference policy controls
+preference.option.formNavigation.tabs,Tabs,टैब,,Pending,,Tenant preference policy controls
+preference.option.formNavigation.wizard,Wizard,विज़ार्ड,,Pending,,Tenant preference policy controls
+preference.label.resultView,Worklist result view,कार्यसूची परिणाम दृश्य,,Pending,,Tenant preference policy controls
+preference.option.resultView.table,Table,तालिका,,Pending,,Tenant preference policy controls
+preference.option.resultView.cards,Card grid,कार्ड ग्रिड,,Pending,,Tenant preference policy controls
+preference.label.previewMode,Quick view style,त्वरित दृश्य शैली,,Pending,,Tenant preference policy controls
+preference.option.previewMode.center-card,Centered record card,केंद्रित रिकॉर्ड कार्ड,,Pending,,Tenant preference policy controls
+preference.option.previewMode.center-modal,Center modal,केंद्रीय संवाद,,Pending,,Tenant preference policy controls
+preference.option.previewMode.left-drawer,Left side panel,बायाँ पैनल,,Pending,,Tenant preference policy controls
+preference.option.previewMode.right-drawer,Right side panel,दायाँ पैनल,,Pending,,Tenant preference policy controls
+preference.label.sidebarPlacement,Position,स्थिति,,Pending,,Tenant preference policy controls
+preference.option.sidebarPlacement.left,Left,बाएँ,,Pending,,Tenant preference policy controls
+preference.option.sidebarPlacement.right,Right,दाएँ,,Pending,,Tenant preference policy controls
+preference.label.sidebarPinned,Pinned open,खुला पिन किया,,Pending,,Tenant preference policy controls
+preference.label.density,Density,घनत्व,,Pending,,Tenant preference policy controls
+preference.option.density.compact,Compact,कॉम्पैक्ट,,Pending,,Tenant preference policy controls
+preference.option.density.comfortable,Comfortable,आरामदायक,,Pending,,Tenant preference policy controls
+preference.option.density.spacious,Spacious,खुला,,Pending,,Tenant preference policy controls
+preference.label.pageSize,Default rows per page,प्रति पृष्ठ डिफ़ॉल्ट पंक्तियाँ,,Pending,,Tenant preference policy controls
+preference.option.pageSize.10,10,10,,Pending,,Tenant preference policy controls
+preference.option.pageSize.20,20,20,,Pending,,Tenant preference policy controls
+preference.option.pageSize.50,50,50,,Pending,,Tenant preference policy controls
+preference.option.pageSize.100,100,100,,Pending,,Tenant preference policy controls
+preference.label.fontFamily,Font family,फ़ॉन्ट परिवार,,Pending,,Tenant preference policy controls
+preference.option.fontFamily.inter,Inter (default),Inter (डिफ़ॉल्ट),,Pending,,Tenant preference policy controls
+preference.option.fontFamily.system,System UI,सिस्टम यूआई,,Pending,,Tenant preference policy controls
+preference.option.fontFamily.georgia,Georgia (serif),Georgia (सेरिफ़),,Pending,,Tenant preference policy controls
+preference.label.fontSizeBase,Base font size,मूल फ़ॉन्ट आकार,,Pending,,Tenant preference policy controls
+preference.label.fontSizeForm,Form field size,फ़ॉर्म फ़ील्ड आकार,,Pending,,Tenant preference policy controls
+preference.label.fontSizeResult,Result / table size,परिणाम / तालिका आकार,,Pending,,Tenant preference policy controls
+preference.label.toastPosition,Position,स्थिति,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.top-left,Top left,ऊपर बाएँ,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.top-center,Top center,ऊपर मध्य,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.top-right,Top right,ऊपर दाएँ,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.bottom-left,Bottom left,नीचे बाएँ,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.bottom-center,Bottom center,नीचे मध्य,,Pending,,Tenant preference policy controls
+preference.option.toastPosition.bottom-right,Bottom right,नीचे दाएँ,,Pending,,Tenant preference policy controls
+preference.label.toastDuration,Duration,अवधि,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.2000,2 seconds,2 सेकंड,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.3500,3.5 seconds,3.5 सेकंड,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.5000,5 seconds,5 सेकंड,,Pending,,Tenant preference policy controls
+preference.option.toastDuration.8000,8 seconds,8 सेकंड,,Pending,,Tenant preference policy controls
+preference.label.toastStyle,Style,शैली,,Pending,,Tenant preference policy controls
+preference.option.toastStyle.solid,Solid — filled with its colour,ठोस — अपने रंग से भरा,,Pending,,Tenant preference policy controls
+preference.option.toastStyle.light,Light — tinted icon on a surface,हल्का — सतह पर रंगीन आइकन,,Pending,,Tenant preference policy controls
+preference.label.helperEnabled,Help assistant button,सहायता सहायक बटन,,Pending,,Tenant preference policy controls
+preference.label.documentationEnabled,Documentation panel on pages,पृष्ठों पर दस्तावेज़ पैनल,,Pending,,Tenant preference policy controls
+preference.label.reducedMotion,Animations,एनिमेशन,,Pending,,Tenant preference policy controls
+preference.label.language,Language,भाषा,,Pending,,Tenant preference policy controls
+preference.option.language.en,English,अंग्रेज़ी,,Pending,,Tenant preference policy controls
+preference.option.language.ar,Arabic,अरबी,,Pending,,Tenant preference policy controls
+preference.option.language.hi,Hindi,हिन्दी,,Pending,,Tenant preference policy controls
+preference.option.language.ml,Malayalam,मलयालम,,Pending,,Tenant preference policy controls
+preference.label.billingLayout,Billing workspace layout,बिलिंग कार्यक्षेत्र लेआउट,,Pending,,Tenant preference policy controls
+preference.option.billingLayout.workspace,Workspace tabs,कार्यक्षेत्र टैब,,Pending,,Tenant preference policy controls
+preference.option.billingLayout.vertical,Vertical sections,लंबवत अनुभाग,,Pending,,Tenant preference policy controls
+preference.option.billingLayout.split,Split header and lines,शीर्ष और पंक्तियाँ अलग,,Pending,,Tenant preference policy controls
+preference.label.globalSearchMode,Search matching,खोज मिलान,,Pending,,Tenant preference policy controls
+preference.option.globalSearchMode.contains,"Contains — the phrase, in any cell",शामिल है — किसी भी सेल में वाक्यांश,,Pending,,Tenant preference policy controls
+preference.option.globalSearchMode.starts-with,Starts with — a cell begins with it,से शुरू — सेल इसी से शुरू होता है,,Pending,,Tenant preference policy controls
+preference.option.globalSearchMode.smart,"Smart — every word, anywhere in the row","स्मार्ट — हर शब्द, पंक्ति में कहीं भी",,Pending,,Tenant preference policy controls
+preference.label.rememberFilters,Remember filters and search,फ़िल्टर और खोज याद रखें,,Pending,,Tenant preference policy controls
+preference.label.openRecordsInTabs,Open records in tabs,रिकॉर्ड टैब में खोलें,,Pending,,Tenant preference policy controls
+preference.label.showKeyboardHints,Keyboard shortcut hints,कीबोर्ड शॉर्टकट संकेत,,Pending,,Tenant preference policy controls
+preference.label.floatingWindows,Floating windows,फ़्लोटिंग विंडो,,Pending,,Tenant preference policy controls
+preference.label.openRecordsIn,Open records,रिकॉर्ड खोलें,,Pending,,Tenant preference policy controls
+preference.option.openRecordsIn.new-tab,Open records in a new tab,रिकॉर्ड नए टैब में खोलें,,Pending,,Tenant preference policy controls
+preference.option.openRecordsIn.same-tab,Open records in place,रिकॉर्ड उसी स्थान पर खोलें,,Pending,,Tenant preference policy controls
+preference.label.dateFormat,Date format,तारीख प्रारूप,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.iso,2026-09-03 — ISO,2026-09-03 — ISO प्रारूप,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.dmy,03/09/2026 — day first,03/09/2026 — दिन पहले,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.mdy,09/03/2026 — month first,09/03/2026 — महीना पहले,,Pending,,Tenant preference policy controls
+preference.option.dateFormat.medium,03 Sep 2026,03 सितम्बर 2026,,Pending,,Tenant preference policy controls
+preference.label.numberLocale,Number format,संख्या प्रारूप,,Pending,,Tenant preference policy controls
+preference.option.numberLocale.en-US,"1,234,567.89","1,234,567.89",,Pending,,Tenant preference policy controls
+preference.option.numberLocale.de-DE,"1.234.567,89","1.234.567,89",,Pending,,Tenant preference policy controls
+preference.option.numberLocale.fr-FR,"1 234 567,89","1 234 567,89",,Pending,,Tenant preference policy controls
+preference.option.numberLocale.en-IN,"12,34,567.89 — lakh/crore","12,34,567.89 — लाख/करोड़",,Pending,,Tenant preference policy controls
+preference.label.currencyCode,Currency,मुद्रा,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.AED,AED — UAE dirham,AED — यूएई दिरहम,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.USD,USD — US dollar,USD — अमेरिकी डॉलर,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.EUR,EUR — Euro,EUR — यूरो,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.INR,INR — Indian rupee,INR — भारतीय रुपया,,Pending,,Tenant preference policy controls
+preference.option.currencyCode.GBP,GBP — Pound sterling,GBP — पाउंड स्टर्लिंग,,Pending,,Tenant preference policy controls
+preference.label.decimalPlaces,Decimal places,दशमलव स्थान,,Pending,,Tenant preference policy controls
+preference.option.decimalPlaces.0,"None — 1,200","कोई नहीं — 1,200",,Pending,,Tenant preference policy controls
+preference.option.decimalPlaces.2,"Two — 1,200.00","दो — 1,200.00",,Pending,,Tenant preference policy controls
+preference.option.decimalPlaces.3,"Three — 1,200.000","तीन — 1,200.000",,Pending,,Tenant preference policy controls
+preference.label.columnLayoutScope,Column layout is saved,कॉलम लेआउट सहेजा गया,,Pending,,Tenant preference policy controls
+preference.option.columnLayoutScope.browser,For this browser only,केवल इस ब्राउज़र के लिए,,Pending,,Tenant preference policy controls
+preference.option.columnLayoutScope.account,To my account,मेरे खाते में,,Pending,,Tenant preference policy controls
+preference.label.sidebarExpandOn,Expands on,विस्तार का तरीका,,Pending,,Tenant preference policy controls
+preference.option.sidebarExpandOn.hover,Hover,होवर,,Pending,,Tenant preference policy controls
+preference.option.sidebarExpandOn.click,Click,क्लिक,,Pending,,Tenant preference policy controls
+preference.label.sidebarFocusExpand,Opens on keyboard focus,कीबोर्ड फ़ोकस पर खुलता है,,Pending,,Tenant preference policy controls
+preference.label.keyboardShortcuts,Keyboard shortcuts,कीबोर्ड शॉर्टकट,,Pending,,Tenant preference policy controls
+preference.label.loadingSkeletons,Loading skeletons,लोडिंग संकेत,,Pending,,Tenant preference policy controls
+preference.label.sidebarTone,Rail tone,रेल रंग शैली,,Pending,,Tenant preference policy controls
+preference.option.sidebarTone.surface,Match,मिलान,,Pending,,Tenant preference policy controls
+preference.option.sidebarTone.light,Light,हल्का,,Pending,,Tenant preference policy controls
+preference.option.sidebarTone.contrast,Deep,गहरा,,Pending,,Tenant preference policy controls
+preference.label.sidebarTheme,Rail theme,रेल थीम,,Pending,,Tenant preference policy controls
+preference.option.sidebarTheme.match,Match the page theme,पृष्ठ थीम से मिलाएँ,,Pending,,Tenant preference policy controls
+preference.label.headerTone,Bar tone,बार रंग शैली,,Pending,,Tenant preference policy controls
+preference.option.headerTone.surface,Match,मिलान,,Pending,,Tenant preference policy controls
+preference.option.headerTone.light,Light,हल्का,,Pending,,Tenant preference policy controls
+preference.option.headerTone.contrast,Deep,गहरा,,Pending,,Tenant preference policy controls
+preference.label.headerTheme,Bar theme,बार थीम,,Pending,,Tenant preference policy controls
+preference.option.headerTheme.match,Match the page theme,पृष्ठ थीम से मिलाएँ,,Pending,,Tenant preference policy controls
+preference.label.maxVisibleToasts,On screen at once,एक साथ स्क्रीन पर,,Pending,,Tenant preference policy controls
+preference.option.maxVisibleToasts.1,1 — newest only,1 — केवल नवीनतम,,Pending,,Tenant preference policy controls
+preference.option.maxVisibleToasts.3,3,3,,Pending,,Tenant preference policy controls
+preference.option.maxVisibleToasts.5,5,5,,Pending,,Tenant preference policy controls
+preference.label.timeFormat,Time format,समय प्रारूप,,Pending,,Tenant preference policy controls
+preference.option.timeFormat.12h,12-hour — 2:30 PM,12 घंटे — 2:30 अपराह्न,,Pending,,Tenant preference policy controls
+preference.option.timeFormat.24h,24-hour — 14:30,24 घंटे — 14:30,,Pending,,Tenant preference policy controls
+preference.label.currencyDisplay,Currency shown as,मुद्रा का प्रदर्शन,,Pending,,Tenant preference policy controls
+preference.option.currencyDisplay.symbol,"Symbol — د.إ1,200","चिह्न — د.إ1,200",,Pending,,Tenant preference policy controls
+preference.option.currencyDisplay.code,"Code — AED 1,200","कोड — AED 1,200",,Pending,,Tenant preference policy controls
+preference.option.currencyDisplay.none,"Number only — 1,200","केवल संख्या — 1,200",,Pending,,Tenant preference policy controls
+preference.label.negativeStyle,Negative amounts,ऋणात्मक राशियाँ,,Pending,,Tenant preference policy controls
+preference.option.negativeStyle.minus,"Minus sign — -1,200","ऋण चिह्न — -1,200",,Pending,,Tenant preference policy controls
+preference.option.negativeStyle.parentheses,"Parentheses — (1,200)","कोष्ठक — (1,200)",,Pending,,Tenant preference policy controls
+preference.label.cornerRadius,Corner radius,कोने की गोलाई,,Pending,,Tenant preference policy controls
+preference.label.landingPage,Start on,आरंभ पृष्ठ,,Pending,,Tenant preference policy controls
+preference.option.landingPage.last-visited,The page I last had open,अंतिम खुला पृष्ठ,,Pending,,Tenant preference policy controls
+preference.option.landingPage.module-dashboard,The current module's dashboard,वर्तमान मॉड्यूल का डैशबोर्ड,,Pending,,Tenant preference policy controls
+preference.label.stickyTableHeader,Sticky header,स्थिर शीर्ष,,Pending,,Tenant preference policy controls
+preference.label.zebraStripes,Zebra stripes,एकांतर पंक्ति रंग,,Pending,,Tenant preference policy controls
+preference.label.wrapCellText,Wrap long text,लंबा पाठ लपेटें,,Pending,,Tenant preference policy controls
+preference.label.confirmBulkActions,Confirm bulk actions,सामूहिक कार्रवाइयों की पुष्टि,,Pending,,Tenant preference policy controls
+preference.label.exportFormat,Export format,निर्यात प्रारूप,,Pending,,Tenant preference policy controls
+preference.option.exportFormat.csv,CSV — opens anywhere,CSV — कहीं भी खुलता है,,Pending,,Tenant preference policy controls
+preference.option.exportFormat.xlsx,Excel workbook (.xlsx),Excel कार्यपुस्तिका (.xlsx),,Pending,,Tenant preference policy controls
+preference.label.clockSeconds,Show seconds,सेकंड दिखाएँ,,Pending,,Tenant preference policy controls
+preference.label.clockZone,Time zone,समय क्षेत्र,,Pending,,Tenant preference policy controls
+preference.option.clockZone.browser,This device,यह डिवाइस,,Pending,,Tenant preference policy controls
+preference.option.clockZone.branch,Selected branch,चयनित शाखा,,Pending,,Tenant preference policy controls
+preference.label.docsPosition,Documentation position,दस्तावेज़ स्थान,,Pending,,Tenant preference policy controls
+preference.option.docsPosition.left,Left,बाएँ,,Pending,,Tenant preference policy controls
+preference.option.docsPosition.right,Right,दाएँ,,Pending,,Tenant preference policy controls
