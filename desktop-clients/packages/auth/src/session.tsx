@@ -135,6 +135,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         const response=await fetch(`${API}/auth/me`,{headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(30000)});
         if(generation.current!==request||readToken()!==token)return;
         const body=await response.json().catch(()=>null);
+        if(generation.current!==request||readToken()!==token)return;
         if(response.ok&&body?.user&&sameIdentity(retained,body.user)){setUser(body.user);setExpired(false);setStatus('authenticated');}
         else if(response.ok&&body?.user){void validate();}
         else expireCurrentSession(token);

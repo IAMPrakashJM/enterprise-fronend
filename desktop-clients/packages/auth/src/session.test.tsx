@@ -367,3 +367,11 @@ test('another window can expire and renew the same identity without discarding t
  fetchMock.mockResolvedValueOnce(json(200,{user}));localStorage.setItem(STORAGE_KEY,'renewed');localStorage.removeItem('nexora-session-expired');
  await act(async()=>window.dispatchEvent(new StorageEvent('storage',{key:STORAGE_KEY,newValue:'renewed'})));await waitFor(()=>expect(screen.getByTestId('expired')).toHaveTextContent('false'));expect(status()).toBe('authenticated');
 });
+
+test('a late cross-window identity body cannot reopen the session after logout',async()=>{
+ localStorage.setItem(STORAGE_KEY,'one');fetchMock.mockResolvedValueOnce(json(200,{user}));mount();await waitFor(()=>expect(status()).toBe('authenticated'));
+ let finish!:(body:unknown)=>void;const body=new Promise(resolve=>{finish=resolve;});fetchMock.mockResolvedValueOnce({ok:true,json:()=>body});localStorage.setItem(STORAGE_KEY,'two');
+ await act(async()=>window.dispatchEvent(new StorageEvent('storage',{key:STORAGE_KEY,newValue:'two'})));expect(screen.getByTestId('expired')).toHaveTextContent('true');
+ localStorage.removeItem(STORAGE_KEY);await act(async()=>window.dispatchEvent(new StorageEvent('storage',{key:STORAGE_KEY,newValue:null})));expect(status()).toBe('anonymous');
+ await act(async()=>{finish({user});await body;});expect(status()).toBe('anonymous');expect(screen.getByTestId('user')).toHaveTextContent('-');expect(readToken()).toBeNull();
+});

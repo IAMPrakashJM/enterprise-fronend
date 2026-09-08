@@ -21,3 +21,7 @@ it('keeps the JSON deadline active after response headers arrive',async()=>{
  vi.useFakeTimers();const send=async(_path:string,init:RequestInit)=>new Response(new ReadableStream({start(controller){init.signal?.addEventListener('abort',()=>controller.error(new DOMException('Aborted','AbortError')));}}),{headers:{'Content-Type':'application/json'}});
  const result=recoveryRequest(send,'/records',{},50).catch(error=>error);await vi.advanceTimersByTimeAsync(50);expect(await result).toMatchObject({status:408});
 });
+it('caller cancellation still reaches a streaming body after headers are returned',async()=>{
+ const parent=new AbortController();const send=async(_path:string,init:RequestInit)=>new Response(new ReadableStream({start(controller){init.signal?.addEventListener('abort',()=>controller.error(new DOMException('Cancelled','AbortError')));}}),{headers:{'Content-Type':'text/event-stream'}});
+ const response=await recoveryRequest(send,'/stream',{signal:parent.signal});const result=response.text().catch(error=>error);parent.abort();expect(await result).toMatchObject({name:'AbortError'});
+});
