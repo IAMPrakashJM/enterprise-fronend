@@ -1,4 +1,5 @@
 "use client";
+import {reportOperationFailure} from "@pepbits/auth";
 import { Card } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 import { Modal } from "@pepbits/ops-ui";
@@ -285,7 +286,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
       const link = `${window.location.origin}/view/${view.id}`;
       await navigator.clipboard?.writeText(link).catch(() => undefined);
       toast({ title: "Saved view created", message: `${view.id} — the link carries no filter values.`, type: "success" });
-    } catch (error) {
+    } catch (error) { reportOperationFailure();
       /* Through the mapper, so a 403 on a saved view reads as a refusal rather
          than as a broken service — and the reference gives support something to
          trace, since the detail never reaches the screen. */
@@ -457,7 +458,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
       setBulkFailures(failures); if (generation === searchGeneration.current) setSelected(failures.map(item => item.id));
       toast({title: failures.length ? "Some records were not archived" : "Records archived", message:`${ids.length-failures.length} archived; ${failures.length} need attention.`,type:failures.length ? "warning" : "success"});
       setRefresh(value => value + 1);
-    } catch (error) { if (mounted.current) setBulkFailures(ids.map(id => ({id,error:(error as Error).message}))); }
+    } catch (error) { reportOperationFailure(); if (mounted.current) setBulkFailures(ids.map(id => ({id,error:(error as Error).message}))); }
     finally { bulkLock.current = false; if (mounted.current) setBulkBusy(false); }
   };
   const applyPersonalView = (layout: PersonalViewLayout) => {

@@ -320,6 +320,13 @@ describe("session invalidation across windows", () => {
     expect(status()).toBe("anonymous");
     expect(readToken()).toBeNull();
   });
+  test("a monitoring 401 cannot sign out an otherwise authenticated user", async () => {
+    localStorage.setItem(STORAGE_KEY, "tok-1");
+    fetchMock.mockResolvedValueOnce(json(200, { user })).mockResolvedValueOnce(json(401, {}));
+    mount(); await waitFor(() => expect(status()).toBe("authenticated"));
+    await act(async () => { await authedFetch("/monitoring/events", {method:"POST"}); });
+    expect(status()).toBe("authenticated");expect(readToken()).toBe("tok-1");
+  });
   test("a stale 401 cannot remove a newer token", async () => {
     localStorage.setItem(STORAGE_KEY, "old");
     let resolve!: (response: Response) => void;

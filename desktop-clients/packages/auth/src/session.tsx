@@ -1,4 +1,5 @@
 "use client";
+import {reportSentinelFailure} from "./sentinel";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
@@ -187,8 +188,13 @@ export async function authedFetch(path: string, init: RequestInit = {}): Promise
   const token = readToken();
   const headers = new Headers(init.headers);
   if (token) headers.set("Authorization", `Bearer ${token}`);
-  const response = await fetch(`${API}${path}`, { ...init, headers });
-  if (response.status === 401 && token && readToken() === token) {
+  const monitoring=path.startsWith('/monitoring/');
+  const report=(status?:number)=>{if(!monitoring&&typeof window!=='undefined')reportSentinelFailure({kind:'request',code:'request-failed',status});};
+  const timer=!monitoring&&typeof window!=='undefined'?setTimeout(()=>reportSentinelFailure({kind:'request',code:'request-timeout'}),15000):undefined;
+  let response:Response;
+  try{response=await fetch(`${API}${path}`, { ...init, headers });}catch(error){if(!init.signal?.aborted)report();throw error;}finally{if(timer!==undefined)clearTimeout(timer);}
+  if(response.status>=500||response.status===429)report(response.status);
+  if (response.status === 401 && !monitoring && token && readToken() === token) {
     writeToken(null);
     window.dispatchEvent(new Event(INVALIDATED_EVENT));
   }

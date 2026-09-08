@@ -1,4 +1,5 @@
 "use client";
+import {reportOperationFailure} from "@pepbits/auth";
 import { Card } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 import {localizeApprovalNotice,localizeApiMessage} from "@pepbits/erp-config";
@@ -29,7 +30,7 @@ function Workspace({productId,pageId,recordId}:{productId:string;pageId:string;r
  const refresh=async()=>{
   const seq=++sequence.current;setBusy(true);setError('');
   try{const next=await adapter.read([productId,pageId],recordId);if(alive.current&&sequence.current===seq){setData(next);setStages(next.config.stages);setSelected([]);}}
-  catch(e){if(alive.current&&sequence.current===seq)setError((e as Error).message);}
+  catch(e){reportOperationFailure();if(alive.current&&sequence.current===seq)setError((e as Error).message);}
   finally{if(alive.current&&sequence.current===seq)setBusy(false);}
  };
  useEffect(()=>{alive.current=true;void refresh();return()=>{alive.current=false;sequence.current++;};},[adapter]);
@@ -37,7 +38,7 @@ function Workspace({productId,pageId,recordId}:{productId:string;pageId:string;r
   if(lock.current)return;pending.current??=change?{change,id:crypto.randomUUID()}:null;if(!pending.current)return;
   lock.current=true;setBusy(true);setError('');setConfirmation(null);const operation=pending.current;
   try{const next=await adapter.change([productId,pageId],operation.change,operation.id,recordId);if(!alive.current)return;setData(next);setStages(next.config.stages);setSelected([]);setComment('');setSettings(false);pending.current=null;setUncertain(false);}
-  catch(e){if(alive.current){setError((e as Error).message);if(e instanceof ApprovalError&&e.status>=400&&e.status<500){pending.current=null;setUncertain(false);}else setUncertain(true);}}
+  catch(e){reportOperationFailure();if(alive.current){setError((e as Error).message);if(e instanceof ApprovalError&&e.status>=400&&e.status<500){pending.current=null;setUncertain(false);}else setUncertain(true);}}
   finally{lock.current=false;if(alive.current)setBusy(false);}
  };
  const disabled=busy||!data||uncertain;

@@ -41,6 +41,19 @@
       "roles": [
         "enterprise-admin"
       ]
+    },
+    {
+      "id": "documentation-center",
+      "titleKey": "Documentation Center",
+      "subtitleKey": "Page guides, releases, patches and changes."
+    },
+    {
+      "id": "error-monitor",
+      "titleKey": "Error Monitor",
+      "subtitleKey": "Review sanitized application incidents.",
+      "roles": [
+        "enterprise-admin"
+      ]
     }
   ],
   "nodes": [
@@ -92,6 +105,27 @@
       "labelKey": "menu.finance.customer-master.label",
       "order": 0,
       "pageId": "customer-master"
+    },
+    {
+      "id": "documentation-center",
+      "kind": "page",
+      "parentId": "section.finance.fin-overview",
+      "pageId": "documentation-center",
+      "labelKey": "Documentation Center",
+      "order": 999,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "error-monitor",
+      "kind": "page",
+      "parentId": "section.finance.fin-overview",
+      "pageId": "error-monitor",
+      "labelKey": "Error Monitor",
+      "order": 1000,
+      "roles": [
+        "enterprise-admin"
+      ],
+      "icon": "Activity"
     }
   ]
 }

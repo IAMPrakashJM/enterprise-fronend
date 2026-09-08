@@ -178,17 +178,10 @@ describe("moduleForPage", () => {
     expect(moduleForPage("no-such-page")).toBe("finance");
   });
 
-  /* The "shared" branch is currently unreachable, and this is here to say so.
-     The rule was written for pages that belong to no module — Preferences, the
-     Developer Library — so that opening one keeps the sidebar on the module the
-     user came from. Every one of them is now declared under `library`, so
-     opening Preferences DOES move the sidebar, and `lastModule` in ERPProvider
-     never does anything. Whoever adds the first shared page should decide which
-     of the two was meant; until then the branch is dead and pinning it as dead
-     is more honest than a test that pretends to exercise it. */
-  test("nothing is declared shared today, so the fallback only covers unknown pages", () => {
-    const shared = Object.entries(PAGE_REGISTRY).filter(([, page]) => page.module === "shared");
-    expect(shared).toEqual([]);
+  test("shared documentation preserves the current module", () => {
+    expect(PAGE_REGISTRY["documentation-center"].module).toBe("shared");
+    expect(moduleForPage("documentation-center", "sales")).toBe("sales");
+    expect(moduleForPage("documentation-center", "healthcare")).toBe("healthcare");
     expect(moduleForPage("preferences", "sales")).toBe("library");
   });
 });

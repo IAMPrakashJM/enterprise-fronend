@@ -5,6 +5,9 @@ import React from "react";
 import { useERP } from "./erp-context";
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
+import { PageDocumentationNotice } from "./documentation";
+import {SentinelBoundary,SentinelBridge} from "./sentinel";
+import {useNavigation} from "@pepbits/platform-ports";
 import { Footer } from "./footer";
 
 /* Structurally identical to the original shell, with one substitution: the workspace
@@ -12,19 +15,23 @@ import { Footer } from "./footer";
    only on desktop. The desktop app passes <WorkspaceTabs/>; the web app passes
    nothing and the band collapses. Everything else is shared and unchanged. */
 export function EnterpriseShell({ tabs, children }: { tabs?: React.ReactNode; children: React.ReactNode }) {
+  const navigation=useNavigation();
   const { preferences, preferencesAvailable } = useERP();
   return (
     /* relative: the sidebar is absolutely positioned inside this box so that hover
          expansion floats over the page instead of pushing it. */
     <div className={`relative flex h-dvh w-full overflow-hidden ${(preferences.sidebarPlacement === "right") !== (preferences.language === "ar") ? "flex-row-reverse" : "flex-row"}`}>
+      <SentinelBridge />
+      <SentinelBoundary resetKey={navigation.current.pageId}>
       <Sidebar />
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <Header />
         {preferencesAvailable === false ? <div role="status" className="border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-2 text-sm text-[var(--text-muted)]"><LocalizedText message="ui.settings.could.not.be.loaded.preference.changes.apply.to.9cc9f6fa" /></div> : null}
         {tabs}
-        <main className="nex-scrollbar relative min-h-0 flex-1 overflow-auto bg-[var(--bg)] p-3 md:p-4">{children}</main>
+        <main className="nex-scrollbar relative min-h-0 flex-1 overflow-auto bg-[var(--bg)] p-3 md:p-4"><PageDocumentationNotice />{children}</main>
         <Footer />
       </div>
+      </SentinelBoundary>
     </div>
   );
 }

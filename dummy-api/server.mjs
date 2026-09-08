@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import {createMonitoringStore} from "./monitoring-store.mjs";
+import {createDocumentationStore} from "./documentation-store.mjs";
 import {createPreferenceStore,canManagePreferences} from "./preference-store.mjs";
 import {createReportScheduler} from "./report-scheduler.mjs";
 import {reportRows} from "../desktop-clients/packages/erp-data/src/report-data.ts";
@@ -83,7 +85,7 @@ const ACCOUNTS = [
     password: "admin",
     user: {
       id: "USR-00301",
-      permissions: ["preferences:manage"],
+      permissions: ["preferences:manage","monitoring:manage"],
       name: "Prakash Mathew",
       email: "prakash@nexora.example",
       initials: "PM",
@@ -103,6 +105,8 @@ const sessions = new Map();
    point of "log out, log back in, your settings are still there".
    Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
 const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "data");
+const monitoringStore=createMonitoringStore(join(DATA_DIR,"monitoring.sqlite"));
+const documentationStore=createDocumentationStore(join(DATA_DIR,"documentation.sqlite"),process.env.NEXORA_CONFIG_DIR ?? join(dirname(fileURLToPath(import.meta.url)),"config"),applicationConfig);
 const auditStore = createAuditStore(join(DATA_DIR,"audit.sqlite"), {retentionDays:Number(process.env.NEXORA_AUDIT_RETENTION_DAYS ?? 90)});
 auditStore.prune();
 setInterval(() => {try {auditStore.prune();} catch {console.error("Audit retention failed");}},3600000).unref();
@@ -916,6 +920,22 @@ const server = createServer(async (req, res) => {
     if (req.headers["if-none-match"] === etag) {res.writeHead(304,{...CORS,...headers});return res.end();}
     if (/\bgzip\b/.test(req.headers["accept-encoding"] ?? "")) {res.writeHead(200,{...CORS,...headers,"Content-Type":"application/json; charset=utf-8","Content-Encoding":"gzip"});return res.end(gzipSync(JSON.stringify(result.body)));}
     return send(res,200,result.body,headers);
+  }
+
+  if(pathname==="/monitoring/events"||pathname==="/monitoring/incidents"||/^\/monitoring\/incidents\/[^/]+$/.test(pathname)){
+    const user=sessions.get(bearer(req));if(!user)return send(res,401,{error:"Not signed in."});
+    const productId=req.headers["x-product-id"]??"nexora";const nav=applicationConfig.navigation(user,productId);if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    const id=pathname.split('/')[3];
+    const result=pathname==="/monitoring/events"?monitoringStore.ingest(user,productId,await readJson(req).catch(()=>null),new Set(nav.body.pages.map(p=>p.id))):id?(req.method==="PATCH"?monitoringStore.update(user,productId,id,await readJson(req).catch(()=>null)):monitoringStore.detail(user,productId,id)):monitoringStore.list(user,productId,requestUrl.searchParams);
+    return send(res,result.status,result.body,{"Cache-Control":"no-store",...(result.status===429?{"Retry-After":"60"}:{})});
+  }
+
+  if (pathname === "/documentation" || pathname === "/documentation/state") {
+    const user=sessions.get(bearer(req));
+    if(!user)return send(res,401,{error:"Not signed in."});
+    const productId=req.headers["x-product-id"] ?? "nexora";
+    const result=pathname==="/documentation"?documentationStore.query(user,productId,requestUrl.searchParams):documentationStore.write(user,productId,await readJson(req).catch(()=>null));
+    return send(res,result.status,result.body,{"Cache-Control":"private, no-store"});
   }
 
   if (pathname === "/preferences" || pathname === "/preference-policy") {

@@ -2,6 +2,8 @@
 const methods = new Map(Object.entries({
   '/auth/login': ['POST'], '/auth/me': ['GET'], '/auth/logout': ['POST'],
   '/records': ['GET'], '/navigation': ['GET'], '/localization': ['GET'],
+  '/monitoring/events': ['POST'], '/monitoring/incidents':['GET'],
+  '/documentation': ['GET'], '/documentation/state': ['PUT'],
   '/preferences': ['GET','PUT'], '/preference-policy': ['GET','PUT'], '/layouts': ['GET','PUT'], '/ai/policy': ['GET','PUT'],
   '/approvals': ['POST'], '/imports': ['POST'], '/record-panels': ['POST'],
   '/personal-views': ['POST'], '/worklists/archive': ['POST'], '/worklists/search': ['POST'],
@@ -11,6 +13,7 @@ const methods = new Map(Object.entries({
   '/health': ['GET'], '/audit': ['GET'], '/report-schedules': ['POST'],
 }));
 export function allowedMethods(pathname) {
+  if (/^\/monitoring\/incidents\/[^/]+$/.test(pathname)) return ['GET','PATCH','OPTIONS'];
   if (methods.has(pathname)) return [...methods.get(pathname), 'OPTIONS'];
   if (/^\/records\/[^/]+$/.test(pathname)) return ['GET','PUT','OPTIONS'];
   if (/^\/records\/[^/]+\/(draft|discard|create)$/.test(pathname)) return ['PUT','OPTIONS'];

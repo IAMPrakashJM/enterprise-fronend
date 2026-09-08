@@ -1,4 +1,5 @@
 "use client";
+import {DocumentationLauncher} from "./documentation";
 import { useLocalization } from "@pepbits/ops-ui";
 
 import { LocalizedText } from "@pepbits/ops-ui";
@@ -130,6 +131,7 @@ export function Header() {
           with a "Mark all read" action, then rows of coloured dot + title +
           body + age. The dot is a semantic token, so a notification is coloured
           by what it MEANS rather than by a hex picked at the call site. */}
+      <DocumentationLauncher />
       {preferences.helperEnabled ? <button type="button" aria-label={translateCopy("ui.open.page.helper.b4639461")} title={translateCopy("ui.help.b22e5e67")} onClick={() => setHelpOpen(true)} className="focus-ring grid size-[30px] shrink-0 place-items-center rounded-lg text-[var(--text-muted)] hover:bg-[var(--surface-2)]"><CircleHelp className="size-4" /></button> : null}
       <ActionMenu trigger={<InboxTrigger label={t("notifications")} count={unreadNotifications} tone="danger"><Bell className="size-3.5" /></InboxTrigger>}>
         {(close) => (

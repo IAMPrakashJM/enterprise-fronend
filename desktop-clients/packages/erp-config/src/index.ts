@@ -21,3 +21,4 @@ export * from './imports.ts';
 
 export * from "./application-config.ts";
 export * from './preference-policy.ts';
+export * from "./documentation.ts";

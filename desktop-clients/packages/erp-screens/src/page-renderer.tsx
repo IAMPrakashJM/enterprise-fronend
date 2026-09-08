@@ -5,7 +5,7 @@ import { RecordPanelsPanel } from "./records/record-panels";
 import React from "react";
 import { canProductAction } from "@pepbits/erp-config";
 import type { NavigationTarget } from "@pepbits/platform-ports";
-import { useProduct } from "@pepbits/erp-shell";
+import { ErrorMonitor, DocumentationCenter, useProduct } from "@pepbits/erp-shell";
 import { AccessDenied, DashboardSkeleton, ErrorState, FormSkeleton, TableSkeleton } from "@pepbits/ops-ui";
 import { ModuleDashboard } from "./dashboard/module-dashboard";
 import { WorklistPage } from "./worklist/worklist-page";
@@ -49,6 +49,8 @@ export function SkeletonFor({ kind }: { kind: string }) {
 export function PageRenderer({ target, showTabPreferences = true }: { target: NavigationTarget; showTabPreferences?: boolean }) {
   const product = useProduct();
   const page = product.pages[target.pageId];
+  if(page && target.pageId==="error-monitor")return <ErrorMonitor />;
+  if(page && target.pageId==="documentation-center")return <DocumentationCenter />;
   /* A page id with no entry is a configuration fault, not an empty result, and
      it used to render as one line of grey text with nothing to do about it. */
   if (product.access?.pages?.[target.pageId] && !page) return <AccessDenied title="Page unavailable for your role" description="Your account does not have access to this page." />;

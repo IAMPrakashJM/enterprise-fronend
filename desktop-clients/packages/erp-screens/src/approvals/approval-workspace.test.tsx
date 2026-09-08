@@ -4,7 +4,7 @@ import {test,expect,vi} from 'vitest';
 import {ApprovalWorkspace} from './approval-workspace';
 import {ProductServicesProvider} from '../product-services';
 import type {ApprovalData} from '@pepbits/erp-data';
-vi.mock('@pepbits/auth',()=>({useSession:()=>({user:{id:'requester',tenantId:'tenant',role:'operations-analyst'}}),readToken:()=> 'token',authedFetch:vi.fn()}));
+vi.mock('@pepbits/auth',()=>({useSession:()=>({user:{id:'requester',tenantId:'tenant',role:'operations-analyst'}}),readToken:()=> 'token',authedFetch:vi.fn(),reportOperationFailure:vi.fn(),reportSentinelFailure:vi.fn()}));
 vi.mock('@pepbits/erp-shell',()=>({useProduct:()=>({id:'test'})}));
 vi.mock('@pepbits/platform-ports',()=>({useNavigation:()=>({open:vi.fn()})}));
 const empty:ApprovalData={config:{version:0,stages:[{name:'Finance',roles:['finance-manager']}]},canConfigure:false,items:[],notifications:[]};

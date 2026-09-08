@@ -9,3 +9,8 @@ export * from "./chrome-palette";
 export * from "./layers";
 export * from "./workspace";
 export * from "./product-context";
+
+export * from "./documentation";
+
+export * from "./error-monitor";
+export * from "./sentinel";

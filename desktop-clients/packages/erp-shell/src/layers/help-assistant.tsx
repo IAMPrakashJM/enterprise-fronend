@@ -2,6 +2,8 @@
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 
+import {useDocumentationRequest} from "../documentation";
+import {DOCUMENTATION_RELEASE} from "@pepbits/erp-config";
 import { useProduct } from "../product-context";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -44,6 +46,7 @@ function Spotlight({ spot, title }: { spot: Spot; title: string }) {
 export function HelpAssistant() {
   const {t: translateCopy} = useLocalization();
   const product = useProduct();
+  const documentationRequest=useDocumentationRequest();
   const hasWorkspace = useOptionalWorkspace() !== null;
   const { preferences, helpOpen, setHelpOpen, setDocumentationOpen } = useERP();
   const navigation = useNavigation();
@@ -67,13 +70,15 @@ export function HelpAssistant() {
      same commit this component is part of. */
   useEffect(() => {
     if (!helpOpen) return;
-    const all = TOURS[kind] ?? TOURS.default;
-    const present = presentSteps(all);
-    setSteps(present.length ? present : presentSteps(TOURS.default));
+    const controller=new AbortController();
+    const apply=(all:TourStep[])=>{const present=presentSteps(all);setSteps(present.length?present:presentSteps(TOURS.default));};
+    apply(TOURS[kind] ?? TOURS.default);
+    void documentationRequest(`/documentation?releaseId=${DOCUMENTATION_RELEASE}&pageId=${encodeURIComponent(navigation.current.pageId)}&language=${preferences.language}`,{signal:controller.signal}).then(body=>{if(!controller.signal.aborted)apply(body.guide.tour);}).catch(()=>{});
     setStep(0);
     setPlaying(false);
     setTouring(false);
-  }, [helpOpen, kind, navigation.current.pageId]);
+    return()=>controller.abort();
+  }, [helpOpen, kind, navigation.current.pageId,preferences.language,documentationRequest]);
 
   const current = steps[Math.min(step, Math.max(0, steps.length - 1))];
 

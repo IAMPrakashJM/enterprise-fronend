@@ -6,6 +6,20 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Sentinel monitoring — 8 September 2026
+
+The local demo collector, monitoring API and administrator incident screen are
+implemented. See [Sentinel monitoring](sentinel-monitoring.md) for capture points,
+privacy constraints, tests and native runtime limitations. Not yet deployed.
+
+## Documentation Center — 8 September 2026
+
+A shared, versioned documentation viewer, release/patch archive and persistent
+change notices are implemented locally. See the [integration guide](documentation-center-integration.md)
+and [page coverage](documentation-coverage.md) for exact scope: 179 references,
+four initial authored workflows, and the remaining content/review work.
+This implementation has not yet been deployed.
+
 ## Engineering review follow-up — 8 September 2026
 
 Tenant/application preference defaults and administrator locks are implemented

@@ -1,4 +1,5 @@
 "use client";
+import {reportOperationFailure} from "@pepbits/auth";
 import { TableContainer } from "@pepbits/ops-ui";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
@@ -24,7 +25,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  useEffect(()=>{
   if(!open)return;closing.current=false;stop.current=false;const version=++generation.current;
   if(job||csv)return;
-  setBusy(true);void adapter.latest(productId,page.id).then(value=>{if(active.current&&version===generation.current&&value){setJob(value);setView('review');}}).catch(e=>{if(active.current&&version===generation.current)setError(e.message);}).finally(()=>{if(active.current&&version===generation.current)setBusy(false);});
+  setBusy(true);void adapter.latest(productId,page.id).then(value=>{if(active.current&&version===generation.current&&value){setJob(value);setView('review');}}).catch(e=>{reportOperationFailure();if(active.current&&version===generation.current)setError(e.message);}).finally(()=>{if(active.current&&version===generation.current)setBusy(false);});
  },[open,adapter,productId,page.id]);
  const readFile=async(file?:File)=>{
   if(!file)return;const version=++generation.current;setError(null);setBusy(true);
@@ -33,13 +34,13 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
    const parsed=parseCsv(new TextDecoder('utf-8',{fatal:true}).decode(await file.arrayBuffer()));
    if(!active.current||version!==generation.current)return;
    setCsv(parsed);setFilename(file.name);setMapping(suggestMapping(parsed.headers,fields));setJob(null);preview.current=null;setView('mapping');
-  }catch(e){if(active.current&&version===generation.current)setError((e as Error).message);}
+  }catch(e){reportOperationFailure();if(active.current&&version===generation.current)setError((e as Error).message);}
   finally{if(active.current&&version===generation.current)setBusy(false);}
  };
  const validate=async()=>{
   if(!csv||lock.current)return;lock.current=true;setBusy(true);setError(null);
   try{preview.current??={id:crypto.randomUUID(),rows:mapImportRows(csv.rows,mapping)};const result=await adapter.preview(productId,page.id,preview.current.rows,preview.current.id);if(active.current){setJob(result);setView('review');setFilter('all');}}
-  catch(e){if(active.current)setError((e as Error).message);}
+  catch(e){reportOperationFailure();if(active.current)setError((e as Error).message);}
   finally{lock.current=false;if(active.current){setBusy(false);if(closing.current)latest.current.onClose();}}
  };
  const run=async(retry=false)=>{
@@ -47,7 +48,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
   try{
    let next=await adapter.run(job.id,retry);if(!active.current)return;setJob(next);latest.current.onImported();
    while(!stop.current&&active.current&&next.rows.some(row=>row.status==='pending')){next=await adapter.run(job.id);if(active.current){setJob(next);latest.current.onImported();}}
-  }catch(e){if(active.current)setError((e as Error).message);}
+  }catch(e){reportOperationFailure();if(active.current)setError((e as Error).message);}
   finally{lock.current=false;if(active.current){setBusy(false);if(closing.current)latest.current.onClose();}}
  };
  const close=()=>{closing.current=true;stop.current=true;if(!lock.current)onClose();};

@@ -5,7 +5,7 @@ import {PAGE_REGISTRY} from '@pepbits/erp-config';
 import type {ImportJob} from '@pepbits/erp-data';
 import {ProductServicesProvider} from '../product-services';
 import {CsvImportDialog} from './csv-import-dialog';
-vi.mock('@pepbits/auth',()=>({readToken:()=> 'token',authedFetch:vi.fn()}));
+vi.mock('@pepbits/auth',()=>({readToken:()=> 'token',authedFetch:vi.fn(),reportOperationFailure:vi.fn(),reportSentinelFailure:vi.fn()}));
 const pending:ImportJob={id:'job',productId:'test',pageId:'customer-master',confirmed:false,createdAt:new Date().toISOString(),rows:[{row:1,values:{customerCode:'NEW'},errors:{},status:'pending'},{row:2,values:{customerCode:'BAD'},errors:{email:'Invalid email'},status:'invalid'}]};
 function setup(job:ImportJob){const adapter={latest:vi.fn().mockResolvedValue(job),preview:vi.fn(),run:vi.fn()};const onImported=vi.fn();render(<ProductServicesProvider services={{imports:adapter}}><CsvImportDialog open onClose={vi.fn()} page={PAGE_REGISTRY['customer-master']} productId="test" onImported={onImported}/></ProductServicesProvider>);return {adapter,onImported};}
 test('restored validation requires explicit confirmation before writing',async()=>{

@@ -8,7 +8,7 @@ A tenant administrator can set a default value and lock or unlock each of the 53
 
 1. Sign in with an account granted `preferences:manage` by the backend.
 2. Open **Preferences → Preference policies**.
-3. Search for a setting, choose its value, and switch **Locked** on to require that value.
+3. Browse the Behaviour, Shell, Page, Notification, Language & help, and General groups, or search by setting or group name. Choose a value and switch **Locked** on to require it.
 4. Select **Save policy**. The policy history records the revision, administrator ID, and time.
 5. Switch **Locked** off and save to allow personal choices again. **Use application default** removes that setting's rule; save to apply the removal.
 

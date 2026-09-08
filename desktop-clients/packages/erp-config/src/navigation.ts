@@ -755,6 +755,10 @@ export const PAGE_REGISTRY: Record<string, PageDefinition> = Object.fromEntries(
   })
 );
 
+PAGE_REGISTRY["documentation-center"] = {id:"documentation-center",title:"Documentation Center",subtitle:"Page guides, releases, patches and changes.",kind:"library",module:"shared",icon:BookOpen};
+
+PAGE_REGISTRY["error-monitor"] = {id:"error-monitor",title:"Error Monitor",subtitle:"Review sanitized application incidents.",kind:"library",module:"shared",icon:Activity};
+
 export const BRANCHES = [
   { value: "hq", label: "Abu Dhabi • Head Office" },
   { value: "dubai", label: "Dubai • Business Center" },

@@ -3182,3 +3182,63 @@ preference.option.clockZone.branch,Selected branch,चयनित शाखा,
 preference.label.docsPosition,Documentation position,दस्तावेज़ स्थान,,Pending,,Tenant preference policy controls
 preference.option.docsPosition.left,Left,बाएँ,,Pending,,Tenant preference policy controls
 preference.option.docsPosition.right,Right,दाएँ,,Pending,,Tenant preference policy controls
+Some content is shown in English.,Some content is shown in English.,कुछ सामग्री अंग्रेज़ी में दिखाई गई है।,,Pending,,Documentation Center UI
+Invalid documentation request.,Invalid documentation request.,अमान्य दस्तावेज़ अनुरोध।,,Pending,,Documentation Center UI
+What's new,What's new,नया क्या है,,Pending,,Documentation Center UI
+Page is unavailable.,Page is unavailable.,पृष्ठ उपलब्ध नहीं है।,,Pending,,Documentation Center UI
+Guide coverage,Guide coverage,मार्गदर्शिका कवरेज,,Pending,,Documentation Center UI
+Could not load documentation.,Could not load documentation.,दस्तावेज़ लोड नहीं हो सके।,,Pending,,Documentation Center UI
+Documentation version is unavailable.,Documentation version is unavailable.,दस्तावेज़ का संस्करण उपलब्ध नहीं है।,,Pending,,Documentation Center UI
+Offline copy. Reconnect to check for updates.,Offline copy. Reconnect to check for updates.,ऑफ़लाइन प्रति। अपडेट जाँचने के लिए फिर जुड़ें।,,Pending,,Documentation Center UI
+Read explanation,Read explanation,विवरण पढ़ें,,Pending,,Documentation Center UI
+No published patches for this version.,No published patches for this version.,इस संस्करण के लिए कोई प्रकाशित पैच नहीं है।,,Pending,,Documentation Center UI
+Troubleshooting,Troubleshooting,समस्या निवारण,,Pending,,Documentation Center UI
+Documentation Center,Documentation Center,दस्तावेज़ केंद्र,,Pending,,Documentation Center UI
+How to use this page,How to use this page,इस पृष्ठ का उपयोग कैसे करें,,Pending,,Documentation Center UI
+Acknowledged,Acknowledged,पुष्टि की गई,,Pending,,Documentation Center UI
+Translation review pending.,Translation review pending.,अनुवाद की समीक्षा लंबित है।,,Pending,,Documentation Center UI
+Start tour,Start tour,टूर शुरू करें,,Pending,,Documentation Center UI
+Purpose,Purpose,उद्देश्य,,Pending,,Documentation Center UI
+Authored guides,Authored guides,लिखी गई मार्गदर्शिकाएँ,,Pending,,Documentation Center UI
+Known issues,Known issues,ज्ञात समस्याएँ,,Pending,,Documentation Center UI
+Patches,Patches,पैच,,Pending,,Documentation Center UI
+Select a guide or release to read.,Select a guide or release to read.,पढ़ने के लिए मार्गदर्शिका या रिलीज़ चुनें।,,Pending,,Documentation Center UI
+Change notice changed. Reload before continuing.,Change notice changed. Reload before continuing.,सूचना बदल गई है। आगे बढ़ने से पहले पुनः लोड करें।,,Pending,,Documentation Center UI
+Search documentation,Search documentation,दस्तावेज़ खोजें,,Pending,,Documentation Center UI
+"Page guides, releases, patches and changes.","Page guides, releases, patches and changes.","पृष्ठ मार्गदर्शिकाएँ, रिलीज़, पैच और बदलाव।",,Pending,,Documentation Center UI
+Showing English for this document revision.,Showing English for this document revision.,दस्तावेज़ का यह संशोधन अंग्रेज़ी में दिखाया जा रहा है।,,Pending,,Documentation Center UI
+Releases,Releases,रिलीज़,,Pending,,Documentation Center UI
+Could not save reading status.,Could not save reading status.,पढ़ने की स्थिति सहेजी नहीं जा सकी।,,Pending,,Documentation Center UI
+Reference guide; detailed workflow review pending.,Reference guide; detailed workflow review pending.,संदर्भ मार्गदर्शिका; विस्तृत कार्यप्रवाह समीक्षा लंबित है।,,Pending,,Documentation Center UI
+I understand,I understand,मैं समझ गया/गई,,Pending,,Documentation Center UI
+Change notice is unavailable.,Change notice is unavailable.,बदलाव सूचना उपलब्ध नहीं है।,,Pending,,Documentation Center UI
+Page guides,Page guides,पृष्ठ मार्गदर्शिकाएँ,,Pending,,Documentation Center UI
+Distinct from first set: an incident usually turns on when it last changed.,Distinct from first set: an incident usually turns on when it last changed.,पहली सेटिंग से अलग: घटना की जाँच में अंतिम बदलाव का समय महत्त्वपूर्ण है।,,Pending,,Sentinel monitoring
+Error Monitor,Error Monitor,त्रुटि मॉनिटर,,Pending,,Sentinel monitoring
+Review sanitized application incidents.,Review sanitized application incidents.,संवेदनशील जानकारी हटाकर ऐप की घटनाएँ देखें।,,Pending,,Sentinel monitoring
+This page encountered an error. Please retry.,This page encountered an error. Please retry.,इस पृष्ठ में त्रुटि हुई। कृपया फिर प्रयास करें।,,Pending,,Sentinel monitoring
+Invalid monitoring events.,Invalid monitoring events.,अमान्य निगरानी घटनाएँ।,,Pending,,Sentinel monitoring
+Monitoring rate limit reached.,Monitoring rate limit reached.,निगरानी की दर सीमा पूरी हुई।,,Pending,,Sentinel monitoring
+Monitoring administrator permission is required.,Monitoring administrator permission is required.,निगरानी प्रशासक की अनुमति आवश्यक है।,,Pending,,Sentinel monitoring
+Invalid monitoring filter.,Invalid monitoring filter.,अमान्य निगरानी फ़िल्टर।,,Pending,,Sentinel monitoring
+Monitoring incident is unavailable.,Monitoring incident is unavailable.,निगरानी घटना उपलब्ध नहीं है।,,Pending,,Sentinel monitoring
+Invalid monitoring update.,Invalid monitoring update.,अमान्य निगरानी अपडेट।,,Pending,,Sentinel monitoring
+Monitoring incident changed. Reload before saving.,Monitoring incident changed. Reload before saving.,घटना बदल गई है। सहेजने से पहले पुनः लोड करें।,,Pending,,Sentinel monitoring
+Could not load monitoring incidents.,Could not load monitoring incidents.,निगरानी घटनाएँ लोड नहीं हो सकीं।,,Pending,,Sentinel monitoring
+Could not update monitoring incident.,Could not update monitoring incident.,निगरानी घटना अपडेट नहीं हो सकी।,,Pending,,Sentinel monitoring
+No incidents found.,No incidents found.,कोई घटना नहीं मिली।,,Pending,,Sentinel monitoring
+Incident details,Incident details,घटना का विवरण,,Pending,,Sentinel monitoring
+Incident reference,Incident reference,घटना संदर्भ,,Pending,,Sentinel monitoring
+sentinel.status.new,New,नई,,Pending,,Sentinel monitoring
+sentinel.status.investigating,Investigating,जाँच जारी,,Pending,,Sentinel monitoring
+sentinel.status.resolved,Resolved,हल हो गई,,Pending,,Sentinel monitoring
+sentinel.code.runtime-error,Runtime error,रनटाइम त्रुटि,,Pending,,Sentinel monitoring
+sentinel.code.unhandled-rejection,Unhandled asynchronous failure,असंभाली असिंक्रोनस विफलता,,Pending,,Sentinel monitoring
+sentinel.code.render-error,Page rendering error,पृष्ठ रेंडर त्रुटि,,Pending,,Sentinel monitoring
+sentinel.code.request-failed,Service request failed,सेवा अनुरोध विफल,,Pending,,Sentinel monitoring
+sentinel.code.request-timeout,Request timed out,अनुरोध का समय समाप्त,,Pending,,Sentinel monitoring
+sentinel.code.operation-failed,Operation failed,कार्रवाई विफल,,Pending,,Sentinel monitoring
+sentinel.code.native-command-failed,Native command failed,डेस्कटॉप कमांड विफल,,Pending,,Sentinel monitoring
+sentinel.code.native-panic,Native application failure,मूल डेस्कटॉप ऐप विफलता,,Pending,,Sentinel monitoring
+View details,View details,विवरण देखें,,Pending,,Sentinel monitoring
+History,History,इतिहास,,Pending,,Sentinel monitoring
