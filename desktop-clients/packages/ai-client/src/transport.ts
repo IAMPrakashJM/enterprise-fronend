@@ -51,7 +51,7 @@ export async function dispatchAi(context: AiContext, useCase: AiUseCase): Promis
       useCaseId: useCase.id,
       promptId: useCase.promptId,
       pageId: context.pageId,
-      fields: context.fields.map((field) => ({ label: field.label, value: field.value })),
+      fields: context.fields.map((field) => ({ key: field.key, label: field.label, value: field.value })),
       ...(context.userInput ? { userInput: context.userInput } : {}),
     }),
   }).catch(() => null);

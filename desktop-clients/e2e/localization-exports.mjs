@@ -38,6 +38,6 @@ try {for(const language of ['en','ar','hi','ml']){
  await page.emulateMedia({media:'screen'});await page.keyboard.press('Escape');await open(page,'profit-loss');
  await page.getByRole('button',{name:t('Schedule'),exact:true}).click();
  assert.equal(await page.getByRole('button',{name:t('Create schedule'),exact:true}).isDisabled(),true);
- await page.getByText(t('Scheduled delivery is not connected. No report will be sent.'),{exact:true}).waitFor();
+ await page.getByText(t('Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.'),{exact:true}).waitFor();
  assert.deepEqual(errors,[]);await context.close();console.log(`PASS ${language}: real XLSX contents, invoice PDF/formatting, honest scheduling state`);
 }}finally{await browser.close();}

@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+import {createReportScheduler} from "./report-scheduler.mjs";
+import {reportRows} from "../desktop-clients/packages/erp-data/src/report-data.ts";
+import {createAuditStore} from "./audit-store.mjs";
+import {createCredentialStore} from "./credential-store.mjs";
+import {providerAllowed, credentialExpired, redactProviderContext, createUserLimiter} from "./ai-security.mjs";
+import {resolveAi} from "../desktop-clients/packages/ai-config/src/gates.ts";
+import {gatesForPage} from "../desktop-clients/packages/ai-config/src/policy.ts";
+import {homedir} from "node:os";
 import { allowedMethods } from "./route-methods.mjs";
 import {withMessageMetadata} from "./message-descriptors.mjs";
 /**
@@ -11,9 +19,8 @@ import {withMessageMetadata} from "./message-descriptors.mjs";
  * the whole point of that endpoint.
  *
  * NOT a security boundary. Passwords are compared in plaintext, tokens are random hex
- * with no expiry claim, and CORS is open to every origin — the web shell, the desktop
- * dev server and the packaged Tauri app are three different origins, and enumerating
- * them buys nothing for a demo. Do not model a real service on this file.
+ * with no expiry claim. CORS and AI egress are now constrained, but these demo
+ * accounts are not a production identity service. See the AI hardening ledger.
  *
  *   node server.mjs            # :3200
  *   PORT=4100 node server.mjs
@@ -30,7 +37,7 @@ import { createWorkspaceStore } from "./workspace-store.mjs";
 import { createRecordStore } from "./record-store.mjs";
 import { createServer } from "node:http";
 import { gzipSync } from "node:zlib";
-import { ADAPTERS, acceptKey, attachSocket, chooseProvider, mockSegment, transcribeOpenAI } from "./speech-gateway.mjs";
+import { ADAPTERS, acceptKey, attachSocket, chooseProvider, mockSegment } from "./speech-gateway.mjs";
 import { createHash, randomBytes } from "node:crypto";
 import { chmodSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -94,6 +101,10 @@ const sessions = new Map();
    point of "log out, log back in, your settings are still there".
    Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
 const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "data");
+const auditStore = createAuditStore(join(DATA_DIR,"audit.sqlite"), {retentionDays:Number(process.env.NEXORA_AUDIT_RETENTION_DAYS ?? 90)});
+auditStore.prune();
+setInterval(() => {try {auditStore.prune();} catch {console.error("Audit retention failed");}},3600000).unref();
+const perUserLimiter = createUserLimiter();
 const recordPanelsStore = createRecordPanelsStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"record-panels.json"));
 const workspaceStore = createWorkspaceStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "workspaces.json"));
 const recordStore = createRecordStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "records.json"));
@@ -116,6 +127,29 @@ const importStore = createImportStore(join(process.env.RECORD_DATA_DIR ?? DATA_D
     if(result.status!==200)throw new Error('Import row was not saved.');
   },
 });
+
+function reportAccess(user,spec) {
+  const current=ACCOUNTS.find(account=>account.user.id===user.id && account.user.tenantId===user.tenantId)?.user;
+  if(!current || !spec || !Object.hasOwn(PAGE_REGISTRY,spec.pageId) || PAGE_REGISTRY[spec.pageId].kind!=="reports")return false;
+  const navigation=applicationConfig.navigation(current,spec.productId);
+  return navigation.status===200 && navigation.body.pages.some(page=>page.id===spec.pageId);
+}
+const reportScheduler=createReportScheduler(join(DATA_DIR,"reports.sqlite"),{
+  audit:(...args)=>auditStore.append(...args),
+  render:async(user,spec)=>{
+    if(!reportAccess(user,spec))throw new Error("Report access revoked");
+    const current=ACCOUNTS.find(account=>account.user.id===user.id && account.user.tenantId===user.tenantId).user;
+    const locale=applicationConfig.localization(current,spec.productId,spec.language);
+    if(locale.status!==200)throw new Error("Report language unavailable");
+    const messages=locale.body.messages;
+    const t=source=>messages[source]??source;
+    const quote=value=>'"'+String(value).replace(/"/g,'""')+'"';
+    const headings=["Branch","Current period","Previous period","Budget / target","Variance","Contribution"];
+    const numeric=new Intl.NumberFormat({en:"en-US",ar:"ar",hi:"hi-IN",ml:"ml-IN"}[spec.language],{maximumFractionDigits:2});
+    return "\uFEFF"+[headings.map(t).map(quote).join(','),...reportRows.map(row=>[row.dimension,...[row.current,row.previous,row.budget,row.variance,row.contribution].map(value=>numeric.format(value))].map(quote).join(','))].join('\r\n');
+  }
+});
+setInterval(()=>{void reportScheduler.tick().catch(()=>console.error("Report worker failed"));},5000).unref();
 
 const PREFS_FILE = join(DATA_DIR, "preferences.json");
 
@@ -388,12 +422,8 @@ function loadPolicies() {
 
 const policies = loadPolicies();
 
-/* AI configuration: what an administrator sets. Same stand-in caveats as the
-   policy store above, plus one that matters more.
-   THERE IS NO CREDENTIAL HERE, and there is no code path that stores one. This
-   process has no vault, no encryption at rest and open CORS; a provider token
-   written into data/ would be a token in a world-readable file. The endpoint
-   that would accept one answers 501 instead. */
+/* Configuration and encrypted provider credentials are separate stores. A config
+   response never contains secret material. Authentication remains a demo adapter. */
 const AI_CONFIG_FILE = join(DATA_DIR, "ai-config.json");
 const AI_CONFIG_SEED = join(dirname(fileURLToPath(import.meta.url)), "ai-config.example.json");
 
@@ -424,45 +454,19 @@ function saveAiConfig() {
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Provider credential storage.
-
-   This exists at the operator's explicit instruction, after the trade-off was
-   put to them and restated: this process has no vault, no encryption at rest
-   and open CORS, so the secret lives in a 0600 file under data/ and is only as
-   safe as this machine and this account. It is a demo decision. Spec sections
-   6.3 and 12 still describe what a real deployment owes here, and nothing below
-   discharges that.
-
-   What survived from the write-only design, because keeping it cost nothing:
-     - no endpoint returns the value,
-     - no response shape has a field that could carry it,
-     - exactly one function reads `secret`, and it hands it to the provider.
-   --------------------------------------------------------------------------- */
+/* Provider credentials are encrypted with AES-256-GCM. The master key is a
+   separate operator-owned file, not a managed vault. Existing plaintext stores
+   migrate on startup. Historical backups need separate operator retention review. */
 const CREDENTIAL_FILE = join(DATA_DIR, "ai-credential.json");
 
-function loadCredentials() {
-  try {
-    return JSON.parse(readFileSync(CREDENTIAL_FILE, "utf8"));
-  } catch {
-    return {};
-  }
-}
-
-const credentials = loadCredentials();
-
-function saveCredentials() {
-  /* `mode` only applies when the file is CREATED, so the chmod is not
-     redundant: without it a file that already existed keeps whatever
-     permissions it had, which is the case that actually matters on a box where
-     something wrote it once before this code did. */
-  writeFileSync(CREDENTIAL_FILE, JSON.stringify(credentials, null, 2), { mode: 0o600 });
-  try {
-    chmodSync(CREDENTIAL_FILE, 0o600);
-  } catch {
-    console.warn("[ai] could not chmod the credential file to 0600");
-  }
-}
+// The master key is kept outside the repository and data backups. Operators must
+// back it up separately; losing it makes the credential store unreadable.
+const masterKeyFile = process.env.NEXORA_KEY_FILE ?? join(homedir(), ".config/nexora/provider-master.key");
+mkdirSync(dirname(masterKeyFile),{recursive:true,mode:0o700});
+try {writeFileSync(masterKeyFile,randomBytes(32),{flag:"wx",mode:0o600});} catch(error) {if(error.code!=="EEXIST")throw error;}
+const credentialStore = createCredentialStore(CREDENTIAL_FILE,masterKeyFile);
+const credentials = credentialStore.load();
+function saveCredentials() { credentialStore.save(credentials); }
 
 /* Takes a TENANT, never a secret, and returns only values that cannot be
    reversed: the last four characters and a hash prefix. The shape is byte for
@@ -492,7 +496,7 @@ function credentialStatus(tenantId, scope) {
   /* Field by field rather than a spread of `held`. A spread would put `secret`
      into every response the day someone adds a field and forgets to omit it. */
   return {
-    configured: true,
+    configured: !credentialExpired(held),
     hint: held.hint ?? null,
     fingerprint: held.fingerprint ?? null,
     setBy: held.setBy ?? null,
@@ -688,6 +692,7 @@ async function callProvider(config, secret, messages) {
   if (!endpoint || !model || model === "unset") {
     return { ok: false, status: 409, error: "No provider or model is configured.", detail: "Set provider.endpoint and model.id through PUT /ai/config first." };
   }
+  if (!providerAllowed(endpoint)) return {ok:false,status:403,error:"AI provider is not approved."};
   let response;
   try {
     response = await fetch(`${endpoint}/chat/completions`, {
@@ -702,6 +707,7 @@ async function callProvider(config, secret, messages) {
          accounted for rather than hidden. */
       body: JSON.stringify({ model, messages, max_tokens: 2000, temperature: 0.2 }),
       signal: AbortSignal.timeout(45000),
+      redirect: "error",
     });
   } catch (cause) {
     /* The provider's own message, not the request that produced it: a thrown
@@ -734,8 +740,15 @@ async function callProvider(config, secret, messages) {
   return { ok: true, text: text.trim(), model: payload?.model ?? model, usage: payload?.usage ?? null };
 }
 
+const allowedOrigins = new Set((process.env.NEXORA_ALLOWED_ORIGINS ?? [
+  "https://front-design.pepbits.com","https://desktop.front-design.pepbits.com",
+  "http://localhost:3100","http://localhost:3101","http://localhost:1420",
+  "http://127.0.0.1:3100","http://127.0.0.1:3101","http://127.0.0.1:3109","http://127.0.0.1:3119",
+  "tauri://localhost","http://tauri.localhost","https://tauri.localhost"
+].join(",")).split(",").map(value=>value.trim()).filter(Boolean));
+
 const CORS = {
-  "Access-Control-Allow-Origin": "*",
+  "Vary": "Origin",
     /* PATCH is here because a browser silently drops a method the preflight does
      not name: the request never leaves, nothing is logged, and the only symptom
      is a cell that will not save. */
@@ -746,6 +759,13 @@ const CORS = {
 };
 
 function send(res, status, body, extraHeaders) {
+  if (res.auditContext) {
+    const {user,action,metadata} = res.auditContext;
+    res.auditContext = null;
+    try {auditStore.append(user,action,status,metadata);} catch {
+      status=503;body={error:"Audit storage is unavailable."};
+    }
+  }
   const payload = body === undefined ? "" : JSON.stringify(withMessageMetadata(body));
   res.writeHead(status, {
     ...CORS,
@@ -767,7 +787,13 @@ async function readJson(req, limit = 16_384) {
     chunks.push(chunk);
   }
   if (!chunks.length) return {};
-  return JSON.parse(Buffer.concat(chunks).toString("utf8"));
+  const body=JSON.parse(Buffer.concat(chunks).toString("utf8"));
+  if(req.auditContext && body && typeof body==="object") {
+    req.auditContext.metadata={pageId:body.pageId,useCaseId:body.useCaseId,
+      filterKeys:[...Object.keys(body.safeFilters??{}),...Object.keys(body.sensitiveFilters??{})],
+      fieldKeys:Array.isArray(body.fields)?body.fields.map(field=>field?.key):[]};
+  }
+  return body;
 }
 
 function bearer(req) {
@@ -778,10 +804,18 @@ function bearer(req) {
 const server = createServer(async (req, res) => {
   const requestUrl = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
   const { pathname } = requestUrl;
+  const origin=req.headers.origin;
+  if(origin && !allowedOrigins.has(origin)) return send(res,403,{error:"Origin is not allowed."});
+  if(origin)res.setHeader("Access-Control-Allow-Origin",origin);
+  const auditUser = sessions.get(bearer(req));
+  if(auditUser && /^\/(ai|exports|worklists|views|report-schedules)(?:\/|$)/.test(pathname)) {
+    req.auditContext=res.auditContext={user:auditUser,action:`${req.method}:${pathname.split('/').slice(0,pathname.startsWith("/ai/")?3:2).join('/')}`,metadata:{}};
+  }
+  try {
+  if(res.auditContext)auditStore.append(auditUser,"request.admitted",202);
 
   if (req.method === "OPTIONS") {
-    res.writeHead(204, CORS);
-    return res.end();
+    return send(res,204);
   }
 
   const allowed = allowedMethods(pathname);
@@ -822,8 +856,7 @@ const server = createServer(async (req, res) => {
   if (req.method === "POST" && pathname === "/auth/logout") {
     const token = bearer(req);
     if (token) sessions.delete(token);
-    res.writeHead(204, CORS);
-    return res.end();
+    return send(res,204);
   }
 
   if (pathname === "/records" && req.method === "GET") {
@@ -909,8 +942,7 @@ const server = createServer(async (req, res) => {
         return send(res, 500, { error: "Could not persist preferences." });
       }
       console.log(`[prefs] ${user.id} saved ${Object.keys(next).length} override(s)`);
-      res.writeHead(204, CORS);
-      return res.end();
+      return send(res,204);
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /preferences.` });
@@ -950,8 +982,7 @@ const server = createServer(async (req, res) => {
         console.error("[layouts] write failed:", error.message);
         return send(res, 500, { error: "Could not persist the layout." });
       }
-      res.writeHead(204, CORS);
-      return res.end();
+      return send(res,204);
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /layouts.` });
@@ -1195,6 +1226,37 @@ const server = createServer(async (req, res) => {
    * claim it exported nothing sensitive, and believing it would record a clean
    * line for the export that mattered most.
    */
+  if (pathname === "/report-schedules") {
+    const user=sessions.get(bearer(req));
+    if(!user)return send(res,401,{error:"Not signed in."});
+    const body=await readJson(req).catch(()=>null);
+    if(!body || !reportAccess(user,body))return send(res,403,{error:"Report is not available for this account."});
+    if(body.action==="list")return send(res,200,reportScheduler.list(user,body.productId,body.pageId));
+    if(body.action==="create") {
+      try {const id=reportScheduler.create(user,body);return send(res,201,{id});}
+      catch {return send(res,400,{error:"Check the schedule name, frequency and start time."});}
+    }
+    const listings=reportScheduler.list(user,body.productId,body.pageId);
+    if(body.action==="toggle" && typeof body.enabled==="boolean" && listings.schedules.some(row=>row.id===body.id)) {
+      return send(res,200,{updated:reportScheduler.enabled(user,body.id,body.enabled)});
+    }
+    if(body.action==="retry" && listings.deliveries.some(row=>row.id===body.id)) {
+      return send(res,200,{updated:reportScheduler.retry(user,body.id)});
+    }
+    if(body.action==="download" && listings.deliveries.some(row=>row.id===body.id)) {
+      const held=reportScheduler.download(user,body.id);
+      if(!held)return send(res,404,{error:"Report delivery is not ready."});
+      auditStore.append(user,"report.download",200,{jobId:body.id,pageId:body.pageId,rows:reportRows.length});
+      return send(res,200,{filename:`report-${body.id}.csv`,content:held.content});
+    }
+    return send(res,400,{error:"Unknown report schedule action."});
+  }
+  if (pathname === "/audit") {
+    const user=sessions.get(bearer(req));
+    if(!user)return send(res,401,{error:"Not signed in."});
+    if(refuseAdminWrite(user))return send(res,403,refuseAdminWrite(user));
+    return send(res,200,{events:auditStore.list(user.tenantId,{before:requestUrl.searchParams.get("before"),limit:requestUrl.searchParams.get("limit")})});
+  }
   if (pathname === "/exports") {
     if (req.method !== "POST") return send(res, 405, { error: `${req.method} not allowed on /exports.` });
     const token = bearer(req);
@@ -1216,6 +1278,7 @@ const server = createServer(async (req, res) => {
        because there was never a file. */
     const via = body?.via === "print" ? "print" : "file";
 
+    res.auditContext.metadata={pageId,columns,rows:Math.max(0,Math.floor(rows)),withheld,via};
     const summary = declared.map((note) => `${note.key}:${note.classification}`).join(",") || "none";
     console.log(`[export] ${user.email ?? user.id} tenant=${user.tenantId} via=${via} page=${pageId} rows=${rows} columns=${columns.length} sensitive=[${summary}]${withheld.length ? ` withheld=[${withheld.join(",")}]` : ""}`);
 
@@ -1305,6 +1368,9 @@ const server = createServer(async (req, res) => {
       const rateRefusal = refuseForRate(tenantId);
       if (rateRefusal) return send(res, rateRefusal.status, rateRefusal.body, { "Retry-After": String(rateRefusal.retryAfter) });
       admit(tenantId);
+      if (!perUserLimiter.admit(user))return send(res,429,{error:"Rate limit reached."},{"Retry-After":"60"});
+      if(credentialExpired(held))return send(res,403,{error:"Provider credential has expired. Rotate it before use."});
+      auditStore.append(user,"ai.verify-attempt",202);
       const result = await callProvider(aiConfig[tenantId], held.secret, [{ role: "user", content: "Reply with the single word: ok" }]);
       recordTokens(tenantId, result.usage?.total_tokens);
       /* Recorded so a bad key is diagnosable from the admin screen without
@@ -1344,6 +1410,8 @@ const server = createServer(async (req, res) => {
         }
         const storeKey = credentialKey(tenantId, scope);
         const existing = credentials[storeKey];
+        // Re-entering the same secret must not renew its rotation deadline.
+        if(existing?.secret===secret)return send(res,200,credentialStatus(tenantId,scope));
         credentials[storeKey] = {
           secret,
           hint: secret.slice(-4),
@@ -1370,8 +1438,7 @@ const server = createServer(async (req, res) => {
         delete credentials[credentialKey(tenantId, scope)];
         saveCredentials();
         console.log(`[ai] credential removed for ${credentialKey(tenantId, scope)} by ${user.email ?? user.id}`);
-        res.writeHead(204, CORS);
-        return res.end();
+        return send(res,204);
       }
       return send(res, 405, { error: `${req.method} not allowed on /ai/config/credential.` });
     }
@@ -1416,8 +1483,7 @@ const server = createServer(async (req, res) => {
       aiConfig[tenantId] = { ...(aiConfig[tenantId] ?? {}), ...body };
       saveAiConfig();
       console.log(`[ai] config updated for ${tenantId} by ${user.email ?? user.id}: ${Object.keys(body).join(", ")}`);
-      res.writeHead(204, CORS);
-      return res.end();
+      return send(res,204);
     }
 
     return send(res, 405, { error: `${req.method} not allowed on /ai/config.` });
@@ -1455,6 +1521,7 @@ const server = createServer(async (req, res) => {
     }
     admit(tenantId);
 
+    if (!perUserLimiter.admit(user))return send(res,429,{error:"Rate limit reached."},{"Retry-After":"60"});
     const system = PROMPT_TEXT[body?.promptId];
     if (!system) {
       return send(res, 400, { error: "Unknown prompt.", detail: `No prompt is registered as ${body?.promptId ?? "(none)"}.` });
@@ -1464,15 +1531,24 @@ const server = createServer(async (req, res) => {
       return send(res, 409, { error: "No provider credential is configured.", detail: "An administrator must set one through PUT /ai/config/credential." });
     }
 
+    if(credentialExpired(held))return send(res,403,{error:"Provider credential has expired. Rotate it before use."});
+    const page=PAGE_REGISTRY[body.pageId];
+    const policy=policies[tenantId];
+    if(!page || !policy || !resolveAi(gatesForPage({...policy,tenantId},{pageId:page.id,module:page.module,build:page.ai},true),body.useCaseId).allowed)
+      return send(res,403,{error:"AI access is disabled for this request."});
+    let redactedFields;
+    try {redactedFields=redactProviderContext(body);} catch {return send(res,403,{error:"AI context is not approved for this provider."});}
     const config = aiConfig[tenantId];
     const limit = config?.limits?.maxContextFields ?? 24;
-    const fields = Array.isArray(body?.fields) ? body.fields.slice(0, limit) : [];
+    const fields = redactedFields.slice(0, limit);
     if (!fields.length) {
       return send(res, 400, { error: "Nothing to send.", detail: "The assembled context held no fields." });
     }
 
     const lines = fields.map((f) => `${String(f?.label ?? "").slice(0, 120)}: ${String(f?.value ?? "").slice(0, 600)}`);
     const userInput = typeof body?.userInput === "string" && body.userInput.trim() ? `\n\nThe user asks: ${body.userInput.trim().slice(0, 500)}` : "";
+    res.auditContext.metadata={pageId:body.pageId,useCaseId:body.useCaseId,fieldKeys:fields.map(field=>field.key),provider:config?.provider?.id};
+    auditStore.append(user,"ai.egress-attempt",202,res.auditContext.metadata);
     const result = await callProvider(config, held.secret, [
       { role: "system", content: system },
       { role: "user", content: `Page: ${String(body?.pageId ?? "unknown")}\n\nFields:\n${lines.join("\n")}${userInput}` },
@@ -1483,6 +1559,7 @@ const server = createServer(async (req, res) => {
        no log rotation, so anything written is written forever. */
     console.log(`[ai] dispatch ${body.useCaseId} on ${body.pageId} by ${user.email ?? user.id}: ${result.ok ? "ok" : "failed"} (${fields.length} fields${result.usage ? `, ${result.usage.total_tokens} tokens` : ""})`);
 
+    if(result.usage?.total_tokens)res.auditContext.metadata.tokens=result.usage.total_tokens;
     if (!result.ok) {
       held.lastError = `${result.error} ${result.detail ?? ""}`.trim();
       saveCredentials();
@@ -1525,6 +1602,10 @@ const server = createServer(async (req, res) => {
   }
 
   send(res, 404, { error: `No route for ${req.method} ${pathname}.` });
+  } catch {
+    if(!res.headersSent)send(res,503,{error:"Service is temporarily unavailable."});
+    else res.end();
+  }
 });
 
 /* ---------------------------------------------------------------------------
@@ -1546,6 +1627,7 @@ const speechSessions = new Map();
 
 server.on("upgrade", (req, socket, head) => {
   const { pathname } = new URL(req.url, `http://${req.headers.host}`);
+  if(req.headers.origin && !allowedOrigins.has(req.headers.origin)){socket.destroy();return;}
   const key = req.headers["sec-websocket-key"];
   if (pathname !== "/speech" || !key) { socket.destroy(); return; }
 
@@ -1628,19 +1710,8 @@ server.on("upgrade", (req, socket, head) => {
       session.sequence = sequence;
 
       if (session.provider.id === "openai") {
-        const held = credentials[credentialKey(session.user.tenantId, "speech:openai")];
-        if (!held) { reply({ type: "ERROR", error: "The OpenAI speech credential is missing." }); return; }
-        reply({ type: "TRANSCRIPT_PARTIAL", sequence, speaker: "SPEAKER", text: "transcribing…" });
-        const result = await transcribeOpenAI({
-          audio: chunk, secret: held.secret, model: session.provider.model, language: session.language, mime: session.mime,
-        });
-        if (!result.ok) { send({ type: "ERROR", error: result.error }); return; }
-        /* An empty transcript is silence, not a failure. Emitting a blank
-           segment would pad the record with nothing. */
-        if (!result.text) { send({ type: "TRANSCRIPT_DROPPED", sequence, reason: "no speech detected" }); return; }
-        send({ type: "TRANSCRIPT_FINAL", sequence, speaker: "SPEAKER", text: result.text, startTime: Number(at.toFixed(2)), endTime: Number((at + 10).toFixed(2)) });
-        /* Metadata only — never the text. */
-        console.log(`[speech] segment session=${session.id} provider=openai seq=${sequence} ${chunk.length} bytes ${result.tokens ?? "?"} tokens`);
+        auditStore.append(session.user,"speech.refused",403,{provider:"openai"});
+        reply({type:"ERROR",error:"Clinical speech delivery requires an approved provider contract."});
         return;
       }
 

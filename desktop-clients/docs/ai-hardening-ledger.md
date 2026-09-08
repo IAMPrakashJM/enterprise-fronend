@@ -29,74 +29,53 @@ These are real properties, enforced and checked.
 | D9 | The tenant comes from the session, never from a request body | `dummy-api` | `verify:ai-hardening` |
 | D10 | Every worklist column is classified; credentials and unclassified columns leave as neither file nor printed sheet; nothing sensitive leaves as a document unannounced | `erp-config/src/export-policy.ts`, `tokens.css` | `verify:export-safety` |
 
+## Server controls added — 8 September 2026
+
+| Original finding | Current implementation | Remaining boundary |
+| --- | --- | --- |
+| N2 — encryption at rest | AES-256-GCM credential file; separate 32-byte master key; plaintext migration; corruption and wrong keys stop startup | Master key is a host file, not KMS. Historical plaintext backups must be handled separately. Audit/report databases are not encrypted by this credential control. |
+| N3 — rotation | Provider credentials expire after 90 days; dispatch and verification refuse expired credentials | Immediate replacement; no managed rotation or overlap window. Previously exposed provider keys still require revocation at the provider. |
+| N4 — audit | SQLite WAL with FULL synchronization, tenant query scope, metadata allowlist and 90-day retention; admission, response, export/print, provider-attempt and report events | Single host; no external immutable archive, disaster recovery service or provider cost pricing. Events record attempts, not proof that a browser saved or printed a file. |
+| N5 — server egress | Stable field keys, registered use-case/prompt pairing, server gates, canonical labels, numeric operational values, canonical demo report branch names, or fully masked values only; unrestricted free text and clinical dispatch refused | This deliberately narrows usable AI functionality. It is not clinical de-identification. A numeric value supplied under a misleading operational key cannot be semantically validated by this demo service. |
+| N6 — provider allowlist | Exact HTTPS OpenAI/DeepSeek base URLs; redirects refused before credentials can follow them | These providers are allowed for restricted demo context only; allowlisting is not a clinical contract. |
+| N8 — CORS | Explicit origins for the two public shells, documented local development origins and Tauri; rejected origins also blocked at WebSocket upgrade | CORS is a browser restriction, not authentication. Requests without an Origin still require endpoint authentication. |
+| N10 — per-user limits | Ten admitted requests/minute per tenant/user, inside the existing tenant request/token limits; verification shares both | Per-user minute windows are process-local; no distributed or per-user daily token budget. |
+
+Clinical speech is refused before any external transcription call. The built-in
+mock remains available. No environment flag claims that a contract exists.
+`security-storage.test.mjs` and `security-http.test.mjs` exercise the new controls.
+
 ## Not discharged
 
-Each carries what it actually is, not a euphemism.
+- **N1 — managed key vault:** the encryption master key remains readable by the
+  service account. A production KMS/Vault integration needs the selected service,
+  its identity, access policy and recovery procedure.
+- **N7 — approved clinical provider:** no BAA, jurisdiction or region approval
+  has been supplied. Clinical provider egress remains disabled.
+- **N9 — production authorization:** demo usernames/passwords and session roles
+  remain. They must be replaced by the application's trusted identity service;
+  renaming the current role comparison would not resolve this finding.
+- The production boundaries in the table remain open, including semantic
+  validation of provider data, managed rotation, off-host audit retention and
+  distributed limits. The new controls do not certify this demo backend for
+  real patient data.
 
-| # | Gap | What exists now | What it would take |
-|---|---|---|---|
-| N1 | **No key vault.** The provider secret is plaintext JSON on disk. | `0600` file, one process | KMS or Vault; the process uses the key without being able to read it out of storage |
-| N2 | **No encryption at rest.** | none | Envelope encryption, keys held elsewhere |
-| N3 | **No key rotation policy.** `rotatedAt` is recorded, never enforced. | a timestamp field | Expiry, forced rotation, overlap window |
-| N4 | **No audit store.** | one `console.log` line per dispatch, search, export and print | Durable, queryable, retained; who / what / which record / which provider / cost / refusals |
-| N5 | **No SERVER-SIDE redaction before egress to a provider.** The client masks identifiers and refuses to send what it did not mask; the service re-checks nothing, and free text still goes as typed. | client-side masking by classification, guarded at dispatch; search logging redacts by key; the service strips nothing | Server-side identifier stripping before any provider call, per data class — a client-side rule protects the honest path, not a modified one |
-| N6 | **No provider allowlist.** Any endpoint an admin configures is obeyed. | free-text endpoint | Approved providers per data class; clinical use cases refused to unapproved ones |
-| N7 | **No PHI-approved provider.** No BAA, no jurisdiction guarantee. | DeepSeek / OpenAI | A provider under contract, and a region that satisfies the tenant's law |
-| N8 | **Open CORS.** `Access-Control-Allow-Origin: *`. | any origin may call the API | Origin allowlist per deployment |
-| N9 | **Role check is a demo.** `role === "enterprise-admin"`, from the session object. | one string comparison | The platform's own authorisation |
-| N10 | **Rate limits are per tenant only.** One user can exhaust a tenant's budget. | per-tenant window | Per-user limits inside the tenant limit |
+## Operations
 
-### N5, narrowed twice
+The default credential key is `~/.config/nexora/provider-master.key`. Set
+`NEXORA_KEY_FILE` to use an operator-managed 32-byte file. New keys are created
+with mode 0600, directories with mode 0700. Keep the key outside source control
+and separate from data backups. The service must stop if a key cannot decrypt
+an existing store; it must never silently replace it with empty credentials.
 
-**Search logging.** `POST /worklists/search` logs the operational filters by
-value and the sensitive ones **by key only** — `status=Active +redacted[query]`.
-That is §14's redaction table, applied where searches are logged.
+Audit events are stored in `NEXORA_DATA_DIR/audit.sqlite`. The default retention
+is 90 days, configurable with positive integer `NEXORA_AUDIT_RETENTION_DAYS`.
+`GET /audit?before=<id>&limit=50` requires an enterprise-admin session and returns
+only that tenant's events, newest first. Audit records omit field values, prompt
+text, responses and secrets. This is durable single-host storage, with the demo
+identity caveat above; it is not an external production audit platform.
 
-**Client-side egress.** Redaction now reads the same classification registry as
-the URL policy, so a field cannot be PHI to one and ordinary to the other. It
-had been exactly that: the registry classified `patientName` as PHI and the
-redaction rules matched only structured identifiers, so a patient name — and,
-on the clinical use cases that actually read them, the treating clinician and
-the admission date — reached the provider in full. Nine keys were affected.
-`dispatchAi` now re-checks the classification of every field on the way out and
-**refuses** rather than repairs: arriving unmasked means assembly was bypassed,
-and masking it quietly would hide the defect while leaving the transparency
-panel describing a request that no longer exists. `verify:ai-egress` fails if a
-use case reads a key nobody classified, if a general use case reads a clinical
-or identifying one, or if the guard stops catching a hand-built context.
-
-**File export.** A worklist writes its visible columns to a file, and a file is
-the one destination nothing here can take back. `credential` and `unclassified`
-columns are refused outright; `phi`, `pii` and `clinical` are exported — a ward
-list with the names removed is not a ward list, and the person exporting is
-already reading it on screen — but only after being told what the file will hold,
-and the export is recorded by column key. Thirty-five worklist columns were
-unclassified when that policy was written, `patient` (an MRN) among them.
-
-**Print.** Paper is the same policy over a destination nothing can recall, and
-the one path script does not control: a browser-initiated print cannot be
-cancelled, so `beforeprint` records it and nothing more. What governs Ctrl+P is
-the document — a stylesheet that REMOVES a refused class rather than hiding it,
-and a provenance banner that is already in the page. The deliberate "Print this
-list" action asks the same question exporting does.
-
-The record for both is a `console.log` line like the other two, which is N4
-rather than a separate gap. A file or a sheet is beyond every control in this
-list the moment it exists; the confirmation, the banner and the audit line are
-the whole of what remains.
-
-**What is still open, and it is the important half.** All of that runs in the
-browser. A client-side rule protects the honest path; it does not protect
-against a modified client, and the service accepts whatever arrives. Free text
-the user types is still sent as typed — deliberately, because silently editing
-someone's own words would make the panel a lie, and the alternative is a server
-that can see what it was sent. Nothing on the server strips identifiers before
-calling a provider, and a provider is a third party where a log line is our own.
-The row stays open.
-
-## What this means in one sentence
-
-The **control plane** — which gates exist, how they resolve, what a use case may
-read, what the client may ask for — is real and enforced. The **infrastructure
-under it** is a prototype, and every row in the second table is a reason not to
-put a real patient's record through it.
+Set `NEXORA_ALLOWED_ORIGINS` to an exact comma-separated deployment list. The
+default list includes the two public demo hosts and explicit localhost/Tauri
+origins needed by the test environments. Production deployments should provide
+only their actual application origins.

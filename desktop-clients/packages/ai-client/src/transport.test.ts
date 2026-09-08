@@ -62,11 +62,11 @@ describe("what is sent", () => {
     expect(JSON.stringify(body)).not.toMatch(/sk-|Bearer|Authorization/i);
   });
 
-  test("sends the fields as label and value only", async () => {
+  test("sends stable field keys so the server can enforce classification", async () => {
     await dispatchAi(context, useCase);
     expect(sentBody().fields).toEqual([
-      { label: "Id", value: "C-100" },
-      { label: "Email", value: "a••••@nexora.ae" },
+      { key: "id", label: "Id", value: "C-100" },
+      { key: "email", label: "Email", value: "a••••@nexora.ae" },
     ]);
   });
 

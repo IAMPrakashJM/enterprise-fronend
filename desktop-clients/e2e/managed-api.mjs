@@ -12,7 +12,7 @@ export async function startApi(api,suite){
  const data=mkdtempSync(join(tmpdir(),'nexora-suite-'));
  const artifacts=process.env.E2E_ARTIFACTS??join(tmpdir(),'nexora-suite-artifacts');mkdirSync(artifacts,{recursive:true});
  const log=openSync(join(artifacts,`${suite}.api.log`),'w');
- const child=spawn(process.execPath,[new URL('../../dummy-api/server.mjs',import.meta.url).pathname],{env:{...process.env,PORT:String(port),NEXORA_DATA_DIR:data,RECORD_DATA_DIR:data},stdio:['ignore',log,log]});
+ const child=spawn(process.execPath,[new URL('../../dummy-api/server.mjs',import.meta.url).pathname],{env:{...process.env,PORT:String(port),NEXORA_DATA_DIR:data,RECORD_DATA_DIR:data,NEXORA_KEY_FILE:join(data,"test-master.key")},stdio:['ignore',log,log]});
  closeSync(log);
  const stop=async()=>{if(child.exitCode===null&&child.signalCode===null){const exited=once(child,'exit');child.kill('SIGTERM');await exited;}rmSync(data,{recursive:true,force:true});};
  try{for(let attempt=0;attempt<100;attempt++){

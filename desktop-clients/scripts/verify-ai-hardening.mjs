@@ -72,81 +72,18 @@ check(ignored, "D7 the credential file is gitignored");
 check(!/tenantId\s*=\s*body[?.]/.test(withoutComments(server)) && !/body\.tenantId/.test(withoutComments(server)),
   "D9 the tenant is never read from a request body");
 
-/* ---- gaps the ledger claims are still real ----------------------------- */
-console.log("\n  gaps the ledger declares — still true?\n");
-
-const declared = [
-  {
-    id: "N1/N2",
-    claim: "the provider secret is plaintext on disk",
-    /* If this ever stops being true, the ledger is overstating the risk and
-       should say so. */
-    stillTrue: () => {
-      if (!existsSync(CREDENTIAL)) return true;
-      const held = JSON.parse(readFileSync(CREDENTIAL, "utf8"));
-      return Object.values(held).some((entry) => typeof entry?.secret === "string" && entry.secret.length > 0);
-    },
-  },
-  {
-    id: "N4",
-    claim: "audit is console.log, not a store",
-    stillTrue: () => /console\.log\(`\[ai\]/.test(server) && !/auditStore|AUDIT_FILE|appendAudit/.test(withoutComments(server)),
-  },
-  {
-    id: "N5",
-    claim: "nothing is redacted before egress to a provider",
-    /* Scoped to the AI dispatch path, not the whole file. Search logging DOES
-       redact by key now, and a whole-file match reported N5 as closed on the
-       strength of it — which was half true and therefore misleading. The open
-       half is that nothing strips identifiers from what reaches a provider.
-
-       Comments are stripped too: the word "redacted" appears in one describing
-       what the client assembles, and matching prose once reported this gap as
-       closed when it had never been open. */
-    stillTrue: () => {
-      const source = withoutComments(server);
-      const dispatch = source.slice(source.indexOf('pathname === "/ai/dispatch"'));
-      return !/redact|scrub|deidentif/i.test(dispatch);
-    },
-  },
-  {
-    id: "N6",
-    claim: "any configured provider endpoint is obeyed",
-    stillTrue: () => !/APPROVED_PROVIDERS|providerAllowlist/.test(withoutComments(server)),
-  },
-  {
-    id: "N8",
-    claim: 'CORS is "*"',
-    stillTrue: () => /"Access-Control-Allow-Origin": "\*"/.test(server),
-  },
-  {
-    id: "N9",
-    claim: "the role check is one string comparison",
-    stillTrue: () => /role === "enterprise-admin"/.test(server),
-  },
-  {
-    id: "N10",
-    claim: "rate limits are per tenant only",
-    stillTrue: () => !/perUser|userWindow|limitFor\(user/.test(withoutComments(server)),
-  },
-];
-
-for (const gap of declared) {
-  const real = gap.stillTrue();
-  const mentioned = ledger.includes(gap.id.split("/")[0]);
-  check(mentioned, `${gap.id} is in the ledger`);
-  /* The interesting direction. A gap that has been closed and not recorded
-     leaves the ledger claiming a risk that no longer exists, and a ledger that
-     overstates is one people stop reading. */
-  check(real, `${gap.id} ${gap.claim}`, real ? "" : "→ CLOSED? update the ledger");
-}
-
-console.log("\n  the ledger does not claim more than it should\n");
-check(!/all clear|fully hardened|production ready|no known gaps/i.test(ledger),
-  "the ledger claims no clean bill of health");
-check(/Not discharged/.test(ledger), "the ledger has a not-discharged section");
-
-console.log(failed === 0
-  ? "\n  The ledger matches the code. Ten gaps declared, ten still real.\n"
-  : `\n  ${failed} check(s) failed — the ledger and the code disagree.\n`);
-process.exit(failed === 0 ? 0 : 1);
+/* Structural guards complement API behavior tests, run separately by test:api. */
+const security = readFileSync(join(REPO,"dummy-api/ai-security.mjs"),"utf8");
+const storage = readFileSync(join(REPO,"dummy-api/credential-store.mjs"),"utf8");
+const audit = readFileSync(join(REPO,"dummy-api/audit-store.mjs"),"utf8");
+check(/createCredentialStore\(CREDENTIAL_FILE,masterKeyFile\)/.test(server) && /aes-256-gcm/.test(storage), "N2 encrypted credential store is wired");
+check(/credentialExpired\(held\)/.test(server) && /90\*86400000/.test(security), "N3 credential expiry is enforced");
+check(/auditStore\.append/.test(server) && /synchronous=FULL/.test(audit), "N4 durable audit store is wired");
+check(/redactProviderContext\(body\)/.test(server) && /useCase.category === 'clinical'/.test(security), "N5 server validates context and refuses clinical egress");
+check(/providerAllowed\(endpoint\)/.test(server) && /redirect: "error"/.test(server), "N6 provider allowlist and redirect refusal are wired");
+check(!/"Access-Control-Allow-Origin": "\*"/.test(server) && /allowedOrigins\.has/.test(server), "N8 explicit origins replace wildcard CORS");
+check(/perUserLimiter\.admit\(user\)/.test(server), "N10 per-user limiter is wired");
+for(const id of ["N1", "N7", "N9"])check(ledger.slice(ledger.indexOf("## Not discharged")).includes(id), `${id} external dependency stays open`);
+check(/Not discharged/.test(ledger), "ledger retains production boundaries");
+console.log(failed ? `${failed} hardening checks failed` : "Hardening controls and outstanding external dependencies match the ledger.");
+process.exitCode=failed?1:0;

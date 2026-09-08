@@ -2996,3 +2996,20 @@ Costing amounts must be non-negative numbers; percentages must be between 0 and 
 The costing export schema requires review before downloading.,The costing export schema requires review before downloading.,يتطلب مخطط تصدير التكاليف مراجعة قبل التنزيل.,,Pending,,Engineering review follow-up
 The export could not be recorded. Please retry.,The export could not be recorded. Please retry.,تعذر تسجيل التصدير. حاول مرة أخرى.,,Pending,,Engineering review follow-up
 Could not read workbook.,Could not read workbook.,تعذرت قراءة المصنف.,,Pending,,Engineering review follow-up
+api.security.3c964cd8b6e5,AI provider is not approved.,مزود الذكاء الاصطناعي غير معتمد.,,Pending,,AI-authored; native review required
+api.security.4dd9062361e3,Audit storage is unavailable.,تخزين سجل التدقيق غير متاح.,,Pending,,AI-authored; native review required
+api.security.0c9544b75527,Origin is not allowed.,مصدر الطلب غير مسموح به.,,Pending,,AI-authored; native review required
+api.security.2eefa1d8b871,Report is not available for this account.,التقرير غير متاح لهذا الحساب.,,Pending,,AI-authored; native review required
+api.security.e5df7a3f454a,"Check the schedule name, frequency and start time.",تحقق من اسم الجدول وتكراره ووقت البدء.,,Pending,,AI-authored; native review required
+api.security.1abfc8632394,Report delivery is not ready.,التقرير غير جاهز للتسليم.,,Pending,,AI-authored; native review required
+api.security.2dadd486ec63,Unknown report schedule action.,إجراء غير معروف لجدول التقرير.,,Pending,,AI-authored; native review required
+api.security.66db97bec1c7,Provider credential has expired. Rotate it before use.,انتهت صلاحية بيانات اعتماد المزود. استبدلها قبل الاستخدام.,,Pending,,AI-authored; native review required
+api.security.44b095ad73e5,AI access is disabled for this request.,الوصول إلى الذكاء الاصطناعي معطل لهذا الطلب.,,Pending,,AI-authored; native review required
+api.security.f222b526aed8,AI context is not approved for this provider.,سياق الذكاء الاصطناعي غير معتمد لهذا المزود.,,Pending,,AI-authored; native review required
+api.security.6cfc1a2964dc,Service is temporarily unavailable.,الخدمة غير متاحة مؤقتًا.,,Pending,,AI-authored; native review required
+api.security.e45696f265e5,Clinical speech delivery requires an approved provider contract.,يتطلب إرسال الصوت السريري عقدًا مع مزود معتمد.,,Pending,,AI-authored; native review required
+Report request failed.,Report request failed.,فشل طلب التقرير.,,Pending,,AI-authored; native review required
+Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.,Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.,تُسلّم ملخصات العرض المجدولة هنا بصيغة CSV. الأوقات بتوقيت UTC. التسليم بالبريد الإلكتروني غير مهيأ.,,Pending,,AI-authored; native review required
+Delivery time (UTC),Delivery time (UTC),وقت التسليم (UTC),,Pending,,AI-authored; native review required
+Next run (UTC),Next run (UTC),التشغيل التالي (UTC),,Pending,,AI-authored; native review required
+Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,تُحتفظ التقارير المسلّمة لمدة 30 يومًا. تُعاد محاولة التسليم الفاشل تلقائيًا حتى خمس مرات.,,Pending,,AI-authored; native review required

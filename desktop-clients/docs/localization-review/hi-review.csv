@@ -2996,3 +2996,20 @@ Costing amounts must be non-negative numbers; percentages must be between 0 and 
 The costing export schema requires review before downloading.,The costing export schema requires review before downloading.,डाउनलोड करने से पहले लागत निर्यात स्कीमा की समीक्षा आवश्यक है।,,Pending,,Engineering review follow-up
 The export could not be recorded. Please retry.,The export could not be recorded. Please retry.,निर्यात दर्ज नहीं किया जा सका। कृपया फिर से कोशिश करें।,,Pending,,Engineering review follow-up
 Could not read workbook.,Could not read workbook.,कार्यपुस्तिका पढ़ी नहीं जा सकी।,,Pending,,Engineering review follow-up
+api.security.3c964cd8b6e5,AI provider is not approved.,AI प्रदाता स्वीकृत नहीं है।,,Pending,,AI-authored; native review required
+api.security.4dd9062361e3,Audit storage is unavailable.,ऑडिट संग्रह उपलब्ध नहीं है।,,Pending,,AI-authored; native review required
+api.security.0c9544b75527,Origin is not allowed.,अनुरोध का स्रोत अनुमत नहीं है।,,Pending,,AI-authored; native review required
+api.security.2eefa1d8b871,Report is not available for this account.,इस खाते के लिए रिपोर्ट उपलब्ध नहीं है।,,Pending,,AI-authored; native review required
+api.security.e5df7a3f454a,"Check the schedule name, frequency and start time.","शेड्यूल का नाम, आवृत्ति और आरंभ समय जाँचें।",,Pending,,AI-authored; native review required
+api.security.1abfc8632394,Report delivery is not ready.,रिपोर्ट वितरण के लिए तैयार नहीं है।,,Pending,,AI-authored; native review required
+api.security.2dadd486ec63,Unknown report schedule action.,रिपोर्ट शेड्यूल की कार्रवाई अज्ञात है।,,Pending,,AI-authored; native review required
+api.security.66db97bec1c7,Provider credential has expired. Rotate it before use.,प्रदाता की क्रेडेंशियल की अवधि समाप्त हो गई है। उपयोग से पहले बदलें।,,Pending,,AI-authored; native review required
+api.security.44b095ad73e5,AI access is disabled for this request.,इस अनुरोध के लिए AI पहुँच बंद है।,,Pending,,AI-authored; native review required
+api.security.f222b526aed8,AI context is not approved for this provider.,इस प्रदाता के लिए AI संदर्भ स्वीकृत नहीं है।,,Pending,,AI-authored; native review required
+api.security.6cfc1a2964dc,Service is temporarily unavailable.,सेवा अस्थायी रूप से उपलब्ध नहीं है।,,Pending,,AI-authored; native review required
+api.security.e45696f265e5,Clinical speech delivery requires an approved provider contract.,चिकित्सीय ऑडियो भेजने के लिए स्वीकृत प्रदाता अनुबंध आवश्यक है।,,Pending,,AI-authored; native review required
+Report request failed.,Report request failed.,रिपोर्ट अनुरोध विफल हुआ।,,Pending,,AI-authored; native review required
+Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.,Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.,शेड्यूल किए गए डेमो सारांश यहाँ CSV में मिलते हैं। समय UTC में है। ईमेल वितरण कॉन्फ़िगर नहीं है।,,Pending,,AI-authored; native review required
+Delivery time (UTC),Delivery time (UTC),वितरण समय (UTC),,Pending,,AI-authored; native review required
+Next run (UTC),Next run (UTC),अगला रन (UTC),,Pending,,AI-authored; native review required
+Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,वितरित रिपोर्ट 30 दिनों तक रखी जाती हैं। विफल वितरण के लिए स्वचालित रूप से अधिकतम पाँच प्रयास होते हैं।,,Pending,,AI-authored; native review required

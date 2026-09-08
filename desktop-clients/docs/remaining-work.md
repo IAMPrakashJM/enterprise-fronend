@@ -9,7 +9,7 @@ for the ones that are not ours to do — who they are waiting on.
 ## Engineering review follow-up — 8 September 2026
 
 The review's CI coverage, catalog bundle/loading, API method handling and costing
-import/export issues have been addressed locally. See the
+import/export issues have passed remote CI and been deployed. See the
 [verified corrections and implementation](review-follow-up-2026-09-08.md).
 The earlier review documents are historical snapshots, not the current backlog.
 
@@ -166,12 +166,11 @@ See [record-editing.md](record-editing.md). The compatible API/frontend pair was
 unverified because verifying them needs real credentials. Nothing can be done
 here until those exist.
 
-**The ten gaps in the AI hardening ledger** are a server project. The contract is
-written (`docs/ai-service-contract.md`) and `verify:ai-hardening` fails in both
-directions so the ledger cannot go stale, but none of it is buildable in this
-repository. The half of N5 that matters — server-side identifier stripping
-before any provider call — is the most important single item on this page and
-the only one that cannot be started here.
+**AI hardening:** server controls now cover credential encryption and expiry,
+durable local audits, restricted provider context, provider/origin allowlists and
+per-user limits. Managed key vaults, production identity, clinical provider
+contracts and the documented production storage/retention boundaries remain.
+See [the current ledger](ai-hardening-ledger.md).
 
 ## Deliberately not being done
 

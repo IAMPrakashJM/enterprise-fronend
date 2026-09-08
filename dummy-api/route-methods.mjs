@@ -8,7 +8,7 @@ const methods = new Map(Object.entries({
   '/exports': ['POST'], '/reference': ['GET'], '/views': ['POST'],
   '/ai/config': ['GET','PUT'], '/ai/config/credential': ['GET','PUT','DELETE'],
   '/ai/config/credential/verify': ['POST'], '/ai/dispatch': ['POST'], '/ai/usage': ['GET'],
-  '/health': ['GET'],
+  '/health': ['GET'], '/audit': ['GET'], '/report-schedules': ['POST'],
 }));
 export function allowedMethods(pathname) {
   if (methods.has(pathname)) return [...methods.get(pathname), 'OPTIONS'];

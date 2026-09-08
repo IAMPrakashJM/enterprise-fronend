@@ -135,5 +135,17 @@
   "Approval unavailable.": "api.message.eda4913ca4aa",
   "Approval changed. Refresh and review again.": "api.message.8bdf033a7cbe",
   "Your role cannot decide this stage, or you are the requester.": "api.message.4288840bf0c7",
-  "Saved record changed. Ask the requester to resubmit it.": "api.message.edf9820feae1"
+  "Saved record changed. Ask the requester to resubmit it.": "api.message.edf9820feae1",
+  "AI provider is not approved.": "api.security.3c964cd8b6e5",
+  "Audit storage is unavailable.": "api.security.4dd9062361e3",
+  "Origin is not allowed.": "api.security.0c9544b75527",
+  "Report is not available for this account.": "api.security.2eefa1d8b871",
+  "Check the schedule name, frequency and start time.": "api.security.e5df7a3f454a",
+  "Report delivery is not ready.": "api.security.1abfc8632394",
+  "Unknown report schedule action.": "api.security.2dadd486ec63",
+  "Provider credential has expired. Rotate it before use.": "api.security.66db97bec1c7",
+  "AI access is disabled for this request.": "api.security.44b095ad73e5",
+  "AI context is not approved for this provider.": "api.security.f222b526aed8",
+  "Service is temporarily unavailable.": "api.security.6cfc1a2964dc",
+  "Clinical speech delivery requires an approved provider contract.": "api.security.e45696f265e5"
 }

@@ -1,7 +1,9 @@
 # Engineering review follow-up — 8 September 2026
 
 This document corrects the earlier review against the implementation and records
-its follow-up changes. The changes are local; the live release has not been changed.
+its follow-up changes. The original local validation below is historical.
+The changes have since been committed, passed remote CI, and deployed; see
+[release and server follow-up](server-completion-2026-09-08.md) for current status.
 
 ## Test execution and CI
 

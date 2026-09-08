@@ -2996,3 +2996,20 @@ Costing amounts must be non-negative numbers; percentages must be between 0 and 
 The costing export schema requires review before downloading.,The costing export schema requires review before downloading.,ഡൗൺലോഡ് ചെയ്യുന്നതിന് മുമ്പ് കോസ്റ്റിംഗ് കയറ്റുമതി സ്കീമ പരിശോധിക്കണം.,,Pending,,Engineering review follow-up
 The export could not be recorded. Please retry.,The export could not be recorded. Please retry.,കയറ്റുമതി രേഖപ്പെടുത്താനായില്ല. വീണ്ടും ശ്രമിക്കുക.,,Pending,,Engineering review follow-up
 Could not read workbook.,Could not read workbook.,വർക്ക്ബുക്ക് വായിക്കാനായില്ല.,,Pending,,Engineering review follow-up
+api.security.3c964cd8b6e5,AI provider is not approved.,AI ദാതാവിന് അംഗീകാരമില്ല.,,Pending,,AI-authored; native review required
+api.security.4dd9062361e3,Audit storage is unavailable.,ഓഡിറ്റ് സംഭരണം ലഭ്യമല്ല.,,Pending,,AI-authored; native review required
+api.security.0c9544b75527,Origin is not allowed.,അഭ്യർത്ഥനയുടെ ഉറവിടം അനുവദനീയമല്ല.,,Pending,,AI-authored; native review required
+api.security.2eefa1d8b871,Report is not available for this account.,ഈ അക്കൗണ്ടിന് റിപ്പോർട്ട് ലഭ്യമല്ല.,,Pending,,AI-authored; native review required
+api.security.e5df7a3f454a,"Check the schedule name, frequency and start time.","ഷെഡ്യൂളിന്റെ പേര്, ആവൃത്തി, ആരംഭ സമയം എന്നിവ പരിശോധിക്കുക.",,Pending,,AI-authored; native review required
+api.security.1abfc8632394,Report delivery is not ready.,റിപ്പോർട്ട് വിതരണത്തിന് തയ്യാറായിട്ടില്ല.,,Pending,,AI-authored; native review required
+api.security.2dadd486ec63,Unknown report schedule action.,റിപ്പോർട്ട് ഷെഡ്യൂൾ നടപടി തിരിച്ചറിയാനായില്ല.,,Pending,,AI-authored; native review required
+api.security.66db97bec1c7,Provider credential has expired. Rotate it before use.,ദാതാവിന്റെ പ്രവേശന വിവരങ്ങളുടെ കാലാവധി കഴിഞ്ഞു. ഉപയോഗിക്കുന്നതിന് മുമ്പ് മാറ്റുക.,,Pending,,AI-authored; native review required
+api.security.44b095ad73e5,AI access is disabled for this request.,ഈ അഭ്യർത്ഥനയ്ക്ക് AI പ്രവേശനം പ്രവർത്തനരഹിതമാണ്.,,Pending,,AI-authored; native review required
+api.security.f222b526aed8,AI context is not approved for this provider.,ഈ ദാതാവിന് AI സന്ദർഭം അയയ്ക്കാൻ അംഗീകാരമില്ല.,,Pending,,AI-authored; native review required
+api.security.6cfc1a2964dc,Service is temporarily unavailable.,സേവനം താൽക്കാലികമായി ലഭ്യമല്ല.,,Pending,,AI-authored; native review required
+api.security.e45696f265e5,Clinical speech delivery requires an approved provider contract.,ക്ലിനിക്കൽ ഓഡിയോ അയയ്ക്കാൻ അംഗീകൃത ദാതാവുമായുള്ള കരാർ ആവശ്യമാണ്.,,Pending,,AI-authored; native review required
+Report request failed.,Report request failed.,റിപ്പോർട്ട് അഭ്യർത്ഥന പരാജയപ്പെട്ടു.,,Pending,,AI-authored; native review required
+Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.,Scheduled demo summaries are delivered here as CSV. Times use UTC. Email delivery is not configured.,ഷെഡ്യൂൾ ചെയ്ത ഡെമോ സംഗ്രഹങ്ങൾ ഇവിടെ CSV ആയി ലഭിക്കും. സമയം UTC ആണ്. ഇമെയിൽ വിതരണം ക്രമീകരിച്ചിട്ടില്ല.,,Pending,,AI-authored; native review required
+Delivery time (UTC),Delivery time (UTC),വിതരണ സമയം (UTC),,Pending,,AI-authored; native review required
+Next run (UTC),Next run (UTC),അടുത്ത പ്രവർത്തനം (UTC),,Pending,,AI-authored; native review required
+Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,Delivered reports are retained for 30 days. Failed deliveries retry automatically up to five times.,വിതരണം ചെയ്ത റിപ്പോർട്ടുകൾ 30 ദിവസം സൂക്ഷിക്കും. പരാജയപ്പെട്ട വിതരണങ്ങൾ സ്വയമേവ അഞ്ച് തവണ വരെ വീണ്ടും ശ്രമിക്കും.,,Pending,,AI-authored; native review required
