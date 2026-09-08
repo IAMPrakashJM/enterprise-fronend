@@ -14,7 +14,7 @@ function fixture(t){const dir=mkdtempSync(join(tmpdir(),'center-'));t.after(()=>
 }
 test('center exposes metadata only and isolates tenant, owner and application',t=>{
  const {write,call}=fixture(t);write('form:customers:A');write('$draft:approval:["customers","inbox"]',user,'app',{schemaVersion:1,context:'current',data:{comment:'PRIVATE COMMENT'}});write('form:customers:B',{...user,id:'other'});write('form:customers:C',{...user,tenantId:'other'});write('form:customers:D',user,'another');
- const result=call({action:'list'});assert.equal(result.body.total,2);assert.ok(!JSON.stringify(result).includes('PRIVATE'));assert.ok(result.body.items.every(i=>i.expiresAt&&i.productId==='app'));assert.equal(call({action:'list',kind:'approval'}).body.total,1);assert.equal(call({action:'list',query:'A'}).body.total,1);
+ const result=call({action:'list'});assert.equal(result.body.total,2);assert.ok(!JSON.stringify(result).includes('PRIVATE'));assert.ok(result.body.items.every(i=>i.expiresAt&&i.productId==='app'));assert.equal(call({action:'list',kind:'approval'}).body.total,1);assert.equal(call({action:'list',query:'inbox'}).body.total,1);
 });
 test('unavailable entries conceal page/record identity and cannot be opened but remain discardable',t=>{
  const {write,call,deny}=fixture(t);write('form:confidential:A');const item=call({action:'list'}).body.items[0];deny();const hidden=call({action:'list'}).body.items[0];assert.equal(hidden.pageId,null);assert.equal(hidden.recordId,null);assert.equal(hidden.status,'unavailable');assert.equal(call({action:'list',query:'confidential'}).body.total,0);
