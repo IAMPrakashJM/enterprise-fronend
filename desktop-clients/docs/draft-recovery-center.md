@@ -4,7 +4,7 @@ Open **Draft Recovery Center** from the sidebar or the command palette. It lists
 
 ## Find and continue unfinished work
 
-The table shows the application, page and record, draft type, last-saved time, expiry and status. Search by page or record ID. Filter by Form, Import mapping or Approval comment, and by status. Results are newest first and paginated in groups of 25.
+The table shows the application, page and record, draft type, last-saved time, expiry and status. Search by localized page title, page ID or record ID. Filter by Form, Import mapping or Approval comment, and by status. Results are newest first and paginated in groups of 25.
 
 - **Ready to review:** open the workflow, then choose Restore or Discard.
 - **Source changed — review required:** the saved record version, approval context or draft format changed. The existing workflow requires review and validation before submission.
@@ -25,7 +25,7 @@ The policy summary shows whether service storage is enabled, the retention perio
 
 | Action | Request fields | Result |
 | --- | --- | --- |
-| `list` | Optional `query`, `kind`, `status`, `offset` | Metadata rows, filtered count, effective offset, policy and status counts |
+| `list` | Optional `query`, `kind`, `status`, `offset`, `language` | Metadata rows, filtered count, effective offset, policy and status counts |
 | `open` | Opaque `id`, `version` | A fresh, access-checked workflow descriptor |
 | `discard` | Opaque `id`, `version`, stable `operationId` | 204 after the owner's revision-checked draft deletion |
 
@@ -48,3 +48,12 @@ Backend tests cover metadata privacy, scope isolation, unavailable-record redact
 The first remote run passed the center, browser, navigation and product checks but exposed a controlled native-panic fixture failure: the panic hook ran, then the process exited with SIGSEGV instead of the fixture's expected exit code. The debug-only trigger now invokes the real panic hook and terminates with an intentional abort. The test requires SIGABRT, the synthetic panic log, a surviving marker, authenticated delivery after restart and marker acknowledgement. Core dumps are disabled for the fixture. [Rust documents abort as abnormal termination without normal exit cleanup](https://doc.rust-lang.org/std/process/fn.abort.html).
 
 A local diagnostic retest initially used a development native build pointing at the demo API and recorded a synthetic Sentinel incident there; it did not change business records. The fixture now guards authentication and monitoring requests against API-target mismatches. The correctly packaged isolated native test passed twice consecutively after the correction. Use the Tauri build command for this test, not a plain Cargo development build.
+
+
+## Verified deployment — 8 September 2026
+
+Application commit `c9fa3295bc5b17944aa9c957f3a14a59cf093569` passed all six jobs in [remote CI run 34270830482](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34270830482). Validation included 1,445 unit tests, API and deployment checks, and all 34 registered runtime suites: 9 browser, 20 feature, 1 product, 1 navigation and 3 native Linux suites. The native fixture correction passed in remote CI as well as the two isolated local retests. No new native installer was published.
+
+Release `20260908194545473-e14bcece` is deployed on [the web demo](https://front-design.pepbits.com) and [the desktop demo](https://desktop.front-design.pepbits.com). Both passed live recovery-center navigation, policy summary, filtered metadata API, all four language catalogs, HTML/assets, API health, login and navigation checks. No browser runtime errors were observed. Live checks used a nonmatching search to avoid capturing users' draft metadata; restoration and discard were tested on isolated fixtures.
+
+The API was stopped for a consistent backup before restart. Previous API source and data are retained under `.deploy/api-backups/20260908194545473-e14bcece/`. Previous frontend release `20260908185346517-40b515a2` remains available for rollback. Existing demo sessions need to sign in again after the restart. Production database integration and native-speaker approval remain pending as described above.

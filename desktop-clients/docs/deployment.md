@@ -69,7 +69,17 @@ deploy. Its API URLs must still match the deployment config:
 npm run deploy -- --activate PREVIOUS_RELEASE_ID
 ```
 
-## Latest activation — 8 September 2026
+## Latest activation — Draft Recovery Center, 8 September 2026
+
+Release `20260908194545473-e14bcece`, from application commit `c9fa329`, is active
+on both demo hosts. All six CI jobs and public recovery-center, localization,
+asset and API checks passed. The API source/data backup is
+`.deploy/api-backups/20260908194545473-e14bcece/`; the previous frontend release
+is `20260908185346517-40b515a2`. The API restart invalidated existing demo sessions.
+See [Draft Recovery Center verification](draft-recovery-center.md#verified-deployment--8-september-2026)
+for complete evidence and integration limits.
+
+## Earlier activation — preference policies, 8 September 2026
 
 Release `20260908132518280-e399b58e`, from application commit `6e7ad75`, is active
 on both public hosts. All remote CI jobs passed before activation, including

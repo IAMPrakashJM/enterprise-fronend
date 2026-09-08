@@ -10,6 +10,8 @@ for the ones that are not ours to do — who they are waiting on.
 
 The shared recovery center lists current-application drafts with search, type/status
 filters, expiry, owner-only open/discard actions and mandatory policy information.
+Deployed to both demo sites after all six CI jobs passed; live recovery-center and
+four-language catalog checks passed.
 See [Draft Recovery Center](draft-recovery-center.md) for workflows, API integration,
 verification and the external production-storage/native-review dependencies.
 
