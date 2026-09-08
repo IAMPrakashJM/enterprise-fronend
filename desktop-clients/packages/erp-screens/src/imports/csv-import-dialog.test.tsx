@@ -20,5 +20,10 @@ test('retry preserves completed rows and retries failed writes once',async()=>{
 });
 test('an interrupted request retains the job for safe resume',async()=>{
  const {adapter}=setup({...pending,confirmed:true});adapter.run.mockRejectedValueOnce(new Error('Connection lost')).mockResolvedValue({...pending,confirmed:true,rows:pending.rows.map(row=>row.status==='pending'?{...row,status:'success'}:row)});
- fireEvent.click(await screen.findByRole('button',{name:'Resume import'}));expect(await screen.findByRole('alert')).toHaveTextContent('Connection lost');fireEvent.click(screen.getByRole('button',{name:'Resume import'}));await waitFor(()=>expect(adapter.run).toHaveBeenCalledTimes(2));expect(adapter.run.mock.calls[0]).toEqual(adapter.run.mock.calls[1]);
+ fireEvent.click(await screen.findByRole('button',{name:'Resume import'}));expect(await screen.findByRole('alert')).toHaveTextContent('Could not reach the service');fireEvent.click(screen.getByRole('button',{name:'Resume import'}));await waitFor(()=>expect(adapter.run).toHaveBeenCalledTimes(2));expect(adapter.run.mock.calls[0]).toEqual(adapter.run.mock.calls[1]);
+});
+
+test.each([408,429,503])('HTTP %i retains import rows and the job identity',async status=>{
+ const {ImportRequestError}=await import('@pepbits/erp-data');const {adapter}=setup({...pending,confirmed:true});adapter.run.mockRejectedValueOnce(new ImportRequestError('PRIVATE',status,'trace-import')).mockResolvedValue({...pending,confirmed:true,rows:pending.rows.map(row=>({...row,status:'success'}))});
+ fireEvent.click(await screen.findByRole('button',{name:'Resume import'}));await screen.findByRole('alert');expect(screen.getByText('NEW')).toBeVisible();expect(screen.getByRole('alert')).not.toHaveTextContent('PRIVATE');fireEvent.click(screen.getByRole('button',{name:'Retry'}));await waitFor(()=>expect(adapter.run).toHaveBeenCalledTimes(2));expect(adapter.run.mock.calls[1]).toEqual(adapter.run.mock.calls[0]);
 });

@@ -1,4 +1,5 @@
 "use client";
+import {RecoveryNotice,failureFromError} from "@pepbits/ops-ui";
 import { Card } from "@pepbits/ops-ui";
 import { TableContainer } from "@pepbits/ops-ui";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@pepbits/ops-ui";
@@ -20,11 +21,7 @@ export const RecordAdapterProvider = AdapterContext.Provider;
 function useRecordTransport() {
   const provided = useContext(AdapterContext);
   const request = useProductRequest();
-  const token = readToken();
-  return useMemo(() => provided ?? createHttpRecordAdapter((path, init) => {
-    if (!token || token !== readToken()) return Promise.reject(new Error("Your session ended. Sign in again to continue."));
-    return request(path, init);
-  }), [provided, token, request]);
+  return useMemo(() => provided ?? createHttpRecordAdapter(request), [provided, request]);
 }
 
 export function useSavedRecords(prefix: string) {
@@ -108,8 +105,7 @@ export function RecordSaveStatus<T>({ editor }: { editor: RecordEditor<T> }) {
       <Button disabled={state.busy} onClick={editor.restore}><LocalizedText message="ui.restore.draft.a86e1a9f" /></Button>
       <Button disabled={state.busy} onClick={() => void editor.discard()}><LocalizedText message="ui.discard.recovery.draft.0d6faf2c" /></Button>
     </> : <span>{state.busy ? <LocalizedText message="ui.saving.23e39291" /> : state.error ? <LocalizedText message="ui.changes.need.attention.fbaeabd5" /> : editor.dirty ? state.draftSaved ? <LocalizedText message="ui.recovery.draft.saved.record.has.unsaved.changes.a3d2d0f5" /> : <LocalizedText message="ui.unsaved.changes.recovery.pending.f83c324c" /> : state.lastSaved ? t("Saved {date}", {date:dateTime(state.lastSaved)}) : <LocalizedText message="ui.no.changes.saved.0a823d05" />}</span>}
-    {state.error ? <span role="alert">{state.error}</span> : null}
-    {state.error && !state.conflict && !state.rejected ? <Button disabled={state.busy} onClick={() => void editor.retry()}><LocalizedText message="ui.retry.942087cc" /></Button> : null}
+    {state.error && !state.conflict ? <RecoveryNotice sessionRestored={!!readToken()} failure={failureFromError(state.failure)} preservesValues={editor.dirty} onReload={()=>window.location.reload()} busy={state.busy} onRetry={()=>void editor.retry()} /> : null}
     {state.conflict ? <>
       <Button disabled={state.busy} onClick={async () => { await editor.review(); }}><LocalizedText message="ui.review.latest.version.c57df6b5" /></Button>
       {state.reviewed ? <div className="w-full">

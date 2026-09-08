@@ -1,5 +1,5 @@
 import { partitionFilters, type FilterDefinition, type FilterValues } from "@pepbits/erp-config";
-import { classifyFailure, type Failure } from "@pepbits/ops-ui";
+import { classifyFailure, failureFromError, type Failure } from "@pepbits/ops-ui";
 
 export interface SearchRequest {
   pageId: string;
@@ -73,14 +73,14 @@ export async function searchWorklist(request: SearchRequest, fetcher: (path: str
       headers: { "content-type": "application/json" },
       body: JSON.stringify(buildSearchBody(request)),
     });
-    if (!response.ok) return { ok: false, failure: classifyFailure({ status: response.status }) };
+    if (!response.ok) return { ok: false, failure: failureFromError({ status: response.status, reference:response.headers.get("X-Sentinel-Reference") }) };
     const body = (await response.json()) as { total: number; page?: number; rows: Array<Record<string, string | number | boolean>> };
     if (!Array.isArray(body.rows) || !Number.isInteger(body.total) || body.total < 0) throw new Error("Invalid search response");
     return { ok: true, total: body.total, page: body.page, rows: body.rows };
-  } catch {
+  } catch (error) {
     /* A failed search must not look like an empty result: "no records found"
        for a service that is down sends someone to re-check filters that were
        never the problem. */
-    return { ok: false, failure: classifyFailure({ networkError: true }) };
+    return { ok: false, failure: failureFromError(error) };
   }
 }

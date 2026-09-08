@@ -6,6 +6,13 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## User-facing error recovery — 8 September 2026
+
+Localized recovery messages/actions, retained in-memory work through recoverable
+failures and session renewal, and shared workflow regression coverage are implemented.
+See [user error recovery and integration](user-error-recovery.md) for exact behavior,
+tests, integration requirements and limits.
+
 ## Sentinel monitoring — 8 September 2026
 
 The local demo collector, monitoring API and administrator incident screen are

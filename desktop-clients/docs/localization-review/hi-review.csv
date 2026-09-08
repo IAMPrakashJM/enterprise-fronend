@@ -3242,3 +3242,20 @@ sentinel.code.native-command-failed,Native command failed,डेस्कटॉ�
 sentinel.code.native-panic,Native application failure,मूल डेस्कटॉप ऐप विफलता,,Pending,,Sentinel monitoring
 View details,View details,विवरण देखें,,Pending,,Sentinel monitoring
 History,History,इतिहास,,Pending,,Sentinel monitoring
+recovery.network,Check your connection. The result is not confirmed; check the record before starting a new operation.,अपना कनेक्शन जाँचें। परिणाम की पुष्टि नहीं हुई है; नया कार्य शुरू करने से पहले रिकॉर्ड जाँचें।,,Pending,,User-facing recovery; native-speaker review required
+recovery.timeout,The service did not respond in time. The operation may have completed; retry the same action to check its result.,सेवा ने समय पर जवाब नहीं दिया। कार्य पूरा हो सकता है; परिणाम जाँचने के लिए वही कार्य फिर से आज़माएँ।,,Pending,,User-facing recovery; native-speaker review required
+recovery.retained,Your values are still here. Keep this page open while recovering.,आपके मान यहीं सुरक्षित हैं। पुनर्प्राप्ति के दौरान यह पृष्ठ खुला रखें।,,Pending,,User-facing recovery; native-speaker review required
+recovery.session,Sign in with the same account to continue with your unsaved work. Do not reload or close this window.,अपने बिना सहेजे काम को जारी रखने के लिए उसी खाते से साइन इन करें। इस विंडो को रीलोड या बंद न करें।,,Pending,,User-facing recovery; native-speaker review required
+recovery.sameUser,Use the same account and access role to recover this work. Sign out to use a different account.,यह काम वापस पाने के लिए उसी खाते और भूमिका का उपयोग करें। दूसरा खाता उपयोग करने के लिए साइन आउट करें।,,Pending,,User-facing recovery; native-speaker review required
+recovery.return,Return to page,पृष्ठ पर लौटें,,Pending,,User-facing recovery; native-speaker review required
+recovery.discardSignOut,Discard unsaved work and sign out,बिना सहेजा काम छोड़ें और साइन आउट करें,,Pending,,User-facing recovery; native-speaker review required
+recovery.discardConfirm,Discard the work kept in this window and sign out? Unsaved values may be lost.,इस विंडो में रखा काम छोड़कर साइन आउट करें? बिना सहेजे मान खो सकते हैं।,,Pending,,User-facing recovery; native-speaker review required
+recovery.rateTitle,Too many requests,बहुत अधिक अनुरोध,,Pending,,User-facing recovery; native-speaker review required
+recovery.rate,"Wait a moment, then retry the same action.","कुछ देर रुकें, फिर वही कार्य दोबारा आज़माएँ।",,Pending,,User-facing recovery; native-speaker review required
+recovery.exportAudit,"The file was generated, but its audit entry was not confirmed. Retry records the audit only; it does not download another file.","फ़ाइल बन गई है, लेकिन ऑडिट प्रविष्टि की पुष्टि नहीं हुई। फिर से प्रयास करने पर केवल ऑडिट दर्ज होगा; दूसरी फ़ाइल डाउनलोड नहीं होगी।",,Pending,,User-facing recovery; native-speaker review required
+recovery.resumeTitle,You are signed in again,आप फिर से साइन इन हैं,,Pending,,User-facing recovery; native-speaker review required
+recovery.resume,Your work is still here. Retry the pending action when you are ready.,आपका काम यहीं है। तैयार होने पर लंबित कार्य फिर से आज़माएँ।,,Pending,,User-facing recovery; native-speaker review required
+recovery.signInUnavailable,Sign-in is temporarily unavailable. Please try again.,साइन इन अभी उपलब्ध नहीं है। कृपया फिर से प्रयास करें।,,Pending,,User-facing recovery; native-speaker review required
+recovery.signInFailed,Sign-in failed. Check your username and password.,साइन इन विफल हुआ। अपना उपयोगकर्ता नाम और पासवर्ड जाँचें।,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportTitle,The file could not be generated,फ़ाइल नहीं बन सकी,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportFailed,"Check your browser downloads, then retry if the file is missing. Your selected rows are unchanged.",ब्राउज़र के डाउनलोड जाँचें। फ़ाइल न मिले तो फिर से प्रयास करें। चुनी गई पंक्तियाँ नहीं बदली हैं।,,Pending,,User-facing recovery; native-speaker review required

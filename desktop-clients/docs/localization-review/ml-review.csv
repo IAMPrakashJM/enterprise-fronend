@@ -3242,3 +3242,20 @@ sentinel.code.native-command-failed,Native command failed,ഡെസ്‌ക്�
 sentinel.code.native-panic,Native application failure,നേറ്റീവ് ഡെസ്‌ക്‌ടോപ്പ് ആപ്പ് പിശക്,,Pending,,Sentinel monitoring
 View details,View details,വിശദാംശങ്ങൾ കാണുക,,Pending,,Sentinel monitoring
 History,History,ചരിത്രം,,Pending,,Sentinel monitoring
+recovery.network,Check your connection. The result is not confirmed; check the record before starting a new operation.,കണക്ഷൻ പരിശോധിക്കുക. ഫലം സ്ഥിരീകരിച്ചിട്ടില്ല; പുതിയ പ്രവർത്തനം തുടങ്ങുന്നതിന് മുമ്പ് രേഖ പരിശോധിക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.timeout,The service did not respond in time. The operation may have completed; retry the same action to check its result.,സേവനം സമയത്തിനുള്ളിൽ പ്രതികരിച്ചില്ല. പ്രവർത്തനം പൂർത്തിയായിരിക്കാം; ഫലം പരിശോധിക്കാൻ അതേ പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.retained,Your values are still here. Keep this page open while recovering.,നിങ്ങൾ നൽകിയ വിവരങ്ങൾ ഇവിടെത്തന്നെയുണ്ട്. വീണ്ടെടുക്കുന്നതിനിടെ ഈ പേജ് തുറന്നുവയ്ക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.session,Sign in with the same account to continue with your unsaved work. Do not reload or close this window.,സേവ് ചെയ്യാത്ത ജോലി തുടരാൻ അതേ അക്കൗണ്ടിൽ സൈൻ ഇൻ ചെയ്യുക. ഈ വിൻഡോ റീലോഡ് ചെയ്യുകയോ അടയ്ക്കുകയോ അരുത്.,,Pending,,User-facing recovery; native-speaker review required
+recovery.sameUser,Use the same account and access role to recover this work. Sign out to use a different account.,ഈ ജോലി വീണ്ടെടുക്കാൻ അതേ അക്കൗണ്ടും പ്രവേശന റോളും ഉപയോഗിക്കുക. മറ്റൊരു അക്കൗണ്ട് ഉപയോഗിക്കാൻ സൈൻ ഔട്ട് ചെയ്യുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.return,Return to page,പേജിലേക്ക് മടങ്ങുക,,Pending,,User-facing recovery; native-speaker review required
+recovery.discardSignOut,Discard unsaved work and sign out,സേവ് ചെയ്യാത്ത ജോലി ഉപേക്ഷിച്ച് സൈൻ ഔട്ട് ചെയ്യുക,,Pending,,User-facing recovery; native-speaker review required
+recovery.discardConfirm,Discard the work kept in this window and sign out? Unsaved values may be lost.,ഈ വിൻഡോയിലെ ജോലി ഉപേക്ഷിച്ച് സൈൻ ഔട്ട് ചെയ്യണോ? സേവ് ചെയ്യാത്ത വിവരങ്ങൾ നഷ്ടപ്പെട്ടേക്കാം.,,Pending,,User-facing recovery; native-speaker review required
+recovery.rateTitle,Too many requests,വളരെയധികം അഭ്യർത്ഥനകൾ,,Pending,,User-facing recovery; native-speaker review required
+recovery.rate,"Wait a moment, then retry the same action.",അൽപ്പം കാത്തിരുന്ന് അതേ പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportAudit,"The file was generated, but its audit entry was not confirmed. Retry records the audit only; it does not download another file.","ഫയൽ സൃഷ്ടിച്ചു, പക്ഷേ ഓഡിറ്റ് രേഖ സ്ഥിരീകരിച്ചിട്ടില്ല. വീണ്ടും ശ്രമിക്കുമ്പോൾ ഓഡിറ്റ് മാത്രം രേഖപ്പെടുത്തും; മറ്റൊരു ഫയൽ ഡൗൺലോഡ് ചെയ്യില്ല.",,Pending,,User-facing recovery; native-speaker review required
+recovery.resumeTitle,You are signed in again,വീണ്ടും സൈൻ ഇൻ ചെയ്തു,,Pending,,User-facing recovery; native-speaker review required
+recovery.resume,Your work is still here. Retry the pending action when you are ready.,നിങ്ങളുടെ ജോലി ഇവിടെത്തന്നെയുണ്ട്. തയ്യാറാകുമ്പോൾ പൂർത്തിയാകാത്ത പ്രവർത്തനം വീണ്ടും ശ്രമിക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.signInUnavailable,Sign-in is temporarily unavailable. Please try again.,സൈൻ ഇൻ താൽക്കാലികമായി ലഭ്യമല്ല. വീണ്ടും ശ്രമിക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.signInFailed,Sign-in failed. Check your username and password.,സൈൻ ഇൻ പരാജയപ്പെട്ടു. ഉപയോക്തൃനാമവും പാസ്‌വേഡും പരിശോധിക്കുക.,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportTitle,The file could not be generated,ഫയൽ സൃഷ്ടിക്കാനായില്ല,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportFailed,"Check your browser downloads, then retry if the file is missing. Your selected rows are unchanged.",ബ്രൗസറിലെ ഡൗൺലോഡുകൾ പരിശോധിക്കുക. ഫയൽ ഇല്ലെങ്കിൽ വീണ്ടും ശ്രമിക്കുക. തിരഞ്ഞെടുത്ത വരികൾ മാറിയിട്ടില്ല.,,Pending,,User-facing recovery; native-speaker review required

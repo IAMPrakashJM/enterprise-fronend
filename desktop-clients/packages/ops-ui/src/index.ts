@@ -23,3 +23,5 @@ export * from "./table";
 export * from "./date-time";
 export * from "./calendar";
 export * from "./data-value";
+
+export * from './recovery-notice';

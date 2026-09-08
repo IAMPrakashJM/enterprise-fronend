@@ -3,7 +3,7 @@ import {render,screen,fireEvent,waitFor} from '@testing-library/react';
 import {test,expect,vi} from 'vitest';
 import {ProductServicesProvider,useProductRequest} from './product-services';
 const session=vi.hoisted(()=>({token:'one'}));
-vi.mock('@pepbits/auth',()=>({readToken:()=>session.token,authedFetch:vi.fn()}));
+vi.mock('@pepbits/auth',async importOriginal=>({...await importOriginal<typeof import('@pepbits/auth')>(),readToken:()=>session.token,authedFetch:vi.fn()}));
 function Probe(){
  const request=useProductRequest();const [status,setStatus]=React.useState('idle');
  return <><button onClick={()=>void request('/worklists/search',{method:'POST',body:'{}'}).then(()=>setStatus('done')).catch(()=>setStatus('ended'))}>Search</button><span>{status}</span></>;
@@ -12,7 +12,7 @@ test('a product replaces transport and an old session cannot make another reques
  session.token='one';const request=vi.fn().mockResolvedValue(new Response('{}'));
  render(<ProductServicesProvider services={{request}}><Probe /></ProductServicesProvider>);
  fireEvent.click(screen.getByText('Search'));await waitFor(()=>expect(screen.getByText('done')).toBeVisible());
- expect(request).toHaveBeenCalledWith('/worklists/search',{method:'POST',body:'{}'});
+ expect(request).toHaveBeenCalledWith('/worklists/search',expect.objectContaining({method:'POST',body:'{}',signal:expect.any(AbortSignal)}));
  session.token='two';fireEvent.click(screen.getByText('Search'));await waitFor(()=>expect(screen.getByText('ended')).toBeVisible());
  expect(request).toHaveBeenCalledTimes(1);
 });

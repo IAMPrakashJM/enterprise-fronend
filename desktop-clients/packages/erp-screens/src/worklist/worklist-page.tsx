@@ -1,5 +1,6 @@
 "use client";
-import {reportOperationFailure} from "@pepbits/auth";
+import {RecoveryNotice,failureFromError} from "@pepbits/ops-ui";
+import {readToken,reportOperationFailure} from "@pepbits/auth";
 import { Card } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 import { Modal } from "@pepbits/ops-ui";
@@ -374,19 +375,23 @@ function WorklistContent({ page }: { page: PageDefinition }) {
    * only after being told what the file will hold, and the export is recorded
    * by column key afterwards. Values never reach the audit; see exportAudit.
    */
+  const [exportFailure,setExportFailure]=useState<{failure:Failure;retry:()=>void;downloaded:boolean}|null>(null);
   const writeExport = (rows: Row[], what: string) => {
-    const { filename, review } = exportRows(rows, visibleColumns.map(column=>({...column,label:t(column.labelKey ?? column.label)})), format, preferences.exportFormat, page.id);
-    void authedFetch("/exports", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(exportAudit(page.id, review, rows.length)),
-    }).catch(() => {
-      /* A demo API that is down does not undo a file the browser has already
-         written. The gap is recorded in the hardening ledger, not papered over
-         with a toast the user cannot act on. */
-    });
-    const dropped = review.withheld.length ? ` ${review.withheld.length} column${review.withheld.length === 1 ? "" : "s"} withheld.` : "";
-    toast({ title: "Export ready", message: `${rows.length} ${what} saved as ${filename}.${dropped}`, type: "success" });
+    setExportFailure(null);
+    try {
+      const { filename, review } = exportRows(rows, visibleColumns.map(column=>({...column,label:t(column.labelKey ?? column.label)})), format, preferences.exportFormat, page.id);
+      const audit=async()=>{
+        try {
+          const response=await authedFetch('/exports',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(exportAudit(page.id,review,rows.length))});
+          if(!response.ok)throw {status:response.status,reference:response.headers.get('X-Sentinel-Reference')};
+          if(mounted.current)setExportFailure(null);
+        } catch(error) {if(mounted.current)setExportFailure({failure:failureFromError(error),retry:()=>void audit(),downloaded:true});}
+      };
+      void audit();
+      toast({title:'Export ready',message:`${rows.length} ${what} saved as ${filename}.`,type:'success'});
+    } catch(error) {
+      reportOperationFailure();setExportFailure({failure:{...failureFromError(error),title:"recovery.exportTitle",description:"recovery.exportFailed"},retry:()=>writeExport(rows,what),downloaded:false});
+    }
   };
 
   const doExport = (rows: Row[], what: string) => {
@@ -474,6 +479,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
 
   return (
     <div className="flex w-full flex-col gap-3">
+      {exportFailure?<div>{exportFailure.downloaded?<p role="status"><LocalizedText message="recovery.exportAudit" /></p>:null}<RecoveryNotice sessionRestored={!!readToken()} failure={exportFailure.failure} onRetry={exportFailure.retry} onReturn={()=>setExportFailure(null)}/></div>:null}
       {bulkFailures.length ? <div role="alert" className="rounded-lg border border-[var(--border)] p-3 text-sm"><b><LocalizedText message="ui.archive.results.f0345b60" /></b>{bulkFailures.map(item => <div key={item.id}>{item.id}: {item.error}</div>)}</div> : null}
 
       {/* A printed sheet has no headers, no footers and no provenance: found on
@@ -567,13 +573,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
           /></div>
         ) : null}
         {searchFailure ? (
-          <ErrorState
-            title={searchFailure.title}
-            description={searchFailure.description}
-            referenceId={searchFailure.reference}
-            severity={searchFailure.severity}
-            onRetry={searchFailure.retryable ? () => void runSearch() : undefined}
-          />
+          <RecoveryNotice sessionRestored={!!readToken()} failure={searchFailure} onRetry={()=>void runSearch()} onReturn={()=>navigation.open({pageId:product.defaultModule+'-dashboard'})} />
         ) : loading ? <div role="status" className="p-6"><LocalizedText message="ui.loading.results.cf2c6389" /></div> : pageRows.length ? preferences.resultView === "table" ? (
           <DataTable
             onCellCommit={canEdit ? async (row, column, next) => {

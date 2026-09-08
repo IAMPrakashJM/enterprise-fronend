@@ -16,3 +16,6 @@ describe('Sentinel',()=>{
  });
 });
 it('malformed diagnostic objects cannot throw into application code',()=>{const queue=new SentinelQueue(async()=>{});expect(()=>queue.capture(new Proxy({},{get(){throw Error('broken object');}}))).not.toThrow();expect(queue.size).toBe(0);});
+it('keeps distinct user-visible request references for incident lookup',()=>{
+ const queue=new SentinelQueue(async()=>{});queue.capture({...event(),kind:'request',code:'request-failed'});queue.capture({...event(),kind:'request',code:'request-failed'});expect(queue.size).toBe(2);
+});

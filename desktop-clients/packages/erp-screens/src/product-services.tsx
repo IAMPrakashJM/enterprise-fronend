@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useMemo, useRef } from "react";
-import { authedFetch, readToken, reportSentinelFailure } from "@pepbits/auth";
+import { authedFetch, readToken, recoveryRequest, RequestFailure, expireCurrentSession } from "@pepbits/auth";
 import {useLocalization} from "@pepbits/ops-ui";
 import {localizeApiMessage} from "@pepbits/erp-config";
 import type { RecordAdapter, RecordPanelsAdapter, ImportAdapter, ApprovalAdapter } from "@pepbits/erp-data";
@@ -27,18 +27,19 @@ export function ProductServicesProvider({services,children}: {services:ProductSe
 }
 export function useProductRequest(): ProductRequest {
   const request = useContext(RequestContext);
-  const token = readToken();
+  const token = useRef(readToken());token.current=readToken();
   const {t}=useLocalization();
   const translate=useRef(t);translate.current=t;
   return useMemo(() => (path,init) => {
-    if (!token || token !== readToken()) return Promise.reject(new Error("Your session ended. Sign in again to continue."));
-    return request(path,init).then(async response => {
-      if(!path.startsWith('/monitoring/')&&(response.status>=500||response.status===429))reportSentinelFailure({kind:'request',code:'request-failed',status:response.status});
+    if (!token.current || token.current !== readToken()) return Promise.reject(new RequestFailure(401));
+    const requestToken=token.current;
+    return (request===authedFetch?request(path,init):recoveryRequest(request,path,init)).then(async response => {
+      if(response.status===401&&!path.startsWith('/monitoring/'))expireCurrentSession(requestToken);
       if(response.ok || !response.headers.get('Content-Type')?.includes('application/json'))return response;
       const body=await response.clone().json().catch(()=>null);
       if(!body || typeof body.error!=='string' || !body.errorMessage)return response;
       const headers=new Headers(response.headers);headers.delete('Content-Length');headers.delete('Content-Encoding');
       return new Response(JSON.stringify({...body,error:localizeApiMessage(body.errorMessage,body.error,translate.current)}),{status:response.status,statusText:response.statusText,headers});
-    }).catch(error=>{if(!path.startsWith('/monitoring/')&&!init?.signal?.aborted)reportSentinelFailure({kind:'request',code:'request-failed'});throw error;});
-  }, [request,token]);
+    });
+  }, [request]);
 }

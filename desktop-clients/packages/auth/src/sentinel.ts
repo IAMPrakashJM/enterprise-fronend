@@ -14,7 +14,7 @@ export class SentinelQueue {
  private pending:SentinelEvent[]=[];private busy=false;private failures=0;private next=0;private stopped=false;
  private send:(events:SentinelEvent[])=>Promise<void>;private now:()=>number;
  constructor(send:(events:SentinelEvent[])=>Promise<void>,now=()=>Date.now()){this.send=send;this.now=now;}
- capture(event:unknown){try{const safe=sanitizeSentinelEvent(event);if(!safe||this.stopped)return;const duplicate=this.pending.some(e=>e.kind===safe.kind&&e.code===safe.code&&e.pageId===safe.pageId&&e.line===safe.line&&e.column===safe.column&&e.status===safe.status);if(!duplicate)this.pending=[...this.pending,safe].slice(-50);}catch{/* Monitoring must never interrupt an application operation. */}}
+ capture(event:unknown){try{const safe=sanitizeSentinelEvent(event);if(!safe||this.stopped)return;const duplicate=safe.kind!=='request'&&safe.kind!=='render'&&this.pending.some(e=>e.kind===safe.kind&&e.code===safe.code&&e.pageId===safe.pageId&&e.line===safe.line&&e.column===safe.column&&e.status===safe.status);if(!duplicate)this.pending=[...this.pending,safe].slice(-50);}catch{/* Monitoring must never interrupt an application operation. */}}
  async flush(){if(this.busy||this.stopped||!this.pending.length||this.now()<this.next)return;this.busy=true;const batch=this.pending.slice(0,10);try{await this.send(batch);this.pending=this.pending.filter(e=>!batch.some(sent=>sent.id===e.id));this.failures=0;this.next=0;}catch{this.failures=Math.min(this.failures+1,6);this.next=this.now()+Math.min(60000,1000*2**this.failures);}finally{this.busy=false;}}
  stop(){this.stopped=true;this.pending=[];}
  get size(){return this.pending.length;}

@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { act } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { API_BASE, DEMO_ACCOUNTS, SessionProvider, authedFetch, readToken, useSession } from "./session.tsx";
@@ -55,6 +55,7 @@ function Probe() {
   const session = useSession();
   return (
     <div>
+      <output data-testid="expired">{String(session.expired)}</output>
       <output data-testid="status">{session.status}</output>
       <output data-testid="user">{session.user?.name ?? "-"}</output>
       <button onClick={() => void session.login("user1", "pw")}>sign in</button>
@@ -317,7 +318,8 @@ describe("session invalidation across windows", () => {
     fetchMock.mockResolvedValueOnce(json(200, { user })).mockResolvedValueOnce(json(401, {}));
     mount(); await waitFor(() => expect(status()).toBe("authenticated"));
     await act(async () => { await authedFetch("/records"); });
-    expect(status()).toBe("anonymous");
+    expect(status()).toBe("authenticated");
+    expect(screen.getByTestId("expired")).toHaveTextContent("true");
     expect(readToken()).toBeNull();
   });
   test("a monitoring 401 cannot sign out an otherwise authenticated user", async () => {
@@ -348,4 +350,20 @@ test("a pending sign-in cannot undo logout", async () => {
   await act(async () => { resolve(json(200, { token: "late", user })); });
   expect(status()).toBe("anonymous");
   expect(readToken()).toBeNull();
+});
+
+test('same-user reauthentication keeps the retained session; a different identity cannot unlock it',async()=>{
+ localStorage.setItem(STORAGE_KEY,'tok-1');fetchMock.mockResolvedValueOnce(json(200,{user}));mount();await waitFor(()=>expect(status()).toBe('authenticated'));
+ fetchMock.mockResolvedValueOnce(json(401,{}));await act(async()=>{await authedFetch('/records');});expect(screen.getByTestId('expired')).toHaveTextContent('true');
+ fetchMock.mockResolvedValueOnce(json(200,{token:'foreign',user:{...user,id:'other'}})).mockResolvedValueOnce(json(200,{}));
+ fireEvent.click(screen.getByText('sign in'));await waitFor(()=>expect(fetchMock).toHaveBeenCalledTimes(4));expect(readToken()).toBeNull();expect(screen.getByTestId('expired')).toHaveTextContent('true');
+ fetchMock.mockResolvedValueOnce(json(200,{token:'renewed',user}));fireEvent.click(screen.getByText('sign in'));await waitFor(()=>expect(readToken()).toBe('renewed'));expect(screen.getByTestId('expired')).toHaveTextContent('false');
+});
+
+test('another window can expire and renew the same identity without discarding this workspace',async()=>{
+ localStorage.setItem(STORAGE_KEY,'one');fetchMock.mockResolvedValueOnce(json(200,{user}));mount();await waitFor(()=>expect(status()).toBe('authenticated'));
+ localStorage.setItem('nexora-session-expired','1');localStorage.removeItem(STORAGE_KEY);
+ await act(async()=>window.dispatchEvent(new StorageEvent('storage',{key:STORAGE_KEY,newValue:null})));expect(status()).toBe('authenticated');expect(screen.getByTestId('expired')).toHaveTextContent('true');
+ fetchMock.mockResolvedValueOnce(json(200,{user}));localStorage.setItem(STORAGE_KEY,'renewed');localStorage.removeItem('nexora-session-expired');
+ await act(async()=>window.dispatchEvent(new StorageEvent('storage',{key:STORAGE_KEY,newValue:'renewed'})));await waitFor(()=>expect(screen.getByTestId('expired')).toHaveTextContent('false'));expect(status()).toBe('authenticated');
 });

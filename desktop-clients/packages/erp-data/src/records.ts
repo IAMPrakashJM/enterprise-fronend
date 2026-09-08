@@ -28,8 +28,12 @@ export interface RecordAdapter {
     discard(key: string, version: number, operationId: string): Promise<void>;
 }
 /** A definitive rejection (400/413/422), safe to amend and submit as a new operation. */
+export class RecordRequestFailure extends Error {
+    constructor(public status?: number, public reference?: string) { super("Request failed"); }
+}
 export class RecordRejected extends Error {
-    constructor(message: string, public fieldErrors: Record<string, string> = {}) { super(message); }
+    status = 422;
+    constructor(message: string, public fieldErrors: Record<string, string> = {}, public reference?: string) { super(message); }
 }
 export class RecordConflict extends Error {
     constructor() { super("A newer version exists. Review it before saving again."); }
@@ -46,12 +50,12 @@ export function createHttpRecordAdapter(fetcher: (path: string, init?: RequestIn
                 for (const [key, value] of Object.entries(body.fieldErrors))
                     if (typeof value === "string")
                         fields[key] = value;
-            throw new RecordRejected("The service rejected these values. Correct the record, then save again.", fields);
+            throw new RecordRejected("The service rejected these values. Correct the record, then save again.", fields, response.headers.get("X-Sentinel-Reference") ?? undefined);
         }
         if (response.status === 409)
             throw new RecordConflict();
         if (!response.ok)
-            throw new Error(response.status === 401 ? "Your session ended. Sign in again to continue." : "Could not reach the record service. Your edits are still here; retry when it is available.");
+            throw new RecordRequestFailure(response.status, response.headers.get("X-Sentinel-Reference") ?? undefined);
         if (response.status === 204)
             return;
         const result = await response.json();
@@ -105,6 +109,7 @@ export interface EditorState<T> {
     loading: boolean;
     busy: boolean;
     error: string | null;
+    failure?: {status?:number;reference?:string};
     rejected: boolean;
     conflict: boolean;
     reviewed: boolean;
@@ -161,7 +166,7 @@ export class RecordEditor<T> {
         void this.load();
     } };
     private async load() {
-        this.patch({ loading: true, error: null });
+        this.patch({ loading: true, error: null, failure: undefined });
         try {
             const result = await this.adapter.load<T>(this.key);
             if (result.record)
@@ -174,7 +179,7 @@ export class RecordEditor<T> {
                 lastSaved: result.record?.savedAt ?? null, conflict: false, rejected: false, reviewed: false, ready: true, loading: false });
         }
         catch (e) {
-            this.patch({ error: String((e as Error).message), loading: false });
+            this.patch({ error: String((e as Error).message), failure: e as RecordRequestFailure, loading: false });
         }
     }
     update = (next: T | ((previous: T) => T)) => {
@@ -196,7 +201,7 @@ export class RecordEditor<T> {
             return Promise.resolve();
         clearTimeout(this.timer);
         this.pending = operation;
-        this.patch({ busy: true, error: null, fieldErrors: {}, rejected: false });
+        this.patch({ busy: true, error: null, failure: undefined, fieldErrors: {}, rejected: false });
         this.inFlight = (async () => {
             try {
                 await operation();
@@ -205,7 +210,7 @@ export class RecordEditor<T> {
             catch (e) {
                 if (e instanceof RecordRejected)
                     this.pending = null;
-                this.patch({ error: (e as Error).message, rejected: e instanceof RecordRejected, fieldErrors: e instanceof RecordRejected ? e.fieldErrors : {}, conflict: e instanceof RecordConflict || this.state.conflict, reviewed: false });
+                this.patch({ failure: e as RecordRequestFailure, error: (e as Error).message, rejected: e instanceof RecordRejected, fieldErrors: e instanceof RecordRejected ? e.fieldErrors : {}, conflict: e instanceof RecordConflict || this.state.conflict, reviewed: false });
             }
             finally {
                 this.patch({ busy: false });

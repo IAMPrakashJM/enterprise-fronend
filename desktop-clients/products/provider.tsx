@@ -10,16 +10,16 @@ import {product, services} from "./active";
 /** Load only the preferred language (the response includes English fallback).
  * Later switches load before committing the preference, without unmounting pages. */
 export function ApplicationProductProvider({children}: {children: React.ReactNode}) {
-  const {user} = useSession();
+  const {user,expired} = useSession();
   const token = readToken();
-  const identity = user ? JSON.stringify([user.tenantId,user.id,user.role,token,product.id]) : "";
+  const identity = user ? JSON.stringify([user.tenantId,user.id,user.role,user.branch,product.id]) : "";
   const identityRef = useRef(identity); identityRef.current = identity;
   const cache = useRef({identity, locales: new Map<LanguageKey, LocalizationResponse>(), pending: new Map<LanguageKey, Promise<void>>()});
   if (cache.current.identity !== identity) cache.current = {identity, locales: new Map(), pending: new Map()};
   const [attempt, retry] = useState(0);
   const [state, setState] = useState<{identity: string; product?: ProductDefinition; navigation?: NavigationResponse; error?: string}>({identity:""});
   useEffect(() => {
-    if (!identity) return;
+    if (!identity || expired) return;
     const controller = new AbortController(); let active = true;
     const request = services.request ?? authedFetch;
     const read = async (path: string) => {
@@ -27,7 +27,7 @@ export function ApplicationProductProvider({children}: {children: React.ReactNod
       if (!response.ok) throw new Error(`Application configuration could not be loaded (${response.status}).`);
       return response.json();
     };
-    setState({identity});
+    setState(previous=>previous.identity===identity?previous:{identity});
     void Promise.all([
       read(`/navigation?productId=${encodeURIComponent(product.id)}`).then(value => parseNavigation(value, product.id)),
       read('/preferences').catch(() => ({})).then(value => sanitizePreferences(value.preferences).language).then(async language =>
@@ -36,9 +36,9 @@ export function ApplicationProductProvider({children}: {children: React.ReactNod
       if (!active || identityRef.current !== identity || readToken() !== token) return;
       cache.current.locales.set(locale.language, locale);
       setState({identity, navigation, product:applyApplicationConfig(product, navigation, [locale])});
-    }).catch(error => {if (active) setState({identity, error:error.message});});
+    }).catch(error => {if (active) setState(previous=>({...previous,identity,error:error.message}));});
     return () => {active = false; controller.abort();};
-  }, [identity, attempt, token]);
+  }, [identity, attempt, token, expired]);
 
   const loadLanguage = useCallback(async (language: LanguageKey) => {
     if (identityRef.current !== identity || readToken() !== token || !state.navigation) throw new Error('Session ended.');

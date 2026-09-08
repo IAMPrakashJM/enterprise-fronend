@@ -1,5 +1,5 @@
 "use client";
-import {reportSentinelFailure} from "./sentinel";
+import {recoveryRequest} from "./recovery";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
@@ -24,6 +24,7 @@ export type SessionStatus = "loading" | "anonymous" | "authenticated";
 
 export interface SessionValue {
   status: SessionStatus;
+  expired?: boolean;
   user: SessionUser | null;
   /** Resolves to null on success, or the message to show under the form. */
   login: (username: string, password: string) => Promise<string | null>;
@@ -31,6 +32,7 @@ export interface SessionValue {
 }
 
 const STORAGE_KEY = "nexora-session-token";
+const EXPIRED_KEY = "nexora-session-expired";
 const INVALIDATED_EVENT = "nexora-session-invalidated";
 
 /* Read once at module scope so both bundlers can statically replace it. Next inlines
@@ -79,12 +81,23 @@ function writeToken(token: string | null) {
   }
 }
 
+function expiredMarker(): boolean {try{return !!window.localStorage.getItem(EXPIRED_KEY);}catch{return false;}}
+function markExpired(value:boolean) {try{if(value)window.localStorage.setItem(EXPIRED_KEY,String(Date.now()));else window.localStorage.removeItem(EXPIRED_KEY);}catch{}}
+const sameIdentity=(a:SessionUser,b:SessionUser)=>['id','tenantId','role','branch'].every(key=>a[key as keyof SessionUser]===b[key as keyof SessionUser]);
+
+/** Locks the current workspace without allowing a stale response to end a newer session. */
+export function expireCurrentSession(token:string|null) {
+ if(token&&readToken()===token){markExpired(true);writeToken(null);window.dispatchEvent(new Event(INVALIDATED_EVENT));}
+}
+
 const SessionContext = createContext<SessionValue | null>(null);
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<SessionStatus>("loading");
   const [user, setUser] = useState<SessionUser | null>(null);
   const generation = useRef(0);
+  const [expired,setExpired]=useState(false);
+  const currentUser=useRef(user);currentUser.current=user;
 
   /* Invalidate the rendered session before validating a token from another
      window. Request generations prevent late responses from restoring old users. */
@@ -92,12 +105,12 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     const validate = async () => {
       const request = ++generation.current;
       const token = readToken();
-      setUser(null);
+      setExpired(false);setUser(null);
       setStatus(token ? "loading" : "anonymous");
       if (!token) return;
       const current = () => generation.current === request && readToken() === token;
       try {
-        const response = await fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${token}` } });
+        const response = await fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${token}` }, signal:AbortSignal.timeout(30000) });
         if (!current()) return;
         if (!response.ok) {
           writeToken(null);
@@ -114,11 +127,29 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         if (current()) { writeToken(null); setStatus("anonymous"); }
       }
     };
-    const storageChanged = (event: StorageEvent) => {
-      if ((event.key === STORAGE_KEY || event.key === null) &&
-          (!event.storageArea || event.storageArea === window.localStorage)) void validate();
+    const renewRetained = async () => {
+      const retained=currentUser.current,token=readToken(),request=++generation.current;
+      setExpired(true);
+      if(!retained||!token)return;
+      try {
+        const response=await fetch(`${API}/auth/me`,{headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(30000)});
+        if(generation.current!==request||readToken()!==token)return;
+        const body=await response.json().catch(()=>null);
+        if(response.ok&&body?.user&&sameIdentity(retained,body.user)){setUser(body.user);setExpired(false);setStatus('authenticated');}
+        else if(response.ok&&body?.user){void validate();}
+        else expireCurrentSession(token);
+      } catch {/* Keep the old workspace locked until identity can be verified. */}
     };
-    const invalidated = () => { void validate(); };
+    const storageChanged = (event: StorageEvent) => {
+      if(event.storageArea&&event.storageArea!==window.localStorage)return;
+      if(event.key===EXPIRED_KEY&&event.newValue===null&&!readToken()){void validate();return;}
+      if(event.key===STORAGE_KEY||event.key===null){
+        if(currentUser.current&&!readToken()&&expiredMarker()){generation.current++;setExpired(true);}
+        else if(currentUser.current&&readToken())void renewRetained();
+        else void validate();
+      }
+    };
+    const invalidated = () => { if(currentUser.current){generation.current++;setExpired(true);}else void validate(); };
     window.addEventListener("storage", storageChanged);
     window.addEventListener(INVALIDATED_EVENT, invalidated);
     void validate();
@@ -137,24 +168,30 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
+        signal: AbortSignal.timeout(30000),
       });
     } catch {
-      return `Could not reach the demo API at ${API}. Start it with: node dummy-api/server.mjs`;
+      return "recovery.network";
     }
-    if (!response.ok) {
-      const body = (await response.json().catch(() => ({}))) as { error?: string };
-      return body.error ?? "Sign-in failed.";
-    }
-    const body = (await response.json()) as { token: string; user: SessionUser };
+    if (!response.ok) return response.status===429?'recovery.rate':response.status>=500?'recovery.signInUnavailable':'recovery.signInFailed';
+    const body = await response.json().catch(()=>null) as {token:string;user:SessionUser}|null;
+    if(!body || typeof body.token!=='string' || !body.token || !body.user || ['id','tenantId','role','branch'].some(key=>typeof body.user[key as keyof SessionUser]!=='string'))return 'recovery.signInUnavailable';
     if (generation.current !== request) return "Sign-in was cancelled. Please try again.";
-    writeToken(body.token);
+    if(expired && currentUser.current && !sameIdentity(currentUser.current,body.user)) {
+      void fetch(`${API}/auth/logout`,{method:'POST',headers:{Authorization:`Bearer ${body.token}`}}).catch(()=>{});
+      return 'recovery.sameUser';
+    }
+    setExpired(false);
+    writeToken(body.token);markExpired(false);
     setUser(body.user);
     setStatus("authenticated");
     return null;
-  }, []);
+  }, [expired]);
 
   const logout = useCallback(async () => {
     generation.current++;
+    setExpired(false);
+    markExpired(false);
     const token = readToken();
     writeToken(null);
     setUser(null);
@@ -168,7 +205,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const value = useMemo<SessionValue>(() => ({ status, user, login, logout }), [login, logout, status, user]);
+  const value = useMemo<SessionValue>(() => ({ status, user, login, logout, expired }), [login, logout, status, user, expired]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
@@ -189,14 +226,9 @@ export async function authedFetch(path: string, init: RequestInit = {}): Promise
   const headers = new Headers(init.headers);
   if (token) headers.set("Authorization", `Bearer ${token}`);
   const monitoring=path.startsWith('/monitoring/');
-  const report=(status?:number)=>{if(!monitoring&&typeof window!=='undefined')reportSentinelFailure({kind:'request',code:'request-failed',status});};
-  const timer=!monitoring&&typeof window!=='undefined'?setTimeout(()=>reportSentinelFailure({kind:'request',code:'request-timeout'}),15000):undefined;
-  let response:Response;
-  try{response=await fetch(`${API}${path}`, { ...init, headers });}catch(error){if(!init.signal?.aborted)report();throw error;}finally{if(timer!==undefined)clearTimeout(timer);}
-  if(response.status>=500||response.status===429)report(response.status);
+  const response=await recoveryRequest((_path,options)=>fetch(`${API}${path}`,options),path,{...init,headers});
   if (response.status === 401 && !monitoring && token && readToken() === token) {
-    writeToken(null);
-    window.dispatchEvent(new Event(INVALIDATED_EVENT));
+    expireCurrentSession(token);
   }
   return response;
 }

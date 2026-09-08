@@ -42,7 +42,7 @@ test("failed save keeps edits and exposes retry", async () => {
   render(form()); await ready();
   fireEvent.change(screen.getByRole("textbox", { name: /Name/ }), { target: { value: "Keep me" } });
   fireEvent.click(screen.getByRole("button", { name: "Save" }));
-  expect(await screen.findByRole("alert")).toHaveTextContent("Service unavailable");
+  expect(await screen.findByRole("alert")).toHaveTextContent("Could not reach the service");
   expect(screen.getByRole("textbox", { name: /Name/ })).toHaveValue("Keep me");
   fireEvent.click(screen.getByRole("button", { name: "Retry" }));
   await waitFor(() => expect(screen.getByText("Saved", { exact: true })).toBeVisible());
@@ -94,4 +94,9 @@ test("server field errors attach to the input and allow correction", async () =>
   fireEvent.change(screen.getByRole("textbox",{name:/Name/}),{target:{value:"Unique"}});
   fireEvent.click(screen.getByRole("button",{name:"Save"}));
   await waitFor(()=>expect(screen.getByText("Saved",{exact:true})).toBeVisible());
+});
+
+test('permission failure keeps edits and does not offer a mutation retry',async()=>{
+ const {RecordRequestFailure}=await import('@pepbits/erp-data');adapter.save.mockRejectedValueOnce(new RecordRequestFailure(403,'trace-form'));render(form());await ready();
+ fireEvent.change(screen.getByRole('textbox',{name:/Name/}),{target:{value:'Retain denied edits'}});fireEvent.click(screen.getByRole('button',{name:'Save'}));expect(await screen.findByRole('alert')).toHaveTextContent('Access not permitted');expect(screen.queryByRole('button',{name:'Retry'})).toBeNull();expect(screen.getByRole('textbox',{name:/Name/})).toHaveValue('Retain denied edits');
 });

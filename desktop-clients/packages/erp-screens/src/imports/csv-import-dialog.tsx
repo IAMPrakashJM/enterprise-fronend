@@ -1,5 +1,6 @@
 "use client";
-import {reportOperationFailure} from "@pepbits/auth";
+import {RecoveryNotice,failureFromError,type Failure} from "@pepbits/ops-ui";
+import {readToken,reportOperationFailure} from "@pepbits/auth";
 import { TableContainer } from "@pepbits/ops-ui";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, TableCaption } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
@@ -18,6 +19,8 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  const [csv,setCsv]=useState<ReturnType<typeof parseCsv>|null>(null),[filename,setFilename]=useState(''),[mapping,setMapping]=useState<Record<string,string>>({});
  const [job,setJob]=useState<ImportJob|null>(null),[error,setError]=useState<string|null>(null),[busy,setBusy]=useState(false),[confirm,setConfirm]=useState(false),[view,setView]=useState<'upload'|'mapping'|'review'>('upload');
  const [filter,setFilter]=useState<'all'|'errors'>('all');
+ const [failure,setFailure]=useState<Failure|null>(null);const retryAction=useRef<()=>void>(()=>{});
+ const fail=(e:unknown)=>{setFailure(failureFromError(e));};
  const closing=useRef(false);
  const active=useRef(true),stop=useRef(false),lock=useRef(false),generation=useRef(0),preview=useRef<{id:string;rows:Record<string,string>[]}|null>(null);
  const latest=useRef({onImported,onClose});latest.current={onImported,onClose};
@@ -25,10 +28,10 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  useEffect(()=>{
   if(!open)return;closing.current=false;stop.current=false;const version=++generation.current;
   if(job||csv)return;
-  setBusy(true);void adapter.latest(productId,page.id).then(value=>{if(active.current&&version===generation.current&&value){setJob(value);setView('review');}}).catch(e=>{reportOperationFailure();if(active.current&&version===generation.current)setError(e.message);}).finally(()=>{if(active.current&&version===generation.current)setBusy(false);});
+  setBusy(true);void adapter.latest(productId,page.id).then(value=>{if(active.current&&version===generation.current&&value){setJob(value);setView('review');}}).catch(e=>{reportOperationFailure();if(active.current&&version===generation.current){fail(e);retryAction.current=()=>{void adapter.latest(productId,page.id).then(value=>{setFailure(null);if(value){setJob(value);setView("review");}}).catch(fail);};}}).finally(()=>{if(active.current&&version===generation.current)setBusy(false);});
  },[open,adapter,productId,page.id]);
  const readFile=async(file?:File)=>{
-  if(!file)return;const version=++generation.current;setError(null);setBusy(true);
+  if(!file)return;const version=++generation.current;setError(null);setFailure(null);setBusy(true);
   try{
    if(file.size>2*1024*1024||!file.name.toLowerCase().endsWith('.csv'))throw new Error('Choose a UTF-8 .csv file up to 2 MB.');
    const parsed=parseCsv(new TextDecoder('utf-8',{fatal:true}).decode(await file.arrayBuffer()));
@@ -38,17 +41,17 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
   finally{if(active.current&&version===generation.current)setBusy(false);}
  };
  const validate=async()=>{
-  if(!csv||lock.current)return;lock.current=true;setBusy(true);setError(null);
+  if(!csv||lock.current)return;lock.current=true;setBusy(true);setError(null);setFailure(null);
   try{preview.current??={id:crypto.randomUUID(),rows:mapImportRows(csv.rows,mapping)};const result=await adapter.preview(productId,page.id,preview.current.rows,preview.current.id);if(active.current){setJob(result);setView('review');setFilter('all');}}
-  catch(e){reportOperationFailure();if(active.current)setError((e as Error).message);}
+  catch(e){reportOperationFailure();if(active.current){fail(e);retryAction.current=()=>void validate();}}
   finally{lock.current=false;if(active.current){setBusy(false);if(closing.current)latest.current.onClose();}}
  };
  const run=async(retry=false)=>{
-  if(!job||lock.current)return;lock.current=true;stop.current=false;setBusy(true);setConfirm(false);setError(null);
+  if(!job||lock.current)return;lock.current=true;stop.current=false;setBusy(true);setConfirm(false);setError(null);setFailure(null);
   try{
    let next=await adapter.run(job.id,retry);if(!active.current)return;setJob(next);latest.current.onImported();
    while(!stop.current&&active.current&&next.rows.some(row=>row.status==='pending')){next=await adapter.run(job.id);if(active.current){setJob(next);latest.current.onImported();}}
-  }catch(e){reportOperationFailure();if(active.current)setError((e as Error).message);}
+  }catch(e){reportOperationFailure();if(active.current){fail(e);retryAction.current=()=>void run(retry);}}
   finally{lock.current=false;if(active.current){setBusy(false);if(closing.current)latest.current.onClose();}}
  };
  const close=()=>{closing.current=true;stop.current=true;if(!lock.current)onClose();};
@@ -64,6 +67,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
  return <>
  <Modal open={open} onClose={close} title={t("Import {page}",{page:t(page.title)})} subtitle="ui.upload.csv.map.columns.review.validation.confirm.results.e725ed21" size="xl">
   <div className="space-y-4 p-5">
+   {failure?<RecoveryNotice sessionRestored={!!readToken()} failure={failure} preservesValues busy={busy} onRetry={()=>retryAction.current()} onReturn={close}/>:null}
    {error?<div role="alert" className="rounded-lg border border-[var(--border)] p-3 text-[var(--danger-ink)]">{localizeImportError(error,t)}</div>:null}
    {view==='upload'?<><p><LocalizedText message="ui.create.new.records.from.utf.8.csv.existing.records.are.n.e8ccc310" /></p><Input type="file" accept=".csv,text/csv" label="ui.upload.csv.file.032e2024" disabled={busy} onChange={event=>{void readFile(event.target.files?.[0]);event.target.value='';}} /></>:null}
    {view==='mapping'&&csv?<>
@@ -83,7 +87,7 @@ export function CsvImportDialog({open,onClose,page,productId,onImported}: {open:
       {counts.pending?<Button onClick={()=>job.confirmed?void run():setConfirm(true)}>{job.confirmed?<LocalizedText message="ui.resume.import.f12822f9" />:t("Import valid rows: {count}",{count:counts.pending})}</Button>:null}
       {job.rows.some(row=>row.status==='failed'&&row.retryable)?<Button onClick={()=>void run(true)}><LocalizedText message="ui.retry.failed.rows.6160b90e" /></Button>:null}
       {!job.confirmed&&csv?<Button onClick={()=>{setView('mapping');setJob(null);preview.current=null;}}><LocalizedText message="ui.change.mapping.6872ef3c" /></Button>:null}
-      <Button disabled={job.confirmed&&(counts.pending>0||job.rows.some(row=>row.status==='failed'&&row.retryable))} onClick={()=>{setView('upload');setJob(null);setCsv(null);preview.current=null;setError(null);}}><LocalizedText message="ui.start.new.import.eabc7445" /></Button>
+      <Button disabled={job.confirmed&&(counts.pending>0||job.rows.some(row=>row.status==='failed'&&row.retryable))} onClick={()=>{setView('upload');setJob(null);setCsv(null);preview.current=null;setError(null);setFailure(null);}}><LocalizedText message="ui.start.new.import.eabc7445" /></Button>
      </>}
     </div>
    </>:null}

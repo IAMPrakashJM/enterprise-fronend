@@ -91,7 +91,7 @@ describe("searchWorklist", () => {
   });
 
   test("a refusal is not retryable", async () => {
-    const fetcher = vi.fn().mockResolvedValue({ ok: false, status: 403, json: async () => ({}) });
+    const fetcher = vi.fn().mockResolvedValue(new Response('{}',{status:403}));
     const result = await searchWorklist({ pageId: "p", title: "P", entity: "e", definitions, filters: {} }, fetcher);
     expect(result.failure?.kind).toBe("denied");
     expect(result.failure?.retryable).toBe(false);

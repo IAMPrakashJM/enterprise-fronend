@@ -39,5 +39,12 @@ try{
  const list=await fetch(api+'/monitoring/incidents',{headers:{Authorization:`Bearer ${token}`,'X-Product-Id':'nexora'}});assert.equal(list.status,200);
  const payload=await list.json();assert.ok(JSON.stringify(payload).includes('native-panic'),'Restart report must reach demo API');
  assert.ok(!JSON.stringify(payload).includes('Sentinel isolated recovery test'),'Panic text must stay out of API');
+ await js('window.__retainedHeader=document.querySelector("header");localStorage.setItem("nexora-session-expired","1");localStorage.removeItem("nexora-session-token");window.dispatchEvent(new Event("nexora-session-invalidated"));return true;');
+ await until(()=>js('return !!document.querySelector("dialog[open]")'),'native session recovery dialog');
+ for(const [selector,text] of [['dialog input[autocomplete="username"]','admin'],['dialog input[type=password]','admin']])await wd(`/element/${await element(selector)}/value`,{text});
+ await wd(`/element/${await element('dialog button[type=submit]')}/click`,{});
+ await until(()=>js('return !document.querySelector("dialog[open]")'),'native same-user sign-in');
+ assert.equal(await js('return window.__retainedHeader===document.querySelector("header")'),true,'Reauthentication must retain the mounted native shell');
+ console.log('PASS native recovery: locked session, same-user sign-in, mounted shell retained');
  console.log('PASS native Sentinel: real panic, process exit, restart, authenticated upload, marker acknowledgement, sanitized incident');
 }finally{if(session)await wd('',undefined,'DELETE').catch(()=>{});rmSync(scratch,{recursive:true,force:true});}

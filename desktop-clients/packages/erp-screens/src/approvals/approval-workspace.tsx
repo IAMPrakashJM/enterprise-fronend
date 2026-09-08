@@ -1,5 +1,6 @@
 "use client";
-import {reportOperationFailure} from "@pepbits/auth";
+import {RecoveryNotice,failureFromError,type Failure} from "@pepbits/ops-ui";
+import {readToken,reportOperationFailure} from "@pepbits/auth";
 import { Card } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 import {localizeApprovalNotice,localizeApiMessage} from "@pepbits/erp-config";
@@ -26,22 +27,23 @@ function Workspace({productId,pageId,recordId}:{productId:string;pageId:string;r
  const [data,setData]=useState<ApprovalData|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false),[comment,setComment]=useState('');
  const [status,setStatus]=useState('pending'),[owner,setOwner]=useState('all'),[query,setQuery]=useState(''),[stage,setStage]=useState(''),[offset,setOffset]=useState(0),[selected,setSelected]=useState<string[]>([]);
  const [settings,setSettings]=useState(false),[stages,setStages]=useState<ApprovalStage[]>([]),[confirmation,setConfirmation]=useState<ApprovalChange|null>(null),[uncertain,setUncertain]=useState(false);
+ const [failure,setFailure]=useState<Failure|null>(null);
  const alive=useRef(true),lock=useRef(false),sequence=useRef(0),pending=useRef<{change:ApprovalChange;id:string}|null>(null);
  const refresh=async()=>{
-  const seq=++sequence.current;setBusy(true);setError('');
-  try{const next=await adapter.read([productId,pageId],recordId);if(alive.current&&sequence.current===seq){setData(next);setStages(next.config.stages);setSelected([]);}}
-  catch(e){reportOperationFailure();if(alive.current&&sequence.current===seq)setError((e as Error).message);}
+  const seq=++sequence.current;setBusy(true);setError('');setFailure(null);
+  try{const next=await adapter.read([productId,pageId],recordId);if(alive.current&&sequence.current===seq){setData(next);if(!settings)setStages(next.config.stages);setSelected([]);}}
+  catch(e){reportOperationFailure();if(alive.current&&sequence.current===seq)setFailure(failureFromError(e));}
   finally{if(alive.current&&sequence.current===seq)setBusy(false);}
  };
  useEffect(()=>{alive.current=true;void refresh();return()=>{alive.current=false;sequence.current++;};},[adapter]);
  const mutate=async(change?:ApprovalChange)=>{
   if(lock.current)return;pending.current??=change?{change,id:crypto.randomUUID()}:null;if(!pending.current)return;
-  lock.current=true;setBusy(true);setError('');setConfirmation(null);const operation=pending.current;
+  lock.current=true;setBusy(true);setError('');setFailure(null);setConfirmation(null);const operation=pending.current;
   try{const next=await adapter.change([productId,pageId],operation.change,operation.id,recordId);if(!alive.current)return;setData(next);setStages(next.config.stages);setSelected([]);setComment('');setSettings(false);pending.current=null;setUncertain(false);}
-  catch(e){reportOperationFailure();if(alive.current){setError((e as Error).message);if(e instanceof ApprovalError&&e.status>=400&&e.status<500){pending.current=null;setUncertain(false);}else setUncertain(true);}}
+  catch(e){reportOperationFailure();if(alive.current){setFailure(failureFromError(e));if(e instanceof ApprovalError&&e.status>=400&&e.status<500&&![408,429].includes(e.status)){pending.current=null;setUncertain(false);}else setUncertain(true);}}
   finally{lock.current=false;if(alive.current)setBusy(false);}
  };
- const disabled=busy||!data||uncertain;
+ const disabled=busy||!data||uncertain||failure?.kind==='denied'||failure?.kind==='session-expired';
  const filtered=(data?.items??[]).filter(item=>recordId||(!status||item.status===status)&&(!stage||item.stages[item.stage]?.name===stage)&&(owner==='all'||owner==='mine'&&item.requesterId===user?.id||owner==='assigned'&&item.canAct)&&`${item.recordId} ${item.requester}`.toLowerCase().includes(query.toLowerCase()));
  const shown=filtered.slice(offset,offset+25),actionItems=(data?.items??[]).filter(item=>selected.includes(item.recordId)&&item.canAct);
  const choose=(decision:'approve'|'reject'|'request-changes',ids=actionItems)=>setConfirmation({action:'decide',decision,comment,items:ids.map(item=>({recordId:item.recordId,version:item.version}))});
@@ -49,6 +51,7 @@ function Workspace({productId,pageId,recordId}:{productId:string;pageId:string;r
  return <Card shadow="none" as="section" radius="xl" aria-label={t(recordId?'Record approval':'Approval inbox')} className="space-y-4 p-4 text-sm">
   <div className="flex items-center gap-3"><h2 className="flex-1 text-lg font-semibold">{t(recordId?'Record approval':'Approval inbox')}</h2><Button disabled={busy||uncertain} onClick={()=>void refresh()}><LocalizedText message="ui.refresh.approvals.fe2ff673" /></Button>{data?.canConfigure&&!recordId?<Button disabled={disabled} onClick={()=>setSettings(!settings)}><LocalizedText message="ui.configure.stages.b1a58fa2" /></Button>:null}</div>
   <p><LocalizedText message="ui.review.the.saved.record.before.deciding.approval.stages.4091af11" /></p>
+  {failure?<RecoveryNotice sessionRestored={!!readToken()} failure={failure} preservesValues busy={busy} onRetry={()=>void (uncertain?mutate():refresh())} onReturn={()=>navigation.open({pageId})}/>:null}
   {error?<div role="alert" className="text-[var(--danger-ink)]">{t(error)}</div>:null}
   {uncertain?<div role="status"><LocalizedText message="ui.the.action.has.not.been.confirmed.ef061242" />{" "}<Button disabled={busy} onClick={()=>void mutate()}><LocalizedText message="ui.retry.approval.action.d14a0834" /></Button></div>:null}
   {busy?<p role="status"><LocalizedText message="ui.updating.approvals.8c051f99" /></p>:null}

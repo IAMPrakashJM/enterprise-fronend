@@ -3242,3 +3242,20 @@ sentinel.code.native-command-failed,Native command failed,فشل أمر سطح �
 sentinel.code.native-panic,Native application failure,فشل تطبيق سطح المكتب,,Pending,,Sentinel monitoring
 View details,View details,عرض التفاصيل,,Pending,,Sentinel monitoring
 History,History,السجل,,Pending,,Sentinel monitoring
+recovery.network,Check your connection. The result is not confirmed; check the record before starting a new operation.,تحقق من اتصالك. لم يتم تأكيد النتيجة؛ تحقق من السجل قبل بدء عملية جديدة.,,Pending,,User-facing recovery; native-speaker review required
+recovery.timeout,The service did not respond in time. The operation may have completed; retry the same action to check its result.,لم تستجب الخدمة في الوقت المحدد. ربما اكتملت العملية؛ أعد محاولة الإجراء نفسه للتحقق من النتيجة.,,Pending,,User-facing recovery; native-speaker review required
+recovery.retained,Your values are still here. Keep this page open while recovering.,قيمك لا تزال هنا. أبقِ هذه الصفحة مفتوحة أثناء الاستعادة.,,Pending,,User-facing recovery; native-speaker review required
+recovery.session,Sign in with the same account to continue with your unsaved work. Do not reload or close this window.,سجّل الدخول بالحساب نفسه لمتابعة عملك غير المحفوظ. لا تُعد تحميل هذه النافذة أو تغلقها.,,Pending,,User-facing recovery; native-speaker review required
+recovery.sameUser,Use the same account and access role to recover this work. Sign out to use a different account.,استخدم الحساب نفسه ودور الوصول نفسه لاستعادة هذا العمل. سجّل الخروج لاستخدام حساب آخر.,,Pending,,User-facing recovery; native-speaker review required
+recovery.return,Return to page,العودة إلى الصفحة,,Pending,,User-facing recovery; native-speaker review required
+recovery.discardSignOut,Discard unsaved work and sign out,تجاهل العمل غير المحفوظ وتسجيل الخروج,,Pending,,User-facing recovery; native-speaker review required
+recovery.discardConfirm,Discard the work kept in this window and sign out? Unsaved values may be lost.,هل تريد تجاهل العمل المحتفظ به في هذه النافذة وتسجيل الخروج؟ قد تفقد القيم غير المحفوظة.,,Pending,,User-facing recovery; native-speaker review required
+recovery.rateTitle,Too many requests,طلبات كثيرة جداً,,Pending,,User-facing recovery; native-speaker review required
+recovery.rate,"Wait a moment, then retry the same action.",انتظر قليلاً، ثم أعد محاولة الإجراء نفسه.,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportAudit,"The file was generated, but its audit entry was not confirmed. Retry records the audit only; it does not download another file.",تم إنشاء الملف، لكن لم يتم تأكيد سجل التدقيق الخاص به. إعادة المحاولة تسجل التدقيق فقط ولا تنزّل ملفاً آخر.,,Pending,,User-facing recovery; native-speaker review required
+recovery.resumeTitle,You are signed in again,تم تسجيل الدخول مجدداً,,Pending,,User-facing recovery; native-speaker review required
+recovery.resume,Your work is still here. Retry the pending action when you are ready.,عملك لا يزال هنا. أعد محاولة الإجراء المعلّق عندما تكون مستعداً.,,Pending,,User-facing recovery; native-speaker review required
+recovery.signInUnavailable,Sign-in is temporarily unavailable. Please try again.,تسجيل الدخول غير متاح مؤقتاً. يرجى المحاولة مجدداً.,,Pending,,User-facing recovery; native-speaker review required
+recovery.signInFailed,Sign-in failed. Check your username and password.,فشل تسجيل الدخول. تحقق من اسم المستخدم وكلمة المرور.,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportTitle,The file could not be generated,تعذّر إنشاء الملف,,Pending,,User-facing recovery; native-speaker review required
+recovery.exportFailed,"Check your browser downloads, then retry if the file is missing. Your selected rows are unchanged.",تحقق من تنزيلات المتصفح، ثم أعد المحاولة إذا كان الملف مفقوداً. الصفوف المحددة لم تتغير.,,Pending,,User-facing recovery; native-speaker review required

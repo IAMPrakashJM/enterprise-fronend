@@ -19,12 +19,12 @@ export interface ApprovalAdapter {
  read(scope:[string,string],recordId?:string):Promise<ApprovalData>;
  change(scope:[string,string],change:ApprovalChange,operationId:string,recordId?:string):Promise<ApprovalData>;
 }
-export class ApprovalError extends Error {constructor(message:string,public status:number){super(message);}}
+export class ApprovalError extends Error {constructor(message:string,public status:number,public reference?:string){super(message);}}
 export function createHttpApprovalAdapter(request:(path:string,init?:RequestInit)=>Promise<Response>):ApprovalAdapter {
  const call=async(body:object):Promise<ApprovalData>=>{
   const response=await request('/approvals',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   const data=await response.json().catch(()=>null);
-  if(!response.ok)throw new ApprovalError(data?.error??'Approval service unavailable. Retry the same action.',response.status);
+  if(!response.ok)throw new ApprovalError(data?.error??'Approval service unavailable. Retry the same action.',response.status,response.headers.get("X-Sentinel-Reference")??undefined);
   if(!data||!Array.isArray(data.items)||!Array.isArray(data.notifications)||!Array.isArray(data.config?.stages)||data.items.some((item:ApprovalItem)=>!item||!Array.isArray(item.history)||!Array.isArray(item.stages)||typeof item.recordId!=='string'||!['pending','approved','rejected','changes-requested'].includes(item.status)))throw new Error('Invalid approval service response.');
   return data;
  };

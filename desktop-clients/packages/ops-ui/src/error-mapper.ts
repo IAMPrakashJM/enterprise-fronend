@@ -47,7 +47,7 @@ export interface Failure {
 export function isRetryable(input: FailureInput): boolean {
   if (input.networkError) return true;
   const status = input.status ?? 0;
-  if (status === 408) return true;
+  if (status === 408 || status === 429) return true;
   return status >= 500;
 }
 
@@ -91,7 +91,7 @@ export function classifyFailure(input: FailureInput): Failure {
     return {
       kind: "error", retryable: true, severity: "warning", reference, detail,
       title: "Could not reach the service",
-      description: "Check your connection. Nothing was saved.",
+      description: "recovery.network",
     };
   }
 
@@ -101,7 +101,7 @@ export function classifyFailure(input: FailureInput): Failure {
         kind: "session-expired", retryable: false, severity: "warning", reference, detail,
         title: "Your session has ended",
         /* No "try again": the fix is to sign in, and a retry button here loops. */
-        description: "Sign in again to continue. Anything unsaved is still on this screen.",
+        description: "recovery.session",
       };
     case 403:
       return {
@@ -124,17 +124,21 @@ export function classifyFailure(input: FailureInput): Failure {
         title: "Changed by someone else",
         description: "Someone updated this while you were working. Review their change before saving yours.",
       };
+    case 400:
+    case 413:
     case 422:
       return {
         kind: "validation", retryable: false, severity: "warning", reference, detail,
         title: "Some values need attention",
         description: "Correct the highlighted fields and try again.",
       };
+    case 429:
+      return {kind:"error",retryable:true,severity:"warning",reference,title:"recovery.rateTitle",description:"recovery.rate"};
     case 408:
       return {
         kind: "error", retryable: true, severity: "warning", reference, detail,
         title: "That took too long",
-        description: "The service did not answer in time. Trying again usually works.",
+        description: "recovery.timeout",
       };
     default:
       return {

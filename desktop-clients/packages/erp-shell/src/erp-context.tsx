@@ -1,5 +1,6 @@
 "use client";
 
+import {SessionLock} from "./session-lock";
 import { LocalizationProvider } from "@pepbits/ops-ui";
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -395,7 +396,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
 
   if (!loaded) return <>{fallback}</>;
 
-  return <ERPContext.Provider value={value}><LocalizationProvider value={localization}>{children}</LocalizationProvider></ERPContext.Provider>;
+  return <ERPContext.Provider value={value}><LocalizationProvider value={localization}><SessionLock>{children}</SessionLock></LocalizationProvider></ERPContext.Provider>;
 }
 
 export function useERP() {

@@ -9,7 +9,7 @@ Sentinel reports sanitized application failures to the existing dummy API. It do
 | JavaScript errors | Reports a fixed runtime-error code, page and available line/column |
 | Unhandled promise rejections | Reports a fixed code; never reads the rejection reason |
 | React rendering failures | Shows a localized Retry/Reload fallback with a searchable reference |
-| Shared authenticated requests | Reports network failures, HTTP 5xx/429, and a diagnostic when a request exceeds 15 seconds |
+| Shared authenticated requests | Reports network failures and non-success HTTP responses; aborts ordinary requests after 30 seconds, including JSON body reads |
 | Custom screen request adapters | Report failed requests through the shared product service wrapper |
 | Import, approval and selected worklist operations | Report caught failures without exception text |
 | Other handled operations | Developers call the exported reporting helper at their catch boundary |
@@ -85,7 +85,7 @@ Relevant statuses: 400 invalid input, 401 unauthenticated, 403 missing managemen
 
 ## Delivery, limits and storage
 
-- Queue: at most 50 pending events in memory; repeated matching pending failures are suppressed.
+- Queue: at most 50 pending events in memory; repeated matching passive failures are suppressed. Request/render reports retain distinct user-visible references.
 - Upload: every five seconds and on reconnect; one batch in flight at a time.
 - Upload timeout: ten seconds. Failed uploads back off exponentially up to sixty seconds.
 - Rate limit: sixty submitted events per authenticated user/tenant per minute, across products.
@@ -125,3 +125,7 @@ The implementation has store and HTTP tests for permission enforcement, tenant/p
 The native Linux debug application passed all three native suites: window lifecycle, Arabic/Hindi/Malayalam rendering, and a real panic/process-exit/restart test. The restart test verified authenticated delivery, sanitized incident storage and marker acknowledgement. The one-use `NEXORA_SENTINEL_TEST_PANIC_ONCE` file trigger is compiled only into debug builds. No live crash was intentionally induced. Native source maps, OS crash dumps, server-process crash collection, external alert delivery and full cross-browser crash testing are not implemented. Human translation review remains pending.
 
 Validation recorded: 1,405 unit tests across 85 files; 48 API tests; Sentinel browser collection/management/redaction and monitoring-auth isolation, disconnected transport, 503 and timeout recovery checks; both production builds; repository verification; native Rust `cargo check`. Native crash/restart runtime verification passed on Linux under Xvfb. All six remote CI jobs passed, including 31 end-to-end suites. Application commit `0863354` is deployed on both demo sites as release `20260908162629872-aaba59f3`. See the [deployment report and screenshots](sentinel-deployment-2026-09-08.md) for live verification and remaining work.
+
+See [user-facing recovery](user-error-recovery.md) for localized actions, retained edits,
+locked-session sign-in and workflow-specific retry behavior. Diagnostic delivery remains
+best effort; a displayed reference does not guarantee successful collection during an outage.

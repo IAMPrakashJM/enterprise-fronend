@@ -103,14 +103,14 @@ export interface ImportAdapter {
     run(id: string, retry?: boolean): Promise<ImportJob>;
 }
 export class ImportRequestError extends Error {
-    constructor(message: string, public status: number) { super(message); }
+    constructor(message: string, public status: number, public reference?: string) { super(message); }
 }
 export function createHttpImportAdapter(request: (path: string, init?: RequestInit) => Promise<Response>): ImportAdapter {
     const call = async (body: object, nullable = false): Promise<ImportJob | null> => {
         const response = await request('/imports', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
         const data = await response.json().catch(() => null);
         if (!response.ok)
-            throw new ImportRequestError(data?.error ?? 'Import service is unavailable. Retry to check the result.', response.status);
+            throw new ImportRequestError(data?.error ?? 'Import service is unavailable. Retry to check the result.', response.status, response.headers.get('X-Sentinel-Reference')??undefined);
         const object = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
         const job = data?.job;
         if (job === null && nullable)
