@@ -143,6 +143,22 @@ describe("useReportDirty", () => {
     expect(workspace.getDocument(a.documentId)?.dirty).toBe(true);
   });
 
+  test("a background save clears only its owning document", () => {
+    const workspace = newWorkspace();
+    const a = workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "1", title: "A" }).document!;
+    const b = workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "2", title: "B" }).document!;
+    const forms = (dirtyA: boolean) => <WorkspaceProvider workspace={workspace}>
+      <DocumentProvider documentId={a.documentId}><Form dirty={dirtyA} /></DocumentProvider>
+      <DocumentProvider documentId={b.documentId}><Form dirty /></DocumentProvider>
+    </WorkspaceProvider>;
+    const { rerender } = render(forms(true));
+    expect(workspace.getDocument(a.documentId)?.dirty).toBe(true);
+    expect(workspace.getDocument(b.documentId)?.dirty).toBe(true);
+    rerender(forms(false));
+    expect(workspace.getDocument(a.documentId)?.dirty).toBe(false);
+    expect(workspace.getDocument(b.documentId)?.dirty).toBe(true);
+  });
+
   test("saving clears it again", () => {
     const workspace = newWorkspace();
     const a = workspace.openDocument({ module: "M", documentType: "PATIENT", entityId: "1", title: "A" }).document!;

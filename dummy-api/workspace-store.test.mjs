@@ -1,0 +1,41 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createWorkspaceStore, validLayout } from './workspace-store.mjs';
+const user={id:'a',tenantId:'tenant',role:'enterprise-admin'};
+const layout={filters:{query:'private text'},columns:['id'],sort:null,pageSize:20};
+test('personal views persist, isolate owners, and reject stale changes',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'views-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));
+ const file=join(dir,'workspace.json');let store=createWorkspaceStore(file);
+ const call=(action,extra={},owner=user)=>store.views(owner,{productId:'one',pageId:'customers',action,...extra});
+ let result=call('create',{label:'My view',layout});assert.equal(result.status,200);
+ const view=result.body.views[0];
+ assert.equal(call('list',{}, {...user,id:'b'}).body.views.length,0);
+ assert.equal(call('list',{}, {...user,tenantId:'other'}).body.views.length,0);
+ assert.equal(call('rename',{id:view.id,version:1,label:'Stolen'},{...user,id:'b'}).status,404);
+ result=call('default',{id:view.id,version:1,isDefault:true});assert.equal(result.body.views[0].isDefault,true);
+ assert.equal(call('rename',{id:view.id,version:1,label:'Stale'}).status,409);
+ result=call('rename',{id:view.id,version:2,label:'Renamed'});assert.equal(result.body.views[0].label,'Renamed');
+ store=createWorkspaceStore(file);assert.equal(call('list').body.views[0].label,'Renamed');
+ const second=call('create',{label:'Second',layout}).body.views.find(v=>v.id!==view.id);
+ result=call('default',{id:second.id,version:1,isDefault:true});assert.equal(result.body.views.filter(v=>v.isDefault).length,1);
+ const current=result.body.views.find(v=>v.id===view.id);
+ assert.equal(call('delete',{id:view.id,version:current.version}).body.views.length,1);
+ assert.equal(call('list',{productId:'two'}).body.views.length,0);
+});
+test('view layouts reject malformed values',()=>{
+ assert.equal(validLayout(layout),true);
+ for(const extra of [{filters:null},{filters:[]},{filters:{query:3}},{columns:[]},{columns:['id','id']},{pageSize:15},{sort:{key:'id',direction:'bad'}}]) assert.equal(validLayout({...layout,...extra}),false);
+});
+test('archive reports partial failures, is idempotent and persists in tenant/product/page scope',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'archive-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));const file=join(dir,'data.json');
+ const store=createWorkspaceStore(file);const rows=[{id:'A',status:'Active'},{id:'B',status:'Locked'}];
+ assert.deepEqual(store.archive(user,'one','page',['A','B','missing'],rows,'id').map(v=>v.ok),[true,false,false]);
+ assert.equal(createWorkspaceStore(file).isArchived(user,'one','page','A'),true);
+ assert.equal(store.isArchived(user,'two','page','A'),false);
+ assert.equal(store.isArchived({...user,tenantId:'other'},'one','page','A'),false);
+ assert.equal(store.archive(user,'one','page',['A'],rows,'id')[0].ok,true);
+ assert.equal(store.archive({...user,role:'viewer'},'one','page',['A'],rows,'id')[0].ok,false);
+});

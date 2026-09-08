@@ -1,4 +1,6 @@
 "use client";
+import { useLocalization } from "@pepbits/ops-ui";
+
 
 import { cn } from "@pepbits/ops-ui";
 import type { WorkspaceDocument } from "@pepbits/workspace-core";
@@ -17,6 +19,7 @@ export function MdiTaskbar({ documents, frames, activeDocumentId, onSelect }: {
   activeDocumentId: string | null;
   onSelect: (documentId: string) => void;
 }) {
+  const {t: translateCopy} = useLocalization();
   if (documents.length === 0) return null;
   return (
     <div
@@ -24,7 +27,7 @@ export function MdiTaskbar({ documents, frames, activeDocumentId, onSelect }: {
       /* Named for the same reason the tab strip is: a page can have toolbars of
          its own, and "which row lists my open windows" should not be a question
          answered by counting. */
-      aria-label="Open windows"
+      aria-label={translateCopy("ui.open.windows.6cbd4f67")}
       className="no-print flex h-9 shrink-0 items-center gap-1 border-t border-[var(--border)] bg-[var(--surface-2)] px-2"
     >
       {documents.map((document) => {

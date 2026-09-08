@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useDocumentScope } from "@pepbits/workspace-core";
 import type { AiSources } from "./assemble.ts";
 
 /**
@@ -13,8 +14,8 @@ import type { AiSources } from "./assemble.ts";
  * use case still filters that down.
  */
 const SourcesContext = createContext<{
-  sources: AiSources;
-  publish: (owner: string, sources: AiSources) => void;
+  byOwner: Record<string, { scope: string | null; sources: AiSources }>;
+  publish: (owner: string, scope: string | null, sources: AiSources) => void;
   retract: (owner: string) => void;
 } | null>(null);
 
@@ -22,7 +23,7 @@ export function AiSourcesProvider({ children }: { children: React.ReactNode }) {
   /* Keyed by owner so an unmounting page removes exactly its own contribution.
      A single flat object would let a stale worklist selection survive into the
      next page, which is precisely the kind of leak nobody notices. */
-  const [byOwner, setByOwner] = useState<Record<string, AiSources>>({});
+  const [byOwner, setByOwner] = useState<Record<string, { scope: string | null; sources: AiSources }>>({});
 
   /* publish and retract are STABLE -- `setByOwner` never changes identity, so
      these never do either. That is load-bearing, not tidiness.
@@ -39,8 +40,9 @@ export function AiSourcesProvider({ children }: { children: React.ReactNode }) {
      navigation the subtree IS re-rendered from a fresh payload, the bail-out no
      longer applies, and the loop starves the transition: the RSC payload
      arrives 200, nothing throws, and the URL simply never commits. */
-  const publish = useCallback((owner: string, sources: AiSources) => {
-    setByOwner((previous) => (JSON.stringify(previous[owner]) === JSON.stringify(sources) ? previous : { ...previous, [owner]: sources }));
+  const publish = useCallback((owner: string, scope: string | null, sources: AiSources) => {
+    const entry = { scope, sources };
+    setByOwner((previous) => (JSON.stringify(previous[owner]) === JSON.stringify(entry) ? previous : { ...previous, [owner]: entry }));
   }, []);
 
   const retract = useCallback((owner: string) => {
@@ -52,14 +54,7 @@ export function AiSourcesProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  /* Only this recomputes when byOwner changes, so a publish re-renders readers
-     of the DATA without invalidating the functions writers depend on. */
-  const sources = useMemo(
-    () => Object.values(byOwner).reduce<AiSources>((all, one) => ({ ...all, ...one }), {}),
-    [byOwner],
-  );
-
-  const value = useMemo(() => ({ sources, publish, retract }), [sources, publish, retract]);
+  const value = useMemo(() => ({ byOwner, publish, retract }), [byOwner, publish, retract]);
 
   return <SourcesContext.Provider value={value}>{children}</SourcesContext.Provider>;
 }
@@ -67,7 +62,11 @@ export function AiSourcesProvider({ children }: { children: React.ReactNode }) {
 /** Read-only view, for the assistant. Empty when no provider is mounted, which
     is a page with nothing to offer rather than an error. */
 export function useAiSources(): AiSources {
-  return useContext(SourcesContext)?.sources ?? {};
+  const context = useContext(SourcesContext);
+  const scope = useDocumentScope();
+  return useMemo(() => Object.values(context?.byOwner ?? {})
+    .filter(entry => entry.scope === scope)
+    .reduce<AiSources>((all, entry) => ({ ...all, ...entry.sources }), {}), [context?.byOwner, scope]);
 }
 
 /**
@@ -79,6 +78,9 @@ export function useAiSources(): AiSources {
  */
 export function usePublishAiSources(owner: string, sources: AiSources): void {
   const context = useContext(SourcesContext);
+  const scope = useDocumentScope();
+  const instance = useId();
+  const publisherId = JSON.stringify([owner, instance]);
   /* The FUNCTIONS, not the context object. Depending on the whole context here
      is what created the publish/retract loop described in the provider: the
      object changes on every publish, including this component's own. */
@@ -90,8 +92,8 @@ export function usePublishAiSources(owner: string, sources: AiSources): void {
 
   useEffect(() => {
     if (!publish || !retract) return;
-    publish(owner, latest.current);
-    return () => retract(owner);
+    publish(publisherId, scope, latest.current);
+    return () => retract(publisherId);
     // serialised, not `sources`: a new object with identical content is not a change.
-  }, [publish, retract, owner, serialised]);
+  }, [publish, retract, publisherId, scope, serialised]);
 }

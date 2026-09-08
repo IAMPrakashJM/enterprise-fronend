@@ -1,5 +1,6 @@
 "use client";
 
+import { useProduct } from "../product-context";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { MODULES, PAGE_REGISTRY } from "@pepbits/erp-config";
 import type { ModuleKey } from "@pepbits/erp-config";
@@ -51,8 +52,8 @@ function dashboardPageId(module: ModuleKey): string {
   return module === "library" ? "library-dashboard" : `${module}-dashboard`;
 }
 
-function moduleOf(pageId: string, fallback: ModuleKey): ModuleKey {
-  const page = PAGE_REGISTRY[pageId];
+function moduleOf(pageId: string, fallback: ModuleKey, pages = PAGE_REGISTRY): ModuleKey {
+  const page = pages[pageId];
   return page && page.module !== "shared" ? (page.module as ModuleKey) : fallback;
 }
 
@@ -66,6 +67,8 @@ function moduleOf(pageId: string, fallback: ModuleKey): ModuleKey {
  * renders the question.
  */
 export function useWorkspaceNavigation(workspace: Workspace, options: { initialModule?: ModuleKey } = {}): WorkspaceNavigation {
+  const product = useProduct();
+  const initialModule = options.initialModule && product.modules[options.initialModule] ? options.initialModule : product.defaultModule;
   const documents = useDocumentsIn(workspace);
   const [pending, setPending] = useState<PendingWorkspaceAction | null>(null);
   /* The action itself is a ref, not state. It is a closure the dialog runs on
@@ -83,7 +86,7 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
   const started = useRef(false);
   if (!started.current) {
     started.current = true;
-    if (documents.length === 0) openHome(options.initialModule ?? "finance");
+    if (documents.length === 0) openHome(initialModule);
   }
 
   const activeDocument = useActiveDocumentIn(workspace);
@@ -108,8 +111,8 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
   }, []);
 
   const currentModule = useCallback(
-    () => moduleOf(workspace.getOpenDocuments().find((doc) => !doc.closable)?.route ?? dashboardPageId("finance"), "finance"),
-    [workspace],
+    () => moduleOf(workspace.getOpenDocuments().find((doc) => !doc.closable)?.route ?? dashboardPageId(initialModule), initialModule, product.pages),
+    [workspace, initialModule, product],
   );
 
   const closeOthers = useCallback((documentId: string) => {
@@ -125,7 +128,7 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
 
   const open = useCallback((target: NavigationTarget) => {
     const here = currentModule();
-    const next = moduleOf(target.pageId, here);
+    const next = moduleOf(target.pageId, here, product.pages);
 
     if (next !== here) {
       /* Crossing modules replaces the whole tab set, so the guard is over
@@ -161,7 +164,7 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
     if (result.ok && result.document?.presentation === "SINGLE") {
       closeOthers(result.document.documentId);
     }
-  }, [ask, closeOthers, currentModule, openHome, workspace]);
+  }, [ask, closeOthers, currentModule, openHome, workspace, product]);
 
   const closeDocument = useCallback((documentId: string) => {
     const result = workspace.closeDocument(documentId);
@@ -175,7 +178,7 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
   }, [ask, workspace]);
 
   const port: NavigationPort = useMemo(() => ({
-    current: activeDocument ? targetFromDocument(activeDocument) : { pageId: dashboardPageId(options.initialModule ?? "finance") },
+    current: activeDocument ? targetFromDocument(activeDocument) : { pageId: dashboardPageId(initialModule) },
     open,
     /* Focuses rather than duplicates. A second tab of one encounter is two
        unsaved drafts of the same record, which is what the duplicate guard
@@ -185,7 +188,7 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
     /* No URL to copy on desktop, and a real-looking one would put a dead link
        in the status bar. */
     hrefFor: () => "#",
-  }), [activeDocument, open, options.initialModule]);
+  }), [activeDocument, open, initialModule]);
 
   return {
     workspace,

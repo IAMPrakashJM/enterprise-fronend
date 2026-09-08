@@ -1,4 +1,6 @@
 "use client";
+import {LocalizedText,useLocalization} from "./localization";
+
 
 import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Check, ChevronDown, Search } from "lucide-react";
@@ -34,6 +36,7 @@ export function SearchSelect({ label, hint, error, required, className, options,
   disabled?: boolean;
   name?: string;
 }) {
+  const {t} = useLocalization();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -48,7 +51,7 @@ export function SearchSelect({ label, hint, error, required, className, options,
   const optionId = (index: number) => `${base}-option-${index}`;
 
   const selected = options.find((option) => option.value === value);
-  const matches = useMemo(() => filterOptions(options, query), [options, query]);
+  const matches = useMemo(() => filterOptions(options.map(option=>({...option,label:t(option.label),description:option.description?t(option.description):undefined})), query), [options, query, t]);
 
   /* Opening lands the highlight on the current selection rather than on row
      one, so the first ArrowDown steps off what is already chosen -- the
@@ -108,7 +111,7 @@ export function SearchSelect({ label, hint, error, required, className, options,
 
   return (
     <div className={cn("block min-w-0", className)} ref={rootRef}>
-      {label ? <span id={labelId} className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{label}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}</span> : null}
+      {label ? <span id={labelId} className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{t(label)}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}</span> : null}
       <div className="relative">
         {/* A hidden input, so a SearchSelect inside a plain <form> submits like
             the <select> it replaces instead of silently contributing nothing. */}
@@ -118,7 +121,7 @@ export function SearchSelect({ label, hint, error, required, className, options,
           type="button"
           disabled={disabled}
           aria-labelledby={label ? labelId : undefined}
-          aria-label={label ? undefined : placeholder}
+          aria-label={label ? undefined : t(placeholder)}
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-invalid={error ? true : undefined}
@@ -127,7 +130,7 @@ export function SearchSelect({ label, hint, error, required, className, options,
           className={cn("focus-ring flex h-9 w-full items-center gap-2 rounded-[10px] border bg-[var(--surface)] px-3 text-left shadow-[inset_0_1px_1px_rgba(15,23,42,.02)] transition hover:border-[var(--border-strong)] disabled:cursor-not-allowed disabled:bg-[var(--surface-2)] disabled:text-[var(--text-subtle)]", error ? "border-[var(--danger)]" : "border-[var(--border)]", open && "border-[var(--primary)]")}
         >
           {selected?.icon ? <span className="shrink-0 text-[var(--text-muted)]">{selected.icon}</span> : null}
-          <span className={cn("min-w-0 flex-1 truncate text-[length:calc(12px*var(--fs-scale))] font-medium", selected ? "text-[var(--text)]" : "text-[var(--text-subtle)]")}>{selected?.label ?? placeholder}</span>
+          <span className={cn("min-w-0 flex-1 truncate text-[length:calc(12px*var(--fs-scale))] font-medium", selected ? "text-[var(--text)]" : "text-[var(--text-subtle)]")}>{t(selected?.label ?? placeholder)}</span>
           <ChevronDown className={cn("size-3.5 shrink-0 text-[var(--text-muted)] transition", open && "rotate-180")} />
         </button>
         {open ? (
@@ -141,21 +144,21 @@ export function SearchSelect({ label, hint, error, required, className, options,
                 aria-controls={listId}
                 aria-autocomplete="list"
                 aria-activedescendant={activeIndex >= 0 ? optionId(activeIndex) : undefined}
-                aria-label={label ? `Search ${label.toLowerCase()}` : "Search options"}
+                aria-label={label ? t("Search {label}", {label:t(label)}) : t("Search options")}
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={onSearchKeyDown}
-                placeholder={searchPlaceholder ?? (label ? `Search ${label.toLowerCase()}…` : "Search…")}
+                placeholder={searchPlaceholder ? t(searchPlaceholder) : label ? t("Search {label}…", {label:t(label)}) : t("Search…")}
                 className="focus-ring h-7 w-full rounded-lg border border-[var(--border)] bg-[var(--surface-2)] ps-7 pe-2 text-[length:calc(11px*var(--fs-scale))] font-semibold text-[var(--text)] placeholder:font-normal placeholder:text-[var(--text-subtle)]"
               />
             </div>
             {/* The count is announced, not just drawn: filtering is otherwise a
                 purely visual event, and a screen-reader user typing into this
                 box would get no signal that the list moved under them. */}
-            <span role="status" className="sr-only">{matches.length === 0 ? "No matching options" : `${matches.length} option${matches.length === 1 ? "" : "s"}`}</span>
+            <span role="status" className="sr-only">{matches.length === 0 ? <LocalizedText message="ui.no.matching.options.39a118fc" /> : <LocalizedText message={matches.length===1?"{count} option":"{count} options"} values={{count:matches.length}} />}</span>
             <div role="listbox" id={listId} aria-labelledby={label ? labelId : undefined}>
               {matches.length === 0 ? (
-                <div className="px-2.5 py-3 text-center text-[length:calc(10px*var(--fs-scale))] text-[var(--text-muted)]">{emptyMessage ?? `No match for “${query.trim()}”`}</div>
+                <div className="px-2.5 py-3 text-center text-[length:calc(10px*var(--fs-scale))] text-[var(--text-muted)]">{emptyMessage ? t(emptyMessage) : t("No match for “{query}”",{query:query.trim()})}</div>
               ) : null}
               {matches.map((option, index) => (
                 <div
@@ -184,7 +187,7 @@ export function SearchSelect({ label, hint, error, required, className, options,
           </div>
         ) : null}
       </div>
-      {error ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger-ink)]">{error}</span> : hint ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{hint}</span> : null}
+      {error ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger-ink)]">{t(error)}</span> : hint ? <span className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{t(hint)}</span> : null}
     </div>
   );
 }

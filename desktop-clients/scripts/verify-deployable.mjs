@@ -1,26 +1,29 @@
 #!/usr/bin/env node
 /**
- * The build on disk is the one this machine serves.
- *
- * This working tree is also the deployment: nginx serves `apps/web/.next` and
- * `apps/desktop/dist` from here. So a build made for a local experiment does
- * not stay local — it goes live at the next request.
- *
- * `NEXT_PUBLIC_*` and `VITE_*` are INLINED at build time, so which API the
- * shells call is decided by whatever the environment said when they were last
- * built. Building once with the API pointed at localhost, to run the browser
- * suites against the dummy API, replaced the public bundle with one that tells
- * every visitor's browser to call 127.0.0.1:3200 — on their machine, where
- * nothing is listening. The site loaded, looked fine, and could not sign anyone
- * in.
- *
- * Nothing noticed for an hour. This is what notices: it compares the API base
- * baked into the artefact against the one the app's own env file declares, and
- * fails when they differ. Expected to fail while browser suites are being run
- * against a local build — that is the reminder to rebuild before walking away.
+ * Check build API identity. --config is the strict deployment gate: artifacts,
+ * stamps and explicit URLs are all required. Without it, compare local builds
+ * to app env files as a development diagnostic (missing builds may be skipped).
+ * Production is served from a selected release; see docs/deployment.md.
  */
 import { readFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
+import { validateConfig, verifyBuild } from "./deployment/release.mjs";
+
+// Deployment is strict: no missing config, missing build, or mismatched stamp can pass.
+const { values } = parseArgs({ options: { config: { type: "string" } } });
+if (values.config) {
+  try {
+    const config = validateConfig(JSON.parse(readFileSync(resolve(values.config), "utf8")));
+    await verifyBuild(fileURLToPath(new URL("..", import.meta.url)), config);
+    console.log("Both release builds match the explicit deployment API URLs.");
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+  process.exit(0);
+}
 
 let failed = 0;
 const check = (ok, name, detail = "") => {
@@ -28,7 +31,7 @@ const check = (ok, name, detail = "") => {
   if (!ok) failed += 1;
 };
 
-const here = new URL("..", import.meta.url).pathname;
+const here = fileURLToPath(new URL("..", import.meta.url));
 
 /** What the app's env file declares, when nothing overrides it. */
 function declared(envPath, variable) {
@@ -62,6 +65,6 @@ for (const shell of SHELLS) {
 }
 
 console.log(failed === 0
-  ? "\n  Both shells are built for the host that serves them.\n"
+  ? "\n  Available local builds match their declared API settings.\n"
   : `\n  ${failed} check(s) failed. Rebuild before this is served:\n\n    npm run build\n`);
 process.exit(failed === 0 ? 0 : 1);

@@ -285,3 +285,15 @@ describe("the administration config", () => {
     expect(read("config")).toBe("none");
   });
 });
+
+test("an inline assistant uses its owning document's page while another page is focused", async () => {
+  const { createWorkspace, WorkspaceProvider, DocumentProvider } = await import("@pepbits/workspace-core");
+  const workspace = createWorkspace({ session: { tenantId: "t1", userId: "u1" }, policy: { platform: { modes: ["TAB"] } } });
+  const a = workspace.openDocument({ module: "hr", documentType: "EMPLOYEE", entityId: "A", title: "A", route: PAGE }).document!;
+  workspace.openDocument({ module: "finance", documentType: "CUSTOMER", entityId: "B", title: "B", route: "customer-master" });
+  render(<WorkspaceProvider workspace={workspace}><NavigationProvider value={navigation("customer-master")}><AiSourcesProvider>
+    <DocumentProvider documentId={a.documentId}><Probe publish={{ "page-record": { id: "A", status: "Active" } }} /></DocumentProvider>
+  </AiSourcesProvider></NavigationProvider></WorkspaceProvider>);
+  await settled();
+  expect(latest.pageId).toBe(PAGE);
+});

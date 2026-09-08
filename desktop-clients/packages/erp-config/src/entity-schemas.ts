@@ -199,7 +199,13 @@ export const ENTITY_SCHEMAS: Record<string, EntitySchema> = {
         { id: "address1", label: "Address line 1", type: "text", required: true, colSpan: 2 },
         { id: "address2", label: "Address line 2", type: "text", colSpan: 2 },
         { id: "city", label: "City", type: "text", required: true },
-        { id: "state", label: "State / Emirate", type: "text" },
+        { id: "state", label: "State / Emirate", type: "select", optionsByField: {field:"country",values:{
+          AE: [{label:"Abu Dhabi",value:"Abu Dhabi"},{label:"Dubai",value:"Dubai"},{label:"Sharjah",value:"Sharjah"}],
+          SA: [{label:"Riyadh",value:"Riyadh"},{label:"Makkah",value:"Makkah"}],
+          QA: [{label:"Doha",value:"Doha"},{label:"Al Rayyan",value:"Al Rayyan"}],
+          GB: [{label:"England",value:"England"},{label:"Scotland",value:"Scotland"},{label:"Wales",value:"Wales"},{label:"Northern Ireland",value:"Northern Ireland"}],
+          IN: [{label:"Kerala",value:"Kerala"},{label:"Maharashtra",value:"Maharashtra"}],
+        }} },
         { id: "country", label: "Country", type: "select", required: true, options: countryOptions, defaultValue: "AE" },
         { id: "postalCode", label: "Postal code", type: "text" },
       ] },
@@ -212,7 +218,7 @@ export const ENTITY_SCHEMAS: Record<string, EntitySchema> = {
         { id: "eInvoice", label: "Electronic invoice enabled", type: "toggle", defaultValue: true },
       ] },
       { id: "credit", title: "Credit controls", description: "Terms, limits and collection risk.", fields: [
-        { id: "creditLimit", label: "Credit limit", type: "number", prefix: "AED", defaultValue: 100000 },
+        { id: "creditLimit", label: "Credit limit", type: "number", min: 0, prefix: "AED", defaultValue: 100000 },
         { id: "paymentTerms", label: "Payment terms", type: "select", options: [
           { label: "Due immediately", value: "0" }, { label: "Net 15", value: "15" }, { label: "Net 30", value: "30" }, { label: "Net 60", value: "60" }, { label: "Net 90", value: "90" },
         ], defaultValue: "30" },
@@ -220,7 +226,7 @@ export const ENTITY_SCHEMAS: Record<string, EntitySchema> = {
         { id: "riskRating", label: "Risk rating", type: "select", options: [
           { label: "Low", value: "Low" }, { label: "Medium", value: "Medium" }, { label: "High", value: "High" },
         ], defaultValue: "Low" },
-        { id: "collectionNotes", label: "Collection notes", type: "textarea", colSpan: 2 },
+        { id: "collectionNotes", label: "Collection notes", type: "textarea", colSpan: 2, visibleWhen: {field:"creditHold",equals:true}, requiredWhen: {field:"creditHold",equals:true} },
       ] },
     ],
   },
@@ -242,7 +248,7 @@ export function getEntitySchema(entity = "record", title = "Record"): EntitySche
         ] },
         { id: "status", label: "Status", type: "select", options: statusOptions, defaultValue: "Active" },
         { id: "effectiveFrom", label: "Effective from", type: "date" },
-        { id: "effectiveTo", label: "Effective to", type: "date" },
+        { id: "effectiveTo", label: "Effective to", type: "date", notBefore: "effectiveFrom" },
       ] },
       { id: "assignment", title: "Assignment", description: "Organizational scope and ownership.", fields: [
         { id: "branch", label: "Branch", type: "select", required: true, options: [

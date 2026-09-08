@@ -1,0 +1,3211 @@
+{
+  "schemaVersion": 1,
+  "productId": "nexora",
+  "defaultModule": "finance",
+  "defaultPageId": "finance-dashboard",
+  "roles": [
+    "enterprise-admin",
+    "finance-manager",
+    "operations-analyst"
+  ],
+  "pages": [
+    {
+      "id": "hr-dashboard",
+      "titleKey": "page.hr-dashboard.title",
+      "subtitleKey": "page.hr-dashboard.subtitle"
+    },
+    {
+      "id": "user-master",
+      "titleKey": "page.user-master.title",
+      "subtitleKey": "page.user-master.subtitle"
+    },
+    {
+      "id": "role-master",
+      "titleKey": "page.role-master.title",
+      "subtitleKey": "page.role-master.subtitle"
+    },
+    {
+      "id": "delegation-master",
+      "titleKey": "page.delegation-master.title",
+      "subtitleKey": "page.delegation-master.subtitle"
+    },
+    {
+      "id": "employee-master",
+      "titleKey": "page.employee-master.title",
+      "subtitleKey": "page.employee-master.subtitle"
+    },
+    {
+      "id": "contractor-master",
+      "titleKey": "page.contractor-master.title",
+      "subtitleKey": "page.contractor-master.subtitle"
+    },
+    {
+      "id": "position-master",
+      "titleKey": "page.position-master.title",
+      "subtitleKey": "page.position-master.subtitle"
+    },
+    {
+      "id": "department-master",
+      "titleKey": "page.department-master.title",
+      "subtitleKey": "page.department-master.subtitle"
+    },
+    {
+      "id": "grade-master",
+      "titleKey": "page.grade-master.title",
+      "subtitleKey": "page.grade-master.subtitle"
+    },
+    {
+      "id": "location-master",
+      "titleKey": "page.location-master.title",
+      "subtitleKey": "page.location-master.subtitle"
+    },
+    {
+      "id": "employee-onboarding",
+      "titleKey": "page.employee-onboarding.title",
+      "subtitleKey": "page.employee-onboarding.subtitle"
+    },
+    {
+      "id": "employee-transfer",
+      "titleKey": "page.employee-transfer.title",
+      "subtitleKey": "page.employee-transfer.subtitle"
+    },
+    {
+      "id": "employee-separation",
+      "titleKey": "page.employee-separation.title",
+      "subtitleKey": "page.employee-separation.subtitle"
+    },
+    {
+      "id": "leave-request",
+      "titleKey": "page.leave-request.title",
+      "subtitleKey": "page.leave-request.subtitle"
+    },
+    {
+      "id": "attendance-adjustment",
+      "titleKey": "page.attendance-adjustment.title",
+      "subtitleKey": "page.attendance-adjustment.subtitle"
+    },
+    {
+      "id": "shift-roster",
+      "titleKey": "page.shift-roster.title",
+      "subtitleKey": "page.shift-roster.subtitle"
+    },
+    {
+      "id": "employee-worklist",
+      "titleKey": "page.employee-worklist.title",
+      "subtitleKey": "page.employee-worklist.subtitle"
+    },
+    {
+      "id": "approval-worklist",
+      "titleKey": "page.approval-worklist.title",
+      "subtitleKey": "page.approval-worklist.subtitle"
+    },
+    {
+      "id": "attendance-anomalies",
+      "titleKey": "page.attendance-anomalies.title",
+      "subtitleKey": "page.attendance-anomalies.subtitle"
+    },
+    {
+      "id": "workforce-report",
+      "titleKey": "page.workforce-report.title",
+      "subtitleKey": "page.workforce-report.subtitle"
+    },
+    {
+      "id": "attendance-report",
+      "titleKey": "page.attendance-report.title",
+      "subtitleKey": "page.attendance-report.subtitle"
+    },
+    {
+      "id": "compliance-report",
+      "titleKey": "page.compliance-report.title",
+      "subtitleKey": "page.compliance-report.subtitle"
+    },
+    {
+      "id": "hr-policy",
+      "titleKey": "page.hr-policy.title",
+      "subtitleKey": "page.hr-policy.subtitle"
+    },
+    {
+      "id": "hr-numbering",
+      "titleKey": "page.hr-numbering.title",
+      "subtitleKey": "page.hr-numbering.subtitle"
+    },
+    {
+      "id": "hr-workflow",
+      "titleKey": "page.hr-workflow.title",
+      "subtitleKey": "page.hr-workflow.subtitle"
+    },
+    {
+      "id": "finance-dashboard",
+      "titleKey": "page.finance-dashboard.title",
+      "subtitleKey": "page.finance-dashboard.subtitle"
+    },
+    {
+      "id": "customer-master",
+      "titleKey": "page.customer-master.title",
+      "subtitleKey": "page.customer-master.subtitle"
+    },
+    {
+      "id": "supplier-fin-master",
+      "titleKey": "page.supplier-fin-master.title",
+      "subtitleKey": "page.supplier-fin-master.subtitle"
+    },
+    {
+      "id": "credit-profile",
+      "titleKey": "page.credit-profile.title",
+      "subtitleKey": "page.credit-profile.subtitle"
+    },
+    {
+      "id": "chart-account",
+      "titleKey": "page.chart-account.title",
+      "subtitleKey": "page.chart-account.subtitle"
+    },
+    {
+      "id": "cost-center",
+      "titleKey": "page.cost-center.title",
+      "subtitleKey": "page.cost-center.subtitle"
+    },
+    {
+      "id": "bank-master",
+      "titleKey": "page.bank-master.title",
+      "subtitleKey": "page.bank-master.subtitle"
+    },
+    {
+      "id": "tax-master",
+      "titleKey": "page.tax-master.title",
+      "subtitleKey": "page.tax-master.subtitle"
+    },
+    {
+      "id": "jurisdiction-master",
+      "titleKey": "page.jurisdiction-master.title",
+      "subtitleKey": "page.jurisdiction-master.subtitle"
+    },
+    {
+      "id": "fiscal-period",
+      "titleKey": "page.fiscal-period.title",
+      "subtitleKey": "page.fiscal-period.subtitle"
+    },
+    {
+      "id": "billing-entry",
+      "titleKey": "page.billing-entry.title",
+      "subtitleKey": "page.billing-entry.subtitle"
+    },
+    {
+      "id": "credit-note",
+      "titleKey": "page.credit-note.title",
+      "subtitleKey": "page.credit-note.subtitle"
+    },
+    {
+      "id": "receipt-entry",
+      "titleKey": "page.receipt-entry.title",
+      "subtitleKey": "page.receipt-entry.subtitle"
+    },
+    {
+      "id": "journal-entry",
+      "titleKey": "page.journal-entry.title",
+      "subtitleKey": "page.journal-entry.subtitle"
+    },
+    {
+      "id": "expense-entry",
+      "titleKey": "page.expense-entry.title",
+      "subtitleKey": "page.expense-entry.subtitle"
+    },
+    {
+      "id": "bank-reconciliation",
+      "titleKey": "page.bank-reconciliation.title",
+      "subtitleKey": "page.bank-reconciliation.subtitle"
+    },
+    {
+      "id": "billing-worklist",
+      "titleKey": "page.billing-worklist.title",
+      "subtitleKey": "page.billing-worklist.subtitle"
+    },
+    {
+      "id": "receivables-worklist",
+      "titleKey": "page.receivables-worklist.title",
+      "subtitleKey": "page.receivables-worklist.subtitle"
+    },
+    {
+      "id": "journal-review",
+      "titleKey": "page.journal-review.title",
+      "subtitleKey": "page.journal-review.subtitle"
+    },
+    {
+      "id": "profit-loss-report",
+      "titleKey": "page.profit-loss-report.title",
+      "subtitleKey": "page.profit-loss-report.subtitle"
+    },
+    {
+      "id": "balance-sheet-report",
+      "titleKey": "page.balance-sheet-report.title",
+      "subtitleKey": "page.balance-sheet-report.subtitle"
+    },
+    {
+      "id": "ar-aging-report",
+      "titleKey": "page.ar-aging-report.title",
+      "subtitleKey": "page.ar-aging-report.subtitle"
+    },
+    {
+      "id": "tax-return-report",
+      "titleKey": "page.tax-return-report.title",
+      "subtitleKey": "page.tax-return-report.subtitle"
+    },
+    {
+      "id": "currency-config",
+      "titleKey": "page.currency-config.title",
+      "subtitleKey": "page.currency-config.subtitle"
+    },
+    {
+      "id": "posting-rules",
+      "titleKey": "page.posting-rules.title",
+      "subtitleKey": "page.posting-rules.subtitle"
+    },
+    {
+      "id": "fin-approvals",
+      "titleKey": "page.fin-approvals.title",
+      "subtitleKey": "page.fin-approvals.subtitle"
+    },
+    {
+      "id": "payroll-dashboard",
+      "titleKey": "page.payroll-dashboard.title",
+      "subtitleKey": "page.payroll-dashboard.subtitle"
+    },
+    {
+      "id": "earning-master",
+      "titleKey": "page.earning-master.title",
+      "subtitleKey": "page.earning-master.subtitle"
+    },
+    {
+      "id": "deduction-master",
+      "titleKey": "page.deduction-master.title",
+      "subtitleKey": "page.deduction-master.subtitle"
+    },
+    {
+      "id": "pay-group",
+      "titleKey": "page.pay-group.title",
+      "subtitleKey": "page.pay-group.subtitle"
+    },
+    {
+      "id": "statutory-master",
+      "titleKey": "page.statutory-master.title",
+      "subtitleKey": "page.statutory-master.subtitle"
+    },
+    {
+      "id": "bank-format",
+      "titleKey": "page.bank-format.title",
+      "subtitleKey": "page.bank-format.subtitle"
+    },
+    {
+      "id": "benefit-plan",
+      "titleKey": "page.benefit-plan.title",
+      "subtitleKey": "page.benefit-plan.subtitle"
+    },
+    {
+      "id": "payroll-run",
+      "titleKey": "page.payroll-run.title",
+      "subtitleKey": "page.payroll-run.subtitle"
+    },
+    {
+      "id": "payroll-adjustment",
+      "titleKey": "page.payroll-adjustment.title",
+      "subtitleKey": "page.payroll-adjustment.subtitle"
+    },
+    {
+      "id": "final-settlement",
+      "titleKey": "page.final-settlement.title",
+      "subtitleKey": "page.final-settlement.subtitle"
+    },
+    {
+      "id": "payroll-worklist",
+      "titleKey": "page.payroll-worklist.title",
+      "subtitleKey": "page.payroll-worklist.subtitle"
+    },
+    {
+      "id": "exception-worklist",
+      "titleKey": "page.exception-worklist.title",
+      "subtitleKey": "page.exception-worklist.subtitle"
+    },
+    {
+      "id": "settlement-review",
+      "titleKey": "page.settlement-review.title",
+      "subtitleKey": "page.settlement-review.subtitle"
+    },
+    {
+      "id": "pay-register-report",
+      "titleKey": "page.pay-register-report.title",
+      "subtitleKey": "page.pay-register-report.subtitle"
+    },
+    {
+      "id": "payslip-report",
+      "titleKey": "page.payslip-report.title",
+      "subtitleKey": "page.payslip-report.subtitle"
+    },
+    {
+      "id": "statutory-report",
+      "titleKey": "page.statutory-report.title",
+      "subtitleKey": "page.statutory-report.subtitle"
+    },
+    {
+      "id": "pay-calendar",
+      "titleKey": "page.pay-calendar.title",
+      "subtitleKey": "page.pay-calendar.subtitle"
+    },
+    {
+      "id": "pay-formula",
+      "titleKey": "page.pay-formula.title",
+      "subtitleKey": "page.pay-formula.subtitle"
+    },
+    {
+      "id": "pay-approval",
+      "titleKey": "page.pay-approval.title",
+      "subtitleKey": "page.pay-approval.subtitle"
+    },
+    {
+      "id": "sales-dashboard",
+      "titleKey": "page.sales-dashboard.title",
+      "subtitleKey": "page.sales-dashboard.subtitle"
+    },
+    {
+      "id": "sales-customer",
+      "titleKey": "page.sales-customer.title",
+      "subtitleKey": "page.sales-customer.subtitle"
+    },
+    {
+      "id": "territory-master",
+      "titleKey": "page.territory-master.title",
+      "subtitleKey": "page.territory-master.subtitle"
+    },
+    {
+      "id": "sales-channel",
+      "titleKey": "page.sales-channel.title",
+      "subtitleKey": "page.sales-channel.subtitle"
+    },
+    {
+      "id": "product-master",
+      "titleKey": "page.product-master.title",
+      "subtitleKey": "page.product-master.subtitle"
+    },
+    {
+      "id": "price-list",
+      "titleKey": "page.price-list.title",
+      "subtitleKey": "page.price-list.subtitle"
+    },
+    {
+      "id": "discount-rule",
+      "titleKey": "page.discount-rule.title",
+      "subtitleKey": "page.discount-rule.subtitle"
+    },
+    {
+      "id": "quotation",
+      "titleKey": "page.quotation.title",
+      "subtitleKey": "page.quotation.subtitle"
+    },
+    {
+      "id": "sales-order",
+      "titleKey": "page.sales-order.title",
+      "subtitleKey": "page.sales-order.subtitle"
+    },
+    {
+      "id": "sales-invoice",
+      "titleKey": "page.sales-invoice.title",
+      "subtitleKey": "page.sales-invoice.subtitle"
+    },
+    {
+      "id": "sales-return",
+      "titleKey": "page.sales-return.title",
+      "subtitleKey": "page.sales-return.subtitle"
+    },
+    {
+      "id": "customer-worklist",
+      "titleKey": "page.customer-worklist.title",
+      "subtitleKey": "page.customer-worklist.subtitle"
+    },
+    {
+      "id": "order-worklist",
+      "titleKey": "page.order-worklist.title",
+      "subtitleKey": "page.order-worklist.subtitle"
+    },
+    {
+      "id": "fulfillment-worklist",
+      "titleKey": "page.fulfillment-worklist.title",
+      "subtitleKey": "page.fulfillment-worklist.subtitle"
+    },
+    {
+      "id": "pipeline-report",
+      "titleKey": "page.pipeline-report.title",
+      "subtitleKey": "page.pipeline-report.subtitle"
+    },
+    {
+      "id": "revenue-report",
+      "titleKey": "page.revenue-report.title",
+      "subtitleKey": "page.revenue-report.subtitle"
+    },
+    {
+      "id": "margin-report",
+      "titleKey": "page.margin-report.title",
+      "subtitleKey": "page.margin-report.subtitle"
+    },
+    {
+      "id": "sales-numbering",
+      "titleKey": "page.sales-numbering.title",
+      "subtitleKey": "page.sales-numbering.subtitle"
+    },
+    {
+      "id": "sales-approval",
+      "titleKey": "page.sales-approval.title",
+      "subtitleKey": "page.sales-approval.subtitle"
+    },
+    {
+      "id": "sales-targets",
+      "titleKey": "page.sales-targets.title",
+      "subtitleKey": "page.sales-targets.subtitle"
+    },
+    {
+      "id": "supply-dashboard",
+      "titleKey": "page.supply-dashboard.title",
+      "subtitleKey": "page.supply-dashboard.subtitle"
+    },
+    {
+      "id": "supplier-master",
+      "titleKey": "page.supplier-master.title",
+      "subtitleKey": "page.supplier-master.subtitle"
+    },
+    {
+      "id": "carrier-master",
+      "titleKey": "page.carrier-master.title",
+      "subtitleKey": "page.carrier-master.subtitle"
+    },
+    {
+      "id": "supplier-contract",
+      "titleKey": "page.supplier-contract.title",
+      "subtitleKey": "page.supplier-contract.subtitle"
+    },
+    {
+      "id": "item-master",
+      "titleKey": "page.item-master.title",
+      "subtitleKey": "page.item-master.subtitle"
+    },
+    {
+      "id": "warehouse-master",
+      "titleKey": "page.warehouse-master.title",
+      "subtitleKey": "page.warehouse-master.subtitle"
+    },
+    {
+      "id": "uom-master",
+      "titleKey": "page.uom-master.title",
+      "subtitleKey": "page.uom-master.subtitle"
+    },
+    {
+      "id": "purchase-requisition",
+      "titleKey": "page.purchase-requisition.title",
+      "subtitleKey": "page.purchase-requisition.subtitle"
+    },
+    {
+      "id": "purchase-order",
+      "titleKey": "page.purchase-order.title",
+      "subtitleKey": "page.purchase-order.subtitle"
+    },
+    {
+      "id": "goods-receipt",
+      "titleKey": "page.goods-receipt.title",
+      "subtitleKey": "page.goods-receipt.subtitle"
+    },
+    {
+      "id": "stock-transfer",
+      "titleKey": "page.stock-transfer.title",
+      "subtitleKey": "page.stock-transfer.subtitle"
+    },
+    {
+      "id": "inventory-count",
+      "titleKey": "page.inventory-count.title",
+      "subtitleKey": "page.inventory-count.subtitle"
+    },
+    {
+      "id": "stock-adjustment",
+      "titleKey": "page.stock-adjustment.title",
+      "subtitleKey": "page.stock-adjustment.subtitle"
+    },
+    {
+      "id": "procurement-worklist",
+      "titleKey": "page.procurement-worklist.title",
+      "subtitleKey": "page.procurement-worklist.subtitle"
+    },
+    {
+      "id": "receiving-worklist",
+      "titleKey": "page.receiving-worklist.title",
+      "subtitleKey": "page.receiving-worklist.subtitle"
+    },
+    {
+      "id": "reorder-worklist",
+      "titleKey": "page.reorder-worklist.title",
+      "subtitleKey": "page.reorder-worklist.subtitle"
+    },
+    {
+      "id": "inventory-valuation-report",
+      "titleKey": "page.inventory-valuation-report.title",
+      "subtitleKey": "page.inventory-valuation-report.subtitle"
+    },
+    {
+      "id": "supplier-performance-report",
+      "titleKey": "page.supplier-performance-report.title",
+      "subtitleKey": "page.supplier-performance-report.subtitle"
+    },
+    {
+      "id": "stock-aging-report",
+      "titleKey": "page.stock-aging-report.title",
+      "subtitleKey": "page.stock-aging-report.subtitle"
+    },
+    {
+      "id": "reorder-rules",
+      "titleKey": "page.reorder-rules.title",
+      "subtitleKey": "page.reorder-rules.subtitle"
+    },
+    {
+      "id": "procurement-approval",
+      "titleKey": "page.procurement-approval.title",
+      "subtitleKey": "page.procurement-approval.subtitle"
+    },
+    {
+      "id": "valuation-method",
+      "titleKey": "page.valuation-method.title",
+      "subtitleKey": "page.valuation-method.subtitle"
+    },
+    {
+      "id": "healthcare-dashboard",
+      "titleKey": "page.healthcare-dashboard.title",
+      "subtitleKey": "page.healthcare-dashboard.subtitle"
+    },
+    {
+      "id": "patient-master",
+      "titleKey": "page.patient-master.title",
+      "subtitleKey": "page.patient-master.subtitle"
+    },
+    {
+      "id": "patient-merge",
+      "titleKey": "page.patient-merge.title",
+      "subtitleKey": "page.patient-merge.subtitle"
+    },
+    {
+      "id": "next-of-kin",
+      "titleKey": "page.next-of-kin.title",
+      "subtitleKey": "page.next-of-kin.subtitle"
+    },
+    {
+      "id": "appointment-worklist",
+      "titleKey": "page.appointment-worklist.title",
+      "subtitleKey": "page.appointment-worklist.subtitle"
+    },
+    {
+      "id": "admission-worklist",
+      "titleKey": "page.admission-worklist.title",
+      "subtitleKey": "page.admission-worklist.subtitle"
+    },
+    {
+      "id": "bed-management",
+      "titleKey": "page.bed-management.title",
+      "subtitleKey": "page.bed-management.subtitle"
+    },
+    {
+      "id": "discharge-worklist",
+      "titleKey": "page.discharge-worklist.title",
+      "subtitleKey": "page.discharge-worklist.subtitle"
+    },
+    {
+      "id": "encounter-worklist",
+      "titleKey": "page.encounter-worklist.title",
+      "subtitleKey": "page.encounter-worklist.subtitle"
+    },
+    {
+      "id": "consultation-worklist",
+      "titleKey": "page.consultation-worklist.title",
+      "subtitleKey": "page.consultation-worklist.subtitle"
+    },
+    {
+      "id": "consultation-entry",
+      "titleKey": "page.consultation-entry.title",
+      "subtitleKey": "page.consultation-entry.subtitle"
+    },
+    {
+      "id": "clinical-notes",
+      "titleKey": "page.clinical-notes.title",
+      "subtitleKey": "page.clinical-notes.subtitle"
+    },
+    {
+      "id": "vitals-worklist",
+      "titleKey": "page.vitals-worklist.title",
+      "subtitleKey": "page.vitals-worklist.subtitle"
+    },
+    {
+      "id": "lab-results",
+      "titleKey": "page.lab-results.title",
+      "subtitleKey": "page.lab-results.subtitle"
+    },
+    {
+      "id": "imaging-worklist",
+      "titleKey": "page.imaging-worklist.title",
+      "subtitleKey": "page.imaging-worklist.subtitle"
+    },
+    {
+      "id": "medication-orders",
+      "titleKey": "page.medication-orders.title",
+      "subtitleKey": "page.medication-orders.subtitle"
+    },
+    {
+      "id": "preauthorization",
+      "titleKey": "page.preauthorization.title",
+      "subtitleKey": "page.preauthorization.subtitle"
+    },
+    {
+      "id": "claim-worklist",
+      "titleKey": "page.claim-worklist.title",
+      "subtitleKey": "page.claim-worklist.subtitle"
+    },
+    {
+      "id": "denial-worklist",
+      "titleKey": "page.denial-worklist.title",
+      "subtitleKey": "page.denial-worklist.subtitle"
+    },
+    {
+      "id": "occupancy-report",
+      "titleKey": "page.occupancy-report.title",
+      "subtitleKey": "page.occupancy-report.subtitle"
+    },
+    {
+      "id": "los-report",
+      "titleKey": "page.los-report.title",
+      "subtitleKey": "page.los-report.subtitle"
+    },
+    {
+      "id": "denial-rate-report",
+      "titleKey": "page.denial-rate-report.title",
+      "subtitleKey": "page.denial-rate-report.subtitle"
+    },
+    {
+      "id": "service-catalog",
+      "titleKey": "page.service-catalog.title",
+      "subtitleKey": "page.service-catalog.subtitle"
+    },
+    {
+      "id": "payer-master",
+      "titleKey": "page.payer-master.title",
+      "subtitleKey": "page.payer-master.subtitle"
+    },
+    {
+      "id": "clinician-master",
+      "titleKey": "page.clinician-master.title",
+      "subtitleKey": "page.clinician-master.subtitle"
+    },
+    {
+      "id": "pharmacy-dashboard",
+      "titleKey": "page.pharmacy-dashboard.title",
+      "subtitleKey": "page.pharmacy-dashboard.subtitle"
+    },
+    {
+      "id": "prescription-queue",
+      "titleKey": "page.prescription-queue.title",
+      "subtitleKey": "page.prescription-queue.subtitle"
+    },
+    {
+      "id": "dispense-history",
+      "titleKey": "page.dispense-history.title",
+      "subtitleKey": "page.dispense-history.subtitle"
+    },
+    {
+      "id": "medication-review",
+      "titleKey": "page.medication-review.title",
+      "subtitleKey": "page.medication-review.subtitle"
+    },
+    {
+      "id": "drug-master",
+      "titleKey": "page.drug-master.title",
+      "subtitleKey": "page.drug-master.subtitle"
+    },
+    {
+      "id": "stock-on-hand",
+      "titleKey": "page.stock-on-hand.title",
+      "subtitleKey": "page.stock-on-hand.subtitle"
+    },
+    {
+      "id": "batch-expiry",
+      "titleKey": "page.batch-expiry.title",
+      "subtitleKey": "page.batch-expiry.subtitle"
+    },
+    {
+      "id": "controlled-register",
+      "titleKey": "page.controlled-register.title",
+      "subtitleKey": "page.controlled-register.subtitle"
+    },
+    {
+      "id": "controlled-reconciliation",
+      "titleKey": "page.controlled-reconciliation.title",
+      "subtitleKey": "page.controlled-reconciliation.subtitle"
+    },
+    {
+      "id": "pharmacy-requisition",
+      "titleKey": "page.pharmacy-requisition.title",
+      "subtitleKey": "page.pharmacy-requisition.subtitle"
+    },
+    {
+      "id": "pharmacy-goods-receipt",
+      "titleKey": "page.pharmacy-goods-receipt.title",
+      "subtitleKey": "page.pharmacy-goods-receipt.subtitle"
+    },
+    {
+      "id": "pharmacy-supplier",
+      "titleKey": "page.pharmacy-supplier.title",
+      "subtitleKey": "page.pharmacy-supplier.subtitle"
+    },
+    {
+      "id": "consumption-report",
+      "titleKey": "page.consumption-report.title",
+      "subtitleKey": "page.consumption-report.subtitle"
+    },
+    {
+      "id": "expiry-risk-report",
+      "titleKey": "page.expiry-risk-report.title",
+      "subtitleKey": "page.expiry-risk-report.subtitle"
+    },
+    {
+      "id": "stock-turn-report",
+      "titleKey": "page.stock-turn-report.title",
+      "subtitleKey": "page.stock-turn-report.subtitle"
+    },
+    {
+      "id": "formulary-setup",
+      "titleKey": "page.formulary-setup.title",
+      "subtitleKey": "page.formulary-setup.subtitle"
+    },
+    {
+      "id": "dispensing-rules",
+      "titleKey": "page.dispensing-rules.title",
+      "subtitleKey": "page.dispensing-rules.subtitle"
+    },
+    {
+      "id": "library-dashboard",
+      "titleKey": "page.library-dashboard.title",
+      "subtitleKey": "page.library-dashboard.subtitle"
+    },
+    {
+      "id": "component-library",
+      "titleKey": "page.component-library.title",
+      "subtitleKey": "page.component-library.subtitle"
+    },
+    {
+      "id": "form-controls",
+      "titleKey": "page.form-controls.title",
+      "subtitleKey": "page.form-controls.subtitle"
+    },
+    {
+      "id": "feedback-components",
+      "titleKey": "page.feedback-components.title",
+      "subtitleKey": "page.feedback-components.subtitle"
+    },
+    {
+      "id": "form-patterns",
+      "titleKey": "page.form-patterns.title",
+      "subtitleKey": "page.form-patterns.subtitle"
+    },
+    {
+      "id": "data-patterns",
+      "titleKey": "page.data-patterns.title",
+      "subtitleKey": "page.data-patterns.subtitle"
+    },
+    {
+      "id": "billing-patterns",
+      "titleKey": "page.billing-patterns.title",
+      "subtitleKey": "page.billing-patterns.subtitle"
+    },
+    {
+      "id": "spreadsheet-studio",
+      "titleKey": "page.spreadsheet-studio.title",
+      "subtitleKey": "page.spreadsheet-studio.subtitle"
+    },
+    {
+      "id": "import-export",
+      "titleKey": "page.import-export.title",
+      "subtitleKey": "page.import-export.subtitle"
+    },
+    {
+      "id": "bulk-operations",
+      "titleKey": "page.bulk-operations.title",
+      "subtitleKey": "page.bulk-operations.subtitle"
+    },
+    {
+      "id": "theme-studio",
+      "titleKey": "page.theme-studio.title",
+      "subtitleKey": "page.theme-studio.subtitle"
+    },
+    {
+      "id": "localization",
+      "titleKey": "page.localization.title",
+      "subtitleKey": "page.localization.subtitle"
+    },
+    {
+      "id": "accessibility",
+      "titleKey": "page.accessibility.title",
+      "subtitleKey": "page.accessibility.subtitle"
+    },
+    {
+      "id": "page-catalog",
+      "titleKey": "page.page-catalog.title",
+      "subtitleKey": "page.page-catalog.subtitle"
+    },
+    {
+      "id": "component-contracts",
+      "titleKey": "page.component-contracts.title",
+      "subtitleKey": "page.component-contracts.subtitle"
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "titleKey": "page.keyboard-shortcuts.title",
+      "subtitleKey": "page.keyboard-shortcuts.subtitle"
+    },
+    {
+      "id": "integration-guide",
+      "titleKey": "page.integration-guide.title",
+      "subtitleKey": "page.integration-guide.subtitle"
+    },
+    {
+      "id": "preferences",
+      "titleKey": "page.preferences.title",
+      "subtitleKey": "page.preferences.subtitle"
+    },
+    {
+      "id": "saved-views",
+      "titleKey": "page.saved-views.title",
+      "subtitleKey": "page.saved-views.subtitle"
+    },
+    {
+      "id": "shortcut-manager",
+      "titleKey": "page.shortcut-manager.title",
+      "subtitleKey": "page.shortcut-manager.subtitle"
+    },
+    {
+      "id": "notifications",
+      "titleKey": "page.notifications.title",
+      "subtitleKey": "page.notifications.subtitle"
+    },
+    {
+      "id": "messages",
+      "titleKey": "page.messages.title",
+      "subtitleKey": "page.messages.subtitle"
+    },
+    {
+      "id": "ai-administration",
+      "titleKey": "page.ai-administration.title",
+      "subtitleKey": "page.ai-administration.subtitle",
+      "roles": [
+        "enterprise-admin"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "module.hr",
+      "kind": "module",
+      "moduleId": "hr",
+      "parentId": null,
+      "labelKey": "module.hr.label",
+      "shortLabelKey": "module.hr.shortLabel",
+      "icon": "UsersRound",
+      "order": 0
+    },
+    {
+      "id": "section.hr.hr-overview",
+      "kind": "section",
+      "parentId": "module.hr",
+      "labelKey": "section.hr.hr-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.hr.hr-dashboard",
+      "kind": "page",
+      "parentId": "section.hr.hr-overview",
+      "labelKey": "menu.hr.hr-dashboard.label",
+      "order": 0,
+      "pageId": "hr-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.hr.hr-masters",
+      "kind": "section",
+      "parentId": "module.hr",
+      "labelKey": "section.hr.hr-masters.label",
+      "order": 1
+    },
+    {
+      "id": "menu.hr.identity",
+      "kind": "group",
+      "parentId": "section.hr.hr-masters",
+      "labelKey": "menu.hr.identity.label",
+      "order": 0,
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "menu.hr.user-master",
+      "kind": "page",
+      "parentId": "menu.hr.identity",
+      "labelKey": "menu.hr.user-master.label",
+      "order": 0,
+      "pageId": "user-master",
+      "icon": "UserCog"
+    },
+    {
+      "id": "menu.hr.role-master",
+      "kind": "page",
+      "parentId": "menu.hr.identity",
+      "labelKey": "menu.hr.role-master.label",
+      "order": 1,
+      "pageId": "role-master",
+      "icon": "IdCard"
+    },
+    {
+      "id": "menu.hr.delegation-master",
+      "kind": "page",
+      "parentId": "menu.hr.identity",
+      "labelKey": "menu.hr.delegation-master.label",
+      "order": 2,
+      "pageId": "delegation-master",
+      "icon": "UserRoundCheck"
+    },
+    {
+      "id": "menu.hr.people",
+      "kind": "group",
+      "parentId": "section.hr.hr-masters",
+      "labelKey": "menu.hr.people.label",
+      "order": 1,
+      "icon": "ContactRound"
+    },
+    {
+      "id": "menu.hr.employee-master",
+      "kind": "page",
+      "parentId": "menu.hr.people",
+      "labelKey": "menu.hr.employee-master.label",
+      "order": 0,
+      "pageId": "employee-master"
+    },
+    {
+      "id": "menu.hr.contractor-master",
+      "kind": "page",
+      "parentId": "menu.hr.people",
+      "labelKey": "menu.hr.contractor-master.label",
+      "order": 1,
+      "pageId": "contractor-master"
+    },
+    {
+      "id": "menu.hr.position-master",
+      "kind": "page",
+      "parentId": "menu.hr.people",
+      "labelKey": "menu.hr.position-master.label",
+      "order": 2,
+      "pageId": "position-master"
+    },
+    {
+      "id": "menu.hr.organization",
+      "kind": "group",
+      "parentId": "section.hr.hr-masters",
+      "labelKey": "menu.hr.organization.label",
+      "order": 2,
+      "icon": "Building2"
+    },
+    {
+      "id": "menu.hr.department-master",
+      "kind": "page",
+      "parentId": "menu.hr.organization",
+      "labelKey": "menu.hr.department-master.label",
+      "order": 0,
+      "pageId": "department-master"
+    },
+    {
+      "id": "menu.hr.grade-master",
+      "kind": "page",
+      "parentId": "menu.hr.organization",
+      "labelKey": "menu.hr.grade-master.label",
+      "order": 1,
+      "pageId": "grade-master"
+    },
+    {
+      "id": "menu.hr.location-master",
+      "kind": "page",
+      "parentId": "menu.hr.organization",
+      "labelKey": "menu.hr.location-master.label",
+      "order": 2,
+      "pageId": "location-master"
+    },
+    {
+      "id": "section.hr.hr-transactions",
+      "kind": "section",
+      "parentId": "module.hr",
+      "labelKey": "section.hr.hr-transactions.label",
+      "order": 2
+    },
+    {
+      "id": "menu.hr.workforce",
+      "kind": "group",
+      "parentId": "section.hr.hr-transactions",
+      "labelKey": "menu.hr.workforce.label",
+      "order": 0,
+      "icon": "BriefcaseBusiness"
+    },
+    {
+      "id": "menu.hr.onboarding",
+      "kind": "page",
+      "parentId": "menu.hr.workforce",
+      "labelKey": "menu.hr.onboarding.label",
+      "order": 0,
+      "pageId": "employee-onboarding"
+    },
+    {
+      "id": "menu.hr.transfer",
+      "kind": "page",
+      "parentId": "menu.hr.workforce",
+      "labelKey": "menu.hr.transfer.label",
+      "order": 1,
+      "pageId": "employee-transfer"
+    },
+    {
+      "id": "menu.hr.separation",
+      "kind": "page",
+      "parentId": "menu.hr.workforce",
+      "labelKey": "menu.hr.separation.label",
+      "order": 2,
+      "pageId": "employee-separation"
+    },
+    {
+      "id": "menu.hr.time",
+      "kind": "group",
+      "parentId": "section.hr.hr-transactions",
+      "labelKey": "menu.hr.time.label",
+      "order": 1,
+      "icon": "CalendarClock"
+    },
+    {
+      "id": "menu.hr.leave-request",
+      "kind": "page",
+      "parentId": "menu.hr.time",
+      "labelKey": "menu.hr.leave-request.label",
+      "order": 0,
+      "pageId": "leave-request"
+    },
+    {
+      "id": "menu.hr.attendance-adjustment",
+      "kind": "page",
+      "parentId": "menu.hr.time",
+      "labelKey": "menu.hr.attendance-adjustment.label",
+      "order": 1,
+      "pageId": "attendance-adjustment"
+    },
+    {
+      "id": "menu.hr.shift-roster",
+      "kind": "page",
+      "parentId": "menu.hr.time",
+      "labelKey": "menu.hr.shift-roster.label",
+      "order": 2,
+      "pageId": "shift-roster"
+    },
+    {
+      "id": "section.hr.hr-worklists",
+      "kind": "section",
+      "parentId": "module.hr",
+      "labelKey": "section.hr.hr-worklists.label",
+      "order": 3
+    },
+    {
+      "id": "menu.hr.hr-ops",
+      "kind": "group",
+      "parentId": "section.hr.hr-worklists",
+      "labelKey": "menu.hr.hr-ops.label",
+      "order": 0,
+      "icon": "ClipboardList"
+    },
+    {
+      "id": "menu.hr.employee-worklist",
+      "kind": "page",
+      "parentId": "menu.hr.hr-ops",
+      "labelKey": "menu.hr.employee-worklist.label",
+      "order": 0,
+      "pageId": "employee-worklist"
+    },
+    {
+      "id": "menu.hr.approval-worklist",
+      "kind": "page",
+      "parentId": "menu.hr.hr-ops",
+      "labelKey": "menu.hr.approval-worklist.label",
+      "order": 1,
+      "pageId": "approval-worklist"
+    },
+    {
+      "id": "menu.hr.attendance-anomalies",
+      "kind": "page",
+      "parentId": "menu.hr.hr-ops",
+      "labelKey": "menu.hr.attendance-anomalies.label",
+      "order": 2,
+      "pageId": "attendance-anomalies"
+    },
+    {
+      "id": "section.hr.hr-reports",
+      "kind": "section",
+      "parentId": "module.hr",
+      "labelKey": "section.hr.hr-reports.label",
+      "order": 4
+    },
+    {
+      "id": "menu.hr.hr-analytics",
+      "kind": "group",
+      "parentId": "section.hr.hr-reports",
+      "labelKey": "menu.hr.hr-analytics.label",
+      "order": 0,
+      "icon": "ChartColumn"
+    },
+    {
+      "id": "menu.hr.workforce-report",
+      "kind": "page",
+      "parentId": "menu.hr.hr-analytics",
+      "labelKey": "menu.hr.workforce-report.label",
+      "order": 0,
+      "pageId": "workforce-report"
+    },
+    {
+      "id": "menu.hr.attendance-report",
+      "kind": "page",
+      "parentId": "menu.hr.hr-analytics",
+      "labelKey": "menu.hr.attendance-report.label",
+      "order": 1,
+      "pageId": "attendance-report"
+    },
+    {
+      "id": "menu.hr.compliance-report",
+      "kind": "page",
+      "parentId": "menu.hr.hr-analytics",
+      "labelKey": "menu.hr.compliance-report.label",
+      "order": 2,
+      "pageId": "compliance-report"
+    },
+    {
+      "id": "section.hr.hr-config",
+      "kind": "section",
+      "parentId": "module.hr",
+      "labelKey": "section.hr.hr-config.label",
+      "order": 5
+    },
+    {
+      "id": "menu.hr.hr-settings",
+      "kind": "group",
+      "parentId": "section.hr.hr-config",
+      "labelKey": "menu.hr.hr-settings.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.hr.hr-policy",
+      "kind": "page",
+      "parentId": "menu.hr.hr-settings",
+      "labelKey": "menu.hr.hr-policy.label",
+      "order": 0,
+      "pageId": "hr-policy"
+    },
+    {
+      "id": "menu.hr.hr-numbering",
+      "kind": "page",
+      "parentId": "menu.hr.hr-settings",
+      "labelKey": "menu.hr.hr-numbering.label",
+      "order": 1,
+      "pageId": "hr-numbering"
+    },
+    {
+      "id": "menu.hr.hr-workflow",
+      "kind": "page",
+      "parentId": "menu.hr.hr-settings",
+      "labelKey": "menu.hr.hr-workflow.label",
+      "order": 2,
+      "pageId": "hr-workflow"
+    },
+    {
+      "id": "module.finance",
+      "kind": "module",
+      "moduleId": "finance",
+      "parentId": null,
+      "labelKey": "module.finance.label",
+      "shortLabelKey": "module.finance.shortLabel",
+      "icon": "Landmark",
+      "order": 40
+    },
+    {
+      "id": "section.finance.fin-overview",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.finance.finance-dashboard",
+      "kind": "page",
+      "parentId": "section.finance.fin-overview",
+      "labelKey": "menu.finance.finance-dashboard.label",
+      "order": 0,
+      "pageId": "finance-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.finance.fin-masters",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-masters.label",
+      "order": 1
+    },
+    {
+      "id": "menu.finance.fin-parties",
+      "kind": "group",
+      "parentId": "section.finance.fin-masters",
+      "labelKey": "menu.finance.fin-parties.label",
+      "order": 0,
+      "icon": "ContactRound"
+    },
+    {
+      "id": "menu.finance.customer-master",
+      "kind": "page",
+      "parentId": "menu.finance.fin-parties",
+      "labelKey": "menu.finance.customer-master.label",
+      "order": 0,
+      "pageId": "customer-master"
+    },
+    {
+      "id": "menu.finance.supplier-fin-master",
+      "kind": "page",
+      "parentId": "menu.finance.fin-parties",
+      "labelKey": "menu.finance.supplier-fin-master.label",
+      "order": 1,
+      "pageId": "supplier-fin-master"
+    },
+    {
+      "id": "menu.finance.credit-profile",
+      "kind": "page",
+      "parentId": "menu.finance.fin-parties",
+      "labelKey": "menu.finance.credit-profile.label",
+      "order": 2,
+      "pageId": "credit-profile"
+    },
+    {
+      "id": "menu.finance.fin-accounting",
+      "kind": "group",
+      "parentId": "section.finance.fin-masters",
+      "labelKey": "menu.finance.fin-accounting.label",
+      "order": 1,
+      "icon": "Scale"
+    },
+    {
+      "id": "menu.finance.chart-account",
+      "kind": "page",
+      "parentId": "menu.finance.fin-accounting",
+      "labelKey": "menu.finance.chart-account.label",
+      "order": 0,
+      "pageId": "chart-account"
+    },
+    {
+      "id": "menu.finance.cost-center",
+      "kind": "page",
+      "parentId": "menu.finance.fin-accounting",
+      "labelKey": "menu.finance.cost-center.label",
+      "order": 1,
+      "pageId": "cost-center"
+    },
+    {
+      "id": "menu.finance.bank-master",
+      "kind": "page",
+      "parentId": "menu.finance.fin-accounting",
+      "labelKey": "menu.finance.bank-master.label",
+      "order": 2,
+      "pageId": "bank-master"
+    },
+    {
+      "id": "menu.finance.fin-tax",
+      "kind": "group",
+      "parentId": "section.finance.fin-masters",
+      "labelKey": "menu.finance.fin-tax.label",
+      "order": 2,
+      "icon": "Gavel"
+    },
+    {
+      "id": "menu.finance.tax-master",
+      "kind": "page",
+      "parentId": "menu.finance.fin-tax",
+      "labelKey": "menu.finance.tax-master.label",
+      "order": 0,
+      "pageId": "tax-master"
+    },
+    {
+      "id": "menu.finance.jurisdiction-master",
+      "kind": "page",
+      "parentId": "menu.finance.fin-tax",
+      "labelKey": "menu.finance.jurisdiction-master.label",
+      "order": 1,
+      "pageId": "jurisdiction-master"
+    },
+    {
+      "id": "menu.finance.fiscal-period",
+      "kind": "page",
+      "parentId": "menu.finance.fin-tax",
+      "labelKey": "menu.finance.fiscal-period.label",
+      "order": 2,
+      "pageId": "fiscal-period"
+    },
+    {
+      "id": "section.finance.fin-transactions",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-transactions.label",
+      "order": 2
+    },
+    {
+      "id": "menu.finance.billing",
+      "kind": "group",
+      "parentId": "section.finance.fin-transactions",
+      "labelKey": "menu.finance.billing.label",
+      "order": 0,
+      "icon": "ReceiptText"
+    },
+    {
+      "id": "menu.finance.billing-entry",
+      "kind": "page",
+      "parentId": "menu.finance.billing",
+      "labelKey": "menu.finance.billing-entry.label",
+      "order": 0,
+      "pageId": "billing-entry"
+    },
+    {
+      "id": "menu.finance.credit-note",
+      "kind": "page",
+      "parentId": "menu.finance.billing",
+      "labelKey": "menu.finance.credit-note.label",
+      "order": 1,
+      "pageId": "credit-note"
+    },
+    {
+      "id": "menu.finance.receipt-entry",
+      "kind": "page",
+      "parentId": "menu.finance.billing",
+      "labelKey": "menu.finance.receipt-entry.label",
+      "order": 2,
+      "pageId": "receipt-entry"
+    },
+    {
+      "id": "menu.finance.ledger",
+      "kind": "group",
+      "parentId": "section.finance.fin-transactions",
+      "labelKey": "menu.finance.ledger.label",
+      "order": 1,
+      "icon": "NotebookTabs"
+    },
+    {
+      "id": "menu.finance.journal-entry",
+      "kind": "page",
+      "parentId": "menu.finance.ledger",
+      "labelKey": "menu.finance.journal-entry.label",
+      "order": 0,
+      "pageId": "journal-entry"
+    },
+    {
+      "id": "menu.finance.expense-entry",
+      "kind": "page",
+      "parentId": "menu.finance.ledger",
+      "labelKey": "menu.finance.expense-entry.label",
+      "order": 1,
+      "pageId": "expense-entry"
+    },
+    {
+      "id": "menu.finance.bank-reconciliation",
+      "kind": "page",
+      "parentId": "menu.finance.ledger",
+      "labelKey": "menu.finance.bank-reconciliation.label",
+      "order": 2,
+      "pageId": "bank-reconciliation"
+    },
+    {
+      "id": "section.finance.fin-worklists",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-worklists.label",
+      "order": 3
+    },
+    {
+      "id": "menu.finance.fin-queues",
+      "kind": "group",
+      "parentId": "section.finance.fin-worklists",
+      "labelKey": "menu.finance.fin-queues.label",
+      "order": 0,
+      "icon": "ClipboardCheck"
+    },
+    {
+      "id": "menu.finance.billing-worklist",
+      "kind": "page",
+      "parentId": "menu.finance.fin-queues",
+      "labelKey": "menu.finance.billing-worklist.label",
+      "order": 0,
+      "pageId": "billing-worklist"
+    },
+    {
+      "id": "menu.finance.receivables-worklist",
+      "kind": "page",
+      "parentId": "menu.finance.fin-queues",
+      "labelKey": "menu.finance.receivables-worklist.label",
+      "order": 1,
+      "pageId": "receivables-worklist"
+    },
+    {
+      "id": "menu.finance.journal-review",
+      "kind": "page",
+      "parentId": "menu.finance.fin-queues",
+      "labelKey": "menu.finance.journal-review.label",
+      "order": 2,
+      "pageId": "journal-review"
+    },
+    {
+      "id": "section.finance.fin-reports",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-reports.label",
+      "order": 4
+    },
+    {
+      "id": "menu.finance.fin-statements",
+      "kind": "group",
+      "parentId": "section.finance.fin-reports",
+      "labelKey": "menu.finance.fin-statements.label",
+      "order": 0,
+      "icon": "FileChartColumn"
+    },
+    {
+      "id": "menu.finance.profit-loss",
+      "kind": "page",
+      "parentId": "menu.finance.fin-statements",
+      "labelKey": "menu.finance.profit-loss.label",
+      "order": 0,
+      "pageId": "profit-loss-report"
+    },
+    {
+      "id": "menu.finance.balance-sheet",
+      "kind": "page",
+      "parentId": "menu.finance.fin-statements",
+      "labelKey": "menu.finance.balance-sheet.label",
+      "order": 1,
+      "pageId": "balance-sheet-report"
+    },
+    {
+      "id": "menu.finance.ar-aging",
+      "kind": "page",
+      "parentId": "menu.finance.fin-statements",
+      "labelKey": "menu.finance.ar-aging.label",
+      "order": 2,
+      "pageId": "ar-aging-report"
+    },
+    {
+      "id": "menu.finance.tax-return",
+      "kind": "page",
+      "parentId": "menu.finance.fin-statements",
+      "labelKey": "menu.finance.tax-return.label",
+      "order": 3,
+      "pageId": "tax-return-report"
+    },
+    {
+      "id": "section.finance.fin-config",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-config.label",
+      "order": 5
+    },
+    {
+      "id": "menu.finance.fin-setup",
+      "kind": "group",
+      "parentId": "section.finance.fin-config",
+      "labelKey": "menu.finance.fin-setup.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.finance.currency-config",
+      "kind": "page",
+      "parentId": "menu.finance.fin-setup",
+      "labelKey": "menu.finance.currency-config.label",
+      "order": 0,
+      "pageId": "currency-config"
+    },
+    {
+      "id": "menu.finance.posting-rules",
+      "kind": "page",
+      "parentId": "menu.finance.fin-setup",
+      "labelKey": "menu.finance.posting-rules.label",
+      "order": 1,
+      "pageId": "posting-rules"
+    },
+    {
+      "id": "menu.finance.fin-approvals",
+      "kind": "page",
+      "parentId": "menu.finance.fin-setup",
+      "labelKey": "menu.finance.fin-approvals.label",
+      "order": 2,
+      "pageId": "fin-approvals"
+    },
+    {
+      "id": "module.payroll",
+      "kind": "module",
+      "moduleId": "payroll",
+      "parentId": null,
+      "labelKey": "module.payroll.label",
+      "shortLabelKey": "module.payroll.shortLabel",
+      "icon": "Banknote",
+      "order": 81
+    },
+    {
+      "id": "section.payroll.pay-overview",
+      "kind": "section",
+      "parentId": "module.payroll",
+      "labelKey": "section.payroll.pay-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.payroll.payroll-dashboard",
+      "kind": "page",
+      "parentId": "section.payroll.pay-overview",
+      "labelKey": "menu.payroll.payroll-dashboard.label",
+      "order": 0,
+      "pageId": "payroll-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.payroll.pay-masters",
+      "kind": "section",
+      "parentId": "module.payroll",
+      "labelKey": "section.payroll.pay-masters.label",
+      "order": 1
+    },
+    {
+      "id": "menu.payroll.pay-structure",
+      "kind": "group",
+      "parentId": "section.payroll.pay-masters",
+      "labelKey": "menu.payroll.pay-structure.label",
+      "order": 0,
+      "icon": "WalletCards"
+    },
+    {
+      "id": "menu.payroll.earning-master",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-structure",
+      "labelKey": "menu.payroll.earning-master.label",
+      "order": 0,
+      "pageId": "earning-master"
+    },
+    {
+      "id": "menu.payroll.deduction-master",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-structure",
+      "labelKey": "menu.payroll.deduction-master.label",
+      "order": 1,
+      "pageId": "deduction-master"
+    },
+    {
+      "id": "menu.payroll.pay-group",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-structure",
+      "labelKey": "menu.payroll.pay-group.label",
+      "order": 2,
+      "pageId": "pay-group"
+    },
+    {
+      "id": "menu.payroll.pay-compliance",
+      "kind": "group",
+      "parentId": "section.payroll.pay-masters",
+      "labelKey": "menu.payroll.pay-compliance.label",
+      "order": 1,
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "menu.payroll.statutory-master",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-compliance",
+      "labelKey": "menu.payroll.statutory-master.label",
+      "order": 0,
+      "pageId": "statutory-master"
+    },
+    {
+      "id": "menu.payroll.bank-format",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-compliance",
+      "labelKey": "menu.payroll.bank-format.label",
+      "order": 1,
+      "pageId": "bank-format"
+    },
+    {
+      "id": "menu.payroll.benefit-plan",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-compliance",
+      "labelKey": "menu.payroll.benefit-plan.label",
+      "order": 2,
+      "pageId": "benefit-plan"
+    },
+    {
+      "id": "section.payroll.pay-transactions",
+      "kind": "section",
+      "parentId": "module.payroll",
+      "labelKey": "section.payroll.pay-transactions.label",
+      "order": 2
+    },
+    {
+      "id": "menu.payroll.pay-processing",
+      "kind": "group",
+      "parentId": "section.payroll.pay-transactions",
+      "labelKey": "menu.payroll.pay-processing.label",
+      "order": 0,
+      "icon": "Calculator"
+    },
+    {
+      "id": "menu.payroll.payroll-run",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-processing",
+      "labelKey": "menu.payroll.payroll-run.label",
+      "order": 0,
+      "pageId": "payroll-run"
+    },
+    {
+      "id": "menu.payroll.payroll-adjustment",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-processing",
+      "labelKey": "menu.payroll.payroll-adjustment.label",
+      "order": 1,
+      "pageId": "payroll-adjustment"
+    },
+    {
+      "id": "menu.payroll.final-settlement",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-processing",
+      "labelKey": "menu.payroll.final-settlement.label",
+      "order": 2,
+      "pageId": "final-settlement"
+    },
+    {
+      "id": "section.payroll.pay-worklists",
+      "kind": "section",
+      "parentId": "module.payroll",
+      "labelKey": "section.payroll.pay-worklists.label",
+      "order": 3
+    },
+    {
+      "id": "menu.payroll.pay-queues",
+      "kind": "group",
+      "parentId": "section.payroll.pay-worklists",
+      "labelKey": "menu.payroll.pay-queues.label",
+      "order": 0,
+      "icon": "ListChecks"
+    },
+    {
+      "id": "menu.payroll.payroll-worklist",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-queues",
+      "labelKey": "menu.payroll.payroll-worklist.label",
+      "order": 0,
+      "pageId": "payroll-worklist"
+    },
+    {
+      "id": "menu.payroll.exception-worklist",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-queues",
+      "labelKey": "menu.payroll.exception-worklist.label",
+      "order": 1,
+      "pageId": "exception-worklist"
+    },
+    {
+      "id": "menu.payroll.settlement-review",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-queues",
+      "labelKey": "menu.payroll.settlement-review.label",
+      "order": 2,
+      "pageId": "settlement-review"
+    },
+    {
+      "id": "section.payroll.pay-reports",
+      "kind": "section",
+      "parentId": "module.payroll",
+      "labelKey": "section.payroll.pay-reports.label",
+      "order": 4
+    },
+    {
+      "id": "menu.payroll.pay-outputs",
+      "kind": "group",
+      "parentId": "section.payroll.pay-reports",
+      "labelKey": "menu.payroll.pay-outputs.label",
+      "order": 0,
+      "icon": "FileText"
+    },
+    {
+      "id": "menu.payroll.pay-register",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-outputs",
+      "labelKey": "menu.payroll.pay-register.label",
+      "order": 0,
+      "pageId": "pay-register-report"
+    },
+    {
+      "id": "menu.payroll.payslip-report",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-outputs",
+      "labelKey": "menu.payroll.payslip-report.label",
+      "order": 1,
+      "pageId": "payslip-report"
+    },
+    {
+      "id": "menu.payroll.statutory-report",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-outputs",
+      "labelKey": "menu.payroll.statutory-report.label",
+      "order": 2,
+      "pageId": "statutory-report"
+    },
+    {
+      "id": "section.payroll.pay-config",
+      "kind": "section",
+      "parentId": "module.payroll",
+      "labelKey": "section.payroll.pay-config.label",
+      "order": 5
+    },
+    {
+      "id": "menu.payroll.pay-settings",
+      "kind": "group",
+      "parentId": "section.payroll.pay-config",
+      "labelKey": "menu.payroll.pay-settings.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.payroll.pay-calendar",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-settings",
+      "labelKey": "menu.payroll.pay-calendar.label",
+      "order": 0,
+      "pageId": "pay-calendar"
+    },
+    {
+      "id": "menu.payroll.pay-formula",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-settings",
+      "labelKey": "menu.payroll.pay-formula.label",
+      "order": 1,
+      "pageId": "pay-formula"
+    },
+    {
+      "id": "menu.payroll.pay-approval",
+      "kind": "page",
+      "parentId": "menu.payroll.pay-settings",
+      "labelKey": "menu.payroll.pay-approval.label",
+      "order": 2,
+      "pageId": "pay-approval"
+    },
+    {
+      "id": "module.sales",
+      "kind": "module",
+      "moduleId": "sales",
+      "parentId": null,
+      "labelKey": "module.sales.label",
+      "shortLabelKey": "module.sales.shortLabel",
+      "icon": "ShoppingBag",
+      "order": 113
+    },
+    {
+      "id": "section.sales.sales-overview",
+      "kind": "section",
+      "parentId": "module.sales",
+      "labelKey": "section.sales.sales-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.sales.sales-dashboard",
+      "kind": "page",
+      "parentId": "section.sales.sales-overview",
+      "labelKey": "menu.sales.sales-dashboard.label",
+      "order": 0,
+      "pageId": "sales-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.sales.sales-masters",
+      "kind": "section",
+      "parentId": "module.sales",
+      "labelKey": "section.sales.sales-masters.label",
+      "order": 1
+    },
+    {
+      "id": "menu.sales.sales-market",
+      "kind": "group",
+      "parentId": "section.sales.sales-masters",
+      "labelKey": "menu.sales.sales-market.label",
+      "order": 0,
+      "icon": "MapPinned"
+    },
+    {
+      "id": "menu.sales.sales-customer",
+      "kind": "page",
+      "parentId": "menu.sales.sales-market",
+      "labelKey": "menu.sales.sales-customer.label",
+      "order": 0,
+      "pageId": "sales-customer"
+    },
+    {
+      "id": "menu.sales.territory-master",
+      "kind": "page",
+      "parentId": "menu.sales.sales-market",
+      "labelKey": "menu.sales.territory-master.label",
+      "order": 1,
+      "pageId": "territory-master"
+    },
+    {
+      "id": "menu.sales.sales-channel",
+      "kind": "page",
+      "parentId": "menu.sales.sales-market",
+      "labelKey": "menu.sales.sales-channel.label",
+      "order": 2,
+      "pageId": "sales-channel"
+    },
+    {
+      "id": "menu.sales.sales-catalog",
+      "kind": "group",
+      "parentId": "section.sales.sales-masters",
+      "labelKey": "menu.sales.sales-catalog.label",
+      "order": 1,
+      "icon": "Tags"
+    },
+    {
+      "id": "menu.sales.product-master",
+      "kind": "page",
+      "parentId": "menu.sales.sales-catalog",
+      "labelKey": "menu.sales.product-master.label",
+      "order": 0,
+      "pageId": "product-master"
+    },
+    {
+      "id": "menu.sales.price-list",
+      "kind": "page",
+      "parentId": "menu.sales.sales-catalog",
+      "labelKey": "menu.sales.price-list.label",
+      "order": 1,
+      "pageId": "price-list"
+    },
+    {
+      "id": "menu.sales.discount-rule",
+      "kind": "page",
+      "parentId": "menu.sales.sales-catalog",
+      "labelKey": "menu.sales.discount-rule.label",
+      "order": 2,
+      "pageId": "discount-rule"
+    },
+    {
+      "id": "section.sales.sales-transactions",
+      "kind": "section",
+      "parentId": "module.sales",
+      "labelKey": "section.sales.sales-transactions.label",
+      "order": 2
+    },
+    {
+      "id": "menu.sales.sales-cycle",
+      "kind": "group",
+      "parentId": "section.sales.sales-transactions",
+      "labelKey": "menu.sales.sales-cycle.label",
+      "order": 0,
+      "icon": "ShoppingCart"
+    },
+    {
+      "id": "menu.sales.quotation",
+      "kind": "page",
+      "parentId": "menu.sales.sales-cycle",
+      "labelKey": "menu.sales.quotation.label",
+      "order": 0,
+      "pageId": "quotation"
+    },
+    {
+      "id": "menu.sales.sales-order",
+      "kind": "page",
+      "parentId": "menu.sales.sales-cycle",
+      "labelKey": "menu.sales.sales-order.label",
+      "order": 1,
+      "pageId": "sales-order"
+    },
+    {
+      "id": "menu.sales.sales-invoice",
+      "kind": "page",
+      "parentId": "menu.sales.sales-cycle",
+      "labelKey": "menu.sales.sales-invoice.label",
+      "order": 2,
+      "pageId": "sales-invoice"
+    },
+    {
+      "id": "menu.sales.sales-return",
+      "kind": "page",
+      "parentId": "menu.sales.sales-cycle",
+      "labelKey": "menu.sales.sales-return.label",
+      "order": 3,
+      "pageId": "sales-return"
+    },
+    {
+      "id": "section.sales.sales-worklists",
+      "kind": "section",
+      "parentId": "module.sales",
+      "labelKey": "section.sales.sales-worklists.label",
+      "order": 3
+    },
+    {
+      "id": "menu.sales.sales-queues",
+      "kind": "group",
+      "parentId": "section.sales.sales-worklists",
+      "labelKey": "menu.sales.sales-queues.label",
+      "order": 0,
+      "icon": "ClipboardList"
+    },
+    {
+      "id": "menu.sales.customer-worklist",
+      "kind": "page",
+      "parentId": "menu.sales.sales-queues",
+      "labelKey": "menu.sales.customer-worklist.label",
+      "order": 0,
+      "pageId": "customer-worklist"
+    },
+    {
+      "id": "menu.sales.order-worklist",
+      "kind": "page",
+      "parentId": "menu.sales.sales-queues",
+      "labelKey": "menu.sales.order-worklist.label",
+      "order": 1,
+      "pageId": "order-worklist"
+    },
+    {
+      "id": "menu.sales.fulfillment-worklist",
+      "kind": "page",
+      "parentId": "menu.sales.sales-queues",
+      "labelKey": "menu.sales.fulfillment-worklist.label",
+      "order": 2,
+      "pageId": "fulfillment-worklist"
+    },
+    {
+      "id": "section.sales.sales-reports",
+      "kind": "section",
+      "parentId": "module.sales",
+      "labelKey": "section.sales.sales-reports.label",
+      "order": 4
+    },
+    {
+      "id": "menu.sales.sales-insights",
+      "kind": "group",
+      "parentId": "section.sales.sales-reports",
+      "labelKey": "menu.sales.sales-insights.label",
+      "order": 0,
+      "icon": "ChartNoAxesCombined"
+    },
+    {
+      "id": "menu.sales.pipeline-report",
+      "kind": "page",
+      "parentId": "menu.sales.sales-insights",
+      "labelKey": "menu.sales.pipeline-report.label",
+      "order": 0,
+      "pageId": "pipeline-report"
+    },
+    {
+      "id": "menu.sales.revenue-report",
+      "kind": "page",
+      "parentId": "menu.sales.sales-insights",
+      "labelKey": "menu.sales.revenue-report.label",
+      "order": 1,
+      "pageId": "revenue-report"
+    },
+    {
+      "id": "menu.sales.margin-report",
+      "kind": "page",
+      "parentId": "menu.sales.sales-insights",
+      "labelKey": "menu.sales.margin-report.label",
+      "order": 2,
+      "pageId": "margin-report"
+    },
+    {
+      "id": "section.sales.sales-config",
+      "kind": "section",
+      "parentId": "module.sales",
+      "labelKey": "section.sales.sales-config.label",
+      "order": 5
+    },
+    {
+      "id": "menu.sales.sales-settings",
+      "kind": "group",
+      "parentId": "section.sales.sales-config",
+      "labelKey": "menu.sales.sales-settings.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.sales.sales-numbering",
+      "kind": "page",
+      "parentId": "menu.sales.sales-settings",
+      "labelKey": "menu.sales.sales-numbering.label",
+      "order": 0,
+      "pageId": "sales-numbering"
+    },
+    {
+      "id": "menu.sales.sales-approval",
+      "kind": "page",
+      "parentId": "menu.sales.sales-settings",
+      "labelKey": "menu.sales.sales-approval.label",
+      "order": 1,
+      "pageId": "sales-approval"
+    },
+    {
+      "id": "menu.sales.sales-targets",
+      "kind": "page",
+      "parentId": "menu.sales.sales-settings",
+      "labelKey": "menu.sales.sales-targets.label",
+      "order": 2,
+      "pageId": "sales-targets"
+    },
+    {
+      "id": "module.supply",
+      "kind": "module",
+      "moduleId": "supply",
+      "parentId": null,
+      "labelKey": "module.supply.label",
+      "shortLabelKey": "module.supply.shortLabel",
+      "icon": "Truck",
+      "order": 146
+    },
+    {
+      "id": "section.supply.supply-overview",
+      "kind": "section",
+      "parentId": "module.supply",
+      "labelKey": "section.supply.supply-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.supply.supply-dashboard",
+      "kind": "page",
+      "parentId": "section.supply.supply-overview",
+      "labelKey": "menu.supply.supply-dashboard.label",
+      "order": 0,
+      "pageId": "supply-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.supply.supply-masters",
+      "kind": "section",
+      "parentId": "module.supply",
+      "labelKey": "section.supply.supply-masters.label",
+      "order": 1
+    },
+    {
+      "id": "menu.supply.supply-partners",
+      "kind": "group",
+      "parentId": "section.supply.supply-masters",
+      "labelKey": "menu.supply.supply-partners.label",
+      "order": 0,
+      "icon": "Store"
+    },
+    {
+      "id": "menu.supply.supplier-master",
+      "kind": "page",
+      "parentId": "menu.supply.supply-partners",
+      "labelKey": "menu.supply.supplier-master.label",
+      "order": 0,
+      "pageId": "supplier-master"
+    },
+    {
+      "id": "menu.supply.carrier-master",
+      "kind": "page",
+      "parentId": "menu.supply.supply-partners",
+      "labelKey": "menu.supply.carrier-master.label",
+      "order": 1,
+      "pageId": "carrier-master"
+    },
+    {
+      "id": "menu.supply.supplier-contract",
+      "kind": "page",
+      "parentId": "menu.supply.supply-partners",
+      "labelKey": "menu.supply.supplier-contract.label",
+      "order": 2,
+      "pageId": "supplier-contract"
+    },
+    {
+      "id": "menu.supply.inventory",
+      "kind": "group",
+      "parentId": "section.supply.supply-masters",
+      "labelKey": "menu.supply.inventory.label",
+      "order": 1,
+      "icon": "Boxes"
+    },
+    {
+      "id": "menu.supply.item-master",
+      "kind": "page",
+      "parentId": "menu.supply.inventory",
+      "labelKey": "menu.supply.item-master.label",
+      "order": 0,
+      "pageId": "item-master"
+    },
+    {
+      "id": "menu.supply.warehouse-master",
+      "kind": "page",
+      "parentId": "menu.supply.inventory",
+      "labelKey": "menu.supply.warehouse-master.label",
+      "order": 1,
+      "pageId": "warehouse-master"
+    },
+    {
+      "id": "menu.supply.uom-master",
+      "kind": "page",
+      "parentId": "menu.supply.inventory",
+      "labelKey": "menu.supply.uom-master.label",
+      "order": 2,
+      "pageId": "uom-master"
+    },
+    {
+      "id": "section.supply.supply-transactions",
+      "kind": "section",
+      "parentId": "module.supply",
+      "labelKey": "section.supply.supply-transactions.label",
+      "order": 2
+    },
+    {
+      "id": "menu.supply.procurement",
+      "kind": "group",
+      "parentId": "section.supply.supply-transactions",
+      "labelKey": "menu.supply.procurement.label",
+      "order": 0,
+      "icon": "PackageOpen"
+    },
+    {
+      "id": "menu.supply.purchase-requisition",
+      "kind": "page",
+      "parentId": "menu.supply.procurement",
+      "labelKey": "menu.supply.purchase-requisition.label",
+      "order": 0,
+      "pageId": "purchase-requisition"
+    },
+    {
+      "id": "menu.supply.purchase-order",
+      "kind": "page",
+      "parentId": "menu.supply.procurement",
+      "labelKey": "menu.supply.purchase-order.label",
+      "order": 1,
+      "pageId": "purchase-order"
+    },
+    {
+      "id": "menu.supply.goods-receipt",
+      "kind": "page",
+      "parentId": "menu.supply.procurement",
+      "labelKey": "menu.supply.goods-receipt.label",
+      "order": 2,
+      "pageId": "goods-receipt"
+    },
+    {
+      "id": "menu.supply.stock",
+      "kind": "group",
+      "parentId": "section.supply.supply-transactions",
+      "labelKey": "menu.supply.stock.label",
+      "order": 1,
+      "icon": "RefreshCw"
+    },
+    {
+      "id": "menu.supply.stock-transfer",
+      "kind": "page",
+      "parentId": "menu.supply.stock",
+      "labelKey": "menu.supply.stock-transfer.label",
+      "order": 0,
+      "pageId": "stock-transfer"
+    },
+    {
+      "id": "menu.supply.inventory-count",
+      "kind": "page",
+      "parentId": "menu.supply.stock",
+      "labelKey": "menu.supply.inventory-count.label",
+      "order": 1,
+      "pageId": "inventory-count"
+    },
+    {
+      "id": "menu.supply.stock-adjustment",
+      "kind": "page",
+      "parentId": "menu.supply.stock",
+      "labelKey": "menu.supply.stock-adjustment.label",
+      "order": 2,
+      "pageId": "stock-adjustment"
+    },
+    {
+      "id": "section.supply.supply-worklists",
+      "kind": "section",
+      "parentId": "module.supply",
+      "labelKey": "section.supply.supply-worklists.label",
+      "order": 3
+    },
+    {
+      "id": "menu.supply.supply-queues",
+      "kind": "group",
+      "parentId": "section.supply.supply-worklists",
+      "labelKey": "menu.supply.supply-queues.label",
+      "order": 0,
+      "icon": "PackageCheck"
+    },
+    {
+      "id": "menu.supply.procurement-worklist",
+      "kind": "page",
+      "parentId": "menu.supply.supply-queues",
+      "labelKey": "menu.supply.procurement-worklist.label",
+      "order": 0,
+      "pageId": "procurement-worklist"
+    },
+    {
+      "id": "menu.supply.receiving-worklist",
+      "kind": "page",
+      "parentId": "menu.supply.supply-queues",
+      "labelKey": "menu.supply.receiving-worklist.label",
+      "order": 1,
+      "pageId": "receiving-worklist"
+    },
+    {
+      "id": "menu.supply.reorder-worklist",
+      "kind": "page",
+      "parentId": "menu.supply.supply-queues",
+      "labelKey": "menu.supply.reorder-worklist.label",
+      "order": 2,
+      "pageId": "reorder-worklist"
+    },
+    {
+      "id": "section.supply.supply-reports",
+      "kind": "section",
+      "parentId": "module.supply",
+      "labelKey": "section.supply.supply-reports.label",
+      "order": 4
+    },
+    {
+      "id": "menu.supply.supply-insights",
+      "kind": "group",
+      "parentId": "section.supply.supply-reports",
+      "labelKey": "menu.supply.supply-insights.label",
+      "order": 0,
+      "icon": "ChartColumn"
+    },
+    {
+      "id": "menu.supply.inventory-valuation",
+      "kind": "page",
+      "parentId": "menu.supply.supply-insights",
+      "labelKey": "menu.supply.inventory-valuation.label",
+      "order": 0,
+      "pageId": "inventory-valuation-report"
+    },
+    {
+      "id": "menu.supply.supplier-performance",
+      "kind": "page",
+      "parentId": "menu.supply.supply-insights",
+      "labelKey": "menu.supply.supplier-performance.label",
+      "order": 1,
+      "pageId": "supplier-performance-report"
+    },
+    {
+      "id": "menu.supply.stock-aging",
+      "kind": "page",
+      "parentId": "menu.supply.supply-insights",
+      "labelKey": "menu.supply.stock-aging.label",
+      "order": 2,
+      "pageId": "stock-aging-report"
+    },
+    {
+      "id": "section.supply.supply-config",
+      "kind": "section",
+      "parentId": "module.supply",
+      "labelKey": "section.supply.supply-config.label",
+      "order": 5
+    },
+    {
+      "id": "menu.supply.supply-settings",
+      "kind": "group",
+      "parentId": "section.supply.supply-config",
+      "labelKey": "menu.supply.supply-settings.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.supply.reorder-rules",
+      "kind": "page",
+      "parentId": "menu.supply.supply-settings",
+      "labelKey": "menu.supply.reorder-rules.label",
+      "order": 0,
+      "pageId": "reorder-rules"
+    },
+    {
+      "id": "menu.supply.procurement-approval",
+      "kind": "page",
+      "parentId": "menu.supply.supply-settings",
+      "labelKey": "menu.supply.procurement-approval.label",
+      "order": 1,
+      "pageId": "procurement-approval"
+    },
+    {
+      "id": "menu.supply.valuation-method",
+      "kind": "page",
+      "parentId": "menu.supply.supply-settings",
+      "labelKey": "menu.supply.valuation-method.label",
+      "order": 2,
+      "pageId": "valuation-method"
+    },
+    {
+      "id": "module.healthcare",
+      "kind": "module",
+      "moduleId": "healthcare",
+      "parentId": null,
+      "labelKey": "module.healthcare.label",
+      "shortLabelKey": "module.healthcare.shortLabel",
+      "icon": "HeartPulse",
+      "order": 182
+    },
+    {
+      "id": "section.healthcare.hc-overview",
+      "kind": "section",
+      "parentId": "module.healthcare",
+      "labelKey": "section.healthcare.hc-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.healthcare.healthcare-dashboard",
+      "kind": "page",
+      "parentId": "section.healthcare.hc-overview",
+      "labelKey": "menu.healthcare.healthcare-dashboard.label",
+      "order": 0,
+      "pageId": "healthcare-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.healthcare.hc-patient",
+      "kind": "section",
+      "parentId": "module.healthcare",
+      "labelKey": "section.healthcare.hc-patient.label",
+      "order": 1
+    },
+    {
+      "id": "menu.healthcare.hc-registry",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-patient",
+      "labelKey": "menu.healthcare.hc-registry.label",
+      "order": 0,
+      "icon": "ContactRound"
+    },
+    {
+      "id": "menu.healthcare.patient-master",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-registry",
+      "labelKey": "menu.healthcare.patient-master.label",
+      "order": 0,
+      "pageId": "patient-master"
+    },
+    {
+      "id": "menu.healthcare.patient-merge",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-registry",
+      "labelKey": "menu.healthcare.patient-merge.label",
+      "order": 1,
+      "pageId": "patient-merge"
+    },
+    {
+      "id": "menu.healthcare.next-of-kin",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-registry",
+      "labelKey": "menu.healthcare.next-of-kin.label",
+      "order": 2,
+      "pageId": "next-of-kin"
+    },
+    {
+      "id": "menu.healthcare.hc-access",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-patient",
+      "labelKey": "menu.healthcare.hc-access.label",
+      "order": 1,
+      "icon": "CalendarClock"
+    },
+    {
+      "id": "menu.healthcare.appointment-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-access",
+      "labelKey": "menu.healthcare.appointment-worklist.label",
+      "order": 0,
+      "pageId": "appointment-worklist"
+    },
+    {
+      "id": "menu.healthcare.admission-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-access",
+      "labelKey": "menu.healthcare.admission-worklist.label",
+      "order": 1,
+      "pageId": "admission-worklist"
+    },
+    {
+      "id": "menu.healthcare.bed-management",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-access",
+      "labelKey": "menu.healthcare.bed-management.label",
+      "order": 2,
+      "pageId": "bed-management"
+    },
+    {
+      "id": "menu.healthcare.discharge-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-access",
+      "labelKey": "menu.healthcare.discharge-worklist.label",
+      "order": 3,
+      "pageId": "discharge-worklist"
+    },
+    {
+      "id": "section.healthcare.hc-clinical",
+      "kind": "section",
+      "parentId": "module.healthcare",
+      "labelKey": "section.healthcare.hc-clinical.label",
+      "order": 2
+    },
+    {
+      "id": "menu.healthcare.hc-encounter",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-clinical",
+      "labelKey": "menu.healthcare.hc-encounter.label",
+      "order": 0,
+      "icon": "Stethoscope"
+    },
+    {
+      "id": "menu.healthcare.encounter-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-encounter",
+      "labelKey": "menu.healthcare.encounter-worklist.label",
+      "order": 0,
+      "pageId": "encounter-worklist"
+    },
+    {
+      "id": "menu.healthcare.consultation-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-encounter",
+      "labelKey": "menu.healthcare.consultation-worklist.label",
+      "order": 1,
+      "pageId": "consultation-worklist"
+    },
+    {
+      "id": "menu.healthcare.consultation-entry",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-encounter",
+      "labelKey": "menu.healthcare.consultation-entry.label",
+      "order": 2,
+      "pageId": "consultation-entry"
+    },
+    {
+      "id": "menu.healthcare.clinical-notes",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-encounter",
+      "labelKey": "menu.healthcare.clinical-notes.label",
+      "order": 3,
+      "pageId": "clinical-notes"
+    },
+    {
+      "id": "menu.healthcare.vitals-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-encounter",
+      "labelKey": "menu.healthcare.vitals-worklist.label",
+      "order": 4,
+      "pageId": "vitals-worklist"
+    },
+    {
+      "id": "menu.healthcare.hc-orders",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-clinical",
+      "labelKey": "menu.healthcare.hc-orders.label",
+      "order": 1,
+      "icon": "FlaskConical"
+    },
+    {
+      "id": "menu.healthcare.order-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-orders",
+      "labelKey": "menu.healthcare.order-worklist.label",
+      "order": 0,
+      "pageId": "order-worklist"
+    },
+    {
+      "id": "menu.healthcare.lab-results",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-orders",
+      "labelKey": "menu.healthcare.lab-results.label",
+      "order": 1,
+      "pageId": "lab-results"
+    },
+    {
+      "id": "menu.healthcare.imaging-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-orders",
+      "labelKey": "menu.healthcare.imaging-worklist.label",
+      "order": 2,
+      "pageId": "imaging-worklist"
+    },
+    {
+      "id": "menu.healthcare.medication-orders",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-orders",
+      "labelKey": "menu.healthcare.medication-orders.label",
+      "order": 3,
+      "pageId": "medication-orders"
+    },
+    {
+      "id": "section.healthcare.hc-revenue",
+      "kind": "section",
+      "parentId": "module.healthcare",
+      "labelKey": "section.healthcare.hc-revenue.label",
+      "order": 3
+    },
+    {
+      "id": "menu.healthcare.hc-payer",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-revenue",
+      "labelKey": "menu.healthcare.hc-payer.label",
+      "order": 0,
+      "icon": "ReceiptText"
+    },
+    {
+      "id": "menu.healthcare.preauthorization",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-payer",
+      "labelKey": "menu.healthcare.preauthorization.label",
+      "order": 0,
+      "pageId": "preauthorization"
+    },
+    {
+      "id": "menu.healthcare.claim-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-payer",
+      "labelKey": "menu.healthcare.claim-worklist.label",
+      "order": 1,
+      "pageId": "claim-worklist"
+    },
+    {
+      "id": "menu.healthcare.denial-worklist",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-payer",
+      "labelKey": "menu.healthcare.denial-worklist.label",
+      "order": 2,
+      "pageId": "denial-worklist"
+    },
+    {
+      "id": "section.healthcare.hc-insight",
+      "kind": "section",
+      "parentId": "module.healthcare",
+      "labelKey": "section.healthcare.hc-insight.label",
+      "order": 4
+    },
+    {
+      "id": "menu.healthcare.hc-reports",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-insight",
+      "labelKey": "menu.healthcare.hc-reports.label",
+      "order": 0,
+      "icon": "ChartColumn"
+    },
+    {
+      "id": "menu.healthcare.occupancy-report",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-reports",
+      "labelKey": "menu.healthcare.occupancy-report.label",
+      "order": 0,
+      "pageId": "occupancy-report"
+    },
+    {
+      "id": "menu.healthcare.los-report",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-reports",
+      "labelKey": "menu.healthcare.los-report.label",
+      "order": 1,
+      "pageId": "los-report"
+    },
+    {
+      "id": "menu.healthcare.denial-rate-report",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-reports",
+      "labelKey": "menu.healthcare.denial-rate-report.label",
+      "order": 2,
+      "pageId": "denial-rate-report"
+    },
+    {
+      "id": "section.healthcare.hc-setup",
+      "kind": "section",
+      "parentId": "module.healthcare",
+      "labelKey": "section.healthcare.hc-setup.label",
+      "order": 5
+    },
+    {
+      "id": "menu.healthcare.hc-config",
+      "kind": "group",
+      "parentId": "section.healthcare.hc-setup",
+      "labelKey": "menu.healthcare.hc-config.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.healthcare.service-catalog",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-config",
+      "labelKey": "menu.healthcare.service-catalog.label",
+      "order": 0,
+      "pageId": "service-catalog"
+    },
+    {
+      "id": "menu.healthcare.payer-master",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-config",
+      "labelKey": "menu.healthcare.payer-master.label",
+      "order": 1,
+      "pageId": "payer-master"
+    },
+    {
+      "id": "menu.healthcare.clinician-master",
+      "kind": "page",
+      "parentId": "menu.healthcare.hc-config",
+      "labelKey": "menu.healthcare.clinician-master.label",
+      "order": 2,
+      "pageId": "clinician-master"
+    },
+    {
+      "id": "module.pharmacy",
+      "kind": "module",
+      "moduleId": "pharmacy",
+      "parentId": null,
+      "labelKey": "module.pharmacy.label",
+      "shortLabelKey": "module.pharmacy.shortLabel",
+      "icon": "Pill",
+      "order": 222
+    },
+    {
+      "id": "section.pharmacy.rx-overview",
+      "kind": "section",
+      "parentId": "module.pharmacy",
+      "labelKey": "section.pharmacy.rx-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.pharmacy.pharmacy-dashboard",
+      "kind": "page",
+      "parentId": "section.pharmacy.rx-overview",
+      "labelKey": "menu.pharmacy.pharmacy-dashboard.label",
+      "order": 0,
+      "pageId": "pharmacy-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.pharmacy.rx-dispensing",
+      "kind": "section",
+      "parentId": "module.pharmacy",
+      "labelKey": "section.pharmacy.rx-dispensing.label",
+      "order": 1
+    },
+    {
+      "id": "menu.pharmacy.rx-queue",
+      "kind": "group",
+      "parentId": "section.pharmacy.rx-dispensing",
+      "labelKey": "menu.pharmacy.rx-queue.label",
+      "order": 0,
+      "icon": "ClipboardCheck"
+    },
+    {
+      "id": "menu.pharmacy.prescription-queue",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-queue",
+      "labelKey": "menu.pharmacy.prescription-queue.label",
+      "order": 0,
+      "pageId": "prescription-queue"
+    },
+    {
+      "id": "menu.pharmacy.dispense-history",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-queue",
+      "labelKey": "menu.pharmacy.dispense-history.label",
+      "order": 1,
+      "pageId": "dispense-history"
+    },
+    {
+      "id": "menu.pharmacy.medication-review",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-queue",
+      "labelKey": "menu.pharmacy.medication-review.label",
+      "order": 2,
+      "pageId": "medication-review"
+    },
+    {
+      "id": "section.pharmacy.rx-inventory",
+      "kind": "section",
+      "parentId": "module.pharmacy",
+      "labelKey": "section.pharmacy.rx-inventory.label",
+      "order": 2
+    },
+    {
+      "id": "menu.pharmacy.rx-formulary",
+      "kind": "group",
+      "parentId": "section.pharmacy.rx-inventory",
+      "labelKey": "menu.pharmacy.rx-formulary.label",
+      "order": 0,
+      "icon": "Boxes"
+    },
+    {
+      "id": "menu.pharmacy.drug-master",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-formulary",
+      "labelKey": "menu.pharmacy.drug-master.label",
+      "order": 0,
+      "pageId": "drug-master"
+    },
+    {
+      "id": "menu.pharmacy.stock-on-hand",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-formulary",
+      "labelKey": "menu.pharmacy.stock-on-hand.label",
+      "order": 1,
+      "pageId": "stock-on-hand"
+    },
+    {
+      "id": "menu.pharmacy.batch-expiry",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-formulary",
+      "labelKey": "menu.pharmacy.batch-expiry.label",
+      "order": 2,
+      "pageId": "batch-expiry"
+    },
+    {
+      "id": "menu.pharmacy.stock-transfer",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-formulary",
+      "labelKey": "menu.pharmacy.stock-transfer.label",
+      "order": 3,
+      "pageId": "stock-transfer"
+    },
+    {
+      "id": "menu.pharmacy.rx-controlled",
+      "kind": "group",
+      "parentId": "section.pharmacy.rx-inventory",
+      "labelKey": "menu.pharmacy.rx-controlled.label",
+      "order": 1,
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "menu.pharmacy.controlled-register",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-controlled",
+      "labelKey": "menu.pharmacy.controlled-register.label",
+      "order": 0,
+      "pageId": "controlled-register"
+    },
+    {
+      "id": "menu.pharmacy.controlled-reconciliation",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-controlled",
+      "labelKey": "menu.pharmacy.controlled-reconciliation.label",
+      "order": 1,
+      "pageId": "controlled-reconciliation"
+    },
+    {
+      "id": "section.pharmacy.rx-procurement",
+      "kind": "section",
+      "parentId": "module.pharmacy",
+      "labelKey": "section.pharmacy.rx-procurement.label",
+      "order": 3
+    },
+    {
+      "id": "menu.pharmacy.rx-buy",
+      "kind": "group",
+      "parentId": "section.pharmacy.rx-procurement",
+      "labelKey": "menu.pharmacy.rx-buy.label",
+      "order": 0,
+      "icon": "ReceiptText"
+    },
+    {
+      "id": "menu.pharmacy.pharmacy-requisition",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-buy",
+      "labelKey": "menu.pharmacy.pharmacy-requisition.label",
+      "order": 0,
+      "pageId": "pharmacy-requisition"
+    },
+    {
+      "id": "menu.pharmacy.pharmacy-goods-receipt",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-buy",
+      "labelKey": "menu.pharmacy.pharmacy-goods-receipt.label",
+      "order": 1,
+      "pageId": "pharmacy-goods-receipt"
+    },
+    {
+      "id": "menu.pharmacy.pharmacy-supplier",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-buy",
+      "labelKey": "menu.pharmacy.pharmacy-supplier.label",
+      "order": 2,
+      "pageId": "pharmacy-supplier"
+    },
+    {
+      "id": "section.pharmacy.rx-insight",
+      "kind": "section",
+      "parentId": "module.pharmacy",
+      "labelKey": "section.pharmacy.rx-insight.label",
+      "order": 4
+    },
+    {
+      "id": "menu.pharmacy.rx-reports",
+      "kind": "group",
+      "parentId": "section.pharmacy.rx-insight",
+      "labelKey": "menu.pharmacy.rx-reports.label",
+      "order": 0,
+      "icon": "ChartColumn"
+    },
+    {
+      "id": "menu.pharmacy.consumption-report",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-reports",
+      "labelKey": "menu.pharmacy.consumption-report.label",
+      "order": 0,
+      "pageId": "consumption-report"
+    },
+    {
+      "id": "menu.pharmacy.expiry-risk-report",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-reports",
+      "labelKey": "menu.pharmacy.expiry-risk-report.label",
+      "order": 1,
+      "pageId": "expiry-risk-report"
+    },
+    {
+      "id": "menu.pharmacy.stock-turn-report",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-reports",
+      "labelKey": "menu.pharmacy.stock-turn-report.label",
+      "order": 2,
+      "pageId": "stock-turn-report"
+    },
+    {
+      "id": "section.pharmacy.rx-setup",
+      "kind": "section",
+      "parentId": "module.pharmacy",
+      "labelKey": "section.pharmacy.rx-setup.label",
+      "order": 5
+    },
+    {
+      "id": "menu.pharmacy.rx-config",
+      "kind": "group",
+      "parentId": "section.pharmacy.rx-setup",
+      "labelKey": "menu.pharmacy.rx-config.label",
+      "order": 0,
+      "icon": "Settings2"
+    },
+    {
+      "id": "menu.pharmacy.formulary-setup",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-config",
+      "labelKey": "menu.pharmacy.formulary-setup.label",
+      "order": 0,
+      "pageId": "formulary-setup"
+    },
+    {
+      "id": "menu.pharmacy.dispensing-rules",
+      "kind": "page",
+      "parentId": "menu.pharmacy.rx-config",
+      "labelKey": "menu.pharmacy.dispensing-rules.label",
+      "order": 1,
+      "pageId": "dispensing-rules"
+    },
+    {
+      "id": "module.library",
+      "kind": "module",
+      "moduleId": "library",
+      "parentId": null,
+      "labelKey": "module.library.label",
+      "shortLabelKey": "module.library.shortLabel",
+      "icon": "LibraryBig",
+      "order": 253
+    },
+    {
+      "id": "section.library.lib-overview",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "section.library.lib-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.library.library-dashboard",
+      "kind": "page",
+      "parentId": "section.library.lib-overview",
+      "labelKey": "menu.library.library-dashboard.label",
+      "order": 0,
+      "pageId": "library-dashboard",
+      "icon": "Gauge"
+    },
+    {
+      "id": "section.library.lib-components",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "section.library.lib-components.label",
+      "order": 1
+    },
+    {
+      "id": "menu.library.ui-primitives",
+      "kind": "group",
+      "parentId": "section.library.lib-components",
+      "labelKey": "menu.library.ui-primitives.label",
+      "order": 0,
+      "icon": "Sparkles"
+    },
+    {
+      "id": "menu.library.component-library",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.component-library.label",
+      "order": 0,
+      "pageId": "component-library"
+    },
+    {
+      "id": "menu.library.form-controls",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.form-controls.label",
+      "order": 1,
+      "pageId": "form-controls"
+    },
+    {
+      "id": "menu.library.feedback-components",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.feedback-components.label",
+      "order": 2,
+      "pageId": "feedback-components"
+    },
+    {
+      "id": "menu.library.composition",
+      "kind": "group",
+      "parentId": "section.library.lib-components",
+      "labelKey": "menu.library.composition.label",
+      "order": 1,
+      "icon": "PanelTop"
+    },
+    {
+      "id": "menu.library.form-patterns",
+      "kind": "page",
+      "parentId": "menu.library.composition",
+      "labelKey": "menu.library.form-patterns.label",
+      "order": 0,
+      "pageId": "form-patterns"
+    },
+    {
+      "id": "menu.library.data-patterns",
+      "kind": "page",
+      "parentId": "menu.library.composition",
+      "labelKey": "menu.library.data-patterns.label",
+      "order": 1,
+      "pageId": "data-patterns"
+    },
+    {
+      "id": "menu.library.billing-patterns",
+      "kind": "page",
+      "parentId": "menu.library.composition",
+      "labelKey": "menu.library.billing-patterns.label",
+      "order": 2,
+      "pageId": "billing-patterns"
+    },
+    {
+      "id": "section.library.lib-tools",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "section.library.lib-tools.label",
+      "order": 2
+    },
+    {
+      "id": "menu.library.workspace-tools",
+      "kind": "group",
+      "parentId": "section.library.lib-tools",
+      "labelKey": "menu.library.workspace-tools.label",
+      "order": 0,
+      "icon": "FileSpreadsheet"
+    },
+    {
+      "id": "menu.library.spreadsheet-studio",
+      "kind": "page",
+      "parentId": "menu.library.workspace-tools",
+      "labelKey": "menu.library.spreadsheet-studio.label",
+      "order": 0,
+      "pageId": "spreadsheet-studio"
+    },
+    {
+      "id": "menu.library.import-export",
+      "kind": "page",
+      "parentId": "menu.library.workspace-tools",
+      "labelKey": "menu.library.import-export.label",
+      "order": 1,
+      "pageId": "import-export"
+    },
+    {
+      "id": "menu.library.bulk-operations",
+      "kind": "page",
+      "parentId": "menu.library.workspace-tools",
+      "labelKey": "menu.library.bulk-operations.label",
+      "order": 2,
+      "pageId": "bulk-operations"
+    },
+    {
+      "id": "section.library.lib-design",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "section.library.lib-design.label",
+      "order": 3
+    },
+    {
+      "id": "menu.library.design-tokens",
+      "kind": "group",
+      "parentId": "section.library.lib-design",
+      "labelKey": "menu.library.design-tokens.label",
+      "order": 0,
+      "icon": "SlidersHorizontal"
+    },
+    {
+      "id": "menu.library.theme-studio",
+      "kind": "page",
+      "parentId": "menu.library.design-tokens",
+      "labelKey": "menu.library.theme-studio.label",
+      "order": 0,
+      "pageId": "theme-studio"
+    },
+    {
+      "id": "menu.library.localization",
+      "kind": "page",
+      "parentId": "menu.library.design-tokens",
+      "labelKey": "menu.library.localization.label",
+      "order": 1,
+      "pageId": "localization",
+      "icon": "Languages"
+    },
+    {
+      "id": "menu.library.accessibility",
+      "kind": "page",
+      "parentId": "menu.library.design-tokens",
+      "labelKey": "menu.library.accessibility.label",
+      "order": 2,
+      "pageId": "accessibility"
+    },
+    {
+      "id": "section.library.lib-docs",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "section.library.lib-docs.label",
+      "order": 4
+    },
+    {
+      "id": "menu.library.engineering",
+      "kind": "group",
+      "parentId": "section.library.lib-docs",
+      "labelKey": "menu.library.engineering.label",
+      "order": 0,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.page-catalog",
+      "kind": "page",
+      "parentId": "menu.library.engineering",
+      "labelKey": "menu.library.page-catalog.label",
+      "order": 0,
+      "pageId": "page-catalog"
+    },
+    {
+      "id": "menu.library.component-contracts",
+      "kind": "page",
+      "parentId": "menu.library.engineering",
+      "labelKey": "menu.library.component-contracts.label",
+      "order": 1,
+      "pageId": "component-contracts"
+    },
+    {
+      "id": "menu.library.keyboard-shortcuts",
+      "kind": "page",
+      "parentId": "menu.library.engineering",
+      "labelKey": "menu.library.keyboard-shortcuts.label",
+      "order": 2,
+      "pageId": "keyboard-shortcuts"
+    },
+    {
+      "id": "menu.library.integration-guide",
+      "kind": "page",
+      "parentId": "menu.library.engineering",
+      "labelKey": "menu.library.integration-guide.label",
+      "order": 3,
+      "pageId": "integration-guide"
+    },
+    {
+      "id": "section.library.lib-settings",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "section.library.lib-settings.label",
+      "order": 5
+    },
+    {
+      "id": "menu.library.personalization",
+      "kind": "group",
+      "parentId": "section.library.lib-settings",
+      "labelKey": "menu.library.personalization.label",
+      "order": 0,
+      "icon": "FileCog"
+    },
+    {
+      "id": "menu.library.preferences",
+      "kind": "page",
+      "parentId": "menu.library.personalization",
+      "labelKey": "menu.library.preferences.label",
+      "order": 0,
+      "pageId": "preferences"
+    },
+    {
+      "id": "menu.library.saved-views",
+      "kind": "page",
+      "parentId": "menu.library.personalization",
+      "labelKey": "menu.library.saved-views.label",
+      "order": 1,
+      "pageId": "saved-views"
+    },
+    {
+      "id": "menu.library.shortcut-manager",
+      "kind": "page",
+      "parentId": "menu.library.personalization",
+      "labelKey": "menu.library.shortcut-manager.label",
+      "order": 2,
+      "pageId": "shortcut-manager"
+    },
+    {
+      "id": "menu.library.inbox",
+      "kind": "group",
+      "parentId": "section.library.lib-settings",
+      "labelKey": "menu.library.inbox.label",
+      "order": 1,
+      "icon": "Bell"
+    },
+    {
+      "id": "menu.library.notifications",
+      "kind": "page",
+      "parentId": "menu.library.inbox",
+      "labelKey": "menu.library.notifications.label",
+      "order": 0,
+      "pageId": "notifications"
+    },
+    {
+      "id": "menu.library.messages",
+      "kind": "page",
+      "parentId": "menu.library.inbox",
+      "labelKey": "menu.library.messages.label",
+      "order": 1,
+      "pageId": "messages"
+    },
+    {
+      "id": "menu.library.ai-assistant",
+      "kind": "group",
+      "parentId": "section.library.lib-settings",
+      "labelKey": "menu.library.ai-assistant.label",
+      "order": 2,
+      "icon": "Sparkles"
+    },
+    {
+      "id": "menu.library.ai-administration",
+      "kind": "page",
+      "parentId": "menu.library.ai-assistant",
+      "labelKey": "menu.library.ai-administration.label",
+      "order": 0,
+      "pageId": "ai-administration"
+    }
+  ]
+}

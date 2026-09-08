@@ -1,4 +1,5 @@
 "use client";
+import { DateInput, LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 import React, { useId, useState } from "react";
 import { ChevronDown, Link2, Lock, RotateCcw, Share2, SlidersHorizontal } from "lucide-react";
@@ -61,6 +62,7 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, refere
       [referenceKey, [...definitions, ...(advanced ?? [])].find((definition) => definition.key === filterKey)?.label ?? referenceKey]),
   );
 
+  const {t} = useLocalization();
   const renderField = (definition: FilterDefinition) => {
     const sensitive = !isUrlSafe(definition);
     const noteId = `${base}-${definition.key}-note`;
@@ -84,18 +86,18 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, refere
             onChange={(next) => onChange(definition.key, next)}
           />
         ) : definition.type === "select" ? (
-          <Select {...common} options={(definition.options ?? []).filter((o) => o !== "All").map((o) => ({ label: o, value: o }))} placeholder="All" onChange={(event) => onChange(definition.key, event.target.value)} />
+          <Select {...common} options={(definition.options ?? []).filter((o) => o !== "All").map((o) => ({ label: definition.optionLabels?.[o] ?? o, value: o }))} placeholder="ui.all.a52ace42" onChange={(event) => onChange(definition.key, event.target.value)} />
+        ) : definition.type === "date" ? (
+          <DateInput {...common} onChange={(event) => onChange(definition.key, event.target.value)} />
         ) : (
-          <Input {...common} type={definition.type === "date" ? "date" : "text"} placeholder={definition.type === "date" ? undefined : `Enter ${definition.label.toLowerCase()}`} onChange={(event) => onChange(definition.key, event.target.value)} />
+          <Input {...common} type="text" placeholder={t("Enter {field}", {field:t(definition.label)})} onChange={(event) => onChange(definition.key, event.target.value)} />
         )}
         {sensitive ? (
           /* Described, not just tinted. Which fields survive a share is the one
              thing this bar has to communicate, and a colour communicates it to
              some people. */
           <p id={noteId} className="mt-1 flex items-center gap-1 text-[length:calc(9px*var(--fs-scale))] font-semibold text-[var(--text-subtle)]">
-            <Lock aria-hidden className="size-3 shrink-0" />
-            Kept out of the link — not included in the URL
-          </p>
+            <Lock aria-hidden className="size-3 shrink-0" /><LocalizedText message="ui.kept.out.of.the.link.not.included.in.the.url.6c7f6a2e" /></p>
         ) : null}
       </div>
     );
@@ -123,8 +125,7 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, refere
             className="focus-ring flex w-full items-center justify-between px-3 py-2 text-left"
           >
             <span className="flex items-center gap-2 text-[length:calc(10.5px*var(--fs-scale))] font-bold text-[var(--text-muted)]">
-              <SlidersHorizontal aria-hidden className="size-3.5" />
-              Advanced filters{advancedSet ? ` (${advancedSet} set)` : ""}
+              <SlidersHorizontal aria-hidden className="size-3.5" /><LocalizedText message="ui.advanced.filters.db332598" />{advancedSet ? t(" ({count} set)",{count:advancedSet}) : ""}
             </span>
             <ChevronDown aria-hidden className={cn("size-4 text-[var(--text-subtle)] transition", advancedOpen && "rotate-180")} />
           </button>
@@ -138,21 +139,20 @@ export function FilterBar({ definitions, advanced, values, sensitiveKeys, refere
         {holdingBack ? (
           <p className="mr-auto flex items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">
             <Lock aria-hidden className="size-3.5 shrink-0 text-[var(--warning-ink)]" />
-            {sensitiveKeys.length} filter{sensitiveKeys.length === 1 ? "" : "s"} cannot be put in a link. Save a view to share this.
-          </p>
+            {t(sensitiveKeys.length===1?"{count} filter cannot be put in a link. Save a view to share this.":"{count} filters cannot be put in a link. Save a view to share this.", {count:sensitiveKeys.length})}</p>
         ) : <span className="mr-auto" />}
 
         {/* One or the other, never both. Offering "copy link" beside a sensitive
             filter hands someone a link that silently drops half of what they
             are looking at. */}
         {anyFilter && holdingBack && onSaveView ? (
-          <Button size="sm" variant="secondary" leftIcon={<Share2 className="size-3.5" />} onClick={onSaveView}>Create saved view</Button>
+          <Button size="sm" variant="secondary" leftIcon={<Share2 className="size-3.5" />} onClick={onSaveView}><LocalizedText message="ui.create.saved.view.488ed7c5" /></Button>
         ) : null}
         {anyFilter && !holdingBack && onCopyLink ? (
-          <Button size="sm" variant="secondary" leftIcon={<Link2 className="size-3.5" />} onClick={onCopyLink}>Copy link</Button>
+          <Button size="sm" variant="secondary" leftIcon={<Link2 className="size-3.5" />} onClick={onCopyLink}><LocalizedText message="ui.copy.link.dbf362d4" /></Button>
         ) : null}
-        {onApply ? <Button size="sm" variant="primary" onClick={onApply}>Apply</Button> : null}
-        <Button size="sm" variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} onClick={onReset}>Reset</Button>
+        {onApply ? <Button size="sm" variant="primary" onClick={onApply}><LocalizedText message="ui.apply.31e392d1" /></Button> : null}
+        <Button size="sm" variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} onClick={onReset}><LocalizedText message="ui.reset.daee7606" /></Button>
       </div>
     </section>
   );

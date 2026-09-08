@@ -1,4 +1,7 @@
 "use client";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
+
 
 import React, { useState } from "react";
 import { Sparkles, X } from "lucide-react";
@@ -20,6 +23,7 @@ import { useAssistant } from "./use-assistant.ts";
  * clinical use case is never surfaced this way.
  */
 export function InlineAiAction({ useCaseId, label, className }: { useCaseId: string; label?: string; className?: string }) {
+  const {t: translateCopy} = useLocalization();
   const assistant = useAssistant();
   const [reply, setReply] = useState<AiReply | null>(null);
   const [fieldCount, setFieldCount] = useState(0);
@@ -44,23 +48,23 @@ export function InlineAiAction({ useCaseId, label, className }: { useCaseId: str
       </Button>
 
       {reply ? (
-        <div className="animate-slide-up mt-2 w-full rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] p-3">
+        <Card shadow="none" tone="muted" className="animate-slide-up mt-2 w-full p-3">
           <div className="flex items-start gap-2">
             <span className="min-w-0 flex-1">
               <span className="flex flex-wrap items-center gap-2">
-                <b className="text-[length:calc(10px*var(--fs-scale))]">{useCase.label}</b>
+                <b className="text-[length:calc(10px*var(--fs-scale))]"><LocalizedText message={useCase.label} /></b>
                 <span className="text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">
-                  {fieldCount} field{fieldCount === 1 ? "" : "s"} captured{reply.via === "mock" ? " · mock transport" : ""}
+                  {translateCopy(fieldCount===1?"{count} field captured":"{count} fields captured",{count:fieldCount})}{reply.via === "mock" ? <LocalizedText message="ui.mock.transport.d72848f2" /> : ""}
                 </span>
               </span>
-              <pre className="mt-1.5 whitespace-pre-wrap break-words font-sans text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{reply.text ?? reply.error}</pre>
+              <pre className="mt-1.5 whitespace-pre-wrap break-words font-sans text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{reply.text ?? translateCopy(reply.error ?? "")}</pre>
             </span>
-            <button type="button" aria-label="Dismiss" onClick={() => setReply(null)}
+            <button type="button" aria-label={translateCopy("ui.dismiss.48845bff")} onClick={() => setReply(null)}
               className="focus-ring shrink-0 rounded-md p-1 text-[var(--text-subtle)] hover:bg-[var(--surface-3)] hover:text-[var(--text)]">
               <X className="size-3.5" />
             </button>
           </div>
-        </div>
+        </Card>
       ) : null}
     </>
   );

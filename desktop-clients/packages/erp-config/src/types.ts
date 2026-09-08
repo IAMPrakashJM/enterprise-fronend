@@ -159,6 +159,7 @@ export interface UserPreferences {
 }
 
 export interface MenuItem {
+  labelKey?: string;
   id: string;
   label: string;
   icon?: LucideIcon;
@@ -168,12 +169,15 @@ export interface MenuItem {
 }
 
 export interface MenuSection {
+  labelKey?: string;
   id: string;
   label: string;
   items: MenuItem[];
 }
 
 export interface ModuleDefinition {
+  labelKey?: string;
+  shortLabelKey?: string;
   id: ModuleKey;
   label: string;
   shortLabel: string;
@@ -200,6 +204,8 @@ export interface PageAiConfig {
 }
 
 export interface PageDefinition {
+  titleKey?: string;
+  subtitleKey?: string;
   id: string;
   title: string;
   subtitle: string;
@@ -216,6 +222,15 @@ export interface FormOption {
 }
 
 export interface FormFieldSchema {
+  labelKey?: string;
+  helpKey?: string;
+  placeholderKey?: string;
+  visibleWhen?: { field: string; equals: string | number | boolean };
+  requiredWhen?: { field: string; equals: string | number | boolean };
+  optionsByField?: { field: string; values: Record<string, FormOption[]> };
+  min?: number;
+  max?: number;
+  notBefore?: string;
   id: string;
   label: string;
   type: FieldType;
@@ -230,6 +245,8 @@ export interface FormFieldSchema {
 }
 
 export interface FormSectionSchema {
+  titleKey?: string;
+  descriptionKey?: string;
   id: string;
   title: string;
   description: string;
@@ -245,6 +262,7 @@ export interface EntitySchema {
 }
 
 export interface DataColumn {
+  labelKey?: string;
   key: string;
   label: string;
   type?: "text" | "money" | "date" | "status" | "number" | "percent";

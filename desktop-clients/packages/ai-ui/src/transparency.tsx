@@ -1,4 +1,8 @@
 "use client";
+import { DescriptionList } from "@pepbits/ops-ui";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText } from "@pepbits/ops-ui";
+
 
 import React, { useState } from "react";
 import { Database, EyeOff, Route, ShieldCheck, TriangleAlert } from "lucide-react";
@@ -44,7 +48,7 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
     <li className="flex gap-3 border-b border-[var(--border)] py-2.5 last:border-0">
       <span className="mt-0.5 size-2 shrink-0 rounded-full bg-[var(--primary)]" />
       <span className="min-w-0 flex-1">
-        <span className="block text-[length:calc(10.5px*var(--fs-scale))] font-bold">{label}</span>
+        <span className="block text-[length:calc(10.5px*var(--fs-scale))] font-bold"><LocalizedText message={label} /></span>
         <span className="block text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{detail}</span>
       </span>
       <span className="shrink-0 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]">{retains}</span>
@@ -67,27 +71,25 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
         {tab === "data" ? (
           <>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[length:calc(11px*var(--fs-scale))] font-extrabold">{useCase.label}</span>
-              <Badge tone="neutral">{context.fields.length} {context.fields.length === 1 ? "field" : "fields"}</Badge>
-              {redactedCount ? <Badge tone="warning">{redactedCount} redacted</Badge> : null}
+              <span className="text-[length:calc(11px*var(--fs-scale))] font-extrabold"><LocalizedText message={useCase.label} /></span>
+              <Badge tone="neutral">{context.fields.length} {context.fields.length === 1 ? <LocalizedText message="ui.field.c0d2856b" /> : <LocalizedText message="ui.fields.bfe5d697" />}</Badge>
+              {redactedCount ? <Badge tone="warning">{redactedCount}<LocalizedText message="ui.redacted.4a081a65" /></Badge> : null}
             </div>
-            <p className="mt-1.5 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{useCase.description}</p>
+            <p className="mt-1.5 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message={useCase.description} /></p>
 
             {context.fields.length === 0 ? (
-              <p className="mt-4 rounded-xl border border-dashed border-[var(--border-strong)] px-3 py-6 text-center text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
-                Nothing on this page matches what this use case may read. There is nothing to send.
-              </p>
+              <p className="mt-4 rounded-xl border border-dashed border-[var(--border-strong)] px-3 py-6 text-center text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.nothing.on.this.page.matches.what.this.use.case.may.read.7844af00" /></p>
             ) : (
               <ul className="mt-3">
                 {context.fields.map((field, index) => (
                   <li key={`${field.label}-${index}`} className="flex gap-3 border-b border-[var(--border)] py-2 last:border-0">
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.08em] text-[var(--text-subtle)]">{field.label}</span>
+                      <span className="block text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.08em] text-[var(--text-subtle)]"><LocalizedText message={field.label} /></span>
                       <span className="mt-0.5 block break-words text-[length:calc(10.5px*var(--fs-scale))] font-semibold">{field.value}</span>
                     </span>
                     <span className="flex shrink-0 flex-col items-end gap-1">
                       <span className="text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-subtle)]">{field.source}</span>
-                      {field.redacted ? <span className="flex items-center gap-1 text-[length:calc(8.5px*var(--fs-scale))] font-bold text-[var(--warning-ink)]"><EyeOff className="size-3" />redacted</span> : null}
+                      {field.redacted ? <span className="flex items-center gap-1 text-[length:calc(8.5px*var(--fs-scale))] font-bold text-[var(--warning-ink)]"><EyeOff className="size-3" /><LocalizedText message="ui.redacted.b68919af" /></span> : null}
                     </span>
                   </li>
                 ))}
@@ -95,10 +97,10 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
             )}
 
             {context.userInput ? (
-              <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] p-3">
-                <div className="text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.08em] text-[var(--text-subtle)]">Your message</div>
+              <Card shadow="none" tone="muted" radius="xl" className="mt-3 p-3">
+                <div className="text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.08em] text-[var(--text-subtle)]"><LocalizedText message="ui.your.message.7a057bd9" /></div>
                 <p className="mt-1 whitespace-pre-wrap text-[length:calc(10.5px*var(--fs-scale))]">{context.userInput}</p>
-              </div>
+              </Card>
             ) : null}
           </>
         ) : null}
@@ -112,21 +114,18 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
         ) : null}
 
         {tab === "policy" ? (
-          <dl className="grid gap-2.5">
-            {[
+          <DescriptionList layout="rows" className="gap-2.5"
+            itemClassName="border-b border-[var(--border)] pb-2 last:border-0"
+            termClassName="text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]"
+            valueClassName="text-right text-[length:calc(9.5px*var(--fs-scale))] font-bold"
+            items={[
               ["Allowed by", `The ${decidedBy} gate`],
               ["Retention", config ? `${config.retention.class}, ${config.retention.days} days` : "Unknown — configuration unavailable"],
               ["Region", config?.dataSharing.region ?? "Unknown"],
               ["Provider trains on this content", config ? (config.dataSharing.providerTrainsOnContent ? "Yes" : "No") : "Unknown"],
               ["Credential", config?.credential.configured ? `Configured ${config.credential.hint ?? ""}` : "Not configured — the request cannot be sent"],
               ["Prompt", useCase.promptId],
-            ].map(([term, value]) => (
-              <div key={term} className="flex justify-between gap-3 border-b border-[var(--border)] pb-2 last:border-0">
-                <dt className="text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">{term}</dt>
-                <dd className="text-right text-[length:calc(9.5px*var(--fs-scale))] font-bold">{value}</dd>
-              </div>
-            ))}
-          </dl>
+            ].map(([term, value]) => ({id: term, label: term, value}))} />
         ) : null}
       </div>
 
@@ -135,24 +134,19 @@ export function TransparencyPanel({ context, useCase, config, decidedBy, onConfi
           <label className="mb-2.5 flex cursor-pointer items-start gap-2 rounded-xl border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-2.5">
             <Checkbox className="mt-0.5" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} />
             <span className="text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed">
-              <TriangleAlert className="mr-1 inline size-3.5 text-[var(--warning-ink)]" />
-              This is a clinical use case. I confirm the fields above may be sent for record <b>{context.pageId}</b>. The assistant summarises; it does not diagnose.
-            </span>
+              <TriangleAlert className="mr-1 inline size-3.5 text-[var(--warning-ink)]" /><LocalizedText message="ui.this.is.a.clinical.use.case.i.confirm.the.fields.above.m.f472ba9e" /><b>{context.pageId}</b><LocalizedText message="ui.the.assistant.summarises.it.does.not.diagnose.4388468f" /></span>
           </label>
         ) : null}
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={onCancel}>Cancel</Button>
+          <Button variant="ghost" size="sm" onClick={onCancel}><LocalizedText message="ui.cancel.19766ed6" /></Button>
           <span className="flex-1" />
           <Button variant="primary" size="sm" loading={sending}
             disabled={context.fields.length === 0 || (clinical && !acknowledged) || !config?.credential.configured}
-            onClick={onConfirm}>
-            Send {context.fields.length} {context.fields.length === 1 ? "field" : "fields"}
+            onClick={onConfirm}><LocalizedText message="ui.send.e8fbd3f3" />{context.fields.length} {context.fields.length === 1 ? <LocalizedText message="ui.field.c0d2856b" /> : <LocalizedText message="ui.fields.bfe5d697" />}
           </Button>
         </div>
         {!config?.credential.configured ? (
-          <p className="mt-2 text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">
-            No provider credential is configured for this tenant, so nothing can be sent yet.
-          </p>
+          <p className="mt-2 text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.no.provider.credential.is.configured.for.this.tenant.so.a77c2f62" /></p>
         ) : null}
       </div>
     </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useDocumentScope, useOptionalWorkspace } from "@pepbits/workspace-core";
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { PAGE_REGISTRY } from "@pepbits/erp-config";
 import { gatesForPage, getUseCase, resolveAi } from "@pepbits/ai-config";
@@ -65,7 +67,9 @@ export function useAssistant(): Assistant {
     return () => { cancelled = true; };
   }, [wantConfig]);
 
-  const pageId = navigation.current.pageId;
+  const scope = useDocumentScope();
+  const workspace = useOptionalWorkspace();
+  const pageId = (scope ? workspace?.getDocument(scope)?.route : undefined) ?? navigation.current.pageId;
   const page = PAGE_REGISTRY[pageId];
 
   const access = useMemo(() => {

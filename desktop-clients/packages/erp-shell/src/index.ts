@@ -8,3 +8,4 @@ export * from "./use-clock";
 export * from "./chrome-palette";
 export * from "./layers";
 export * from "./workspace";
+export * from "./product-context";

@@ -1,5 +1,7 @@
 # UI gap analysis — AllyVORA provider-web vs. this repo
 
+> Historical review. See the [verified follow-up and corrections](review-follow-up-2026-09-08.md) for current implementation and test wiring.
+
 _5 September 2026. What shipped recorded 7 September 2026._
 
 What the other codebase has at the **design and app-feel** level that this one does not,

@@ -1,3 +1,4 @@
+import { LANGUAGE_LOCALES } from "./i18n.ts";
 import type { DataColumn, UserPreferences } from "./types.ts";
 
 /* Value formatting lives HERE, not in ops-ui, for one reason: it has to read
@@ -23,9 +24,9 @@ export interface Formatters {
 
 type FormatPrefs = Pick<UserPreferences,
   "currencyCode" | "numberLocale" | "dateFormat" | "decimalPlaces"
-  | "timeFormat" | "currencyDisplay" | "negativeStyle">;
+  | "timeFormat" | "currencyDisplay" | "negativeStyle"> & Partial<Pick<UserPreferences, "language">>;
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 
 /* Parsed by hand rather than with `new Date(value)`: the mock data is plain
    YYYY-MM-DD, and Date would read that as UTC midnight and then render it in
@@ -46,6 +47,9 @@ export function createFormatters(preferences: FormatPrefs): Formatters {
   /* currencySign:"accounting" is what produces (1,200) rather than -1,200 --
      done by Intl rather than by hand so the parenthesis lands where each locale
      puts it relative to the symbol, which is not the same everywhere. */
+  const languageLocale = LANGUAGE_LOCALES[preferences.language ?? "en"];
+  const months = Array.from({length: 12}, (_, month) => new Intl.DateTimeFormat(languageLocale, {month: "short", timeZone: "UTC"}).format(new Date(Date.UTC(2020, month, 1))));
+  const periods = [0, 12].map(hour => new Intl.DateTimeFormat(languageLocale, {hour: "numeric", hour12: true, timeZone: "UTC"}).formatToParts(new Date(Date.UTC(2020, 0, 1, hour))).find(part => part.type === "dayPeriod")?.value ?? (hour ? "PM" : "AM"));
   const accounting = negativeStyle === "parentheses";
   const money = currencyDisplay === "none"
     ? new Intl.NumberFormat(numberLocale, {
@@ -90,7 +94,7 @@ export function createFormatters(preferences: FormatPrefs): Formatters {
     switch (dateFormat) {
       case "dmy":    return `${parts.d}/${parts.m}/${parts.y}`;
       case "mdy":    return `${parts.m}/${parts.d}/${parts.y}`;
-      case "medium": return `${parts.d} ${MONTHS[parts.month - 1]} ${parts.y}`;
+      case "medium": return `${parts.d} ${months[parts.month - 1]} ${parts.y}`;
       default:       return `${parts.y}-${parts.m}-${parts.d}`;
     }
   };
@@ -119,12 +123,12 @@ export function createFormatters(preferences: FormatPrefs): Formatters {
     const tail = options?.seconds && sec !== null ? `:${sec}` : "";
     if (timeFormat === "24h") return `${String(h).padStart(2, "0")}:${m}${tail}`;
     // 00:xx is 12 AM and 12:xx is 12 PM -- the two cases a plain h % 12 gets wrong.
-    const suffix = h < 12 ? "AM" : "PM";
+    const suffix = periods[h < 12 ? 0 : 1];
     const hour12 = h % 12 === 0 ? 12 : h % 12;
     return `${hour12}:${m}${tail} ${suffix}`;
   };
 
-  const percent = (value: number | string) => `${plain.format(Number(value))}%`;
+  const percent = (value: number | string) => wrapNegative(`${plain.format(Number(value))}%`, Number(value));
 
   const dateTime = (value: string | Date): string => {
     if (value instanceof Date) return `${date(value)} ${time(value)}`;

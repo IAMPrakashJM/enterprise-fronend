@@ -5,7 +5,8 @@ import type { NavigationPort, NavigationTarget } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
 import type { SessionUser } from "@pepbits/auth";
 import { MdiTaskbar, targetFromDocument, useDetachedWindows, useMdiWorkspace } from "@pepbits/erp-shell";
-import { ERPProvider, EnterpriseShell, GlobalLayers, WorkspaceCanvas, WorkspaceTabs, useERP, useWorkspaceNavigation, skeletonsPreferred } from "@pepbits/erp-shell";
+import { ApplicationProductProvider } from "../../../products/provider";
+import { ProductProvider, ERPProvider, EnterpriseShell, GlobalLayers, WorkspaceCanvas, WorkspaceTabs, useERP, useWorkspaceNavigation, skeletonsPreferred } from "@pepbits/erp-shell";
 import { LoginScreen, PageRenderer, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
 import { createWorkspace, parseDocumentKey, WorkspaceProvider } from "@pepbits/workspace-core";
 import { createTauriWindowPort, detachedDocumentKey } from "./platform/tauri-windows";
@@ -242,9 +243,11 @@ const windowPort = createTauriWindowPort();
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <SessionProvider>
+    <ApplicationProductProvider>
       <WindowPortProvider value={windowPort}>
         <Gate />
       </WindowPortProvider>
+    </ApplicationProductProvider>
     </SessionProvider>
   </React.StrictMode>,
 );

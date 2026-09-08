@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 export interface SessionUser {
   id: string;
@@ -30,6 +30,7 @@ export interface SessionValue {
 }
 
 const STORAGE_KEY = "nexora-session-token";
+const INVALIDATED_EVENT = "nexora-session-invalidated";
 
 /* Read once at module scope so both bundlers can statically replace it. Next inlines
    process.env.NEXT_PUBLIC_*; Vite inlines import.meta.env.VITE_*. Neither understands
@@ -82,43 +83,53 @@ const SessionContext = createContext<SessionValue | null>(null);
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<SessionStatus>("loading");
   const [user, setUser] = useState<SessionUser | null>(null);
+  const generation = useRef(0);
 
-  /* Re-validate a stored token on mount. Trusting it blind would render a signed-in
-     shell whose every request then 401s — the failure looks like a broken app rather
-     than an expired session. */
+  /* Invalidate the rendered session before validating a token from another
+     window. Request generations prevent late responses from restoring old users. */
   useEffect(() => {
-    let cancelled = false;
-    const token = readToken();
-    if (!token) {
-      setStatus("anonymous");
-      return;
-    }
-    (async () => {
+    const validate = async () => {
+      const request = ++generation.current;
+      const token = readToken();
+      setUser(null);
+      setStatus(token ? "loading" : "anonymous");
+      if (!token) return;
+      const current = () => generation.current === request && readToken() === token;
       try {
         const response = await fetch(`${API}/auth/me`, { headers: { Authorization: `Bearer ${token}` } });
-        if (cancelled) return;
+        if (!current()) return;
         if (!response.ok) {
           writeToken(null);
           setStatus("anonymous");
           return;
         }
         const body = (await response.json()) as { user: SessionUser };
-        if (cancelled) return;
+        if (!current()) return;
         setUser(body.user);
         setStatus("authenticated");
       } catch {
-        /* The API being down is indistinguishable here from a bad token, and guessing
-           wrong in the permissive direction would strand the user in a broken shell. */
-        if (!cancelled) {
-          writeToken(null);
-          setStatus("anonymous");
-        }
+        /* An unreachable API cannot establish that this token is valid. Do not
+           guess permissively and strand the user in an unusable signed-in shell. */
+        if (current()) { writeToken(null); setStatus("anonymous"); }
       }
-    })();
-    return () => { cancelled = true; };
+    };
+    const storageChanged = (event: StorageEvent) => {
+      if ((event.key === STORAGE_KEY || event.key === null) &&
+          (!event.storageArea || event.storageArea === window.localStorage)) void validate();
+    };
+    const invalidated = () => { void validate(); };
+    window.addEventListener("storage", storageChanged);
+    window.addEventListener(INVALIDATED_EVENT, invalidated);
+    void validate();
+    return () => {
+      generation.current++;
+      window.removeEventListener("storage", storageChanged);
+      window.removeEventListener(INVALIDATED_EVENT, invalidated);
+    };
   }, []);
 
   const login = useCallback(async (username: string, password: string): Promise<string | null> => {
+    const request = ++generation.current;
     let response: Response;
     try {
       response = await fetch(`${API}/auth/login`, {
@@ -134,6 +145,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
       return body.error ?? "Sign-in failed.";
     }
     const body = (await response.json()) as { token: string; user: SessionUser };
+    if (generation.current !== request) return "Sign-in was cancelled. Please try again.";
     writeToken(body.token);
     setUser(body.user);
     setStatus("authenticated");
@@ -141,6 +153,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logout = useCallback(async () => {
+    generation.current++;
     const token = readToken();
     writeToken(null);
     setUser(null);
@@ -170,11 +183,16 @@ export function useSession(): SessionValue {
 /** fetch with the stored bearer attached. Callers get a plain Response; a 401 means
     the session died server-side (an API restart drops every token) and the caller
     should treat it as signed out rather than retrying. */
-export function authedFetch(path: string, init: RequestInit = {}): Promise<Response> {
+export async function authedFetch(path: string, init: RequestInit = {}): Promise<Response> {
   const token = readToken();
   const headers = new Headers(init.headers);
   if (token) headers.set("Authorization", `Bearer ${token}`);
-  return fetch(`${API}${path}`, { ...init, headers });
+  const response = await fetch(`${API}${path}`, { ...init, headers });
+  if (response.status === 401 && token && readToken() === token) {
+    writeToken(null);
+    window.dispatchEvent(new Event(INVALIDATED_EVENT));
+  }
+  return response;
 }
 
 export const DEMO_ACCOUNTS: Array<{ username: string; label: string; role: string }> = [

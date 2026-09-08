@@ -287,3 +287,58 @@ describe("the demo accounts", () => {
     expect(JSON.stringify(DEMO_ACCOUNTS)).not.toMatch(/password|secret|pw\b/i);
   });
 });
+
+describe("session invalidation across windows", () => {
+  test("logout in another window removes the rendered session", async () => {
+    localStorage.setItem(STORAGE_KEY, "tok-1");
+    fetchMock.mockResolvedValue(json(200, { user }));
+    mount(); await waitFor(() => expect(status()).toBe("authenticated"));
+    await act(async () => {
+      localStorage.removeItem(STORAGE_KEY);
+      window.dispatchEvent(new StorageEvent("storage", { key: STORAGE_KEY, oldValue: "tok-1", newValue: null }));
+    });
+    expect(status()).toBe("anonymous");
+    expect(screen.getByTestId("user")).toHaveTextContent("-");
+  });
+  test("an in-flight validation cannot sign back in after another window logs out", async () => {
+    localStorage.setItem(STORAGE_KEY, "tok-1");
+    let resolve!: (response: Response) => void;
+    fetchMock.mockReturnValue(new Promise<Response>(r => { resolve = r; }));
+    mount();
+    await act(async () => {
+      localStorage.removeItem(STORAGE_KEY);
+      window.dispatchEvent(new StorageEvent("storage", { key: STORAGE_KEY }));
+      resolve(json(200, { user }));
+    });
+    expect(status()).toBe("anonymous");
+  });
+  test("a 401 invalidates the current session in this window", async () => {
+    localStorage.setItem(STORAGE_KEY, "tok-1");
+    fetchMock.mockResolvedValueOnce(json(200, { user })).mockResolvedValueOnce(json(401, {}));
+    mount(); await waitFor(() => expect(status()).toBe("authenticated"));
+    await act(async () => { await authedFetch("/records"); });
+    expect(status()).toBe("anonymous");
+    expect(readToken()).toBeNull();
+  });
+  test("a stale 401 cannot remove a newer token", async () => {
+    localStorage.setItem(STORAGE_KEY, "old");
+    let resolve!: (response: Response) => void;
+    fetchMock.mockReturnValue(new Promise<Response>(r => { resolve = r; }));
+    const response = authedFetch("/records");
+    localStorage.setItem(STORAGE_KEY, "new");
+    resolve(json(401, {}));
+    await response;
+    expect(readToken()).toBe("new");
+  });
+});
+
+test("a pending sign-in cannot undo logout", async () => {
+  let resolve!: (response: Response) => void;
+  fetchMock.mockReturnValue(new Promise<Response>(r => { resolve = r; }));
+  mount();
+  await click("sign in");
+  await click("sign out");
+  await act(async () => { resolve(json(200, { token: "late", user })); });
+  expect(status()).toBe("anonymous");
+  expect(readToken()).toBeNull();
+});

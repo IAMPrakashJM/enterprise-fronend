@@ -62,7 +62,7 @@ describe("WorkspaceTabs", () => {
     const onClose = vi.fn();
     const onActivate = vi.fn();
     render_({ onClose, onActivate });
-    await userEvent.click(screen.getByRole("button", { name: /Close Journal Entry/ }));
+    await userEvent.click(screen.getByTitle("Close Journal Entry"));
     expect(onClose).toHaveBeenCalledWith("w3");
     expect(onActivate).not.toHaveBeenCalled();
   });

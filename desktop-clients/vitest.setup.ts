@@ -16,3 +16,6 @@ afterEach(cleanup);
 if (!Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = function scrollIntoView() {};
 }
+
+import {loadFallbackLanguage} from "./packages/erp-config/src/locale-messages";
+await Promise.all([loadFallbackLanguage("ar"), loadFallbackLanguage("hi"), loadFallbackLanguage("ml")]);

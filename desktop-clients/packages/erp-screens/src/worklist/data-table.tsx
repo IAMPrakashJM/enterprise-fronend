@@ -1,4 +1,7 @@
 "use client";
+import { TableContainer } from "@pepbits/ops-ui";
+import { DataValue, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@pepbits/ops-ui";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 import React from "react";
 import { ArrowDown, ArrowUp, ArrowUpDown, Eye, MoreHorizontal, Pencil, SquareArrowOutUpRight } from "lucide-react";
@@ -8,7 +11,7 @@ import { IconButton } from "@pepbits/ops-ui";
 import { ActionMenu, MenuButton } from "@pepbits/ops-ui";
 /* Stamped on every header and cell so the print stylesheet can refuse a class
    without JavaScript: see tokens.css. */
-import { classificationFor } from "@pepbits/erp-config";
+import { classificationFor, localizeFieldError } from "@pepbits/erp-config";
 import type { DataColumn, Density, Formatters } from "@pepbits/erp-config";
 
 /**
@@ -39,11 +42,11 @@ function formatValue(column: DataColumn, value: unknown, format: Formatters, wra
   if (column.type === "percent") return <span className="font-extrabold tabular-nums">{format.cell(column, value)}</span>;
   if (column.type === "number") return <span className="font-bold tabular-nums">{format.cell(column, value)}</span>;
   const text = format.cell(column, value);
-  if (wrap) return <span className="block max-w-[360px] whitespace-normal break-words">{text}</span>;
-  return <span className="block max-w-[260px] truncate" title={text}>{text}</span>;
+  if (wrap) return <DataValue value={text} wrap className="block max-w-[360px]" />;
+  return <DataValue value={text} className="block max-w-[260px]" />;
 }
 
-export function DataTable({ rows, columns, primaryKey, displayKey, selected, onToggle, onToggleAll, sort, onSort, onPreview, onView, onEdit, onCellCommit, density, format, stickyHeader = true, zebra = false, wrap = false }: {
+export function DataTable({ rows, columns, primaryKey, displayKey, selected, onToggle, onToggleAll, sort, onSort, onPreview, onView, onEdit, canEdit = true, onCellCommit, density, format, stickyHeader = true, zebra = false, wrap = false }: {
   rows: Array<Record<string, string | number | boolean>>;
   columns: DataColumn[];
   primaryKey: string;
@@ -55,6 +58,7 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
   onSort: (column: DataColumn) => void;
   onPreview: (row: Record<string, string | number | boolean>) => void;
   onView: (row: Record<string, string | number | boolean>) => void;
+  canEdit?: boolean;
   onEdit: (row: Record<string, string | number | boolean>) => void;
   /** Present only where a shell can persist a correction. Absent means read-only. */
   onCellCommit?: (row: Record<string, string | number | boolean>, column: DataColumn, next: string) => void | Promise<void>;
@@ -68,23 +72,24 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
      preference. The old py-1.5/2.5/3.5 ternary was duplicated here and in
      CardGrid, and the two had already drifted by a step. `density` stays in the
      signature because CardGrid still uses it for column count. */
+  const {t} = useLocalization();
   void density;
   const padding = "py-[var(--row-py)]";
   const allSelected = rows.length > 0 && rows.every((row) => selected.includes(String(row[primaryKey])));
   return (
-    <div className="nex-scrollbar min-h-0 overflow-auto" style={{ "--fs-scale": "var(--fs-result)" } as React.CSSProperties}>
-      <table className="w-full min-w-[920px] border-collapse text-left">
-        <thead className={cn("z-10 bg-[var(--surface-2)] shadow-[0_1px_0_var(--border)]", stickyHeader && "sticky top-0")}>
-          <tr>
-            <th className="w-10 px-3 py-2"><Checkbox aria-label="Select all visible records" checked={allSelected} indeterminate={selected.length > 0 && !allSelected} onChange={onToggleAll} /></th>
+    <TableContainer className="min-h-0" style={{ "--fs-scale": "var(--fs-result)" } as React.CSSProperties}>
+      <Table className="w-full min-w-[920px] border-collapse text-left">
+        <TableHeader className={cn("z-10 bg-[var(--surface-2)] shadow-[0_1px_0_var(--border)]", stickyHeader && "sticky top-0")}>
+          <TableRow>
+            <TableHead className="w-10 px-3 py-2"><Checkbox aria-label="ui.select.all.visible.records.e15adf6c" checked={allSelected} indeterminate={selected.length > 0 && !allSelected} onChange={onToggleAll} /></TableHead>
             {columns.map((column) => {
               const active = sort?.key === column.key;
-              return <th key={column.key} data-classification={classificationFor(column.key)} style={{ minWidth: column.width }} className="px-3 py-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]"><button type="button" disabled={!column.sortable} onClick={() => onSort(column)} className="focus-ring inline-flex items-center gap-1 rounded-md transition hover:text-[var(--text)] disabled:cursor-default">{column.label}{column.sortable ? active ? sort?.direction === "asc" ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" /> : <ArrowUpDown className="size-3 opacity-45" /> : null}</button></th>;
+              return <TableHead key={column.key} data-classification={classificationFor(column.key)} style={{ minWidth: column.width }} className="px-3 py-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]"><button type="button" disabled={!column.sortable} onClick={() => onSort(column)} className="focus-ring inline-flex items-center gap-1 rounded-md transition hover:text-[var(--text)] disabled:cursor-default">{<LocalizedText message={column.labelKey ?? column.label} />}{column.sortable ? active ? sort?.direction === "asc" ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" /> : <ArrowUpDown className="size-3 opacity-45" /> : null}</button></TableHead>;
             })}
-            <th className="sticky right-0 w-28 bg-[var(--surface-2)] px-3 py-2 text-right text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+            <TableHead className="sticky right-0 w-28 bg-[var(--surface-2)] px-3 py-2 text-right text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]"><LocalizedText message="ui.actions.ff8059dc" /></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {rows.map((row, rowIndex) => {
             const id = String(row[primaryKey]);
             const checked = selected.includes(id);
@@ -92,9 +97,9 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
                selected whichever stripe it landed on. */
             const stripe = zebra && rowIndex % 2 === 1 && !checked ? "bg-[color-mix(in_srgb,var(--surface-2)_60%,transparent)]" : undefined;
             return (
-              <tr key={id} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
-                <td className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><Checkbox aria-label={`Select ${id}`} checked={checked} onChange={() => onToggle(id)} /></td>
-                {columns.map((column, index) => <td key={column.key} data-classification={classificationFor(column.key)} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
+              <TableRow key={id} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
+                <TableCell className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><Checkbox aria-label={t("Select {item}",{item:id})} checked={checked} onChange={() => onToggle(id)} /></TableCell>
+                {columns.map((column, index) => <TableCell key={column.key} data-classification={classificationFor(column.key)} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
                     /* stopPropagation: the cell opens the record preview, and
                        clicking into an editor must not also open a drawer over
                        the thing being edited. */
@@ -104,25 +109,25 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
                           value={String(row[column.key] ?? "")}
                           display={formatValue(column, row[column.key], format, wrap)}
                           inputMode={column.type === "money" || column.type === "number" || column.type === "percent" ? "decimal" : undefined}
-                          validate={(next) => validateCell(column, next)}
+                          validate={(next) => localizeFieldError(validateCell(column, next) ?? undefined, column.label, t) ?? null}
                           onCommit={(next) => onCellCommit(row, column, next)}
                         />
                       </span>
-                      : formatValue(column, row[column.key], format, wrap)}</td>)}
-                <td className={cn("sticky right-0 bg-[var(--surface)] px-2 text-right transition group-hover:bg-[var(--surface-2)]", checked && "bg-[var(--primary-soft)]", padding)}>
+                      : formatValue(column, row[column.key], format, wrap)}</TableCell>)}
+                <TableCell className={cn("sticky right-0 bg-[var(--surface)] px-2 text-right transition group-hover:bg-[var(--surface-2)]", checked && "bg-[var(--primary-soft)]", padding)}>
                   <div className="flex justify-end gap-0.5">
-                    <IconButton label={`Preview ${id}`} className="size-7" onClick={() => onPreview(row)}><Eye className="size-3.5" /></IconButton>
-                    <IconButton label={`Edit ${id}`} className="size-7" onClick={() => onEdit(row)}><Pencil className="size-3.5" /></IconButton>
-                    <ActionMenu trigger={<IconButton label={`More actions for ${id}`} className="size-7"><MoreHorizontal className="size-3.5" /></IconButton>}>
-                      {(close) => <><MenuButton icon={<SquareArrowOutUpRight className="size-3.5" />} label="Open full record" onClick={() => { onView(row); close(); }} /><MenuButton icon={<Pencil className="size-3.5" />} label="Edit record" onClick={() => { onEdit(row); close(); }} /><MenuButton label="Duplicate record" onClick={close} /><MenuButton label="View audit history" onClick={close} /></>}
+                    <IconButton label={t("Preview {item}",{item:id})} className="size-7" onClick={() => onPreview(row)}><Eye className="size-3.5" /></IconButton>
+                    <IconButton label={t("Edit {item}",{item:id})} disabled={!canEdit} className="size-7" onClick={() => onEdit(row)}><Pencil className="size-3.5" /></IconButton>
+                    <ActionMenu trigger={<IconButton label={t("More actions for {item}",{item:id})} className="size-7"><MoreHorizontal className="size-3.5" /></IconButton>}>
+                      {(close) => <><MenuButton icon={<SquareArrowOutUpRight className="size-3.5" />} label="Open full record" onClick={() => { onView(row); close(); }} />{canEdit ? <MenuButton icon={<Pencil className="size-3.5" />} label="Edit record" onClick={() => { onEdit(row); close(); }} /> : null}<MenuButton label="Duplicate record" onClick={close} /><MenuButton label="View audit history" onClick={close} /></>}
                     </ActionMenu>
                   </div>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

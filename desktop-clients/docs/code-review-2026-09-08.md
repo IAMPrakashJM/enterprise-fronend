@@ -1,5 +1,7 @@
 # Code review — the 8 September working set
 
+> Historical review. See the [verified follow-up and corrections](review-follow-up-2026-09-08.md) for current implementation and test wiring.
+
 _8 September 2026._
 
 A review of everything changed in the twenty-four hours to 01:53 UTC on

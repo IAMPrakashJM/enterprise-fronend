@@ -16,7 +16,8 @@
     "@pepbits/erp-config": "*",
     "@pepbits/erp-shell": "*",
     "@pepbits/platform-ports": "*",
-    "@pepbits/auth": "*"
+    "@pepbits/auth": "*",
+    "@pepbits/workspace-core": "*"
   },
   "peerDependencies": {
     "react": ">=19"

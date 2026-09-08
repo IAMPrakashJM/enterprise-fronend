@@ -1,4 +1,6 @@
 "use client";
+import { useLocalization } from "./localization";
+
 
 import React from "react";
 import { cn } from "./cn";
@@ -28,8 +30,9 @@ export function Skeleton({ className, rounded = "md" }: { className?: string; ro
 
 /** A worklist: toolbar, then rows. */
 export function TableSkeleton({ rows = 8 }: { rows?: number }) {
+  const {t: translateCopy} = useLocalization();
   return (
-    <div className="grid gap-3 p-4" role="status" aria-label="Loading">
+    <div className="grid gap-3 p-4" role="status" aria-label={translateCopy("ui.loading.dc380888")}>
       <div className="flex gap-2"><Skeleton className="h-8 w-64" /><Skeleton className="h-8 w-24" /><span className="flex-1" /><Skeleton className="h-8 w-28" /></div>
       <div className="overflow-hidden rounded-[var(--radius)] border border-[var(--border)]">
         <div className="flex gap-4 border-b border-[var(--border)] bg-[var(--surface-2)] p-2.5">
@@ -48,8 +51,9 @@ export function TableSkeleton({ rows = 8 }: { rows?: number }) {
 
 /** A dashboard: KPI cards, then a chart. */
 export function DashboardSkeleton() {
+  const {t: translateCopy} = useLocalization();
   return (
-    <div className="grid gap-3 p-4" role="status" aria-label="Loading">
+    <div className="grid gap-3 p-4" role="status" aria-label={translateCopy("ui.loading.dc380888")}>
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 2xl:grid-cols-6">
         {Array.from({ length: 6 }, (_, i) => (
           <div key={i} className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-3">
@@ -66,8 +70,9 @@ export function DashboardSkeleton() {
 
 /** A record form: sections of label-and-field pairs. */
 export function FormSkeleton() {
+  const {t: translateCopy} = useLocalization();
   return (
-    <div className="grid gap-3 p-4" role="status" aria-label="Loading">
+    <div className="grid gap-3 p-4" role="status" aria-label={translateCopy("ui.loading.dc380888")}>
       {Array.from({ length: 3 }, (_, s) => (
         <div key={s} className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-3">
           <Skeleton className="h-3 w-36" />

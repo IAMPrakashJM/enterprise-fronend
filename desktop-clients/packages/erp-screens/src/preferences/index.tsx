@@ -1,4 +1,6 @@
 "use client";
+import { CardGrid } from "@pepbits/ops-ui";
+import { LocalizedText } from "@pepbits/ops-ui";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -63,10 +65,10 @@ function ChoiceGroup<T extends string>({ value, options, onChange }: {
             : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)]",
         )}>
           <div className="flex items-center justify-between gap-2">
-            <span className="text-[length:calc(11px*var(--fs-scale))] font-extrabold">{option.label}</span>
+            <span className="text-[length:calc(11px*var(--fs-scale))] font-extrabold">{<LocalizedText message={option.label} />}</span>
             {value === option.value ? <CheckCircle2 className="size-4 text-[var(--primary)]" /> : null}
           </div>
-          {option.description ? <p className="mt-1 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{option.description}</p> : null}
+          {option.description ? <p className="mt-1 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{<LocalizedText message={option.description} />}</p> : null}
         </button>
       ))}
     </div>
@@ -79,9 +81,9 @@ function ChoiceGroup<T extends string>({ value, options, onChange }: {
 function Row({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
-      <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{label}</span>
+      <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{<LocalizedText message={label} />}</span>
       {children}
-      {hint ? <span className="text-[length:calc(9px*var(--fs-scale))] leading-snug text-[var(--text-muted)]">{hint}</span> : null}
+      {hint ? <span className="text-[length:calc(9px*var(--fs-scale))] leading-snug text-[var(--text-muted)]">{<LocalizedText message={hint} />}</span> : null}
     </div>
   );
 }
@@ -98,7 +100,7 @@ function Segmented<T extends string>({ value, options, onChange, label }: { valu
           <button key={option.value} type="button" role="radio" aria-checked={active} onClick={() => onChange(option.value)}
             className={cn("focus-ring h-8 flex-1 whitespace-nowrap rounded-lg px-2 text-[length:calc(10.5px*var(--fs-scale))] font-bold transition",
               active ? "bg-[var(--primary-fill)] text-white shadow-sm" : "text-[var(--text-muted)] hover:bg-[var(--surface)] hover:text-[var(--text)]")}>
-            {option.label}
+            {<LocalizedText message={option.label} />}
           </button>
         );
       })}
@@ -129,7 +131,7 @@ function ThemeCard({ id, name, description, active, onSelect }: { id: string; na
         </div>
       </div>
       <div className="flex items-center justify-between gap-2 px-2.5 py-2">
-        <div className="min-w-0"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">{name}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]">{description}</div></div>
+        <div className="min-w-0"><div className="truncate text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">{name}</div><div className="truncate text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message={description} /></div></div>
         {active ? <CheckCircle2 className="size-4 shrink-0 text-[var(--primary)]" /> : null}
       </div>
     </button>
@@ -174,8 +176,8 @@ function PreferenceSection({ title, subtitle, icon, tab, keys, keywords, activeT
       <CardHeader>
         <CardTitle title={title} subtitle={subtitle} action={
           <span className="flex items-center gap-2">
-            {changed ? <Badge tone="brand">{changed} changed</Badge> : null}
-            {changed ? <Button size="xs" variant="ghost" leftIcon={<RotateCcw className="size-3" />} onClick={resetSection}>Reset</Button> : null}
+            {changed ? <Badge tone="brand">{changed}{" "}<LocalizedText message="ui.changed.d67e2e94" /></Badge> : null}
+            {changed ? <Button size="xs" variant="ghost" leftIcon={<RotateCcw className="size-3" />} onClick={resetSection}><LocalizedText message="ui.reset.daee7606" /></Button> : null}
             <span className="flex size-8 items-center justify-center rounded-xl bg-[var(--primary-soft)] text-[var(--primary)]">{icon}</span>
           </span>
         } />
@@ -190,7 +192,7 @@ function PreferenceSection({ title, subtitle, icon, tab, keys, keywords, activeT
 // ---------------------------------------------------------------------------
 
 export function PreferencesPage({ showTabPreferences = true }: { showTabPreferences?: boolean }) {
-  const { preferences, updatePreference, updatePreferences, resetPreferences, toast, branch } = useERP();
+  const { preferences, updatePreference, updatePreferences, resetPreferences, toast, branch, t } = useERP();
   const set = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => updatePreference(key, value);
   /* Navigation state, not a setting: which tab you last had open should not
      sync across devices. Same for the search box. */
@@ -242,10 +244,10 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
   return (
     <div className="flex h-full w-full flex-col gap-3">
       {/* ---- header ---------------------------------------------------- */}
-      <div className="flex shrink-0 flex-wrap items-center gap-3 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] px-4 py-3 shadow-[var(--shadow-sm)]">
+      <Card className="flex shrink-0 flex-wrap items-center gap-3 px-4 py-3">
         <div className="min-w-0">
-          <div className="flex items-center gap-2"><SlidersHorizontal className="size-4 text-[var(--primary)]" /><h2 className="text-[length:calc(13px*var(--fs-scale))] font-black">My Preferences</h2>{changed ? <Badge tone="brand">{changed} changed</Badge> : <Badge tone="neutral">All defaults</Badge>}</div>
-          <p className="mt-1 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">Saved to your account and applied everywhere the moment you change them.</p>
+          <div className="flex items-center gap-2"><SlidersHorizontal className="size-4 text-[var(--primary)]" /><h2 className="text-[length:calc(13px*var(--fs-scale))] font-black"><LocalizedText message="ui.my.preferences.164a6ee1" /></h2>{changed ? <Badge tone="brand">{changed}{" "}<LocalizedText message="ui.changed.d67e2e94" /></Badge> : <Badge tone="neutral"><LocalizedText message="ui.all.defaults.10313df3" /></Badge>}</div>
+          <p className="mt-1 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.saved.to.your.account.and.applied.everywhere.the.moment.810675e5" /></p>
         </div>
         <SearchInput
           className="ml-auto min-w-[220px] flex-1 lg:max-w-xs"
@@ -256,20 +258,20 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
         />
         <div className="flex flex-wrap gap-2">
           <FilePicker accept="application/json,.json" icon={<Upload className="size-3.5" />} label="Import" onFile={(file) => void importJson(file)} />
-          <Button variant="secondary" leftIcon={<Download className="size-3.5" />} onClick={exportJson}>Export</Button>
-          <Button variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} onClick={() => { resetPreferences(); toast({ title: "Defaults restored", message: "Every preference is back to its default.", type: "info" }); }}>Restore defaults</Button>
+          <Button variant="secondary" leftIcon={<Download className="size-3.5" />} onClick={exportJson}><LocalizedText message="ui.export.36648955" /></Button>
+          <Button variant="ghost" leftIcon={<RotateCcw className="size-3.5" />} onClick={() => { resetPreferences(); toast({ title: "Defaults restored", message: "Every preference is back to its default.", type: "info" }); }}><LocalizedText message="ui.restore.defaults.602f8e63" /></Button>
         </div>
-      </div>
+      </Card>
 
-      <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[210px_minmax(0,1fr)]">
+      <CardGrid className="min-h-0 flex-1 gap-3 lg:grid-cols-[210px_minmax(0,1fr)]">
         {/* ---- rail ------------------------------------------------------ */}
         <Card className="nex-scrollbar p-1.5 lg:h-full lg:overflow-y-auto">
           <Tabs orientation="vertical" variant="pills" items={PREF_TABS} value={activeTab} onChange={(value) => { setActiveTab(value as PrefTab); setQuery(""); }} />
-          {query.trim() ? <p className="px-2.5 pt-3 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">Showing every section matching “{query.trim()}”. Clear the search to go back to tabs.</p> : null}
+          {query.trim() ? <p className="px-2.5 pt-3 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><LocalizedText message="ui.showing.every.section.matching.f4d5fda7" />{query.trim()}<LocalizedText message="ui.clear.the.search.to.go.back.to.tabs.abb33ccd" /></p> : null}
         </Card>
 
         {/* ---- sections -------------------------------------------------- */}
-        <div className="nex-scrollbar grid min-w-0 content-start gap-3 lg:h-full lg:overflow-y-auto lg:pe-1">
+        <CardGrid className="nex-scrollbar min-w-0 content-start gap-3 lg:h-full lg:overflow-y-auto lg:pe-1">
 
           {/* ================= BEHAVIOUR ================= */}
           {/* Row for row, Vantage's Layout group -- same labels, same hints. */}
@@ -283,10 +285,10 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
                 <Segmented<ResultView> label="Worklist result view" value={preferences.resultView} onChange={(value) => set("resultView", value)} options={[{ value: "table", label: "Table" }, { value: "cards", label: "Card grid" }]} />
               </Row>
               <Row label="Quick view style" hint="Shown when clicking a result row">
-                <Select aria-label="Quick view style" value={preferences.previewMode} onChange={(event) => set("previewMode", event.target.value as PreviewMode)} options={[{ label: "Centered record card", value: "center-card" }, { label: "Center modal", value: "center-modal" }, { label: "Left side panel", value: "left-drawer" }, { label: "Right side panel", value: "right-drawer" }]} />
+                <Select aria-label="ui.quick.view.style.c03cba44" value={preferences.previewMode} onChange={(event) => set("previewMode", event.target.value as PreviewMode)} options={[{ label: "Centered record card", value: "center-card" }, { label: "Center modal", value: "center-modal" }, { label: "Left side panel", value: "left-drawer" }, { label: "Right side panel", value: "right-drawer" }]} />
               </Row>
               <Row label="Default rows per page">
-                <Select aria-label="Default rows per page" value={String(preferences.pageSize)} onChange={(event) => set("pageSize", Number(event.target.value) as 10 | 20 | 50 | 100)} options={[{ label: "10", value: "10" }, { label: "20", value: "20" }, { label: "50", value: "50" }, { label: "100", value: "100" }]} />
+                <Select aria-label="ui.default.rows.per.page.c972be79" value={String(preferences.pageSize)} onChange={(event) => set("pageSize", Number(event.target.value) as 10 | 20 | 50 | 100)} options={[{ label: "10", value: "10" }, { label: "20", value: "20" }, { label: "50", value: "50" }, { label: "100", value: "100" }]} />
               </Row>
             </div>
           </PreferenceSection>
@@ -319,7 +321,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
                 <Segmented<SidebarTone> label="Sidebar tone" value={preferences.sidebarTone} onChange={(value) => set("sidebarTone", value)} options={[{ value: "surface", label: "Match" }, { value: "light", label: "Light" }, { value: "contrast", label: "Deep" }]} />
               </Row>
               <Row label="Rail theme" hint="Independent of the page theme — Solarized rail on a Nexora page, say">
-                <Select aria-label="Sidebar theme" value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[
+                <Select aria-label="ui.sidebar.theme.f7427d59" value={preferences.sidebarTheme} onChange={(event) => set("sidebarTheme", event.target.value as SidebarTheme)} options={[
                   { label: "Match the page theme", value: "match" },
                   ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
                 ]} />
@@ -337,7 +339,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
                 <Segmented<HeaderTone> label="Header tone" value={preferences.headerTone} onChange={(value) => set("headerTone", value)} options={[{ value: "surface", label: "Match" }, { value: "light", label: "Light" }, { value: "contrast", label: "Deep" }]} />
               </Row>
               <Row label="Bar theme" hint="Independent of the page theme, as the rail's is">
-                <Select aria-label="Header theme" value={preferences.headerTheme} onChange={(event) => set("headerTheme", event.target.value as HeaderTheme)} options={[
+                <Select aria-label="ui.header.theme.994e2001" value={preferences.headerTheme} onChange={(event) => set("headerTheme", event.target.value as HeaderTheme)} options={[
                   { label: "Match the page theme", value: "match" },
                   ...THEME_OPTIONS.map((theme) => ({ label: theme.name, value: theme.id })),
                 ]} />
@@ -349,12 +351,12 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
             keys={["openRecordsInTabs", "landingPage", "floatingWindows"]} keywords="landing home start page module dashboard last visited records tabs workspace floating windows mdi taskbar">
             <div className="grid gap-2 md:grid-cols-2">
               {showTabPreferences
-                ? <Toggle label="Open records in tabs" description="Each record gets its own workspace tab. Off reuses the matching tab." checked={preferences.openRecordsInTabs} onChange={(value) => set("openRecordsInTabs", value)} />
-                : <Select label="Start on" value={preferences.landingPage} onChange={(event) => set("landingPage", event.target.value as LandingPage)} options={[{ label: "The current module's dashboard", value: "module-dashboard" }, { label: "The page I last had open", value: "last-visited" }]} />}
+                ? <Toggle label="ui.open.records.in.tabs.b10f3af8" description="ui.each.record.gets.its.own.workspace.tab.off.reuses.the.ma.79a0f2f4" checked={preferences.openRecordsInTabs} onChange={(value) => set("openRecordsInTabs", value)} />
+                : <Select label="ui.start.on.b6089ce4" value={preferences.landingPage} onChange={(event) => set("landingPage", event.target.value as LandingPage)} options={[{ label: "The current module's dashboard", value: "module-dashboard" }, { label: "The page I last had open", value: "last-visited" }]} />}
                 {/* Desktop only, and off by default. The framework marks the
                     whole idea optional, so it is offered rather than imposed. */}
                 {showTabPreferences
-                  ? <Toggle label="Floating windows" description="Arrange open records as movable windows with a taskbar, instead of tabs." checked={preferences.floatingWindows} onChange={(value) => set("floatingWindows", value)} />
+                  ? <Toggle label="ui.floating.windows.4f5a6c7b" description="ui.arrange.open.records.as.movable.windows.with.a.taskbar.i.dd2f78aa" checked={preferences.floatingWindows} onChange={(value) => set("floatingWindows", value)} />
                   : null}
             </div>
           </PreferenceSection>
@@ -365,32 +367,32 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               <ChoiceGroup<OpenRecordsIn> value={preferences.openRecordsIn} onChange={(value) => set("openRecordsIn", value)} options={[{ value: "new-tab", label: "Open records in a new tab", description: "View, Edit and New each get their own container." }, { value: "same-tab", label: "Open records in place", description: "Navigate within the current page instead." }]} />
             </div>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <Select label="Search matching" value={preferences.globalSearchMode} onChange={(event) => set("globalSearchMode", event.target.value as SearchMode)} options={[{ label: "Smart — every word, anywhere in the row", value: "smart" }, { label: "Contains — the phrase, in any cell", value: "contains" }, { label: "Starts with — a cell begins with it", value: "starts-with" }]} />
-              <Select label="Column layout is saved" value={preferences.columnLayoutScope} onChange={(event) => set("columnLayoutScope", event.target.value as ColumnLayoutScope)} options={[{ label: "For this browser only", value: "browser" }, { label: "To my account", value: "account" }]} />
-              <Select label="Export format" value={preferences.exportFormat} onChange={(event) => set("exportFormat", event.target.value as ExportFormat)} options={[{ label: "CSV — opens anywhere", value: "csv" }, { label: "Excel workbook (.xlsx)", value: "xlsx" }]} />
+              <Select label="ui.search.matching.311a26c4" value={preferences.globalSearchMode} onChange={(event) => set("globalSearchMode", event.target.value as SearchMode)} options={[{ label: "Smart — every word, anywhere in the row", value: "smart" }, { label: "Contains — the phrase, in any cell", value: "contains" }, { label: "Starts with — a cell begins with it", value: "starts-with" }]} />
+              <Select label="ui.column.layout.is.saved.9e9984dd" value={preferences.columnLayoutScope} onChange={(event) => set("columnLayoutScope", event.target.value as ColumnLayoutScope)} options={[{ label: "For this browser only", value: "browser" }, { label: "To my account", value: "account" }]} />
+              <Select label="ui.export.format.df339cb8" value={preferences.exportFormat} onChange={(event) => set("exportFormat", event.target.value as ExportFormat)} options={[{ label: "CSV — opens anywhere", value: "csv" }, { label: "Excel workbook (.xlsx)", value: "xlsx" }]} />
             </div>
             <div className="mt-4 grid gap-2 md:grid-cols-2">
-              <Toggle label="Remember filters and search" description="Each worklist reopens with the filters you left on it." checked={preferences.rememberFilters} onChange={(value) => set("rememberFilters", value)} />
-              <Toggle label="Confirm bulk actions" description="Ask before archiving selected records." checked={preferences.confirmBulkActions} onChange={(value) => set("confirmBulkActions", value)} />
+              <Toggle label="ui.remember.filters.and.search.e050a77f" description="ui.each.worklist.reopens.with.the.filters.you.left.on.it.b8266e48" checked={preferences.rememberFilters} onChange={(value) => set("rememberFilters", value)} />
+              <Toggle label="ui.confirm.bulk.actions.5c64ae13" description="ui.ask.before.archiving.selected.records.36e82503" checked={preferences.confirmBulkActions} onChange={(value) => set("confirmBulkActions", value)} />
             </div>
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="behaviour" title="Tables" subtitle="How the data table reads at twelve columns and a hundred rows." icon={<Table2 className="size-4" />}
             keys={["stickyTableHeader", "zebraStripes", "wrapCellText"]} keywords="table header sticky zebra stripes wrap truncate rows">
             <div className="grid gap-2 md:grid-cols-3">
-              <Toggle label="Sticky header" description="Column names stay visible while you scroll." checked={preferences.stickyTableHeader} onChange={(value) => set("stickyTableHeader", value)} />
-              <Toggle label="Zebra stripes" description="Alternate rows are tinted." checked={preferences.zebraStripes} onChange={(value) => set("zebraStripes", value)} />
-              <Toggle label="Wrap long text" description="Off truncates a long cell to one line." checked={preferences.wrapCellText} onChange={(value) => set("wrapCellText", value)} />
+              <Toggle label="ui.sticky.header.71a03535" description="ui.column.names.stay.visible.while.you.scroll.4b34c24d" checked={preferences.stickyTableHeader} onChange={(value) => set("stickyTableHeader", value)} />
+              <Toggle label="ui.zebra.stripes.ad73773d" description="ui.alternate.rows.are.tinted.2acedabc" checked={preferences.zebraStripes} onChange={(value) => set("zebraStripes", value)} />
+              <Toggle label="ui.wrap.long.text.0815b2b6" description="ui.off.truncates.a.long.cell.to.one.line.dfad076c" checked={preferences.wrapCellText} onChange={(value) => set("wrapCellText", value)} />
             </div>
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="behaviour" title="Billing" subtitle="The tax invoice workspace." icon={<MonitorCog className="size-4" />}
             keys={["billingLayout"]} keywords="billing invoice layout workspace split vertical">
-            <div><Select label="Billing workspace layout" value={preferences.billingLayout} onChange={(event) => set("billingLayout", event.target.value as BillingLayout)} options={[{ label: "Workspace tabs", value: "workspace" }, { label: "Vertical sections", value: "vertical" }, { label: "Split header and lines", value: "split" }]} /></div>
+            <div><Select label="ui.billing.workspace.layout.54522c95" value={preferences.billingLayout} onChange={(event) => set("billingLayout", event.target.value as BillingLayout)} options={[{ label: "Workspace tabs", value: "workspace" }, { label: "Vertical sections", value: "vertical" }, { label: "Split header and lines", value: "split" }]} /></div>
           </PreferenceSection>
 
           {/* ================= PAGE ================= */}
-          <PreferenceSection {...common} tab="page" tour="prefs-theme" title="Theme" subtitle={`${THEME_OPTIONS.length} palettes. Each card is drawn with that theme's real tokens.`} icon={<Sparkles className="size-4" />}
+          <PreferenceSection {...common} tab="page" tour="prefs-theme" title="Theme" subtitle={t("{count} palettes. Each card is drawn with that theme's real tokens.",{count:THEME_OPTIONS.length})} icon={<Sparkles className="size-4" />}
             keys={["theme"]} keywords="theme dark light colour color palette midnight nord plum graphite">
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {THEME_OPTIONS.map((theme) => <ThemeCard key={theme.id} id={theme.id} name={theme.name} description={theme.description} active={preferences.theme === theme.id} onSelect={() => set("theme", theme.id)} />)}
@@ -400,65 +402,65 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           <PreferenceSection {...common} tab="page" tour="prefs-type" title="Typography" subtitle="Fonts and sizes for the shell, forms and result lists." icon={<Languages className="size-4" />}
             keys={["fontFamily", "fontSizeBase", "fontSizeForm", "fontSizeResult", "density", "cornerRadius"]} keywords="font family size typography plex inter manrope nunito source sans georgia serif mono base form result table density compact spacious corners radius rounded square">
             <div className="grid gap-x-5 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
-              <Select label="Font family" value={preferences.fontFamily} onChange={(event) => set("fontFamily", event.target.value as FontFamily)} options={[
+              <Select label="ui.font.family.119ef3fa" value={preferences.fontFamily} onChange={(event) => set("fontFamily", event.target.value as FontFamily)} options={[
                 { label: "Inter (default)", value: "inter" }, { label: "IBM Plex Sans", value: "plex" }, { label: "Source Sans 3", value: "source-sans" }, { label: "Nunito Sans", value: "nunito" },
                 { label: "Manrope", value: "manrope" }, { label: "System UI", value: "system" }, { label: "Georgia (serif)", value: "georgia" }, { label: "IBM Plex Mono", value: "plex-mono" },
               ]} />
               <RangeInput label="Base font size" hint="Header, sidebar, cards and everything not listed below." value={preferences.fontSizeBase} min={11} max={16} step={0.5} unit="px" onChange={(value) => set("fontSizeBase", value)} />
               <RangeInput label="Form field size" hint="Record forms: labels, inputs and section text." value={preferences.fontSizeForm} min={11} max={17} step={0.5} unit="px" onChange={(value) => set("fontSizeForm", value)} />
               <RangeInput label="Result / table size" hint="Worklist tables and card grids." value={preferences.fontSizeResult} min={10} max={16} step={0.5} unit="px" onChange={(value) => set("fontSizeResult", value)} />
-              <Select label="Density" hint="Row padding in tables and cards." value={preferences.density} onChange={(event) => set("density", event.target.value as Density)} options={[{ label: "Compact", value: "compact" }, { label: "Comfortable", value: "comfortable" }, { label: "Spacious", value: "spacious" }]} />
+              <Select label="ui.density.77a283d6" hint="ui.row.padding.in.tables.and.cards.0a0a1e81" value={preferences.density} onChange={(event) => set("density", event.target.value as Density)} options={[{ label: "Compact", value: "compact" }, { label: "Comfortable", value: "comfortable" }, { label: "Spacious", value: "spacious" }]} />
               <RangeInput label="Corner radius" hint="0 squares every corner in the app." value={preferences.cornerRadius} min={0} max={20} step={1} unit="px" onChange={(value) => set("cornerRadius", value)} />
             </div>
-            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">13px is the design as drawn. Each size scales its area independently, so dense tables and readable forms are not a trade-off.</p>
+            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.13px.is.the.design.as.drawn.each.size.scales.its.area.in.21713684" /></p>
           </PreferenceSection>
 
           {/* ================= NOTIFICATION ================= */}
           <PreferenceSection {...common} tab="notification" tour="prefs-toast" title="Toasts" subtitle="Where they appear, how long they stay, and how they look. Try one below." icon={<BellRing className="size-4" />}
             keys={["toastPosition", "toastDuration", "maxVisibleToasts", "toastStyle"]} keywords="toast notification position duration solid light style preview">
             <div className="grid gap-4 md:grid-cols-2">
-              <Select label="Position" value={preferences.toastPosition} onChange={(event) => set("toastPosition", event.target.value as ToastPosition)} options={[
+              <Select label="ui.position.6d031af1" value={preferences.toastPosition} onChange={(event) => set("toastPosition", event.target.value as ToastPosition)} options={[
                 { label: "Top left", value: "top-left" }, { label: "Top center", value: "top-center" }, { label: "Top right", value: "top-right" }, { label: "Bottom left", value: "bottom-left" }, { label: "Bottom center", value: "bottom-center" }, { label: "Bottom right", value: "bottom-right" },
               ]} />
-              <Select label="Duration" value={String(preferences.toastDuration)} onChange={(event) => set("toastDuration", Number(event.target.value) as 2000 | 3500 | 5000 | 8000)} options={[{ label: "2 seconds", value: "2000" }, { label: "3.5 seconds", value: "3500" }, { label: "5 seconds", value: "5000" }, { label: "8 seconds", value: "8000" }]} />
-              <Select label="On screen at once" value={String(preferences.maxVisibleToasts)} onChange={(event) => set("maxVisibleToasts", Number(event.target.value) as 1 | 3 | 5)} options={[{ label: "1 — newest only", value: "1" }, { label: "3", value: "3" }, { label: "5", value: "5" }]} />
-              <Select label="Style" value={preferences.toastStyle} onChange={(event) => set("toastStyle", event.target.value as ToastStyle)} options={[{ label: "Solid — filled with its colour", value: "solid" }, { label: "Light — tinted icon on a surface", value: "light" }]} />
+              <Select label="ui.duration.4fc52a3c" value={String(preferences.toastDuration)} onChange={(event) => set("toastDuration", Number(event.target.value) as 2000 | 3500 | 5000 | 8000)} options={[{ label: "2 seconds", value: "2000" }, { label: "3.5 seconds", value: "3500" }, { label: "5 seconds", value: "5000" }, { label: "8 seconds", value: "8000" }]} />
+              <Select label="ui.on.screen.at.once.9b5e8539" value={String(preferences.maxVisibleToasts)} onChange={(event) => set("maxVisibleToasts", Number(event.target.value) as 1 | 3 | 5)} options={[{ label: "1 — newest only", value: "1" }, { label: "3", value: "3" }, { label: "5", value: "5" }]} />
+              <Select label="ui.style.7e744141" value={preferences.toastStyle} onChange={(event) => set("toastStyle", event.target.value as ToastStyle)} options={[{ label: "Solid — filled with its colour", value: "solid" }, { label: "Light — tinted icon on a surface", value: "light" }]} />
             </div>
             {/* A settings page that demonstrates its own settings: fire one with the
                 position, duration and style above without leaving the page. */}
-            <div className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2.5">
-              <span className="text-[length:calc(10px*var(--fs-scale))] font-extrabold">Preview</span>
-              <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">Fires a sample using the settings above.</span>
+            <Card shadow="none" tone="muted" radius="xl" className="mt-4 flex flex-wrap items-center gap-2 px-3 py-2.5">
+              <span className="text-[length:calc(10px*var(--fs-scale))] font-extrabold"><LocalizedText message="ui.preview.324b134f" /></span>
+              <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.fires.a.sample.using.the.settings.above.33ab8430" /></span>
               <div className="ml-auto flex flex-wrap gap-1.5">
-                <Button size="xs" variant="success" onClick={() => toast({ title: "Customer saved", message: "CUS-1042 updated successfully.", type: "success" })}>Success</Button>
-                <Button size="xs" variant="secondary" onClick={() => toast({ title: "Credit limit", message: "Exceeded by AED 12,400 on this order.", type: "warning" })}>Warning</Button>
-                <Button size="xs" variant="danger" onClick={() => toast({ title: "Posting failed", message: "Period 2026-P08 is locked.", type: "error" })}>Error</Button>
-                <Button size="xs" variant="ghost" onClick={() => toast({ title: "Bank feed", message: "2,486 transactions imported.", type: "info" })}>Info</Button>
+                <Button size="xs" variant="success" onClick={() => toast({ title: "Customer saved", message: "CUS-1042 updated successfully.", type: "success" })}><LocalizedText message="ui.success.c88a0b90" /></Button>
+                <Button size="xs" variant="secondary" onClick={() => toast({ title: "Credit limit", message: "Exceeded by AED 12,400 on this order.", type: "warning" })}><LocalizedText message="ui.warning.e981ddae" /></Button>
+                <Button size="xs" variant="danger" onClick={() => toast({ title: "Posting failed", message: "Period 2026-P08 is locked.", type: "error" })}><LocalizedText message="ui.error.54a0e8c1" /></Button>
+                <Button size="xs" variant="ghost" onClick={() => toast({ title: "Bank feed", message: "2,486 transactions imported.", type: "info" })}><LocalizedText message="ui.info.170322a3" /></Button>
               </div>
-            </div>
+            </Card>
           </PreferenceSection>
 
           {/* ================= GENERAL ================= */}
           <PreferenceSection {...common} tab="general" title="Numbers, currency and dates" subtitle="Applied wherever a value is rendered: worklists, cards, previews, reports and billing." icon={<Coins className="size-4" />}
             keys={["currencyCode", "currencyDisplay", "numberLocale", "dateFormat", "decimalPlaces", "timeFormat", "negativeStyle"]} keywords="number currency dirham aed money decimal thousands lakh date time 12 24 hour negative parentheses accounting format locale">
             <div className="grid gap-4 md:grid-cols-2">
-              {SHOW_CURRENCY_PICKER ? <Select label="Currency" value={preferences.currencyCode} onChange={(event) => set("currencyCode", event.target.value as CurrencyCode)} options={[{ label: "AED — UAE dirham", value: "AED" }, { label: "USD — US dollar", value: "USD" }, { label: "EUR — Euro", value: "EUR" }, { label: "INR — Indian rupee", value: "INR" }, { label: "GBP — Pound sterling", value: "GBP" }]} /> : null}
-              <Select label="Currency shown as" value={preferences.currencyDisplay} onChange={(event) => set("currencyDisplay", event.target.value as CurrencyDisplay)} options={[{ label: "Symbol — د.إ1,200", value: "symbol" }, { label: "Code — AED 1,200", value: "code" }, { label: "Number only — 1,200", value: "none" }]} />
-              <Select label="Number format" value={preferences.numberLocale} onChange={(event) => set("numberLocale", event.target.value as NumberLocale)} options={[{ label: "1,234,567.89", value: "en-US" }, { label: "1.234.567,89", value: "de-DE" }, { label: "1 234 567,89", value: "fr-FR" }, { label: "12,34,567.89 — lakh/crore", value: "en-IN" }]} />
-              <Select label="Decimal places" value={String(preferences.decimalPlaces)} onChange={(event) => set("decimalPlaces", Number(event.target.value) as 0 | 2 | 3)} options={[{ label: "None — 1,200", value: "0" }, { label: "Two — 1,200.00", value: "2" }, { label: "Three — 1,200.000", value: "3" }]} />
-              <Select label="Negative amounts" value={preferences.negativeStyle} onChange={(event) => set("negativeStyle", event.target.value as NegativeStyle)} options={[{ label: "Minus sign — -1,200", value: "minus" }, { label: "Parentheses — (1,200)", value: "parentheses" }]} />
-              <Select label="Date format" value={preferences.dateFormat} onChange={(event) => set("dateFormat", event.target.value as DateFormat)} options={[{ label: "2026-09-03 — ISO", value: "iso" }, { label: "03/09/2026 — day first", value: "dmy" }, { label: "09/03/2026 — month first", value: "mdy" }, { label: "03 Sep 2026", value: "medium" }]} />
-              <Select label="Time format" value={preferences.timeFormat} onChange={(event) => set("timeFormat", event.target.value as TimeFormat)} options={[{ label: "24-hour — 14:30", value: "24h" }, { label: "12-hour — 2:30 PM", value: "12h" }]} />
+              {SHOW_CURRENCY_PICKER ? <Select label="ui.currency.3ac1a9ec" value={preferences.currencyCode} onChange={(event) => set("currencyCode", event.target.value as CurrencyCode)} options={[{ label: "AED — UAE dirham", value: "AED" }, { label: "USD — US dollar", value: "USD" }, { label: "EUR — Euro", value: "EUR" }, { label: "INR — Indian rupee", value: "INR" }, { label: "GBP — Pound sterling", value: "GBP" }]} /> : null}
+              <Select label="ui.currency.shown.as.ab804fb4" value={preferences.currencyDisplay} onChange={(event) => set("currencyDisplay", event.target.value as CurrencyDisplay)} options={[{ label: "Symbol — د.إ1,200", value: "symbol" }, { label: "Code — AED 1,200", value: "code" }, { label: "Number only — 1,200", value: "none" }]} />
+              <Select label="ui.number.format.457421f8" value={preferences.numberLocale} onChange={(event) => set("numberLocale", event.target.value as NumberLocale)} options={[{ label: "1,234,567.89", value: "en-US" }, { label: "1.234.567,89", value: "de-DE" }, { label: "1 234 567,89", value: "fr-FR" }, { label: "12,34,567.89 — lakh/crore", value: "en-IN" }]} />
+              <Select label="ui.decimal.places.004a3408" value={String(preferences.decimalPlaces)} onChange={(event) => set("decimalPlaces", Number(event.target.value) as 0 | 2 | 3)} options={[{ label: "None — 1,200", value: "0" }, { label: "Two — 1,200.00", value: "2" }, { label: "Three — 1,200.000", value: "3" }]} />
+              <Select label="ui.negative.amounts.cd1dd5f2" value={preferences.negativeStyle} onChange={(event) => set("negativeStyle", event.target.value as NegativeStyle)} options={[{ label: "Minus sign — -1,200", value: "minus" }, { label: "Parentheses — (1,200)", value: "parentheses" }]} />
+              <Select label="ui.date.format.43123f5c" value={preferences.dateFormat} onChange={(event) => set("dateFormat", event.target.value as DateFormat)} options={[{ label: "2026-09-03 — ISO", value: "iso" }, { label: "03/09/2026 — day first", value: "dmy" }, { label: "09/03/2026 — month first", value: "mdy" }, { label: "03 Sep 2026", value: "medium" }]} />
+              <Select label="ui.time.format.80d7dcf2" value={preferences.timeFormat} onChange={(event) => set("timeFormat", event.target.value as TimeFormat)} options={[{ label: "24-hour — 14:30", value: "24h" }, { label: "12-hour — 2:30 PM", value: "12h" }]} />
             </div>
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="general" title="Clock" subtitle="The clock in the header." icon={<Clock3 className="size-4" />}
             keys={["clockSeconds", "clockZone"]} keywords="clock time seconds timezone zone branch dubai kochi header">
             <div className="grid gap-4 md:grid-cols-2">
-              <Select label="Time zone" value={preferences.clockZone} onChange={(event) => set("clockZone", event.target.value as ClockZone)} options={[{ label: "This device", value: "browser" }, { label: `Selected branch — ${branchLabel}`, value: "branch" }]} />
+              <Select label="ui.time.zone.b9fe1464" value={preferences.clockZone} onChange={(event) => set("clockZone", event.target.value as ClockZone)} options={[{ label: "This device", value: "browser" }, { label: `Selected branch — ${branchLabel}`, value: "branch" }]} />
             </div>
             <div className="mt-4 grid gap-2 md:grid-cols-2">
-              <Toggle label="Show seconds" description="Off ticks once a minute instead of every second." checked={preferences.clockSeconds} onChange={(value) => set("clockSeconds", value)} />
+              <Toggle label="ui.show.seconds.f516b99a" description="ui.off.ticks.once.a.minute.instead.of.every.second.e07c67a4" checked={preferences.clockSeconds} onChange={(value) => set("clockSeconds", value)} />
             </div>
           </PreferenceSection>
 
@@ -471,7 +473,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
             keys={["language", "helperEnabled", "documentationEnabled", "docsPosition", "reducedMotion", "showKeyboardHints"]} keywords="language arabic hindi malayalam english rtl help assistant tours documentation docs panel position left right animations motion keyboard shortcuts hints">
             <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
               <Row label="Language" hint="Arabic switches the whole layout to right-to-left">
-                <Select aria-label="Language" value={preferences.language} onChange={(event) => set("language", event.target.value as LanguageKey)} options={LANGUAGE_OPTIONS.map((item) => ({ label: `${item.native} — ${item.label}`, value: item.value }))} />
+                <Select aria-label="ui.language.a4fe6526" value={preferences.language} onChange={(event) => set("language", event.target.value as LanguageKey)} options={LANGUAGE_OPTIONS.map((item) => ({ label: `${item.native} — ${item.label}`, value: item.value }))} />
               </Row>
               <Row label="Help assistant button" hint="Guided tours and shortcuts, bottom corner">
                 <Segmented<"on" | "off"> label="Help assistant button" value={preferences.helperEnabled ? "on" : "off"} onChange={(value) => set("helperEnabled", value === "on")} options={[{ value: "on", label: "On" }, { value: "off", label: "Off" }]} />
@@ -491,8 +493,8 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
             </div>
           </PreferenceSection>
 
-        </div>
-      </div>
+        </CardGrid>
+      </CardGrid>
     </div>
   );
 }

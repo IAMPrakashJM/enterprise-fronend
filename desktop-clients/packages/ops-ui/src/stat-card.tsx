@@ -1,5 +1,6 @@
 "use client";
 
+import {useLocalization} from "./localization";
 import React from "react";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { cn } from "./cn";
@@ -30,6 +31,7 @@ export function StatCard({ label, value, hint, trend, icon, tone = "auto", class
   tone?: "auto" | "inverse" | "neutral";
   className?: string;
 }) {
+  const {t} = useLocalization();
   const good = tone === "neutral" ? null
     : tone === "inverse" ? trend?.direction === "down"
       : trend?.direction === "up";
@@ -38,9 +40,9 @@ export function StatCard({ label, value, hint, trend, icon, tone = "auto", class
     <div className={cn("min-w-0 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-3.5 shadow-[var(--shadow-sm)]", className)}>
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate text-[length:calc(9px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]">{label}</p>
+          <p className="truncate text-[length:calc(9px*var(--fs-scale))] font-black uppercase tracking-[.08em] text-[var(--text-subtle)]">{t(label)}</p>
           <p className="mt-1.5 truncate text-[length:calc(19px*var(--fs-scale))] font-black tracking-[-.02em] text-[var(--text)]">{value}</p>
-          {hint ? <p className="mt-1 truncate text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">{hint}</p> : null}
+          {hint ? <p className="mt-1 truncate text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">{t(hint)}</p> : null}
         </div>
         {icon ? <span aria-hidden className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[var(--surface-2)] text-[var(--primary)]">{icon}</span> : null}
       </div>
@@ -50,7 +52,7 @@ export function StatCard({ label, value, hint, trend, icon, tone = "auto", class
               red-bad is invisible to a substantial number of people, and to
               anyone hearing the page rather than seeing it. */}
           <span
-            aria-label={`${trend.delta}, ${trend.direction === "flat" ? "unchanged" : trend.direction}`}
+            aria-label={`${trend.delta}, ${t(trend.direction === "flat" ? "unchanged" : trend.direction)}`}
             className={cn(
               "inline-flex items-center gap-1 text-[length:calc(9.5px*var(--fs-scale))] font-extrabold",
               good === null ? "text-[var(--text-muted)]" : good ? "text-[var(--success-ink)]" : "text-[var(--danger-ink)]",
@@ -59,7 +61,7 @@ export function StatCard({ label, value, hint, trend, icon, tone = "auto", class
             {trend.direction === "up" ? <TrendingUp aria-hidden className="size-3.5" /> : trend.direction === "down" ? <TrendingDown aria-hidden className="size-3.5" /> : null}
             {trend.delta}
           </span>
-          <span className="truncate text-right text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">{trend.comparedTo}</span>
+          <span className="truncate text-right text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">{t(trend.comparedTo)}</span>
         </div>
       ) : null}
     </div>

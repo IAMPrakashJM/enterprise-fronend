@@ -18,7 +18,7 @@
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-RUN_DIR="$ROOT/.run"
+RUN_DIR="${NEXORA_RUN_DIR:-$ROOT/.run}"
 
 # ---------------------------------------------------------------------------
 # Service table:  key | directory (relative to ROOT) | port | start command
@@ -44,8 +44,8 @@ svc_dir() {
 svc_port() {
   case "$1" in
     api)     echo 3200 ;;
-    web)     echo 3100 ;;
-    desktop) echo 3101 ;;
+    web)     echo "${NEXORA_WEB_PORT:-3100}" ;;
+    desktop) echo "${NEXORA_DESKTOP_PORT:-3101}" ;;
     nexora)  echo 3102 ;;
     vantage) echo 3103 ;;
   esac
@@ -73,18 +73,16 @@ svc_cmd() {
   fi
   case "$1" in
     api)     echo "node server.mjs" ;;
-    # `next start` reads apps/web/package.json's --port 3100.
-    web)     echo "npm run start --silent -w web" ;;
-    # `vite preview` reads preview.port/host/allowedHosts from vite.config.ts.
-    desktop) echo "npm run preview --silent -w desktop" ;;
+    # Each process resolves current once, then serves only that release.
+    web)     echo "node scripts/serve-release.mjs web" ;;
+    desktop) echo "node scripts/serve-release.mjs desktop" ;;
     # These two have a bare `next start`, so the port comes from the CLI.
     nexora)  echo "npm run start --silent -- --port 3102" ;;
     vantage) echo "npm run start --silent -- --port 3103" ;;
   esac
 }
 
-# What must be built before `start` in prod mode. The API is plain node and the
-# dev servers build nothing, so both cases are empty.
+# Local build commands. Release-backed services never invoke these on start.
 svc_build_cmd() {
   [ "$MODE" = "dev" ] && return 0
   case "$1" in
@@ -111,6 +109,9 @@ svc_artifact() {
 # two workspace apps that is the workspace root, not the app folder.
 svc_install_dir() { svc_dir "$1"; }
 
+# Shared shells in production require an explicitly deployed, self-contained release.
+svc_uses_release() { [ "$MODE" != "dev" ] && { [ "$1" = "web" ] || [ "$1" = "desktop" ]; }; }
+
 # api is plain node with no dependencies at all.
 svc_needs_install() { [ "$1" != "api" ]; }
 
@@ -118,7 +119,7 @@ svc_label() {
   case "$1" in
     api)     echo "demo auth API" ;;
     web)     echo "web shell (Next)" ;;
-    desktop) echo "desktop shell (Vite)" ;;
+    desktop) echo "desktop shell" ;;
     nexora)  echo "nexora-enterprise-erp" ;;
     vantage) echo "vantage-erp-next" ;;
   esac
@@ -162,7 +163,7 @@ is_service() {
 # an unset `pids` simply stays empty.
 port_pids() {
   local pids
-  pids="$(lsof -ti "tcp:$1" 2>/dev/null)"
+  pids="$(lsof -tiTCP:"$1" -sTCP:LISTEN 2>/dev/null)"
   if [ -z "$pids" ] && command -v ss >/dev/null 2>&1; then
     # No -H: it is a recent iproute2 flag, and the header line carries no "pid=".
     pids="$(ss -ltnp "sport = :$1" 2>/dev/null | grep -o 'pid=[0-9]*' | cut -d= -f2 | sort -u)"
@@ -296,15 +297,16 @@ do_start() {
     return 1
   fi
 
-  if svc_needs_install "$svc" && [ ! -d "$ROOT/$(svc_install_dir "$svc")/node_modules" ]; then
+  if svc_uses_release "$svc"; then
+    (cd "$dir" && node scripts/serve-release.mjs "$svc" --check) || return 1
+  elif svc_needs_install "$svc" && [ ! -d "$ROOT/$(svc_install_dir "$svc")/node_modules" ]; then
     do_install "$svc" || return 1
   fi
 
-  # In prod mode `start` serves a build that must already exist. Building on
-  # demand beats the alternative: `next start` on a missing .next exits with a
-  # message no one sees, and the port never opens -- which reads as a hang.
+  # Reference applications retain their legacy build-on-demand behavior.
+  # Web and desktop only start a previously verified release.
   local artifact; artifact="$(svc_artifact "$svc")"
-  if [ -n "$(svc_build_cmd "$svc")" ] && [ -n "$artifact" ] && [ ! -d "$ROOT/$artifact" ]; then
+  if ! svc_uses_release "$svc" && [ -n "$(svc_build_cmd "$svc")" ] && [ -n "$artifact" ] && [ ! -d "$ROOT/$artifact" ]; then
     do_build "$svc" || return 1
   fi
 
@@ -415,10 +417,12 @@ Nexora stack control
   ./run.sh status             one line per service
   ./run.sh logs    <svc>      tail -f the service log
   ./run.sh install [svc...]   npm install where node_modules is missing
-  ./run.sh build   [svc...]   production build (start does this if missing)
+  ./run.sh build   [svc...]   local production build (does not deploy web/desktop)
 
-MODE=dev in front of any command runs the dev servers instead of the built
-output, on the same ports.
+Web and desktop production starts require a release: cd desktop-clients && npm run deploy.
+NEXORA_DEPLOY_ROOT selects the release directory (default: .deploy/ beside this script).
+NEXORA_WEB_PORT / NEXORA_DESKTOP_PORT override production ports (3100 / 3101).
+MODE=dev runs the development servers from source on their configured ports.
 
 Services and ports:
 EOF

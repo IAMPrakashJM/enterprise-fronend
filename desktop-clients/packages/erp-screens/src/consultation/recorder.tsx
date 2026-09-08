@@ -1,4 +1,8 @@
 "use client";
+import { CardGrid } from "@pepbits/ops-ui";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText } from "@pepbits/ops-ui";
+
 
 import React, { useEffect, useRef, useState } from "react";
 import { useIsDocumentVisible } from "@pepbits/workspace-core";
@@ -175,28 +179,27 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
   const finals = segments.filter((s) => s.final);
 
   return (
-    <div className="grid gap-2.5">
+    <CardGrid className="gap-2.5">
       <div className="flex flex-wrap items-center gap-2">
         {state === "idle" || state === "ended" ? (
           <Button size="sm" variant="primary" leftIcon={<Mic className="size-3.5" />} onClick={() => void start()}>
-            {state === "ended" ? "Record again" : "Start recording"}
+            {state === "ended" ? <LocalizedText message="ui.record.again.eb8d93c6" /> : <LocalizedText message="ui.start.recording.30756af0" />}
           </Button>
         ) : (
           <>
             <Button size="sm" variant="secondary" leftIcon={state === "paused" ? <Play className="size-3.5" /> : <Pause className="size-3.5" />} onClick={pause}>
-              {state === "paused" ? "Resume" : "Pause"}
+              {state === "paused" ? <LocalizedText message="ui.resume.d640c742" /> : <LocalizedText message="ui.pause.858e4ba7" />}
             </Button>
-            <Button size="sm" variant="danger" leftIcon={<Square className="size-3.5" />} onClick={stop}>Stop</Button>
+            <Button size="sm" variant="danger" leftIcon={<Square className="size-3.5" />} onClick={stop}><LocalizedText message="ui.stop.cae7d57b" /></Button>
           </>
         )}
 
         <span className="font-mono text-[length:calc(13px*var(--fs-scale))] font-black tabular-nums">{clock}</span>
         {state === "recording" ? (
           <span className="flex items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] font-bold text-[var(--danger-ink)]">
-            <Circle className="size-2 animate-pulse fill-current" /> Recording
-          </span>
-        ) : state === "paused" ? <Badge tone="warning">paused</Badge>
-          : state === "starting" ? <Badge tone="neutral">connecting…</Badge> : null}
+            <Circle className="size-2 animate-pulse fill-current" /><LocalizedText message="ui.recording.232c8b77" /></span>
+        ) : state === "paused" ? <Badge tone="warning"><LocalizedText message="ui.paused.a7a9dc5b" /></Badge>
+          : state === "starting" ? <Badge tone="neutral"><LocalizedText message="ui.connecting.4b639453" /></Badge> : null}
 
         <span className="flex-1" />
         {state === "idle" ? (
@@ -212,7 +215,7 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
         ) : null}
         {provider ? (
           <Badge tone={provider.verified ? "neutral" : "warning"}>
-            {provider.label}{provider.model ? ` · ${provider.model}` : ""}{provider.verified ? "" : " · unverified"}
+            {provider.label}{provider.model ? ` · ${provider.model}` : ""}{provider.verified ? "" : <LocalizedText message="ui.unverified.5987f7cb" />}
           </Badge>
         ) : null}
       </div>
@@ -225,35 +228,30 @@ export function ConsultationRecorder({ onTranscript }: { onTranscript?: (text: s
       ) : null}
 
       {provider && !provider.verified ? (
-        <div className="rounded-lg border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-2.5 text-[length:calc(9px*var(--fs-scale))] leading-relaxed">
-          This adapter has never run against its provider in this build. Treat anything below as illustrative, not as a transcript.
-        </div>
+        <div className="rounded-lg border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] p-2.5 text-[length:calc(9px*var(--fs-scale))] leading-relaxed"><LocalizedText message="ui.this.adapter.has.never.run.against.its.provider.in.this.ae3871c2" /></div>
       ) : null}
 
-      <div className="nex-scrollbar max-h-72 min-h-24 overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--surface-2)] p-2.5">
+      <Card shadow="none" tone="muted" radius="lg" className="nex-scrollbar max-h-72 min-h-24 overflow-y-auto p-2.5">
         {segments.length === 0 ? (
           <div className="py-6 text-center text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
-            {state === "recording" ? "Listening…" : "The transcript appears here as it is spoken."}
+            {state === "recording" ? <LocalizedText message="ui.listening.bbb4106e" /> : <LocalizedText message="ui.the.transcript.appears.here.as.it.is.spoken.419b964f" />}
           </div>
         ) : segments.map((s) => (
           <div key={s.sequence} className={cn("mb-1.5 grid grid-cols-[70px_1fr] gap-2 text-[length:calc(10px*var(--fs-scale))] leading-relaxed", !s.final && "opacity-60")}>
             <span className={cn("text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.06em]",
               s.speaker === "DOCTOR" ? "text-[var(--primary)]" : "text-[var(--success-ink)]")}>{s.speaker}</span>
-            <span>{s.text}{!s.final ? <span className="ms-1 text-[var(--text-subtle)]">(interim)</span> : null}</span>
+            <span>{s.text}{!s.final ? <span className="ms-1 text-[var(--text-subtle)]"><LocalizedText message="ui.interim.03c51dde" /></span> : null}</span>
           </div>
         ))}
-      </div>
+      </Card>
 
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]">
-          {finals.length} final segment{finals.length === 1 ? "" : "s"} · audio is streamed, never stored · the transcript is not saved until you use it
-        </span>
+          <LocalizedText message="Final segments: {count}" values={{count:finals.length}} /><LocalizedText message="ui.audio.is.streamed.never.stored.the.transcript.is.not.sav.346210fe" /></span>
         <span className="flex-1" />
         <Button size="sm" variant="secondary" disabled={!finals.length}
-          onClick={() => onTranscript?.(finals.map((s) => `${s.speaker}: ${s.text}`).join("\n"))}>
-          Insert into narrative
-        </Button>
+          onClick={() => onTranscript?.(finals.map((s) => `${s.speaker}: ${s.text}`).join("\n"))}><LocalizedText message="ui.insert.into.narrative.3b44ab17" /></Button>
       </div>
-    </div>
+    </CardGrid>
   );
 }

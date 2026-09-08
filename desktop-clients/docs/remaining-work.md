@@ -6,13 +6,44 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Engineering review follow-up — 8 September 2026
+
+The review's CI coverage, catalog bundle/loading, API method handling and costing
+import/export issues have been addressed locally. See the
+[verified corrections and implementation](review-follow-up-2026-09-08.md).
+The earlier review documents are historical snapshots, not the current backlog.
+
+## Record panels — 8 September 2026
+
+Reusable attachment, comment, related-record and activity panels are implemented
+with product adapters and persisted demo behavior. See [record-panels.md](record-panels.md)
+for scope, validation and production integration boundaries.
+
+## Product starter — 8 September 2026
+
+Application-owned product composition, starter generation, page/action role rules,
+login branding and record/worklist service injection are implemented. The second
+product example exercises reuse without copied shell internals. See
+[product-profiles.md](product-profiles.md) for current scope and remaining adapters.
+
+## Latest development batch
+
+The four requested areas now have implementations and regression coverage:
+server-paged worklists with refresh and partial archive results, account-owned
+personal views, conditional/dependent form rules with server field errors, and
+targeted desktop keyboard/theme/split-pane validation. See
+[worklist-workflows.md](worklist-workflows.md) for contracts and coverage limits.
+Activated as `20260907172055053-faace50b`; authenticated checks passed on both public hosts.
+The older estimates below describe broader coverage still to extend.
+
 ## Where the code stands
 
 So the list below is readable without going and counting:
 
 | | |
 |---|---|
-| Unit tests | 1249 across 63 files |
+| Unit tests | 1329 tests across 73 files; no unhandled errors in the panel batch |
+| Deployment tests | 14, plus real launcher activation/rollback checks on isolated ports |
 | Structural checks | 12 `verify:*` scripts, 533 assertions |
 | Browser suites | 9, 151 assertions, run against a real Chromium |
 | Accessibility | WCAG 2.1 AA across seven screens, **no known failures** |
@@ -24,36 +55,30 @@ Every package that holds branching logic has tests. The two that do not are
 
 ---
 
-## 1. A deploy step, so the working tree stops being the deployment
+## 1. Deployment isolation — complete
 
-**Effort:** half a day. **Value:** removes a class of failure rather than
-detecting it.
+The release workflow is implemented in `scripts/deploy.mjs`. It snapshots source
+into a temporary build directory, installs the lockfile, builds against explicit
+API URLs, verifies the artifacts, and packages self-contained web/desktop releases.
+Both packages are smoke-tested after the build directory has been deleted.
 
-`apps/web/.next` is both the build output of this repository and the artefact
-nginx serves. There is nothing between the two. Building the shells against the
-local dummy API — which running the browser suites requires — therefore puts
-that build live, and the site then tells every visitor's browser to call
-`127.0.0.1:3200` on their own machine. It loads, it looks entirely normal, and
-nobody can sign in.
+`npm run deploy:prepare` prepares a candidate without changing running services.
+`npm run deploy` also activates it, restarts only web and desktop, and checks the
+release identity, HTML and assets. A failed activation restores the previous
+release. The production launcher refuses to serve workspace output.
 
-That happened on 7 September. It was caught by a user reporting the error, not
-by anything here.
+See [deployment.md](deployment.md) for setup, rollback and isolated test ports.
+Deployment lifecycle tests now run in CI.
 
-`verify:deployable` now compares a `BUILD_API` stamp written by each build
-against the app's env file, and it runs inside `npm run verify`. That is a smoke
-alarm. The fix is a deploy that makes the mistake impossible:
+**Activated on 7 September 2026:** release `20260907124618130-3b6cb502`.
+Both public hosts now proxy to release-backed listeners on ports 3100 and 3101.
+Release identity, HTML, referenced assets and `/api/health` were verified through
+HTTPS on both `front-design.pepbits.com` and `desktop.front-design.pepbits.com`.
+The API process was not restarted. The launchers bind to `0.0.0.0` by default
+because the reverse proxy reaches the host through its Docker bridge address.
 
-    npm run deploy   →   build
-                         verify:deployable
-                         copy the verified artefact to a serving directory
-                         restart the server
-
-Two things fall out of it for free. Nothing currently restarts the server after
-a rebuild — it has been done by hand every time — and the served directory
-stops changing under a running process.
-
-**Done when:** a local build cannot reach the public host, and a deploy is one
-command that ends with the site answering.
+**Done:** ordinary workspace builds cannot change the files these production
+processes serve; future deployments use the release activation command.
 
 ## 2. Run the browser suites against the desktop shell
 
@@ -113,6 +138,28 @@ statement that it works.
 
 ---
 
+## Frontend correctness follow-up from code review
+
+Completed in the frontend releases (see [desktop-reliability.md](desktop-reliability.md)):
+
+- Document-scoped AI source publication and selection.
+- Dirty-state ownership during background saves.
+- Detached-window cleanup and session invalidation on logout. Linux native
+  WebDriver lifecycle and native-port contracts pass. Windows/macOS and physical
+  multi-monitor checks remain pending.
+- Preference writes require successful initialization and explicit changes;
+  the skeleton-hint write is reachable.
+
+Also completed in the record-editing development batch:
+
+- Service-backed recovery, versioned saves, retry and explicit conflict review.
+- Billing and consultation adoption of the shared controller.
+- New record identities and saved-record worklist discovery.
+- Deferred export cleanup now finishes before URL mocks are restored.
+
+See [record-editing.md](record-editing.md). The compatible API/frontend pair was activated publicly as release
+`20260907163215381-b9dabe79`; public health and authenticated record-load checks passed.
+
 ## Waiting on someone else
 
 **The three speech adapters** (`deepgram`, `azure`, and one more) are marked
@@ -152,3 +199,20 @@ Neither is work so much as a question:
   considered exposed.
 - **Add the four `front-design` names to `~/pv/scripts/renew-cert.sh`.** Needs
   sudo. The certificate lapses in roughly ninety days from early September.
+
+## Desktop-first development
+
+The active implementation sequence and first batch status are tracked in
+[desktop-development-plan.md](desktop-development-plan.md). Mobile is optional.
+
+Latest frontend release: `20260907152207170-63028a2b`, activated on both public
+shells with product profiles and desktop reliability corrections. See the desktop
+development plan for completed checks and remaining milestones.
+
+Customer Master CSV upload, mapping, validation, confirmation, progress and failed-row
+retry are implemented. See [csv-import.md](csv-import.md). Additional entity import
+definitions and production bulk-processing adapters remain integration work.
+
+The Customer Master approval workflow is implemented through a reusable adapter.
+See [approvals.md](approvals.md). Additional entities, production workflow storage
+and email/push delivery remain integration work.

@@ -210,3 +210,50 @@ page size, so the count was the same filtered or not. The same trap in reverse
 sank a unit test in the same session: a hook that starts on its defaults makes
 "it falls back to the defaults" true before the load has been attempted. Capture
 the before value and assert the change, not the state.
+
+## Native desktop lifecycle
+
+`npm run e2e:native` runs separately from the browser suites. It needs a built
+Tauri executable, a display and `tauri-driver` with WebKitWebDriver. See
+[the native setup and coverage](../docs/running-tauri.md#native-lifecycle-regression-with-webdriver).
+
+## Record recovery and saving
+
+`npm run e2e:records` checks recovery after reload and record creation/worklist
+discovery against an isolated API and desktop shell. It creates demo test records.
+See [record-editing.md](../docs/record-editing.md#verification) for setup.
+
+### Worklist workflows (desktop)
+
+`npm run e2e:workflows` covers server pagination/refresh, partial archive results,
+personal views, nested modal focus, split panes, conditional/dependent forms and
+Nexora/Midnight/High Contrast accessibility. It mutates fixture records and views;
+run with an isolated API data directory. See [worklist workflow setup](../docs/worklist-workflows.md).
+
+### Product starter
+
+Select the Ledger example in `products/active.ts` for an isolated development
+instance, then run `node e2e/product-starter.mjs`. It checks branding, page selection
+and permissions for the three demo roles. Restore the application's selected
+product afterward. See [product profiles](../docs/product-profiles.md).
+
+### Record panels
+
+`npm run e2e:panels` uploads and removes fixture files, posts comments, links records
+and verifies recent activity and accessibility. Use an isolated API data directory;
+see [record panels](../docs/record-panels.md).
+
+`npm run e2e:approvals` exercises configurable approval stages, requester submission,
+change requests/resubmission, bulk decisions, final approval/rejection and requester
+notifications. It writes fixtures: use an isolated API directory and set
+`E2E_DESKTOP` to the matching frontend. See `docs/approvals.md`.
+
+
+## Explicit runtime groups
+
+`e2e/suites.mjs` registers every suite and helper. `node e2e/run.mjs --check`
+rejects missing/unregistered files. CI runs browser, features, navigation, product
+and Linux native groups in the appropriate environments. The latter three need
+configuration, product or WebDriver setup; they must not join the ordinary browser
+runner by filename renaming. Feature tests can start a fresh API per suite with
+`--managed-api`. See [review follow-up](../docs/review-follow-up-2026-09-08.md).

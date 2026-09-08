@@ -1,3 +1,4 @@
+import { useLocalization } from "./localization";
 import React from "react";
 import { cn } from "./cn";
 
@@ -19,7 +20,8 @@ const classes: Record<BadgeTone, string> = {
 };
 
 export function Badge({ tone = "neutral", className, children }: { tone?: BadgeTone; className?: string; children: React.ReactNode }) {
-  return <span className={cn("inline-flex min-h-5 items-center gap-1 rounded-full border px-2 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold leading-none", classes[tone], className)}>{children}</span>;
+  const {t} = useLocalization();
+  return <span className={cn("inline-flex min-h-5 items-center gap-1 rounded-full border px-2 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold leading-none", classes[tone], className)}>{typeof children === "string" ? t(children) : children}</span>;
 }
 
 export function statusTone(value: unknown): BadgeTone {
@@ -32,5 +34,6 @@ export function statusTone(value: unknown): BadgeTone {
 }
 
 export function StatusBadge({ value }: { value: unknown }) {
-  return <Badge tone={statusTone(value)}><span className="size-1.5 rounded-full bg-current" />{typeof value === "boolean" ? (value ? "Enabled" : "Disabled") : String(value)}</Badge>;
+  const { t } = useLocalization();
+  return <Badge tone={statusTone(value)}><span className="size-1.5 rounded-full bg-current" />{t(typeof value === "boolean" ? (value ? "Enabled" : "Disabled") : String(value))}</Badge>;
 }

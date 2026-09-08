@@ -1,9 +1,10 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { LocalizationProvider } from "@pepbits/ops-ui";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
-  DEFAULT_PREFERENCES, LANGUAGE_OPTIONS, MODULES, PAGE_REGISTRY,
-  createFormatters, preferenceOverrides, sanitizePreferences, translate,
+  DEFAULT_PREFERENCES, LANGUAGE_OPTIONS, LANGUAGE_LOCALES, MODULES, PAGE_REGISTRY,
+  createFormatters, preferenceOverrides, sanitizePreferences, translate, loadFallbackLanguage,
   SHORTCUTS,
   SIDEBAR_SEARCH_EVENT,
   matchesShortcut,
@@ -12,6 +13,7 @@ import {
 import type { Formatters, ModuleKey, ToastItem, UserPreferences } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { authedFetch, useSession } from "@pepbits/auth";
+import { useProduct, useProductLanguageLoader } from "./product-context";
 import { useOptionalWorkspace } from "@pepbits/workspace-core";
 
 
@@ -44,6 +46,7 @@ interface ERPContextValue {
   currentModule: ModuleKey;
   module: (typeof MODULES)[ModuleKey];
   preferences: UserPreferences;
+  preferencesAvailable: boolean;
   updatePreference: <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => void;
   updatePreferences: (next: Partial<UserPreferences>) => void;
   resetPreferences: () => void;
@@ -64,7 +67,7 @@ interface ERPContextValue {
   setHelpOpen: (open: boolean) => void;
   documentationOpen: boolean;
   setDocumentationOpen: (open: boolean) => void;
-  t: (key: string) => string;
+  t: (key: string, values?:Record<string,string|number>) => string;
 }
 
 const ERPContext = createContext<ERPContextValue | null>(null);
@@ -89,6 +92,10 @@ export function skeletonsPreferred(): boolean {
 }
 
 export function ERPProvider({ children, fallback = null }: { children: React.ReactNode; fallback?: React.ReactNode }) {
+  const product = useProduct();
+  const loadProductLanguage = useProductLanguageLoader();
+  const languageRequest = useRef(0);
+  useEffect(() => () => { languageRequest.current++; }, []);
   const navigation = useNavigation();
   const { user } = useSession();
   const [preferences, setPreferences] = useState<UserPreferences>(DEFAULT_PREFERENCES);
@@ -105,20 +112,23 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
   const [documentationOpen, setDocumentationOpen] = useState(false);
   /* Remembered only so a "shared" page (Preferences, Spreadsheet Studio, the Developer
      Library) keeps the sidebar on the module the user came from. */
-  const [lastModule, setLastModule] = useState<ModuleKey>("finance");
+  const [lastModule, setLastModule] = useState<ModuleKey>(product.defaultModule);
 
-  const currentModule = moduleForPage(navigation.current.pageId, lastModule);
+  const activePage = product.pages[navigation.current.pageId];
+  const currentModule = activePage && activePage.module !== "shared" ? activePage.module : lastModule;
 
   useEffect(() => {
-    const page = PAGE_REGISTRY[navigation.current.pageId];
+    const page = product.pages[navigation.current.pageId];
     if (page && page.module !== "shared") setLastModule(page.module);
-  }, [navigation.current.pageId]);
+  }, [navigation.current.pageId, product]);
 
   /* Preferences come from the server, keyed by the signed-in user. The shell renders
      `fallback` until they land, so it never paints in one theme and then jumps to
      another — and localStorage holds none of this, because two stores for one setting
      is a reconciliation bug waiting to happen. */
   const [loaded, setLoaded] = useState(false);
+  const [preferencesAvailable, setPreferencesAvailable] = useState(false);
+  const [preferencesEdited, setPreferencesEdited] = useState(false);
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -127,10 +137,19 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
         if (cancelled) return;
         if (response.ok) {
           const body = (await response.json()) as { preferences?: unknown };
+          if (!body || !body.preferences || typeof body.preferences !== "object" || Array.isArray(body.preferences)) {
+            throw new Error("Invalid preferences response");
+          }
           /* Validated, not spread. A theme id removed in a later release, or a
              hand-edited preferences.json, used to reach the shell verbatim and
              set data-theme to a selector no stylesheet defines. */
-          if (!cancelled) setPreferences(sanitizePreferences(body.preferences));
+          if (!cancelled) {
+            const next = sanitizePreferences(body.preferences);
+            await (loadProductLanguage ? loadProductLanguage(next.language) : loadFallbackLanguage(next.language));
+            if (cancelled) return;
+            setPreferences(next);
+            setPreferencesAvailable(true);
+          }
         }
       } catch {
         // API unreachable: fall through to defaults rather than blocking the shell.
@@ -141,28 +160,24 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     return () => { cancelled = true; };
   }, []);
 
-  /* Debounced so dragging a slider or clicking through a theme row does not fire a
-     request per keystroke, and skipped until the initial load resolves so mounting
-     cannot immediately write back what it just read. */
+  /* A failed read must never turn defaults into a replacement for saved settings.
+     Mounting with a valid response also needs no write-back. */
   useEffect(() => {
-    if (!loaded) return;
+    if (!preferencesAvailable || !preferencesEdited) return;
     const timer = window.setTimeout(() => {
       void authedFetch("/preferences", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ preferences: preferenceOverrides(preferences) }),
-      }).catch(() => {
-        // A failed save is not worth interrupting the user over in a demo.
-      });
+      }).catch(() => undefined);
     }, 400);
     return () => window.clearTimeout(timer);
-    /* Remembered for the NEXT first paint. The loading placeholder must be
-       chosen before preferences exist — that fetch is the wait it covers — so
-       the only honest way to honour the setting is to have kept last time's
-       answer, the same trick a theme uses to avoid a flash of wrong colours.
-       The first visit ever gets the default, and nothing can change that. */
+  }, [preferencesAvailable, preferencesEdited, preferences]);
+
+  useEffect(() => {
+    if (!preferencesAvailable) return;
     try { window.localStorage.setItem(SKELETON_HINT, String(preferences.loadingSkeletons)); } catch { /* storage unavailable */ }
-  }, [loaded, preferences]);
+  }, [preferencesAvailable, preferences.loadingSkeletons]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -186,15 +201,35 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     window.localStorage.setItem("nexora-module", currentModule);
   }, [currentModule]);
 
-  const updatePreference = useCallback(<K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
-    setPreferences((previous) => ({ ...previous, [key]: value }));
-  }, []);
-
   const updatePreferences = useCallback((next: Partial<UserPreferences>) => {
-    setPreferences((previous) => ({ ...previous, ...next }));
-  }, []);
+    const {language, ...otherPreferences} = next;
+    // An unrelated preference edit must neither cancel a language request nor
+    // be overwritten when its catalog eventually arrives.
+    if (Object.keys(otherPreferences).length) {
+      setPreferencesEdited(true);
+      setPreferences(previous => ({...previous, ...otherPreferences}));
+    }
+    if (!language) return;
+    const request = ++languageRequest.current;
+    const apply = () => {
+      if (request !== languageRequest.current) return;
+      setPreferencesEdited(true);
+      setPreferences(previous => ({...previous, language}));
+    };
+    if (language !== preferences.language) {
+      const load = loadProductLanguage ? loadProductLanguage(language) : loadFallbackLanguage(language);
+      void load.then(apply).catch(() => {
+        if (request !== languageRequest.current) return;
+        setToasts(previous => [...previous, {id: `language-${request}`, title: "Could not load language", message: "Your current language was kept. Please try again.", type: "error" as const}].slice(-preferences.maxVisibleToasts));
+      });
+    } else apply();
+  }, [loadProductLanguage, preferences.language, preferences.maxVisibleToasts]);
 
-  const resetPreferences = useCallback(() => setPreferences(DEFAULT_PREFERENCES), []);
+  const updatePreference = useCallback(<K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
+    updatePreferences({[key]: value});
+  }, [updatePreferences]);
+
+  const resetPreferences = useCallback(() => { languageRequest.current++; setPreferencesEdited(true); setPreferences(DEFAULT_PREFERENCES); }, []);
 
   const toast = useCallback((nextToast: Omit<ToastItem, "id">) => {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -257,17 +292,21 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     return () => window.removeEventListener("keydown", onKey);
   }, [currentModule, navigation, preferences.keyboardShortcuts, preferences.sidebarPinned, updatePreference, workspace]);
 
-  const t = useCallback((key: string) => translate(preferences.language, key), [preferences.language]);
+  const t = useCallback((key: string,values?:Record<string,string|number>) => translate(preferences.language, key,values,product.translations), [preferences.language,product.translations]);
+  const localization=useMemo(()=>({language:preferences.language,direction:(preferences.language==='ar'?'rtl':'ltr') as 'rtl'|'ltr',t,dateTime:(value:string|Date)=>{
+    const date=new Date(value);return Number.isNaN(date.getTime())?String(value):new Intl.DateTimeFormat(LANGUAGE_LOCALES[preferences.language],{dateStyle:'medium',timeStyle:'short'}).format(date);
+  }}),[preferences.language,t]);
 
   const format = useMemo(() => createFormatters(preferences), [
     preferences.currencyCode, preferences.numberLocale, preferences.dateFormat, preferences.decimalPlaces,
-    preferences.timeFormat, preferences.currencyDisplay, preferences.negativeStyle,
+    preferences.timeFormat, preferences.currencyDisplay, preferences.negativeStyle, preferences.language,
   ]);
 
   const value = useMemo<ERPContextValue>(() => ({
     currentModule,
-    module: MODULES[currentModule],
+    module: product.modules[currentModule] ?? product.modules[product.defaultModule]!,
     preferences,
+    preferencesAvailable,
     updatePreference,
     updatePreferences,
     resetPreferences,
@@ -285,11 +324,11 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     documentationOpen,
     setDocumentationOpen,
     t,
-  }), [branch, commandOpen, currentModule, dismissToast, documentationOpen, format, helpOpen, preferences, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
+  }), [product, branch, commandOpen, currentModule, dismissToast, documentationOpen, format, helpOpen, preferences, preferencesAvailable, resetPreferences, role, t, toast, toasts, updatePreference, updatePreferences]);
 
   if (!loaded) return <>{fallback}</>;
 
-  return <ERPContext.Provider value={value}>{children}</ERPContext.Provider>;
+  return <ERPContext.Provider value={value}><LocalizationProvider value={localization}>{children}</LocalizationProvider></ERPContext.Provider>;
 }
 
 export function useERP() {

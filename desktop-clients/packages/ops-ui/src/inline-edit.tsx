@@ -1,4 +1,6 @@
 "use client";
+import { LocalizedText } from "./localization";
+
 
 import React, { useEffect, useId, useRef, useState } from "react";
 import { cn } from "./cn";
@@ -176,7 +178,7 @@ export function InlineEdit({ label, value, display, onCommit, validate, disabled
           problem ? "border-[var(--danger)]" : "border-[var(--primary)]",
         ),
       })}
-      {saving ? <span role="status" className="sr-only">Saving {label}</span> : null}
+      {saving ? <span role="status" className="sr-only"><LocalizedText message="ui.saving.8d3085ef" />{label}</span> : null}
       {problem ? (
         /* Above the cell rather than inside it. A table row cannot grow to fit
            a message without shifting every row below it, and a message that

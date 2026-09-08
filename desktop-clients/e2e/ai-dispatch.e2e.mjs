@@ -15,7 +15,17 @@ import { BASE, loadPlaywright, openViaPalette, reporter, requireShell, signIn } 
 const { chromium } = loadPlaywright();
 await requireShell(BASE);
 const browser = await chromium.launch({ chromiumSandbox: false });
-const { page, errors } = await signIn(browser, `${BASE}/finance/customer-master`);
+// This suite verifies UI-to-request equality, not a live provider. Supply a
+// credential-status fixture and intercept dispatch so it needs no secret or
+// network access to an AI provider. Backend credential gates have API/unit tests.
+const context = await browser.newContext();
+await context.route(url => url.pathname === "/ai/config", async route => {
+  const response = await route.fetch();
+  const config = await response.json();
+  await route.fulfill({response, body:JSON.stringify({...config, credential:{...config.credential, configured:true, hint:"test-fixture"}})});
+});
+await context.route("**/ai/dispatch", route => route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({text:"Deterministic browser-test reply"})}));
+const { page, errors } = await signIn(browser, `${BASE}/finance/customer-master`, undefined, context);
 const t = reporter("the assistant sends what it showed");
 
 /* Every AI request the page makes, captured before it leaves. */

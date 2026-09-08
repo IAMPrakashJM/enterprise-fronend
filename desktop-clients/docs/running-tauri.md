@@ -1,6 +1,6 @@
 # Running the desktop app as a real Tauri window
 
-_5 September 2026._
+_Updated 7 September 2026._
 
 `npm run dev:desktop` serves the desktop shell at :3101 in a browser, which is
 enough for almost everything. The exception is anything that only exists inside
@@ -48,10 +48,12 @@ used to bind-mount anything over `/usr`. Check
 `/proc/sys/kernel/apparmor_restrict_unprivileged_userns` before planning around
 it.
 
-**Xvfb is a dead end without root.** It runs `/usr/bin/xkbcomp` from a compiled-in
-path, ignores `XKB_BINDIR`, and exits when the keymap fails to compile. A Wayland
-compositor avoids this entirely, because libxkbcommon compiles keymaps in-process
-from `XKB_CONFIG_ROOT`.
+**Rootless Xvfb needs its keyboard compiler path resolved.** The unpacked binary
+runs `/usr/bin/xkbcomp` from a compiled-in path and ignores `XKB_BINDIR`. The
+7 September test used a task-local copy with that path redirected to a local
+`xkbcomp` symlink. An ordinary system installation does not need this workaround.
+Wayland avoids this path issue, but the headless Weston configuration below
+had no input seat and produced invalid GTK viewport metrics during automation.
 
 **Weston, headless, kiosk shell.** The desktop shell tries to launch helper
 clients from `/usr/libexec` and dies; the kiosk shell needs none and still maps
@@ -96,33 +98,67 @@ SMOKE url=http://localhost:3101/index.html?document=acme%3ACUSTOMER-MASTER%3Avie
 SMOKE after_close=1
 ```
 
-That answers the question Phase 5 left open: this build, with these
-capabilities, does open a second window, and the title reaching the OS carries
-the record id and no name. It asks from Rust because there is nothing to click
-with — `wayland-info` against the headless compositor lists no `wl_seat` at all,
-so there is no keyboard and no pointer to synthesise from.
+This Rust-only smoke checks creation and metadata. It does not exercise the JS
+menu or its capability permissions. The end-to-end check below covers that gap.
 
-What it does not cover is the menu item itself. The JS port is tested against a
-fake in both directions, the child window's page is checked in a browser, and
-the runtime is checked here; the one link nobody has exercised is a human
-clicking "Open in its own window".
+## Native lifecycle regression with WebDriver
 
-## What this can and cannot show you
+Install `tauri-driver` and your distribution's `WebKitWebDriver` package using the
+[official Tauri setup](https://v2.tauri.app/develop/tests/webdriver/manual-setup/).
+Use a desktop session or Xvfb with a working keyboard/pointer. Run the app and
+driver with isolated XDG config/data/cache directories and a dedicated demo API
+account; this test signs in as `user1` / `user1` and signs out after each journey.
+The built frontend must point to the demo API containing `CUS-02401`.
 
-It runs. The binary compiles against the real WebKit and GTK, the webview loads
-the dev server, and both WebKit helper processes come up.
+From `desktop-clients`:
 
-It cannot be clicked. A headless compositor has no seat, so there is no keyboard
-and no pointer, and `weston-screenshooter` fails because the headless backend
-reports a zero-width output. Anything that needs a click — including opening a
-detached window from the tab menu — still needs a real session.
-
-What a browser CAN check is the child window's own code path, because that is
-just a URL:
-
-```
-http://localhost:3101/?document=acme%3ACUSTOMER-MASTER%3Aview~CUS-02401
+```bash
+cd apps/desktop
+# Set VITE_API_URL to the demo API URL reachable from the native webview.
+VITE_API_URL=http://localhost:3200 npx tauri build --debug --no-bundle
+cd ../..
+# In another terminal with the same display/environment:
+tauri-driver --native-driver /usr/bin/WebKitWebDriver
+# Then:
+npm run e2e:native
 ```
 
-That found a real bug the first time it was run: the detached window had no
-`NavigationProvider`, so every window it opened would have been blank.
+`TAURI_DRIVER_URL` defaults to `http://127.0.0.1:4444`.
+`TAURI_APPLICATION` defaults to `apps/desktop/src-tauri/target/debug/app` relative
+to the current directory. Override it for another binary location. The test
+creates and deletes its own WebDriver session; start with no other driver session.
+It uses only Node's built-in APIs.
+
+The test clicks the real login, page picker, record edit and detach controls. It
+checks the native title, requests the native close event, verifies reattachment,
+reopens the record, and verifies logout from both the child and the main window.
+It asserts no main-window runtime errors and zero main-window preference writes.
+Main-window preference requests are stubbed to provide a predictable tab layout;
+authentication and session invalidation use the real demo API. It does not edit
+or save customer data. The native close step invokes the same close request event
+used by the title-bar control; it does not click the OS title bar. WebDriver's
+`DELETE /window` bypasses that event and is unsuitable for testing this path.
+
+### Verified on 7 September 2026
+
+Passed on Linux with Tauri 2.11.5, Wry 0.55.1 and WebKitGTK 2.52.6 under Xvfb
+(1440 × 900 webview, device pixel ratio 1). The debug executable bundled the exact
+frontend assets from release `20260907152207170-63028a2b` through a temporary
+`frontendDist` override; it did not load a Vite development server.
+
+This run found a missing `core:window:allow-destroy` permission: the JS SDK's
+`onCloseRequested` handler invokes `destroy()` after the callback. Both sessions
+were invalidated on logout, but the detached window remained open and emitted an
+unhandled rejection. Adding the permission for `main` and `doc-*` fixed the
+failure, and the complete lifecycle regression passed on the rebuilt executable.
+Native capability changes require a rebuilt desktop executable; serving new
+browser assets alone does not update them.
+
+Rootless TLS also needed the unpacked `glib-networking` GnuTLS GIO module. Without
+it, HTTPS authentication failed before reaching the application API. Load the
+needed module via `GIO_EXTRA_MODULES` when using an isolated sysroot.
+
+This is a native automated Linux check, not installer validation or physical
+multi-monitor QA. Windows/macOS behavior, OS title-bar interaction, display/DPI
+changes and crash recovery remain separate checks. Headless Weston smoke results
+alone do not establish clickable UI behavior; Xvfb was used for this regression.

@@ -1,9 +1,12 @@
 "use client";
 
+import { RecordApproval } from "./approvals/approval-workspace";
+import { RecordPanelsPanel } from "./records/record-panels";
 import React from "react";
+import { canProductAction } from "@pepbits/erp-config";
 import type { NavigationTarget } from "@pepbits/platform-ports";
-import { PAGE_REGISTRY } from "@pepbits/erp-config";
-import { DashboardSkeleton, ErrorState, FormSkeleton, TableSkeleton } from "@pepbits/ops-ui";
+import { useProduct } from "@pepbits/erp-shell";
+import { AccessDenied, DashboardSkeleton, ErrorState, FormSkeleton, TableSkeleton } from "@pepbits/ops-ui";
 import { ModuleDashboard } from "./dashboard/module-dashboard";
 import { WorklistPage } from "./worklist/worklist-page";
 import { DynamicRecordForm } from "./forms/dynamic-record-form";
@@ -44,23 +47,27 @@ export function SkeletonFor({ kind }: { kind: string }) {
 }
 
 export function PageRenderer({ target, showTabPreferences = true }: { target: NavigationTarget; showTabPreferences?: boolean }) {
-  const page = PAGE_REGISTRY[target.pageId];
+  const product = useProduct();
+  const page = product.pages[target.pageId];
   /* A page id with no entry is a configuration fault, not an empty result, and
      it used to render as one line of grey text with nothing to do about it. */
+  if (product.access?.pages?.[target.pageId] && !page) return <AccessDenied title="Page unavailable for your role" description="Your account does not have access to this page." />;
+  if ((target.mode === "new" && !canProductAction(product,"create")) || (target.mode === "edit" && !canProductAction(product,"edit"))) return <AccessDenied title="Action unavailable for your role" description="You can return to the list to view available records." />;
   if (!page) return <ErrorState title="This page is not configured" description="The workspace asked for a page that is not in the registry." detail={`pageId: ${target.pageId}`} />;
-  if (target.mode && (page.kind === "worklist" || page.kind === "form")) return <DynamicRecordForm page={page} target={target} />;
+  const withPanels = (screen: React.ReactNode) => <div className="flex flex-col gap-4">{screen}<RecordApproval pageId={page.id} recordId={target.recordId} /><RecordPanelsPanel pageId={page.id} recordId={target.recordId} /></div>;
+  if (target.mode && (page.kind === "worklist" || page.kind === "form")) return withPanels(<DynamicRecordForm page={page} target={target} />);
   switch (page.kind) {
     case "dashboard": return <ModuleDashboard moduleKey={page.module === "shared" ? undefined : page.module} />;
     case "worklist": return <WorklistPage page={page} />;
-    case "form": return <DynamicRecordForm page={page} target={target} />;
-    case "billing": return <BillingPage page={page} />;
+    case "form": return withPanels(<DynamicRecordForm page={page} target={!target.mode && !canProductAction(product,"edit") ? {...target,mode:"view"} : target} />);
+    case "billing": return withPanels(<BillingPage page={page} target={target} />);
     case "reports": return <ReportsPage page={page} />;
     case "preferences": return <PreferencesPage showTabPreferences={showTabPreferences} />;
     case "spreadsheet": return <SpreadsheetPage />;
     case "library": return <LibraryPage page={page} />;
     case "ai-admin": return <AiAdministration />;
     case "inbox": return <InboxPage page={page} />;
-    case "consultation": return <ConsultationPage page={page} />;
+    case "consultation": return withPanels(<ConsultationPage page={page} target={target} />);
     default: return <WorklistPage page={page} />;
   }
 }

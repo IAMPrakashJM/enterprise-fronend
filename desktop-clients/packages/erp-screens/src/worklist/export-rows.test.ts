@@ -33,7 +33,9 @@ beforeEach(() => {
   vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
 });
 
-afterEach(() => {
+afterEach(async () => {
+  // Let deferred download URL cleanup finish while the URL stub still exists.
+  await new Promise(resolve => setTimeout(resolve, 0));
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });

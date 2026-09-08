@@ -13,6 +13,12 @@ const newWorkspace = () => createWorkspace({
 });
 const doc = (entityId: string, title: string) => ({ module: "CLINICAL", documentType: "ENCOUNTER", entityId, title, patientId: "100" });
 
+function openDocument(workspace: Workspace, request: ReturnType<typeof doc>) {
+  let result!: ReturnType<Workspace["openDocument"]>;
+  React.act(() => { result = workspace.openDocument(request); });
+  return result;
+}
+
 function fakePort() {
   const opened: DetachedWindowRequest[] = [];
   const closed: string[] = [];
@@ -54,7 +60,7 @@ describe("useDetachedWindows", () => {
   test("opens a window for a document the store detached", async () => {
     const { port, opened } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "Maya Thomas")).document!;
+    const a = openDocument(workspace, doc("5001", "Maya Thomas")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     expect(opened).toHaveLength(1);
     expect(opened[0].documentId).toBe(a.documentId);
@@ -65,7 +71,7 @@ describe("useDetachedWindows", () => {
   test("and titles it without the patient's name", async () => {
     const { port, opened } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "Maya Thomas — follow-up")).document!;
+    const a = openDocument(workspace, doc("5001", "Maya Thomas — follow-up")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     expect(opened[0].title).not.toMatch(/Maya|Thomas|follow-up/);
     expect(opened[0].title).toMatch(/5001/);
@@ -74,7 +80,7 @@ describe("useDetachedWindows", () => {
   test("closes the window when the document comes home", async () => {
     const { port, closed } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "A")).document!;
+    const a = openDocument(workspace, doc("5001", "A")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     await React.act(async () => { workspace.attachDocument(a.documentId); });
     expect(closed).toEqual([a.documentId]);
@@ -83,8 +89,8 @@ describe("useDetachedWindows", () => {
   test("and when the document is closed outright", async () => {
     const { port, closed } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "A")).document!;
-    workspace.openDocument(doc("5002", "B"));
+    const a = openDocument(workspace, doc("5001", "A")).document!;
+    openDocument(workspace, doc("5002", "B"));
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     await React.act(async () => { workspace.closeDocument(a.documentId); });
     expect(closed).toEqual([a.documentId]);
@@ -96,7 +102,7 @@ describe("useDetachedWindows", () => {
   test("a window the user closes brings its document home", async () => {
     const { port, closeFromOutside } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "A")).document!;
+    const a = openDocument(workspace, doc("5001", "A")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     expect(detachedCount()).toBe(1);
     await React.act(async () => { closeFromOutside(a.documentId); });
@@ -107,7 +113,7 @@ describe("useDetachedWindows", () => {
   test("opens nothing twice for one document", async () => {
     const { port, opened } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "A")).document!;
+    const a = openDocument(workspace, doc("5001", "A")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     await React.act(async () => { workspace.markDirty(a.documentId); });
     expect(opened).toHaveLength(1);
@@ -117,8 +123,8 @@ describe("useDetachedWindows", () => {
   test("closes every window when the workspace is cleared", async () => {
     const { port, closed } = fakePort();
     const workspace = mount(port);
-    const a = workspace.openDocument(doc("5001", "A")).document!;
-    const b = workspace.openDocument(doc("5002", "B")).document!;
+    const a = openDocument(workspace, doc("5001", "A")).document!;
+    const b = openDocument(workspace, doc("5002", "B")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     await React.act(async () => { workspace.detachDocument(b.documentId); });
     await React.act(async () => { workspace.logout(); });
@@ -128,8 +134,66 @@ describe("useDetachedWindows", () => {
   test("a shell without windows opens none", async () => {
     const { port, opened } = fakePort();
     const workspace = mount({ ...port, available: false });
-    const a = workspace.openDocument(doc("5001", "A")).document!;
+    const a = openDocument(workspace, doc("5001", "A")).document!;
     await React.act(async () => { workspace.detachDocument(a.documentId); });
     expect(opened).toHaveLength(0);
   });
+});
+
+describe("window lifetime", () => {
+  test("unmounting the authenticated workspace closes its native windows", async () => {
+    const { port, closed } = fakePort();
+    const workspace = newWorkspace();
+    const { unmount } = render(<WindowPortProvider value={port}><Harness workspace={workspace} port={port} /></WindowPortProvider>);
+    const a = openDocument(workspace, doc("5001", "A")).document!;
+    await React.act(async () => { workspace.detachDocument(a.documentId); });
+    await React.act(async () => { unmount(); });
+    expect(closed).toEqual([a.documentId]);
+  });
+  test("a window that finishes opening after unmount is still closed", async () => {
+    const { port, closed } = fakePort();
+    let finish!: (ok: boolean) => void;
+    port.open = () => new Promise<boolean>(r => { finish = r; });
+    const workspace = newWorkspace();
+    const { unmount } = render(<WindowPortProvider value={port}><Harness workspace={workspace} port={port} /></WindowPortProvider>);
+    const a = openDocument(workspace, doc("5001", "A")).document!;
+    await React.act(async () => { workspace.detachDocument(a.documentId); });
+    unmount();
+    await React.act(async () => { finish(true); });
+    expect(closed).toEqual([a.documentId]);
+  });
+  test("a failed open brings the document back into the main workspace", async () => {
+    const { port } = fakePort();
+    port.open = async () => false;
+    const workspace = mount(port);
+    const a = openDocument(workspace, doc("5001", "A")).document!;
+    await React.act(async () => { workspace.detachDocument(a.documentId); });
+    expect(workspace.getDetached()).toEqual([]);
+    expect(workspace.getDocument(a.documentId)).not.toBeNull();
+  });
+});
+
+  test("Strict Mode cleanup finishes before the replacement window opens", async () => {
+    const { port, opened, closed } = fakePort();
+    const workspace = newWorkspace();
+    const a = workspace.openDocument(doc("5001", "A")).document!;
+    workspace.detachDocument(a.documentId);
+    let unmount!: () => void;
+    await React.act(async () => {
+      ({ unmount } = render(<React.StrictMode><WindowPortProvider value={port}><Harness workspace={workspace} port={port} /></WindowPortProvider></React.StrictMode>));
+    });
+    expect(opened).toHaveLength(2);
+    expect(closed).toEqual([a.documentId]);
+    await React.act(async () => { unmount(); });
+    expect(closed).toEqual([a.documentId, a.documentId]);
+  });
+
+test("an open failure cleans up a partially created native window", async () => {
+  const { port, closed } = fakePort();
+  port.open = async () => { throw new Error("Listener setup failed"); };
+  const workspace = mount(port);
+  const a = openDocument(workspace, doc("5001", "A")).document!;
+  await React.act(async () => { workspace.detachDocument(a.documentId); });
+  expect(workspace.getDetached()).toEqual([]);
+  expect(closed).toEqual([a.documentId]);
 });

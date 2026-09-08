@@ -16,6 +16,11 @@ export interface SearchRequest {
   definitions: FilterDefinition[];
   filters: FilterValues;
   limit?: number;
+  productId?: string;
+  queryMode?: string;
+  page?: number;
+  pageSize?: number;
+  sort?: { key: string; direction: "asc" | "desc" } | null;
 }
 
 export interface SearchBody {
@@ -25,6 +30,11 @@ export interface SearchBody {
   safeFilters: FilterValues;
   sensitiveFilters: FilterValues;
   limit?: number;
+  productId?: string;
+  queryMode?: string;
+  page?: number;
+  pageSize?: number;
+  sort?: { key: string; direction: "asc" | "desc" } | null;
 }
 
 /**
@@ -34,14 +44,15 @@ export interface SearchBody {
  * object would leave the server to work out which is which, and it would do it
  * by name — which is the guess this whole classification exists to replace.
  */
-export function buildSearchBody({ pageId, title, entity, definitions, filters, limit }: SearchRequest): SearchBody {
+export function buildSearchBody({ pageId, title, entity, definitions, filters, limit, productId, queryMode, page, pageSize, sort }: SearchRequest): SearchBody {
   const { urlSafe, sensitive } = partitionFilters(definitions, filters);
-  return { pageId, title, entity, safeFilters: urlSafe, sensitiveFilters: sensitive, ...(limit ? { limit } : {}) };
+  return { pageId, title, entity, safeFilters: urlSafe, sensitiveFilters: sensitive, ...(limit ? { limit } : {}), ...(productId ? { productId } : {}), ...(queryMode ? { queryMode } : {}), ...(page ? { page } : {}), ...(pageSize ? { pageSize } : {}), ...(sort ? { sort } : {}) };
 }
 
 export interface SearchResult {
   ok: boolean;
   total?: number;
+  page?: number;
   rows?: Array<Record<string, string | number | boolean>>;
   failure?: Failure;
 }
@@ -63,8 +74,9 @@ export async function searchWorklist(request: SearchRequest, fetcher: (path: str
       body: JSON.stringify(buildSearchBody(request)),
     });
     if (!response.ok) return { ok: false, failure: classifyFailure({ status: response.status }) };
-    const body = (await response.json()) as { total: number; rows: Array<Record<string, string | number | boolean>> };
-    return { ok: true, total: body.total, rows: body.rows };
+    const body = (await response.json()) as { total: number; page?: number; rows: Array<Record<string, string | number | boolean>> };
+    if (!Array.isArray(body.rows) || !Number.isInteger(body.total) || body.total < 0) throw new Error("Invalid search response");
+    return { ok: true, total: body.total, page: body.page, rows: body.rows };
   } catch {
     /* A failed search must not look like an empty result: "no records found"
        for a service that is down sends someone to re-check filters that were

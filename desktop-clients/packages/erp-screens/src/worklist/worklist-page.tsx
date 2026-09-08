@@ -1,10 +1,17 @@
 "use client";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
+import { Modal } from "@pepbits/ops-ui";
+import { ApprovalWorkspace } from "../approvals/approval-workspace";
 
+import { useProductRequest } from "../product-services";
+import { CsvImportDialog } from "../imports/csv-import-dialog";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Archive, Columns3, Download, FilterX, Grid2X2, ListFilter, MoreHorizontal, Plus, Printer, RefreshCw, Rows3, Save, Settings2, Star, Upload } from "lucide-react";
+import { PersonalViews, type PersonalViewLayout } from "./personal-views";
 import { getWorklistConfig } from "@pepbits/erp-data";
 import { useNavigation } from "@pepbits/platform-ports";
-import { useERP } from "@pepbits/erp-shell";
+import { useERP, useProduct } from "@pepbits/erp-shell";
 import { Button, ConfirmDialog, ConflictState, IconButton, Segmented, classifyFailure, type Failure, type ReferenceResponse, ErrorState } from "@pepbits/ops-ui";
 import { SearchInput } from "@pepbits/ops-ui";
 import { Badge } from "@pepbits/ops-ui";
@@ -15,14 +22,14 @@ import { useColumnLayout } from "./use-column-layout";
 import { usePublishAiSources } from "@pepbits/ai-client";
 import { InlineAiAction } from "@pepbits/ai-ui";
 import { exportRows } from "./export-rows";
-import { authedFetch, useSession } from "@pepbits/auth";
+import { useSession } from "@pepbits/auth";
 import { FilterBar } from "./filter-bar";
 import { searchWorklist } from "./search-request";
 import { DataTable } from "./data-table";
 import { CardGrid } from "./card-grid";
 import { ColumnManager } from "./column-manager";
 import { RecordPreview } from "./record-preview";
-import { storableFilters, partitionFilters, classificationFor, exportAudit, reviewExport } from "@pepbits/erp-config";
+import { getImportDefinition, canProductAction, storableFilters, partitionFilters, classificationFor, exportAudit, reviewExport } from "@pepbits/erp-config";
 import type { DataColumn, EgressVia, ExportReview, PageDefinition, ResultView, FilterDefinition, WorklistConfig } from "@pepbits/erp-config";
 import { cn } from "@pepbits/ops-ui";
 
@@ -121,12 +128,26 @@ function rowMatches(row: Row, term: string, mode: "contains" | "starts-with" | "
 }
 
 export function WorklistPage({ page }: { page: PageDefinition }) {
+  const product = useProduct();
+  return <WorklistContent key={`${product.id}:${page.id}`} page={page} />;
+}
+
+function WorklistContent({ page }: { page: PageDefinition }) {
+  const { t } = useLocalization();
+  const authedFetch = useProductRequest();
   const { preferences, updatePreference, toast, format } = useERP();
   const { user } = useSession();
   const navigation = useNavigation();
-  const config = useMemo(() => getWorklistConfig(page.id, page.title, page.entity), [page.entity, page.id, page.title]);
+  const product = useProduct();
+  const canEdit = canProductAction(product, "edit");
+  const canExport = canProductAction(product, "export");
+  const canArchive = canProductAction(product, "archive");
+  const config = useMemo(() => {const value=getWorklistConfig(page.id,page.title,page.entity);return page.titleKey ? {...value,columns:value.columns.map(column=>({...column,labelKey:`column.${page.id}.${column.key}.label`}))} : value;}, [page.entity,page.id,page.title,page.titleKey]);
+  const explicitView = useRef(false);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Record<string, string>>({});
+  const [importOpen, setImportOpen] = useState(false);
+  const [approvalOpen,setApprovalOpen]=useState(false);
   const [confirmArchive, setConfirmArchive] = useState(false);
   const [pendingEgress, setPendingEgress] = useState<{ rows: Row[]; what: string; review: ExportReview; via: EgressVia } | null>(null);
 
@@ -149,7 +170,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
       .then((response) => (response.ok ? response.json() : null))
       .then((body) => setReference((body as ReferenceResponse | null) ?? null))
       .catch(() => setReference(null));
-  }, []);
+  }, [authedFetch]);
   useEffect(() => loadReference(), [loadReference]);
   const [selected, setSelected] = useState<string[]>([]);
   const [previewRow, setPreviewRow] = useState<Record<string, string | number | boolean> | null>(null);
@@ -174,6 +195,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
        which filters the same rows and still reads as the wrong answer. */
     const pending = takePendingView(page.id);
     if (pending) {
+      explicitView.current = true;
       const declared = new Set([...config.basicFilters, ...config.advancedFilters].map((filter) => filter.key));
       const restored: Record<string, string> = {};
       let restoredSearch = "";
@@ -195,32 +217,6 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const persist = (nextSearch: string, nextFilters: Record<string, string>) => {
     if (preferences.rememberFilters) writeFilters(page.id, { search: nextSearch, filters: nextFilters });
   };
-
-  const filtered = useMemo(() => {
-    let rows = [...config.rows];
-    const term = search.trim().toLowerCase();
-    if (term) rows = rows.filter((row) => rowMatches(row, term, preferences.globalSearchMode));
-    Object.entries(filters).forEach(([key, value]) => {
-      if (!value) return;
-      if (key === "query" || key === "recordRef" || key === "tags" || key === "createdBy") {
-        const q = value.toLowerCase();
-        rows = rows.filter((row) => Object.values(row).some((entry) => valueText(entry).includes(q)));
-      } else if (key === "from") {
-        rows = rows.filter((row) => Object.values(row).filter((entry) => /^\d{4}-\d{2}-\d{2}/.test(String(entry))).some((entry) => String(entry) >= value));
-      } else if (key === "to") {
-        rows = rows.filter((row) => Object.values(row).filter((entry) => /^\d{4}-\d{2}-\d{2}/.test(String(entry))).some((entry) => String(entry) <= value));
-      } else {
-        rows = rows.filter((row) => valueText(row[key] ?? "").includes(value.toLowerCase()) || Object.values(row).some((entry) => valueText(entry) === value.toLowerCase()));
-      }
-    });
-    if (sort) rows.sort((a, b) => {
-      const left = a[sort.key];
-      const right = b[sort.key];
-      const comparison = typeof left === "number" && typeof right === "number" ? left - right : String(left ?? "").localeCompare(String(right ?? ""), undefined, { numeric: true });
-      return sort.direction === "asc" ? comparison : -comparison;
-    });
-    return rows;
-  }, [config.rows, filters, preferences.globalSearchMode, search, sort]);
 
   const pageSize = preferences.pageSize;
   /**
@@ -297,41 +293,47 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
       const failure = classifyFailure(Number.isFinite(status) ? { status } : { networkError: true });
       toast({ title: failure.title, message: `${failure.description} Reference: ${failure.reference}`, type: "error" });
     }
-  }, [filters, search, page.id, page.title, toast]);
+  }, [filters, search, page.id, page.title, toast, authedFetch]);
 
-  /**
-   * The server's answer, when it gave one.
-   *
-   * Sensitive filters are POSTed rather than applied here, so a patient name
-   * reaches the search as a request body instead of a query string that nginx,
-   * the gateway and APM would all record. Local filtering stays as the fallback
-   * — a demo without the API up should still filter, and a failed search must
-   * not silently look like an empty result.
-   */
-  const [remote, setRemote] = useState<{ rows: typeof filtered; total: number } | null>(null);
+  // Server results are authoritative; a failed request remains visible as an error.
+  const [remote, setRemote] = useState<{ rows: Row[]; total: number } | null>(null);
   const [searchFailure, setSearchFailure] = useState<Failure | null>(null);
-
+  const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(0);
+  const searchGeneration = useRef(0);
+  const requestAbort = useRef<AbortController | null>(null);
   const runSearch = useCallback(async () => {
+    const generation = ++searchGeneration.current;
+    requestAbort.current?.abort();
+    const controller = new AbortController(); requestAbort.current = controller;
+    setLoading(true); setSearchFailure(null);
     const everything = { ...filters, ...(search.trim() ? { query: search } : {}) };
-    if (Object.keys(everything).length === 0) { setRemote(null); setSearchFailure(null); return; }
     const result = await searchWorklist(
-      { pageId: page.id, title: page.title, entity: page.entity ?? "record",
-        definitions: [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: classificationFor("query") }],
-        filters: everything },
-      (path, init) => authedFetch(path, init),
+      { pageId: page.id, title: page.title, entity: page.entity ?? "record", productId: product.id,
+        page: pageNumber, pageSize, sort, queryMode: preferences.globalSearchMode,
+        definitions: [...basicDefinitions, ...advancedDefinitions, { key: "query", label: "Search", type: "text", classification: classificationFor("query") }], filters: everything },
+      (path, init) => authedFetch(path, { ...init, signal: controller.signal }),
     );
-    if (result.ok) { setRemote({ rows: (result.rows ?? []) as typeof filtered, total: result.total ?? 0 }); setSearchFailure(null); }
-    else { setRemote(null); setSearchFailure(result.failure ?? null); }
-  }, [filters, search, page.id, page.title, page.entity, basicDefinitions, advancedDefinitions]);
-
-  /* The server's rows when it answered, this page's own when it did not. */
-  const results = remote?.rows ?? filtered;
-  const pageRows = results
-    .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
-    .map((row) => {
-      const applied = edits[String(row[config.primaryKey])];
-      return applied ? { ...row, ...applied } : row;
-    });
+    if (generation !== searchGeneration.current) return;
+    setLoading(false);
+    if (result.ok) {
+      setRemote({ rows: (result.rows ?? []) as Row[], total: result.total ?? 0 });
+      setSelected(previous => previous.filter(id => result.rows?.some(row => String(row[config.primaryKey]) === id)));
+      if (result.page && result.page !== pageNumber) setPageNumber(result.page);
+    } else { setRemote(null); setSearchFailure(result.failure ?? null); }
+  }, [authedFetch, filters, search, page.id, page.title, page.entity, product.id, pageNumber, pageSize, sort, preferences.globalSearchMode, basicDefinitions, advancedDefinitions, config.primaryKey]);
+  useEffect(() => {
+    setLoading(true); setRemote(null); setSearchFailure(null);
+    const timer = setTimeout(() => void runSearch(), 200);
+    return () => { clearTimeout(timer); searchGeneration.current++; requestAbort.current?.abort(); };
+  }, [runSearch, refresh]);
+  useEffect(() => { setSelected([]); }, [page.id, filters, search, sort, pageNumber, pageSize]);
+  const results = remote?.rows ?? [];
+  const total = remote?.total ?? 0;
+  const pageRows = results.map(row => {
+    const applied = edits[String(row[config.primaryKey])];
+    return applied ? { ...row, ...applied } : row;
+  });
   const visibleColumns = visibleKeys.map((key) => config.columns.find((column) => column.key === key)).filter(Boolean) as DataColumn[];
   const activeFilterCount = Object.values(filters).filter(Boolean).length;
 
@@ -354,7 +356,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
      matching tab" vs "always a new one", which is the same intent. */
   const openRecord = (target: Parameters<typeof navigation.open>[0]) =>
     preferences.openRecordsIn === "same-tab" ? navigation.open(target) : navigation.openInNewContext(target);
-  const selectedRows = filtered.filter((row) => selected.includes(String(row[config.primaryKey])));
+  const selectedRows = pageRows.filter((row) => selected.includes(String(row[config.primaryKey])));
 
   /* Offer the selection to the assistant. Publishing is all this page does --
      it hands over rows it is already showing, and the use case decides which
@@ -372,7 +374,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
    * by column key afterwards. Values never reach the audit; see exportAudit.
    */
   const writeExport = (rows: Row[], what: string) => {
-    const { filename, review } = exportRows(rows, visibleColumns, format, preferences.exportFormat, page.title);
+    const { filename, review } = exportRows(rows, visibleColumns.map(column=>({...column,label:t(column.labelKey ?? column.label)})), format, preferences.exportFormat, page.id);
     void authedFetch("/exports", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -387,6 +389,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   };
 
   const doExport = (rows: Row[], what: string) => {
+    if (!canExport) return;
     if (!rows.length) { toast({ title: "Nothing to export", message: "No records match the current view.", type: "warning" }); return; }
     const review = reviewExport(visibleColumns);
     if (!review.silent) { setPendingEgress({ rows, what, review, via: "file" }); return; }
@@ -404,6 +407,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
    * below (which is in the document before anyone asks). The listener records.
    */
   const doPrint = (rows: Row[]) => {
+    if (!canExport) return;
     const review = reviewExport(visibleColumns);
     if (!review.silent) { setPendingEgress({ rows, what: "records", review, via: "print" }); return; }
     window.print();
@@ -414,7 +418,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
   const printReview = useMemo(() => reviewExport(visibleColumns), [visibleColumns]);
 
   const latestPrint = useRef({ pageId: page.id, columns: visibleColumns, rows: 0 });
-  latestPrint.current = { pageId: page.id, columns: visibleColumns, rows: filtered.length };
+  latestPrint.current = { pageId: page.id, columns: visibleColumns, rows: pageRows.length };
 
   useEffect(() => {
     /* Read through a ref so the listener is bound once. Re-subscribing on every
@@ -431,16 +435,45 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
     window.addEventListener("beforeprint", record);
     return () => window.removeEventListener("beforeprint", record);
   }, []);
-  const archive = () => {
-    toast({ title: "Archived", message: `${selected.length} records moved to the archive (mock).`, type: "success" });
-    setSelected([]);
-    setConfirmArchive(false);
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkFailures, setBulkFailures] = useState<Array<{id: string; error: string}>>([]);
+  const bulkLock = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  const archive = async () => {
+    if (!canArchive || bulkLock.current || loading || !selected.length) return;
+    bulkLock.current = true;
+    const generation = searchGeneration.current;
+    setBulkBusy(true); setConfirmArchive(false);
+    const ids = [...selected];
+    try {
+      const response = await authedFetch("/worklists/archive", { method: "POST", headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({productId:product.id,pageId:page.id,title:page.title,entity:page.entity,ids}) });
+      if (!response.ok) throw new Error("Archive failed. Your selection is retained; try again.");
+      const body = await response.json() as { results: Array<{id:string;ok:boolean;error?:string}> };
+      if (!Array.isArray(body.results) || ids.some(id => !body.results.some(item => item.id === id))) throw new Error("The service did not confirm every selected record.");
+      if (!mounted.current) return;
+      const failures = body.results.filter(item => !item.ok).map(item => ({id:item.id,error:item.error ?? "Could not archive"}));
+      setBulkFailures(failures); if (generation === searchGeneration.current) setSelected(failures.map(item => item.id));
+      toast({title: failures.length ? "Some records were not archived" : "Records archived", message:`${ids.length-failures.length} archived; ${failures.length} need attention.`,type:failures.length ? "warning" : "success"});
+      setRefresh(value => value + 1);
+    } catch (error) { if (mounted.current) setBulkFailures(ids.map(id => ({id,error:(error as Error).message}))); }
+    finally { bulkLock.current = false; if (mounted.current) setBulkBusy(false); }
+  };
+  const applyPersonalView = (layout: PersonalViewLayout) => {
+    const {query = "", ...rest} = layout.filters;
+    const columns = layout.columns.filter(key => config.columns.some(column => column.key === key));
+    setSearch(query); setFilters(rest); persist(query, rest); setVisibleKeys(columns.length ? columns : defaults);
+    setSort(layout.sort && config.columns.some(column => column.key === layout.sort?.key) ? layout.sort : null);
+    const size = ([10, 20, 50, 100] as const).find(size => size === layout.pageSize) ?? 20;
+    updatePreference("pageSize", size); setPageNumber(1); setSelected([]);
   };
   const view = (row: Record<string, string | number | boolean>) => { setPreviewRow(null); openRecord({ pageId: page.id, mode: "view", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • View` }); };
-  const edit = (row: Record<string, string | number | boolean>) => { setPreviewRow(null); openRecord({ pageId: page.id, mode: "edit", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • Edit` }); };
+  const edit = (row: Record<string, string | number | boolean>) => { if (!canEdit) return; setPreviewRow(null); openRecord({ pageId: page.id, mode: "edit", recordId: String(row[config.primaryKey]), title: `${String(row[config.displayKey])} • Edit` }); };
 
   return (
     <div className="flex w-full flex-col gap-3">
+      {bulkFailures.length ? <div role="alert" className="rounded-lg border border-[var(--border)] p-3 text-sm"><b><LocalizedText message="ui.archive.results.f0345b60" /></b>{bulkFailures.map(item => <div key={item.id}>{item.id}: {item.error}</div>)}</div> : null}
 
       {/* A printed sheet has no headers, no footers and no provenance: found on
           a desk, it is an anonymous list of patients. This says whose it is,
@@ -449,23 +482,20 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           printing begins would be absent from the print that script never saw.
           See tokens.css for why Ctrl+P cannot be intercepted. */}
       <div className="print-only mb-3 border-b-2 border-black pb-2 text-black">
-        <div className="text-[11px] font-black uppercase tracking-[.14em]">{page.title}</div>
-        <div className="mt-1 text-[9px] leading-relaxed">
-          Printed by {user?.name ?? "an unidentified user"}{user?.email ? ` (${user.email})` : ""} · tenant {user?.tenantId ?? "unknown"} · {new Date().toLocaleString()} · {filtered.length} records
-        </div>
+        <div className="text-[11px] font-black uppercase tracking-[.14em]"><LocalizedText message={page.title} /></div>
+        <div className="mt-1 text-[9px] leading-relaxed"><LocalizedText message="ui.printed.by.c16730e3" />{" "}{user?.name ?? "an unidentified user"}{user?.email ? ` (${user.email})` : ""}{" "}<LocalizedText message="ui.tenant.b34b287f" />{" "}{user?.tenantId ?? "unknown"} · {new Date().toLocaleString()} · {pageRows.length}{" "}<LocalizedText message="ui.records.a94e7bcf" /></div>
         {printReview.declared.length ? (
-          <div className="mt-1 text-[9px] font-bold leading-relaxed">
-            Contains {printReview.declared.map((note) => note.label).join(", ")}.
+          <div className="mt-1 text-[9px] font-bold leading-relaxed"><LocalizedText message="ui.contains.2eaecb3d" />{" "}{printReview.declared.map((note) => note.label).join(", ")}.
             {printReview.declared.some((note) => note.classification === "phi") ? " Patient-identifying information — handle under the tenant's retention policy." : ""}
           </div>
         ) : null}
-      </div>      <div className="flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[var(--shadow-sm)]">
-        <div data-tour="search" className="min-w-[240px] flex-1 lg:max-w-xl"><SearchInput value={search} onChange={(value) => { setSearch(value); persist(value, filters); setPageNumber(1); }} className="w-full" placeholder={`Search ${page.title.toLowerCase()} by ID, name or any visible value…`} /></div>
-        <Button data-tour="new" variant="primary" leftIcon={<Plus className="size-3.5" />} onClick={() => openRecord({ pageId: page.id, mode: "new", title: `New ${page.title.replace(/ (Master|Worklist)$/i, "")}` })}>New</Button>
+      </div>      <Card className="flex flex-wrap items-center gap-2 p-2.5">
+        <div data-tour="search" className="min-w-[240px] flex-1 lg:max-w-xl"><SearchInput value={search} onChange={(value) => { setSearch(value); persist(value, filters); setPageNumber(1); }} className="w-full" placeholder={t("Search {page} by ID, name or any visible value…",{page:t(page.title)})} /></div>
+        <Button disabled={!canProductAction(product,"create")} data-tour="new" variant="primary" leftIcon={<Plus className="size-3.5" />} onClick={() => openRecord({ pageId: page.id, mode: "new", title: `New ${page.title.replace(/ (Master|Worklist)$/i, "")}` })}><LocalizedText message="ui.new.18fdd549" /></Button>
         <div className="hidden h-7 w-px bg-[var(--border)] md:block" />
-        <ActionMenu align="left" trigger={<Button variant="secondary" leftIcon={<Star className="size-3.5" />}>Saved views</Button>}>
-          {(close) => <><MenuButton label="My default view" hint="Table • 8 columns • 20 rows" onClick={close} /><MenuButton label="High priority" hint="4 filters • updated today" onClick={close} /><MenuButton label="Open items by branch" hint="Shared by Operations" onClick={close} /><MenuButton icon={<Save className="size-3.5" />} label="Save current view" onClick={() => { toast({ title: "View saved", message: "Current filters and columns were saved as a personal view.", type: "success" }); close(); }} /></>}
-        </ActionMenu>
+        <PersonalViews key={`${product.id}:${page.id}`} productId={product.id} pageId={page.id}
+          layout={{ filters: {...filters,...(search ? {query:search} : {})},columns:visibleKeys,sort,pageSize }}
+          onApply={applyPersonalView} allowDefault={() => !explicitView.current} onShare={createSavedView} />
         <div className="ml-auto flex items-center gap-1">
             {/* Was two IconButtons in a bordered box, which is a segmented
                 control drawn by hand: no group name, no radio semantics, and
@@ -481,13 +511,14 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
                 ]}
               />
             </div>
-          <IconButton data-tour="columns" label="Choose columns" onClick={() => setColumnOpen(true)}><Columns3 className="size-4" /></IconButton>
-          <IconButton label="Refresh results" onClick={() => toast({ title: "Worklist refreshed", message: `${filtered.length} mock records synchronized.`, type: "info" })}><RefreshCw className="size-4" /></IconButton>
-          <ActionMenu trigger={<IconButton label="More worklist actions"><MoreHorizontal className="size-4" /></IconButton>}>
-            {(close) => <><MenuButton icon={<Download className="size-3.5" />} label={`Export visible records (${preferences.exportFormat.toUpperCase()})`} onClick={() => { doExport(filtered, "records"); close(); }} /><MenuButton icon={<Printer className="size-3.5" />} label="Print this list" onClick={() => { doPrint(filtered); close(); }} /><MenuButton icon={<Upload className="size-3.5" />} label="Import records" onClick={() => { navigation.open({ pageId: "spreadsheet-studio" }); close(); }} /><MenuButton icon={<Settings2 className="size-3.5" />} label="Page preferences" onClick={() => { navigation.open({ pageId: "preferences" }); close(); }} /></>}
+          <IconButton data-tour="columns" label="ui.choose.columns.61b55093" onClick={() => setColumnOpen(true)}><Columns3 className="size-4" /></IconButton>
+          <IconButton label="ui.refresh.results.04cc9c1a" disabled={loading || bulkBusy} onClick={() => { setEdits({}); setRefresh(value => value + 1); }}><RefreshCw className="size-4" /></IconButton>
+          {page.id==="customer-master"?<Button onClick={()=>setApprovalOpen(true)}><LocalizedText message="ui.approval.inbox.a670f0ac" /></Button>:null}
+          <ActionMenu trigger={<IconButton label="ui.more.worklist.actions.e02a7587"><MoreHorizontal className="size-4" /></IconButton>}>
+            {(close) => <>{canExport ? <MenuButton icon={<Download className="size-3.5" />} label={t("Export visible records ({format})",{format:preferences.exportFormat.toUpperCase()})} onClick={() => { doExport(pageRows, "current page — records"); close(); }} /> : null}{canExport ? <MenuButton icon={<Printer className="size-3.5" />} label="Print this list" onClick={() => { doPrint(pageRows); close(); }} /> : null}{getImportDefinition(page.entity) && canProductAction(product,"create") ? <MenuButton icon={<Upload className="size-3.5" />} label="Import records" onClick={() => { setImportOpen(true); close(); }} /> : null}<MenuButton icon={<Settings2 className="size-3.5" />} label="Page preferences" onClick={() => { navigation.open({ pageId: "preferences" }); close(); }} /></>}
           </ActionMenu>
         </div>
-      </div>
+      </Card>
 
         {/* The shared bar, driven by the classification registry. It replaces a
             panel that rendered the same controls with no idea what any of them
@@ -509,12 +540,12 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
           />
         </div>
 
-      {selected.length ? <div className="animate-slide-up flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--primary-soft)] px-3 py-2"><Badge tone="brand">{selected.length} selected</Badge><span className="text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]">Bulk operations apply only to records you can update.</span><div className="ml-auto flex gap-1.5"><Button size="xs" variant="secondary" leftIcon={<Archive className="size-3" />} onClick={() => preferences.confirmBulkActions ? setConfirmArchive(true) : archive()}>Archive</Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />} onClick={() => doExport(selectedRows, "selected records")}>Export</Button><InlineAiAction useCaseId="worklist.summarise-selection" label="Summarise" /><Button size="xs" variant="ghost" leftIcon={<FilterX className="size-3" />} onClick={() => setSelected([])}>Clear</Button></div></div> : null}
+      {selected.length ? <div className="animate-slide-up flex flex-wrap items-center gap-2 rounded-[var(--radius)] border border-[color-mix(in_srgb,var(--primary)_25%,var(--border))] bg-[var(--primary-soft)] px-3 py-2"><Badge tone="brand">{selected.length}{" "}<LocalizedText message="ui.selected.d7cbbb68" /></Badge><span className="text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><LocalizedText message="ui.selection.applies.to.this.page.only.failed.records.stay.6c13991d" /></span><div className="ml-auto flex gap-1.5"><Button size="xs" variant="secondary" leftIcon={<Archive className="size-3" />} disabled={!canArchive || bulkBusy || loading} onClick={() => preferences.confirmBulkActions ? setConfirmArchive(true) : archive()}><LocalizedText message="ui.archive.66f4804e" /></Button><Button size="xs" variant="secondary" leftIcon={<Download className="size-3" />} disabled={!canExport} onClick={() => doExport(selectedRows, "selected records")}><LocalizedText message="ui.export.36648955" /></Button><InlineAiAction useCaseId="worklist.summarise-selection" label="Summarise" /><Button size="xs" variant="ghost" leftIcon={<FilterX className="size-3" />} onClick={() => setSelected([])}><LocalizedText message="ui.clear.83b12c22" /></Button></div></div> : null}
 
-      <section className="min-h-[420px] overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)]">
+      <Card as="section" className="min-h-[420px] overflow-hidden">
         <div className="flex min-h-11 flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] px-3 py-2">
-          <div className="flex items-center gap-2"><ListFilter className="size-3.5 text-[var(--primary)]" /><span className="text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">Results</span><Badge tone="neutral">{filtered.length} records</Badge>{activeFilterCount || search ? <Badge tone="brand">Filtered</Badge> : null}</div>
-          <div className="flex items-center gap-2 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><span>View: <b className="text-[var(--text)]">{preferences.resultView === "table" ? "Table" : "Card grid"}</b></span><span className="h-3 w-px bg-[var(--border)]" /><span>Preview: <b className="text-[var(--text)]">{preferences.previewMode.replaceAll("-", " ")}</b></span></div>
+          <div className="flex items-center gap-2"><ListFilter className="size-3.5 text-[var(--primary)]" /><span className="text-[length:calc(10.5px*var(--fs-scale))] font-extrabold"><LocalizedText message="ui.results.219c4a6c" /></span><Badge tone="neutral">{total}{" "}<LocalizedText message="ui.records.a94e7bcf" /></Badge>{activeFilterCount || search ? <Badge tone="brand"><LocalizedText message="ui.filtered.0ba993b3" /></Badge> : null}</div>
+          <div className="flex items-center gap-2 text-[length:calc(8.5px*var(--fs-scale))] font-semibold text-[var(--text-muted)]"><span><LocalizedText message="ui.view.1d016dda" />{" "}<b className="text-[var(--text)]">{t(preferences.resultView === "table" ? "Table" : "Card grid")}</b></span><span className="h-3 w-px bg-[var(--border)]" /><span><LocalizedText message="ui.preview.75954c5f" />{" "}<b className="text-[var(--text)]">{t(preferences.previewMode.replaceAll("-", " "))}</b></span></div>
         </div>
         {/* A failed search is a failure, not an empty result: "no records found"
             for a service that is down sends someone to re-check filters that
@@ -524,14 +555,14 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
              the other ninety-five rows are fine. Replacing the list would be a
              bigger claim than the failure supports. */
           <div className="mb-3"><ConflictState
-            title={`${conflict.label} was changed by someone else`}
-            description={`You typed "${conflict.mine}". It now says "${conflict.theirs}". Your change was not saved.`}
+            title={t("{field} was changed by someone else",{field:t(conflict.label)})}
+            description={t('You typed "{mine}". It now says "{theirs}". Your change was not saved.',{mine:conflict.mine,theirs:conflict.theirs})}
             detail={`Record ${conflict.id}`}
             onReload={() => {
               setEdits((current) => ({ ...current, [conflict.id]: { ...current[conflict.id], [conflict.key]: conflict.theirs } }));
               setConflict(null);
             }}
-            action={<Button variant="ghost" onClick={() => setConflict(null)}>Dismiss</Button>}
+            action={<Button variant="ghost" onClick={() => setConflict(null)}><LocalizedText message="ui.dismiss.48845bff" /></Button>}
           /></div>
         ) : null}
         {searchFailure ? (
@@ -542,9 +573,9 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
             severity={searchFailure.severity}
             onRetry={searchFailure.retryable ? () => void runSearch() : undefined}
           />
-        ) : pageRows.length ? preferences.resultView === "table" ? (
+        ) : loading ? <div role="status" className="p-6"><LocalizedText message="ui.loading.results.cf2c6389" /></div> : pageRows.length ? preferences.resultView === "table" ? (
           <DataTable
-            onCellCommit={async (row, column, next) => {
+            onCellCommit={canEdit ? async (row, column, next) => {
               const id = String(row[config.primaryKey]);
               /* What this browser believes the cell says — the local edit if
                  there is one, otherwise what the row was generated with. That
@@ -554,7 +585,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
               const response = await authedFetch(`/worklists/${encodeURIComponent(page.id)}/${encodeURIComponent(id)}`, {
                 method: "PATCH",
                 headers: { "content-type": "application/json" },
-                body: JSON.stringify({ column: column.key, value: next, seen, title: page.title, entity: page.entity }),
+                body: JSON.stringify({ productId: product.id, column: column.key, value: next, seen, title: page.title, entity: page.entity }),
               }).catch(() => null);
 
               if (response?.status === 409) {
@@ -567,18 +598,20 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
                 toast({ type: "error", title: failure.title, message: `${failure.description} Reference: ${failure.reference}` });
                 return;
               }
-              setEdits((current) => ({ ...current, [id]: { ...current[id], [column.key]: next } }));
+              setEdits({}); setRefresh(value => value + 1);
               toast({ type: "success", title: `${column.label} updated`, message: `${id} · ${next}` });
-            }}
-            rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onToggleAll={toggleAll} sort={sort} onSort={toggleSort} onPreview={setPreviewRow} onView={view} onEdit={edit} density={preferences.density} format={format} stickyHeader={preferences.stickyTableHeader} zebra={preferences.zebraStripes} wrap={preferences.wrapCellText} />
+            } : undefined}
+            rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onToggleAll={toggleAll} sort={sort} onSort={toggleSort} onPreview={setPreviewRow} onView={view} onEdit={edit} canEdit={canEdit} density={preferences.density} format={format} stickyHeader={preferences.stickyTableHeader} zebra={preferences.zebraStripes} wrap={preferences.wrapCellText} />
         ) : (
-          <CardGrid rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onPreview={setPreviewRow} onView={view} onEdit={edit} density={preferences.density} format={format} />
-        ) : <EmptyState action={<Button variant="secondary" onClick={reset}>Clear filters</Button>} />}
-        <Pagination page={pageNumber} pageSize={pageSize} total={filtered.length} onPageChange={setPageNumber} onPageSizeChange={(size) => { updatePreference("pageSize", size); setPageNumber(1); }} />
-      </section>
+          <CardGrid rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onPreview={setPreviewRow} onView={view} onEdit={edit} canEdit={canEdit} density={preferences.density} format={format} />
+        ) : <EmptyState action={<Button variant="secondary" onClick={reset}><LocalizedText message="ui.clear.filters.7179ea00" /></Button>} />}
+        <Pagination page={pageNumber} pageSize={pageSize} total={total} onPageChange={setPageNumber} onPageSizeChange={(size) => { updatePreference("pageSize", size); setPageNumber(1); }} />
+      </Card>
 
+      <Modal open={approvalOpen} onClose={()=>setApprovalOpen(false)} title="ui.customer.approvals.1954476c" size="xl">{approvalOpen?<ApprovalWorkspace pageId={page.id}/>:null}</Modal>
+      <CsvImportDialog open={importOpen} onClose={()=>setImportOpen(false)} page={page} productId={product.id} onImported={()=>setRefresh(value=>value+1)} />
       <ColumnManager open={columnOpen} onClose={() => setColumnOpen(false)} columns={config.columns} visibleKeys={visibleKeys} onChange={setVisibleKeys} onReset={resetLayout} />
-      <ConfirmDialog open={confirmArchive} title={`Archive ${selected.length} records?`} message={<>They will leave every worklist and report until restored. This cannot be undone from the worklist.<br /><br />Turn off <b>Confirm bulk actions</b> in My Preferences to skip this prompt.</>} confirmLabel="Archive" tone="danger" onConfirm={archive} onCancel={() => setConfirmArchive(false)} />
+      <ConfirmDialog open={confirmArchive} title={t("Archive {count} records?",{count:selected.length})} message={<><LocalizedText message="ui.they.will.be.excluded.from.this.worklist.records.that.ca.46f15d6e" /><br /><br /><LocalizedText message="ui.turn.off.06f0e210" />{" "}<b><LocalizedText message="ui.confirm.bulk.actions.5c64ae13" /></b><LocalizedText message="ui.in.my.preferences.to.skip.this.prompt.0e1972b0" /></>} confirmLabel="ui.archive.66f4804e" tone="danger" onConfirm={archive} onCancel={() => setConfirmArchive(false)} />
       <ConfirmDialog
         open={pendingEgress !== null}
         title={pendingEgress?.via === "print"
@@ -587,14 +620,12 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
         confirmLabel={pendingEgress?.via === "print" ? "Print" : "Export"}
         message={<>
           {pendingEgress?.review.declared.length ? (
-            <>The {pendingEgress.via === "print" ? "printout" : "file"} will contain <b>{pendingEgress.review.declared.map((note) => note.label).join(", ")}</b>.
-              {" "}Once {pendingEgress.via === "print" ? "printed" : "saved"} it is outside this application: no retention rule reaches it, and nobody is asked again when it is {pendingEgress.via === "print" ? "carried out of the building" : "forwarded"}.<br /><br /></>
+            <><LocalizedText message="ui.the.b344d80e" />{" "}{pendingEgress.via === "print" ? <LocalizedText message="ui.printout.c05892a2" /> : "file"}{" "}<LocalizedText message="ui.will.contain.8ae754fa" />{" "}<b>{pendingEgress.review.declared.map((note) => note.label).join(", ")}</b>.
+              {" "}<LocalizedText message="ui.once.d88f6d83" />{" "}{pendingEgress.via === "print" ? <LocalizedText message="ui.printed.dda3af6e" /> : "saved"}{" "}<LocalizedText message="ui.it.is.outside.this.application.no.retention.rule.reaches.b3c815a5" />{" "}{pendingEgress.via === "print" ? <LocalizedText message="ui.carried.out.of.the.building.fe624e77" /> : <LocalizedText message="ui.forwarded.8e12cac1" />}.<br /><br /></>
           ) : null}
           {pendingEgress?.review.withheld.length ? (
-            <>Held back: <b>{pendingEgress.review.withheld.map((note) => note.label).join(", ")}</b>. Nothing of that kind leaves as a document.<br /><br /></>
-          ) : null}
-          This is recorded against your account — by column, never by value.
-        </>}
+            <><LocalizedText message="ui.held.back.300ea402" />{" "}<b>{pendingEgress.review.withheld.map((note) => note.label).join(", ")}</b><LocalizedText message="ui.nothing.of.that.kind.leaves.as.a.document.487773f4" /><br /><br /></>
+          ) : null}{" "}<LocalizedText message="ui.this.is.recorded.against.your.account.by.column.never.by.72dc14ba" /></>}
         onConfirm={() => {
           const pending = pendingEgress;
           setPendingEgress(null);
@@ -604,7 +635,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
         }}
         onCancel={() => setPendingEgress(null)}
       />
-      <RecordPreview row={previewRow} config={config} onClose={() => setPreviewRow(null)} onView={() => previewRow && view(previewRow)} onEdit={() => previewRow && edit(previewRow)} />
+      <RecordPreview canEdit={canEdit} row={previewRow} config={config} onClose={() => setPreviewRow(null)} onView={() => previewRow && view(previewRow)} onEdit={() => previewRow && edit(previewRow)} />
     </div>
   );
 }

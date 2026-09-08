@@ -1,4 +1,7 @@
 "use client";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
+
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Bot, ChevronLeft, MessageSquare, Sparkles, SquareTerminal, X } from "lucide-react";
@@ -22,6 +25,7 @@ type Stage = "choose" | "review" | "answer";
  * answer is that the assistant does not belong there at all.
  */
 export function AssistantPanel() {
+  const {t: translateCopy} = useLocalization();
   const navigation = useNavigation();
   /* The ONE place access and the use-case set come from. Terminal and inline
      read the same object, which is what makes "one removal, three
@@ -93,46 +97,44 @@ export function AssistantPanel() {
           fill and elevation, sitting beside it rather than above. Two peers in
           one corner, not a primary control and an afterthought. The help
           button itself is untouched -- this one was moved to meet it. */}
-      <button type="button" aria-label="Open the AI assistant" title={`AI assistant — ${useCases.length} available here`}
+      <button type="button" aria-label={translateCopy("ui.open.the.ai.assistant.9ef7c20f")} title={translateCopy("AI assistant — {count} available here",{count:useCases.length})}
         onClick={() => openAssistant(!open)}
         className="no-print fixed bottom-12 right-20 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary-fill)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
         <Sparkles className="size-5" />
       </button>
 
       {open ? (
-        <div role="dialog" aria-label="AI assistant"
-          className="animate-slide-up no-print fixed bottom-28 right-5 z-[71] flex max-h-[70vh] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
+        <Card shadow="lg" role="dialog" aria-label={translateCopy("ui.ai.assistant.ab6eb4ac")}
+          className="animate-slide-up no-print fixed bottom-28 right-5 z-[71] flex max-h-[70vh] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden">
           <div className="flex shrink-0 items-center gap-2 border-b border-[var(--border)] px-3 py-2.5">
             {mode === "panel" && stage !== "choose" ? (
-              <IconButton label="Back" className="size-7" onClick={() => { setStage("choose"); setReply(null); }}><ChevronLeft className="size-4" /></IconButton>
+              <IconButton label="ui.back.76900f1b" className="size-7" onClick={() => { setStage("choose"); setReply(null); }}><ChevronLeft className="size-4" /></IconButton>
             ) : <Bot className="size-4 text-[var(--primary)]" />}
             <span className="min-w-0 flex-1 truncate text-[length:calc(11.5px*var(--fs-scale))] font-extrabold">
-              {stage === "choose" ? "AI assistant" : chosen?.label}
+              {stage === "choose" ? <LocalizedText message="ui.ai.assistant.ab6eb4ac" /> : chosen?.label}
             </span>
-            <Badge tone="neutral">{assistant.pageTitle}</Badge>
+            <Badge tone="neutral"><LocalizedText message={assistant.pageTitle} /></Badge>
             <IconButton label={mode === "panel" ? "Terminal mode" : "Panel mode"} className="size-7"
               onClick={() => setMode((previous) => (previous === "panel" ? "terminal" : "panel"))}>
               {mode === "panel" ? <SquareTerminal className="size-4" /> : <MessageSquare className="size-4" />}
             </IconButton>
-            <IconButton label="Close" className="size-7" onClick={() => setOpen(false)}><X className="size-4" /></IconButton>
+            <IconButton label="ui.close.7d9eb7ac" className="size-7" onClick={() => setOpen(false)}><X className="size-4" /></IconButton>
           </div>
 
           {mode === "terminal" ? <AiTerminal assistant={assistant} /> : null}
 
           {mode === "panel" && stage === "choose" ? (
             <div className="nex-scrollbar min-h-0 flex-1 overflow-y-auto p-3">
-              <p className="mb-2 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">
-                Enabled here by the <b>{assistant.decidedBy}</b> gate. You will see exactly what is captured before anything is sent.
-              </p>
+              <p className="mb-2 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message="ui.enabled.here.by.the.9729cac7" /><b>{assistant.decidedBy}</b><LocalizedText message="ui.gate.you.will.see.exactly.what.is.captured.before.anythi.26f5481b" /></p>
               <div className="grid gap-2">
                 {useCases.map((useCase) => (
                   <button key={useCase.id} type="button" onClick={() => choose(useCase)}
                     className={cn("focus-ring rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 text-left transition hover:border-[var(--primary)] hover:bg-[var(--surface-2)]")}>
                     <span className="flex items-center gap-2">
-                      <span className="text-[length:calc(11px*var(--fs-scale))] font-extrabold">{useCase.label}</span>
-                      {useCase.category === "clinical" ? <Badge tone="warning">clinical</Badge> : null}
+                      <span className="text-[length:calc(11px*var(--fs-scale))] font-extrabold"><LocalizedText message={useCase.label} /></span>
+                      {useCase.category === "clinical" ? <Badge tone="warning"><LocalizedText message="ui.clinical.98569e7e" /></Badge> : null}
                     </span>
-                    <span className="mt-1 block text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{useCase.description}</span>
+                    <span className="mt-1 block text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message={useCase.description} /></span>
                   </button>
                 ))}
               </div>
@@ -147,24 +149,20 @@ export function AssistantPanel() {
           {mode === "panel" && stage === "answer" ? (
             <div className="nex-scrollbar min-h-0 flex-1 overflow-y-auto p-3">
               {reply?.via === "mock" ? (
-                <div className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] px-2.5 py-1.5 text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--text)]">
-                  Mock transport — no provider was contacted.
-                </div>
+                <div className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--warning)_35%,var(--border))] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] px-2.5 py-1.5 text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--text)]"><LocalizedText message="ui.mock.transport.no.provider.was.contacted.a98a191e" /></div>
               ) : null}
               {/* A refusal is not an answer, and without this it renders as one:
                   the text below is the same <pre> either way. The dispatch guard
                   stops the request before anything is contacted, so the panel has
                   to say that rather than leave a plausible-looking reply. */}
               {reply?.via === "blocked" ? (
-                <div className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_10%,transparent)] px-2.5 py-1.5 text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--text)]">
-                  Not sent — this request was held back before it left the browser.
-                </div>
+                <div className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--danger)_35%,var(--border))] bg-[color-mix(in_srgb,var(--danger)_10%,transparent)] px-2.5 py-1.5 text-[length:calc(9px*var(--fs-scale))] font-bold text-[var(--text)]"><LocalizedText message="ui.not.sent.this.request.was.held.back.before.it.left.the.b.249b6f31" /></div>
               ) : null}
-              <pre className="whitespace-pre-wrap break-words font-sans text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed">{reply?.text ?? reply?.error}</pre>
-              <Button className="mt-3" size="sm" variant="secondary" onClick={() => setStage("choose")}>Ask something else</Button>
+              <pre className="whitespace-pre-wrap break-words font-sans text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed">{reply?.text ?? translateCopy(reply?.error ?? "")}</pre>
+              <Button className="mt-3" size="sm" variant="secondary" onClick={() => setStage("choose")}><LocalizedText message="ui.ask.something.else.6b2e237d" /></Button>
             </div>
           ) : null}
-        </div>
+        </Card>
       ) : null}
     </>
   );

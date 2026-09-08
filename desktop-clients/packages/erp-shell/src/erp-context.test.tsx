@@ -1,4 +1,6 @@
 import React from "react";
+import {ProductProvider} from "./product-context";
+import {NEXORA_PRODUCT} from "@pepbits/erp-config";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { NavigationProvider } from "@pepbits/platform-ports";
@@ -47,6 +49,7 @@ function Probe() {
       <button onClick={() => erp.toast({ title: "three", tone: "info" } as never)}>toast three</button>
       <button onClick={() => erp.toast({ title: "four", tone: "info" } as never)}>toast four</button>
       <button onClick={() => erp.updatePreference("theme", "midnight" as never)}>dark</button>
+      <button onClick={() => erp.resetPreferences()}>reset preferences</button>
       <input data-testid="field" />
     </div>
   );
@@ -107,7 +110,7 @@ describe("loading preferences", () => {
     await ready();
     expect(screen.getByTestId("theme").textContent).not.toBe("no-such-theme");
     /* And the valid neighbour in the same object still lands. */
-    expect(document.documentElement.style.getPropertyValue("--row-py")).toBe("14px");
+    await waitFor(() => expect(document.documentElement.style.getPropertyValue("--row-py")).toBe("14px"));
   });
 
   test("an unreachable API falls through to defaults rather than blocking the shell", async () => {
@@ -314,4 +317,55 @@ describe("useERP", () => {
     expect(() => render(<Probe />)).toThrow(/ERPProvider/);
     quiet.mockRestore();
   });
+});
+
+describe("preference write safety", () => {
+  afterEach(() => vi.useRealTimers());
+  const writes = () => authedFetch.mock.calls.filter(([, init]) => init?.method === "PUT");
+  test.each(["http", "offline", "malformed", "missing", "array"])("a %s load failure never overwrites stored preferences", async (failure) => {
+    if (failure === "offline") authedFetch.mockImplementation(() => unreachable());
+    else authedFetch.mockResolvedValue(new Response(failure === "malformed" ? "null" : failure === "array" ? '{"preferences":[]}' : "{}", { status: failure === "http" ? 503 : 200 }));
+    mount();
+    await ready();
+    vi.useFakeTimers();
+    await act(async () => { screen.getByText("dark").click(); });
+    await act(async () => { vi.advanceTimersByTime(1000); });
+    expect(writes()).toHaveLength(0);
+    expect(document.documentElement.dataset.theme).toBe("midnight");
+  });
+  test("loading alone does not write; explicit edits do, including reverting to defaults", async () => {
+    mount(); await ready();
+    vi.useFakeTimers();
+    await act(async () => { vi.advanceTimersByTime(1000); });
+    expect(writes()).toHaveLength(0);
+    await act(async () => { screen.getByText("dark").click(); });
+    await act(async () => { vi.advanceTimersByTime(400); });
+    expect(writes()).toHaveLength(1);
+    await act(async () => { screen.getByText("reset preferences").click(); });
+    await act(async () => { vi.advanceTimersByTime(400); });
+    expect(writes()).toHaveLength(2);
+    expect(JSON.parse(writes()[1][1].body).preferences.theme).toBeUndefined();
+  });
+  test("the skeleton preference is remembered after a successful load", async () => {
+    authedFetch.mockResolvedValue(settled({ loadingSkeletons: false }));
+    mount(); await ready();
+    expect(localStorage.getItem("nexora-loading-skeletons")).toBe("false");
+  });
+});
+
+
+test("a pending language switch preserves a later theme edit", async () => {
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  const loadLanguage = vi.fn((language: string) => language === "ar" ? pending : Promise.resolve());
+  let context!: ReturnType<typeof useERP>;
+  function SettingsProbe() { context = useERP(); return <output data-testid="race-language">{context.preferences.language}</output>; }
+  render(<ProductProvider product={NEXORA_PRODUCT} loadLanguage={loadLanguage}><NavigationProvider value={navigation()}><ERPProvider><SettingsProbe /></ERPProvider></NavigationProvider></ProductProvider>);
+  await waitFor(() => expect(context.preferencesAvailable).toBe(true));
+  act(() => context.updatePreference("language", "ar"));
+  expect(context.preferences.language).toBe("en");
+  act(() => context.updatePreference("theme", "midnight" as never));
+  await act(async () => { release(); await pending; });
+  expect(context.preferences.language).toBe("ar");
+  expect(context.preferences.theme).toBe("midnight");
 });

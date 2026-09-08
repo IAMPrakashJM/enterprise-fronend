@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
+import React, { createContext, useContext, useEffect, useState, useSyncExternalStore } from "react";
 import type { Workspace } from "./document-manager.ts";
 import type { WorkspaceDocument, WorkspaceDocumentState } from "./types.ts";
 
@@ -32,28 +32,19 @@ export function useOptionalWorkspace(): Workspace | null {
   return useContext(WorkspaceContext);
 }
 
-/**
- * Tell the workspace this screen has unsaved work.
- *
- * The active document, because the shell renders exactly one at a time — the
- * screen calling this IS the open document. No cleanup on unmount: switching
- * away from a tab does not save it, so the flag has to survive the unmount that
- * switching causes.
- *
- * A limitation worth naming: form state itself is still local to the screen, so
- * leaving a tab and returning gives a fresh form and clears the flag with it.
- * Moving draft state into the document is a later phase. What this protects is
- * the case that loses work today — closing the tab, or crossing to another
- * module, with something typed and unsaved.
+/** Report against the owning document, including when it saves in the background.
+ * Screens without a DocumentProvider retain the single-document fallback.
+ * Unmounting does not clear unsaved work.
  */
 export function useReportDirty(dirty: boolean): void {
   const workspace = useOptionalWorkspace();
+  const documentId = useContext(DocumentContext);
+  const ownerId = documentId ?? workspace?.getActiveDocument()?.documentId;
   useEffect(() => {
-    const active = workspace?.getActiveDocument();
-    if (!active) return;
-    if (dirty) workspace!.markDirty(active.documentId);
-    else workspace!.markClean(active.documentId);
-  }, [workspace, dirty]);
+    if (!workspace || !ownerId) return;
+    if (dirty) workspace.markDirty(ownerId);
+    else workspace.markClean(ownerId);
+  }, [workspace, ownerId, dirty]);
 }
 
 /**
@@ -157,4 +148,50 @@ export function useActiveDocument(): WorkspaceDocument | null {
 
 export function useSplit(): string[] {
   return useSplitIn(useWorkspace());
+}
+
+/** The explicit owner, distinct from focus (both split panes may be visible). */
+export function useDocumentId(): string | null { return useContext(DocumentContext); }
+
+/** The focused document for commands, or the declared owner for scoped readers. */
+export function useDocumentScope(): string | null {
+  const workspace = useOptionalWorkspace();
+  const owner = useDocumentId();
+  const active = useSyncExternalStore(
+    workspace?.subscribeToChanges ?? noSubscribe,
+    workspace?.getActiveDocument ?? noActiveDocument,
+    workspace?.getActiveDocument ?? noActiveDocument,
+  );
+  return owner ?? active?.documentId ?? null;
+}
+const noActiveDocument = () => null;
+
+/** Draft values survive screen suspension inside this workspace session.
+ * Closing/discarding the document clears them; web screens keep ordinary local state.
+ */
+export function useDocumentDraftState<T>(key: string, initial: T): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const workspace = useOptionalWorkspace();
+  const owner = useDocumentId();
+  const [local, setLocal] = useState(initial);
+  const stored = useSyncExternalStore(
+    workspace?.subscribeToChanges ?? noSubscribe,
+    () => owner ? workspace?.getDraft<T>(owner, key) : undefined,
+    () => undefined,
+  );
+  const value = stored ?? initial;
+  const setValue: React.Dispatch<React.SetStateAction<T>> = (next) => {
+    if (!workspace || !owner) { setLocal(next); return; }
+    const previous = workspace.getDraft<T>(owner, key) ?? initial;
+    workspace.setDraft(owner, key, typeof next === "function" ? (next as (previous: T) => T)(previous) : next);
+  };
+  return workspace && owner ? [value, setValue] : [local, setLocal];
+}
+
+/** Only one document owns global keyboard commands, including in split view. */
+export function useIsDocumentFocused(): boolean {
+  const workspace = useOptionalWorkspace();
+  const owner = useDocumentId();
+  const active = useSyncExternalStore(workspace?.subscribeToChanges ?? noSubscribe,
+    workspace?.getActiveDocument ?? noActiveDocument, workspace?.getActiveDocument ?? noActiveDocument);
+  return !workspace || !owner || active?.documentId === owner;
 }

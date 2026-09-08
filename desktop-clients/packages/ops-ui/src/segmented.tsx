@@ -1,5 +1,6 @@
 "use client";
 
+import {useLocalization} from "./localization";
 import React, { useRef } from "react";
 import { cn } from "./cn";
 
@@ -34,6 +35,7 @@ export function Segmented({ label, options, value, onChange, size = "md", classN
   size?: "sm" | "md";
   className?: string;
 }) {
+  const {t} = useLocalization();
   const groupRef = useRef<HTMLDivElement>(null);
 
   /* Arrow keys move the choice and wrap, which is the radio-group pattern —
@@ -56,7 +58,7 @@ export function Segmented({ label, options, value, onChange, size = "md", classN
     <div
       ref={groupRef}
       role="radiogroup"
-      aria-label={label}
+      aria-label={t(label)}
       className={cn("inline-flex shrink-0 rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] p-0.5", className)}
     >
       {options.map((option) => {
@@ -68,7 +70,7 @@ export function Segmented({ label, options, value, onChange, size = "md", classN
             role="radio"
             data-value={option.value}
             aria-checked={chosen}
-            aria-label={option.iconOnly ? option.label : undefined}
+            aria-label={option.iconOnly ? t(option.label) : undefined}
             disabled={option.disabled}
             /* One tab stop for the group: only the chosen option is reachable
                by Tab, and arrows move within. Three options costing three tab
@@ -86,7 +88,7 @@ export function Segmented({ label, options, value, onChange, size = "md", classN
             )}
           >
             {option.icon}
-            {option.iconOnly ? null : <span className="truncate">{option.label}</span>}
+            {option.iconOnly ? null : <span className="truncate">{t(option.label)}</span>}
           </button>
         );
       })}

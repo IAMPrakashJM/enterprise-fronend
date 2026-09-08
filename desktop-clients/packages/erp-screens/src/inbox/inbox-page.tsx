@@ -1,4 +1,8 @@
 "use client";
+import { CardGrid } from "@pepbits/ops-ui";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText } from "@pepbits/ops-ui";
+
 
 import React, { useMemo, useState } from "react";
 import { ArrowRight, Bell, Check, CheckCheck, CircleAlert, CircleCheck, Inbox, Info, MessageSquareText, Search, Send, TriangleAlert } from "lucide-react";
@@ -149,9 +153,9 @@ export function InboxPage({ page }: { page: PageDefinition }) {
       <div className="flex flex-wrap items-center gap-2 border-b border-[var(--border)] px-4 py-2.5">
         <span className="flex items-center gap-1.5 text-[length:calc(11px*var(--fs-scale))] font-extrabold">
           {messages ? <MessageSquareText className="size-4 text-[var(--primary)]" /> : <Bell className="size-4 text-[var(--primary)]" />}
-          {messages ? "Messages" : "Notifications"}
+          {messages ? <LocalizedText message="ui.messages.04d7b483" /> : <LocalizedText message="ui.notifications.78801183" />}
         </span>
-        <Badge tone={unreadCount ? "info" : "neutral"}>{unreadCount} unread</Badge>
+        <Badge tone={unreadCount ? "info" : "neutral"}>{unreadCount}<LocalizedText message="ui.unread.6048438c" /></Badge>
 
         <div className="ms-auto flex items-center gap-2">
           <div className="w-72">
@@ -170,21 +174,19 @@ export function InboxPage({ page }: { page: PageDefinition }) {
           <InlineAiAction useCaseId="inbox.summarise-unread" label="Summarise unread" />
           <Button size="sm" variant="secondary" leftIcon={<CheckCheck className="size-3.5" />}
             disabled={!unreadCount}
-            onClick={() => { setReadIds(all.map((row) => row.id)); toast({ title: messages ? "All messages marked as read" : "All notifications marked as read", type: "info" }); }}>
-            Mark all read
-          </Button>
+            onClick={() => { setReadIds(all.map((row) => row.id)); toast({ title: messages ? "All messages marked as read" : "All notifications marked as read", type: "info" }); }}><LocalizedText message="ui.mark.all.read.3bc62a9e" /></Button>
         </div>
       </div>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(300px,380px)_1fr]">
+      <CardGrid className="min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(300px,380px)_1fr]">
         {/* list */}
         <div className="nex-scrollbar min-h-0 overflow-y-auto border-b border-[var(--border)] lg:border-b-0 lg:border-e">
           {shown.length === 0 ? (
             <div className="flex flex-col items-center gap-2 p-10 text-center">
               <Inbox className="size-6 text-[var(--text-subtle)]" />
-              <span className="text-[length:calc(10.5px*var(--fs-scale))] font-bold">Nothing here</span>
+              <span className="text-[length:calc(10.5px*var(--fs-scale))] font-bold"><LocalizedText message="ui.nothing.here.f4c7f41c" /></span>
               <span className="text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
-                {filter === "unread" ? "Everything has been read." : "No item matches that search."}
+                {filter === "unread" ? <LocalizedText message="ui.everything.has.been.read.66567841" /> : <LocalizedText message="ui.no.item.matches.that.search.dcb0bb88" />}
               </span>
             </div>
           ) : shown.map((row, index) => {
@@ -221,7 +223,7 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                       <span className="shrink-0 text-[length:calc(9px*var(--fs-scale))] tabular-nums text-[var(--text-subtle)]">{row.time}</span>
                     </span>
                     {row.role ? (
-                      <span className="truncate text-[length:calc(8.5px*var(--fs-scale))] font-bold uppercase tracking-[.06em] text-[var(--text-subtle)]">{row.role}</span>
+                      <span className="truncate text-[length:calc(8.5px*var(--fs-scale))] font-bold uppercase tracking-[.06em] text-[var(--text-subtle)]"><LocalizedText message={row.role} /></span>
                     ) : null}
                     <span className="line-clamp-2 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{row.preview}</span>
                   </span>
@@ -251,13 +253,13 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.01em]">{selected.title}</h2>
-                    {selected.kind ? <Badge tone={KIND_TONE[selected.kind]}>{selected.kind}</Badge> : null}
-                    {isUnread(selected) ? <Badge tone="info">unread</Badge> : null}
+                    {selected.kind ? <Badge tone={KIND_TONE[selected.kind]}><LocalizedText message={selected.kind} /></Badge> : null}
+                    {isUnread(selected) ? <Badge tone="info"><LocalizedText message="ui.unread.2cc1c371" /></Badge> : null}
                   </div>
                   <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[length:calc(9.5px*var(--fs-scale))] text-[var(--text-muted)]">
                     <span className="font-bold">{selected.role ?? (selected.module ? MODULES[selected.module as keyof typeof MODULES]?.label ?? selected.module : "System")}</span>
                     <span aria-hidden>•</span>
-                    <span>{selected.time} ago</span>
+                    <span>{selected.time}<LocalizedText message="ui.ago.eb04b447" /></span>
                   </div>
                 </div>
               </div>
@@ -267,19 +269,18 @@ export function InboxPage({ page }: { page: PageDefinition }) {
               <div className="mt-5 flex flex-wrap gap-2">
                 {selected.target ? (
                   <Button size="sm" variant="primary" rightIcon={<ArrowRight className="size-3.5" />} onClick={() => go(selected)}>
-                    {messages ? "Open what this is about" : "Open the record"}
+                    {messages ? <LocalizedText message="ui.open.what.this.is.about.b82f9382" /> : <LocalizedText message="ui.open.the.record.12f0e64a" />}
                   </Button>
                 ) : null}
                 {isUnread(selected) ? (
                   <Button size="sm" variant="secondary" leftIcon={<Check className="size-3.5" />}
-                    onClick={() => setReadIds((previous) => [...previous, selected.id])}>Mark as read</Button>
+                    onClick={() => setReadIds((previous) => [...previous, selected.id])}><LocalizedText message="ui.mark.as.read.50c8b81f" /></Button>
                 ) : null}
               </div>
 
               {selected.target ? (
-                <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]">
-                  Goes to <span className="font-mono">{selected.target.pageId}</span>
-                  {PAGE_REGISTRY[selected.target.pageId] ? "" : " — not registered in this build"}
+                <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-subtle)]"><LocalizedText message="ui.goes.to.69415870" /><span className="font-mono">{selected.target.pageId}</span>
+                  {PAGE_REGISTRY[selected.target.pageId] ? "" : <LocalizedText message="ui.not.registered.in.this.build.fe9af712" />}
                 </p>
               ) : null}
 
@@ -287,27 +288,25 @@ export function InboxPage({ page }: { page: PageDefinition }) {
                   answer. It is a compose box over a mock, and says so on send
                   rather than pretending something was delivered. */}
               {messages ? (
-                <div className="mt-6 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] p-3">
-                  <div className="mb-2 text-[length:calc(9.5px*var(--fs-scale))] font-black">Reply to {selected.title.split(" ")[0]}</div>
-                  <Textarea rows={3} placeholder="Write a reply…" value={reply} onChange={(event) => setReply(event.target.value)} />
+                <Card shadow="none" tone="muted" className="mt-6 p-3">
+                  <div className="mb-2 text-[length:calc(9.5px*var(--fs-scale))] font-black"><LocalizedText message="ui.reply.to.ec06f3d2" />{selected.title.split(" ")[0]}</div>
+                  <Textarea rows={3} placeholder="ui.write.a.reply.182fe0aa" value={reply} onChange={(event) => setReply(event.target.value)} />
                   <div className="mt-2 flex items-center gap-2">
                     <Button size="sm" variant="primary" leftIcon={<Send className="size-3.5" />} disabled={!reply.trim()}
-                      onClick={() => { setReply(""); toast({ title: "Reply not sent", message: "There is no messaging service behind this screen — the draft was discarded.", type: "warning" }); }}>
-                      Send
-                    </Button>
-                    <span className="text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-subtle)]">Nothing is delivered; this is a prototype.</span>
+                      onClick={() => { setReply(""); toast({ title: "Reply not sent", message: "There is no messaging service behind this screen — the draft was discarded.", type: "warning" }); }}><LocalizedText message="ui.send.f6f4688f" /></Button>
+                    <span className="text-[length:calc(8.5px*var(--fs-scale))] text-[var(--text-subtle)]"><LocalizedText message="ui.nothing.is.delivered.this.is.a.prototype.1b08c969" /></span>
                   </div>
-                </div>
+                </Card>
               ) : null}
             </div>
           ) : (
             <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
               <Inbox className="size-7 text-[var(--text-subtle)]" />
-              <span className="text-[length:calc(10.5px*var(--fs-scale))] font-bold">Nothing selected</span>
+              <span className="text-[length:calc(10.5px*var(--fs-scale))] font-bold"><LocalizedText message="ui.nothing.selected.f8c10424" /></span>
             </div>
           )}
         </div>
-      </div>
+      </CardGrid>
     </div>
   );
 }

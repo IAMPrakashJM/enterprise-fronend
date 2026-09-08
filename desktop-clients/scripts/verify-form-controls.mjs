@@ -48,6 +48,7 @@ const consumers = [...sources(join(root, "packages")), ...sources(join(root, "ap
  * there gets suppressed; one that names the component gets followed.
  */
 const RULES = [
+  { pattern: /<table[\s>]/, control: "<table>", use: "Table and the shared table building blocks" },
   { pattern: /<input[^>]*type="checkbox"/, control: "<input type=\"checkbox\">", use: "Checkbox" },
   { pattern: /<input[^>]*type="radio"/, control: "<input type=\"radio\">", use: "Radio" },
   { pattern: /<input[^>]*type="file"/, control: "<input type=\"file\">", use: "FilePicker" },

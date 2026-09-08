@@ -1,4 +1,5 @@
 "use client";
+import { LocalizedText } from "./localization";
 
 import React from "react";
 import { cn } from "./cn";
@@ -35,7 +36,7 @@ export function Tabs({ items, value, onChange, variant = "line", orientation = "
             variant === "segmented" && "h-8 rounded-lg",
             variant === "segmented" && (active ? "bg-[var(--surface)] text-[var(--primary)] shadow-sm" : "text-[var(--text-muted)] hover:text-[var(--text)]"),
           )}>
-            {item.icon}{item.label}{item.badge !== undefined ? <span className="rounded-full bg-[var(--surface-3)] px-1.5 py-0.5 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">{item.badge}</span> : null}
+            {item.icon}<LocalizedText message={item.label} />{item.badge !== undefined ? <span className="rounded-full bg-[var(--surface-3)] px-1.5 py-0.5 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">{item.badge}</span> : null}
             {variant === "line" && active ? (
               vertical
                 ? <span className="absolute inset-y-1 -end-px w-0.5 rounded-full bg-[var(--primary)]" />

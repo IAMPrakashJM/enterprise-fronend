@@ -1,0 +1,27 @@
+import React from 'react';
+import {render,screen,fireEvent,waitFor} from '@testing-library/react';
+import {test,expect,vi} from 'vitest';
+import {ApprovalWorkspace} from './approval-workspace';
+import {ProductServicesProvider} from '../product-services';
+import type {ApprovalData} from '@pepbits/erp-data';
+vi.mock('@pepbits/auth',()=>({useSession:()=>({user:{id:'requester',tenantId:'tenant',role:'operations-analyst'}}),readToken:()=> 'token',authedFetch:vi.fn()}));
+vi.mock('@pepbits/erp-shell',()=>({useProduct:()=>({id:'test'})}));
+vi.mock('@pepbits/platform-ports',()=>({useNavigation:()=>({open:vi.fn()})}));
+const empty:ApprovalData={config:{version:0,stages:[{name:'Finance',roles:['finance-manager']}]},canConfigure:false,items:[],notifications:[]};
+function setup(data=empty,recordId?:string){const adapter={read:vi.fn().mockResolvedValue(data),change:vi.fn().mockResolvedValue(data)};render(<ProductServicesProvider services={{approvals:adapter}}><ApprovalWorkspace pageId="customer-master" recordId={recordId}/></ProductServicesProvider>);return adapter;}
+test('submission requires a comment and confirmation; unknown outcomes reuse the operation id',async()=>{
+ const adapter=setup(empty,'A');await waitFor(()=>expect(screen.getByLabelText('Approval comment')).toBeEnabled());expect(screen.getByRole('button',{name:'Submit for approval'})).toBeDisabled();
+ fireEvent.change(screen.getByLabelText('Approval comment'),{target:{value:'Please review'}});fireEvent.click(screen.getByRole('button',{name:'Submit for approval'}));expect(adapter.change).not.toHaveBeenCalled();adapter.change.mockRejectedValueOnce(new Error('Connection lost'));
+ fireEvent.click(screen.getByRole('button',{name:'Confirm approval action'}));expect(await screen.findByRole('alert')).toHaveTextContent('Connection lost');fireEvent.click(screen.getByRole('button',{name:'Retry approval action'}));await waitFor(()=>expect(adapter.change).toHaveBeenCalledTimes(2));expect(adapter.change.mock.calls[1]).toEqual(adapter.change.mock.calls[0]);
+});
+test('bulk selection excludes ineligible rows and preserves per-row errors',async()=>{
+ const item={recordId:'A',requesterId:'other',requester:'Other',version:1,status:'pending' as const,stage:0,stages:empty.config.stages,canAct:true,canSubmit:false,history:[]};
+ const data={...empty,items:[item,{...item,recordId:'B',canAct:false}]};const adapter=setup(data);
+ await waitFor(()=>expect(screen.getByRole('button',{name:'Select eligible rows on this page'})).toBeEnabled());fireEvent.click(screen.getByRole('button',{name:'Select eligible rows on this page'}));expect(screen.getByLabelText('Select B')).not.toBeChecked();fireEvent.change(screen.getByLabelText('Bulk decision comment'),{target:{value:'Checked'}});
+ adapter.change.mockResolvedValue({...data,results:[{recordId:'A',ok:false,error:'Record changed'}]});fireEvent.click(screen.getByRole('button',{name:'Approve selected'}));fireEvent.click(screen.getByRole('button',{name:'Confirm approval action'}));await waitFor(()=>expect(adapter.change).toHaveBeenCalledOnce());expect(adapter.change.mock.calls[0][1].items).toEqual([{recordId:'A',version:1}]);expect(await screen.findByText('A: Record changed')).toBeVisible();
+});
+
+test('changed saved versions visibly require resubmission and cannot be approved',async()=>{
+ setup({...empty,items:[{recordId:'A',requesterId:'other',requester:'Other',version:2,status:'approved',stage:0,stages:empty.config.stages,canAct:false,canSubmit:false,recordChanged:true,history:[]}]},'A');
+ expect(await screen.findByText(/Saved record changed/)).toBeVisible();expect(screen.queryByRole('button',{name:'Approve'})).not.toBeInTheDocument();
+});

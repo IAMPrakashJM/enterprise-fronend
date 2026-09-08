@@ -1,3 +1,5 @@
+
+import { LocalizedText } from "./localization";
 import React from "react";
 import { FileQuestion, GitCompareArrows, Inbox, LogIn, Loader2, ShieldOff, TriangleAlert } from "lucide-react";
 import { Button } from "./button";
@@ -33,8 +35,8 @@ function StatePanel({ icon, tone, title, description, detail, reference, action,
        result is not an event and does not interrupt. */
     <div role={alert ? "alert" : status ? "status" : undefined} className="flex min-h-64 flex-col items-center justify-center px-6 text-center">
       <div className={cn("mb-3 flex size-12 items-center justify-center rounded-2xl", badge)}>{icon}</div>
-      <h3 className="text-[length:calc(13px*var(--fs-scale))] font-extrabold">{title}</h3>
-      <p className="mt-1 max-w-sm text-[length:calc(11px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{description}</p>
+      <h3 className="text-[length:calc(13px*var(--fs-scale))] font-extrabold"><LocalizedText message={title} /></h3>
+      <p className="mt-1 max-w-sm text-[length:calc(11px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message={description} /></p>
       {/* The slot the whole component turns on. A shared panel that swallows the
           specific message is worse than the twenty bespoke ones it replaced,
           because it takes away the only line that said what actually broke. */}
@@ -44,8 +46,7 @@ function StatePanel({ icon, tone, title, description, detail, reference, action,
       {/* Selectable, and monospaced, because the whole job of this line is
           being read aloud on the phone or pasted into a ticket. */}
       {reference ? (
-        <p className="mt-3 select-all font-mono text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-subtle)]">
-          Reference: {reference}
+        <p className="mt-3 select-all font-mono text-[length:calc(9.5px*var(--fs-scale))] font-semibold text-[var(--text-subtle)]"><LocalizedText message="ui.reference.66d13194" />{reference}
         </p>
       ) : null}
       {action ? <div className="mt-4 flex items-center gap-2">{action}</div> : null}
@@ -95,7 +96,7 @@ export function ErrorState({ title = "Something went wrong", description = "The 
       description={description}
       detail={detail}
       reference={referenceId}
-      action={<>{action}{onRetry ? <Button variant="secondary" disabled={retrying} onClick={onRetry}>{retrying ? "Trying…" : "Try again"}</Button> : null}</>}
+      action={<>{action}{onRetry ? <Button variant="secondary" disabled={retrying} onClick={onRetry}>{retrying ? <LocalizedText message="ui.trying.3ff51b0b" /> : <LocalizedText message="ui.try.again.d8b8392e" />}</Button> : null}</>}
     />
   );
 }
@@ -140,7 +141,7 @@ export function ConflictState({ title = "Changed by someone else", description =
       description={description}
       detail={detail}
       reference={referenceId}
-      action={<>{action}{onReload ? <Button variant="secondary" onClick={onReload}>Reload</Button> : null}</>}
+      action={<>{action}{onReload ? <Button variant="secondary" onClick={onReload}><LocalizedText message="ui.reload.bdc090ec" /></Button> : null}</>}
     />
   );
 }
@@ -165,7 +166,7 @@ export function SessionExpiredState({ title = "Your session has ended", descript
       tone="warning"
       title={title}
       description={description}
-      action={<>{action}{onSignIn ? <Button variant="primary" onClick={onSignIn}>Sign in</Button> : null}</>}
+      action={<>{action}{onSignIn ? <Button variant="primary" onClick={onSignIn}><LocalizedText message="ui.sign.in.bfd402b2" /></Button> : null}</>}
     />
   );
 }

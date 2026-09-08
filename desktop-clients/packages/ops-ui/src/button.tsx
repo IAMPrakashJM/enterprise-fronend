@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocalization } from "./localization";
 import React from "react";
 import { LoaderCircle } from "lucide-react";
 import { cn } from "./cn";
@@ -42,6 +43,7 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
+  const {t}=useLocalization();
   return (
     <button
       type="button"
@@ -55,18 +57,19 @@ export function Button({
       {...props}
     >
       {loading ? <LoaderCircle className="size-4 animate-spin" /> : leftIcon}
-      {children}
+      {typeof children === "string" ? t(children) : children}
       {rightIcon}
     </button>
   );
 }
 
 export function IconButton({ label, className, children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { label: string }) {
+  const {t}=useLocalization();
   return (
     <button
       type="button"
-      aria-label={label}
-      title={label}
+      aria-label={t(label)}
+      title={t(label)}
       className={cn("focus-ring inline-flex size-9 shrink-0 items-center justify-center rounded-[10px] border border-transparent text-[var(--text-muted)] transition hover:border-[var(--border)] hover:bg-[var(--surface-2)] hover:text-[var(--text)] disabled:pointer-events-none disabled:opacity-50", className)}
       {...props}
     >

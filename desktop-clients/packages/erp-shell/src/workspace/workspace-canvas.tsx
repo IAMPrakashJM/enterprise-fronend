@@ -1,4 +1,6 @@
 "use client";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
+
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftRight, Maximize2, X } from "lucide-react";
@@ -53,6 +55,7 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
     setBounds: (bounds: { width: number; height: number }) => void;
   };
 }) {
+  const {t: translateCopy} = useLocalization();
   const [percent, setPercent] = useState(50);
   const rowRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
@@ -159,9 +162,9 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
            are operations on the split, and offering them twice invites the
            question of which one you pressed. */
         <div className="flex h-8 shrink-0 items-center justify-end gap-1 border-b border-[var(--border)] bg-[var(--surface-2)] px-2">
-          <span className="mr-auto text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.06em] text-[var(--text-subtle)]">Split view</span>
-          <IconButton label="Swap the panes" className="size-7" onClick={onSwap}><ArrowLeftRight className="size-3.5" /></IconButton>
-          <IconButton label="Make full screen" className="size-7" onClick={onExitSplit}><Maximize2 className="size-3.5" /></IconButton>
+          <span className="mr-auto text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.06em] text-[var(--text-subtle)]"><LocalizedText message="ui.split.view.915c438b" /></span>
+          <IconButton label="ui.swap.the.panes.55e75080" className="size-7" onClick={onSwap}><ArrowLeftRight className="size-3.5" /></IconButton>
+          <IconButton label="ui.make.full.screen.f5c45f1e" className="size-7" onClick={onExitSplit}><Maximize2 className="size-3.5" /></IconButton>
         </div>
       ) : null}
 
@@ -210,8 +213,8 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
                   >
                     {document.dirty ? <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-[var(--warning)]" /> : null}
                     <span className={cn("min-w-0 flex-1 truncate text-[length:calc(10px*var(--fs-scale))] font-bold", focused ? "text-[var(--primary-strong)]" : "text-[var(--text-muted)]")}>{document.title}</span>
-                    {floating ? <IconButton label={`Minimise ${document.title}`} className="size-6" onClick={() => mdi!.onMinimise(document.documentId)}><Minus className="size-3" /></IconButton> : null}
-                    {document.closable ? <IconButton label={`Close ${document.title}`} className="size-6" onClick={() => onClosePane(document.documentId)}><X className="size-3" /></IconButton> : null}
+                    {floating ? <IconButton label={translateCopy("Minimise {item}",{item:translateCopy(document.title)})} className="size-6" onClick={() => mdi!.onMinimise(document.documentId)}><Minus className="size-3" /></IconButton> : null}
+                    {document.closable ? <IconButton label={translateCopy("Close {item}",{item:translateCopy(document.title)})} className="size-6" onClick={() => onClosePane(document.documentId)}><X className="size-3" /></IconButton> : null}
                   </header>
                 ) : null}
                 <div className={cn("min-h-0 flex-1", chrome ? "nex-scrollbar overflow-auto" : "flex flex-col")}>
@@ -227,7 +230,7 @@ export function WorkspaceCanvas({ documents, splitIds, activeDocumentId, onFocus
             role="separator"
             tabIndex={0}
             aria-orientation="vertical"
-            aria-label="Resize the split"
+            aria-label={translateCopy("ui.resize.the.split.206f7291")}
             aria-valuenow={Math.round(percent)}
             aria-valuemin={MIN_PERCENT}
             aria-valuemax={MAX_PERCENT}

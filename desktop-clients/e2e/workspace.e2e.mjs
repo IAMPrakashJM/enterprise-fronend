@@ -20,13 +20,16 @@ t.say("floating windows are off for this run", await setPreference(page, /Floati
 
 const strip = () => page.locator('[role="tablist"][aria-label="Open documents"]');
 const tabs = () => strip().locator('[role="tab"]');
+// The setup preference page is a real document; close it before counting records.
+await tabs().filter({hasText:"My Preferences"}).press("Delete");
+
 const panes = () => page.locator('[role="region"]:visible');
 const shown = () => page.locator("main:visible");
 
 /* Asserted as an invariant rather than a starting count: setPreference has
    already navigated, so "one tab" would be testing the route this suite took
    to get here rather than the rule. Exactly one tab is fixed, always. */
-const fixed = async () => (await tabs().count()) - (await page.locator('[role="tab"] [role="button"]').count());
+const fixed = async () => strip().locator('[role="tab"]:not([aria-keyshortcuts])').count();
 t.say(`exactly one tab is fixed (${(await tabs().allTextContents()).map((each) => each.trim()).join(", ")})`, (await fixed()) === 1);
 t.say("and it is the module dashboard", /Command Center|Dashboard|Library/i.test((await tabs().first().innerText()).trim()));
 

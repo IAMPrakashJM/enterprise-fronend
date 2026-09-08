@@ -1,8 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useWindowPort } from "@pepbits/platform-ports";
+import { useWindowPort, type WindowPort } from "@pepbits/platform-ports";
 import { windowTitleFor, type Workspace } from "@pepbits/workspace-core";
+
+// Serialize each native window's operations, including across Strict Mode remounts.
+const queues = new WeakMap<WindowPort, Map<string, Promise<unknown>>>();
+function enqueue<T>(port: WindowPort, id: string, operation: () => Promise<T>): Promise<T> {
+  const queue = queues.get(port) ?? new Map<string, Promise<unknown>>();
+  queues.set(port, queue);
+  const result = (queue.get(id) ?? Promise.resolve()).catch(() => undefined).then(operation);
+  queue.set(id, result);
+  void result.finally(() => { if (queue.get(id) === result) queue.delete(id); }).catch(() => undefined);
+  return result;
+}
 
 /**
  * Keeps the real windows matching what the store says is detached.
@@ -26,6 +37,9 @@ export function useDetachedWindows(workspace: Workspace): void {
      reconciles a side effect and does not render anything. */
   useEffect(() => {
     if (!port.available) return;
+    let disposed = false;
+    const opened = open.current;
+    const close = (id: string) => { void enqueue(port, id, () => port.close(id)).catch(() => undefined); };
 
     const sync = () => {
       const wanted = new Set(workspace.getDetached());
@@ -35,19 +49,23 @@ export function useDetachedWindows(workspace: Workspace): void {
         const document = workspace.getDocument(documentId);
         if (!document) continue;
         open.current.add(documentId);
-        void port.open({
+        void enqueue(port, documentId, () => port.open({
           documentId,
           documentKey: document.documentKey,
           /* Sanitised at the boundary, not by the caller. Every path to a window
              goes through here, so there is one place a title can leak from. */
           title: windowTitleFor(document),
+        })).then((ok) => {
+          if (!ok && !disposed) { opened.delete(documentId); workspace.attachDocument(documentId); }
+        }).catch(() => {
+          if (!disposed) { close(documentId); opened.delete(documentId); workspace.attachDocument(documentId); }
         });
       }
 
       for (const documentId of [...open.current]) {
         if (wanted.has(documentId)) continue;
         open.current.delete(documentId);
-        void port.close(documentId);
+        close(documentId);
       }
     };
 
@@ -60,6 +78,12 @@ export function useDetachedWindows(workspace: Workspace): void {
       if (workspace.getDetached().includes(documentId)) workspace.attachDocument(documentId);
     });
 
-    return () => { stopWatching(); stopListening(); };
+    return () => {
+      disposed = true;
+      stopWatching();
+      stopListening();
+      for (const id of opened) close(id);
+      opened.clear();
+    };
   }, [port, workspace]);
 }

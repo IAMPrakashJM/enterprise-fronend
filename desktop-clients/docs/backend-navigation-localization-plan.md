@@ -2,7 +2,7 @@
 
 Date: 8 September 2026
 
-Status: Planned; this document does not implement the new endpoints or migration.
+Status: Implementation started. See [the milestone report](./backend-navigation-implementation.md) for completed work and remaining acceptance gates.
 
 Audience: Product owners, frontend developers, backend developers, and translators.
 

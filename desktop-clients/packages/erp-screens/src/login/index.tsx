@@ -1,5 +1,9 @@
 "use client";
+import { Card } from "@pepbits/ops-ui";
+import { LocalizedText } from "@pepbits/ops-ui";
 
+
+import { useProduct } from "@pepbits/erp-shell";
 import React, { useState } from "react";
 import { Skeleton, TableSkeleton } from "@pepbits/ops-ui";
 import { Command, LockKeyhole, LogIn, ShieldCheck, UserRound } from "lucide-react";
@@ -9,6 +13,7 @@ import { DEMO_ACCOUNTS } from "@pepbits/auth";
 /* Built only from existing ops-ui controls and the existing theme tokens, so it themes
    with the rest of the app and introduces no new visual vocabulary. */
 export function LoginScreen({ onSubmit }: { onSubmit: (username: string, password: string) => Promise<string | null> }) {
+  const product = useProduct();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +41,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
 
   return (
     <div className="flex min-h-dvh w-full items-center justify-center bg-[var(--bg)] p-4">
-      <div className="grid w-full max-w-4xl overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)] lg:grid-cols-2">
+      <Card shadow="lg" className="grid w-full max-w-4xl overflow-hidden lg:grid-cols-2">
 
         <div className="relative hidden flex-col justify-between overflow-hidden bg-[var(--primary-fill)] p-8 text-white lg:flex">
           <span className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(255,255,255,.28),transparent_46%)]" />
@@ -44,36 +49,32 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
             <div className="flex items-center gap-3">
               <span className="flex size-11 items-center justify-center rounded-[13px] bg-white/15"><Command className="size-5" /></span>
               <div>
-                <div className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA ONE</div>
-                <div className="text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] opacity-70">Enterprise ERP</div>
+                <div className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.04em]">{product.name} {product.accentName}</div>
+                <div className="text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] opacity-70"><LocalizedText message={product.tagline} /></div>
               </div>
             </div>
-            <h1 className="mt-8 text-[length:calc(26px*var(--fs-scale))] font-black leading-tight tracking-[-.04em]">Sign in to your workspace</h1>
-            <p className="mt-3 max-w-sm text-[length:calc(11px*var(--fs-scale))] leading-relaxed opacity-80">
-              One configurable interface across human resources, finance, payroll, sales and supply chain.
-            </p>
+            <h1 className="mt-8 text-[length:calc(26px*var(--fs-scale))] font-black leading-tight tracking-[-.04em]"><LocalizedText message="ui.sign.in.to.your.workspace.a49b670e" /></h1>
+            <p className="mt-3 max-w-sm text-[length:calc(11px*var(--fs-scale))] leading-relaxed opacity-80"><LocalizedText message="ui.one.configurable.interface.across.human.resources.financ.2e9ac658" /></p>
           </div>
           <div className="relative flex items-center gap-2 text-[length:calc(9.5px*var(--fs-scale))] font-semibold opacity-75">
-            <ShieldCheck className="size-3.5" />
-            Demo environment · mock data · no real records
-          </div>
+            <ShieldCheck className="size-3.5" /><LocalizedText message="ui.demo.environment.mock.data.no.real.records.a37d424d" /></div>
         </div>
 
         <div className="p-6 sm:p-8">
           <div className="lg:hidden">
             <div className="flex items-center gap-2.5">
               <span className="flex size-9 items-center justify-center rounded-xl bg-[var(--primary-fill)] text-white"><Command className="size-4" /></span>
-              <div className="text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary)]">ONE</span></div>
+              <div className="text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">{product.name} <span className="text-[var(--primary)]">{product.accentName}</span></div>
             </div>
             <div className="my-5 h-px bg-[var(--border)]" />
           </div>
 
-          <h2 className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.02em]">Welcome back</h2>
-          <p className="mt-1 text-[length:calc(10px*var(--fs-scale))] text-[var(--text-muted)]">Enter your credentials to continue.</p>
+          <h2 className="text-[length:calc(15px*var(--fs-scale))] font-black tracking-[-.02em]"><LocalizedText message="ui.welcome.back.66212495" /></h2>
+          <p className="mt-1 text-[length:calc(10px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.enter.your.credentials.to.continue.ff9eee04" /></p>
 
           <form onSubmit={submit} className="mt-5 space-y-4">
             <Input
-              label="Username"
+              label="ui.username.e3b89e9d"
               required
               autoFocus
               autoComplete="username"
@@ -83,7 +84,7 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
               onChange={(event) => setUsername(event.target.value)}
             />
             <Input
-              label="Password"
+              label="ui.password.e7cf3ef4"
               required
               type="password"
               autoComplete="current-password"
@@ -99,15 +100,13 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
               </div>
             ) : null}
 
-            <Button type="submit" variant="primary" className="w-full" loading={busy} leftIcon={<LogIn className="size-3.5" />}>
-              Sign in
-            </Button>
+            <Button type="submit" variant="primary" className="w-full" loading={busy} leftIcon={<LogIn className="size-3.5" />}><LocalizedText message="ui.sign.in.bfd402b2" /></Button>
           </form>
 
           <div className="mt-6">
             <div className="flex items-center gap-2">
               <span className="h-px flex-1 bg-[var(--border)]" />
-              <span className="text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.14em] text-[var(--text-subtle)]">Demo accounts</span>
+              <span className="text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.14em] text-[var(--text-subtle)]"><LocalizedText message="ui.demo.accounts.819adaa3" /></span>
               <span className="h-px flex-1 bg-[var(--border)]" />
             </div>
             <div className="mt-3 space-y-1.5">
@@ -129,16 +128,14 @@ export function LoginScreen({ onSubmit }: { onSubmit: (username: string, passwor
                     <span className="block truncate text-[length:calc(10.5px*var(--fs-scale))] font-extrabold">{account.username}</span>
                     <span className="block truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">{account.label} · {account.role}</span>
                   </span>
-                  <Badge tone="neutral">Fill</Badge>
+                  <Badge tone="neutral"><LocalizedText message="ui.fill.033955d4" /></Badge>
                 </button>
               ))}
             </div>
-            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]">
-              Every demo password is the same as its username. Selecting an account fills both fields.
-            </p>
+            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] leading-relaxed text-[var(--text-subtle)]"><LocalizedText message="ui.every.demo.password.is.the.same.as.its.username.selectin.d1681c9f" /></p>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -152,7 +149,7 @@ export function SessionSplash() {
         <span className="flex size-12 animate-pulse items-center justify-center rounded-[15px] bg-[var(--primary-fill)] text-white shadow-[var(--shadow-md)]">
           <Command className="size-6" />
         </span>
-        <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">Restoring your session…</span>
+        <span className="text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]"><LocalizedText message="ui.restoring.your.session.62e28512" /></span>
       </div>
     </div>
   );

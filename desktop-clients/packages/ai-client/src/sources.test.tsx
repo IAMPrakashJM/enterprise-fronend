@@ -180,3 +180,28 @@ describe("stability", () => {
     expect(renders - settled).toBeLessThanOrEqual(2);
   });
 });
+
+describe("document isolation", () => {
+  test("the focused record owns panel sources even when another record publishes last", async () => {
+    const { createWorkspace, WorkspaceProvider, DocumentProvider } = await import("@pepbits/workspace-core");
+    const workspace = createWorkspace({ session: { tenantId: "t", userId: "u" }, policy: { platform: { modes: ["TAB", "SPLIT"] } } });
+    const a = workspace.openDocument({ module: "M", documentType: "CUSTOMER", entityId: "A", title: "A" }).document!;
+    const b = workspace.openDocument({ module: "M", documentType: "CUSTOMER", entityId: "B", title: "B" }).document!;
+    workspace.focusDocument(a.documentId);
+    const InlineReader = () => <output data-testid="inline-sources">{JSON.stringify(useAiSources())}</output>;
+    const tree = (showB: boolean) => <WorkspaceProvider workspace={workspace}><AiSourcesProvider>
+      <DocumentProvider documentId={a.documentId}><Publisher owner="form:customer" id="A" /><InlineReader /></DocumentProvider>
+      {showB && <DocumentProvider documentId={b.documentId}><Publisher owner="form:customer" id="B" /></DocumentProvider>}
+      <Reader />
+    </AiSourcesProvider></WorkspaceProvider>;
+    const { rerender } = render(tree(true));
+    expect(read()).toEqual({ "page-record": { id: "A" } });
+    React.act(() => { workspace.focusDocument(b.documentId); });
+    expect(read()).toEqual({ "page-record": { id: "B" } });
+    expect(JSON.parse(screen.getByTestId("inline-sources").textContent!)).toEqual({ "page-record": { id: "A" } });
+    rerender(tree(false));
+    expect(read()).toEqual({});
+    React.act(() => { workspace.focusDocument(a.documentId); });
+    expect(read()).toEqual({ "page-record": { id: "A" } });
+  });
+});

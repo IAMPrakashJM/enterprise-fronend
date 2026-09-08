@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "productId": "ledger",
+  "defaultModule": "finance",
+  "defaultPageId": "finance-dashboard",
+  "roles": [
+    "enterprise-admin",
+    "finance-manager",
+    "operations-analyst"
+  ],
+  "pages": [
+    {
+      "id": "finance-dashboard",
+      "titleKey": "page.finance-dashboard.title",
+      "subtitleKey": "page.finance-dashboard.subtitle"
+    },
+    {
+      "id": "customer-master",
+      "titleKey": "page.customer-master.title",
+      "subtitleKey": "page.customer-master.subtitle"
+    },
+    {
+      "id": "preferences",
+      "titleKey": "page.preferences.title",
+      "subtitleKey": "page.preferences.subtitle"
+    },
+    {
+      "id": "notifications",
+      "titleKey": "page.notifications.title",
+      "subtitleKey": "page.notifications.subtitle"
+    },
+    {
+      "id": "messages",
+      "titleKey": "page.messages.title",
+      "subtitleKey": "page.messages.subtitle"
+    },
+    {
+      "id": "ai-administration",
+      "titleKey": "page.ai-administration.title",
+      "subtitleKey": "page.ai-administration.subtitle",
+      "roles": [
+        "enterprise-admin"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "module.finance",
+      "kind": "module",
+      "moduleId": "finance",
+      "parentId": null,
+      "labelKey": "module.finance.label",
+      "shortLabelKey": "module.finance.shortLabel",
+      "icon": "Landmark",
+      "order": 0
+    },
+    {
+      "id": "section.finance.fin-overview",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-overview.label",
+      "order": 0
+    },
+    {
+      "id": "menu.finance.finance-dashboard",
+      "kind": "page",
+      "parentId": "section.finance.fin-overview",
+      "labelKey": "menu.finance.finance-dashboard.label",
+      "order": 0,
+      "pageId": "finance-dashboard",
+      "icon": "LayoutDashboard"
+    },
+    {
+      "id": "section.finance.fin-masters",
+      "kind": "section",
+      "parentId": "module.finance",
+      "labelKey": "section.finance.fin-masters.label",
+      "order": 1
+    },
+    {
+      "id": "menu.finance.fin-parties",
+      "kind": "group",
+      "parentId": "section.finance.fin-masters",
+      "labelKey": "menu.finance.fin-parties.label",
+      "order": 0,
+      "icon": "ContactRound"
+    },
+    {
+      "id": "menu.finance.customer-master",
+      "kind": "page",
+      "parentId": "menu.finance.fin-parties",
+      "labelKey": "menu.finance.customer-master.label",
+      "order": 0,
+      "pageId": "customer-master"
+    }
+  ]
+}

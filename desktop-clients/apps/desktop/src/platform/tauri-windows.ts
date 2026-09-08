@@ -33,7 +33,12 @@ export function createTauriWindowPort(): WindowPort {
   if (!inTauri()) return NULL_WINDOW_PORT;
 
   const windows = new Map<string, WebviewWindow>();
+  const subscriptions = new Map<WebviewWindow, () => void>();
   const listeners = new Set<(documentId: string) => void>();
+  const release = (child: WebviewWindow) => {
+    subscriptions.get(child)?.();
+    subscriptions.delete(child);
+  };
 
   return {
     available: true,
@@ -54,27 +59,41 @@ export function createTauriWindowPort(): WindowPort {
       });
       windows.set(request.documentId, child);
 
-      /* Tauri reports creation failures through an event rather than a rejected
-         constructor, so a window that never appeared would otherwise sit in the
-         map for ever and block a retry. */
-      await child.once("tauri://error", () => {
-        windows.delete(request.documentId);
-        for (const listener of listeners) listener(request.documentId);
+      // The constructor starts creation; it does not mean a window exists yet.
+      // Lifecycle cleanup must wait for this result before trying to close it.
+      const created = await new Promise<boolean>((resolve, reject) => {
+        void child.once("tauri://created", () => resolve(true)).catch(reject);
+        void child.once("tauri://error", () => {
+          if (windows.get(request.documentId) === child) windows.delete(request.documentId);
+          resolve(false);
+        }).catch(reject);
       });
+      if (!created) return false;
       /* The user closing the window with its own button. Without this the tab
          strip goes on claiming the record is on a monitor that no longer shows
          it. */
-      await child.onCloseRequested(() => {
+      const unsubscribe = await child.onCloseRequested((event) => {
+        // The SDK otherwise destroys after this callback, even for a stale
+        // listener whose label has since been reused by a new window.
+        event.preventDefault();
+        if (windows.get(request.documentId) !== child) return;
         windows.delete(request.documentId);
+        release(child);
+        void child.destroy().catch(() => undefined);
         for (const listener of listeners) listener(request.documentId);
       });
+      subscriptions.set(child, unsubscribe);
       return true;
     },
 
     async close(documentId: string) {
       const child = windows.get(documentId);
       windows.delete(documentId);
-      await child?.close().catch(() => undefined);
+      if (child) {
+        release(child);
+        // Logout owns the teardown; do not enqueue another close-request event.
+        await child.destroy().catch(() => undefined);
+      }
     },
 
     async focus(documentId: string) {

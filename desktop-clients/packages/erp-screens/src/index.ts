@@ -13,3 +13,11 @@ export * from "./preferences";
 export * from "./spreadsheet";
 export * from "./library";
 export * from "./worklist/saved-view";
+
+export * from "./records/use-record-editor";
+
+export * from "./product-services";
+
+export * from "./records/record-panels";
+export * from "./approvals/approval-workspace";
+export * from "./worklist/data-table";

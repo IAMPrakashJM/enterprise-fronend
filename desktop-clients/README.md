@@ -72,6 +72,20 @@ is buried. Usually it is a dev server from an earlier session:
 lsof -ti tcp:3100 tcp:3101 | xargs kill
 ```
 
+## Deployment
+
+Production web and desktop use separate, verified release directories. Local
+builds do not publish them. Configure `deploy.config.json`, then run:
+
+```bash
+npm run deploy:prepare   # build and smoke-test without changing running services
+npm run deploy          # build, verify, activate, restart and check both shells
+```
+
+See [deployment instructions](docs/deployment.md) for first migration, rollback,
+and product-specific API hosts. Existing hosts need one activation before their
+old workspace-backed processes are isolated.
+
 ## Verify
 
 ```bash
@@ -159,3 +173,7 @@ build log.
 - `docs/ai-hardening-ledger.md` — what is discharged, what is not, and what the gaps would take
 - `docs/running-tauri.md` — running the desktop app as a real Tauri window, and what a headless machine can and cannot show you
 - `docs/ui-gap-analysis.md` — what AllyVORA's provider-web has that this does not, with the cost and the case against each
+
+## Create another SaaS product
+
+Run `npm run product:create -- --id acme --name "ACME" --module finance`, then select it in `products/active.ts`. See [the product starter guide](docs/product-profiles.md) for branding, pages, roles, service adapters and upgrade steps.

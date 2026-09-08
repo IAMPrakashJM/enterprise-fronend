@@ -1,5 +1,7 @@
 "use client";
+import { LocalizedText } from "./localization";
 
+import { useLocalization } from "./localization";
 import React, { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown, Search, X } from "lucide-react";
 import { Button } from "./button";
@@ -7,6 +9,9 @@ import { cn } from "./cn";
 
 /** Structurally identical to erp-config's Option. Declared locally so ops-ui
     depends on nothing and stays a generic interaction surface. */
+function useControlCopy<T extends {placeholder?:string;'aria-label'?:string}>(props:T):T {
+ const {t}=useLocalization();return {...props,...(props.placeholder?{placeholder:t(props.placeholder)}:{}),...(props['aria-label']?{'aria-label':t(props['aria-label'])}:{})};
+}
 export interface Option { label: string; value: string }
 
 interface BaseFieldProps {
@@ -33,6 +38,7 @@ interface BaseFieldProps {
  * without being handed the value.
  */
 export function FieldShell({ label, hint, error, required, className, children }: BaseFieldProps & { children: (describedBy?: string) => React.ReactNode }) {
+  const {t}=useLocalization();
   const generated = React.useId();
   const noteId = error || hint ? `${generated}-note` : undefined;
   return (
@@ -40,11 +46,11 @@ export function FieldShell({ label, hint, error, required, className, children }
       {/* The label still WRAPS the control, so the association survives without
           an id on a control this does not own. */}
       <label className="block min-w-0">
-        {label ? <span className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{label}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}</span> : null}
+        {label ? <span className="mb-1.5 flex items-center gap-1 text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{typeof label === "string" ? t(label) : label}{required ? <span className="text-[var(--danger-ink)]">*</span> : null}</span> : null}
         {children(noteId)}
       </label>
-      {error ? <span id={noteId} className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger-ink)]">{error}</span>
-        : hint ? <span id={noteId} className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{hint}</span> : null}
+      {error ? <span id={noteId} className="mt-1 block text-[length:calc(10px*var(--fs-scale))] font-semibold text-[var(--danger-ink)]">{t(error)}</span>
+        : hint ? <span id={noteId} className="mt-1 block text-[length:calc(10px*var(--fs-scale))] text-[var(--text-subtle)]">{t(hint)}</span> : null}
     </div>
   );
 }
@@ -60,13 +66,14 @@ const inputClass = "focus-ring h-9 w-full rounded-[10px] border border-[var(--bo
    an RDFa string attribute, so the intersection collapsed this prop to `string & ReactNode`
    and rejected an icon element. Strings still pass, since ReactNode includes them. */
 export function Input({ label, hint, error, required, className, prefix, suffix, ...props }: BaseFieldProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefix" | "suffix"> & { prefix?: React.ReactNode; suffix?: React.ReactNode }) {
+  const localizedProps=useControlCopy(props);
   return (
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       {(note) => (
       <div className="relative">
-        {prefix ? <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{prefix}</div> : null}
-        <input className={cn(inputClass, prefix ? "pl-11" : undefined, suffix ? "pr-10" : undefined)} {...props} aria-describedby={describedBy(props["aria-describedby"], note)} />
-        {suffix ? <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{suffix}</div> : null}
+        {prefix ? <div className="pointer-events-none absolute inset-y-0 start-3 flex items-center text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{prefix}</div> : null}
+        <input className={cn(inputClass, prefix ? "ps-11" : undefined, suffix ? "pe-10" : undefined)} {...localizedProps} aria-invalid={error ? true : props["aria-invalid"]} aria-required={required || props["aria-required"]} aria-describedby={describedBy(props["aria-describedby"], note)} />
+        {suffix ? <div className="pointer-events-none absolute inset-y-0 end-3 flex items-center text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text-muted)]">{suffix}</div> : null}
       </div>
       )}
     </FieldShell>
@@ -92,48 +99,54 @@ export function SearchInput({ value, onChange, placeholder = "Search records, ID
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
   "aria-label"?: string;
 }) {
+  const { t } = useLocalization();
   return (
     <div className={cn("relative", className)}>
-      <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--text-subtle)]" />
+      <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-[var(--text-subtle)]" />
       <input
         ref={inputRef}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={onKeyDown}
-        aria-label={ariaLabel}
-        placeholder={placeholder}
-        className={cn(inputClass, "pl-9 pr-8")}
+        aria-label={ariaLabel ? t(ariaLabel) : undefined}
+        placeholder={t(placeholder)}
+        className={cn(inputClass, "ps-9 pe-8")}
       />
-      {value ? <button type="button" onClick={() => { onChange(""); onClear?.(); }} className="absolute right-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-[var(--surface-3)] hover:text-[var(--text)]"><X className="size-3.5" /></button> : null}
+      {value ? <button type="button" aria-label={t("Clear search")} onClick={() => { onChange(""); onClear?.(); }} className="absolute end-2 top-1/2 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-[var(--text-subtle)] hover:bg-[var(--surface-3)] hover:text-[var(--text)]"><X className="size-3.5" /></button> : null}
     </div>
   );
 }
 
 export function Textarea({ label, hint, error, required, className, ...props }: BaseFieldProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const localizedProps=useControlCopy(props);
   return (
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
-      {(note) => <textarea className={cn(inputClass, "h-auto min-h-24 resize-y py-2.5 leading-relaxed")} {...props} aria-describedby={describedBy(props["aria-describedby"], note)} />}
+      {(note) => <textarea className={cn(inputClass, "h-auto min-h-24 resize-y py-2.5 leading-relaxed")} {...localizedProps} aria-invalid={error ? true : props["aria-invalid"]} aria-required={required || props["aria-required"]} aria-describedby={describedBy(props["aria-describedby"], note)} />}
     </FieldShell>
   );
 }
 
 export function Select({ label, hint, error, required, className, options, placeholder = "Select…", ...props }: BaseFieldProps & React.SelectHTMLAttributes<HTMLSelectElement> & { options: Option[]; placeholder?: string }) {
+  const localizedProps=useControlCopy(props);
+  const {t}=useLocalization();
   return (
     <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       {(note) => (
       <div className="relative">
-        <select className={cn(inputClass, "appearance-none pr-9")} {...props} aria-describedby={describedBy(props["aria-describedby"], note)}>
-          {placeholder ? <option value="">{placeholder}</option> : null}
-          {options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+        <select className={cn(inputClass, "appearance-none pe-9")} {...localizedProps} aria-invalid={error ? true : props["aria-invalid"]} aria-required={required || props["aria-required"]} aria-describedby={describedBy(props["aria-describedby"], note)}>
+          {placeholder ? <option value="">{t(placeholder)}</option> : null}
+          {options.map((option) => <option key={option.value} value={option.value}>{t(option.label)}</option>)}
         </select>
-        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-muted)]" />
+        <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-muted)]" />
       </div>
       )}
     </FieldShell>
   );
 }
 
-export function MultiSelect({ label, hint, required, options, value, onChange, placeholder = "Select values…", className, disabled }: BaseFieldProps & { options: Option[]; value: string[]; onChange: (value: string[]) => void; placeholder?: string; disabled?: boolean }) {
+export function MultiSelect({ label, hint, error, required, options, value, onChange, placeholder = "Select values…", className, disabled }: BaseFieldProps & { options: Option[]; value: string[]; onChange: (value: string[]) => void; placeholder?: string; disabled?: boolean }) {
+  const {t: translateCopy} = useLocalization();
+  const { t } = useLocalization();
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState("");
   const ref = useRef<HTMLDivElement>(null);
@@ -147,16 +160,16 @@ export function MultiSelect({ label, hint, required, options, value, onChange, p
   }, []);
 
   const selectedLabels = value.map((selected) => options.find((option) => option.value === selected)?.label).filter(Boolean) as string[];
-  const filtered = options.filter((option) => option.label.toLowerCase().includes(filter.toLowerCase()));
+  const filtered = options.filter((option) => t(option.label).toLocaleLowerCase().includes(filter.toLocaleLowerCase()));
   const toggle = (optionValue: string) => onChange(value.includes(optionValue) ? value.filter((item) => item !== optionValue) : [...value, optionValue]);
 
   return (
-    <FieldShell label={label} hint={hint} required={required} className={className}>
+    <FieldShell label={label} hint={hint} error={error} required={required} className={className}>
       {(note) => (
       <div className="relative" ref={ref}>
-        <button type="button" disabled={disabled} aria-describedby={note} onClick={() => setOpen((previous) => !previous)} className={cn(inputClass, "flex min-h-9 h-auto items-center justify-between gap-2 py-1.5 text-left disabled:opacity-60")}>
+        <button type="button" disabled={disabled} aria-invalid={error ? true : undefined} aria-describedby={note} onClick={() => setOpen((previous) => !previous)} className={cn(inputClass, "flex min-h-9 h-auto items-center justify-between gap-2 py-1.5 text-start disabled:opacity-60")}>
           <span className="flex min-w-0 flex-1 flex-wrap gap-1">
-            {selectedLabels.length ? selectedLabels.slice(0, 3).map((selected) => <span key={selected} className="rounded-md bg-[var(--primary-soft)] px-1.5 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--primary-strong)]">{selected}</span>) : <span className="text-[var(--text-subtle)]">{placeholder}</span>}
+            {selectedLabels.length ? selectedLabels.slice(0, 3).map((selected) => <span key={selected} className="rounded-md bg-[var(--primary-soft)] px-1.5 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--primary-strong)]">{t(selected)}</span>) : <span className="text-[var(--text-subtle)]">{t(placeholder)}</span>}
             {selectedLabels.length > 3 ? <span className="rounded-md bg-[var(--surface-3)] px-1.5 py-0.5 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text-muted)]">+{selectedLabels.length - 3}</span> : null}
           </span>
           <ChevronDown className={cn("size-3.5 shrink-0 text-[var(--text-muted)] transition", open && "rotate-180")} />
@@ -164,14 +177,14 @@ export function MultiSelect({ label, hint, required, options, value, onChange, p
         {open ? (
           <div className="animate-slide-up absolute z-50 mt-1.5 w-full min-w-64 overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-md)]">
             <div className="border-b border-[var(--border)] p-2">
-              <div className="relative"><Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-subtle)]" /><input autoFocus value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Filter options" className={cn(inputClass, "h-8 pl-8 text-[length:calc(11px*var(--fs-scale))]")} /></div>
+              <div className="relative"><Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-[var(--text-subtle)]" /><input autoFocus value={filter} onChange={(event) => setFilter(event.target.value)} placeholder={translateCopy("ui.filter.options.62b72239")} className={cn(inputClass, "h-8 pl-8 text-[length:calc(11px*var(--fs-scale))]")} /></div>
             </div>
             <div className="nex-scrollbar max-h-52 overflow-auto p-1.5">
               {filtered.map((option) => {
                 const selected = value.includes(option.value);
-                return <button key={option.value} type="button" onClick={() => toggle(option.value)} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[length:calc(11px*var(--fs-scale))] font-medium hover:bg-[var(--surface-2)]"><span className={cn("flex size-4 items-center justify-center rounded border", selected ? "border-[var(--primary)] bg-[var(--primary-fill)] text-white" : "border-[var(--border-strong)]")}><Check className={cn("size-3", !selected && "opacity-0")} /></span><span className="flex-1">{option.label}</span></button>;
+                return <button key={option.value} type="button" onClick={() => toggle(option.value)} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-start text-[length:calc(11px*var(--fs-scale))] font-medium hover:bg-[var(--surface-2)]"><span className={cn("flex size-4 items-center justify-center rounded border", selected ? "border-[var(--primary)] bg-[var(--primary-fill)] text-white" : "border-[var(--border-strong)]")}><Check className={cn("size-3", !selected && "opacity-0")} /></span><span className="flex-1">{t(option.label)}</span></button>;
               })}
-              {!filtered.length ? <div className="px-3 py-5 text-center text-[length:calc(11px*var(--fs-scale))] text-[var(--text-subtle)]">No matching options</div> : null}
+              {!filtered.length ? <div className="px-3 py-5 text-center text-[length:calc(11px*var(--fs-scale))] text-[var(--text-subtle)]"><LocalizedText message="ui.no.matching.options.39a118fc" /></div> : null}
             </div>
           </div>
         ) : null}
@@ -226,8 +239,8 @@ export function Checkbox({ label, description, indeterminate, className, ...prop
     <label className={cn("flex cursor-pointer items-start gap-2", props.disabled && "cursor-not-allowed opacity-60", className)}>
       {box}
       <span className="min-w-0">
-        <span className="block text-[length:calc(11px*var(--fs-scale))] font-semibold leading-tight text-[var(--text)]">{label}</span>
-        {description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{description}</span> : null}
+        <span className="block text-[length:calc(11px*var(--fs-scale))] font-semibold leading-tight text-[var(--text)]">{typeof label === "string" ? <LocalizedText message={label} /> : label}</span>
+        {description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{typeof description === "string" ? <LocalizedText message={description} /> : description}</span> : null}
       </span>
     </label>
   );
@@ -256,8 +269,8 @@ export function Radio({ label, description, className, ...props }: {
     <label className={cn("flex cursor-pointer items-start gap-2", props.disabled && "cursor-not-allowed opacity-60", className)}>
       {dot}
       <span className="min-w-0">
-        <span className="block text-[length:calc(11px*var(--fs-scale))] font-semibold leading-tight text-[var(--text)]">{label}</span>
-        {description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{description}</span> : null}
+        <span className="block text-[length:calc(11px*var(--fs-scale))] font-semibold leading-tight text-[var(--text)]">{typeof label === "string" ? <LocalizedText message={label} /> : label}</span>
+        {description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{typeof description === "string" ? <LocalizedText message={description} /> : description}</span> : null}
       </span>
     </label>
   );
@@ -298,7 +311,7 @@ export function FilePicker({ accept, label, icon, variant = "secondary", disable
           if (file) onFile(file);
         }}
       />
-      <Button variant={variant} leftIcon={icon} disabled={disabled} className={className} onClick={() => ref.current?.click()}>{label}</Button>
+      <Button variant={variant} leftIcon={icon} disabled={disabled} className={className} onClick={() => ref.current?.click()}>{typeof label === "string" ? <LocalizedText message={label} /> : label}</Button>
     </>
   );
 }
@@ -306,7 +319,7 @@ export function FilePicker({ accept, label, icon, variant = "secondary", disable
 export function Toggle({ label, description, checked, onChange, disabled, className }: { label: string; description?: string; checked: boolean; onChange: (checked: boolean) => void; disabled?: boolean; className?: string }) {
   return (
     <label className={cn("flex min-h-10 items-center justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2", className)}>
-      <span className="min-w-0"><span className="block text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text)]">{label}</span>{description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{description}</span> : null}</span>
+      <span className="min-w-0"><span className="block text-[length:calc(11px*var(--fs-scale))] font-bold text-[var(--text)]">{typeof label === "string" ? <LocalizedText message={label} /> : label}</span>{description ? <span className="mt-0.5 block text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{typeof description === "string" ? <LocalizedText message={description} /> : description}</span> : null}</span>
       <button type="button" role="switch" aria-checked={checked} disabled={disabled} onClick={() => onChange(!checked)} className={cn("focus-ring relative h-5 w-9 shrink-0 rounded-full border transition", checked ? "border-[var(--primary)] bg-[var(--primary)]" : "border-[var(--border-strong)] bg-[var(--surface-3)]", disabled && "opacity-50")}>
         <span className={cn("absolute top-0.5 size-3.5 rounded-full bg-white shadow-sm transition", checked ? "left-[18px]" : "left-0.5")} />
       </button>

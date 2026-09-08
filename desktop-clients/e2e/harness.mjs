@@ -13,6 +13,8 @@
  * that most people running `npm test` do not need, so it is not a dependency of
  * this package. `npm run e2e` says clearly what to install when it is absent.
  */
+import { suites } from "./suites.mjs";
+import { basename } from "node:path";
 import { createRequire } from "node:module";
 
 export const BASE = process.env.E2E_BASE ?? "http://127.0.0.1:3100";
@@ -23,10 +25,10 @@ export const API = process.env.E2E_API ?? "http://127.0.0.1:3200";
 export function loadPlaywright() {
   const require = createRequire(import.meta.url);
   for (const specifier of ["playwright", "playwright-core"]) {
-    try { return require(specifier); } catch { /* try the next */ }
+    try { return guardedPlaywright(require(specifier)); } catch { /* try the next */ }
   }
   if (process.env.PLAYWRIGHT_PATH) {
-    try { return require(`${process.env.PLAYWRIGHT_PATH}/index.js`); } catch { /* fall through */ }
+    try { return guardedPlaywright(require(`${process.env.PLAYWRIGHT_PATH}/index.js`)); } catch { /* fall through */ }
   }
   console.error(`
   Playwright is not installed.
@@ -180,4 +182,42 @@ export async function setPreference(page, switchName, on) {
     await page.waitForTimeout(1800);
   }
   return (await toggle.getAttribute("aria-checked")) === String(on);
+}
+
+
+export function assertApiTarget(url, expected) {
+  const observed=url.slice(0,url.indexOf('/auth/')).replace(/\/$/,'');
+  if(observed!==expected.replace(/\/$/,''))throw new Error(`API target mismatch: shell calls ${observed}; expected ${expected}. Rebuild the shell for this test environment.`);
+}
+
+const wrapped=new WeakMap();
+function guardedPlaywright(playwright) {
+  if(wrapped.has(playwright))return wrapped.get(playwright);
+  const result={...playwright};
+  for(const engine of ['chromium','firefox','webkit']){
+    const type=playwright[engine];
+    result[engine]=new Proxy(type,{get(target,key){
+      if(key!=='launch'){const value=target[key];return typeof value==='function'?value.bind(target):value;}
+      return async options=>{
+        const browser=await target.launch(options);
+        const original=browser.newContext.bind(browser);
+        browser.newContext=async options=>{
+          const context=await original(options);
+          const expected=process.env.E2E_API??(suites.browser.includes(basename(process.argv[1]??''))?API:'http://127.0.0.1:3330');
+          // Installed before tests add fixture routes. Authentication is checked
+          // before credentials leave the browser, not after a successful login.
+          await context.route(/\/auth\/(?:login|me|logout)(?:[?#]|$)/,async route=>{
+            try{assertApiTarget(route.request().url(),expected);}
+            catch(error){await route.abort();throw error;}
+            await route.continue();
+          });
+          return context;
+        };
+        // Playwright's browser.newPage uses an internal context constructor.
+        browser.newPage=async options=>{const context=await browser.newContext(options);return context.newPage();};
+        return browser;
+      };
+    }});
+  }
+  wrapped.set(playwright,result);return result;
 }

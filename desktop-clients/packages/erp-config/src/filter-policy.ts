@@ -45,6 +45,8 @@ export interface FilterDefinition {
   label: string;
   type: "text" | "select" | "date";
   options?: string[];
+  /** Display labels only; option values remain stable in filters and saved views. */
+  optionLabels?: Record<string, string>;
   /** Required in practice: an absent one resolves to "unclassified", which is not url-safe. */
   classification?: DataClassification;
 }

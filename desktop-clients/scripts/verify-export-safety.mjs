@@ -154,6 +154,12 @@ check(/exportAudit\(.{0,140}"print"/.test(worklist.replace(/\s+/g, " ")), "as a 
 check(!/window\.addEventListener\("beforeprint"[\s\S]{0,400}preventDefault/.test(worklist),
   "and nothing pretends it can cancel one");
 
+// The costing sheet has a fixed schema, mapped at import, reviewed at export.
+const sheet = readFileSync(new URL("../packages/erp-screens/src/spreadsheet/index.tsx", import.meta.url), "utf8");
+check(sheet.includes("reviewSheetExport()") && sheet.includes("exportAudit(\"spreadsheet-studio\""), "costing export uses schema review and metadata audit");
+check(sheet.includes("importSheet(parsed)"), "costing import validates and maps its fixed headers");
+check((sheet.match(/data-classification=\{classificationFor\(SHEET_FIELDS\[/g) ?? []).length === 2, "costing headers and cells carry print classification");
+
 console.log(failed === 0
   ? "\n  Every worklist column is classified, and nothing sensitive leaves as a document unannounced.\n"
   : `\n  ${failed} check(s) failed.\n`);

@@ -1,15 +1,17 @@
 "use client";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, ChevronRight, ChevronsLeft, ChevronsRight, Command, PanelLeftClose, PanelLeftOpen, Pin, PinOff, Search, SlidersHorizontal, X } from "lucide-react";
 import { NavLink, cn } from "@pepbits/ops-ui";
 import { useNavigation } from "@pepbits/platform-ports";
 import { chromePalette } from "./chrome-palette";
+import { useProduct } from "./product-context";
 import { useERP } from "./erp-context";
 import { SIDEBAR_SEARCH_EVENT } from "@pepbits/erp-config";
 import type { MenuItem, MenuSection } from "@pepbits/erp-config";
 
-const matchText = (item: MenuItem, term: string) => item.label.toLowerCase().includes(term);
+const matchText = (item: MenuItem, term: string, t: (key: string) => string) => `${item.label} ${t(item.labelKey ?? item.label)}`.toLowerCase().includes(term);
 
 /**
  * The navigation tree, narrowed to what matches.
@@ -19,15 +21,15 @@ const matchText = (item: MenuItem, term: string) => item.label.toLowerCase().inc
  * keeps only the children that do. Sections and groups left with nothing are
  * dropped, so no empty headings survive.
  */
-function filterNavigation(navigation: MenuSection[], query: string): MenuSection[] {
+function filterNavigation(navigation: MenuSection[], query: string, t: (key: string) => string): MenuSection[] {
   const term = query.trim().toLowerCase();
   if (!term) return navigation;
   const sections: MenuSection[] = [];
   for (const section of navigation) {
     const items: MenuItem[] = [];
     for (const item of section.items) {
-      if (matchText(item, term)) { items.push(item); continue; }
-      const children = item.children?.filter((child) => matchText(child, term)) ?? [];
+      if (matchText(item, term, t)) { items.push(item); continue; }
+      const children = item.children?.filter((child) => matchText(child, term, t)) ?? [];
       if (children.length) items.push({ ...item, children });
     }
     if (items.length) sections.push({ ...section, items });
@@ -42,14 +44,15 @@ function countPages(sections: MenuSection[]): number {
 }
 
 function SidebarLeaf({ item, expanded, active, href, onSelect }: { item: MenuItem; expanded: boolean; active: boolean; href: string; onSelect: () => void }) {
+  const {t}=useLocalization();
   const Icon = item.icon;
   return (
     <NavLink
       href={href}
-      title={!expanded ? item.label : undefined}
+      title={!expanded ? t(item.labelKey ?? item.label) : undefined}
       onClick={(event) => { event.preventDefault(); onSelect(); }}
       className={cn(
-        "focus-ring group relative flex h-9 w-full items-center rounded-[10px] border text-left transition",
+        "focus-ring group relative flex h-9 w-full items-center rounded-[10px] border text-start transition",
         expanded ? "gap-2.5 px-2.5" : "justify-center px-1",
         active
           ? "border-[color-mix(in_srgb,var(--primary)_20%,transparent)] bg-[var(--primary-soft)] text-[var(--primary-strong)]"
@@ -57,7 +60,7 @@ function SidebarLeaf({ item, expanded, active, href, onSelect }: { item: MenuIte
       )}
     >
       <span className={cn("flex size-6 shrink-0 items-center justify-center rounded-lg transition", active ? "bg-[var(--surface)] shadow-sm" : "group-hover:bg-[var(--surface)]")}>{Icon ? <Icon className="size-3.5" /> : <span className="size-1.5 rounded-full bg-current opacity-55" />}</span>
-      {expanded ? <span className="min-w-0 flex-1 truncate text-[length:calc(11px*var(--fs-scale))] font-bold">{item.label}</span> : null}
+      {expanded ? <span className="min-w-0 flex-1 truncate text-[length:calc(11px*var(--fs-scale))] font-bold">{<LocalizedText message={item.labelKey ?? item.label} />}</span> : null}
       {expanded && item.badge ? <span className="rounded-full bg-[var(--surface-3)] px-1.5 py-0.5 text-[length:calc(9px*var(--fs-scale))] font-extrabold text-[var(--text-muted)]">{item.badge}</span> : null}
       {active ? <span className={cn("absolute inset-y-2 w-0.5 rounded-full bg-[var(--primary)]", "left-0")} /> : null}
     </NavLink>
@@ -72,6 +75,7 @@ function SidebarGroup({ item, expanded, activePageId, hrefFor, onSelect, forceOp
      clearing the box restores exactly the groups they had open. */
   const open = forceOpen || selfOpen;
   const setOpen = setSelfOpen;
+  const {t}=useLocalization();
   const Icon = item.icon;
 
   if (!item.children?.length && item.pageId) return <SidebarLeaf item={item} expanded={expanded} active={item.pageId === activePageId} href={hrefFor(item.pageId)} onSelect={() => onSelect(item.pageId!)} />;
@@ -79,22 +83,22 @@ function SidebarGroup({ item, expanded, activePageId, hrefFor, onSelect, forceOp
     <div>
       <button
         type="button"
-        title={!expanded ? item.label : undefined}
+        title={!expanded ? t(item.labelKey ?? item.label) : undefined}
         onClick={() => setOpen((previous) => !previous)}
-        className={cn("focus-ring group flex h-9 w-full items-center rounded-[10px] border border-transparent text-left text-[var(--text-muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)]", expanded ? "gap-2.5 px-2.5" : "justify-center px-1", childActive && "text-[var(--primary-strong)]")}
+        className={cn("focus-ring group flex h-9 w-full items-center rounded-[10px] border border-transparent text-start text-[var(--text-muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)]", expanded ? "gap-2.5 px-2.5" : "justify-center px-1", childActive && "text-[var(--primary-strong)]")}
       >
         <span className={cn("flex size-6 shrink-0 items-center justify-center rounded-lg", childActive && "bg-[var(--primary-soft)]")}>{Icon ? <Icon className="size-3.5" /> : <span className="size-1.5 rounded-full bg-current" />}</span>
-        {expanded ? <><span className="min-w-0 flex-1 truncate text-[length:calc(11px*var(--fs-scale))] font-bold">{item.label}</span>{open ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}</> : null}
+        {expanded ? <><span className="min-w-0 flex-1 truncate text-[length:calc(11px*var(--fs-scale))] font-bold">{<LocalizedText message={item.labelKey ?? item.label} />}</span>{open ? <ChevronDown className="size-3.5" /> : <ChevronRight className="size-3.5" />}</> : null}
       </button>
       {expanded && open ? (
-        <div className="relative ml-[21px] mt-0.5 space-y-0.5 border-l border-[var(--border)] pl-3">
+        <div className="relative ms-[21px] mt-0.5 space-y-0.5 border-s border-[var(--border)] ps-3">
           {item.children?.map((child) => {
             const active = child.pageId === activePageId;
             return (
-              <NavLink key={child.id} href={child.pageId ? hrefFor(child.pageId) : "#"} onClick={(event) => { event.preventDefault(); if (child.pageId) onSelect(child.pageId); }} className={cn("focus-ring group relative flex min-h-8 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[length:calc(10.5px*var(--fs-scale))] font-semibold transition", active ? "bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]")}>
-                <span className={cn("absolute -left-[14px] top-1/2 h-px w-3 bg-[var(--border)]", active && "bg-[var(--primary)]")} />
+              <NavLink key={child.id} href={child.pageId ? hrefFor(child.pageId) : "#"} onClick={(event) => { event.preventDefault(); if (child.pageId) onSelect(child.pageId); }} className={cn("focus-ring group relative flex min-h-8 w-full items-center gap-2 rounded-lg px-2 py-1.5 text-start text-[length:calc(10.5px*var(--fs-scale))] font-semibold transition", active ? "bg-[var(--primary-soft)] text-[var(--primary-strong)]" : "text-[var(--text-muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text)]")}>
+                <span className={cn("absolute -start-[14px] top-1/2 h-px w-3 bg-[var(--border)]", active && "bg-[var(--primary)]")} />
                 {child.icon ? React.createElement(child.icon, { className: "size-3.5 shrink-0" }) : <span className="size-1.5 shrink-0 rounded-full bg-current opacity-40" />}
-                <span className="min-w-0 flex-1 truncate">{child.label}</span>
+                <span className="min-w-0 flex-1 truncate">{<LocalizedText message={child.labelKey ?? child.label} />}</span>
                 {child.badge ? <span className="rounded-full bg-[var(--surface-3)] px-1.5 py-0.5 text-[length:calc(8px*var(--fs-scale))]">{child.badge}</span> : null}
               </NavLink>
             );
@@ -106,6 +110,9 @@ function SidebarGroup({ item, expanded, activePageId, hrefFor, onSelect, forceOp
 }
 
 export function Sidebar() {
+  const {t: translateCopy} = useLocalization();
+  const product = useProduct();
+  const { t } = useLocalization();
   const { module, preferences, updatePreference } = useERP();
   const navigation = useNavigation();
   const activePageId = navigation.current.pageId;
@@ -149,7 +156,7 @@ export function Sidebar() {
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
   const searching = query.trim().length > 0;
-  const sections = useMemo(() => filterNavigation(module.navigation, query), [module.navigation, query]);
+  const sections = useMemo(() => filterNavigation(module.navigation, query, t), [module.navigation, query, t]);
   const resultCount = useMemo(() => (searching ? countPages(sections) : 0), [searching, sections]);
 
   /* A query is about one module's tree, so switching module clears it --
@@ -175,7 +182,7 @@ export function Sidebar() {
         )}
       />
       <aside
-        aria-label="Primary navigation"
+        aria-label={translateCopy("ui.primary.navigation.e1bfe7ec")}
         data-tour="sidebar"
         /* A theme id here re-resolves EVERY palette token inside the rail from
            that theme's block, so the sidebar can run Solarized while the page
@@ -202,7 +209,7 @@ export function Sidebar() {
         }}
         className={cn(
           "no-print absolute inset-y-0 z-50 flex flex-col bg-[var(--surface)] transition-[width] duration-200",
-          isRight ? "right-0 border-l border-[var(--border)]" : "left-0 border-r border-[var(--border)]",
+          isRight ? "right-0 border-s border-[var(--border)]" : "left-0 border-r border-[var(--border)]",
           expanded ? "w-[var(--sidebar-expanded)]" : "w-[var(--sidebar-collapsed)]",
           /* Lifted off the page only while it is actually floating over it. Pinned, it
              is part of the layout again and takes the flat resting shadow. */
@@ -228,14 +235,14 @@ export function Sidebar() {
             <Command className="relative size-4" />
           </button>
         )}
-        {expanded ? <div className="min-w-0 flex-1"><div className="truncate text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">NEXORA <span className="text-[var(--primary-strong)]">ONE</span></div><div className="truncate text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] text-[var(--text-subtle)]">Enterprise ERP</div></div> : null}
+        {expanded ? <div className="min-w-0 flex-1"><div className="truncate text-[length:calc(13px*var(--fs-scale))] font-black tracking-[-.04em]">{product.name} {product.accentName ? <span className="text-[var(--primary-strong)]">{product.accentName}</span> : null}</div><div className="truncate text-[length:calc(9px*var(--fs-scale))] font-bold uppercase tracking-[.15em] text-[var(--text-subtle)]">{product.tagline}</div></div> : null}
         {expanded ? <button type="button" title={preferences.sidebarPinned ? "Unpin sidebar" : "Pin sidebar"} onClick={() => updatePreference("sidebarPinned", !preferences.sidebarPinned)} className={cn("focus-ring flex size-8 items-center justify-center rounded-lg border transition", preferences.sidebarPinned ? "border-[color-mix(in_srgb,var(--primary)_25%,transparent)] bg-[var(--primary-soft)] text-[var(--primary)]" : "border-[var(--border)] text-[var(--text-muted)] hover:bg-[var(--surface-2)]")}>{preferences.sidebarPinned ? <PinOff className="size-3.5" /> : <Pin className="size-3.5" />}</button> : null}
       </div>
 
       <div className="shrink-0 border-b border-[var(--border)] px-3 py-3">
         <div className={cn("flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface-2)]", expanded ? "gap-2 px-2.5 py-2" : "justify-center p-1.5")}>
           <div className="flex size-7 shrink-0 items-center justify-center rounded-lg text-[length:calc(10px*var(--fs-scale))] font-black text-white" style={{ background: module.accent }}>{brandLetters}</div>
-          {expanded ? <div className="min-w-0"><div className="truncate text-[length:calc(11px*var(--fs-scale))] font-extrabold text-[var(--text)]">{module.label}</div><div className="truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">Module navigation</div></div> : null}
+          {expanded ? <div className="min-w-0"><div className="truncate text-[length:calc(11px*var(--fs-scale))] font-extrabold text-[var(--text)]">{<LocalizedText message={module.labelKey ?? module.label} />}</div><div className="truncate text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.module.navigation.62254823" /></div></div> : null}
         </div>
       </div>
 
@@ -251,19 +258,19 @@ export function Sidebar() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               onKeyDown={(event) => { if (event.key === "Escape") { setQuery(""); event.currentTarget.blur(); } }}
-              placeholder={`Search ${module.shortLabel} menu…`}
-              aria-label={`Search the ${module.label} menu`}
+              placeholder={t("Search {module} menu…",{module:t(module.shortLabel)})}
+              aria-label={t("Search the {module} menu",{module:t(module.labelKey ?? module.label)})}
               className="focus-ring h-8 w-full rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] ps-8 pe-7 text-[length:calc(10.5px*var(--fs-scale))] font-semibold text-[var(--text)] transition placeholder:font-normal placeholder:text-[var(--text-subtle)] hover:border-[var(--border-strong)] focus:bg-[var(--surface)]"
             />
             {searching ? (
-              <button type="button" aria-label="Clear search" onClick={() => { setQuery(""); searchRef.current?.focus(); }}
+              <button type="button" aria-label={translateCopy("ui.clear.search.3b7ea517")} onClick={() => { setQuery(""); searchRef.current?.focus(); }}
                 className="focus-ring absolute end-1.5 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center rounded-md text-[var(--text-subtle)] transition hover:bg-[var(--surface-3)] hover:text-[var(--text)]">
                 <X className="size-3" />
               </button>
             ) : null}
           </div>
         ) : (
-          <button type="button" aria-label="Search menu" title="Search menu"
+          <button type="button" aria-label={translateCopy("ui.search.menu.30a52f50")} title={translateCopy("ui.search.menu.30a52f50")}
             onClick={() => window.setTimeout(() => searchRef.current?.focus(), 0)}
             className="focus-ring mx-auto flex size-8 items-center justify-center rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-subtle)] transition hover:border-[var(--primary)] hover:text-[var(--text)]">
             <Search className="size-3.5" />
@@ -272,7 +279,7 @@ export function Sidebar() {
         {searching ? (
           <div className="mt-1.5 flex items-center justify-between px-0.5 text-[length:calc(8.5px*var(--fs-scale))] font-bold text-[var(--text-muted)]">
             <span>{resultCount} {resultCount === 1 ? "page" : "pages"}</span>
-            <span className="text-[var(--text-subtle)]">Esc to clear</span>
+            <span className="text-[var(--text-subtle)]"><LocalizedText message="ui.esc.to.clear.3bfa5f77" /></span>
           </div>
         ) : null}
       </div>
@@ -281,13 +288,13 @@ export function Sidebar() {
         {searching && sections.length === 0 ? (
           <div className="rounded-xl border border-dashed border-[var(--border-strong)] px-3 py-6 text-center">
             <Search className="mx-auto size-4 text-[var(--text-subtle)]" />
-            <p className="mt-2 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text)]">No menu item matches</p>
-            <p className="mt-0.5 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">“{query.trim()}” is not in {module.label}. Try another module.</p>
+            <p className="mt-2 text-[length:calc(10px*var(--fs-scale))] font-bold text-[var(--text)]"><LocalizedText message="ui.no.menu.item.matches.a442b70a" /></p>
+            <p className="mt-0.5 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]">“{query.trim()}<LocalizedText message="ui.is.not.in.82f33b7f" />{" "}{<LocalizedText message={module.labelKey ?? module.label} />}<LocalizedText message="ui.try.another.module.0a6adf30" /></p>
           </div>
         ) : null}
         {sections.map((section, sectionIndex) => (
           <div key={section.id} className={cn(sectionIndex > 0 && "mt-4")}>
-            {expanded ? <div className="mb-1.5 flex items-center gap-2 px-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.16em] text-[var(--text-subtle)]"><span>{section.label}</span><span className="h-px flex-1 bg-[var(--border)]" /></div> : <div className="mx-auto mb-1.5 h-px w-7 bg-[var(--border)]" />}
+            {expanded ? <div className="mb-1.5 flex items-center gap-2 px-2 text-[length:calc(8.5px*var(--fs-scale))] font-black uppercase tracking-[.16em] text-[var(--text-subtle)]"><span>{<LocalizedText message={section.labelKey ?? section.label} />}</span><span className="h-px flex-1 bg-[var(--border)]" /></div> : <div className="mx-auto mb-1.5 h-px w-7 bg-[var(--border)]" />}
             <div className="space-y-0.5">
               {section.items.map((item) => <SidebarGroup key={item.id} item={item} expanded={expanded} activePageId={activePageId} hrefFor={hrefForPage} onSelect={openPage} forceOpen={searching} />)}
             </div>
@@ -296,10 +303,10 @@ export function Sidebar() {
       </nav>
 
       <div className="shrink-0 border-t border-[var(--border)] p-2">
-        <button type="button" title="My Preferences" onClick={() => openPage("preferences")} className={cn("focus-ring flex h-9 w-full items-center rounded-[10px] text-[var(--text-muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)]", expanded ? "gap-2.5 px-2.5" : "justify-center")}><span className="flex size-6 items-center justify-center"><SlidersHorizontal className="size-3.5" /></span>{expanded ? <span className="text-[length:calc(11px*var(--fs-scale))] font-bold">My Preferences</span> : null}</button>
+        <button type="button" title={translateCopy("ui.my.preferences.164a6ee1")} onClick={() => openPage("preferences")} className={cn("focus-ring flex h-9 w-full items-center rounded-[10px] text-[var(--text-muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)]", expanded ? "gap-2.5 px-2.5" : "justify-center")}><span className="flex size-6 items-center justify-center"><SlidersHorizontal className="size-3.5" /></span>{expanded ? <span className="text-[length:calc(11px*var(--fs-scale))] font-bold"><LocalizedText message="ui.my.preferences.164a6ee1" /></span> : null}</button>
         <button type="button" title={preferences.sidebarPinned ? "Sidebar is fixed" : "Sidebar expands on hover"} onClick={() => updatePreference("sidebarPinned", !preferences.sidebarPinned)} className={cn("focus-ring mt-0.5 flex h-9 w-full items-center rounded-[10px] text-[var(--text-muted)] transition hover:bg-[var(--surface-2)] hover:text-[var(--text)]", expanded ? "gap-2.5 px-2.5" : "justify-center")}>
           <span className="flex size-6 items-center justify-center">{preferences.sidebarPinned ? <PanelLeftClose className="size-3.5" /> : <PanelLeftOpen className="size-3.5" />}</span>
-          {expanded ? <span className="min-w-0 flex-1 text-left text-[length:calc(10px*var(--fs-scale))] font-semibold">{preferences.sidebarPinned ? "Unfix sidebar" : "Fix sidebar open"}</span> : null}
+          {expanded ? <span className="min-w-0 flex-1 text-start text-[length:calc(10px*var(--fs-scale))] font-semibold">{preferences.sidebarPinned ? <LocalizedText message="ui.unfix.sidebar.fcdb31f7" /> : <LocalizedText message="ui.fix.sidebar.open.5cfa2a6b" />}</span> : null}
           {expanded ? <SideIcon className="size-3 text-[var(--text-subtle)]" /> : null}
         </button>
         </div>

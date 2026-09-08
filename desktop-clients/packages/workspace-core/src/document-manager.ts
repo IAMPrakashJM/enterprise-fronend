@@ -78,6 +78,9 @@ export interface Workspace {
   closeAll(options?: { discardChanges?: boolean; includeUnclosable?: boolean }): CloseResult;
   closeOthers(documentId: string, options?: { discardChanges?: boolean }): CloseResult;
 
+  /** Session-only screen state. Never included in restore metadata. */
+  getDraft<T>(documentId: string, key: string): T | undefined;
+  setDraft<T>(documentId: string, key: string, value: T): void;
   markDirty(documentId: string): void;
   markClean(documentId: string): void;
 
@@ -164,6 +167,7 @@ export function createWorkspace(options: {
    * actually changes, and a change replaces only the documents it touched, so
    * marking one form dirty does not hand every other tab a new object.
    */
+  const drafts = new Map<string, Map<string, unknown>>();
   let documents: WorkspaceDocument[] = [];
   let activeId: string | null = null;
   /* The split is an arrangement over documents, not a property of one. Ordered
@@ -286,6 +290,7 @@ export function createWorkspace(options: {
   };
 
   const removeDocument = (document: WorkspaceDocument, announce: boolean) => {
+    drafts.delete(document.documentId);
     let next = documents.filter((doc) => doc.documentId !== document.documentId);
     /* A split of one is not a split. Closing a pane collapses onto the other
        rather than leaving a divider with nothing on the far side. */
@@ -332,6 +337,7 @@ export function createWorkspace(options: {
     /* Unconditional, dirty or not. A tenant switch or a logout is not a moment
        to ask whether to keep another tenant's record on screen. */
     const closing = documents;
+    drafts.clear();
     split = [];
     detached = [];
     recent = [];
@@ -472,6 +478,15 @@ export function createWorkspace(options: {
 
     /* A no-op does not commit. Otherwise every keystroke in an already-dirty
        form invalidates the snapshot and re-renders the whole tab bar. */
+    getDraft<T>(documentId: string, key: string) { return drafts.get(documentId)?.get(key) as T | undefined; },
+    setDraft<T>(documentId: string, key: string, value: T) {
+      if (!find(documentId)) return;
+      const fields = drafts.get(documentId) ?? new Map<string, unknown>();
+      if (Object.is(fields.get(key), value)) return;
+      fields.set(key, value);
+      drafts.set(documentId, fields);
+      for (const listener of changeListeners) listener();
+    },
     markDirty(documentId) { setDirty(documentId, true); },
     markClean(documentId) { setDirty(documentId, false); },
 
@@ -479,8 +494,8 @@ export function createWorkspace(options: {
       const document = find(documentId);
       if (!document) return;
       if (document.state === "SUSPENDED") return;
-      commit(documents.map((doc) => (doc.documentId === documentId ? { ...doc, state: "SUSPENDED" as const } : doc)));
       if (activeId === documentId) activeId = null;
+      commit(documents.map((doc) => (doc.documentId === documentId ? { ...doc, state: "SUSPENDED" as const } : doc)));
       emit("suspend", find(documentId)!);
     },
 

@@ -4,6 +4,8 @@ import path from "node:path";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  output: "standalone",
+  outputFileTracingRoot: path.join(__dirname, "..", ".."),
   // Pin the workspace root so Turbopack never infers it from a stray parent lockfile.
   turbopack: { root: path.join(__dirname, "..", "..") },
   /* Every @pepbits package ships RAW TypeScript (main: "./src/index.ts", no build

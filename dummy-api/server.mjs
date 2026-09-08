@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { allowedMethods } from "./route-methods.mjs";
+import {withMessageMetadata} from "./message-descriptors.mjs";
 /**
  * Nexora demo auth API.
  *
@@ -16,7 +18,18 @@
  *   node server.mjs            # :3200
  *   PORT=4100 node server.mjs
  */
+import { createApplicationConfig } from "./application-config.mjs";
+import { PAGE_REGISTRY } from "../desktop-clients/packages/erp-config/src/navigation.ts";
+import { getEntitySchema } from "../desktop-clients/packages/erp-config/src/entity-schemas.ts";
+import { validateForm } from "../desktop-clients/packages/erp-config/src/form-rules.ts";
+import { createApprovalStore } from "./approval-store.mjs";
+import { createImportStore } from "./import-store.mjs";
+import { getImportDefinition } from "../desktop-clients/packages/erp-config/src/imports.ts";
+import { createRecordPanelsStore } from "./record-panels-store.mjs";
+import { createWorkspaceStore } from "./workspace-store.mjs";
+import { createRecordStore } from "./record-store.mjs";
 import { createServer } from "node:http";
+import { gzipSync } from "node:zlib";
 import { ADAPTERS, acceptKey, attachSocket, chooseProvider, mockSegment, transcribeOpenAI } from "./speech-gateway.mjs";
 import { createHash, randomBytes } from "node:crypto";
 import { chmodSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
@@ -24,6 +37,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PORT = Number(process.env.PORT ?? 3200);
+const applicationConfig = createApplicationConfig(process.env.NEXORA_CONFIG_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "config"), new Set(Object.keys(PAGE_REGISTRY)));
 
 /* Roles are the `value` strings from packages/erp-config's ROLES, so the shell's role
    selector can reflect the account instead of being free-choice. */
@@ -79,7 +93,30 @@ const sessions = new Map();
    every saved preference the moment the process restarted, which defeats the whole
    point of "log out, log back in, your settings are still there".
    Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
-const DATA_DIR = join(dirname(fileURLToPath(import.meta.url)), "data");
+const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "data");
+const recordPanelsStore = createRecordPanelsStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"record-panels.json"));
+const workspaceStore = createWorkspaceStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "workspaces.json"));
+const recordStore = createRecordStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "records.json"));
+const approvalStore=createApprovalStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"approvals.json"),{
+  record:(user,product,pageId,id)=>{
+    if(!Object.hasOwn(PAGE_REGISTRY,pageId))return null;
+    const page=PAGE_REGISTRY[pageId],config=getWorklistConfig(pageId,page.title,page.entity);
+    return rowsWithSaved(user,product,pageId,config).find(row=>String(row[config.primaryKey])===id)??null;
+  },
+});
+const importStore = createImportStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"imports.json"),{
+  definition: pageId => Object.hasOwn(PAGE_REGISTRY,pageId) ? getImportDefinition(PAGE_REGISTRY[pageId].entity) : null,
+  existing: (user,product,pageId) => {
+    const page=PAGE_REGISTRY[pageId],config=getWorklistConfig(pageId,page.title,page.entity);
+    return rowsWithSaved(user,product,pageId,config).map(row=>row.customerCode??row[config.primaryKey]);
+  },
+  alreadySaved: (user,job,id) => !!recordStore.handle(user,JSON.stringify([job.productId,`form:${job.pageId}:${id}`]),'load').body.record,
+  save: (user,job,id,values) => {
+    const result=recordStore.handle(user,JSON.stringify([job.productId,`form:${job.pageId}:${id}`]),'save',{values,version:0,draftVersion:0,operationId:`${job.id}-${id.split('-').at(-1)}`});
+    if(result.status!==200)throw new Error('Import row was not saved.');
+  },
+});
+
 const PREFS_FILE = join(DATA_DIR, "preferences.json");
 
 function loadPrefs() {
@@ -172,14 +209,28 @@ function partitionOnServer(filters) {
   return { safe, sensitive };
 }
 
-function matchesRow(row, key, value) {
+function rowsWithSaved(user, product, pageId, config) {
+  const rows = new Map(config.rows.map(row => [String(row[config.primaryKey]), row]));
+  for (const item of recordStore.list(user, JSON.stringify([product, `form:${pageId}:`]))) {
+    const id = JSON.parse(item.key)[1].slice(`form:${pageId}:`.length);
+    const values = item.record.values, mapped = {};
+    for (const [key,value] of Object.entries(values)) if (["string","number","boolean"].includes(typeof value)) mapped[key]=value;
+    for (const [field,column] of Object.entries({ legalName:"name",displayName:"name",mobile:"phone",customerType:"type",accountManager:"owner" })) if(mapped[field]!==undefined)mapped[column]=mapped[field];
+    rows.set(id,{...rows.get(id),...mapped,[config.primaryKey]:id});
+  }
+  return [...rows.values()];
+}
+
+function matchesRow(row, key, value, mode = "contains") {
   const needle = value.trim().toLowerCase();
   if (!needle) return true;
   /* `query` is the free-text box: it searches every visible field, which is
      exactly why it is classified phi rather than operational. */
-  if (key === "query") return Object.values(row).some((field) => String(field).toLowerCase().includes(needle));
+  if (key === "query") return Object.values(row).some(field => { const text = String(field).toLowerCase(); return mode === "exact" ? text === needle : mode === "starts-with" ? text.startsWith(needle) : text.includes(needle); });
   const field = row[key];
-  if (field === undefined) return true;
+  if (key === "from" || key === "to") return Object.values(row).some(field => /^\d{4}-\d{2}-\d{2}/.test(String(field)) && (key === "from" ? String(field) >= value : String(field) <= value));
+  if (["recordRef", "tags", "createdBy"].includes(key)) return Object.values(row).some(field => String(field).toLowerCase().includes(needle));
+  if (field === undefined) return false;
   return String(field).toLowerCase().includes(needle);
 }
 
@@ -689,12 +740,13 @@ const CORS = {
      not name: the request never leaves, nothing is logged, and the only symptom
      is a cell that will not save. */
   "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, If-None-Match",
+  "Access-Control-Expose-Headers": "ETag",
   "Access-Control-Max-Age": "86400",
 };
 
 function send(res, status, body, extraHeaders) {
-  const payload = body === undefined ? "" : JSON.stringify(body);
+  const payload = body === undefined ? "" : JSON.stringify(withMessageMetadata(body));
   res.writeHead(status, {
     ...CORS,
     "Content-Type": "application/json; charset=utf-8",
@@ -705,13 +757,13 @@ function send(res, status, body, extraHeaders) {
   res.end(payload);
 }
 
-async function readJson(req) {
+async function readJson(req, limit = 16_384) {
   const chunks = [];
   let size = 0;
   for await (const chunk of req) {
     size += chunk.length;
     // A demo service still should not be a memory bomb.
-    if (size > 16_384) throw new Error("body too large");
+    if (size > limit) throw new Error("body too large");
     chunks.push(chunk);
   }
   if (!chunks.length) return {};
@@ -730,6 +782,12 @@ const server = createServer(async (req, res) => {
   if (req.method === "OPTIONS") {
     res.writeHead(204, CORS);
     return res.end();
+  }
+
+  const allowed = allowedMethods(pathname);
+  if (allowed && !allowed.includes(req.method)) {
+    res.setHeader("Allow", allowed.join(", "));
+    return send(res, 405, { error: "Method not allowed." });
   }
 
   if (req.method === "POST" && pathname === "/auth/login") {
@@ -766,6 +824,59 @@ const server = createServer(async (req, res) => {
     if (token) sessions.delete(token);
     res.writeHead(204, CORS);
     return res.end();
+  }
+
+  if (pathname === "/records" && req.method === "GET") {
+    const user = sessions.get(bearer(req));
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    try { return send(res, 200, { records: recordStore.list(user, requestUrl.searchParams.get("scope")) }); }
+    catch { return send(res, 400, { error: "Invalid record scope." }); }
+  }
+
+  if (pathname.startsWith("/records/")) {
+    const token = bearer(req);
+    const user = token ? sessions.get(token) : undefined;
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const match = pathname.match(/^\/records\/([^/]+)(?:\/(draft|discard|create))?$/);
+    if (!match) return send(res, 404, { error: "Unknown record route." });
+    let key;
+    try { key = decodeURIComponent(match[1]); } catch { return send(res, 400, { error: "Invalid record key." }); }
+    if (!key || key.length > 300) return send(res, 400, { error: "Invalid record key." });
+    const action = req.method === "GET" && !match[2] ? "load" : req.method === "PUT" ? (match[2] ?? "save") : null;
+    if (!action) return send(res, 405, { error: "Method not allowed." });
+    let body;
+    if (action !== "load") {
+      try { body = await readJson(req, 262_144); } catch { return send(res, 400, { error: "Invalid or oversized record." }); }
+    }
+    if (sessions.get(token) !== user) return send(res, 401, { error: "Session ended." });
+    try {
+      if (["save", "create"].includes(action) && body?.values && typeof body.values === "object") {
+        let definition;
+        try { const logical = JSON.parse(key)[1]; if (logical.startsWith("form:")) definition = PAGE_REGISTRY[logical.split(":")[1]]; } catch { /* Custom product adapters validate their own schemas. */ }
+        if (definition) {
+          const fieldErrors = validateForm(getEntitySchema(definition.entity, definition.title), body.values);
+          if (Object.keys(fieldErrors).length) return send(res, 422, { error: "Complete the highlighted fields.", fieldErrors });
+        }
+      }
+      const result = recordStore.handle(user, key, action, body);
+      return send(res, result.status, result.body);
+    } catch {
+      return send(res, 500, { error: "Could not persist record." });
+    }
+  }
+
+  if (pathname === "/navigation" || pathname === "/localization") {
+    const user = sessions.get(bearer(req));
+    if (!user) return send(res, 401, {error:"Not signed in."});
+    if (req.method !== "GET") return send(res, 405, {error:"Method not allowed."});
+    const productId = requestUrl.searchParams.get("productId");
+    const result = pathname === "/navigation" ? applicationConfig.navigation(user,productId) : applicationConfig.localization(user,productId,requestUrl.searchParams.get("language"));
+    if (result.error) return send(res,result.status,{error:result.error});
+    const etag = `"${result.body.revision}"`;
+    const headers = {"Cache-Control":"private, no-cache",ETag:etag,Vary:"Authorization, Accept-Encoding"};
+    if (req.headers["if-none-match"] === etag) {res.writeHead(304,{...CORS,...headers});return res.end();}
+    if (/\bgzip\b/.test(req.headers["accept-encoding"] ?? "")) {res.writeHead(200,{...CORS,...headers,"Content-Type":"application/json; charset=utf-8","Content-Encoding":"gzip"});return res.end(gzipSync(JSON.stringify(result.body)));}
+    return send(res,200,result.body,headers);
   }
 
   if (pathname === "/preferences") {
@@ -883,6 +994,62 @@ const server = createServer(async (req, res) => {
     return send(res, 405, { error: `${req.method} not allowed on /ai/policy.` });
   }
 
+  if (pathname === "/approvals" && req.method === "POST") {
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    let body;try{body=await readJson(req,256*1024);}catch{return send(res,413,{error:"Approval request is too large or invalid."});}
+    if(sessions.get(token)!==user)return send(res,401,{error:"Your session ended."});
+    try{const result=approvalStore.handle(user,body);return send(res,result.status,result.body);}
+    catch{return send(res,500,{error:"Approval could not be confirmed. Retry the same action to recover its result."});}
+  }
+
+  if (pathname === "/imports" && req.method === "POST") {
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    let body;try{body=await readJson(req,3*1024*1024);}catch{return send(res,413,{error:"Import exceeds the service request limit."});}
+    if(sessions.get(token)!==user)return send(res,401,{error:"Your session ended."});
+    try{const result=importStore.handle(user,body);return send(res,result.status,result.body);}
+    catch{return send(res,500,{error:"Import status could not be confirmed. Resume the import to check completed rows."});}
+  }
+
+  if (pathname === "/record-panels" && req.method === "POST") {
+    const token=bearer(req), user=sessions.get(token);
+    if(!user)return send(res,401,{error:"Not signed in."});
+    let body;try{body=await readJson(req,3*1024*1024);}catch{return send(res,413,{error:"Invalid request or attachment larger than 2 MB."});}
+    if(sessions.get(token)!==user)return send(res,401,{error:"Your session ended."});
+    if (!Array.isArray(body?.scope) || body.scope.length!==3 || body.scope.some(value=>typeof value!=="string"||!value||value.length>200)) return send(res,400,{error:"A product, page and saved record are required."});
+    const knownRecord=(pageId,id)=>{
+      if(typeof pageId!=="string"||typeof id!=="string"||!Object.hasOwn(PAGE_REGISTRY,pageId))return false;
+      const page=PAGE_REGISTRY[pageId];if(!page)return false;
+      const config=getWorklistConfig(pageId,page.title,page.entity);
+      return rowsWithSaved(user,body.scope[0],pageId,config).some(row=>String(row[config.primaryKey])===id);
+    };
+    if(!knownRecord(body.scope[1],body.scope[2]))return send(res,404,{error:"Save or select an existing record before using these panels."});
+    if(body.action==='link'&&!knownRecord(body.pageId,body.recordId))return send(res,404,{error:"That related record was not found on the selected page."});
+    try{const result=recordPanelsStore.handle(user,body);return send(res,result.status,result.body);}
+    catch{return send(res,500,{error:"Record panels could not be saved. Retry the operation."});}
+  }
+
+  if (pathname === "/personal-views" && req.method === "POST") {
+    const user = sessions.get(bearer(req));
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const body = await readJson(req).catch(() => null);
+    if (!body || typeof body !== "object") return send(res, 400, { error: "Invalid view request." });
+    try { const result = workspaceStore.views(user, body); return send(res, result.status, result.body); }
+    catch { return send(res, 500, { error: "Could not save personal views." }); }
+  }
+
+  if (pathname === "/worklists/archive" && req.method === "POST") {
+    const user = sessions.get(bearer(req));
+    if (!user) return send(res, 401, { error: "Not signed in." });
+    const body = await readJson(req).catch(() => null);
+    if (!body || typeof body.pageId !== "string" || !body.pageId || (body.productId !== undefined && typeof body.productId !== "string") || !Array.isArray(body.ids) || !body.ids.length || body.ids.length > 100 || body.ids.some(id => typeof id !== "string")) return send(res, 400, { error: "Select 1–100 record IDs." });
+    try {
+      const config = getWorklistConfig(body.pageId, typeof body.title === "string" ? body.title : body.pageId, typeof body.entity === "string" ? body.entity : "record");
+      const rows = rowsWithSaved(user, body.productId ?? "nexora", body.pageId, config);
+      const results = workspaceStore.archive(user, body.productId ?? "nexora", body.pageId, [...new Set(body.ids)], rows, config.primaryKey);
+      return send(res, 200, { results });
+    } catch { return send(res, 500, { error: "Could not archive records." }); }
+  }
+
   /* ---- worklist search --------------------------------------------------- */
   if (pathname === "/worklists/search") {
     if (req.method !== "POST") return send(res, 405, { error: `${req.method} not allowed on /worklists/search.` });
@@ -921,19 +1088,28 @@ const server = createServer(async (req, res) => {
        written by PATCH and read by nobody, so the server's idea of a cell and
        the client's diverged permanently and every later edit looked like a
        conflict. */
-    const edited = config.rows.map((row) => {
-      const held = cellEdits.get(`${user.tenantId}:${pageId}:${String(row[config.primaryKey])}`);
+    const product = typeof body.productId === "string" ? body.productId : "nexora";
+    const edited = rowsWithSaved(user, product, pageId, config).filter(row => !workspaceStore.isArchived(user, product, pageId, String(row[config.primaryKey]))).map(row => {
+      const held = cellEdits.get(JSON.stringify([user.tenantId, product, pageId, String(row[config.primaryKey])]));
       return held ? { ...row, ...held.values } : row;
     });
-    const rows = edited.filter((row) => Object.entries(filters).every(([key, value]) => matchesRow(row, key, value)));
+    const rows = edited.filter(row => Object.entries(filters).every(([key, value]) => matchesRow(row, key, String(value), body.queryMode)));
+    const sort = body.sort;
+    if (sort && config.columns.some(column => column.key === sort.key)) rows.sort((a,b) => {
+      const left=a[sort.key], right=b[sort.key];
+      const compared=typeof left === "number" && typeof right === "number" ? left-right : String(left ?? "").localeCompare(String(right ?? ""), undefined, {numeric:true});
+      return (sort.direction === "desc" ? -compared : compared) || String(a[config.primaryKey]).localeCompare(String(b[config.primaryKey]));
+    });
 
     console.log(`[search] ${user.email ?? user.id} tenant=${user.tenantId} page=${pageId} ${loggableFilters(safe, sensitive)} -> ${rows.length}/${config.rows.length}`);
 
-    const limit = Math.min(Number(body?.limit) || 200, 500);
+    const limit = Math.max(1, Math.min(Math.floor(Number(body?.pageSize ?? body?.limit)) || 200, 500));
+    const page = Math.max(1, Math.min(Math.floor(Number(body?.page)) || 1, Math.max(1, Math.ceil(rows.length / limit))));
     return send(res, 200, {
       pageId,
       total: rows.length,
-      rows: rows.slice(0, limit),
+      rows: rows.slice((page - 1) * limit, page * limit),
+      page, pageSize: limit,
       /* Echoed so a client can show what was applied without holding it in a
          URL. Keys only for the sensitive half, for the same reason the log
          does: this response passes through the same proxies. */
@@ -966,7 +1142,10 @@ const server = createServer(async (req, res) => {
     const user = token ? sessions.get(token) : undefined;
     if (!user) return send(res, 401, { error: "Not signed in." });
 
-    const [, , pageId, recordId] = pathname.split("/");
+    const [, , pagePart, recordPart] = pathname.split("/");
+    let pageId, recordId;
+    try { pageId = decodeURIComponent(pagePart ?? ""); recordId = decodeURIComponent(recordPart ?? ""); }
+    catch { return send(res, 400, {error:"Invalid record address."}); }
     if (!pageId || !recordId) return send(res, 400, { error: "An edit needs a page and a record." });
 
     const body = await readJson(req).catch(() => null);
@@ -975,7 +1154,8 @@ const server = createServer(async (req, res) => {
     const seen = typeof body?.seen === "string" ? body.seen : "";
     if (!column) return send(res, 400, { error: "An edit needs a column." });
 
-    const key = `${user.tenantId}:${pageId}:${recordId}`;
+    const product = typeof body?.productId === "string" ? body.productId : "nexora";
+    const key = JSON.stringify([user.tenantId, product, pageId, recordId]);
     const held = cellEdits.get(key);
 
     /* The row as generated, so a first edit has a stamp to compare against
@@ -983,7 +1163,7 @@ const server = createServer(async (req, res) => {
     let original;
     try {
       const config = getWorklistConfig(pageId, typeof body?.title === "string" && body.title ? body.title : pageId, typeof body?.entity === "string" && body.entity ? body.entity : "record");
-      original = config.rows.find((row) => String(row[config.primaryKey]) === recordId);
+      original = rowsWithSaved(user, product, pageId, config).find((row) => String(row[config.primaryKey]) === recordId);
     } catch { original = undefined; }
     if (!original) return send(res, 404, { error: "That record is not on this list." });
 

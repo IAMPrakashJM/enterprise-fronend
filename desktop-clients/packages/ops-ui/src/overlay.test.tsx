@@ -194,6 +194,12 @@ describe("Modal focus handling", () => {
     expect(screen.getByRole("textbox", { name: "Search pages" })).toHaveFocus();
     await userEvent.keyboard("journal");
     expect(screen.getByRole("textbox", { name: "Search pages" })).toHaveValue("journal");
+    await userEvent.keyboard("{Escape}");
+    expect(screen.getByRole("button", { name: "Open" })).toHaveFocus();
+    await userEvent.keyboard("{Enter}");
+    expect(screen.getByRole("textbox", { name: "Search pages" })).toHaveFocus();
+    await userEvent.keyboard("{Escape}");
+    expect(screen.getByRole("button", { name: "Open" })).toHaveFocus();
   });
 
   test("Tab cycles inside the panel instead of escaping to the page", async () => {
@@ -258,4 +264,20 @@ describe("Escape inside a dialog", () => {
     expect(screen.queryByRole("option")).toBeNull();
     expect(onClose).not.toHaveBeenCalled();
   });
+});
+
+test("Escape closes only the top dialog and restores its nested trigger", async () => {
+  function Example() {
+    const [open,setOpen]=React.useState(false),[confirm,setConfirm]=React.useState(false);
+    return <><button onClick={()=>setOpen(true)}>Open parent</button><Modal open={open} onClose={()=>setOpen(false)} title="Parent"><button onClick={()=>setConfirm(true)}>Delete item</button></Modal><ConfirmDialog open={confirm} title="Confirm delete" message="Delete?" onCancel={()=>setConfirm(false)} onConfirm={()=>setConfirm(false)} /></>;
+  }
+  render(<Example />);
+  await userEvent.click(screen.getByRole("button",{name:"Open parent"}));
+  await userEvent.click(screen.getByRole("button",{name:"Delete item"}));
+  await userEvent.keyboard("{Escape}");
+  expect(screen.queryByRole("dialog",{name:"Confirm delete"})).not.toBeInTheDocument();
+  expect(screen.getByRole("dialog",{name:"Parent"})).toBeVisible();
+  expect(screen.getByRole("button",{name:"Delete item"})).toHaveFocus();
+  await userEvent.keyboard("{Escape}");
+  expect(screen.getByRole("button",{name:"Open parent"})).toHaveFocus();
 });

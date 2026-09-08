@@ -1,7 +1,10 @@
 "use client";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 import { Ellipsis, ExternalLink, Plus, X } from "lucide-react";
 import { ActionMenu, IconButton, MenuButton, cn } from "@pepbits/ops-ui";
+import { useProduct } from "../product-context";
+import { PAGE_REGISTRY } from "@pepbits/erp-config";
 import type { WorkspaceDocument } from "@pepbits/workspace-core";
 
 /**
@@ -31,52 +34,60 @@ export function WorkspaceTabs({ documents, activeDocumentId, onActivate, onClose
   onDetach?: (documentId: string) => void;
   detachedIds?: string[];
 }) {
+  const {t: translateCopy} = useLocalization();
+  const product=useProduct();
+  const {t}=useLocalization();
+  const titleFor=(doc:WorkspaceDocument)=>{
+    const page=product.pages[doc.documentType],base=PAGE_REGISTRY[doc.documentType]?.title;
+    if(!page?.titleKey||!base||doc.title!==base&&!doc.title.startsWith(`${base} • `))return t(doc.title);
+    const suffix=doc.title.slice(base.length).split(' • ').map(part=>part==='New'||part==='Edit'?t(part):part).join(' • ');
+    return t(page.titleKey)+suffix;
+  };
   const activeId = documents.some((doc) => doc.documentId === activeDocumentId) ? activeDocumentId : documents[0]?.documentId ?? null;
   return (
     <div className="no-print flex h-[var(--tabbar-height)] shrink-0 items-end border-b border-[var(--border)] bg-[var(--surface-2)] px-2">
       {/* Named, because a page can have tablists of its own — a billing record has
           six — and "tablist" on its own does not say which one holds the open
           documents. */}
-      <div role="tablist" aria-label="Open documents" className="nex-scrollbar flex min-w-0 flex-1 items-end gap-1 overflow-x-auto overflow-y-hidden pt-1.5">
+      <div role="tablist" aria-label={translateCopy("ui.open.documents.eadd61ba")} className="nex-scrollbar flex min-w-0 flex-1 items-end gap-1 overflow-x-auto overflow-y-hidden pt-1.5">
         {documents.map((doc) => {
           const active = doc.documentId === activeId;
           const detached = detachedIds?.includes(doc.documentId) ?? false;
           return (
-            <button
-              key={doc.documentId}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              /* The dot is a dot. The word is what a screen reader gets, and it
-                 is the only warning before the close button is pressed. */
-              aria-label={[doc.title, detached ? "in its own window" : null, doc.dirty ? "unsaved changes" : null].filter(Boolean).join(" — ")}
-              onClick={() => onActivate(doc.documentId)}
-              className={cn("focus-ring group relative flex h-9 max-w-56 shrink-0 items-center gap-2 rounded-t-[11px] border px-3 text-left transition", active ? "border-[var(--border)] border-b-[var(--surface)] bg-[var(--surface)] text-[var(--text)]" : "border-transparent bg-transparent text-[var(--text-muted)] hover:bg-[var(--surface-3)]")}
-            >
+            <div key={doc.documentId} role="presentation" className={cn("focus-ring group relative flex h-9 max-w-56 shrink-0 items-center gap-2 rounded-t-[11px] border px-3 text-left transition", active ? "border-[var(--border)] border-b-[var(--surface)] bg-[var(--surface)] text-[var(--text)]" : "border-transparent bg-transparent text-[var(--text-muted)] hover:bg-[var(--surface-3)]")}>
+              <button type="button" role="tab" aria-keyshortcuts={doc.closable ? "Delete" : undefined} aria-selected={active} tabIndex={active ? 0 : -1}
+                aria-label={[titleFor(doc), detached ? "in its own window" : null, doc.dirty ? "unsaved changes" : null].filter(Boolean).join(" — ")}
+                onClick={() => onActivate(doc.documentId)}
+                onKeyDown={event => {
+                  if (event.key === "Delete" && doc.closable) { event.preventDefault(); onClose(doc.documentId); return; }
+                  const index = documents.findIndex(item => item.documentId === doc.documentId);
+                  const next = event.key === "ArrowRight" ? (index + 1) % documents.length : event.key === "ArrowLeft" ? (index - 1 + documents.length) % documents.length : event.key === "Home" ? 0 : event.key === "End" ? documents.length - 1 : -1;
+                  if (next < 0) return;
+                  event.preventDefault(); onActivate(documents[next].documentId);
+                  event.currentTarget.closest('[role="tablist"]')?.querySelectorAll<HTMLElement>('[role="tab"]')[next]?.focus();
+                }}
+                className="focus-ring flex min-w-0 flex-1 items-center gap-2 rounded-md text-left">
               {detached
                 ? <ExternalLink aria-hidden className="size-3 shrink-0 text-[var(--text-subtle)]" />
                 : <span aria-hidden className={cn("size-1.5 shrink-0 rounded-full", doc.dirty ? "bg-[var(--warning)]" : active ? "bg-[var(--primary)]" : "bg-[var(--text-subtle)]")} />}
-              <span className="min-w-0 flex-1 truncate text-[length:calc(10.5px*var(--fs-scale))] font-bold">{doc.title}</span>
+              <span className="min-w-0 flex-1 truncate text-[length:calc(10.5px*var(--fs-scale))] font-bold">{<LocalizedText message={titleFor(doc)} />}</span>
+              </button>
               {doc.closable ? (
-                /* A nested button would be invalid inside the tab, so this is a
-                   span with a role. stopPropagation, or closing also activates
-                   the tab being removed and the shell paints a page on its way
-                   out. */
-                <span role="button" tabIndex={0} aria-label={`Close ${doc.title}`}
+                <span aria-hidden="true" title={t("Close {item}",{item:t(doc.title)})}
                   onClick={(event) => { event.stopPropagation(); onClose(doc.documentId); }}
-                  onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); event.stopPropagation(); onClose(doc.documentId); } }}
                   className="flex size-5 shrink-0 items-center justify-center rounded-md opacity-0 transition hover:bg-[var(--surface-3)] group-hover:opacity-100 focus:opacity-100">
                   <X className="size-3" />
                 </span>
               ) : null}
               {active ? <span aria-hidden className="absolute inset-x-2 top-0 h-0.5 rounded-full bg-[var(--primary)]" /> : null}
-            </button>
+            </div>
           );
         })}
       </div>
       <div className="mb-1 flex shrink-0 items-center gap-0.5 border-l border-[var(--border)] pl-1.5">
-        <IconButton label="Open page" className="size-8" onClick={() => onOpenCommand()}><Plus className="size-3.5" /></IconButton>
-        <ActionMenu trigger={<IconButton label="Tab options" className="size-8"><Ellipsis className="size-3.5" /></IconButton>}>
+        {documents.find(doc => doc.documentId === activeId)?.closable ? <IconButton label={t("Close {item}",{item:t(documents.find(doc => doc.documentId === activeId)?.title ?? "")})} className="size-8" onClick={() => { if (activeId) onClose(activeId); }}><X className="size-3.5" /></IconButton> : null}
+        <IconButton label="ui.open.page.af030334" className="size-8" onClick={() => onOpenCommand()}><Plus className="size-3.5" /></IconButton>
+        <ActionMenu trigger={<IconButton label="ui.tab.options.743b9c60" className="size-8"><Ellipsis className="size-3.5" /></IconButton>}>
           {(close) => <>
             {onDetach && activeId && !detachedIds?.includes(activeId) ? <MenuButton label="Open in its own window" onClick={() => { onDetach(activeId); close(); }} /> : null}
             {onSplit && !isSplit ? <MenuButton label="Split with the last document" hint="Alt+\\" onClick={() => { onSplit(); close(); }} /> : null}

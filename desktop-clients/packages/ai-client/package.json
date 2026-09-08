@@ -11,7 +11,8 @@
   "dependencies": {
     "@pepbits/ai-config": "*",
     "@pepbits/auth": "*",
-    "@pepbits/erp-config": "*"
+    "@pepbits/erp-config": "*",
+    "@pepbits/workspace-core": "*"
   },
   "peerDependencies": {
     "react": ">=19"

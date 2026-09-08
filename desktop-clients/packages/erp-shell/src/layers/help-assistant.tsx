@@ -1,9 +1,13 @@
 "use client";
+import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
+
+
+import { useProduct } from "../product-context";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronLeft, ChevronRight, CircleHelp, Keyboard, Pause, Play, Route, X } from "lucide-react";
 import { Button, IconButton, cn } from "@pepbits/ops-ui";
-import { PAGE_REGISTRY, SHORTCUTS, SHORTCUT_GROUPS, TOURS, displayFor, shortcutAvailable } from "@pepbits/erp-config";
+import { SHORTCUTS, SHORTCUT_GROUPS, TOURS, displayFor, shortcutAvailable } from "@pepbits/erp-config";
 import { useOptionalWorkspace } from "@pepbits/workspace-core";
 import type { TourStep } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
@@ -38,10 +42,12 @@ function Spotlight({ spot, title }: { spot: Spot; title: string }) {
 }
 
 export function HelpAssistant() {
+  const {t: translateCopy} = useLocalization();
+  const product = useProduct();
   const hasWorkspace = useOptionalWorkspace() !== null;
   const { preferences, helpOpen, setHelpOpen, setDocumentationOpen } = useERP();
   const navigation = useNavigation();
-  const page = PAGE_REGISTRY[navigation.current.pageId];
+  const page = product.pages[navigation.current.pageId];
   const kind = page?.kind ?? "dashboard";
 
   const [tab, setTab] = useState<Tab>("tour");
@@ -123,13 +129,10 @@ export function HelpAssistant() {
 
   return (
     <>
-      <button type="button" aria-label="Open page helper" title="Help (?)" onClick={() => setHelpOpen(!helpOpen)}
-        className="help-pulse no-print fixed bottom-12 right-5 z-[70] flex size-12 items-center justify-center rounded-2xl bg-[var(--primary-fill)] text-white shadow-[var(--shadow-md)] transition hover:-translate-y-0.5">
-        <CircleHelp className="size-5" />
-      </button>
+
 
       {helpOpen ? (
-        <div role="dialog" aria-label="Help" className="animate-slide-up no-print fixed bottom-28 right-5 z-[71] flex max-h-[70vh] w-[360px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
+        <div role="dialog" aria-label={translateCopy("ui.help.b79cac92")} className="animate-slide-up no-print fixed bottom-28 right-5 z-[71] flex max-h-[70vh] w-[360px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-lg)]">
           <div className="flex border-b border-[var(--border)]">
             {tabs.map((item) => (
               <button key={item.id} type="button" onClick={() => { setTab(item.id); setPlaying(false); setTouring(false); }}
@@ -138,13 +141,13 @@ export function HelpAssistant() {
                 {item.icon}{item.label}
               </button>
             ))}
-            <IconButton label="Close help" className="size-10 rounded-none" onClick={() => setHelpOpen(false)}><X className="size-4" /></IconButton>
+            <IconButton label="ui.close.help.88f2b692" className="size-10 rounded-none" onClick={() => setHelpOpen(false)}><X className="size-4" /></IconButton>
           </div>
 
           {tab === "tour" ? (
             <div className="nex-scrollbar flex flex-col gap-3 overflow-auto px-4 py-3.5">
               <div className="flex items-center gap-2.5">
-                <span className="text-[length:calc(9px*var(--fs-scale))] font-black uppercase tracking-[.12em] text-[var(--text-muted)]">Guided tour · {page?.title ?? "Workspace"}</span>
+                <span className="text-[length:calc(9px*var(--fs-scale))] font-black uppercase tracking-[.12em] text-[var(--text-muted)]"><LocalizedText message="ui.guided.tour.40eb5b9e" />{page?.title ?? "Workspace"}</span>
                 <span className="flex-1" />
                 <span className="font-mono text-[length:calc(10.5px*var(--fs-scale))] tabular-nums text-[var(--text-muted)]">{steps.length ? step + 1 : 0} / {steps.length}</span>
               </div>
@@ -157,17 +160,17 @@ export function HelpAssistant() {
                     <span className="text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{current.text}</span>
                   </span>
                 </div>
-              ) : <div className="rounded-xl bg-[var(--surface-2)] p-3 text-[length:calc(10.5px*var(--fs-scale))] text-[var(--text-muted)]">Nothing to tour on this page yet.</div>}
+              ) : <div className="rounded-xl bg-[var(--surface-2)] p-3 text-[length:calc(10.5px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.nothing.to.tour.on.this.page.yet.18d0885f" /></div>}
               <div className="flex gap-1.5">{steps.map((s, i) => <button key={s.target} type="button" title={s.title} onClick={() => { setTouring(true); setStep(i); }} className={cn("h-2 flex-1 rounded-sm transition", i <= step ? "bg-[var(--primary)]" : "bg-[var(--border)]")} />)}</div>
               <div className="flex items-center gap-2">
                 {/* Play starts the run. Stepping by hand starts it too -- a Next
                     button that highlights nothing would just look broken -- but
                     merely opening the panel does not. */}
-                <Button variant={playing ? "secondary" : "primary"} size="sm" leftIcon={playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />} onClick={() => { setTouring(true); setPlaying((p) => !p); }} disabled={!steps.length}>{playing ? "Pause" : touring ? "Resume" : "Play tour"}</Button>
-                {touring ? <Button variant="ghost" size="sm" onClick={() => { setPlaying(false); setTouring(false); setStep(0); }}>Stop</Button> : null}
+                <Button variant={playing ? "secondary" : "primary"} size="sm" leftIcon={playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />} onClick={() => { setTouring(true); setPlaying((p) => !p); }} disabled={!steps.length}>{playing ? <LocalizedText message="ui.pause.858e4ba7" /> : touring ? <LocalizedText message="ui.resume.d640c742" /> : <LocalizedText message="ui.play.tour.6d258106" />}</Button>
+                {touring ? <Button variant="ghost" size="sm" onClick={() => { setPlaying(false); setTouring(false); setStep(0); }}><LocalizedText message="ui.stop.cae7d57b" /></Button> : null}
                 <span className="flex-1" />
-                <IconButton label="Previous step" onClick={() => { setTouring(true); setStep((s) => (s - 1 + steps.length) % steps.length); }} disabled={!steps.length}><ChevronLeft className="size-4" /></IconButton>
-                <IconButton label="Next step" onClick={() => { setTouring(true); setStep((s) => (s + 1) % steps.length); }} disabled={!steps.length}><ChevronRight className="size-4" /></IconButton>
+                <IconButton label="ui.previous.step.318c1da8" onClick={() => { setTouring(true); setStep((s) => (s - 1 + steps.length) % steps.length); }} disabled={!steps.length}><ChevronLeft className="size-4" /></IconButton>
+                <IconButton label="ui.next.step.298a9207" onClick={() => { setTouring(true); setStep((s) => (s + 1) % steps.length); }} disabled={!steps.length}><ChevronRight className="size-4" /></IconButton>
               </div>
             </div>
           ) : null}
@@ -176,10 +179,10 @@ export function HelpAssistant() {
             <div className="nex-scrollbar flex flex-col gap-2.5 overflow-auto px-4 py-3.5">
               <span className="text-[length:calc(12px*var(--fs-scale))] font-black">{page?.title ?? "Workspace"}</span>
               <span className="text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{page?.subtitle ?? "Rendered from the central page registry using the shared shell, theme, access and preference contracts."}</span>
-              <span className="border-t border-[var(--border)] pt-2.5 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">The full page guide, the component library and the developer manual are one click away.</span>
+              <span className="border-t border-[var(--border)] pt-2.5 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message="ui.the.full.page.guide.the.component.library.and.the.develo.c84664a6" /></span>
               <div className="flex flex-wrap gap-2">
-                {preferences.documentationEnabled ? <Button size="sm" variant="primary" leftIcon={<BookOpen className="size-3.5" />} onClick={() => { setHelpOpen(false); setDocumentationOpen(true); }}>Open documentation</Button> : null}
-                <Button size="sm" variant="secondary" onClick={() => { navigation.open({ pageId: "library-dashboard" }); setHelpOpen(false); }}>Open Library →</Button>
+                {preferences.documentationEnabled ? <Button size="sm" variant="primary" leftIcon={<BookOpen className="size-3.5" />} onClick={() => { setHelpOpen(false); setDocumentationOpen(true); }}><LocalizedText message="ui.open.documentation.61139361" /></Button> : null}
+                <Button size="sm" variant="secondary" onClick={() => { navigation.open({ pageId: "library-dashboard" }); setHelpOpen(false); }}><LocalizedText message="ui.open.library.98c4cfdd" /></Button>
               </div>
             </div>
           ) : null}
@@ -187,9 +190,7 @@ export function HelpAssistant() {
           {tab === "keys" ? (
             <div className="nex-scrollbar flex flex-col overflow-auto px-4 pb-3.5 pt-2">
                             {!preferences.keyboardShortcuts ? (
-                <div className="px-1 py-3 text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">
-                  Keyboard shortcuts are switched off in your preferences. The list below is what they would be.
-                </div>
+                <div className="px-1 py-3 text-[length:calc(10px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message="ui.keyboard.shortcuts.are.switched.off.in.your.preferences.c0ffe36c" /></div>
               ) : null}
               {/* Rendered FROM the registry. The list used to be written out
                   again here, which is the copy that goes stale: a shortcut that

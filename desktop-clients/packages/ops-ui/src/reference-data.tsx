@@ -1,4 +1,6 @@
 "use client";
+import { LocalizedText } from "./localization";
+
 
 import React from "react";
 import { TriangleAlert } from "lucide-react";
@@ -60,13 +62,11 @@ export function ReferenceDataWarning({ failures, labels, onRetry, className }: {
     >
       <TriangleAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-[var(--warning-ink)]" />
       <div className="min-w-0 flex-1 text-[length:calc(10px*var(--fs-scale))] leading-relaxed">
-        <b>{names.length === 1 ? "A reference list could not be loaded." : "Some reference lists could not be loaded."}</b>{" "}
-        {names.join(", ")} {names.length === 1 ? "is" : "are"} unavailable, so {names.length === 1 ? "that field" : "those fields"} will look empty.
-        Other fields are unaffected.
-        {/* The machine code is deliberately absent — §6, it is for support, not
+        <b>{names.length === 1 ? <LocalizedText message="ui.a.reference.list.could.not.be.loaded.a1e0d208" /> : <LocalizedText message="ui.some.reference.lists.could.not.be.loaded.e9a89fdf" />}</b>{" "}
+        {names.join(", ")} {names.length === 1 ? "is" : "are"}<LocalizedText message="ui.unavailable.so.a3f71a82" />{names.length === 1 ? <LocalizedText message="ui.that.field.533d6c97" /> : <LocalizedText message="ui.those.fields.1ad330c4" />}<LocalizedText message="ui.will.look.empty.other.fields.are.unaffected.04f888e7" />{/* The machine code is deliberately absent — §6, it is for support, not
             for the user to decode. It stays in the response for logging. */}
       </div>
-      {onRetry ? <Button size="sm" variant="secondary" onClick={onRetry}>Try again</Button> : null}
+      {onRetry ? <Button size="sm" variant="secondary" onClick={onRetry}><LocalizedText message="ui.try.again.d8b8392e" /></Button> : null}
     </div>
   );
 }

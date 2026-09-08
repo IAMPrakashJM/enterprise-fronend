@@ -15,3 +15,5 @@ desktop-clients/apps/desktop/src-tauri/gen
 
 # run.sh state
 .run/
+.deploy/
+desktop-clients/deploy.config.json

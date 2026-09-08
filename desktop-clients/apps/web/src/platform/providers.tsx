@@ -3,7 +3,8 @@
 import React from "react";
 import { NavigationProvider } from "@pepbits/platform-ports";
 import { SessionProvider, useSession } from "@pepbits/auth";
-import { ERPProvider, EnterpriseShell, GlobalLayers, skeletonsPreferred } from "@pepbits/erp-shell";
+import { ApplicationProductProvider } from "../../../../products/provider";
+import { ProductProvider, ERPProvider, EnterpriseShell, GlobalLayers, skeletonsPreferred } from "@pepbits/erp-shell";
 import { AiSourcesProvider } from "@pepbits/ai-client";
 import { AssistantPanel } from "@pepbits/ai-ui";
 import { LoginScreen, SessionSplash, ShellSkeleton } from "@pepbits/erp-screens";
@@ -45,7 +46,9 @@ function Gate({ children }: { children: React.ReactNode }) {
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
+    <ApplicationProductProvider>
       <Gate>{children}</Gate>
+    </ApplicationProductProvider>
     </SessionProvider>
   );
 }
