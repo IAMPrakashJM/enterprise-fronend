@@ -72,3 +72,21 @@ Recovery messages are canonical in `dummy-api/config/localization/shared/{en,ar,
 Tests cover classification/actions in all four languages, transport and JSON-body timeouts, cancellation, reference correlation, same-user and cross-window session renewal, retained record edits and validation errors, retained import jobs and mappings, approval comments and operation IDs, table permission failures, and export retry without a second download. The dedicated browser suite is `e2e/recovery.mjs`; native modal recovery is part of `e2e/native-sentinel.mjs`.
 
 The changes extend the existing shared workflows. They do not provide durable offline storage, OS crash recovery for unsaved browser values, production authentication or exactly-once semantics for arbitrary third-party APIs.
+
+## Verified deployment — 8 September 2026
+
+Code commit `eb93a1dff4f2ef86d912344d90e1acfca5a20c4a` passed all six jobs in [GitHub Actions run 34259172734](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34259172734):
+
+- 1,432 unit tests in 88 files and 48 API tests.
+- 32 runtime suites: 9 browser, 18 feature, 1 navigation, 1 product and 3 native Linux suites.
+- Type checks, localization verification, production builds and repository verification checks.
+
+The earlier native CI attempt exposed unreliable controlled-panic startup. The test now waits for application readiness, isolates the WebKit profile and retains process diagnostics. Three consecutive local recovery runs and the final native CI job passed. Native checks include Arabic, Hindi and Malayalam billing screens, a real controlled panic/restart and same-user session recovery. This validates the Linux native runtime; a new installer was not published in this deployment.
+
+Release `20260908174722609-72db4f3d` is active on both [web demo](https://front-design.pepbits.com) and [desktop browser demo](https://desktop.front-design.pepbits.com). Both packaged shells passed HTML/asset checks before activation. The demo API restarted to load the updated message catalogs.
+
+Live browser checks on each site verified readable failed-sign-in copy, session locking, same-user sign-in with the original page still mounted, retained search text and explicit Retry. English, Arabic, Hindi and Malayalam recovery catalogs returned successfully, with no browser runtime errors. These checks intercepted only a read-only search in the test browser; they did not edit business records or tenant policies. Separate public probes confirmed successful HTML, API health, login, navigation and Arabic catalog responses.
+
+![Live session recovery dialog: sign in with the same account to continue with unsaved work](images/recovery/session-lock.png)
+
+The previous frontend release is retained at `.deploy/releases/20260908162629872-aaba59f3`. Pre-deployment API source and data are retained under `.deploy/api-backups/20260908174722609-72db4f3d/`; these local rollback files are not committed. Native-speaker review of the new translations remains Pending in the review CSV files.

@@ -9,7 +9,8 @@ for the ones that are not ours to do — who they are waiting on.
 ## User-facing error recovery — 8 September 2026
 
 Localized recovery messages/actions, retained in-memory work through recoverable
-failures and session renewal, and shared workflow regression coverage are implemented.
+failures and session renewal, and shared workflow regression coverage are implemented
+and deployed on both demo sites. All six CI jobs and live recovery checks passed.
 See [user error recovery and integration](user-error-recovery.md) for exact behavior,
 tests, integration requirements and limits.
 
