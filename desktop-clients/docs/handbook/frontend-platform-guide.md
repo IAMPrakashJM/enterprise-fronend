@@ -1,6 +1,6 @@
-# Frontend Platform: User and Integration Guide
+# Frontend Platform: Illustrated User and Integration Guide
 
-A practical handover for product owners, everyday users, developers and operators.
+A practical handover for product owners, everyday users, developers and operators. Illustrated with 19 screenshots of the running desktop interface.
 
 Reporting period: Monday 7 September 2026, with follow-on work through Tuesday 8 September 2026. All dates and release times use UTC.
 
@@ -34,7 +34,7 @@ Product-owned setup is separated from shared packages. The developer can select 
 
 Completed here means the shared frontend and its matching persisted demo service implement the documented behavior. Production identity, authorization, databases, object storage, compliance controls, email/push delivery and specialized business rules still belong to the consuming application. Adding an entirely new domain schema or module requires code changes; the starter is not a no-code application builder.
 
-Read sections 4–10 to use the product, sections 11–14 to integrate it, and sections 15–19 to run, verify and plan it.
+Read sections 4–10 to use the product, sections 11–14 to integrate it, and sections 15–19 to run, verify and plan it. The screenshots use isolated fictional demo data captured on 8 September 2026 at a 1440-pixel desktop width. Some show a focused panel rather than the full window so its controls remain readable. They are actual browser captures, not design mockups. Zoom the PDF to inspect a screen; original PNG files are supplied in the screenshots folder.
 
 ## 2. What happened on Monday, and what followed
 
@@ -102,12 +102,19 @@ Existing billing, consultation, spreadsheet, reporting, inbox and library screen
 
 The web site is https://front-design.pepbits.com. The desktop browser shell is https://desktop.front-design.pepbits.com. A browser desktop shell and an installed native Tauri application share much of the interface, but they are different delivery modes.
 
+![Figure 1. Sign-in screen. Enter your administrator-supplied account credentials. The image shows the demonstration login before any credentials were entered.](screenshots/01-sign-in.png)
+
+
 1. Sign in with an account supplied by the application administrator. Do not put production passwords or service credentials in this guide or product source.
 2. Use the sidebar to open Customer Master. Alternatively, press Ctrl+K, type Customer Master and choose the result.
 3. Search the list or open a record using its Edit action. A record is one saved business item, such as a customer.
 4. Make a small permitted change and save it. Wait for the saved acknowledgment. “Not saved” or a pending recovery indicator is not a completed save.
 5. Return to the list and use Refresh if you need the latest server result.
 6. Open Approval inbox to see requests available to your role. Use Import records in the worklist's More actions menu when creating customers from CSV.
+
+
+
+![Figure 2. Customer Master in the desktop workspace. Use the search/filter area to find records; New, Saved views and Approval inbox are on the list toolbar.](screenshots/02-customer-worklist.png)
 
 ### Who does what in the demonstration
 
@@ -128,6 +135,9 @@ A disabled action may need a saved record, selected rows, a comment, a successfu
 The design assumes a desktop screen, keyboard and pointer. Persistent navigation and dense lists are intentional. The work checked common desktop widths including 1280, 1440 and 1920 pixels, plus selected split-pane behavior. A narrow pane may scroll a table or reduce secondary information.
 
 ### Working with more than one record
+
+![Figure 3. Press Ctrl+K and type Customer Master. Choose the page result to open it in the workspace.](screenshots/03-command-palette.png)
+
 
 1. Open the first record, then open another record in the desktop workspace.
 2. Each record owns its edits and recovery state. Saving a background record must not mark the active record clean.
@@ -158,6 +168,10 @@ Restore draft, discard draft, or start editing
 Validate and Save
 Acknowledge saved version, or review error/conflict and retry
 ```
+
+
+
+![Figure 4. Customer form with section navigation on the left and Save draft / Save on the upper right. Complete required fields in all relevant sections; No changes saved is not a claim that a new edit has been committed.](screenshots/05-customer-form.png)
 
 ### Normal save
 
@@ -212,6 +226,10 @@ Selection means rows on the current page. Changing query, order or page clears s
 
 Views belong to an account, tenant, product and page. The demonstration allows 50 views in a scope and names up to 80 characters. Concurrent stale changes return a conflict and require reload. Existing opaque shared-filter links are separate from these personal layouts.
 
+
+
+![Figure 5. Saved views dialog after saving Daily customer review as the default. Apply restores the layout; Rename, Unset default and Delete manage the view without deleting customers.](screenshots/04-personal-view.png)
+
 ### Archive and export
 
 Archive returns a result for every selected ID. Successful rows disappear after refresh; failed rows remain available for review/retry. Unknown or locked rows can fail individually. Archive is not permanent deletion or a production retention workflow.
@@ -231,15 +249,27 @@ These panels belong to a saved record. They save separately from the form. Savin
 
 There are at most 20 attachments per record in the demo. File contents are stored as base64 in a private JSON file. Production applications should replace this with authorized object storage, scanning, transfer progress/resume and retention rules.
 
+![Figure 6. Attachments panel after uploading a fictional onboarding file. Download retrieves the file; Remove asks for confirmation. These actions save independently from the form.](screenshots/06-record-attachments.png)
+
+
 ### Add a comment or relationship
 
 Comments are plain text, attributed to a user and time, with a 4,000-character limit. Post comment saves it. The author or an administrator may remove it. The demo allows 200 comments per record.
 
+![Figure 7. Comments panel with a posted demo note and author/time. Type a note in New comment and select Post comment. Unposted text is not a durable record save.](screenshots/07-record-comments.png)
+
+
 For a related record, choose a configured page, enter an existing record ID and a relationship label, then Link record. Open follows the shared navigation interface. Self-links and duplicate links are rejected. Up to 100 links are supported per record in the demo.
+
+![Figure 8. Related records panel linking CUS-02402. Choose a page, enter a real saved record ID and label, then Link record. Open follows the link.](screenshots/08-related-records.png)
+
 
 ### Understand activity and retries
 
 Activity shows successful panel changes, newest first, with up to 500 entries. It is not the complete record-save or approval audit. Approval decisions have their own history.
+
+![Figure 9. Activity panel after adding the file, comment and relationship. These entries describe successful supporting-panel changes, not the complete record audit.](screenshots/09-panel-activity.png)
+
 
 If a mutation response is lost, Retry change preserves the operation identity and avoids duplicating an acknowledged change. A correctable rejection keeps inputs available for correction. Comment/link inputs survive desktop tab suspension in memory, but unposted text is not durable across document close or reload.
 
@@ -248,6 +278,9 @@ Panel writes require both product edit availability and service permission. The 
 ## 9. Import customers from CSV
 
 Open Customer Master, then More actions → Import records. This workflow creates new customers; it does not overwrite existing customers.
+
+![Figure 10. Import dialog before file selection. Use Upload CSV file to choose a UTF-8 CSV within the displayed size and row limits.](screenshots/10-csv-upload.png)
+
 
 ```flow
 Upload CSV and preview the first five rows
@@ -274,17 +307,30 @@ Use fictional data while testing. Customer fields include customer code, legal n
 
 Matching field IDs or labels are suggested automatically. Select the correct CSV column for every required field without a default. One source column can map to at most one application field. Select Validate mapped rows to check all rows on the server.
 
+![Figure 11. CSV preview and mapping. The file column Company is explicitly mapped to Legal name; matching identifiers were suggested for the other columns. Select Validate mapped rows when mapping is complete.](screenshots/11-csv-mapping.png)
+
+
 Validation covers required/conditional fields, email, supported option values, numeric rules, dependent choices and applicable dates. Numbers exclude grouping separators and currency symbols. Toggles accept true/false, yes/no or 1/0. Multiselect values use semicolons. Dates use YYYY-MM-DD where applicable.
 
 Customer codes are compared after trimming and case folding. Every occurrence of a duplicate inside the file is invalid. Codes already in saved or seeded customers are invalid too.
+
+
+
+![Figure 12. Validation of six illustrative rows: three ready and three invalid. The invalid rows contain an email error and a duplicated code. Review errors or download the report before importing.](screenshots/12-csv-validation.png)
 
 ### Confirm and inspect results
 
 1. Review each row's errors, switch to Error rows, or download the error report.
 2. Change the mapping if needed. Correct bad source values in the original CSV before validating a new import.
 3. Choose Import valid rows, then explicitly confirm. Validation alone does not create records.
+
+![Figure 13. Final confirmation before any customer is created. Confirm import creates the three valid records and excludes the three invalid rows.](screenshots/13-csv-confirmation.png)
+
 4. The service processes ten pending rows per batch. Progress distinguishes ready, imported, invalid and failed rows.
 5. Closing pauses after the current batch. Reopening or reloading restores the latest server job. Resume continues pending rows. Retry failed rows retries transient failures without submitting successful rows again.
+
+![Figure 14. Completed six-row example: three imported, three invalid and zero failed writes. Progress and row statuses show the acknowledged outcome. Retry failed rows appears only when transient failed writes exist; this screenshot does not claim to demonstrate that state.](screenshots/14-csv-results.png)
+
 
 A code created after validation becomes a non-retryable row error. Correct the CSV and validate again. Deterministic job/row record IDs recover safely when a record was saved but its receipt or response was lost.
 
@@ -311,12 +357,18 @@ Final approval or rejection appears in history and requester notices
 
 The default is Finance review, assigned to finance-manager or enterprise-admin. New configuration applies to future submissions and resubmissions. Existing pending requests retain the stages captured when they were submitted. Configure an available approver other than the requester. Account-specific assignment, delegation and escalation are not implemented.
 
+![Figure 15. Administrator stage configuration. This example uses Finance review followed by Final review, with different approver roles. Save approval stages and confirm to apply it to future submissions.](screenshots/16-approval-stages.png)
+
+
 ### Requester: submit or resubmit
 
 1. Open the saved customer. Save any form edits first.
 2. In Record approval, add an Approval comment.
 3. Select Submit for approval and confirm.
 4. After requested changes or rejection, edit and save the record as needed, add a new comment, then Resubmit saved record.
+
+![Figure 16. Record approval section before submission. Add an Approval comment and select Submit for approval, then confirm. This is the working approval control, separate from the older form-menu demonstration action.](screenshots/15-approval-submission.png)
+
 
 The original requester owns resubmission. Submitting an unchanged version already pending or approved is refused. Changing the saved record during review prevents decisions until resubmission. A visible warning identifies an earlier approval when the current saved record has changed. Approval does not lock the form or execute downstream business actions.
 
@@ -328,11 +380,20 @@ For bulk decisions, open Approval inbox. Filter by status, current stage, owners
 
 Refresh approvals before acting on information changed by another user. A version conflict requires reviewing fresh data. An uncertain response exposes Retry approval action, which reuses the same operation identity.
 
+![Figure 17. Approval inbox as a finance reviewer. Filters narrow the list; only the eligible pending row is selected. Add the bulk decision comment and choose Approve selected, Reject selected or Request changes for selected.](screenshots/17-approval-inbox.png)
+
+
 ### History and requester notifications
 
 Expand Approval history for a record to see decisions, comments, actors, stages and timestamps. Earlier review cycles remain after resubmission.
 
+![Figure 18. Expanded history of CUS-02401 after finance and final approval. Each decision retains its stage, actor, time and comment.](screenshots/18-approval-history.png)
+
+
 Expand My approval notifications in the inbox or record section. Requesters receive persistent in-app notices for submission, stage advancement, final approval, rejection and requested changes. Open a notification to inspect the record. Mark notifications read updates the stored read state. The latest 100 notices are displayed and changes from other users appear on refresh.
+
+![Figure 19. Requester notifications for the fictional approval examples. Open notification goes to the record; Mark notifications read persists the read state. This feed is separate from the general header bell.](screenshots/19-requester-notifications.png)
+
 
 These notices are specific to approvals. Email, push, automatic live delivery and synchronization with the general header notification bell are pending integrations.
 
@@ -670,6 +731,10 @@ These are proposed priorities based on the inspected foundation. They are not de
 | Optional / product owner | Mobile and broader component catalogue | Product requirements specify acceptance coverage and demonstrable component states |
 
 The old roadmap contains competing opinions about a separate component sandbox. The newer multi-product review suggests extending the existing Library first. Treat the direction as a product decision, not a completed feature. Minor navigation questions about the shared module branch and dashboard special case also remain in the older backlog.
+
+### Remaining legacy form-menu demonstrations
+
+The older More record actions menu still contains Duplicate record and View audit history entries without completed workflows, plus a Submit for approval entry that only shows a demo toast. Use the actual Record approval section shown in Figure 16 for persisted approval submission. Wiring or removing these older menu entries remains pending; a toast alone is not evidence of a submitted request.
 
 ### Production workflow work
 

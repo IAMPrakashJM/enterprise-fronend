@@ -12,7 +12,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     BaseDocTemplate, Frame, PageTemplate, Paragraph, Spacer, PageBreak,
-    LongTable, TableStyle, Preformatted, KeepTogether, CondPageBreak,
+    LongTable, TableStyle, Preformatted, KeepTogether, CondPageBreak, Image,
 )
 from reportlab.platypus.tableofcontents import TableOfContents
 
@@ -39,6 +39,7 @@ def build(source, target, font_dir):
     styles.add(ParagraphStyle('GuideCell', fontName='Body', fontSize=8.8, leading=12.5,
                               textColor=INK, wordWrap='CJK'))
     styles.add(ParagraphStyle('GuideCellHead', parent=styles['GuideCell'], fontName='BodyBold', textColor=colors.white))
+    styles.add(ParagraphStyle('GuideCaption', parent=styles['GuideBody'], fontSize=9, leading=13, textColor=MUTED, spaceAfter=14))
     styles.add(ParagraphStyle('GuideCode', fontName='Mono', fontSize=8, leading=11.5,
                               textColor=INK, backColor=PALE, borderPadding=9, spaceBefore=7, spaceAfter=12))
     styles.add(ParagraphStyle('GuideBullet', parent=styles['GuideBody'], leftIndent=15,
@@ -83,7 +84,7 @@ def build(source, target, font_dir):
         canvas.restoreState()
 
     doc = GuideDoc(str(target), pagesize=A4, leftMargin=46, rightMargin=46,
-                   topMargin=62, bottomMargin=49, title='Frontend Platform: User and Integration Guide',
+                   topMargin=62, bottomMargin=49, title='Frontend Platform: Illustrated User and Integration Guide',
                    author='Nexora project documentation', subject='Monday handover, user flows, architecture and SaaS integration',
                    invariant=1)
     frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id='main',
@@ -113,6 +114,19 @@ def build(source, target, font_dir):
             i += 1
         elif line.startswith('### '):
             story.extend([CondPageBreak(100), Paragraph(inline(line[4:]), styles['GuideH2'])])
+            i += 1
+        elif re.match(r'^!\[.*\]\(.+\)$', line):
+            match = re.fullmatch(r'!\[(.*?)\]\((.*?)\)', line)
+            caption, relative = match.groups()
+            image_path = (source.parent / relative).resolve()
+            if not image_path.is_relative_to(source.parent.resolve()):
+                raise ValueError('Screenshot must be inside the document folder')
+            picture = Image(str(image_path))
+            scale = min(doc.width / picture.imageWidth, 540 / picture.imageHeight)
+            picture.drawWidth = picture.imageWidth * scale
+            picture.drawHeight = picture.imageHeight * scale
+            story.append(KeepTogether([Spacer(1, 8), picture, Spacer(1, 8),
+                                      Paragraph(inline(caption), styles['GuideCaption'])]))
             i += 1
         elif line.startswith('```'):
             kind = line[3:].strip()
@@ -163,7 +177,7 @@ def build(source, target, font_dir):
         else:
             block = [line]
             i += 1
-            while i < len(lines) and lines[i].strip() and not re.match(r'^(#|\||```|- |\d+\. )', lines[i]):
+            while i < len(lines) and lines[i].strip() and not re.match(r'^(#|!\[|\||```|- |\d+\. )', lines[i]):
                 block.append(lines[i])
                 i += 1
             story.append(Paragraph(inline(' '.join(block)), styles['GuideBody']))
