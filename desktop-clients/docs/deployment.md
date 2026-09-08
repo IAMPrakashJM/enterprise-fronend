@@ -69,6 +69,15 @@ deploy. Its API URLs must still match the deployment config:
 npm run deploy -- --activate PREVIOUS_RELEASE_ID
 ```
 
+## Latest activation — 8 September 2026
+
+Release `20260908123426077-75c38ac1`, from application commit `55e5015`, is active
+on both public hosts. Remote CI passed all jobs before activation. The API was
+backed up and restarted to enable encrypted credential storage, persistent audit
+events and scheduled CSV report delivery. Public browser and HTTP checks passed.
+See [the release and integration guide](server-completion-2026-09-08.md) for
+validation, recovery paths and the external requirements that remain open.
+
 ## Current host
 
 On 7 September 2026, release `20260907163215381-b9dabe79` was activated for

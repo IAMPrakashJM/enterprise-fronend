@@ -175,5 +175,6 @@ targeted reruns; this was not a single uninterrupted aggregate run. The final
 language/theme race correction was checked by the unit regression and production
 build; the browser suites were not repeated after that correction.
 
-Temporary test services were stopped. These changes have not been committed,
-pushed or deployed, and the new GitHub Actions jobs have not run remotely.
+Temporary test services were stopped. This section records the original local
+validation; subsequent commits, successful remote CI runs and public deployments
+are recorded in [the release guide](server-completion-2026-09-08.md).

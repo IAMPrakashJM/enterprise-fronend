@@ -10,8 +10,24 @@ Release `20260908121202814-fa32f40d` was activated on both public demo hosts.
 Application HTML, assets, API health, sign-in, navigation and Arabic catalogs
 passed public HTTPS checks. The previous release is retained for rollback.
 
-The additional work below is a separate server/frontend release. Its final
-commit, CI and activation results will be recorded after verification.
+The additional work below was committed and pushed as `55e5015`. All jobs passed
+in [Actions run 34226797594](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34226797594):
+1,396 unit tests, 35 API tests, registry and deployment checks, both builds, and
+all 27 E2E suites (9 browser, 14 feature, 1 navigation, 1 product, 2 Linux native).
+
+Release `20260908123426077-75c38ac1` is now active on both public hosts. The API
+was stopped for a consistent backup and restarted with the new server code.
+Credential encryption migration succeeded; credential, audit and report files
+have mode 0600. API data and the previous server source are retained under
+`.deploy/api-backups/20260908123426077-75c38ac1` for recovery.
+
+Post-activation HTTPS checks passed for application HTML, assets, health,
+sign-in, navigation and Arabic catalogs. Actual browser sessions on both hosts
+opened the report schedule modal and loaded its API without runtime errors.
+Authenticated audit queries and unapproved-origin refusal passed on both hosts.
+No production schedules or external email deliveries were created by these
+smoke checks. Demo users must sign in again because the API restart ended old
+sessions. The previous frontend release remains available for rollback.
 
 ## Scheduled reports: user flow
 
@@ -113,5 +129,5 @@ remain open; completing local code cannot manufacture those approvals.
   real CSV download and pause.
 - Localized export checks passed for English, Arabic, Hindi and Malayalam,
   including real XLSX contents, invoice PDFs and the updated schedule modal.
-- The explicit registry now contains 27 E2E suites. Full remote execution is
-  required for the follow-up commit; the earlier green run tested 26 suites.
+- The explicit registry now contains 27 E2E suites. The full remote run for
+  `55e5015` passed all 27; the earlier release run tested 26 suites.

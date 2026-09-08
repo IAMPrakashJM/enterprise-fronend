@@ -24,7 +24,7 @@ numeric formatting. The PDFs use browser print-to-PDF; they do not demonstrate
 a background PDF service. Account number formatting in these examples is German,
 and invoice currency remains AED.
 
-The CSV sheets cover 2979 distinct shared messages, including navigation,
+The CSV sheets cover distinct shared messages, including navigation,
 schema, UI and API copy. Product overrides remain in
 `dummy-api/config/localization/products/`; review them in their product context
 before signing off an entire product. Reviewed technical/data exceptions are
