@@ -32,3 +32,9 @@ test.each([408,429,503])('HTTP %i retains the comment and retries the identical 
  fireEvent.click(screen.getByRole('button',{name:'Confirm approval action'}));await screen.findByRole('alert');expect(screen.getByLabelText('Approval comment')).toHaveValue('Keep this comment');expect(screen.getByRole('alert')).not.toHaveTextContent('INTERNAL');
  fireEvent.click(screen.getByRole('button',{name:'Retry'}));await waitFor(()=>expect(adapter.change).toHaveBeenCalledTimes(2));expect(adapter.change.mock.calls[1]).toEqual(adapter.change.mock.calls[0]);
 });
+
+test('return from a failed inbox delegates to its owning dialog',async()=>{
+ const {ApprovalError}=await import('@pepbits/erp-data');const onReturn=vi.fn(),adapter={read:vi.fn().mockRejectedValue(new ApprovalError('PRIVATE',403)),change:vi.fn()};
+ render(<ProductServicesProvider services={{approvals:adapter}}><ApprovalWorkspace pageId="customer-master" onReturn={onReturn}/></ProductServicesProvider>);
+ await screen.findByRole('alert');fireEvent.click(screen.getByRole('button',{name:'Return to page'}));expect(onReturn).toHaveBeenCalledOnce();expect(adapter.change).not.toHaveBeenCalled();
+});

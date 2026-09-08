@@ -609,7 +609,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
         <Pagination page={pageNumber} pageSize={pageSize} total={total} onPageChange={setPageNumber} onPageSizeChange={(size) => { updatePreference("pageSize", size); setPageNumber(1); }} />
       </Card>
 
-      <Modal open={approvalOpen} onClose={()=>setApprovalOpen(false)} title="ui.customer.approvals.1954476c" size="xl">{approvalOpen?<ApprovalWorkspace pageId={page.id}/>:null}</Modal>
+      <Modal open={approvalOpen} onClose={()=>setApprovalOpen(false)} title="ui.customer.approvals.1954476c" size="xl">{approvalOpen?<ApprovalWorkspace pageId={page.id} onReturn={()=>setApprovalOpen(false)}/>:null}</Modal>
       <CsvImportDialog open={importOpen} onClose={()=>setImportOpen(false)} page={page} productId={product.id} onImported={()=>setRefresh(value=>value+1)} />
       <ColumnManager open={columnOpen} onClose={() => setColumnOpen(false)} columns={config.columns} visibleKeys={visibleKeys} onChange={setVisibleKeys} onReset={resetLayout} />
       <ConfirmDialog open={confirmArchive} title={t("Archive {count} records?",{count:selected.length})} message={<><LocalizedText message="ui.they.will.be.excluded.from.this.worklist.records.that.ca.46f15d6e" /><br /><br /><LocalizedText message="ui.turn.off.06f0e210" />{" "}<b><LocalizedText message="ui.confirm.bulk.actions.5c64ae13" /></b><LocalizedText message="ui.in.my.preferences.to.skip.this.prompt.0e1972b0" /></>} confirmLabel="ui.archive.66f4804e" tone="danger" onConfirm={archive} onCancel={() => setConfirmArchive(false)} />

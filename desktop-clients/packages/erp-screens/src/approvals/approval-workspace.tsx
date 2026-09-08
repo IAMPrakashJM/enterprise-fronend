@@ -12,15 +12,15 @@ import {ApprovalError,createHttpApprovalAdapter,type ApprovalData,type ApprovalC
 import {Button,Input,Textarea,Select,Checkbox,ConfirmDialog} from '@pepbits/ops-ui';
 import {ProductApprovalContext,useProductRequest} from '../product-services';
 const roleOptions=['finance-manager','enterprise-admin','operations-analyst'];
-export function ApprovalWorkspace({pageId,recordId}:{pageId:string;recordId?:string}) {
+export function ApprovalWorkspace({pageId,recordId,onReturn}:{pageId:string;recordId?:string;onReturn?:()=>void}) {
  const product=useProduct(),{user}=useSession();
- return <Workspace key={JSON.stringify([product.id,user?.id,user?.tenantId,pageId,recordId])} productId={product.id} pageId={pageId} recordId={recordId}/>;
+ return <Workspace key={JSON.stringify([product.id,user?.id,user?.tenantId,pageId,recordId])} productId={product.id} pageId={pageId} recordId={recordId} onReturn={onReturn}/>;
 }
 export function RecordApproval({pageId,recordId}:{pageId:string;recordId?:string}) {
  if(pageId!=='customer-master')return null;
  return recordId?<ApprovalWorkspace pageId={pageId} recordId={recordId}/>:<p className="p-4 text-sm"><LocalizedText message="ui.save.the.record.before.submitting.it.for.approval.9161f6f6" /></p>;
 }
-function Workspace({productId,pageId,recordId}:{productId:string;pageId:string;recordId?:string}) {
+function Workspace({productId,pageId,recordId,onReturn}:{productId:string;pageId:string;recordId?:string;onReturn?:()=>void}) {
  const {t,dateTime}=useLocalization();
  const request=useProductRequest(),provided=useContext(ProductApprovalContext),navigation=useNavigation(),{user}=useSession();
  const adapter=useMemo(()=>provided??createHttpApprovalAdapter(request),[provided,request]);
@@ -51,7 +51,7 @@ function Workspace({productId,pageId,recordId}:{productId:string;pageId:string;r
  return <Card shadow="none" as="section" radius="xl" aria-label={t(recordId?'Record approval':'Approval inbox')} className="space-y-4 p-4 text-sm">
   <div className="flex items-center gap-3"><h2 className="flex-1 text-lg font-semibold">{t(recordId?'Record approval':'Approval inbox')}</h2><Button disabled={busy||uncertain} onClick={()=>void refresh()}><LocalizedText message="ui.refresh.approvals.fe2ff673" /></Button>{data?.canConfigure&&!recordId?<Button disabled={disabled} onClick={()=>setSettings(!settings)}><LocalizedText message="ui.configure.stages.b1a58fa2" /></Button>:null}</div>
   <p><LocalizedText message="ui.review.the.saved.record.before.deciding.approval.stages.4091af11" /></p>
-  {failure?<RecoveryNotice sessionRestored={!!readToken()} failure={failure} preservesValues busy={busy} onRetry={()=>void (uncertain?mutate():refresh())} onReturn={()=>navigation.open({pageId})}/>:null}
+  {failure?<RecoveryNotice sessionRestored={!!readToken()} failure={failure} preservesValues busy={busy} onRetry={()=>void (uncertain?mutate():refresh())} onReturn={onReturn??(()=>navigation.open({pageId}))}/>:null}
   {error?<div role="alert" className="text-[var(--danger-ink)]">{t(error)}</div>:null}
   {uncertain?<div role="status"><LocalizedText message="ui.the.action.has.not.been.confirmed.ef061242" />{" "}<Button disabled={busy} onClick={()=>void mutate()}><LocalizedText message="ui.retry.approval.action.d14a0834" /></Button></div>:null}
   {busy?<p role="status"><LocalizedText message="ui.updating.approvals.8c051f99" /></p>:null}
