@@ -71,12 +71,23 @@ npm run deploy -- --activate PREVIOUS_RELEASE_ID
 
 ## Latest activation — 8 September 2026
 
-Release `20260908123426077-75c38ac1`, from application commit `55e5015`, is active
-on both public hosts. Remote CI passed all jobs before activation. The API was
-backed up and restarted to enable encrypted credential storage, persistent audit
-events and scheduled CSV report delivery. Public browser and HTTP checks passed.
-See [the release and integration guide](server-completion-2026-09-08.md) for
-validation, recovery paths and the external requirements that remain open.
+Release `20260908132518280-e399b58e`, from application commit `6e7ad75`, is active
+on both public hosts. All remote CI jobs passed before activation, including
+browser and native Linux checks. The API was stopped for a consistent data
+backup and restarted to enable tenant/application preference policies. Existing
+demo sessions must sign in again.
+
+Public health, login, navigation, Arabic catalogs and policy permission checks
+passed. Both administrator editors displayed all 53 settings without runtime
+errors; an initial desktop login timeout passed on an isolated rerun. No tenant
+policy values were changed during live verification.
+
+API data and the previous API source are retained under
+`.deploy/api-backups/20260908132518280-e399b58e`. Previous frontend release
+`20260908123426077-75c38ac1` remains available for rollback. See
+[tenant preference policies](tenant-preference-policies.md) for the user and
+integration guide, and [the previous server guide](server-completion-2026-09-08.md)
+for the earlier release's production integration boundaries.
 
 ## Current host
 

@@ -11,7 +11,7 @@ for the ones that are not ours to do — who they are waiting on.
 Tenant/application preference defaults and administrator locks are implemented
 and locally validated. See [tenant preference policies](tenant-preference-policies.md)
 for the user workflow, API contracts, storage and production integration boundaries.
-This preference-policy change has not yet been deployed.
+The preference-policy change passed remote CI and is deployed on both demo sites.
 
 The review's CI coverage, catalog bundle/loading, API method handling and costing
 import/export issues have passed remote CI and been deployed. See the
