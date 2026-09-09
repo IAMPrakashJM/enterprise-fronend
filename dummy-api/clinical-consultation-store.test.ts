@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, rmSync, readFileSync } from "node:fs";
+import { mkdtempSync, rmSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createClinicalConsultationStore } from "./clinical-consultation-store.ts";
@@ -149,6 +149,118 @@ test("consultation drafts persist, retry once, validate explicit entries, finali
         ).blank.values,
       ).every((v) => v === ""),
     );
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("expanded notes persist and legacy updates preserve new fields", () => {
+  const dir = mkdtempSync(join(tmpdir(), "consultation-expanded-")),
+    file = join(dir, "notes.csv");
+  const user = { id: "u", tenantId: "t" };
+  const store = createClinicalConsultationStore(file, (_u, _p, id) => ({
+    status: 200,
+    body: { patient: { id, mrn: "DEMO", values: {} }, rows: [] },
+  }));
+  try {
+    const view = store.handle(
+      user,
+      "app",
+      { action: "load", patientId: "p" },
+      true,
+    ).body as ConsultationView;
+    const input = {
+      action: "save",
+      patientId: "p",
+      assessment: {
+        ...view.blank,
+        values: {
+          ...view.blank.values,
+          medicalHistory: "History recorded",
+          pulse: "72",
+          referralReason: "Review requested",
+        },
+      },
+      expectedVersion: 0,
+      operationId: "expanded",
+      complete: false,
+    };
+    const saved = store.handle(user, "app", input, true)
+      .body as ConsultationRecord;
+    assert.equal(saved.values.medicalHistory, "History recorded");
+    const legacy = JSON.parse(JSON.stringify(saved));
+    delete legacy.values.medicalHistory;
+    delete legacy.values.pulse;
+    delete legacy.values.referralReason;
+    const updated = store.handle(
+      user,
+      "app",
+      {
+        ...input,
+        assessment: legacy,
+        expectedVersion: 1,
+        operationId: "legacy",
+      },
+      true,
+    ).body as ConsultationRecord;
+    assert.equal(updated.values.medicalHistory, "History recorded");
+    assert.equal(updated.values.pulse, "72");
+    assert.equal(updated.values.referralReason, "Review requested");
+    assert.equal(
+      store.handle(
+        user,
+        "app",
+        {
+          ...input,
+          assessment: {
+            ...updated,
+            values: { ...updated.values, oxygenSaturation: "101" },
+          },
+          expectedVersion: 2,
+          operationId: "bad",
+        },
+        true,
+      ).status,
+      400,
+    );
+    assert.equal(
+      store.handle(
+        user,
+        "app",
+        {
+          ...input,
+          assessment: {
+            ...updated,
+            values: { ...updated.values, medicalHistory: { bad: true } },
+          },
+          expectedVersion: 2,
+          operationId: "bad-object",
+        },
+        true,
+      ).status,
+      400,
+    );
+    // A pre-expansion snapshot normalizes absent optional fields without rewriting CSV.
+    const old = { ...saved, values: { ...saved.values } };
+    delete (old.values as Partial<typeof old.values>).medicalHistory;
+    const q = (v: string) => '"' + v.replaceAll('"', '""') + '"';
+    writeFileSync(
+      file,
+      "tenant,application,patient,data\r\n" +
+        ["t", "app", "p", JSON.stringify({ assessments: [old], receipts: {} })]
+          .map(q)
+          .join(",") +
+        "\r\n",
+    );
+    const before = readFileSync(file, "utf8"),
+      loaded = store.handle(
+        user,
+        "app",
+        { action: "load", patientId: "p" },
+        true,
+      ).body as ConsultationView;
+    assert.equal(loaded.assessments[0].values.medicalHistory, "");
+    assert.equal(readFileSync(file, "utf8"), before);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

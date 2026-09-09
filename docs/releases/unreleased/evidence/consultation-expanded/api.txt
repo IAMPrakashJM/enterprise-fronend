@@ -1,0 +1,33 @@
+
+> nexora-monorepo@1.0.0 test:clinical-api
+> tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts ../dummy-api/clinical-template-csv.test.ts ../dummy-api/clinic-billing-store.test.ts ../dummy-api/clinical-triage-store.test.ts ../dummy-api/clinical-consultation-store.test.ts
+
+✔ prescription → order → invoice → partial payments → refund survives restart and duplicate retries (24.685481ms)
+✔ permissions, conflicts, duplicate billing, input validation and tenant isolation (16.954591ms)
+✔ void returns unpaid orders for rebilling and blocks paid invoice cancellation (19.080105ms)
+✔ consultation drafts persist, retry once, validate explicit entries, finalize immutably and isolate scope (17.388714ms)
+✔ expanded notes persist and legacy updates preserve new fields (7.52879ms)
+✔ CSV create round-trips commas quotes Unicode newlines and booleans; query and 360 read the saved record after restart (76.565943ms)
+✔ CSV changes are read on the next API operation; legacy JSON migration preserves records and leaves source intact (62.721849ms)
+✔ corrupt CSV fails closed instead of replacing saved records with seed data (7.806522ms)
+✔ CSV parser enforces quoting, row width and duplicate entity identities (0.408814ms)
+✔ new related entries and their retry receipts survive restart and appear in 360 from CSV (43.39371ms)
+✔ patient search applies combined filters, sorting and pagination (48.674273ms)
+✔ complete registration is atomic, persisted and retried idempotently (49.632104ms)
+✔ validation, duplicate identity and stale versions cannot alter records (27.650634ms)
+✔ patient mutations are tenant/application scoped and permissions are enforced (45.94614ms)
+✔ saved searches are user scoped; appointment writes are patient scoped and retry safe (44.486144ms)
+✔ eligibility reads the saved policy and rejects unknown policy identities (24.221245ms)
+✔ patient record keeps identifiers server managed and projects contact edits into search values (19.974115ms)
+✔ registry search uses whole words, phrases, exclusions and child-record values (72.94471ms)
+✔ draft persists and retries keep one identity; complete locks history and new assessments are blank (10.398812ms)
+✔ completion requires explicit safety/priority and measurements or a reason; malformed input is rejected (8.569692ms)
+✔ server roles, tenant scope, optimistic versions and corrupt CSV are enforced (3.250118ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 718.643943

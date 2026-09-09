@@ -29,3 +29,5 @@ Previous deployment: [Billing Clinic](billing-clinic-2026-09-09.md#verified-depl
 Previous deployment: [Clinical Triage](clinical-triage-2026-09-09.md#verified-deployment), verified on both demo sites.
 
 Latest deployment: [Clinical Consultation](clinical-consultation-2026-09-09.md#verified-deployment), verified on both demo sites.
+
+Latest local page enhancement: [Expanded consultation workspace](consultation-expanded-2026-09-09.md), not yet deployed.

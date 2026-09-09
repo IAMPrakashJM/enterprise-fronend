@@ -2,6 +2,20 @@
 
 Open **Library → Page templates → Clinical Consultation**, immediately after Clinical Triage. This is a direct-entry consultation template with fictional API data. The existing specialty/template composer remains available separately.
 
+## Expanded consultation workspace
+
+The next local update expands the existing page to **12 one-click sections inside three columns**. The default view still shows the core visit, assessment and plan. Each column has its own tabs with counts of populated fields; switching tabs retains entered data. Effective rail/tabs/wizard preferences continue to control the outer workflow.
+
+| Column | Section tabs | Additional content |
+| --- | --- | --- |
+| History & visit | Visit, Background, Vitals, Allergies | Medical/surgical/family/social history; eight manual vital readings and measurement time; allergy details, reactions and precautions |
+| Examination & assessment | Assessment, Systems, Results, Procedures | System reviews; laboratory/imaging review; procedures and outcome notes |
+| Care plan | Plan, Medicines, Referrals, Education | Current medicines, prescription-plan and review notes; referral destination/reason/plan; counselling, consent-discussion and support-needs notes |
+
+There are 44 value fields: the original 11 plus 33 optional expanded fields. The original completion requirements remain. New readings use the API vital metadata and basic numeric validation; they are not imported from triage and do not calculate a clinical score. Invalid hidden readings open the appropriate section before focus is applied. Prescription, referral, procedure and consent text remains documentation, without dispatch or electronic signing.
+
+Old saved records normalize missing optional values to empty strings when read, without rewriting CSV on load. A legacy update that omits new fields preserves their existing saved values. Explicit empty strings clear a field. Completed-note locks remain unchanged. See [expanded-workspace evidence](../releases/unreleased/consultation-expanded-2026-09-09.md) for the tested scope and deployment status.
+
 ## Using the page
 
 1. Search for a patient and check the name and MRN. Select a linked encounter when appropriate; an unlinked note is allowed.

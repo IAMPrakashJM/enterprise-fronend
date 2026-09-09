@@ -51,3 +51,6 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | CONSULT-03 | Retry or submit stale revision, unauthorized role/scope or invalid options | No duplicate write; server checks reject invalid operations | Consultation store tests |
 | CONSULT-04 | Change layout during editing or retry a failed save | Input and retry identity survive shared editor changes | Consultation and triage frontend tests |
 | CONSULT-05 | Switch four languages; re-exercise triage | Labels/direction resolve, width stays contained; existing triage flow works | Consultation and triage browser suites |
+| CONSULT-06 | Open the expanded sections, enter notes and vitals, save and reload | 12 tabs remain usable, fields retain values and final actions fit the tested desktop viewport | Consultation browser suite |
+| CONSULT-07 | Read an old note or update with a legacy payload | Missing optional fields render empty; load does not rewrite CSV; omitted expanded fields retain prior values | Consultation store compatibility test |
+| CONSULT-08 | Save an invalid vital while its panel is hidden | The vital panel opens and the invalid field receives focus | Consultation frontend test |

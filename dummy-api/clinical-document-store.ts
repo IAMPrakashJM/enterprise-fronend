@@ -19,7 +19,7 @@ export interface ClinicalDocumentRecipe<V, C> {
   config: C;
   blank: () => V;
   validate: (values: V, config: C, complete: boolean) => Record<string, string>;
-  sanitize: (values: V) => V;
+  sanitize: (values: V, previous?: V) => V;
 }
 /** Single-process CSV assessment journal, isolated from registration and billing. */
 export function createClinicalDocumentStore<V, C>(
@@ -176,7 +176,7 @@ export function createClinicalDocumentStore<V, C>(
         return fail(400, "invalid", { encounterId: recipe.prefix + "invalid" });
       const errors = recipe.validate(record.values, config, body.complete);
       if (Object.keys(errors).length) return fail(400, "invalid", errors);
-      const values = recipe.sanitize(record.values);
+      const values = recipe.sanitize(record.values, old?.values);
       const saved: ClinicalDocument<V> = {
         id: old?.id ?? recipe.idPrefix + randomUUID(),
         patientId: body.patientId,

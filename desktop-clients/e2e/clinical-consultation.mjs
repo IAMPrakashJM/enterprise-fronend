@@ -85,6 +85,71 @@ fs.mkdirSync(artifacts, { recursive: true });
     await root
       .getByRole("combobox", { name: "Allergy information review" })
       .selectOption("reviewed");
+    const expanded = [
+      ["Background", "Past medical history", "Fictional background", "Visit"],
+      ["Allergies", "Allergy details", "Reported information", "Visit"],
+      [
+        "Systems",
+        "Heart / respiratory review",
+        "Recorded review",
+        "Assessment",
+      ],
+      [
+        "Results",
+        "Laboratory results review",
+        "Documented result review",
+        "Assessment",
+      ],
+      [
+        "Procedures",
+        "Procedure details / outcome",
+        "Documented discussion",
+        "Assessment",
+      ],
+      [
+        "Medicines",
+        "Prescription plan (notes only)",
+        "Documented medication plan",
+        "Plan",
+      ],
+      [
+        "Referrals",
+        "Reason for referral",
+        "Documented referral reason",
+        "Plan",
+      ],
+      [
+        "Education",
+        "Patient education / counselling",
+        "Documented counselling",
+        "Plan",
+      ],
+    ];
+    for (const [tab, field, value, back] of expanded) {
+      await root.getByRole("tab", { name: tab, exact: true }).click();
+      await root.getByRole("textbox", { name: field, exact: true }).fill(value);
+      const action = await root
+        .getByRole("button", { name: "Complete consultation" })
+        .boundingBox();
+      if (!action || action.y + action.height > 870) {
+        await p.screenshot({
+          path: join(artifacts, "consultation-overflow.png"),
+          fullPage: true,
+        });
+      }
+      assert.ok(
+        action && action.y + action.height <= 870,
+        tab + " keeps final actions visible: " + JSON.stringify(action),
+      );
+      await root.getByRole("tab", { name: new RegExp("^" + back) }).click();
+    }
+    await root.getByRole("tab", { name: "Vitals", exact: true }).click();
+    await root.getByRole("spinbutton", { name: "Pulse (/min)" }).fill("72");
+    await p.screenshot({
+      path: join(artifacts, "consultation-expanded.png"),
+      fullPage: true,
+    });
+    await root.getByRole("tab", { name: /^Visit/ }).click();
     let waiting = p.waitForResponse(
       (r) =>
         r.url().endsWith("/clinical-consultation") &&
@@ -95,6 +160,9 @@ fs.mkdirSync(artifacts, { recursive: true });
     assert.equal(response.status(), 200);
     const saved = await response.json();
     assert.ok(saved.id.startsWith("CON-"));
+    assert.equal(saved.values.medicalHistory, "Fictional background");
+    assert.equal(saved.values.pulse, "72");
+    assert.equal(saved.values.referralReason, "Documented referral reason");
     await p.reload();
     await p.locator("header").first().waitFor();
     await open();
@@ -109,6 +177,14 @@ fs.mkdirSync(artifacts, { recursive: true });
       await root.getByRole("textbox", { name: "Chief complaint" }).inputValue(),
       "Fictional consultation for interface testing",
     );
+    await root.getByRole("tab", { name: /^Background/ }).click();
+    assert.equal(
+      await root
+        .getByRole("textbox", { name: "Past medical history" })
+        .inputValue(),
+      "Fictional background",
+    );
+    await root.getByRole("tab", { name: /^Visit/ }).click();
     await root.getByRole("button", { name: "Complete consultation" }).click();
     waiting = p.waitForResponse(
       (r) =>

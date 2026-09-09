@@ -93,6 +93,7 @@ export function ClinicalConsultationLibraryPage() {
         <ClinicPanel title="template.guide">
           {[
             "guideFlow",
+            "guideExpanded",
             "guideIntegration",
             "guidePreferences",
             "guideRecovery",

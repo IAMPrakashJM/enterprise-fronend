@@ -104,13 +104,16 @@ export function ClinicalDocumentEditor<V, C>({
     const first = Object.keys(next)[0];
     if (!first) return;
     setSection(definition.sectionFor(first));
-    requestAnimationFrame(() =>
+    const focus = () =>
       root.current
         ?.querySelector<HTMLElement>(
           `[name="${first}"], [data-field="${first}"] [role="radio"]`,
         )
-        ?.focus(),
-    );
+        ?.focus();
+    requestAnimationFrame(() => {
+      focus();
+      requestAnimationFrame(focus);
+    });
   };
   const save = async (complete: boolean) => {
     if (

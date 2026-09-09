@@ -1,0 +1,43 @@
+{
+  "baseCommit": "34f154911b42b954c3757ef515ff5a1484eed5c1",
+  "scope": "Local expanded consultation workspace; not committed or deployed",
+  "sourceSha256": {
+    "desktop-clients/e2e/clinical-consultation.mjs": "7ed1fb9ceec3cde426dae42275ec81355ee32061485501fb1a0665750245d96a",
+    "desktop-clients/packages/erp-config/src/clinical-consultation.ts": "e4d0664123b75e48c19562c6ecb3fca65cc7c09b6c1744354bf43735481fc359",
+    "desktop-clients/packages/erp-config/src/documentation.ts": "6e22942a2c91563df7671e8c0495e44e6e8fb3ec3811662dab0a4f5869b425ce",
+    "desktop-clients/packages/erp-config/src/locales/ar.ts": "6ee3aabed1fd507993280aee4eadb736df491c0cad05091f7be722432cc45980",
+    "desktop-clients/packages/erp-config/src/locales/en.ts": "e439563503e43cec35db7d8b72b2ded1e73f971f62fbe2416187e45aec9cc8dd",
+    "desktop-clients/packages/erp-config/src/locales/hi.ts": "6bbdf6af85adcb89f6ac644e49d3d79f9c59d637eeb0b5a0d89cf3ee07fb3dd1",
+    "desktop-clients/packages/erp-config/src/locales/ml.ts": "f3cc1ce259b801badfca473dc21efd17995acb0693818d791472d509ebdbfc8b",
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/fields.tsx": "06f332fb58c4d9f3ff68b9f5ad2139432176152b034aa864c8ca66c87f8d990a",
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/library-page.tsx": "a5ef62a3d8fa1414c8fff472980e5432ddd307050e9de93e3cc2e2c8eba5c11e",
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/sections.ts": "bf0c978cdbc9a66cead3bc6bc911702762bb06d38a8dcd21b253d8ec23d53bed",
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/workspace.test.tsx": "0bedcbc48d835b142918c8f5cc299eb132d49fb16d11f9b2413df2da6b89b0ad",
+    "desktop-clients/packages/erp-screens/src/clinical-document/editor.tsx": "57c0c349014a22a6ac5335fc6ddbee7bd98626bc7dc690089fb93ad95b58a16f",
+    "desktop-clients/packages/ops-ui/src/messages.en.ts": "7d9fd0ade4a2789c17bad082cded535061b15de7153e521064d8cb920b04ed59",
+    "dummy-api/clinical-consultation-store.test.ts": "45092766d61a95afd46e5b505c4d4d29cd69f571a0ca0fd80adef607352a3fb9",
+    "dummy-api/clinical-consultation-store.ts": "19c56e8f3c4e83859b47f924df050d63ddb04c5fa13878f262f40aa48994e42a",
+    "dummy-api/clinical-document-store.ts": "cb9e0fe8b801ff79dbbdc0ee390133abd1a72c5358e728f492ee55b00cb39383",
+    "dummy-api/config/clinical-consultation/form.json": "5ce9e9c541bb98ae7f4fe6387c5ac36631559ccf19d1d487d4bd2441b413ea84",
+    "dummy-api/config/documentation/availability.json": "52305a1e349552bbc502ffc7c15bd314f066e444f833d192407c383f77ea5770",
+    "dummy-api/config/documentation/releases.json": "8b6ea65dcfd5df4a510a064d2c4ea92bba1a830a6cb9f52a0e20b41122fafaf1",
+    "dummy-api/config/documentation/translations.json": "6c9e2c3b9c7a297ab57eb1c7436bb116c56f9b2853aa0427d72ffc49c07f3d7c",
+    "dummy-api/config/localization/shared/ar.json": "429639093bfe3ffdd4cb3512370728842091fbdb028b533679159d8bb60628ad",
+    "dummy-api/config/localization/shared/en.json": "46c60d56b7f0dad75bd629bd8b350ab7c62b13497497ecbe00d4f07341606eee",
+    "dummy-api/config/localization/shared/hi.json": "86925b6455e38a8fbe02ec22a5722b2335d547aa5aa70fa9960b4d0b3405c6c4",
+    "dummy-api/config/localization/shared/ml.json": "1b53ddea220fb905e0ec5f5406c726660dd98afa7b344434bb08d1cc55797eef"
+  },
+  "artifactSha256": {
+    "api.txt": "cef3b138d01376c94c58bec1c1a352b0aa3572942d780b0524bc8dd4d92afb4a",
+    "browser.txt": "76b3eae2d019a95d46b011e9d1b2cbff0ccd9c972a9d9f35cf1f121bd0725c1b",
+    "build.txt": "e4a73c2f964ca6b0ea7aff925b8eb2ca009259f5e10f3f575186a00084208013",
+    "consultation-ar.png": "bc99b0011f4312d12cacf2d616e38004a3eb642994023d47a9382c48f6393a95",
+    "consultation-expanded.png": "c7d049fa7e79351928b766999c893375e5f1422bd3f1528f0bb5fc0bd461cacc",
+    "consultation-hi.png": "ca5a9b0f052fdb80afd57d33d2789e3cc00baa7be7817ca2352bcb49bd550f36",
+    "consultation-initial.png": "ff956b6211b6ce2f7b0c4dbacbe13748cbdffb334cdee4ea7209504372a80a2f",
+    "consultation-ml.png": "d92905e20eafe830ed32dbae82c4bf4184ab36f1a657281ac1375618c688c8e4",
+    "frontend.txt": "80b32f6b22217b60a0e74654689cad64a9fb4362e10e7a9dd9bd5d4b591500f8",
+    "triage-regression.txt": "b824c8997f02ae0c044a2e0041e61e64e94c799b66f6f3793eab3b13efd4eabd",
+    "verify.txt": "c653510c5863216a8b140c19036e6b4fad27fbcaf50436cdd1ef0b58b90115a4"
+  }
+}

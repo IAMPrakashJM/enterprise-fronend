@@ -18,5 +18,57 @@
       "value": "follow-up",
       "label": "template.consultation.followUpVisit"
     }
+  ],
+  "vitals": [
+    {
+      "id": "systolic",
+      "label": "template.triage.systolic",
+      "unit": "mmHg",
+      "step": "1"
+    },
+    {
+      "id": "diastolic",
+      "label": "template.triage.diastolic",
+      "unit": "mmHg",
+      "step": "1"
+    },
+    {
+      "id": "pulse",
+      "label": "template.triage.pulse",
+      "unit": "/min",
+      "step": "1"
+    },
+    {
+      "id": "respiratoryRate",
+      "label": "template.triage.respiratoryRate",
+      "unit": "/min",
+      "step": "1"
+    },
+    {
+      "id": "oxygenSaturation",
+      "label": "template.triage.oxygenSaturation",
+      "unit": "%",
+      "max": 100,
+      "step": "1"
+    },
+    {
+      "id": "temperature",
+      "label": "template.triage.temperature",
+      "unit": "\u00b0C",
+      "step": "0.1"
+    },
+    {
+      "id": "pain",
+      "label": "template.triage.pain",
+      "unit": "/10",
+      "max": 10,
+      "step": "1"
+    },
+    {
+      "id": "weight",
+      "label": "template.triage.weight",
+      "unit": "kg",
+      "step": "0.1"
+    }
   ]
 }
