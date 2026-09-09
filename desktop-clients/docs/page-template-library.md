@@ -293,7 +293,7 @@ Recoverable errors retain unsaved values during the mounted session. The generic
 
 The field contract covers text, email, number, date, time, select, textarea and checkbox. Extend shared typed renderers for additional domain widgets. The separate Component Library remains the catalog for all public UI controls.
 
-Native-speaker review remains pending. Verification and deployment evidence will be recorded below.
+Native-speaker review remains pending. Verification and deployment evidence is recorded below.
 
 ## Verification — 9 September 2026
 
@@ -302,3 +302,9 @@ Native-speaker review remains pending. Verification and deployment evidence will
 - The dedicated Chromium suite passed catalog discovery, all renderer families, edit retention across code/layout switches, failed-save retry, order lines, booking, CSV mapping, four-language/RTL display and a scoped accessibility audit. No business-data writes occurred.
 - All repository verification checks passed, including common-component adoption, localization, documentation coverage, generated-example parity and bundle budgets.
 - Screenshots above were captured from the tested desktop preview at 1800 × 1150.
+
+### Remote CI and live release
+
+Commit `d1110ed` passed all six jobs in [CI run 34325060001](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34325060001): core checks, browser, feature-browser, navigation, product integration and native Linux lifecycle/localization.
+
+Release `20260909074035930-09b06741` is active on [web](https://front-design.pepbits.com) and [desktop demo](https://desktop.front-design.pepbits.com). Public checks passed on both: all 97 templates, Library navigation, master/order previews, TypeScript source, retained preview values and four-language API catalogs, with no runtime errors or business-data writes. API and both shells returned HTTP 200. The previous release and an API source/data backup were retained for rollback.

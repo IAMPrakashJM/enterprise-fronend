@@ -10,7 +10,8 @@ for the ones that are not ours to do — who they are waiting on.
 
 Implemented 97 presets in 11 Library sidebar groups with shared TypeScript renderers,
 interactive previews, copyable examples, four-language copy and page help. An explicit
-adapter supports loading and versioned saves. See the [guide](page-template-library.md).
+adapter supports loading and versioned saves. All six remote CI jobs passed; both demo
+sites were deployed and public checks passed. See the [guide](page-template-library.md).
 Production domain services, durable draft wiring for this generic engine and native
 translation review remain application/review work.
 
