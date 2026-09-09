@@ -20,4 +20,4 @@ The source baseline is `82656eeedf809c8419bd6e2ae4674580cb3ff71a` plus the recor
 
 Publication fields remain null/false until the corresponding action actually succeeds. New remote CI and built-artifact acceptance are still future release work. The documentation task changes no application runtime behavior and does not deploy this delivery.
 
-New local work: [Registry design family](registry-design-family-2026-09-09.md), not included in the earlier demo deployment.
+Latest deployed set: [Registry design family](registry-design-family-2026-09-09.md#verified-deployment), verified on both demo sites.
