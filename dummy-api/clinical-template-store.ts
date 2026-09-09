@@ -1,6 +1,7 @@
+import {fileURLToPath} from "node:url";
 import { searchMatch } from "./clinical-template-search.ts";
-import { readFileSync, mkdirSync, writeFileSync, renameSync } from "node:fs";
-import { dirname } from "node:path";
+import { readFileSync } from "node:fs";
+import {readClinicalCsv,writeClinicalCsv,type ClinicalBucket as Bucket} from "./clinical-template-csv.ts";
 import { randomUUID, createHash } from "node:crypto";
 import type {
   PatientRecord,
@@ -12,25 +13,14 @@ import type {
 } from "../desktop-clients/packages/erp-config/src/clinical-templates.ts";
 type User = { id: string; tenantId: string; name: string };
 type Result = { status: number; body: unknown };
-type Bucket = {
-  records: PatientRecord[];
-  care: Record<string, PatientCareRow[]>;
-  searches: Record<string, PatientSavedSearch[]>;
-  receipts: Record<string, { hash: string; result: Result }>;
-  exports: Array<{ userId: string; at: string; count: number }>;
-};
 const metadata = JSON.parse(
   readFileSync(
     new URL("./config/clinical-templates/metadata.json", import.meta.url),
     "utf8",
   ),
 ) as PatientMetadata;
-const fixtures = JSON.parse(
-  readFileSync(
-    new URL("./config/clinical-templates/patients.json", import.meta.url),
-    "utf8",
-  ),
-) as PatientRecord[];
+const seed = readClinicalCsv(fileURLToPath(new URL("./config/clinical-templates/seed.csv", import.meta.url)))['["seed","seed"]'];
+if(!seed)throw Error('Missing clinical CSV seed scope');
 const ok = (body: unknown): Result => ({ status: 200, body });
 const fail = (
   status: number,
@@ -88,86 +78,6 @@ function newRecord(): PatientRecord {
     ),
     activity: [],
   };
-}
-function seedCare(now: Date): PatientCareRow[] {
-  const future = new Date(now.getTime() + 86400000).toISOString();
-  return [
-    {
-      id: "e1",
-      kind: "encounter",
-      date: now.toISOString(),
-      title: "template.clinical.outpatient",
-      detail: "template.clinical.general",
-      status: "inProgress",
-      provider: "Dr Demo Jordan",
-    },
-    {
-      id: "a1",
-      kind: "appointment",
-      date: future,
-      title: "template.clinical.followUp",
-      detail: "template.clinical.main",
-      status: "scheduled",
-      provider: "Dr Demo Rivera",
-    },
-    {
-      id: "ep1",
-      kind: "episode",
-      date: now.toISOString(),
-      title: "template.clinical.followUp",
-      detail: "template.clinical.general",
-      status: "active",
-    },
-    {
-      id: "o1",
-      kind: "order",
-      date: now.toISOString(),
-      title: "template.clinical.labPanel",
-      detail: "template.clinical.demoOrder",
-      status: "pending",
-    },
-    {
-      id: "b1",
-      kind: "billing",
-      date: now.toISOString(),
-      title: "template.clinical.invoice",
-      detail: "template.clinical.demoInvoice",
-      status: "pending",
-      amount: 120,
-    },
-    {
-      id: "rx1",
-      kind: "pharmacy",
-      date: now.toISOString(),
-      title: "template.clinical.demoPrescription",
-      detail: "template.clinical.sampleOnly",
-      status: "pending",
-    },
-    {
-      id: "t1",
-      kind: "team",
-      date: now.toISOString(),
-      title: "Dr Demo Jordan",
-      detail: "template.clinical.attending",
-      status: "active",
-    },
-    {
-      id: "l1",
-      kind: "location",
-      date: now.toISOString(),
-      title: "template.clinical.main",
-      detail: "template.clinical.outpatient",
-      status: "active",
-    },
-    {
-      id: "cl1",
-      kind: "clinical",
-      date: now.toISOString(),
-      title: "template.clinical.clinicalNotes",
-      detail: "template.clinical.sampleOnly",
-      status: "recorded",
-    },
-  ];
 }
 function validate(record: PatientRecord): Record<string, string> {
   const errors: Record<string, string> = {};
@@ -268,18 +178,17 @@ function validate(record: PatientRecord): Record<string, string> {
   return errors;
 }
 export function createClinicalTemplateStore(file: string) {
+  const csvFile = file.endsWith('.csv') ? file : file.replace(/\.json$/, '') + '.csv';
+  const legacyFile = file.endsWith('.csv') ? file.slice(0,-4)+'.json' : file;
   let data: Record<string, Bucket> = {};
-  try {
-    data = JSON.parse(readFileSync(file, "utf8"));
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  try { data=readClinicalCsv(csvFile); }
+  catch(error){
+    if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;
+    try { data=JSON.parse(readFileSync(legacyFile,'utf8')); }
+    catch(legacyError){if((legacyError as NodeJS.ErrnoException).code!=='ENOENT')throw legacyError;}
+    writeClinicalCsv(csvFile,data);
   }
-  const persist = (next: typeof data) => {
-    mkdirSync(dirname(file), { recursive: true, mode: 0o700 });
-    writeFileSync(file + ".tmp", JSON.stringify(next), { mode: 0o600 });
-    renameSync(file + ".tmp", file);
-    data = next;
-  };
+  const persist = (next: typeof data) => {writeClinicalCsv(csvFile,next);data=next;};
   return {
     handle(
       user: User,
@@ -292,15 +201,10 @@ export function createClinicalTemplateStore(file: string) {
       const body = input as Record<string, unknown>,
         action = text(body.action),
         scope = JSON.stringify([user.tenantId, product]);
-      const bucket = data[scope] ?? {
-        records: structuredClone(fixtures),
-        care: Object.fromEntries(
-          fixtures.map((p) => [p.id, seedCare(new Date())]),
-        ),
-        searches: {},
-        receipts: {},
-        exports: [],
-      };
+      // Read the committed CSV snapshot for every request; never silently reseed a corrupt file.
+      data=readClinicalCsv(csvFile);
+      if(!data[scope])persist({...data,[scope]:structuredClone(seed)});
+      const bucket = data[scope];
       // Add new schema fields without overwriting saved values or changing record versions.
       for (const record of bucket.records) {
         if (

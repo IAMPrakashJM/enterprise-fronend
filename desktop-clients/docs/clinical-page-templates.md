@@ -190,7 +190,7 @@ All actions use authenticated `POST /clinical-templates`, a JSON body and
 
 Invalid requests use 422, denied writes 403, missing records 404, and version/slot
 conflicts 409. The request adapter integrates with existing recovery/session handling.
-The isolated `clinical-templates.json` store writes atomically; it is not a production
+The isolated `clinical-templates.csv` store writes atomically (legacy JSON is migrated once; see [CSV storage](../../docs/features/page-templates-csv.md)); it is not a production
 clinical database. Production needs transactional persistence, governed auditing,
 retention, encryption, access controls and domain-specific validation.
 

@@ -77,7 +77,7 @@
     "verify:library": "node scripts/library/generate-examples.mjs --check",
     "templates:sync": "node scripts/templates/generate-example.ts",
     "verify:templates": "node scripts/templates/generate-example.ts --check",
-    "test:clinical-api": "tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts",
+    "test:clinical-api": "tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts ../dummy-api/clinical-template-csv.test.ts",
     "verify:library-preferences": "node scripts/verify-library-preferences.mjs"
   },
   "devDependencies": {

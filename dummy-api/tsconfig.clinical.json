@@ -7,8 +7,17 @@
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,
-    "types": ["node"],
-    "typeRoots": ["../desktop-clients/node_modules/@types"]
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "../desktop-clients/node_modules/@types"
+    ]
   },
-  "files": ["clinical-template-store.ts", "clinical-template-store.test.ts"]
+  "files": [
+    "clinical-template-store.ts",
+    "clinical-template-store.test.ts",
+    "clinical-template-csv.ts",
+    "clinical-template-csv.test.ts"
+  ]
 }

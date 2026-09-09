@@ -108,7 +108,7 @@ const sessions = new Map();
    point of "log out, log back in, your settings are still there".
    Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
 const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "data");
-const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.json"));
+const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.csv"));
 const monitoringStore=createMonitoringStore(join(DATA_DIR,"monitoring.sqlite"));
 const documentationStore=createDocumentationStore(join(DATA_DIR,"documentation.sqlite"),process.env.NEXORA_CONFIG_DIR ?? join(dirname(fileURLToPath(import.meta.url)),"config"),applicationConfig);
 const auditStore = createAuditStore(join(DATA_DIR,"audit.sqlite"), {retentionDays:Number(process.env.NEXORA_AUDIT_RETENTION_DAYS ?? 90)});

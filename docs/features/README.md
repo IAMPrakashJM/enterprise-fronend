@@ -23,3 +23,5 @@ Create a feature document using the [feature template](../releases/templates/fea
 Never substitute a screenshot, an empty route or a passing build for functional acceptance. Keep planned, implemented, tested, deployed and accepted states distinct.
 
 - [Registry design family](registry-design-family.md): worklist, small master, billing, claim and consultation templates.
+
+- [Page templates CSV storage](page-templates-csv.md): API-backed query, main record and 360 data with CSV persistence.
