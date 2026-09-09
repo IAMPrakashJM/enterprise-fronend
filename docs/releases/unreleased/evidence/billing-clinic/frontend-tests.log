@@ -1,0 +1,69 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run packages/erp-screens/src/clinic-billing/workspace.test.tsx packages/erp-screens/src/clinical-templates packages/erp-config/src/export-policy.test.ts packages/erp-screens/src/worklist/export-rows.test.ts packages/erp-screens/src/templates/registry-template.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+stderr | packages/erp-screens/src/clinical-templates/query.test.tsx > query waits for criteria and preserves filters after a failed search
+An update to PatientQueryTemplate inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ✓ packages/erp-screens/src/templates/registry-template.test.tsx (3 tests) 1357ms
+   ✓ all five registry templates render through shared engines with preference-owned layouts  579ms
+   ✓ changing managed layout preserves edits and discard restores the saved record only after confirmation  565ms
+stderr | packages/erp-screens/src/clinical-templates/query.test.tsx > disabled query shortcuts do not focus search or open help
+An update to PatientQueryTemplate inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to PatientQueryTemplate inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ✓ packages/erp-screens/src/clinical-templates/query.test.tsx (7 tests) 3270ms
+   ✓ query waits for criteria and preserves filters after a failed search  1126ms
+   ✓ inline details belong to the selected row and record actions use navigation  738ms
+   ✓ failed preset saves show their error in the dialog and preserve its name  546ms
+   ✓ query has no presentation selectors and honors locked page size  426ms
+   ✓ query export uses the selected file format  372ms
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (3 tests) 1131ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  947ms
+ ✓ packages/erp-screens/src/worklist/export-rows.test.ts (26 tests) 162ms
+ ✓ packages/erp-screens/src/clinical-templates/overview-data.test.ts (1 test) 20ms
+ ✓ packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx (7 tests) 6551ms
+   ✓ patient form preserves edits through section changes and retries with the same operation  2894ms
+   ✓ read-only metadata blocks saves and form inputs  604ms
+   ✓ scope remounts cannot retain another user patient edits  645ms
+   ✓ late patient load cannot replace a newly selected record  354ms
+   ✓ New patient resets a saved record in a reused new-record tab  1133ms
+   ✓ empty contact editors do not create rows until edited and retain focus while typing  900ms
+ ✓ packages/erp-config/src/export-policy.test.ts (13 tests) 14ms
+ ✓ packages/erp-screens/src/clinical-templates/record-age.test.ts (1 test) 4ms
+
+ Test Files  8 passed (8)
+      Tests  61 passed (61)
+   Start at  17:17:29
+   Duration  15.19s (transform 5.59s, setup 7.77s, collect 12.17s, tests 12.51s, environment 6.14s, prepare 1.35s)
+
