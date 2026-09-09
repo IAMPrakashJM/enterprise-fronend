@@ -10,6 +10,8 @@ for the ones that are not ours to do — who they are waiting on.
 
 Added Patient Query, Patient Record and Patient 360 to Library with modular shared
 components, typed adapters, API-backed metadata/data and four-language copy.
+All six remote CI jobs passed; both demo sites were deployed and read-only live
+checks passed for all three templates.
 See [Clinical page templates](clinical-page-templates.md) for workflows, integration,
 source correspondence and explicit demo limitations. Real domain services, governed
 draft persistence and native-speaker review remain integration/review work.

@@ -154,7 +154,8 @@ export function PatientPage(props: Props) {
 
 Use `view: 'record', patientId, mode: 'view' | 'edit'` for existing records, or
 `view: 'overview', patientId` for Patient 360. Supply `onOpen(destination)` to integrate
-with application routes or MDI navigation. Without it, navigation stays within the
+with application routes or MDI navigation. The Library uses browser tabs on the web
+shell and workspace tabs on the desktop shell. Without it, navigation stays within the
 workspace. Changing `scopeKey` resets component state and ignores late loads.
 
 For a real backend, implement `ClinicalTemplateAdapter` using that backend's endpoints.
@@ -208,8 +209,21 @@ See `clinical-template-translation-review.csv` for the review inventory.
 - Browser suite: `e2e/clinical-templates.ts`; exercises search, quick view, saved search,
   registration with injected failure, booking, CSV, localization and RTL.
 
-Local full CI passed (1,466 tests before the additional care-filter regression,
-61 existing API tests, six new clinical API tests, registry and deployment tests,
-both builds and all property checks). The final targeted suite passed all six tests,
-and the browser workflow passed again with Arabic, Hindi, Malayalam and RTL checks.
-Remote CI and deployment evidence will be recorded after release validation.
+Remote CI run **34334589887** passed all six jobs for implementation commit
+`42851f629946d9b00d77ccb1d05b39bcd3bdf6d3`: 1,467 tests across 97 files,
+61 existing API tests, six clinical API tests, registry and deployment lifecycle tests,
+both builds, property checks, browser suites and native Linux lifecycle/localization.
+The clinical browser workflow also passed locally after the final care-filter correction.
+
+Release **20260909092513312-089c0a69** was prepared and smoke-tested in isolation,
+then activated on both demo sites. The previous release and an API source/data backup
+were retained. Public checks passed for API metadata/search/load/overview, view-record
+navigation, all thirteen overview panels and absence of browser runtime errors.
+The public verification performed no patient, booking, saved-search or export mutations.
+
+- Web: https://front-design.pepbits.com/library/allyvora-patient-query
+- Desktop browser shell: https://desktop.front-design.pepbits.com (Library → Clinical page templates)
+
+Native CI covers the framework lifecycle and localization; the new clinical workflow
+was exercised in Chromium. Native-speaker wording approval and real clinical-service
+integration remain pending as described above.
