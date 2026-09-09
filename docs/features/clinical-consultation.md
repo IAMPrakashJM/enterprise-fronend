@@ -4,7 +4,7 @@ Open **Library → Page templates → Clinical Consultation**, immediately after
 
 ## Expanded consultation workspace
 
-The next local update expands the existing page to **12 one-click sections inside three columns**. The default view still shows the core visit, assessment and plan. Each column has its own tabs with counts of populated fields; switching tabs retains entered data. Effective rail/tabs/wizard preferences continue to control the outer workflow.
+The deployed update expands the existing page to **12 one-click sections inside three columns**. The default view still shows the core visit, assessment and plan. Each column has its own tabs with counts of populated fields; switching tabs retains entered data. Effective rail/tabs/wizard preferences continue to control the outer workflow.
 
 | Column | Section tabs | Additional content |
 | --- | --- | --- |

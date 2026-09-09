@@ -1,6 +1,6 @@
 # Expanded consultation workspace — 9 September 2026
 
-Local implementation on top of `34f1549`. Not committed, pushed or deployed.
+Implemented in `09e8bb2`. Committed, pushed and deployed to both demo sites on 9 September 2026 (UTC). Earlier local verification statements below retain their original scope.
 
 ## Changed
 
@@ -27,3 +27,18 @@ See the [updated feature guide](../../features/clinical-consultation.md#expanded
 - Fictional screenshots: [12-section overview](evidence/consultation-expanded/consultation-initial.png), [vitals and entered-section counts](evidence/consultation-expanded/consultation-expanded.png), [Arabic](evidence/consultation-expanded/consultation-ar.png), [Hindi](evidence/consultation-expanded/consultation-hi.png), [Malayalam](evidence/consultation-expanded/consultation-ml.png).
 
 Reproduce with a Vite desktop shell pointed at an isolated local API and `node e2e/run.mjs features --suite=clinical-consultation.mjs --managed-api`, supplying matching `E2E_API`, `E2E_DESKTOP` and `PLAYWRIGHT_PATH`. The triage regression uses `--suite=clinical-triage.mjs`. Both suites use disposable fictional data.
+
+## Verified deployment
+
+- Frontend release `20260909195817845-9b653707` was built from `09e8bb2` in isolation; both packaged shells passed HTML/asset smoke tests before activation.
+- The demo API was restarted with expanded field metadata and backward-compatible note normalization. Existing CSV hashes remained unchanged after restart and live checks.
+- Backup: `.deploy/backups/consultation-expanded-20260909T195832Z/`. Previous frontend release: `20260909192013277-c4aedb8e`.
+- Chromium verified release identity, all 12 consultation section tabs, 44 blank API value fields, default 1600 × 900 action visibility and no page errors on both `https://front-design.pepbits.com` and `https://desktop.front-design.pepbits.com`.
+- Triage and Billing Clinic navigation/API/section checks passed on both sites. Live checks did not save or complete patient records; write behavior was tested with isolated fixtures.
+- [Consultation](evidence/consultation-expanded/live-consultation.txt), [Triage](evidence/consultation-expanded/live-triage.txt), [Billing Clinic](evidence/consultation-expanded/live-billing.txt), [activation](evidence/consultation-expanded/deployment.txt).
+
+## Test typing correction after deployment
+
+Hosted CI run `34398223318` failed package typechecking because the new Testing Library test used the Playwright-only `exact` selector option. Removed it from three test selectors; string role names already match exactly in Testing Library. This changes test source only, not the deployed runtime. The implementation-stage build and passing Vitest run had not detected this test-file type error. Full typechecking and the focused test were rerun after correction; results are retained below. The follow-up push starts a replacement CI run; remote CI success is not claimed.
+
+Correction verification: [full typecheck passed](evidence/consultation-expanded/deploy-typecheck.txt); [three consultation frontend tests passed](evidence/consultation-expanded/deploy-ui.txt). Runtime files were unchanged, so no new deployment build was needed for the test-only correction.

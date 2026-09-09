@@ -99,16 +99,16 @@ test("failed save retains consultation input and retry identity; layout changes 
 test("expanded panels retain values and validation opens a hidden invalid vital", async () => {
   const p = props();
   render(<ClinicalDocumentEditor {...p} />);
-  fireEvent.click(screen.getByRole("tab", { name: "Background", exact: true }));
+  fireEvent.click(screen.getByRole("tab", { name: "Background" }));
   fireEvent.change(
     screen.getByRole("textbox", { name: "Past medical history" }),
     { target: { value: "Recorded background" } },
   );
-  fireEvent.click(screen.getByRole("tab", { name: "Vitals", exact: true }));
+  fireEvent.click(screen.getByRole("tab", { name: "Vitals" }));
   fireEvent.change(screen.getByRole("spinbutton", { name: "SpO₂ (%)" }), {
     target: { value: "101" },
   });
-  fireEvent.click(screen.getByRole("tab", { name: "Visit", exact: true }));
+  fireEvent.click(screen.getByRole("tab", { name: "Visit" }));
   fireEvent.click(screen.getByRole("button", { name: "Save draft" }));
   await waitFor(() =>
     expect(screen.getByRole("spinbutton", { name: "SpO₂ (%)" })).toHaveFocus(),

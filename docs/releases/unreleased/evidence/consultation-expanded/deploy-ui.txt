@@ -1,0 +1,14 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/clinical-consultation/workspace.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/clinical-consultation/workspace.test.tsx (3 tests) 616ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:01:01
+   Duration  3.31s (transform 1.92s, setup 958ms, collect 1.01s, tests 616ms, environment 436ms, prepare 86ms)
+
