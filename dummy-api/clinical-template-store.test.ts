@@ -235,3 +235,37 @@ test("eligibility reads the saved policy and rejects unknown policy identities",
     x.close();
   }
 });
+
+test("patient record keeps identifiers server managed and projects contact edits into search values", () => {
+  const x = setup();
+  try {
+    const p = x.call({ action: "load", id: "PT-0001" }).body as PatientRecord;
+    const uhid = p.values.uhid,
+      mrn = p.mrn;
+    p.values.uhid = "tampered";
+    p.mrn = "tampered";
+    p.values.status = "inactive";
+    p.collections.contacts = p.collections.contacts.filter(
+      (r) => r.contactType !== "email",
+    );
+    const result = x.call({
+      action: "save",
+      record: p,
+      expectedVersion: 1,
+      operationId: "record-projection",
+    });
+    assert.equal(result.status, 200);
+    const saved = result.body as PatientRecord;
+    assert.equal(saved.values.uhid, uhid);
+    assert.equal(saved.mrn, mrn);
+    assert.equal(saved.values.status, "active");
+    assert.equal(saved.values.email, "");
+    const loaded = x.call({ action: "load", id: p.id }).body as PatientRecord;
+    assert.equal(
+      loaded.collections.contacts.some((r) => r.contactType === "email"),
+      false,
+    );
+  } finally {
+    x.close();
+  }
+});

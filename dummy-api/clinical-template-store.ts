@@ -70,6 +70,7 @@ function newRecord(): PatientRecord {
       ),
       status: "active",
       dobPrecision: "unknown",
+      branch: "main",
     },
     collections: Object.fromEntries(
       metadata.collections.map((c) => [c.id, []]),
@@ -169,6 +170,12 @@ function validate(record: PatientRecord): Record<string, string> {
         key = prefix + f.id;
       if (typeof v !== (f.type === "checkbox" ? "boolean" : "string"))
         errors[key] = "template.clinical.invalid";
+      else if (
+        f.type === "time" &&
+        v &&
+        !/^([01]\d|2[0-3]):[0-5]\d$/.test(text(v))
+      )
+        errors[key] = "template.clinical.invalid";
       else if (f.required && !text(v))
         errors[key] = "template.validation.required";
       else if (typeof v === "string" && v.length > 4000)
@@ -187,7 +194,12 @@ function validate(record: PatientRecord): Record<string, string> {
           new Date(text(v)).toISOString().slice(0, 10) !== v)
       )
         errors[key] = "template.validation.date";
-      else if (f.options && v && !f.options.some((o) => o.value === v))
+      else if (
+        f.options &&
+        !f.allowCustom &&
+        v &&
+        !f.options.some((o) => o.value === v)
+      )
         errors[key] = "template.clinical.invalid";
     }
   };
@@ -278,6 +290,28 @@ export function createClinicalTemplateStore(file: string) {
         receipts: {},
         exports: [],
       };
+      // Add new schema fields without overwriting saved values or changing record versions.
+      for (const record of bucket.records) {
+        if (
+          record.values.email &&
+          !record.collections.contacts.some((r) => r.contactType === "email")
+        )
+          record.collections.contacts.push({
+            id: "legacy-email-" + record.id,
+            contactType: "email",
+            value: String(record.values.email),
+            primary: "yes",
+          });
+
+        for (const section of metadata.sections)
+          for (const field of section.fields)
+            record.values[field.id] ??= field.type === "checkbox" ? false : "";
+        for (const collection of metadata.collections) {
+          record.collections[collection.id] ??= [];
+          for (const row of record.collections[collection.id])
+            for (const field of collection.fields) row[field.id] ??= "";
+        }
+      }
       const find = () => bucket.records.find((p) => p.id === body.id);
       const overview = (id: string, b = bucket) => ({
         patient: b.records.find((p) => p.id === id),
@@ -495,6 +529,22 @@ export function createClinicalTemplateStore(file: string) {
             },
           ],
         };
+
+        record.values.uhid =
+          old?.values.uhid ||
+          `DEMO-UHID-${old?.id ?? String(seq).padStart(4, "0")}`;
+        record.values.branchMrn = old?.values.branchMrn || record.mrn;
+        record.values.status = old?.values.status ?? "active";
+        const primaryContact = (kinds: string[]) => {
+          const rows = record.collections.contacts.filter((r) =>
+            kinds.includes(r.contactType),
+          );
+          return (
+            (rows.find((r) => r.primary === "yes") ?? rows[0])?.value ?? ""
+          );
+        };
+        record.values.email = primaryContact(["email"]);
+        record.values.mobile = primaryContact(["mobile", "phone"]);
         b.records = old
           ? b.records.map((p) => (p.id === id ? record : p))
           : [...b.records, record];

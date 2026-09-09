@@ -6,6 +6,12 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Patient Record layout alignment — 9 September 2026
+
+The record template now follows Allyvora’s rail, section cards, field grouping and
+persistent footer using shared components and the demo API. See the
+[alignment guide](patient-record-parity.md) for comparison details and validation.
+
 ## Clinical page templates — 9 September 2026
 
 Added Patient Query, Patient Record and Patient 360 to Library with modular shared

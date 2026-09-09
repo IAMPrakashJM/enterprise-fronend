@@ -1,4 +1,5 @@
 "use client";
+import recordStyles from "./record-layout.module.css";
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -14,6 +15,9 @@ import {
   Textarea,
   Checkbox,
   DateInput,
+  TimeInput,
+  Toggle,
+  FilePicker,
   LoadingState,
   RecoveryNotice,
   failureFromError,
@@ -34,6 +38,7 @@ export interface PatientDestination {
   mode?: "new" | "edit" | "view";
 }
 export interface ClinicalPageProps {
+  preferenceControls?: React.ReactNode;
   adapter: ClinicalTemplateAdapter;
   metadata: PatientMetadata;
   preferences: UserPreferences;
@@ -162,6 +167,7 @@ export function PatientFieldControl({
   disabled?: boolean;
   error?: string;
 }) {
+  const { t } = useLocalization();
   const common = {
     label: field.label,
     "aria-label": field.label,
@@ -169,16 +175,42 @@ export function PatientFieldControl({
     disabled,
     error,
   };
+  if (field.control === "toggle")
+    return (
+      <Toggle
+        label={field.label}
+        checked={value === "yes"}
+        disabled={disabled}
+        onChange={(v) => onChange(v ? "yes" : "no")}
+      />
+    );
+  if (field.control === "primary")
+    return (
+      <Button
+        variant={value === "yes" ? "primary" : "secondary"}
+        disabled={disabled}
+        aria-pressed={value === "yes"}
+        onClick={() => onChange(value === "yes" ? "no" : "yes")}
+      >
+        {t(field.label)}
+      </Button>
+    );
   if (field.type === "checkbox")
     return (
-      <div className="flex min-h-16 items-center">
-        <Checkbox
-          label={field.label}
-          checked={!!value}
-          disabled={disabled}
-          onChange={(e) => onChange(e.target.checked)}
-        />
-      </div>
+      <Toggle
+        label={field.label}
+        checked={!!value}
+        disabled={disabled}
+        onChange={onChange}
+      />
+    );
+  if (field.type === "time")
+    return (
+      <TimeInput
+        {...common}
+        value={String(value ?? "")}
+        onChange={(e) => onChange(e.target.value)}
+      />
     );
   if (field.type === "select")
     return (
@@ -188,6 +220,11 @@ export function PatientFieldControl({
         options={[
           { value: "", label: "template.clinical.select" },
           ...(field.options ?? []),
+          ...(field.allowCustom &&
+          value &&
+          !field.options?.some((o) => o.value === value)
+            ? [{ value: String(value), label: String(value) }]
+            : []),
         ]}
         onChange={(e) => onChange(e.target.value)}
       />
@@ -298,94 +335,209 @@ export function ClinicalSection({
 }
 export function PatientCollectionEditor({
   id,
+  embedded = false,
+  subset,
   patient,
   metadata,
   update,
   disabled,
+  reading = false,
   errors,
 }: {
   id: string;
+  embedded?: boolean;
+  subset?: { values: string[]; title: string };
   patient: PatientRecord;
   metadata: PatientMetadata;
   update: (record: PatientRecord) => void;
   disabled: boolean;
+  reading?: boolean;
   errors: Record<string, string>;
 }) {
-  const { t } = useLocalization();
-  const definition = metadata.collections.find((c) => c.id === id);
+  const { t } = useLocalization(),
+    definition = metadata.collections.find((c) => c.id === id);
   if (!definition) return null;
-  const rows = patient.collections[id] ?? [];
+  const rows = patient.collections[id] ?? [],
+    shown = rows
+      .map((row, index) => ({ row, index }))
+      .filter(({ row }) => !subset || subset.values.includes(row.contactType));
   const change = (next: typeof rows) =>
     update({ ...patient, collections: { ...patient.collections, [id]: next } });
+  const fields = (row: Record<string, string>) =>
+    definition.fields.filter(
+      (f) =>
+        !f.hidden &&
+        (!f.visibleWhen || row[f.visibleWhen.field] === f.visibleWhen.value) &&
+        (!subset ||
+          (f.id !== "contactType" &&
+            (f.id !== "countryCode" || subset.values[0] !== "email"))),
+    );
+  const add = () =>
+    change([
+      ...rows,
+      Object.fromEntries([
+        ["id", crypto.randomUUID()],
+        ...definition.fields.map((f) => [f.id, ""]),
+        ...(subset ? [["contactType", subset.values[0]]] : []),
+      ]),
+    ]);
+  const addLabel = subset
+    ? subset.values[0] === "email"
+      ? "template.clinical.addEmail"
+      : "template.clinical.addPhone"
+    : (definition.addLabel ?? "template.clinical.add");
+  const Wrapper = embedded ? "div" : Card;
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle
-          title={definition.title}
-          action={
-            <Button
-              disabled={disabled || rows.length >= 30}
-              onClick={() =>
-                change([
-                  ...rows,
-                  Object.fromEntries([
-                    ["id", crypto.randomUUID()],
-                    ...definition.fields.map((f) => [f.id, ""]),
-                  ]),
-                ])
-              }
-            >
-              {t("template.clinical.add")}
-            </Button>
-          }
-        />
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {!rows.length ? (
-          <p className="text-sm text-[var(--text-muted)]">
-            {t("template.clinical.noneRecorded")}
-          </p>
-        ) : (
-          rows.map((row, index) => (
-            <div
-              key={row.id}
-              className="space-y-2 border-b border-[var(--border)] pb-4 last:border-0"
-            >
-              <CardGrid columns={2}>
-                {definition.fields.map((field) => (
-                  <PatientFieldControl
-                    key={field.id}
-                    field={field}
-                    value={row[field.id] ?? ""}
-                    disabled={disabled}
-                    error={errors[`${id}.${index}.${field.id}`]}
-                    onChange={(value) =>
-                      change(
-                        rows.map((r, i) =>
-                          i === index ? { ...r, [field.id]: String(value) } : r,
-                        ),
-                      )
-                    }
-                  />
-                ))}
-              </CardGrid>
-              <Button
-                variant="ghost"
-                disabled={disabled}
-                onClick={() => change(rows.filter((_, i) => i !== index))}
-              >
-                {t("template.remove")}
-              </Button>
+    <Wrapper
+      className="space-y-3"
+      data-record-collection={subset?.values[0] ?? id}
+    >
+      <h4 className="border-b border-[var(--border)] pb-2 text-xs font-bold">
+        {t(subset?.title ?? definition.title)}
+      </h4>
+      {!shown.length ? (
+        <p className="rounded-lg border border-dashed border-[var(--border)] p-6 text-center text-sm text-[var(--text-muted)]">
+          {t("template.clinical.noneRecorded")}
+        </p>
+      ) : (
+        shown.map(({ row, index }, position) => (
+          <Card key={row.id} className="overflow-hidden bg-[var(--surface-2)]">
+            <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] px-4 py-2">
+              <div className="flex items-center gap-2 text-sm">
+                <Badge>{position + 1}</Badge>
+                <span className="font-semibold">
+                  {row.name ||
+                    row.fileName ||
+                    row.payer ||
+                    row.value ||
+                    t(subset?.title ?? definition.title)}
+                </span>
+              </div>
+              {!reading ? (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  disabled={disabled}
+                  onClick={() => change(rows.filter((_, i) => i !== index))}
+                >
+                  {t("template.remove")}
+                </Button>
+              ) : null}
             </div>
-          ))
-        )}
-        {errors[id] ? <p role="alert">{t(errors[id])}</p> : null}
-        {id === "documents" ? (
-          <p className="text-xs text-[var(--text-muted)]">
-            {t("template.clinical.documentNote")}
-          </p>
-        ) : null}
-      </CardContent>
-    </Card>
+            <CardContent>
+              {reading ? (
+                <DescriptionList
+                  items={fields(row).map((f) => ({
+                    id: f.id,
+                    label: f.label,
+                    value: f.options
+                      ? t(
+                          f.options.find((o) => o.value === row[f.id])?.label ??
+                            row[f.id] ??
+                            "—",
+                        )
+                      : row[f.id] || "—",
+                  }))}
+                />
+              ) : (
+                <div className={recordStyles.fieldGrid}>
+                  {fields(row).map((field) => (
+                    <div
+                      className={recordStyles.field}
+                      key={field.id}
+                      style={
+                        {
+                          "--field-span": field.span ?? 4,
+                        } as React.CSSProperties
+                      }
+                    >
+                      <PatientFieldControl
+                        field={
+                          subset && field.id === "value"
+                            ? {
+                                ...field,
+                                label:
+                                  subset.values[0] === "email"
+                                    ? "template.clinical.email"
+                                    : "template.clinical.phone",
+                                type:
+                                  subset.values[0] === "email"
+                                    ? "email"
+                                    : "text",
+                              }
+                            : field
+                        }
+                        value={row[field.id] ?? ""}
+                        disabled={disabled}
+                        error={errors[`${id}.${index}.${field.id}`]}
+                        onChange={(value) =>
+                          change(
+                            rows.map((r, i) =>
+                              i === index
+                                ? { ...r, [field.id]: String(value) }
+                                : field.id === "primary" &&
+                                    value === "yes" &&
+                                    (id !== "contacts" ||
+                                      r.contactType === row.contactType)
+                                  ? { ...r, primary: "no" }
+                                  : r,
+                            ),
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        ))
+      )}
+      {!reading ? (
+        <Button
+          className="w-full border-dashed"
+          disabled={
+            disabled ||
+            rows.length >= 30 ||
+            !!(
+              definition.addRequires &&
+              shown.length &&
+              !shown.at(-1)!.row[definition.addRequires]
+            )
+          }
+          onClick={add}
+        >
+          {t(addLabel)}
+        </Button>
+      ) : null}
+      {errors[id] ? <p role="alert">{t(errors[id])}</p> : null}
+      {id === "documents" ? (
+        <>
+          <div className="flex items-center justify-between gap-3 rounded-lg border border-[var(--border)] p-3">
+            <p className="text-xs text-[var(--text-muted)]">
+              {t("template.clinical.documentNote")}
+            </p>
+            {!reading ? (
+              <FilePicker
+                label="template.clinical.upload"
+                disabled={disabled || rows.length >= 30}
+                onFile={(file) =>
+                  change([
+                    ...rows,
+                    Object.fromEntries([
+                      ["id", crypto.randomUUID()],
+                      ...definition.fields.map((f) => [f.id, ""]),
+                      ["fileName", file.name],
+                      ["mimeType", file.type],
+                      ["fileSizeBytes", String(file.size)],
+                    ]),
+                  ])
+                }
+              />
+            ) : null}
+          </div>
+        </>
+      ) : null}
+    </Wrapper>
   );
 }

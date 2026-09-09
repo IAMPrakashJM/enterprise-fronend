@@ -20,6 +20,7 @@ export interface ClinicalPatientWorkspaceProps {
   scopeKey: string;
   initialPage?: PatientDestination;
   preferences?: UserPreferences;
+  preferenceControls?: React.ReactNode;
   onOpen?: (target: PatientDestination) => void;
 }
 /** Remount on tenant/application/user/record scope changes. No implicit browser persistence. */
@@ -31,6 +32,7 @@ function ClinicalWorkspace({
   initialPage = { view: "query" },
   preferences = DEFAULT_PREFERENCES,
   onOpen,
+  preferenceControls,
 }: ClinicalPatientWorkspaceProps) {
   const [page, setPage] = useState(initialPage),
     { language } = useLocalization();
@@ -40,6 +42,7 @@ function ClinicalWorkspace({
   const props = {
     adapter,
     metadata: metadata.value,
+    preferenceControls,
     preferences,
     format: createFormatters({
       ...preferences,

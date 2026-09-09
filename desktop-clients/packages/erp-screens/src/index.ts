@@ -26,3 +26,4 @@ export * from "./templates/page-template";
 export * from "./templates/template-state";
 export {ClinicalPatientWorkspace,type ClinicalPatientWorkspaceProps} from './clinical-templates/workspace';
 export type {PatientDestination,ClinicalView} from './clinical-templates/shared';
+export {RecordSectionLayout} from './clinical-templates/record-layout';

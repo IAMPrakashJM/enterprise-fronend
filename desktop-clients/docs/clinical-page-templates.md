@@ -41,6 +41,10 @@ accounts can read. The API enforces write permission independently of disabled b
 
 ## Patient Record
 
+The record composition has since been aligned with the Allyvora source layout.
+See [Patient Record alignment](patient-record-parity.md) for the revised rail, field
+groups, footer, screenshots and integration details.
+
 ![Patient Record](images/clinical-patient-record.png)
 
 The record has nine sections: MRN, Personal, Contact, Address, Identity, Insurance,

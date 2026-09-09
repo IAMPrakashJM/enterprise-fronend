@@ -47,7 +47,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0001",
+      "branchMrn": "DEMO-000001"
     },
     "collections": {
       "names": [],
@@ -57,7 +63,8 @@
           "contactType": "email",
           "value": "patient1@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -81,7 +88,8 @@
           "value": "DEMO-00001",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -93,7 +101,8 @@
           "memberNumber": "MEMBER-0001",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -108,7 +117,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -171,7 +185,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0002",
+      "branchMrn": "DEMO-000002"
     },
     "collections": {
       "names": [],
@@ -181,7 +201,8 @@
           "contactType": "email",
           "value": "patient2@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -205,7 +226,8 @@
           "value": "DEMO-00002",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -217,7 +239,8 @@
           "memberNumber": "MEMBER-0002",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -232,7 +255,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -295,7 +323,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0003",
+      "branchMrn": "DEMO-000003"
     },
     "collections": {
       "names": [],
@@ -305,7 +339,8 @@
           "contactType": "email",
           "value": "patient3@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -329,7 +364,8 @@
           "value": "DEMO-00003",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -341,7 +377,8 @@
           "memberNumber": "MEMBER-0003",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -356,7 +393,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -419,7 +461,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0004",
+      "branchMrn": "DEMO-000004"
     },
     "collections": {
       "names": [],
@@ -429,7 +477,8 @@
           "contactType": "email",
           "value": "patient4@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -453,7 +502,8 @@
           "value": "DEMO-00004",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -465,7 +515,8 @@
           "memberNumber": "MEMBER-0004",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -480,7 +531,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -543,7 +599,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0005",
+      "branchMrn": "DEMO-000005"
     },
     "collections": {
       "names": [],
@@ -553,7 +615,8 @@
           "contactType": "email",
           "value": "patient5@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -577,7 +640,8 @@
           "value": "DEMO-00005",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -589,7 +653,8 @@
           "memberNumber": "MEMBER-0005",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -604,7 +669,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -667,7 +737,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0006",
+      "branchMrn": "DEMO-000006"
     },
     "collections": {
       "names": [],
@@ -677,7 +753,8 @@
           "contactType": "email",
           "value": "patient6@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -701,7 +778,8 @@
           "value": "DEMO-00006",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -713,7 +791,8 @@
           "memberNumber": "MEMBER-0006",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -728,7 +807,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -791,7 +875,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0007",
+      "branchMrn": "DEMO-000007"
     },
     "collections": {
       "names": [],
@@ -801,7 +891,8 @@
           "contactType": "email",
           "value": "patient7@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -825,7 +916,8 @@
           "value": "DEMO-00007",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -837,7 +929,8 @@
           "memberNumber": "MEMBER-0007",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -852,7 +945,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -915,7 +1013,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0008",
+      "branchMrn": "DEMO-000008"
     },
     "collections": {
       "names": [],
@@ -925,7 +1029,8 @@
           "contactType": "email",
           "value": "patient8@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -949,7 +1054,8 @@
           "value": "DEMO-00008",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -961,7 +1067,8 @@
           "memberNumber": "MEMBER-0008",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -976,7 +1083,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -1039,7 +1151,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0009",
+      "branchMrn": "DEMO-000009"
     },
     "collections": {
       "names": [],
@@ -1049,7 +1167,8 @@
           "contactType": "email",
           "value": "patient9@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -1073,7 +1192,8 @@
           "value": "DEMO-00009",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -1085,7 +1205,8 @@
           "memberNumber": "MEMBER-0009",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -1100,7 +1221,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -1163,7 +1289,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0010",
+      "branchMrn": "DEMO-000010"
     },
     "collections": {
       "names": [],
@@ -1173,7 +1305,8 @@
           "contactType": "email",
           "value": "patient10@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -1197,7 +1330,8 @@
           "value": "DEMO-00010",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -1209,7 +1343,8 @@
           "memberNumber": "MEMBER-0010",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -1224,7 +1359,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -1287,7 +1427,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0011",
+      "branchMrn": "DEMO-000011"
     },
     "collections": {
       "names": [],
@@ -1297,7 +1443,8 @@
           "contactType": "email",
           "value": "patient11@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -1321,7 +1468,8 @@
           "value": "DEMO-00011",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -1333,7 +1481,8 @@
           "memberNumber": "MEMBER-0011",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -1348,7 +1497,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []
@@ -1411,7 +1565,13 @@
       "contactTime": "",
       "hasDisability": false,
       "registrationSource": "",
-      "referralDetails": ""
+      "referralDetails": "",
+      "birthTime": "",
+      "vulnerable": false,
+      "specialNeeds": "",
+      "deathVerification": "",
+      "uhid": "DEMO-UHID-0012",
+      "branchMrn": "DEMO-000012"
     },
     "collections": {
       "names": [],
@@ -1421,7 +1581,8 @@
           "contactType": "email",
           "value": "patient12@example.test",
           "primary": "",
-          "countryCode": ""
+          "countryCode": "",
+          "contactCategory": ""
         }
       ],
       "addresses": [
@@ -1445,7 +1606,8 @@
           "value": "DEMO-00012",
           "expiry": "2030-12-31",
           "issuingCountry": "",
-          "verified": ""
+          "verified": "",
+          "nationalIdType": ""
         }
       ],
       "documents": [],
@@ -1457,7 +1619,8 @@
           "memberNumber": "MEMBER-0012",
           "expiry": "2030-12-31",
           "insuranceType": "",
-          "policyNumber": ""
+          "policyNumber": "",
+          "payerType": ""
         }
       ],
       "disabilities": [],
@@ -1472,7 +1635,12 @@
           "consentText": "",
           "refusalReason": "",
           "revokedAt": "",
-          "revocationReason": ""
+          "revocationReason": "",
+          "scope": "",
+          "source": "",
+          "language": "",
+          "consentVersion": "",
+          "revokedBy": ""
         }
       ],
       "communications": []

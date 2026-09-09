@@ -30,12 +30,10 @@ function adapter(): ClinicalTemplateAdapter {
     metadata: vi.fn().mockResolvedValue(metadata),
     load: vi.fn().mockResolvedValue(structuredClone(fixture)),
     newRecord: vi.fn().mockResolvedValue(structuredClone(fixture)),
-    save: vi
-      .fn()
-      .mockImplementation(async (r) => ({
-        ...r.record,
-        version: r.expectedVersion + 1,
-      })),
+    save: vi.fn().mockImplementation(async (r) => ({
+      ...r.record,
+      version: r.expectedVersion + 1,
+    })),
     search: vi
       .fn()
       .mockResolvedValue({ rows: [], total: 0, page: 1, pageSize: 20 }),
@@ -43,13 +41,11 @@ function adapter(): ClinicalTemplateAdapter {
     saveSearch: vi.fn(),
     deleteSearch: vi.fn(),
     exportRows: vi.fn(),
-    overview: vi
-      .fn()
-      .mockResolvedValue({
-        patient: fixture,
-        rows: [],
-        loadedAt: new Date().toISOString(),
-      }),
+    overview: vi.fn().mockResolvedValue({
+      patient: fixture,
+      rows: [],
+      loadedAt: new Date().toISOString(),
+    }),
     schedule: vi.fn(),
   };
 }
@@ -82,7 +78,7 @@ test("patient form preserves edits through section changes and retries with the 
   expect(screen.getByRole("textbox", { name: "First name" })).toHaveValue(
     "Retained",
   );
-  fireEvent.click(screen.getByRole("button", { name: "Review and save" }));
+  fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
   fireEvent.click(
     within(await screen.findByRole("dialog")).getByRole("button", {
       name: "Confirm",
@@ -99,9 +95,7 @@ test("read-only metadata blocks saves and form inputs", async () => {
   render(page(adapter(), false));
   fireEvent.click(await screen.findByRole("tab", { name: /Personal/ }));
   expect(screen.getByRole("textbox", { name: "First name" })).toBeDisabled();
-  expect(
-    screen.getByRole("button", { name: "Review and save" }),
-  ).toBeDisabled();
+  expect(screen.getByRole("button", { name: "Save changes" })).toBeDisabled();
 });
 test("scope remounts cannot retain another user patient edits", async () => {
   const a = adapter(),
@@ -155,7 +149,7 @@ test("late patient load cannot replace a newly selected record", async () => {
       onOpen={vi.fn()}
     />,
   );
-  await screen.findByText("Second Morgan");
+  await screen.findByRole("heading", { name: "Second Morgan" });
   resolve(fixture);
   await waitFor(() =>
     expect(screen.queryByText("Alex Morgan")).not.toBeInTheDocument(),
@@ -186,4 +180,38 @@ test("HTTP adapter sends product context and retains structured validation failu
   expect(JSON.parse(request.mock.calls[0][1].body).operationId).toBe(
     "same-operation",
   );
+});
+
+test("New patient resets a saved record in a reused new-record tab", async () => {
+  const a = adapter(),
+    initial = { ...structuredClone(fixture), id: "new", mrn: "", version: 0 };
+  const empty = {
+    ...initial,
+    values: { ...initial.values, firstName: "", lastName: "" },
+  };
+  a.newRecord = vi.fn().mockResolvedValueOnce(initial).mockResolvedValue(empty);
+  a.save = vi.fn().mockImplementation(async (r) => ({
+    ...r.record,
+    id: "PT-created",
+    mrn: "DEMO-created",
+    version: 1,
+  }));
+  render(React.cloneElement(page(a), { patientId: undefined, mode: "new" }));
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Create patient" }),
+  );
+  fireEvent.click(
+    within(await screen.findByRole("dialog")).getByRole("button", {
+      name: "Create patient",
+    }),
+  );
+  await screen.findByText("Patient record saved.");
+  fireEvent.click(screen.getByRole("button", { name: "New" }));
+  await waitFor(() =>
+    expect(screen.getByRole("textbox", { name: "First name" })).toHaveValue(""),
+  );
+  expect(
+    screen.queryByRole("heading", { name: "Alex Morgan" }),
+  ).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Create patient" })).toBeEnabled();
 });

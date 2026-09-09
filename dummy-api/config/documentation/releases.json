@@ -38231,7 +38231,7 @@
           "pageId": "allyvora-patient-record",
           "module": "library",
           "title": "Patient Record",
-          "revision": 1,
+          "revision": 2,
           "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
@@ -38240,8 +38240,8 @@
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.",
-                "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.",
+                "Use the section rail to scroll all nine patient sections. Tabs and wizard show one section at a time. The footer keeps New, Cancel, save and available care actions accessible while the form scrolls.",
+                "MRN and registration fields are system-managed. Add names, contacts, documents and other repeated details as needed. Document upload stages file metadata only. Theme, layout and density controls use application preferences and cannot override administrator locks.",
                 "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.",
                 "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.",
                 "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.",
@@ -38627,6 +38627,17 @@
       "category": "feature",
       "title": "Page Template Library",
       "summary": "Explore reusable page designs, try layouts, and copy typed configuration and integration examples.",
+      "requiresAcknowledgment": false
+    },
+    {
+      "id": "patient-record-layout",
+      "revision": 1,
+      "releaseId": "2026-09-08-documentation",
+      "pageId": "allyvora-patient-record",
+      "sectionId": "workflow",
+      "category": "improvement",
+      "title": "Patient Record",
+      "summary": "Use the section rail to scroll all nine patient sections. Tabs and wizard show one section at a time. The footer keeps New, Cancel, save and available care actions accessible while the form scrolls.",
       "requiresAcknowledgment": false
     }
   ]

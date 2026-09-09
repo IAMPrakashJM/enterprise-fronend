@@ -1,10 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "sections": [
     {
       "id": "mrn",
       "title": "template.clinical.mrn",
-      "subtitle": "template.clinical.sectionHelp.mrn",
+      "subtitle": "template.clinical.recordSubMrn",
       "fields": [
         {
           "id": "status",
@@ -26,21 +26,22 @@
           ]
         },
         {
-          "id": "preferredName",
-          "label": "template.clinical.preferredName",
+          "id": "uhid",
+          "label": "template.clinical.uhid",
           "type": "text"
         }
       ],
-      "collections": []
+      "collections": [],
+      "cardTitle": "template.clinical.recordTitleMrn"
     },
     {
       "id": "personal",
       "title": "template.clinical.personal",
-      "subtitle": "template.clinical.sectionHelp.personal",
+      "subtitle": "template.clinical.recordSubPersonal",
       "fields": [
         {
           "id": "title",
-          "label": "template.clinical.title",
+          "label": "template.clinical.salutation",
           "type": "select",
           "options": [
             {
@@ -55,28 +56,34 @@
               "value": "dr",
               "label": "template.clinical.dr"
             }
-          ]
+          ],
+          "span": 2
         },
         {
           "id": "firstName",
           "label": "template.clinical.firstName",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 3
         },
         {
           "id": "middleName",
           "label": "template.clinical.middleName",
-          "type": "text"
+          "type": "text",
+          "span": 3
         },
         {
           "id": "lastName",
           "label": "template.clinical.lastName",
-          "type": "text"
+          "type": "text",
+          "span": 2,
+          "required": true
         },
         {
-          "id": "birthDate",
-          "label": "template.clinical.birthDate",
-          "type": "date"
+          "id": "preferredName",
+          "label": "template.clinical.preferredName",
+          "type": "text",
+          "span": 2
         },
         {
           "id": "gender",
@@ -95,7 +102,20 @@
               "value": "other",
               "label": "template.clinical.other"
             }
-          ]
+          ],
+          "span": 3
+        },
+        {
+          "id": "birthDate",
+          "label": "template.clinical.birthDate",
+          "type": "date",
+          "span": 3
+        },
+        {
+          "id": "birthTime",
+          "label": "template.clinical.birthTime",
+          "type": "time",
+          "span": 2
         },
         {
           "id": "nationality",
@@ -117,51 +137,52 @@
           ]
         },
         {
-          "id": "language",
-          "label": "template.clinical.language",
+          "id": "ethnicity",
+          "label": "template.clinical.ethnicity",
           "type": "select",
           "options": [
             {
-              "value": "en",
-              "label": "template.clinical.en"
+              "value": "notStated",
+              "label": "template.clinical.notStated"
             },
             {
-              "value": "ar",
-              "label": "template.clinical.ar"
-            },
-            {
-              "value": "hi",
-              "label": "template.clinical.hi"
-            },
-            {
-              "value": "ml",
-              "label": "template.clinical.ml"
+              "value": "other",
+              "label": "template.clinical.other"
             }
-          ]
+          ],
+          "allowCustom": true
         },
         {
-          "id": "occupation",
-          "label": "template.clinical.occupation",
-          "type": "text"
-        },
-        {
-          "id": "dobPrecision",
-          "label": "template.clinical.dobPrecision",
+          "id": "race",
+          "label": "template.clinical.race",
           "type": "select",
           "options": [
             {
-              "value": "exact",
-              "label": "template.clinical.exact"
+              "value": "notStated",
+              "label": "template.clinical.notStated"
             },
             {
-              "value": "estimated",
-              "label": "template.clinical.estimated"
-            },
-            {
-              "value": "unknown",
-              "label": "template.clinical.unknown"
+              "value": "other",
+              "label": "template.clinical.other"
             }
-          ]
+          ],
+          "allowCustom": true
+        },
+        {
+          "id": "religion",
+          "label": "template.clinical.religion",
+          "type": "select",
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "maritalStatus",
@@ -183,19 +204,20 @@
           ]
         },
         {
-          "id": "race",
-          "label": "template.clinical.race",
-          "type": "text"
-        },
-        {
-          "id": "ethnicity",
-          "label": "template.clinical.ethnicity",
-          "type": "text"
-        },
-        {
-          "id": "religion",
-          "label": "template.clinical.religion",
-          "type": "text"
+          "id": "occupation",
+          "label": "template.clinical.occupation",
+          "type": "select",
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "employer",
@@ -203,9 +225,59 @@
           "type": "text"
         },
         {
-          "id": "birthPlace",
-          "label": "template.clinical.birthPlace",
-          "type": "text"
+          "id": "language",
+          "label": "template.clinical.preferredLanguage",
+          "type": "select",
+          "options": [
+            {
+              "value": "en",
+              "label": "template.clinical.en"
+            },
+            {
+              "value": "ar",
+              "label": "template.clinical.ar"
+            },
+            {
+              "value": "hi",
+              "label": "template.clinical.hi"
+            },
+            {
+              "value": "ml",
+              "label": "template.clinical.ml"
+            }
+          ]
+        },
+        {
+          "id": "educationLevel",
+          "label": "template.clinical.educationLevel",
+          "type": "select",
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
+        },
+        {
+          "id": "incomeBracket",
+          "label": "template.clinical.incomeBracket",
+          "type": "select",
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "birthCountry",
@@ -227,24 +299,72 @@
           ]
         },
         {
-          "id": "educationLevel",
-          "label": "template.clinical.educationLevel",
-          "type": "text"
+          "id": "birthPlace",
+          "label": "template.clinical.birthPlace",
+          "type": "text",
+          "span": 8
         },
         {
-          "id": "incomeBracket",
-          "label": "template.clinical.incomeBracket",
-          "type": "text"
+          "id": "dobPrecision",
+          "label": "template.clinical.dobPrecision",
+          "type": "select",
+          "options": [
+            {
+              "value": "exact",
+              "label": "template.clinical.exact"
+            },
+            {
+              "value": "estimated",
+              "label": "template.clinical.estimated"
+            },
+            {
+              "value": "unknown",
+              "label": "template.clinical.unknown"
+            }
+          ]
         }
       ],
       "collections": [
         "names"
-      ]
+      ],
+      "groups": [
+        {
+          "title": "template.clinical.name",
+          "fields": [
+            "title",
+            "firstName",
+            "middleName",
+            "lastName",
+            "preferredName"
+          ]
+        },
+        {
+          "title": "template.clinical.demographics",
+          "fields": [
+            "gender",
+            "birthDate",
+            "birthTime",
+            "nationality",
+            "ethnicity",
+            "race",
+            "religion",
+            "maritalStatus",
+            "occupation",
+            "employer",
+            "language",
+            "educationLevel",
+            "incomeBracket",
+            "birthCountry",
+            "birthPlace"
+          ]
+        }
+      ],
+      "cardTitle": "template.clinical.recordTitlePersonal"
     },
     {
       "id": "contact",
       "title": "template.clinical.contact",
-      "subtitle": "template.clinical.sectionHelp.contact",
+      "subtitle": "template.clinical.recordSubContact",
       "fields": [
         {
           "id": "mobile",
@@ -282,13 +402,23 @@
         }
       ],
       "collections": [
-        "contacts"
+        "contacts",
+        "communications"
+      ],
+      "cardTitle": "template.clinical.recordTitleContact",
+      "groups": [
+        {
+          "title": "template.clinical.preferredContact",
+          "fields": [
+            "preferredContact"
+          ]
+        }
       ]
     },
     {
       "id": "address",
       "title": "template.clinical.address",
-      "subtitle": "template.clinical.sectionHelp.address",
+      "subtitle": "template.clinical.recordSubAddress",
       "fields": [
         {
           "id": "emergencyName",
@@ -309,22 +439,25 @@
       "collections": [
         "addresses",
         "related"
-      ]
+      ],
+      "cardTitle": "template.clinical.recordTitleAddress",
+      "groups": []
     },
     {
       "id": "identity",
       "title": "template.clinical.identity",
-      "subtitle": "template.clinical.sectionHelp.identity",
+      "subtitle": "template.clinical.recordSubIdentity",
       "fields": [],
       "collections": [
         "identifiers",
         "documents"
-      ]
+      ],
+      "cardTitle": "template.clinical.recordTitleIdentity"
     },
     {
       "id": "insurance",
       "title": "template.clinical.insurance",
-      "subtitle": "template.clinical.sectionHelp.insurance",
+      "subtitle": "template.clinical.recordSubInsurance",
       "fields": [
         {
           "id": "hasInsurance",
@@ -334,12 +467,13 @@
       ],
       "collections": [
         "insurances"
-      ]
+      ],
+      "cardTitle": "template.clinical.recordTitleInsurance"
     },
     {
       "id": "clinical",
       "title": "template.clinical.clinical",
-      "subtitle": "template.clinical.sectionHelp.clinical",
+      "subtitle": "template.clinical.recordSubClinical",
       "fields": [
         {
           "id": "bloodGroup",
@@ -377,7 +511,11 @@
         {
           "id": "deathDate",
           "label": "template.clinical.deathDate",
-          "type": "date"
+          "type": "date",
+          "visibleWhen": {
+            "field": "deceased",
+            "value": true
+          }
         },
         {
           "id": "clinicalNotes",
@@ -388,16 +526,82 @@
           "id": "hasDisability",
           "label": "template.clinical.hasDisability",
           "type": "checkbox"
+        },
+        {
+          "id": "vulnerable",
+          "label": "template.clinical.vulnerable",
+          "type": "checkbox",
+          "span": 4
+        },
+        {
+          "id": "specialNeeds",
+          "label": "template.clinical.specialNeeds",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "deathVerification",
+          "label": "template.clinical.deathVerification",
+          "type": "select",
+          "span": 4,
+          "visibleWhen": {
+            "field": "deceased",
+            "value": true
+          },
+          "options": [
+            {
+              "value": "deathCertificate",
+              "label": "template.clinical.deathCertificate"
+            },
+            {
+              "value": "hospitalRecord",
+              "label": "template.clinical.hospitalRecord"
+            },
+            {
+              "value": "familyReport",
+              "label": "template.clinical.familyReport"
+            },
+            {
+              "value": "pending",
+              "label": "template.clinical.pending"
+            }
+          ]
         }
       ],
       "collections": [
         "disabilities"
-      ]
+      ],
+      "groups": [
+        {
+          "title": "template.clinical.bloodGroup",
+          "fields": [
+            "bloodGroup",
+            "bloodVerified"
+          ]
+        },
+        {
+          "title": "template.clinical.specialStatus",
+          "fields": [
+            "hasDisability",
+            "vulnerable",
+            "specialNeeds"
+          ]
+        },
+        {
+          "title": "template.clinical.deceasedStatus",
+          "fields": [
+            "deceased",
+            "deathDate",
+            "deathVerification"
+          ]
+        }
+      ],
+      "cardTitle": "template.clinical.recordTitleClinical"
     },
     {
       "id": "registration",
       "title": "template.clinical.registration",
-      "subtitle": "template.clinical.sectionHelp.registration",
+      "subtitle": "template.clinical.recordSubRegistration",
       "fields": [
         {
           "id": "branch",
@@ -438,14 +642,20 @@
           "id": "referralDetails",
           "label": "template.clinical.referralDetails",
           "type": "textarea"
+        },
+        {
+          "id": "branchMrn",
+          "label": "template.clinical.branchMrn",
+          "type": "text"
         }
       ],
-      "collections": []
+      "collections": [],
+      "cardTitle": "template.clinical.recordTitleRegistration"
     },
     {
       "id": "consent",
       "title": "template.clinical.consent",
-      "subtitle": "template.clinical.sectionHelp.consent",
+      "subtitle": "template.clinical.recordSubConsent",
       "fields": [
         {
           "id": "privacyAccepted",
@@ -459,27 +669,17 @@
         }
       ],
       "collections": [
-        "consents",
-        "communications"
-      ]
+        "consents"
+      ],
+      "cardTitle": "template.clinical.recordTitleConsent",
+      "groups": []
     }
   ],
   "collections": [
     {
       "id": "names",
-      "title": "template.clinical.names",
+      "title": "template.clinical.collectionNames",
       "fields": [
-        {
-          "id": "name",
-          "label": "template.clinical.name",
-          "type": "text",
-          "required": true
-        },
-        {
-          "id": "relationship",
-          "label": "template.clinical.relationship",
-          "type": "text"
-        },
         {
           "id": "nameType",
           "label": "template.clinical.nameType",
@@ -497,14 +697,50 @@
               "value": "local",
               "label": "template.clinical.local"
             }
-          ]
+          ],
+          "span": 4
+        },
+        {
+          "id": "title",
+          "label": "template.clinical.title",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "firstName",
+          "label": "template.clinical.firstName",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "lastName",
+          "label": "template.clinical.lastName",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "name",
+          "label": "template.clinical.name",
+          "type": "text",
+          "required": true,
+          "span": 4
         },
         {
           "id": "localScript",
           "label": "template.clinical.localScript",
-          "type": "text"
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "relationship",
+          "label": "template.clinical.relationship",
+          "type": "text",
+          "span": 4,
+          "hidden": true
         }
-      ]
+      ],
+      "addRequires": "nameType",
+      "addLabel": "template.clinical.addNames"
     },
     {
       "id": "contacts",
@@ -528,13 +764,15 @@
               "value": "phone",
               "label": "template.clinical.phone"
             }
-          ]
+          ],
+          "span": 4
         },
         {
           "id": "value",
           "label": "template.clinical.value",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "primary",
@@ -549,14 +787,34 @@
               "value": "no",
               "label": "template.clinical.no"
             }
-          ]
+          ],
+          "span": 4,
+          "control": "primary"
         },
         {
           "id": "countryCode",
           "label": "template.clinical.countryCode",
-          "type": "text"
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "contactCategory",
+          "label": "template.clinical.contactCategory",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "home",
+              "label": "template.clinical.home"
+            },
+            {
+              "value": "work",
+              "label": "template.clinical.work"
+            }
+          ]
         }
-      ]
+      ],
+      "addRequires": "value"
     },
     {
       "id": "addresses",
@@ -576,38 +834,8 @@
               "value": "work",
               "label": "template.clinical.work"
             }
-          ]
-        },
-        {
-          "id": "line1",
-          "label": "template.clinical.line1",
-          "type": "text",
-          "required": true
-        },
-        {
-          "id": "city",
-          "label": "template.clinical.city",
-          "type": "text"
-        },
-        {
-          "id": "postalCode",
-          "label": "template.clinical.postalCode",
-          "type": "text"
-        },
-        {
-          "id": "country",
-          "label": "template.clinical.country",
-          "type": "text"
-        },
-        {
-          "id": "line2",
-          "label": "template.clinical.line2",
-          "type": "text"
-        },
-        {
-          "id": "state",
-          "label": "template.clinical.state",
-          "type": "text"
+          ],
+          "span": 4
         },
         {
           "id": "primary",
@@ -622,35 +850,80 @@
               "value": "no",
               "label": "template.clinical.no"
             }
-          ]
+          ],
+          "span": 4,
+          "control": "primary"
+        },
+        {
+          "id": "line1",
+          "label": "template.clinical.line1",
+          "type": "text",
+          "required": true,
+          "span": 4
+        },
+        {
+          "id": "line2",
+          "label": "template.clinical.line2",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "country",
+          "label": "template.clinical.country",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "state",
+          "label": "template.clinical.state",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "city",
+          "label": "template.clinical.city",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "postalCode",
+          "label": "template.clinical.postalCode",
+          "type": "text",
+          "span": 4
         }
-      ]
+      ],
+      "addRequires": "line1",
+      "addLabel": "template.clinical.addAddresses"
     },
     {
       "id": "related",
-      "title": "template.clinical.related",
+      "title": "template.clinical.collectionRelated",
       "fields": [
         {
           "id": "name",
           "label": "template.clinical.name",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "relationship",
           "label": "template.clinical.relationship",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "phone",
           "label": "template.clinical.phone",
-          "type": "text"
+          "type": "text",
+          "span": 4
         },
         {
           "id": "email",
           "label": "template.clinical.email",
-          "type": "email"
+          "type": "email",
+          "span": 4
         },
         {
           "id": "guardian",
@@ -665,7 +938,9 @@
               "value": "no",
               "label": "template.clinical.no"
             }
-          ]
+          ],
+          "span": 4,
+          "control": "toggle"
         },
         {
           "id": "emergency",
@@ -680,13 +955,17 @@
               "value": "no",
               "label": "template.clinical.no"
             }
-          ]
+          ],
+          "span": 4,
+          "control": "toggle"
         }
-      ]
+      ],
+      "addRequires": "name",
+      "addLabel": "template.clinical.addRelated"
     },
     {
       "id": "identifiers",
-      "title": "template.clinical.identifiers",
+      "title": "template.clinical.collectionIdentifiers",
       "fields": [
         {
           "id": "identityType",
@@ -702,23 +981,27 @@
               "value": "nationalId",
               "label": "template.clinical.nationalId"
             }
-          ]
+          ],
+          "span": 4
         },
         {
           "id": "value",
           "label": "template.clinical.value",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "expiry",
           "label": "template.clinical.expiry",
-          "type": "date"
+          "type": "date",
+          "span": 4
         },
         {
           "id": "issuingCountry",
           "label": "template.clinical.issuingCountry",
-          "type": "text"
+          "type": "text",
+          "span": 4
         },
         {
           "id": "verified",
@@ -733,59 +1016,95 @@
               "value": "no",
               "label": "template.clinical.no"
             }
-          ]
+          ],
+          "span": 4,
+          "control": "toggle"
+        },
+        {
+          "id": "nationalIdType",
+          "label": "template.clinical.nationalIdType",
+          "type": "text",
+          "span": 4
         }
-      ]
+      ],
+      "addRequires": "value",
+      "addLabel": "template.clinical.addIdentifiers"
     },
     {
       "id": "documents",
-      "title": "template.clinical.documents",
+      "title": "template.clinical.collectionDocuments",
       "fields": [
         {
           "id": "documentType",
           "label": "template.clinical.documentType",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "fileName",
           "label": "template.clinical.fileName",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "notes",
           "label": "template.clinical.notes",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "id": "insurances",
-      "title": "template.clinical.insurances",
-      "fields": [
-        {
-          "id": "payer",
-          "label": "template.clinical.payer",
           "type": "text",
-          "required": true
+          "span": 4
         },
         {
-          "id": "plan",
-          "label": "template.clinical.plan",
-          "type": "text"
-        },
-        {
-          "id": "memberNumber",
-          "label": "template.clinical.memberNumber",
-          "type": "text",
-          "required": true
+          "id": "issuedDate",
+          "label": "template.clinical.issuedDate",
+          "type": "date",
+          "span": 4
         },
         {
           "id": "expiry",
           "label": "template.clinical.expiry",
-          "type": "date"
+          "type": "date",
+          "span": 4
         },
+        {
+          "id": "verified",
+          "label": "template.clinical.verified",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ],
+          "control": "toggle"
+        },
+        {
+          "id": "mimeType",
+          "label": "template.clinical.mimeType",
+          "type": "text",
+          "span": 4,
+          "hidden": true
+        },
+        {
+          "id": "fileSizeBytes",
+          "label": "template.clinical.fileSizeBytes",
+          "type": "text",
+          "span": 4,
+          "hidden": true
+        }
+      ],
+      "addRequires": "fileName",
+      "addLabel": "template.clinical.addDocuments"
+    },
+    {
+      "id": "insurances",
+      "title": "template.clinical.collectionInsurances",
+      "fields": [
         {
           "id": "insuranceType",
           "label": "template.clinical.insuranceType",
@@ -798,36 +1117,126 @@
             {
               "value": "secondary",
               "label": "template.clinical.secondary"
+            },
+            {
+              "value": "tertiary",
+              "label": "template.clinical.tertiary"
+            }
+          ],
+          "span": 4
+        },
+        {
+          "id": "payerType",
+          "label": "template.clinical.payerType",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "self",
+              "label": "template.clinical.self"
+            },
+            {
+              "value": "insurance",
+              "label": "template.clinical.insurance"
+            },
+            {
+              "value": "corporate",
+              "label": "template.clinical.corporate"
+            },
+            {
+              "value": "employer",
+              "label": "template.clinical.employer"
             }
           ]
         },
         {
+          "id": "payer",
+          "label": "template.clinical.payer",
+          "type": "text",
+          "required": true,
+          "span": 4
+        },
+        {
+          "id": "plan",
+          "label": "template.clinical.plan",
+          "type": "text",
+          "span": 4
+        },
+        {
           "id": "policyNumber",
           "label": "template.clinical.policyNumber",
-          "type": "text"
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "memberNumber",
+          "label": "template.clinical.memberNumber",
+          "type": "text",
+          "required": true,
+          "span": 4
+        },
+        {
+          "id": "expiry",
+          "label": "template.clinical.expiry",
+          "type": "date",
+          "span": 4
         }
-      ]
+      ],
+      "addRequires": "payer",
+      "addLabel": "template.clinical.addInsurances"
     },
     {
       "id": "disabilities",
-      "title": "template.clinical.disabilities",
+      "title": "template.clinical.collectionDisabilities",
       "fields": [
         {
           "id": "description",
           "label": "template.clinical.description",
           "type": "text",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "notes",
           "label": "template.clinical.notes",
-          "type": "text"
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "cause",
+          "label": "template.clinical.cause",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "byBirth",
+              "label": "template.clinical.byBirth"
+            },
+            {
+              "value": "accident",
+              "label": "template.clinical.accident"
+            },
+            {
+              "value": "illness",
+              "label": "template.clinical.illness"
+            },
+            {
+              "value": "ageRelated",
+              "label": "template.clinical.ageRelated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ]
         }
-      ]
+      ],
+      "addRequires": "cause",
+      "addLabel": "template.clinical.addDisabilities"
     },
     {
       "id": "consents",
-      "title": "template.clinical.consents",
+      "title": "template.clinical.collectionConsents",
       "fields": [
         {
           "id": "consentType",
@@ -846,8 +1255,25 @@
             {
               "value": "marketing",
               "label": "template.clinical.marketing"
+            },
+            {
+              "value": "research",
+              "label": "template.clinical.research"
+            },
+            {
+              "value": "photography",
+              "label": "template.clinical.photography"
+            },
+            {
+              "value": "insuranceDisclosure",
+              "label": "template.clinical.insuranceDisclosure"
+            },
+            {
+              "value": "telehealth",
+              "label": "template.clinical.telehealth"
             }
-          ]
+          ],
+          "span": 4
         },
         {
           "id": "decision",
@@ -866,50 +1292,232 @@
             {
               "value": "revoked",
               "label": "template.clinical.revoked"
+            },
+            {
+              "value": "expired",
+              "label": "template.clinical.expired"
+            },
+            {
+              "value": "pending",
+              "label": "template.clinical.pending"
+            },
+            {
+              "value": "notRequired",
+              "label": "template.clinical.notRequired"
             }
-          ]
+          ],
+          "span": 4
         },
         {
           "id": "date",
           "label": "template.clinical.date",
           "type": "date",
-          "required": true
+          "required": true,
+          "span": 4
         },
         {
           "id": "validUntil",
           "label": "template.clinical.validUntil",
-          "type": "date"
+          "type": "date",
+          "span": 4
         },
         {
           "id": "givenBy",
           "label": "template.clinical.givenBy",
-          "type": "text"
+          "type": "text",
+          "span": 4
         },
         {
           "id": "consentText",
           "label": "template.clinical.consentText",
-          "type": "textarea"
+          "type": "textarea",
+          "span": 12
         },
         {
           "id": "refusalReason",
           "label": "template.clinical.refusalReason",
-          "type": "textarea"
+          "type": "textarea",
+          "span": 12,
+          "visibleWhen": {
+            "field": "decision",
+            "value": "declined"
+          }
         },
         {
           "id": "revokedAt",
           "label": "template.clinical.revokedAt",
-          "type": "date"
+          "type": "date",
+          "span": 4,
+          "visibleWhen": {
+            "field": "decision",
+            "value": "revoked"
+          }
         },
         {
           "id": "revocationReason",
           "label": "template.clinical.revocationReason",
-          "type": "textarea"
+          "type": "textarea",
+          "span": 12,
+          "visibleWhen": {
+            "field": "decision",
+            "value": "revoked"
+          }
+        },
+        {
+          "id": "scope",
+          "label": "template.clinical.scope",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "patient",
+              "label": "template.clinical.patient"
+            },
+            {
+              "value": "case",
+              "label": "template.clinical.case"
+            },
+            {
+              "value": "episode",
+              "label": "template.clinical.episode"
+            },
+            {
+              "value": "encounter",
+              "label": "template.clinical.encounter"
+            },
+            {
+              "value": "order",
+              "label": "template.clinical.order"
+            },
+            {
+              "value": "procedure",
+              "label": "template.clinical.procedure"
+            },
+            {
+              "value": "insurance",
+              "label": "template.clinical.insurance"
+            },
+            {
+              "value": "portal",
+              "label": "template.clinical.portal"
+            },
+            {
+              "value": "billing",
+              "label": "template.clinical.billing"
+            },
+            {
+              "value": "individual",
+              "label": "template.clinical.individual"
+            },
+            {
+              "value": "general",
+              "label": "template.clinical.general"
+            }
+          ]
+        },
+        {
+          "id": "source",
+          "label": "template.clinical.source",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "frontDesk",
+              "label": "template.clinical.frontDesk"
+            },
+            {
+              "value": "patientPortal",
+              "label": "template.clinical.patientPortal"
+            },
+            {
+              "value": "mobileApp",
+              "label": "template.clinical.mobileApp"
+            },
+            {
+              "value": "kiosk",
+              "label": "template.clinical.kiosk"
+            },
+            {
+              "value": "callCenter",
+              "label": "template.clinical.callCenter"
+            },
+            {
+              "value": "importSource",
+              "label": "template.clinical.importSource"
+            },
+            {
+              "value": "apiSource",
+              "label": "template.clinical.apiSource"
+            },
+            {
+              "value": "written",
+              "label": "template.clinical.written"
+            },
+            {
+              "value": "verbal",
+              "label": "template.clinical.verbal"
+            }
+          ]
+        },
+        {
+          "id": "language",
+          "label": "template.clinical.language",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "en",
+              "label": "template.clinical.en"
+            },
+            {
+              "value": "ar",
+              "label": "template.clinical.ar"
+            },
+            {
+              "value": "hi",
+              "label": "template.clinical.hi"
+            },
+            {
+              "value": "ur",
+              "label": "template.clinical.ur"
+            },
+            {
+              "value": "tl",
+              "label": "template.clinical.tl"
+            },
+            {
+              "value": "fr",
+              "label": "template.clinical.fr"
+            },
+            {
+              "value": "ml",
+              "label": "template.clinical.ml"
+            }
+          ]
+        },
+        {
+          "id": "consentVersion",
+          "label": "template.clinical.consentVersion",
+          "type": "text",
+          "span": 4
+        },
+        {
+          "id": "revokedBy",
+          "label": "template.clinical.revokedBy",
+          "type": "text",
+          "span": 4,
+          "visibleWhen": {
+            "field": "decision",
+            "value": "revoked"
+          }
         }
-      ]
+      ],
+      "addRequires": "consentType",
+      "addLabel": "template.clinical.addConsents"
     },
     {
       "id": "communications",
-      "title": "template.clinical.communications",
+      "title": "template.clinical.collectionCommunications",
       "fields": [
         {
           "id": "purpose",
@@ -933,7 +1541,8 @@
               "value": "general",
               "label": "template.clinical.general"
             }
-          ]
+          ],
+          "span": 4
         },
         {
           "id": "channel",
@@ -949,9 +1558,59 @@
               "value": "mobile",
               "label": "template.clinical.mobile"
             }
+          ],
+          "span": 4
+        },
+        {
+          "id": "optedIn",
+          "label": "template.clinical.optedIn",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ],
+          "control": "toggle"
+        },
+        {
+          "id": "language",
+          "label": "template.clinical.language",
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "en",
+              "label": "template.clinical.en"
+            },
+            {
+              "value": "ar",
+              "label": "template.clinical.ar"
+            },
+            {
+              "value": "hi",
+              "label": "template.clinical.hi"
+            },
+            {
+              "value": "ml",
+              "label": "template.clinical.ml"
+            }
           ]
+        },
+        {
+          "id": "contactTime",
+          "label": "template.clinical.contactTime",
+          "type": "text",
+          "span": 4
         }
-      ]
+      ],
+      "addRequires": "purpose",
+      "addLabel": "template.clinical.addCommunications"
     }
   ],
   "providers": [

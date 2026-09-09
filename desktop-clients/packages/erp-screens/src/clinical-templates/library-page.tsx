@@ -22,6 +22,7 @@ import {
 import { useProductRequest } from "../product-services";
 import { ClinicalPatientWorkspace } from "./workspace";
 import type { ClinicalView } from "./shared";
+import { RecordPreferenceControls } from "./record-preferences";
 const views: ClinicalView[] = ["query", "record", "overview"];
 export function ClinicalLibraryPage({
   page,
@@ -48,30 +49,8 @@ export function ClinicalLibraryPage({
   const code = `import { ClinicalPatientWorkspace } from '@pepbits/erp-screens';\nimport { createClinicalTemplateAdapter } from '@pepbits/erp-data';\nimport type { UserPreferences } from '@pepbits/erp-config';\n\nexport function PatientPage({ request, productId, scopeKey, preferences }: {\n  request: (path: string, init?: RequestInit) => Promise<Response>;\n  productId: string;\n  scopeKey: string; // tenant + application + user + record\n  preferences: UserPreferences;\n}) {\n  const adapter = React.useMemo(() => createClinicalTemplateAdapter(request, productId), [request, productId]);\n  return <ClinicalPatientWorkspace adapter={adapter} scopeKey={scopeKey}\n    initialPage={{ view: '${view}' }} preferences={preferences} />;\n}\n`;
   return (
     <div className="space-y-4" data-clinical-library={page.id}>
-      <Card>
-        <CardContent className="space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="space-y-1">
-              <Badge tone="brand">{t("template.clinical.library")}</Badge>
-              <h2 className="text-xl font-bold">
-                {t(page.titleKey ?? page.title)}
-              </h2>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {CLINICAL_TEMPLATE_PAGES.map((p) => (
-                <Button
-                  key={p.id}
-                  variant={p.id === page.id ? "primary" : "secondary"}
-                  onClick={() => navigation.open({ pageId: p.id })}
-                >
-                  {t(p.title)}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <p className="text-sm text-[var(--text-muted)]">
-            {t("template.clinical.demoNotice")}
-          </p>
+      {view === "record" ? (
+        <div className="flex items-center justify-between gap-2">
           <Tabs
             items={[
               { id: "preview", label: "template.preview" },
@@ -81,8 +60,45 @@ export function ClinicalLibraryPage({
             value={tab}
             onChange={setTab}
           />
-        </CardContent>
-      </Card>
+          <Badge>{t("template.clinical.demoRecord")}</Badge>
+        </div>
+      ) : (
+        <Card>
+          <CardContent className="space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="space-y-1">
+                <Badge tone="brand">{t("template.clinical.library")}</Badge>
+                <h2 className="text-xl font-bold">
+                  {t(page.titleKey ?? page.title)}
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {CLINICAL_TEMPLATE_PAGES.map((p) => (
+                  <Button
+                    key={p.id}
+                    variant={p.id === page.id ? "primary" : "secondary"}
+                    onClick={() => navigation.open({ pageId: p.id })}
+                  >
+                    {t(p.title)}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <p className="text-sm text-[var(--text-muted)]">
+              {t("template.clinical.demoNotice")}
+            </p>
+            <Tabs
+              items={[
+                { id: "preview", label: "template.preview" },
+                { id: "code", label: "template.typescript" },
+                { id: "guide", label: "template.guide" },
+              ]}
+              value={tab}
+              onChange={setTab}
+            />
+          </CardContent>
+        </Card>
+      )}
       <div hidden={tab !== "preview"}>
         <ClinicalPatientWorkspace
           adapter={adapter}
@@ -94,6 +110,7 @@ export function ClinicalLibraryPage({
           ])}
           initialPage={{ view, patientId: target.recordId, mode: target.mode }}
           preferences={preferences}
+          preferenceControls={<RecordPreferenceControls />}
           onOpen={(destination) =>
             navigation.openInNewContext({
               pageId:

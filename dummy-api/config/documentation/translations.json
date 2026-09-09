@@ -175,7 +175,9 @@
     "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted.": "بيانات الرعاية التجريبية وهمية. تتطلب القرارات السريرية والأهلية وتخزين الملفات والإشعارات خدمات معتمدة. تبقى القيم غير المحفوظة في الذاكرة؛ لا تُحفظ مسودات حساسة تلقائياً.",
     "Patient Query": "البحث عن المرضى",
     "Patient Record": "سجل المريض",
-    "Patient 360": "نظرة شاملة للمريض"
+    "Patient 360": "نظرة شاملة للمريض",
+    "Use the section rail to scroll all nine patient sections. Tabs and wizard show one section at a time. The footer keeps New, Cancel, save and available care actions accessible while the form scrolls.": "استخدم التنقل الجانبي للتمرير عبر أقسام المريض التسعة. تعرض علامات التبويب والخطوات قسمًا واحدًا في كل مرة. تبقى إجراءات جديد وإلغاء وحفظ والرعاية المتاحة في التذييل أثناء التمرير.",
+    "MRN and registration fields are system-managed. Add names, contacts, documents and other repeated details as needed. Document upload stages file metadata only. Theme, layout and density controls use application preferences and cannot override administrator locks.": "يدير النظام رقم السجل الطبي وبيانات التسجيل. أضف الأسماء وجهات الاتصال والوثائق والتفاصيل المتكررة حسب الحاجة. يجهز رفع الوثائق بيانات الملف الوصفية فقط. تستخدم عناصر المظهر والتخطيط والكثافة تفضيلات التطبيق ولا تتجاوز أقفال المسؤول."
   },
   "hi": {
     "Use Customer Master to find and maintain customer records.": "ग्राहकों के रिकॉर्ड खोजने और बनाए रखने के लिए ग्राहक मास्टर का उपयोग करें।",
@@ -353,7 +355,9 @@
     "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted.": "डेमो देखभाल डेटा काल्पनिक है। वास्तविक नैदानिक निर्णय, पात्रता, फ़ाइल भंडारण और सूचनाओं के लिए अधिकृत सेवाएँ चाहिए। असहेजे मान मेमोरी में रहते हैं; संवेदनशील ड्राफ़्ट स्वतः नहीं सहेजे जाते।",
     "Patient Query": "रोगी खोज",
     "Patient Record": "रोगी रिकॉर्ड",
-    "Patient 360": "रोगी का समग्र विवरण"
+    "Patient 360": "रोगी का समग्र विवरण",
+    "Use the section rail to scroll all nine patient sections. Tabs and wizard show one section at a time. The footer keeps New, Cancel, save and available care actions accessible while the form scrolls.": "नौ रोगी अनुभागों में स्क्रॉल करने के लिए साइड नेविगेशन का उपयोग करें। टैब और विज़ार्ड एक बार में एक अनुभाग दिखाते हैं। स्क्रॉल करते समय नया, रद्द करें, सहेजें और उपलब्ध देखभाल कार्रवाइयाँ नीचे बनी रहती हैं।",
+    "MRN and registration fields are system-managed. Add names, contacts, documents and other repeated details as needed. Document upload stages file metadata only. Theme, layout and density controls use application preferences and cannot override administrator locks.": "MRN और पंजीकरण फ़ील्ड सिस्टम प्रबंधित करता है। आवश्यकता के अनुसार नाम, संपर्क, दस्तावेज़ और अन्य विवरण जोड़ें। दस्तावेज़ अपलोड केवल फ़ाइल की जानकारी तैयार करता है। थीम, लेआउट और घनत्व ऐप की प्राथमिकताओं का उपयोग करते हैं और एडमिन के लॉक नहीं बदल सकते।"
   },
   "ml": {
     "Use Customer Master to find and maintain customer records.": "ഉപഭോക്തൃ രേഖകൾ കണ്ടെത്താനും പരിപാലിക്കാനും കസ്റ്റമർ മാസ്റ്റർ ഉപയോഗിക്കുക.",
@@ -531,6 +535,8 @@
     "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted.": "ഡെമോ പരിചരണ വിവരങ്ങൾ സാങ്കൽപ്പികമാണ്. യഥാർത്ഥ ക്ലിനിക്കൽ തീരുമാനങ്ങൾ, അർഹത, ഫയൽ സംഭരണം, അറിയിപ്പുകൾ എന്നിവയ്ക്ക് അംഗീകൃത സേവനങ്ങൾ വേണം. സംരക്ഷിക്കാത്ത മൂല്യങ്ങൾ മെമ്മറിയിൽ തുടരും; രഹസ്യ ഡ്രാഫ്റ്റുകൾ സ്വയം സൂക്ഷിക്കില്ല.",
     "Patient Query": "രോഗിയെ തിരയുക",
     "Patient Record": "രോഗിയുടെ രേഖ",
-    "Patient 360": "രോഗിയുടെ സമഗ്ര വിവരങ്ങൾ"
+    "Patient 360": "രോഗിയുടെ സമഗ്ര വിവരങ്ങൾ",
+    "Use the section rail to scroll all nine patient sections. Tabs and wizard show one section at a time. The footer keeps New, Cancel, save and available care actions accessible while the form scrolls.": "ഒൻപത് രോഗി വിഭാഗങ്ങളിലൂടെ സ്ക്രോൾ ചെയ്യാൻ വശത്തെ നാവിഗേഷൻ ഉപയോഗിക്കുക. ടാബുകളും വിസാർഡും ഒരേസമയം ഒരു വിഭാഗം കാണിക്കുന്നു. സ്ക്രോൾ ചെയ്യുമ്പോഴും പുതിയ റെക്കോർഡ്, റദ്ദാക്കൽ, സേവ്, ലഭ്യമായ പരിചരണ പ്രവർത്തനങ്ങൾ അടിയിൽ ലഭ്യമാണ്.",
+    "MRN and registration fields are system-managed. Add names, contacts, documents and other repeated details as needed. Document upload stages file metadata only. Theme, layout and density controls use application preferences and cannot override administrator locks.": "MRN, രജിസ്ട്രേഷൻ ഫീൽഡുകൾ സിസ്റ്റം നിയന്ത്രിക്കുന്നു. ആവശ്യാനുസരണം പേരുകൾ, ബന്ധപ്പെടൽ വിവരങ്ങൾ, രേഖകൾ, മറ്റു വിവരങ്ങൾ ചേർക്കുക. അപ്‌ലോഡ് ഫയലിന്റെ വിവരങ്ങൾ മാത്രമാണ് തയ്യാറാക്കുന്നത്. തീം, ലേഔട്ട്, സാന്ദ്രത നിയന്ത്രണങ്ങൾ ആപ്പിന്റെ മുൻഗണനകൾ ഉപയോഗിക്കുന്നു; അഡ്മിൻ ലോക്കുകൾ മറികടക്കാൻ കഴിയില്ല."
   }
 }

@@ -106,8 +106,47 @@ try {
   let record = page.locator("[data-clinical-record]");
   await record.waitFor();
   await record
-    .getByRole("combobox", { name: "Status", exact: true })
-    .selectOption("active");
+    .getByRole("button", { name: "Rail layout", exact: true })
+    .click();
+  await record.locator('[data-layout="rail"]').waitFor();
+  assert.equal(await record.locator("[data-record-section]").count(), 9);
+  assert.equal(
+    await record.getByRole("textbox", { name: "MRN", exact: true }).count(),
+    0,
+  );
+  assert.equal(await record.locator("progress").getAttribute("value"), "2");
+  await page.screenshot({ path: "/tmp/record-parity-rail.png" });
+  const footer = await record.locator("footer").boundingBox();
+  assert.ok(footer && footer.y + footer.height <= 1100);
+  assert.deepEqual(
+    (await audit(page, { include: "[data-clinical-record]" })).filter((v) =>
+      ["critical", "serious"].includes(v.impact),
+    ),
+    [],
+  );
+  await record.getByRole("tab", { name: "MRN", exact: true }).focus();
+  await page.keyboard.press("ArrowDown");
+  assert.equal(
+    await record
+      .getByRole("tab", { name: "Personal", exact: true })
+      .getAttribute("aria-selected"),
+    "true",
+  );
+  await record
+    .getByRole("button", { name: "Wizard layout", exact: true })
+    .click();
+  await record.locator('[data-layout="wizard"]').waitFor();
+  assert.equal(await record.locator("[data-record-section]").count(), 1);
+  assert.equal(
+    await record
+      .getByRole("button", { name: "Create patient", exact: true })
+      .count(),
+    0,
+  );
+  await record.getByRole("button", { name: "Tab layout", exact: true }).click();
+  await record.locator('[data-layout="tabs"]').waitFor();
+  assert.equal(await record.locator("[data-record-section]").count(), 1);
+
   await record.getByRole("tab", { name: /Personal/ }).click();
   await record
     .getByRole("textbox", { name: "First name", exact: true })
@@ -119,10 +158,6 @@ try {
   await record
     .getByRole("combobox", { name: "Gender", exact: true })
     .selectOption("female");
-  await record.getByRole("tab", { name: /Registration/ }).click();
-  await record
-    .getByRole("combobox", { name: "Branch", exact: true })
-    .selectOption("main");
   await record.getByRole("tab", { name: /Personal/ }).click();
   assert.equal(
     await record
@@ -147,9 +182,11 @@ try {
   await record.getByRole("button", { name: "Retry", exact: true }).click();
   await record.getByText("Patient record saved.", { exact: true }).waitFor();
   await page.screenshot({ path: "/tmp/clinical-patient-record.png" });
-  await record
-    .getByRole("button", { name: "Patient 360", exact: true })
-    .click();
+  await open("allyvora-patient-360");
+  await page
+    .locator("[data-clinical-overview]")
+    .getByRole("combobox", { name: "Select patient", exact: true })
+    .selectOption({ label: "DEMO-000013 · Browser Clinical Demo" });
   const overview = page.locator("[data-clinical-overview]");
   await overview
     .getByRole("heading", { name: "Browser Clinical Demo", exact: true })
@@ -228,6 +265,25 @@ try {
         name: catalog["template.clinical.newPatient"],
         exact: true,
       })
+      .waitFor();
+    await open("allyvora-patient-record");
+    await page
+      .locator("[data-clinical-record]")
+      .getByRole("tab", {
+        name: catalog["template.clinical.personal"],
+        exact: true,
+      })
+      .click();
+    await page
+      .locator("[data-clinical-record]")
+      .getByRole("heading", {
+        name: catalog["template.clinical.recordTitlePersonal"],
+        exact: true,
+      })
+      .waitFor();
+    await page
+      .locator("[data-clinical-record]")
+      .getByLabel(catalog["template.clinical.salutation"], { exact: true })
       .waitFor();
     assert.equal(
       await page.locator("html").getAttribute("dir"),

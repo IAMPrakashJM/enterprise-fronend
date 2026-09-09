@@ -5,10 +5,8 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardGrid,
   Button,
   Badge,
-  Tabs,
   DescriptionList,
   ConfirmDialog,
   Modal,
@@ -24,16 +22,14 @@ import type {
 import { ClinicalRequestFailure } from "@pepbits/erp-data";
 import {
   ClinicalLoading,
-  PatientBanner,
-  PatientFieldControl,
-  PatientCollectionEditor,
-  PatientSummaryPanel,
   useClinicalLoad,
   type ClinicalPageProps,
   type PatientDestination,
 } from "./shared";
 import { PatientInsuranceCheck } from "./insurance-check";
 import { PatientCareAction } from "./care-action";
+import { RecordSectionLayout } from "./record-layout";
+import { PatientRecordSection, patientSectionDone } from "./record-sections";
 export function PatientRecordTemplate(props: ClinicalPageProps) {
   const { adapter, patientId } = props;
   const loaded = useClinicalLoad(
@@ -58,6 +54,8 @@ function PatientRecordEditor({
   format,
   mode = "new",
   onOpen,
+  preferenceControls,
+  patientId,
 }: ClinicalPageProps & { initial: PatientRecord }) {
   const { t } = useLocalization(),
     [patient, setPatient] = useState(initial),
@@ -76,6 +74,7 @@ function PatientRecordEditor({
     [care, setCare] = useState<"appointment" | "encounter" | null>(null),
     [collapsed, setCollapsed] = useState<string[]>([]);
   const pending = useRef<PatientSave | null>(null),
+    cancelRequested = useRef(false),
     lock = useRef(false),
     alive = useRef(true),
     disabled = !editing || !metadata.canWrite || busy;
@@ -103,15 +102,35 @@ function PatientRecordEditor({
     setError(null);
     pending.current = null;
   };
+  const navigate = async (target: PatientDestination) => {
+    if (target.view !== "record" || target.mode !== "new" || patientId) {
+      onOpen(target);
+      return;
+    }
+    if (busy) return;
+    setBusy(true);
+    try {
+      const next = await adapter.newRecord();
+      if (!alive.current) return;
+      setPatient(next);
+      setSaved(next);
+      setDirty(false);
+      setEditing(true);
+      setErrors({});
+      setError(null);
+      setSuccess(false);
+      setSection(metadata.sections[0].id);
+      pending.current = null;
+    } catch (e) {
+      if (alive.current) setError(e);
+    } finally {
+      if (alive.current) setBusy(false);
+    }
+  };
   const go = (target: PatientDestination) => {
     if (dirty) setLeave(target);
-    else onOpen(target);
+    else void navigate(target);
   };
-  const missing = (s: PatientSection) =>
-    s.fields.filter(
-      (f) => f.required && !String(patient.values[f.id] ?? "").trim(),
-    ).length;
-  const complete = metadata.sections.filter((s) => !missing(s)).length;
   const reviewSave = () => {
     const e: Record<string, string> = {};
     for (const s of metadata.sections)
@@ -183,192 +202,38 @@ function PatientRecordEditor({
   };
   const index = metadata.sections.findIndex((s) => s.id === section),
     layout = preferences.formNavigation;
-  const sectionContent = (s: PatientSection) => (
-    <div className="space-y-3" key={s.id}>
-      <Card data-clinical-section={s.id}>
-        <CardHeader>
-          <CardTitle
-            title={s.title}
-            subtitle={s.subtitle}
-            action={
-              <Button
-                variant="ghost"
-                onClick={() =>
-                  setCollapsed((c) =>
-                    c.includes(s.id)
-                      ? c.filter((v) => v !== s.id)
-                      : [...c, s.id],
-                  )
-                }
-              >
-                {t(
-                  collapsed.includes(s.id)
-                    ? "template.clinical.expand"
-                    : "template.clinical.readSummary",
-                )}
-              </Button>
-            }
-          />
-        </CardHeader>
-        <CardContent>
-          {collapsed.includes(s.id) || !editing ? (
-            <DescriptionList
-              items={s.fields.map((f) => ({
-                id: f.id,
-                label: f.label,
-                value:
-                  f.type === "checkbox"
-                    ? t(
-                        patient.values[f.id]
-                          ? "template.clinical.yes"
-                          : "template.clinical.no",
-                      )
-                    : f.type === "select" && patient.values[f.id]
-                      ? t(
-                          f.options?.find(
-                            (o) => o.value === patient.values[f.id],
-                          )?.label ?? String(patient.values[f.id]),
-                        )
-                      : f.type === "date"
-                        ? format.date(String(patient.values[f.id] ?? ""))
-                        : String(patient.values[f.id] || "—"),
-              }))}
-            />
-          ) : (
-            <CardGrid columns={2}>
-              {s.fields.map((field) => (
-                <PatientFieldControl
-                  key={field.id}
-                  field={field}
-                  value={patient.values[field.id]}
-                  disabled={disabled}
-                  error={errors[field.id]}
-                  onChange={(value) =>
-                    update({
-                      ...patient,
-                      values: { ...patient.values, [field.id]: value },
-                    })
-                  }
-                />
-              ))}
-            </CardGrid>
-          )}
-        </CardContent>
-      </Card>
-      {s.id === "insurance" ? (
-        <PatientInsuranceCheck
-          key={patient.version}
-          patient={patient}
-          adapter={adapter}
-          disabled={
-            busy ||
-            dirty ||
-            patient.id === "new" ||
-            !patient.values.hasInsurance
-          }
-        />
-      ) : null}
-      {s.collections.map((id) => (
-        <PatientCollectionEditor
-          key={id}
-          id={id}
-          patient={patient}
-          metadata={metadata}
-          update={update}
-          disabled={
-            disabled ||
-            (id === "insurances" && !patient.values.hasInsurance) ||
-            (id === "disabilities" && !patient.values.hasDisability)
-          }
-          errors={errors}
-        />
-      ))}
-    </div>
+  const fullName = [
+    patient.values.firstName,
+    patient.values.middleName,
+    patient.values.lastName,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const primaryAction = (
+    <Button
+      variant="primary"
+      loading={busy}
+      disabled={!metadata.canWrite}
+      onClick={() => (editing ? reviewSave() : setEditing(true))}
+    >
+      {t(
+        patient.id === "new"
+          ? "template.clinical.createPatient"
+          : editing
+            ? "template.clinical.saveChanges"
+            : "template.clinical.editRecord",
+      )}
+    </Button>
   );
   return (
-    <div className="space-y-4" data-clinical-record>
-      <PatientBanner
-        patient={patient}
-        format={format}
-        actions={
-          <>
-            <Button disabled={busy} onClick={() => go({ view: "query" })}>
-              {t("template.clinical.backSearch")}
-            </Button>
-            {patient.id !== "new" ? (
-              <>
-                <Button
-                  disabled={busy}
-                  onClick={() =>
-                    go({ view: "overview", patientId: patient.id })
-                  }
-                >
-                  {t("template.clinical.overview")}
-                </Button>
-                <Button
-                  disabled={busy || !metadata.canWrite}
-                  onClick={() => setCare("appointment")}
-                >
-                  {t("template.clinical.book")}
-                </Button>
-              </>
-            ) : null}
-            {!editing ? (
-              <Button
-                variant="primary"
-                disabled={!metadata.canWrite}
-                onClick={() => setEditing(true)}
-              >
-                {t("template.clinical.edit")}
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                loading={busy}
-                disabled={!metadata.canWrite}
-                onClick={reviewSave}
-              >
-                {t(
-                  patient.id === "new"
-                    ? "template.clinical.createPatient"
-                    : "template.clinical.reviewSave",
-                )}
-              </Button>
-            )}
-          </>
-        }
-      />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Badge tone={dirty ? "warning" : "success"}>
-            {t(
-              dirty
-                ? "template.unsaved"
-                : editing
-                  ? "template.clinical.edit"
-                  : "template.clinical.view",
-            )}
-          </Badge>
-          <span className="text-sm text-[var(--text-muted)]">
-            {t("template.clinical.completeCount", {
-              count: complete,
-              total: metadata.sections.length,
-            })}
-          </span>
-        </div>
-        {dirty ? (
-          <Button disabled={busy} onClick={() => setDiscard(true)}>
-            {t("template.clinical.discard")}
-          </Button>
-        ) : null}
-      </div>
+    <div data-clinical-record>
       {success ? (
-        <p role="status" className="rounded-lg bg-[var(--primary-soft)] p-3">
+        <p role="status" className="p-2 text-sm">
           {t("template.clinical.saved")}
         </p>
       ) : null}
       {error ? (
-        <div className="space-y-2">
+        <div>
           <RecoveryNotice
             failure={failureFromError(error)}
             onRetry={() => void save()}
@@ -383,121 +248,174 @@ function PatientRecordEditor({
         </div>
       ) : null}
       {Object.keys(errors).length ? (
-        <div
-          role="alert"
-          className="space-y-1 text-sm text-[var(--danger-ink)]"
-        >
+        <div role="alert" className="text-sm text-[var(--danger-ink)]">
           {[...new Set(Object.values(errors))].map((e) => (
             <p key={e}>{t(e)}</p>
           ))}
         </div>
       ) : null}
-      <CardGrid className="items-start gap-4 2xl:grid-cols-[minmax(0,1fr)_260px]">
-        <div className="min-w-0">
-          <CardGrid
-            className={
-              layout === "rail"
-                ? "items-start gap-4 xl:grid-cols-[210px_minmax(0,1fr)]"
-                : "gap-4"
+      <RecordSectionLayout
+        sections={metadata.sections}
+        active={section}
+        onActive={setSection}
+        preferences={preferences}
+        isDone={(id) => patientSectionDone(id, patient)}
+        identity={
+          fullName || patient.mrn ? (
+            <div>
+              <h2 className="font-bold">{fullName}</h2>
+              <div className="flex gap-3 text-xs text-[var(--text-muted)]">
+                {patient.mrn ? <Badge>{patient.mrn}</Badge> : null}
+                {patient.values.gender
+                  ? t(`template.clinical.${patient.values.gender}`)
+                  : null}
+                {patient.values.birthDate
+                  ? format.date(String(patient.values.birthDate))
+                  : null}
+              </div>
+            </div>
+          ) : null
+        }
+        railHeader={
+          <>
+            <p className="text-[10px] uppercase tracking-widest opacity-70">
+              {t("template.clinical.record")}
+            </p>
+            <p className="mt-1 text-xl font-semibold">
+              {fullName || t("template.clinical.newPatient")}
+            </p>
+            <p className="mt-1 text-xs opacity-70">
+              {patient.mrn || t("template.clinical.mrnPending")}
+            </p>
+          </>
+        }
+        renderSection={(s) => (
+          <PatientRecordSection
+            section={s}
+            index={metadata.sections.indexOf(s)}
+            patient={patient}
+            metadata={metadata}
+            disabled={disabled}
+            canToggleRead={editing}
+            reading={collapsed.includes(s.id) || !editing}
+            onRead={() =>
+              setCollapsed((c) =>
+                c.includes(s.id) ? c.filter((v) => v !== s.id) : [...c, s.id],
+              )
             }
+            update={update}
+            errors={errors}
+            format={format}
           >
-            {layout === "rail" ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle title="template.clinical.sections" />
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div
-                    role="progressbar"
-                    aria-label={t("template.clinical.completion")}
-                    aria-valuenow={complete}
-                    aria-valuemin={0}
-                    aria-valuemax={metadata.sections.length}
-                    className="h-2 rounded bg-[var(--surface-2)]"
-                  >
-                    <div
-                      className="h-full rounded bg-[var(--primary)]"
-                      style={{
-                        width: `${(complete / metadata.sections.length) * 100}%`,
-                      }}
-                    />
-                  </div>
-                  <Tabs
-                    orientation="vertical"
-                    variant="pills"
-                    value={section}
-                    onChange={setSection}
-                    items={metadata.sections.map((s, i) => ({
-                      id: s.id,
-                      label: s.title,
-                      badge: missing(s) ? "!" : String(i + 1).padStart(2, "0"),
-                    }))}
-                  />
-                </CardContent>
-              </Card>
-            ) : (
-              <Tabs
-                value={section}
-                onChange={setSection}
-                items={metadata.sections.map((s) => ({
-                  id: s.id,
-                  label: s.title,
-                  badge: missing(s) ? "!" : undefined,
-                }))}
+            {s.id === "insurance" &&
+            patient.id !== "new" &&
+            patient.values.hasInsurance ? (
+              <PatientInsuranceCheck
+                key={patient.version}
+                patient={patient}
+                adapter={adapter}
+                disabled={busy || dirty}
               />
-            )}
-            <div className="min-w-0 space-y-3">
-              {metadata.sections
-                .filter((s) => s.id === section)
-                .map(sectionContent)}
+            ) : null}
+          </PatientRecordSection>
+        )}
+        footer={
+          <>
+            <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+              <Badge tone={dirty ? "warning" : "success"}>
+                {t(
+                  dirty
+                    ? "template.unsaved"
+                    : patient.id === "new"
+                      ? "template.clinical.draftRecord"
+                      : editing
+                        ? "template.clinical.edit"
+                        : "template.clinical.view",
+                )}
+              </Badge>
+              {dirty ? (
+                <Button
+                  size="sm"
+                  disabled={busy}
+                  onClick={() => setDiscard(true)}
+                >
+                  {t("template.clinical.discard")}
+                </Button>
+              ) : null}
+            </div>
+            {preferenceControls}
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                size="sm"
+                disabled={busy || !metadata.canWrite}
+                onClick={() => go({ view: "record", mode: "new" })}
+              >
+                {t("New")}
+              </Button>
+              {patient.id !== "new" && !editing ? (
+                <>
+                  <Button
+                    size="sm"
+                    disabled={busy || !metadata.canWrite}
+                    onClick={() => setCare("encounter")}
+                  >
+                    {t("template.clinical.encounter")}
+                  </Button>
+                  <Button
+                    size="sm"
+                    disabled={busy || !metadata.canWrite}
+                    onClick={() => setCare("appointment")}
+                  >
+                    {t("template.clinical.book")}
+                  </Button>
+                </>
+              ) : null}
+              {editing ? (
+                <Button
+                  size="sm"
+                  disabled={busy}
+                  onClick={() => {
+                    if (patient.id === "new") {
+                      go({ view: "query" });
+                      return;
+                    }
+                    if (dirty) {
+                      cancelRequested.current = true;
+                      setDiscard(true);
+                    } else setEditing(false);
+                  }}
+                >
+                  {t("Cancel")}
+                </Button>
+              ) : null}
               {layout === "wizard" ? (
-                <div className="flex justify-between gap-2">
+                <>
                   <Button
                     disabled={index === 0}
                     onClick={() => setSection(metadata.sections[index - 1].id)}
                   >
                     {t("template.previous")}
                   </Button>
-                  <Button
-                    disabled={index === metadata.sections.length - 1}
-                    onClick={() => setSection(metadata.sections[index + 1].id)}
-                  >
-                    {t("template.next")}
-                  </Button>
-                </div>
-              ) : null}
-            </div>
-          </CardGrid>
-        </div>
-        <aside className="space-y-3">
-          <PatientSummaryPanel patient={patient} format={format} />
-          <Card>
-            <CardHeader>
-              <CardTitle title="template.clinical.history" />
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {patient.activity.length ? (
-                patient.activity
-                  .slice(-5)
-                  .reverse()
-                  .map((a) => (
-                    <div
-                      key={a.id}
-                      className="border-s-2 border-[var(--primary)] ps-3 text-sm"
+                  {index < metadata.sections.length - 1 ? (
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        setSection(metadata.sections[index + 1].id)
+                      }
                     >
-                      <p>{t(a.messageKey)}</p>
-                      <p className="text-xs text-[var(--text-muted)]">
-                        {a.actor} · {format.date(a.at)}
-                      </p>
-                    </div>
-                  ))
+                      {t("template.next")}
+                    </Button>
+                  ) : (
+                    primaryAction
+                  )}
+                </>
               ) : (
-                <p>{t("template.clinical.noneRecorded")}</p>
+                primaryAction
               )}
-            </CardContent>
-          </Card>
-        </aside>
-      </CardGrid>
+            </div>
+          </>
+        }
+      />
       <Modal
         open={review}
         onClose={() => {
@@ -583,9 +501,14 @@ function PatientRecordEditor({
         open={discard}
         title="template.clinical.discard"
         message="template.replaceLocalHelp"
-        onCancel={() => setDiscard(false)}
+        onCancel={() => {
+          cancelRequested.current = false;
+          setDiscard(false);
+        }}
         onConfirm={() => {
           setPatient(structuredClone(saved));
+          if (cancelRequested.current) setEditing(false);
+          cancelRequested.current = false;
           setDirty(false);
           setErrors({});
           setError(null);
@@ -601,7 +524,7 @@ function PatientRecordEditor({
         onConfirm={() => {
           if (leave) {
             setDirty(false);
-            onOpen(leave);
+            void navigate(leave);
             setLeave(null);
           }
         }}

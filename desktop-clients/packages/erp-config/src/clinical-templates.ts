@@ -8,11 +8,18 @@ export type PatientValue = string | boolean;
 export interface PatientField {
   id: string;
   label: string;
-  type: "text" | "email" | "date" | "select" | "textarea" | "checkbox";
+  type: "text" | "email" | "date" | "time" | "select" | "textarea" | "checkbox";
   required?: boolean;
+  span?: number;
+  hidden?: boolean;
+  allowCustom?: boolean;
+  control?: "toggle" | "primary";
+  visibleWhen?: { field: string; value: PatientValue };
   options?: Array<{ value: string; label: string }>;
 }
 export interface PatientSection {
+  cardTitle?: string;
+  groups?: Array<{ title: string; fields: string[] }>;
   id: string;
   title: string;
   subtitle: string;
@@ -20,6 +27,8 @@ export interface PatientSection {
   collections: string[];
 }
 export interface PatientCollection {
+  addRequires?: string;
+  addLabel?: string;
   id: string;
   title: string;
   fields: PatientField[];
