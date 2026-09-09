@@ -34,3 +34,9 @@ Remote CI was still in progress when this record was written; no complete remote
 Renamed the Library group “Clinical page templates” to “Page templates” in English, Arabic, Hindi and Malayalam. Existing navigation IDs, routes and localization keys stay stable. Generated offline catalogs use the same wording. This label-only follow-up is local and not included in the deployment recorded above.
 
 The same local label follow-up renames Patient Query to Worklist Query, Patient Record to Master Record - Main, and Patient 360 to 360 Data in all four languages. Sidebar entries, tab titles and other consumers share the existing message keys. Existing URLs and patient-demo behavior stay compatible.
+
+## Verified label deployment
+
+The label follow-up is now deployed. Application commit `4ca4817` was pushed to main; release `20260909161011864-64158fe3` is active on both demo hosts. Isolated builds and packaged HTML/asset checks passed. Live Chromium checks verified Page templates, Worklist Query, Master Record - Main and 360 Data on both hosts with no page JavaScript errors. Existing URLs remain unchanged.
+
+The demo API restarted to load translations, so existing sessions must sign in again. A restricted data backup is retained at `.deploy/api-backups/20260909161011864-64158fe3/data.tar.gz`. Previous frontend release `20260909154128708-9e6b266e` remains available for rollback. Remote CI was still running when recorded; the browser checks verified English labels, not native-speaker approval.
