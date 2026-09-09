@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import {
   DEFAULT_PREFERENCES,
+  effectivePreferences,
   createFormatters,
   type UserPreferences,
 } from "@pepbits/erp-config";
-import { useLocalization } from "@pepbits/ops-ui";
+import type {PreferenceHost} from "../preference-choice";
+import { PresentationProvider, useLocalization } from "@pepbits/ops-ui";
 import type { ClinicalTemplateAdapter } from "@pepbits/erp-data";
 import { PatientQueryTemplate } from "./patient-query";
 import { PatientRecordTemplate } from "./patient-record";
@@ -15,7 +17,7 @@ import {
   useClinicalLoad,
   type PatientDestination,
 } from "./shared";
-export interface ClinicalPatientWorkspaceProps {
+export interface ClinicalPatientWorkspaceProps extends Partial<PreferenceHost> {
   adapter: ClinicalTemplateAdapter;
   scopeKey: string;
   initialPage?: PatientDestination;
@@ -25,7 +27,8 @@ export interface ClinicalPatientWorkspaceProps {
 }
 /** Remount on tenant/application/user/record scope changes. No implicit browser persistence. */
 export function ClinicalPatientWorkspace(props: ClinicalPatientWorkspaceProps) {
-  return <ClinicalWorkspace key={props.scopeKey} {...props} />;
+  const preferences=props.preferencePolicy?effectivePreferences(props.preferences??DEFAULT_PREFERENCES,props.preferencePolicy):props.preferences??DEFAULT_PREFERENCES;
+  return <PresentationProvider value={preferences}><ClinicalWorkspace key={props.scopeKey} {...props} preferences={preferences} /></PresentationProvider>;
 }
 function ClinicalWorkspace({
   adapter,
@@ -33,6 +36,7 @@ function ClinicalWorkspace({
   preferences = DEFAULT_PREFERENCES,
   onOpen,
   preferenceControls,
+  preferencePolicy, preferencesAvailable, onPreferenceChange,
 }: ClinicalPatientWorkspaceProps) {
   const [page, setPage] = useState(initialPage),
     { language } = useLocalization();
@@ -43,6 +47,7 @@ function ClinicalWorkspace({
     adapter,
     metadata: metadata.value,
     preferenceControls,
+  preferencePolicy, preferencesAvailable, onPreferenceChange,
     preferences,
     format: createFormatters({
       ...preferences,
@@ -53,7 +58,7 @@ function ClinicalWorkspace({
     onOpen: onOpen ?? setPage,
   };
   return (
-    <div key={[page.view, page.patientId, page.mode].join(":")}>
+    <div style={{"--fs-scale": "var(--fs-form)"} as React.CSSProperties} key={[page.view, page.patientId, page.mode].join(":")}>
       {page.view === "query" ? (
         <PatientQueryTemplate {...props} />
       ) : page.view === "record" ? (

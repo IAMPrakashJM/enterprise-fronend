@@ -194,8 +194,11 @@ function PreferenceSection({ title, subtitle, icon, tab, keys, keywords, activeT
 // ---------------------------------------------------------------------------
 
 export function PreferencesPage({ showTabPreferences = true }: { showTabPreferences?: boolean }) {
-  const { preferences, updatePreference, updatePreferences, resetPreferences, toast, branch, t, preferencePolicy, canManagePreferencePolicy, preferenceSaveError, refreshPreferences } = useERP();
-  const set = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => updatePreference(key, value);
+  const { preferences, updatePreference, updatePreferences, resetPreferences, toast, branch, t, preferencePolicy, preferencesAvailable, canManagePreferencePolicy, preferenceSaveError, refreshPreferences } = useERP();
+  const set = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
+    if (!preferencesAvailable || preferencePolicy.rules[key]?.locked) return;
+    updatePreference(key, value);
+  };
   /* Navigation state, not a setting: which tab you last had open should not
      sync across devices. Same for the search box. */
   const [activeTab, setActiveTab] = useState<PrefTab>("behaviour");
@@ -283,9 +286,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           <PreferenceSection {...common} tab="behaviour" tour="prefs-layout" title="Layout" subtitle="Honoured by every module and page." icon={<PanelLeft className="size-4" />}
             keys={["formNavigation", "resultView", "previewMode", "pageSize"]} keywords="layout record form style rail tabs wizard worklist result view table cards quick view preview card modal panel rows per page size">
             <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
-              <PreferenceControl preferenceKey="formNavigation"><Row label="Record form style" hint="View, edit and new records">
-                <Segmented<FormNavigation> label="Record form style" value={preferences.formNavigation} onChange={(value) => set("formNavigation", value)} options={[{ value: "rail", label: "Rail" }, { value: "tabs", label: "Tabs" }, { value: "wizard", label: "Wizard" }]} />
-              </Row></PreferenceControl>
+              <PreferenceControl preferenceKey="formNavigation"><Select label="Record form style" hint="preferences.recordLayout.help" value={preferences.formNavigation} onChange={(event) => set("formNavigation", event.target.value as FormNavigation)} options={[{ value: "rail", label: "Rail" }, { value: "tabs", label: "Tabs" }, { value: "wizard", label: "Wizard" }]} /></PreferenceControl>
               <PreferenceControl preferenceKey="resultView"><Row label="Worklist result view">
                 <Segmented<ResultView> label="Worklist result view" value={preferences.resultView} onChange={(value) => set("resultView", value)} options={[{ value: "table", label: "Table" }, { value: "cards", label: "Card grid" }]} />
               </Row></PreferenceControl>
@@ -405,7 +406,7 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           </PreferenceSection>
 
           <PreferenceSection {...common} tab="page" tour="prefs-type" title="Typography" subtitle="Fonts and sizes for the shell, forms and result lists." icon={<Languages className="size-4" />}
-            keys={["fontFamily", "fontSizeBase", "fontSizeForm", "fontSizeResult", "density", "cornerRadius"]} keywords="font family size typography plex inter manrope nunito source sans georgia serif mono base form result table density compact spacious corners radius rounded square">
+            keys={["fontFamily", "fontSizeBase", "fontSizeForm", "fontSizeResult"]} keywords="font family size typography plex inter manrope nunito source sans georgia serif mono base form result table">
             <div className="grid gap-x-5 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
               <PreferenceControl preferenceKey="fontFamily"><Select label="ui.font.family.119ef3fa" value={preferences.fontFamily} onChange={(event) => set("fontFamily", event.target.value as FontFamily)} options={[
                 { label: "Inter (default)", value: "inter" }, { label: "IBM Plex Sans", value: "plex" }, { label: "Source Sans 3", value: "source-sans" }, { label: "Nunito Sans", value: "nunito" },
@@ -414,10 +415,16 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
               <PreferenceControl preferenceKey="fontSizeBase"><RangeInput label="Base font size" hint="Header, sidebar, cards and everything not listed below." value={preferences.fontSizeBase} min={11} max={16} step={0.5} unit="px" onChange={(value) => set("fontSizeBase", value)} /></PreferenceControl>
               <PreferenceControl preferenceKey="fontSizeForm"><RangeInput label="Form field size" hint="Record forms: labels, inputs and section text." value={preferences.fontSizeForm} min={11} max={17} step={0.5} unit="px" onChange={(value) => set("fontSizeForm", value)} /></PreferenceControl>
               <PreferenceControl preferenceKey="fontSizeResult"><RangeInput label="Result / table size" hint="Worklist tables and card grids." value={preferences.fontSizeResult} min={10} max={16} step={0.5} unit="px" onChange={(value) => set("fontSizeResult", value)} /></PreferenceControl>
+            </div>
+            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.13px.is.the.design.as.drawn.each.size.scales.its.area.in.21713684" /></p>
+          </PreferenceSection>
+
+          <PreferenceSection {...common} tab="page" title="preferences.spacing.title" subtitle="preferences.spacing.help" icon={<SlidersHorizontal className="size-4" />}
+            keys={["density", "cornerRadius"]} keywords="patient record appearance spacing density compact comfortable spacious corners radius rounded square">
+            <div className="grid gap-4 md:grid-cols-2">
               <PreferenceControl preferenceKey="density"><Select label="ui.density.77a283d6" hint="ui.row.padding.in.tables.and.cards.0a0a1e81" value={preferences.density} onChange={(event) => set("density", event.target.value as Density)} options={[{ label: "Compact", value: "compact" }, { label: "Comfortable", value: "comfortable" }, { label: "Spacious", value: "spacious" }]} /></PreferenceControl>
               <PreferenceControl preferenceKey="cornerRadius"><RangeInput label="Corner radius" hint="0 squares every corner in the app." value={preferences.cornerRadius} min={0} max={20} step={1} unit="px" onChange={(value) => set("cornerRadius", value)} /></PreferenceControl>
             </div>
-            <p className="mt-3 text-[length:calc(9px*var(--fs-scale))] text-[var(--text-muted)]"><LocalizedText message="ui.13px.is.the.design.as.drawn.each.size.scales.its.area.in.21713684" /></p>
           </PreferenceSection>
 
           {/* ================= NOTIFICATION ================= */}

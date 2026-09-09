@@ -1,0 +1,14 @@
+# Selected result lines; not the full raw log.
+    ok    packages/ai-client
+    ok    packages/ai-config
+    ok    packages/ai-ui
+    ok    packages/auth
+    ok    packages/erp-config
+    ok    packages/erp-data
+    ok    packages/erp-screens
+    ok    packages/erp-shell
+    ok    packages/ops-ui
+    ok    packages/platform-ports
+    ok    packages/workspace-core
+    ok    apps/desktop
+  Every package typechecks.

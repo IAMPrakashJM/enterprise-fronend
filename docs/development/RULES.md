@@ -1,0 +1,66 @@
+# Frontend design, development and documentation rules
+
+Policy version: **1.0.0**, 9 September 2026. Applies to new work and modifications in this repository. Existing guides retain historical context; this policy does not retroactively certify old implementations.
+
+## Component and architecture rules
+
+| Rule | Requirement | Evidence/check |
+| --- | --- | --- |
+| CMP-01 | Use shared form controls, cards, CardGrid, tables, dates, overlays and typed value/inline controls. Add missing reusable primitives in ops-ui instead of cloning them in a page. | Form-control and shared-component gates; component tests |
+| CMP-02 | Keep primitives independent of ERP context, API clients and application-specific data. Supply generic presentation/context contracts from the host. | Dependency and code review |
+| CMP-03 | Compose page engines from typed definitions and adapters. Reuse configuration for application variants; do not copy a renderer per patient/customer/student page. | Template/adapter tests and generated examples |
+| CMP-04 | Keep specialized chart, editor and layout markup only where it expresses behavior not covered by a shared primitive. Document the reason and how preferences/accessibility remain satisfied. | Review and renderer-specific acceptance cases |
+| CMP-05 | Focus on usable desktop layouts: readable typography, visible actions, predictable focus, scrollable wide data and preserved form values. Responsive support must not weaken the desktop workflow. | Browser checks and visual review |
+
+A specialized skeleton or calendar demo demonstrates that component. This is not an exception allowing an ordinary runtime page to ignore a relevant preference. State non-applicability explicitly instead of silently accepting drift.
+
+## Preferences, themes and policies
+
+| Rule | Requirement |
+| --- | --- |
+| PREF-01 | Consume effective preferences resolved against tenant/application policy. Default values are a fallback for supported standalone demos, not a replacement for host preferences. |
+| PREF-02 | Managed settings win over local presentation choices. Disable managed/unavailable controls and guard the change handler. A policy change while mounted must replace conflicting local state. |
+| PREF-03 | Use the central update path for persisted preferences. Pass `PreferenceHost` properties to reusable workspaces. Do not create a second persistence store for the same setting. |
+| PREF-04 | Supply managed table presentation and connect controller page size. Preserve compact/comfortable/spacious behavior, stripe settings, wrapping, sticky headers and result formatting. |
+| PREF-05 | Use semantic theme tokens, the chosen font family and independent shell/form/result scales. Preference-controlled rectangular radii must use the radius token. |
+| PREF-06 | Use the selected formatter for displayed dates, times, amounts and numbers. Native date/time inputs retain their standardized machine-value contracts; format read-only values separately. |
+| PREF-07 | Respect shortcut enablement, preview and supported export preferences. Do not leave custom listeners attached after shortcuts are disabled. |
+| PREF-08 | UI locks and disabled actions are not authorization. Enforce tenant/application/user permissions on the server for reads and writes. |
+
+## Data, errors, drafts and accessibility
+
+- Keep production data/API integration explicit. Fictional demo data and in-memory adapters must be described as such.
+- Derive trusted tenant/user permissions from authentication. Treat client scope keys as routing/isolation metadata, not proof of authority.
+- Preserve supported unsaved values during recoverable failures. Reuse structured failures, localized recovery actions, operation identity and conflict handling where provided.
+- Do not present in-memory retention as durable drafts. Connect the shared draft service, scope, retention and sensitive-field exclusions when durability is required.
+- Use labels, accessible names, focus behavior and semantic controls. Keep actions usable with normal keyboard navigation even when custom shortcuts are disabled.
+- Apply reduced-motion preferences. Check Arabic direction and long Hindi/Malayalam strings in the relevant layouts; catalog presence is not native-speaker acceptance.
+
+## Localization and generated code
+
+- Edit canonical messages in `dummy-api/config/localization/shared/{en,ar,hi,ml}.json`; preserve placeholder meaning across languages.
+- Regenerate offline fallbacks with `npm run localization:sync` from `desktop-clients`. Do not hand-edit generated fallback files.
+- Keep IDs, API values and source identifiers stable when labels are translated.
+- Regenerate component/template examples with `library:sync` or `templates:sync` after source changes. Copyable code must import public package exports and show preference/adapter integration honestly.
+- Avoid fixed currency, locale or `DEFAULT_PREFERENCES` in hosted examples that should demonstrate the current settings.
+
+## Documentation and release rules
+
+| Rule | Requirement |
+| --- | --- |
+| DOC-01 | Every new/changed feature needs a user flow, technical contract, how-to, preferences/permissions, failure behavior and explicit completion boundary. Use the feature template. |
+| DOC-02 | Record added, changed, fixed, deprecated and removed behavior in the appropriate unreleased/release record. New validation is a behavior change. |
+| DOC-03 | Keep the architecture, feature index, testing contract and navigation inventory aligned. Repository docs do not automatically update in-app help or alerts. |
+| DOC-04 | Separate package versions, release tags, testing-document versions and runtime schema/policy revisions. Never invent a published version to fill a folder name. |
+| DOC-05 | Evidence must identify the exact commit or base plus working-tree digest, command, result, scope and retained artifact. Explain changes made after a run. |
+| DOC-06 | Preserve previous release evidence. Correct factual errors with a dated correction; create a new record for later delivery. Do not relabel an old passing run as current. |
+| DOC-07 | Keep pending/not-run/blocked checks visible. A green build does not establish live API acceptance, native execution, native-speaker review or deployment. |
+| DOC-08 | Never retain credentials, tokens, private patient/customer payloads or environment secrets in screenshots, logs or manifests. Use isolated fictional fixtures. |
+| DOC-09 | Validate docs before submitting a change. Document-only edits do not require unrelated runtime reruns. CI enforcement and branch protection are different; do not claim hosted checks without a run. |
+| DOC-10 | Keep existing documentation URLs working. If relocation is necessary, leave forwarding guidance and update/validate links. |
+
+## Definition of done
+
+The intended behavior works through shared components and applicable settings; relevant failures and locks are tested; examples/translations/help are updated; feature and release notes state the actual result; documentation checks pass; unresolved product/platform dependencies are named. Mark publication or deployment complete only after that action succeeds and is verified.
+
+See the [testing gate](../testing/v1.0.0/PRE-COMMIT.md) and [versioning policy](../releases/VERSIONING.md). These rules add no independent user-approval flow and do not authorize changes outside the requested scope.

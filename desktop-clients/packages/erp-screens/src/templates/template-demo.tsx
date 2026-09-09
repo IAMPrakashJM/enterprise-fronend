@@ -1,11 +1,12 @@
 "use client";
 import React,{useMemo} from 'react';
 import type {PageTemplateDefinition,TemplateLayout,UserPreferences} from '@pepbits/erp-config';
+import type {PreferenceHost} from '../preference-choice';
 import {PageTemplateWorkspace} from './page-template';
 import {createTemplateSample,type PageTemplateAdapter} from './template-state';
-export interface TemplateDemoProps {definition:PageTemplateDefinition;preferences?:UserPreferences;layout?:TemplateLayout;scenario?:'ready'|'loading'|'empty'|'denied'|'readOnly'|'failure'}
+export interface TemplateDemoProps extends Partial<PreferenceHost> {definition:PageTemplateDefinition;preferences?:UserPreferences;layout?:TemplateLayout;scenario?:'ready'|'loading'|'empty'|'denied'|'readOnly'|'failure'}
 /** In-memory demonstration adapter. Replace it with your authorized application adapter. */
-export function TemplateDemo({definition,preferences,layout,scenario='ready'}:TemplateDemoProps) {
+export function TemplateDemo({definition,preferences,layout,preferencePolicy,preferencesAvailable,onPreferenceChange,scenario='ready'}:TemplateDemoProps) {
  const initial=useMemo(()=>createTemplateSample(definition),[definition]);
  const store=useMemo(()=>({current:structuredClone(initial),receipts:new Map<string,typeof initial>()}),[initial]);
  const adapter=useMemo<PageTemplateAdapter>(()=>({
@@ -17,5 +18,5 @@ export function TemplateDemo({definition,preferences,layout,scenario='ready'}:Te
   },
   async load(){return structuredClone(store.current);},
  }),[store,scenario]);
- return <PageTemplateWorkspace definition={definition} scope={{tenantId:'demo-tenant',applicationId:'demo-app',userId:'demo-user',pageId:definition.id,recordId:initial.id}} initialDocument={initial} adapter={adapter} preferences={preferences} layout={layout} readOnly={scenario==='readOnly'} state={scenario==='loading'||scenario==='empty'||scenario==='denied'?scenario:'ready'}/>;
+ return <PageTemplateWorkspace definition={definition} scope={{tenantId:'demo-tenant',applicationId:'demo-app',userId:'demo-user',pageId:definition.id,recordId:initial.id}} initialDocument={initial} adapter={adapter} preferences={preferences} layout={layout} preferencePolicy={preferencePolicy} preferencesAvailable={preferencesAvailable} onPreferenceChange={onPreferenceChange} readOnly={scenario==='readOnly'} state={scenario==='loading'||scenario==='empty'||scenario==='denied'?scenario:'ready'}/>;
 }

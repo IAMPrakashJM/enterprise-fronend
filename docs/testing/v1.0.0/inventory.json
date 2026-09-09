@@ -1,0 +1,917 @@
+{
+  "schemaVersion": 1,
+  "documentVersion": "1.0.0",
+  "scope": "Library sidebar destinations; source and navigation coverage are distinct from complete workflow acceptance",
+  "routes": [
+    {
+      "id": "library-dashboard",
+      "title": "Developer Library",
+      "kind": "dashboard",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "component-library",
+      "title": "Component Gallery",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "form-controls",
+      "title": "Form Controls",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "feedback-components",
+      "title": "Feedback & Overlays",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "date-components",
+      "title": "Dates & Calendars",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "card-components",
+      "title": "Cards & Data Display",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "table-components",
+      "title": "Tables",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "navigation-components",
+      "title": "Buttons & Navigation",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "inline-components",
+      "title": "Inline Editing",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "form-patterns",
+      "title": "Form Patterns",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "data-patterns",
+      "title": "Data Worklists",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "billing-patterns",
+      "title": "Billing Workspace",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "page-templates",
+      "title": "template.library",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-simple-master",
+      "title": "template.name.simple-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-detailed-master",
+      "title": "template.name.detailed-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-person-registration",
+      "title": "template.name.person-registration",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-person-profile",
+      "title": "template.name.person-profile",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-organization-profile",
+      "title": "template.name.organization-profile",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-item-service-master",
+      "title": "template.name.item-service-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-hierarchical-master",
+      "title": "template.name.hierarchical-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-relationship-master",
+      "title": "template.name.relationship-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-configuration-master",
+      "title": "template.name.configuration-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-patient-master",
+      "title": "template.name.patient-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-employee-master",
+      "title": "template.name.employee-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-customer-master",
+      "title": "template.name.customer-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-supplier-master",
+      "title": "template.name.supplier-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-student-master",
+      "title": "template.name.student-master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-master-list",
+      "title": "template.name.master-list",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-transaction-register",
+      "title": "template.name.transaction-register",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-operational-worklist",
+      "title": "template.name.operational-worklist",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-assignment-queue",
+      "title": "template.name.assignment-queue",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-approval-inbox",
+      "title": "template.name.approval-inbox",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-exception-queue",
+      "title": "template.name.exception-queue",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-board-workspace",
+      "title": "template.name.board-workspace",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-split-list-detail",
+      "title": "template.name.split-list-detail",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-batch-processing",
+      "title": "template.name.batch-processing",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-header-lines-order",
+      "title": "template.name.header-lines-order",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-service-test-order",
+      "title": "template.name.service-test-order",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-quotation-estimate",
+      "title": "template.name.quotation-estimate",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-order-fulfillment",
+      "title": "template.name.order-fulfillment",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-return-cancellation",
+      "title": "template.name.return-cancellation",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-order-comparison",
+      "title": "template.name.order-comparison",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-recurring-order",
+      "title": "template.name.recurring-order",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-purchase-order",
+      "title": "template.name.purchase-order",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-sales-order",
+      "title": "template.name.sales-order",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-lab-order",
+      "title": "template.name.lab-order",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-appointment",
+      "title": "template.name.appointment",
+      "kind": "library",
+      "engine": "booking",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-calendar-workspace",
+      "title": "template.name.calendar-workspace",
+      "kind": "library",
+      "engine": "booking",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-resource-timeline",
+      "title": "template.name.resource-timeline",
+      "kind": "library",
+      "engine": "booking",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-occupancy-board",
+      "title": "template.name.occupancy-board",
+      "kind": "library",
+      "engine": "booking",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-allocation-workspace",
+      "title": "template.name.allocation-workspace",
+      "kind": "library",
+      "engine": "booking",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-roster-timetable",
+      "title": "template.name.roster-timetable",
+      "kind": "library",
+      "engine": "booking",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-waitlist-check-in",
+      "title": "template.name.waitlist-check-in",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-patient-encounter",
+      "title": "template.name.patient-encounter",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-service-case",
+      "title": "template.name.service-case",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-long-running-episode",
+      "title": "template.name.long-running-episode",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-procedure-planning",
+      "title": "template.name.procedure-planning",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-surgery-workspace",
+      "title": "template.name.surgery-workspace",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-procedure-execution",
+      "title": "template.name.procedure-execution",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-checklist-workspace",
+      "title": "template.name.checklist-workspace",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-discharge-closure",
+      "title": "template.name.discharge-closure",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-structured-result",
+      "title": "template.name.structured-result",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-lab-result",
+      "title": "template.name.lab-result",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-narrative-result",
+      "title": "template.name.narrative-result",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-observation-chart",
+      "title": "template.name.observation-chart",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-assessment-scoring",
+      "title": "template.name.assessment-scoring",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-result-verification",
+      "title": "template.name.result-verification",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-result-comparison",
+      "title": "template.name.result-comparison",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-certificate-output",
+      "title": "template.name.certificate-output",
+      "kind": "library",
+      "engine": "result",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-goods-receipt",
+      "title": "template.name.goods-receipt",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-issue-dispatch",
+      "title": "template.name.issue-dispatch",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-stock-transfer",
+      "title": "template.name.stock-transfer",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-stock-count",
+      "title": "template.name.stock-count",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-batch-serial-tracking",
+      "title": "template.name.batch-serial-tracking",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-pick-pack",
+      "title": "template.name.pick-pack",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-transport-plan",
+      "title": "template.name.transport-plan",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-dispatch-board",
+      "title": "template.name.dispatch-board",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-journal-voucher",
+      "title": "template.name.journal-voucher",
+      "kind": "library",
+      "engine": "finance",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-payment-voucher",
+      "title": "template.name.payment-voucher",
+      "kind": "library",
+      "engine": "finance",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-receipt-voucher",
+      "title": "template.name.receipt-voucher",
+      "kind": "library",
+      "engine": "finance",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-invoice-billing",
+      "title": "template.name.invoice-billing",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-patient-billing",
+      "title": "template.name.patient-billing",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-school-fees",
+      "title": "template.name.school-fees",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-credit-debit-note",
+      "title": "template.name.credit-debit-note",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-allocation-settlement",
+      "title": "template.name.allocation-settlement",
+      "kind": "library",
+      "engine": "reconcile",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-bank-reconciliation",
+      "title": "template.name.bank-reconciliation",
+      "kind": "library",
+      "engine": "reconcile",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-budget-workspace",
+      "title": "template.name.budget-workspace",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-period-processing",
+      "title": "template.name.period-processing",
+      "kind": "library",
+      "engine": "finance",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-statement-account",
+      "title": "template.name.statement-account",
+      "kind": "library",
+      "engine": "report",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-report-parameters",
+      "title": "template.name.report-parameters",
+      "kind": "library",
+      "engine": "report",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-tabular-report",
+      "title": "template.name.tabular-report",
+      "kind": "library",
+      "engine": "report",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-grouped-report",
+      "title": "template.name.grouped-report",
+      "kind": "library",
+      "engine": "report",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-pivot-report",
+      "title": "template.name.pivot-report",
+      "kind": "library",
+      "engine": "report",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-printable-report",
+      "title": "template.name.printable-report",
+      "kind": "library",
+      "engine": "report",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-operational-dashboard",
+      "title": "template.name.operational-dashboard",
+      "kind": "library",
+      "engine": "dashboard",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-management-dashboard",
+      "title": "template.name.management-dashboard",
+      "kind": "library",
+      "engine": "dashboard",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-analytical-workspace",
+      "title": "template.name.analytical-workspace",
+      "kind": "library",
+      "engine": "dashboard",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-entity-360",
+      "title": "template.name.entity-360",
+      "kind": "library",
+      "engine": "entity",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-history-timeline",
+      "title": "template.name.history-timeline",
+      "kind": "library",
+      "engine": "entity",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-document-workspace",
+      "title": "template.name.document-workspace",
+      "kind": "library",
+      "engine": "entity",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-task-workspace",
+      "title": "template.name.task-workspace",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-communication-workspace",
+      "title": "template.name.communication-workspace",
+      "kind": "library",
+      "engine": "entity",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-policy-editor",
+      "title": "template.name.policy-editor",
+      "kind": "library",
+      "engine": "admin",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-permissions-matrix",
+      "title": "template.name.permissions-matrix",
+      "kind": "library",
+      "engine": "admin",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-workflow-configuration",
+      "title": "template.name.workflow-configuration",
+      "kind": "library",
+      "engine": "admin",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-import-wizard",
+      "title": "template.name.import-wizard",
+      "kind": "library",
+      "engine": "admin",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-background-jobs",
+      "title": "template.name.background-jobs",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-schedule-configuration",
+      "title": "template.name.schedule-configuration",
+      "kind": "library",
+      "engine": "admin",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-audit-explorer",
+      "title": "template.name.audit-explorer",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-integration-configuration",
+      "title": "template.name.integration-configuration",
+      "kind": "library",
+      "engine": "admin",
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "allyvora-patient-query",
+      "title": "Patient Query",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "allyvora-patient-record",
+      "title": "Patient Record",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "allyvora-patient-360",
+      "title": "Patient 360",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "spreadsheet-studio",
+      "title": "Spreadsheet Studio",
+      "kind": "spreadsheet",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "import-export",
+      "title": "Import & Export",
+      "kind": "worklist",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "bulk-operations",
+      "title": "Bulk Operations",
+      "kind": "worklist",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "theme-studio",
+      "title": "Theme Studio",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "localization",
+      "title": "Localization",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "accessibility",
+      "title": "Accessibility",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "page-catalog",
+      "title": "Page Catalog",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "component-contracts",
+      "title": "Component Contracts",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "title": "Keyboard Shortcuts",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "integration-guide",
+      "title": "Integration Guide",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "preferences",
+      "title": "My Preferences",
+      "kind": "preferences",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "saved-views",
+      "title": "Saved Views",
+      "kind": "worklist",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "shortcut-manager",
+      "title": "Shortcut Manager",
+      "kind": "worklist",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "notifications",
+      "title": "Notifications",
+      "kind": "inbox",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "messages",
+      "title": "Messages",
+      "kind": "inbox",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "ai-administration",
+      "title": "AI Administration",
+      "kind": "ai-admin",
+      "engine": null,
+      "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    }
+  ],
+  "tests": [
+    "desktop-clients/packages/erp-screens/src/templates/preference-compliance.test.tsx",
+    "desktop-clients/packages/erp-screens/src/library/preference-compliance.test.tsx",
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query.test.tsx",
+    "desktop-clients/e2e/library-preferences.ts"
+  ],
+  "staticGate": "desktop-clients/scripts/verify-library-preferences.mjs"
+}

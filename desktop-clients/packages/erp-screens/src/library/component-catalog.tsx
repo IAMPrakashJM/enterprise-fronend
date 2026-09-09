@@ -28,7 +28,7 @@ function Example({entry}: {entry:CatalogEntry}) {
       </div>
       <p className="text-sm text-[var(--text-muted)]">{t(`catalog.example.${entry.id}`)}</p>
       <div className="grid min-w-0 gap-5 2xl:grid-cols-2">
-        <section className="min-w-0 space-y-3" aria-label={t("catalog.preview")}><h4 className="text-sm font-semibold">{t("catalog.preview")}</h4><Demo key={revision}/></section>
+        <section style={{"--fs-scale":"var(--fs-form)"} as React.CSSProperties} className="min-w-0 space-y-3" aria-label={t("catalog.preview")}><h4 className="text-sm font-semibold">{t("catalog.preview")}</h4><Demo key={revision}/></section>
         <section className="min-w-0 space-y-3" aria-label={t("catalog.code")}>
           <div className="flex items-center justify-between gap-2"><h4 className="text-sm font-semibold">{t("catalog.code")}</h4><Button onClick={() => void copy()}>{t("catalog.copy")}</Button></div>
           <Textarea aria-label="catalog.code" label="catalog.code" value={code} readOnly spellCheck={false} dir="ltr" rows={14} className="font-mono text-xs" onFocus={e=>e.target.select()}/>

@@ -31,3 +31,5 @@ export {RecordSectionLayout} from './clinical-templates/record-layout';
 export {PatientQueryTemplate} from './clinical-templates/patient-query';
 export {PatientQueryFilters} from './clinical-templates/query-filters';
 export {PatientQueryResults,PatientQueryActions} from './clinical-templates/query-results';
+
+export type {PreferenceHost} from "./preference-choice";

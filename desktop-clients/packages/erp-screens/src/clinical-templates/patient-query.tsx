@@ -4,6 +4,7 @@ import {
   Button,
   Tabs,
   Drawer,
+  CenterRecordCard,
   Modal,
   Checkbox,
   ConfirmDialog,
@@ -48,19 +49,19 @@ import {
   queryFields,
   type QueryField,
 } from "./query-model";
+import {usePreferenceChoice} from "../preference-choice";
 import styles from "./query-layout.module.css";
 export function PatientQueryTemplate(props: ClinicalPageProps) {
   const { adapter, metadata, format, preferences, onOpen } = props,
     { t } = useLocalization();
   const [filters, setFilters] = useState<PatientFilters>({}),
     [applied, setApplied] = useState<PatientFilters | null>(null),
-    [view, setView] = useState(preferences.resultView),
     [columns, setColumns] = useState<string[]>(
       queryColumns.filter((k) => k !== "country"),
     ),
     [columnsOpen, setColumnsOpen] = useState(false),
     [selected, setSelected] = useState<PatientSummary | null>(null),
-    [detail, setDetail] = useState<"drawer" | "inline" | "modal">("drawer"),
+    [inline, setInline] = useState(false),
     [care, setCare] = useState<{
       kind: "appointment" | "encounter";
       id: string;
@@ -72,6 +73,12 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
     [exportBusy, setExportBusy] = useState(false),
     [presetBusy, setPresetBusy] = useState(false),
     [help, setHelp] = useState(false);
+  const [view, setView, viewLocked] = usePreferenceChoice(props, "resultView");
+  const [preview, setPreview, previewLocked] = usePreferenceChoice(props, "previewMode");
+  const [pageSize, setPageSize, pageSizeLocked] = usePreferenceChoice(props, "pageSize");
+  const detail = inline && !previewLocked ? "inline" : preview;
+  useEffect(() => setInline(false), [preferences.previewMode, previewLocked]);
+  useEffect(() => { setApplied(a => a && a.pageSize !== pageSize ? {...a, pageSize, page: 1} : a); }, [pageSize]);
   const search = useClinicalLoad(
     () => (applied ? adapter.search(applied) : Promise.resolve(null)),
     [adapter, applied],
@@ -94,8 +101,8 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
       active.current = false;
     };
   }, [adapter]);
-  useEffect(() => setView(preferences.resultView), [preferences.resultView]);
   useEffect(() => {
+    if (!preferences.keyboardShortcuts) return;
     const key = (e: KeyboardEvent) => {
       if (
         !root.current?.getClientRects().length ||
@@ -121,17 +128,17 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
       }
       if (e.key.toLowerCase() === "v") {
         e.preventDefault();
-        setView((v) => (v === "table" ? "cards" : "table"));
+        setView(view === "table" ? "cards" : "table");
       }
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, []);
+  }, [preferences.keyboardShortcuts, view, viewLocked, setView]);
   const apply = (value = filters) => {
     const normalized = normalizeQuery(value);
     if (!queryFields.some((k) => normalized[k])) return;
     setFilters(normalized);
-    setApplied({ ...normalized, page: 1, pageSize: preferences.pageSize });
+    setApplied({ ...normalized, page: 1, pageSize });
     setSelected(null);
     setError(null);
     setRecents((previous) =>
@@ -204,7 +211,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
           { key: "status", label: t("template.clinical.status") },
         ],
         format,
-        "csv",
+        preferences.exportFormat,
         "clinical-demo-patients",
       );
       setExportOpen(false);
@@ -321,6 +328,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
               <span className={styles.hint}>
                 {t("template.clinical.openAs")}
               </span>
+              <fieldset disabled={previewLocked} className="contents">
               <Tabs
                 variant="segmented"
                 items={[
@@ -330,19 +338,27 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
                     icon: <Rows2 size={14} />,
                   },
                   {
-                    id: "modal",
+                    id: "center-modal",
                     label: "template.clinical.modal",
                     icon: <PanelsTopLeft size={14} />,
                   },
                   {
-                    id: "drawer",
-                    label: "template.clinical.drawer",
+                    id: "right-drawer",
+                    label: "Right side panel",
                     icon: <PanelRight size={14} />,
                   },
+                  {id: "left-drawer", label: "Left side panel"},
+                  {id: "center-card", label: "Centered record card"},
                 ]}
                 value={detail}
-                onChange={(v) => setDetail(v as typeof detail)}
+                onChange={(v) => {
+                  if (previewLocked) return;
+                  setInline(v === "inline");
+                  if (v !== "inline") setPreview(v as typeof preview);
+                }}
               />
+              </fieldset>
+              <fieldset disabled={viewLocked} className="contents">
               <Tabs
                 variant="segmented"
                 items={[
@@ -360,6 +376,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
                 value={view}
                 onChange={(v) => setView(v as typeof view)}
               />
+              </fieldset>
             </div>
           </div>
           {!search.value ? (
@@ -403,6 +420,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
                 preferences={preferences}
               />
               <Pagination
+                pageSizeDisabled={pageSizeLocked}
                 page={search.value.page}
                 pageSize={search.value.pageSize}
                 total={search.value.total}
@@ -412,7 +430,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
                 }}
                 onPageSizeChange={(pageSize) => {
                   setSelected(null);
-                  setApplied((a) => ({ ...a, pageSize, page: 1 }));
+                  setPageSize(pageSize);
                 }}
               />
             </>
@@ -420,21 +438,25 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
         </>
       )}
       <Drawer
-        open={!!selected && detail === "drawer"}
+        open={!!selected && (detail === "right-drawer" || detail === "left-drawer")}
         onClose={() => setSelected(null)}
         title="template.clinical.quickView"
+        side={detail === "left-drawer" ? "left" : "right"}
         width="lg"
       >
-        {detail === "drawer" ? quick : null}
+        {(detail === "right-drawer" || detail === "left-drawer") ? quick : null}
       </Drawer>
       <Modal
-        open={!!selected && detail === "modal"}
+        open={!!selected && detail === "center-modal"}
         onClose={() => setSelected(null)}
         title="template.clinical.quickView"
         size="xl"
       >
-        {detail === "modal" ? quick : null}
+        {detail === "center-modal" ? quick : null}
       </Modal>
+      <CenterRecordCard open={!!selected && detail === "center-card"} onClose={() => setSelected(null)} title="template.clinical.quickView">
+        {detail === "center-card" ? quick : null}
+      </CenterRecordCard>
       <Modal
         open={columnsOpen}
         onClose={() => setColumnsOpen(false)}

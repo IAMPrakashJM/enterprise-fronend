@@ -1,0 +1,15 @@
+# Selected result lines; not the full raw log.
+PASS shared component adoption: 65 page/AI source files checked, 289 shared component uses. Alerts, charts, editor layouts and interactive choice controls retain specialized markup.
+    ok    apps/web recorded what it was built for                 
+    ok    apps/web calls https://front-design.pepbits.com/api     
+    ok    apps/desktop recorded what it was built for             
+    ok    apps/desktop calls https://desktop.front-design.pepbits.com/api
+PASS 15321 catalog keys in four languages; 1119 static presentation references; explicit data/code exceptions.
+PASS 161 static API errors registered with catalog message keys.
+PASS 38 suites registered in 5 runtime groups
+PASS desktop: largest client chunk 517137 gzip bytes; budget 550000
+PASS web: largest client chunk 186919 gzip bytes; budget 550000
+PASS 286 page references; 118 authored workflows in four languages; 168 references await detailed workflow authoring. Native/domain reviews remain pending.
+PASS 26 examples match their compiled demo functions
+PASS TypeScript template example matches the rendered demo adapter
+PASS 129 Library routes match API navigation; formatter, clinical token, dedicated-page and public example contracts checked. Runtime policy behavior is covered by preference-compliance tests and e2e/library-preferences.ts.

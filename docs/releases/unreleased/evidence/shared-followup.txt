@@ -1,0 +1,6 @@
+# Selected result lines; not the full raw log.
+ ✓ packages/ops-ui/src/shared-components.test.tsx (11 tests) 504ms
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  13:22:46
+   Duration  2.14s (transform 1.17s, setup 761ms, collect 252ms, tests 504ms, environment 339ms, prepare 76ms)

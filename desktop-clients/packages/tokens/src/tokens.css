@@ -579,3 +579,26 @@ button { cursor: pointer; }
   }
   [data-invoice-print] { width: 100%; max-width: none; margin: 0; padding: 0; box-shadow: none; }
 }
+
+/* Managed table presentation outranks consumer cell classes and CSS modules. */
+table[data-managed-table="true"] > :is(thead, tbody, tfoot) > tr > :is(th, td) {
+  padding-block: var(--managed-row-padding) !important;
+  white-space: nowrap !important;
+  max-width: 36rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+table[data-managed-table="true"][data-density="compact"] { --managed-row-padding: 4px; }
+table[data-managed-table="true"][data-density="comfortable"] { --managed-row-padding: 12px; }
+table[data-managed-table="true"][data-density="spacious"] { --managed-row-padding: 16px; }
+table[data-managed-table="true"][data-wrap="true"] > :is(thead, tbody, tfoot) > tr > :is(th, td) { white-space: normal !important; overflow-wrap: anywhere; }
+table[data-managed-table="true"][data-striped="true"] > tbody > tr:nth-child(even):not([data-selected="true"]) { background: var(--surface-2); }
+table[data-managed-table="true"][data-sticky="false"] > thead { position: static !important; }
+.library-preferences [class*="rounded-["],
+.library-preferences :is(.rounded, .rounded-sm, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl) { border-radius: var(--radius); }
+.library-preferences .text-xs { font-size: calc(12px * var(--fs-scale)); }
+.library-preferences .text-sm { font-size: calc(14px * var(--fs-scale)); }
+.library-preferences .text-base { font-size: calc(16px * var(--fs-scale)); }
+.library-preferences .text-lg { font-size: calc(18px * var(--fs-scale)); }
+.library-preferences .text-xl { font-size: calc(20px * var(--fs-scale)); }
+.library-preferences .text-2xl { font-size: calc(24px * var(--fs-scale)); }

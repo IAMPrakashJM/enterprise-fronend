@@ -1731,5 +1731,21 @@ export const ENGLISH_MESSAGES: Record<string,string> = {
   "template.clinical.closeDetails": "Close patient details",
   "template.clinical.identifier": "Identifier",
   "template.clinical.onePatientFound": "1 patient found",
-  "template.clinical.demoQuery": "Demo patient search"
+  "template.clinical.demoQuery": "Demo patient search",
+  "catalog.reference.theme-studio": "Change your theme and inspect shared components with your current preferences.",
+  "catalog.reference.accessibility": "Adjust reading and motion settings, then check the accessible form example.",
+  "catalog.reference.page-catalog": "Search the pages available to your account and open their working screens.",
+  "catalog.reference.component-contracts": "Find each shared component, its source, its behavior and its integration example.",
+  "catalog.reference.keyboard-shortcuts": "Keyboard reference generated from the same registry used by the application.",
+  "catalog.reference.integration-guide": "Connect reusable pages to your application without copying the shell or bypassing policy.",
+  "catalog.reference.livePreferences": "These controls update your actual preferences. Administrator locks apply.",
+  "catalog.reference.accessibilityCheck": "Use Tab and Shift+Tab to move between controls. Check visible focus, labels and error announcements.",
+  "catalog.reference.focusHelp": "The label and help text remain associated with this field.",
+  "catalog.reference.accessibilityLimit": "This example supports manual checks; it is not an accessibility certification.",
+  "catalog.reference.contract": "Reuse the exported component and its TypeScript props. Supply translated labels, accessible names, resolved preferences and real action handlers.",
+  "catalog.reference.shortcutScope": "⌘ means Command on macOS and Ctrl on other systems. Workspace shortcuts require the desktop workspace capability. Disabling shortcuts leaves normal keyboard navigation available.",
+  "catalog.reference.providers": "Application providers",
+  "catalog.reference.providersHelp": "Use the existing authentication, product, navigation, localization and ERP providers. Keep UI primitives independent of API clients.",
+  "catalog.reference.preferencesHelp": "Pass preferences, preferencePolicy, preferencesAvailable and onPreferenceChange to reusable workspaces. Locked policy values take precedence over local choices.",
+  "catalog.reference.integrationSteps": "Choose a template, open its TypeScript example, replace the demo adapter with your authenticated API adapter, and test validation, conflicts, recovery, permissions and preference locks before release."
 };

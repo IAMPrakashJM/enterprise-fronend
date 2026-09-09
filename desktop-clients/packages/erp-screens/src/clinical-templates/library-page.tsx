@@ -22,7 +22,6 @@ import {
 import { useProductRequest } from "../product-services";
 import { ClinicalPatientWorkspace } from "./workspace";
 import type { ClinicalView } from "./shared";
-import { RecordPreferenceControls } from "./record-preferences";
 const views: ClinicalView[] = ["query", "record", "overview"];
 export function ClinicalLibraryPage({
   page,
@@ -33,7 +32,7 @@ export function ClinicalLibraryPage({
 }) {
   const { t } = useLocalization(),
     { user } = useSession(),
-    { preferences } = useERP(),
+    { preferences, preferencePolicy, preferencesAvailable, updatePreference } = useERP(),
     product = useProduct(),
     request = useProductRequest(),
     navigation = useNavigation(),
@@ -46,7 +45,7 @@ export function ClinicalLibraryPage({
     view =
       views[CLINICAL_TEMPLATE_PAGES.findIndex((p) => p.id === page.id)] ??
       "query";
-  const code = `import { ClinicalPatientWorkspace } from '@pepbits/erp-screens';\nimport { createClinicalTemplateAdapter } from '@pepbits/erp-data';\nimport type { UserPreferences } from '@pepbits/erp-config';\n\nexport function PatientPage({ request, productId, scopeKey, preferences }: {\n  request: (path: string, init?: RequestInit) => Promise<Response>;\n  productId: string;\n  scopeKey: string; // tenant + application + user + record\n  preferences: UserPreferences;\n}) {\n  const adapter = React.useMemo(() => createClinicalTemplateAdapter(request, productId), [request, productId]);\n  return <ClinicalPatientWorkspace adapter={adapter} scopeKey={scopeKey}\n    initialPage={{ view: '${view}' }} preferences={preferences} />;\n}\n`;
+  const code = `import { ClinicalPatientWorkspace } from '@pepbits/erp-screens';\nimport { createClinicalTemplateAdapter } from '@pepbits/erp-data';\nimport type { PreferenceHost } from '@pepbits/erp-screens';\n\nexport function PatientPage({ request, productId, scopeKey, ...host }: {\n  request: (path: string, init?: RequestInit) => Promise<Response>;\n  productId: string;\n  scopeKey: string; // tenant + application + user + record\n} & PreferenceHost) {\n  const adapter = React.useMemo(() => createClinicalTemplateAdapter(request, productId), [request, productId]);\n  return <ClinicalPatientWorkspace adapter={adapter} scopeKey={scopeKey}\n    initialPage={{ view: '${view}' }} {...host} />;\n}\n`;
   return (
     <div className="space-y-4" data-clinical-library={page.id}>
       {view !== "overview" ? (
@@ -116,7 +115,9 @@ export function ClinicalLibraryPage({
           ])}
           initialPage={{ view, patientId: target.recordId, mode: target.mode }}
           preferences={preferences}
-          preferenceControls={<RecordPreferenceControls />}
+          preferencePolicy={preferencePolicy}
+          preferencesAvailable={preferencesAvailable}
+          onPreferenceChange={updatePreference}
           onOpen={(destination) =>
             navigation.openInNewContext({
               pageId:

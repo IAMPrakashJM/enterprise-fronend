@@ -41,6 +41,11 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Documentation contracts
+        run: |
+          node ../docs/tools/check-docs.mjs
+          node --test ../docs/tools/check-docs.test.mjs
+
       # Before the tests, because it is the fastest check and the one most
       # likely to be red — vitest transpiles and does not typecheck, so a green
       # suite says nothing about this.

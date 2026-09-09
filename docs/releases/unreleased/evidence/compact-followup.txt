@@ -1,0 +1,5 @@
+# Selected result lines; not the full raw log.
+PASS route template-patient-master
+PASS route table-components
+PASS route allyvora-patient-query
+PASS 3 Library destinations, managed table CSS, template/query locks and clinical preview

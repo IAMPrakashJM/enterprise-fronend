@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useId } from "react";
 import { DataTable } from "../worklist/data-table";
-import { createFormatters, DEFAULT_PREFERENCES, type DataColumn } from "@pepbits/erp-config";
+import { type DataColumn } from "@pepbits/erp-config";
+import {useERP} from "@pepbits/erp-shell";
 import { Plus } from "lucide-react";
 import {
   Highlight, Input, SearchInput, Textarea, Select, MultiSelect, Checkbox, Radio, Toggle, FilePicker, RangeInput, FieldShell,
@@ -24,7 +25,7 @@ export function TextDemo() {
     <Input label="Name" required value={name} onChange={e => setName(e.target.value)} />
     <Input label="Email" type="email" placeholder="Email" />
     <Input label="Password" type="password" autoComplete="new-password" />
-    <Input label="Amount" type="number" min={0} prefix="₹" />
+    <Input label="Amount" type="number" min={0} />
     <SearchInput aria-label="Search" value={search} onChange={setSearch} onClear={() => setSearch("")} />
     <Highlight text="Example searchable record" query={search} />
     <Textarea label="Notes" value={notes} onChange={e => setNotes(e.target.value)} />
@@ -112,39 +113,41 @@ export function CalendarDemo() {
 }
 
 export function CardsDemo() {
+  const {format}=useERP();
   return <CardGrid columns={2}>
-    <Card><CardHeader><CardTitle title="Summary" subtitle="catalog.sampleData" /></CardHeader><CardContent><DataValue value={1200} numeric /></CardContent><CardFooter><Badge tone="success"><LocalizedText message="Active"/></Badge></CardFooter></Card>
+    <Card><CardHeader><CardTitle title="Summary" subtitle="catalog.sampleData" /></CardHeader><CardContent><DataValue value={1200} numeric format={format.number} /></CardContent><CardFooter><Badge tone="success"><LocalizedText message="Active"/></Badge></CardFooter></Card>
     <Card tone="muted" shadow="none"><CardContent><Avatar name="Demo User" /><DescriptionList items={[{id:"id",label:"Record ID",value:"DEMO-001"},{id:"status",label:"Status",value:<StatusBadge value="Pending"/>}]} /></CardContent></Card>
   </CardGrid>;
 }
 
 export function StatsDemo() {
-  return <CardGrid columns={2}><StatCard label="Total" value={1200} trend={{direction:"up",delta:"+12%",comparedTo:"vs last month"}} />
-    <StatCard label="Pending" value={24} tone="inverse" trend={{direction:"down",delta:"-8%",comparedTo:"vs last month"}} /></CardGrid>;
+  const {format}=useERP();
+  return <CardGrid columns={2}><StatCard label="Total" value={format.number(1200)} trend={{direction:"up",delta:"+12%",comparedTo:"vs last month"}} />
+    <StatCard label="Pending" value={format.number(24)} tone="inverse" trend={{direction:"down",delta:"-8%",comparedTo:"vs last month"}} /></CardGrid>;
 }
 
 export function TableDemo() {
   const {t} = useLocalization();
-  const [striped, setStriped] = useState(true);
+  const {preferences,preferencePolicy,preferencesAvailable,updatePreference,format} = useERP();
   const [bordered, setBordered] = useState(true);
-  const [compact, setCompact] = useState(false);
+
   return <div className="space-y-3">
-    <Toggle label="catalog.striped" checked={striped} onChange={setStriped}/><Toggle label="catalog.bordered" checked={bordered} onChange={setBordered}/><Toggle label="Compact" checked={compact} onChange={setCompact}/>
-    <TableContainer><Table striped={striped} bordered={bordered} stickyHeader density={compact ? "compact" : "comfortable"} className="w-full">
+    <Toggle label="catalog.striped" disabled={!preferencesAvailable||preferencePolicy.rules.zebraStripes?.locked} checked={preferences.zebraStripes} onChange={value=>updatePreference("zebraStripes",value)}/><Toggle label="catalog.bordered" checked={bordered} onChange={setBordered}/><Toggle label="Compact" disabled={!preferencesAvailable||preferencePolicy.rules.density?.locked} checked={preferences.density === "compact"} onChange={value=>updatePreference("density",value?"compact":"comfortable")}/>
+    <TableContainer><Table striped={preferences.zebraStripes} bordered={bordered} stickyHeader={preferences.stickyTableHeader} density={preferences.density} className="w-full">
       <TableCaption>{t("catalog.sampleData")}</TableCaption>
       <TableHeader><TableRow><TableHead className="p-3">{t("Name")}</TableHead><TableHead className="p-3">{t("Amount")}</TableHead><TableHead className="p-3">{t("Status")}</TableHead></TableRow></TableHeader>
-      <TableBody>{[120,240,360].map((amount,i) => <TableRow key={i}><TableCell className="p-3">{`DEMO-00${i+1}`}</TableCell><TableCell className="p-3"><DataValue value={amount} numeric /></TableCell><TableCell className="p-3"><StatusBadge value={i === 1 ? "Pending" : "Active"}/></TableCell></TableRow>)}</TableBody>
-      <TableFooter><TableRow><TableCell className="p-3">{t("Total")}</TableCell><TableCell className="p-3" colSpan={2}>{720}</TableCell></TableRow></TableFooter>
+      <TableBody>{[120,240,360].map((amount,i) => <TableRow key={i}><TableCell className="p-3">{`DEMO-00${i+1}`}</TableCell><TableCell className="p-3"><DataValue value={amount} numeric format={format.money} /></TableCell><TableCell className="p-3"><StatusBadge value={i === 1 ? "Pending" : "Active"}/></TableCell></TableRow>)}</TableBody>
+      <TableFooter><TableRow><TableCell className="p-3">{t("Total")}</TableCell><TableCell className="p-3" colSpan={2}>{format.money(720)}</TableCell></TableRow></TableFooter>
     </Table></TableContainer>
   </div>;
 }
 
 export function ValuesDemo() {
-  const {language} = useLocalization();
+  const {format} = useERP();
   return <DescriptionList layout="stacked" items={[
-    {id:"money",label:"Amount",value:<DataValue value={12345.67} numeric format={value => new Intl.NumberFormat(language,{style:"currency",currency:"INR"}).format(value)}/>},
+    {id:"money",label:"Amount",value:<DataValue value={12345.67} numeric format={format.money}/>},
     {id:"empty",label:"Notes",value:<DataValue value={null}/>},
-    {id:"date",label:"Date",value:<DataValue value="2026-09-09" format={value => new Intl.DateTimeFormat(language).format(new Date(value+"T12:00:00"))}/>},
+    {id:"date",label:"Date",value:<DataValue value="2026-09-09" format={format.date}/>},
     {id:"status",label:"Status",value:<StatusBadge value="Active"/>},
   ]}/>;
 }
@@ -186,8 +189,9 @@ export function MenusDemo() {
 export function PaginationDemo() {
   const {t} = useLocalization();
   const [page,setPage] = useState(1);
-  const [pageSize,setPageSize] = useState<10|20|50|100>(10);
-  return <div className="space-y-3"><p>{t("catalog.pageNumber",{page})}</p><Pagination page={page} pageSize={pageSize} total={125} onPageChange={setPage} onPageSizeChange={size => {setPageSize(size);setPage(1);}}/></div>;
+  const {preferences,preferencePolicy,preferencesAvailable,updatePreference} = useERP();
+  const pageSize=preferences.pageSize;
+  return <div className="space-y-3"><p>{t("catalog.pageNumber",{page})}</p><Pagination pageSizeDisabled={!preferencesAvailable||preferencePolicy.rules.pageSize?.locked} page={Math.min(page,Math.ceil(125/pageSize))} pageSize={pageSize} total={125} onPageChange={setPage} onPageSizeChange={size => {updatePreference("pageSize",size);setPage(1);}}/></div>;
 }
 
 export function OverlaysDemo() {
@@ -241,6 +245,7 @@ export function RecoveryDemo() {
 }
 
 export function InlineDemo() {
+  const {format}=useERP();
   const {t} = useLocalization();
   const [name,setName] = useState("DEMO-001");
   const [amount,setAmount] = useState(100);
@@ -249,9 +254,9 @@ export function InlineDemo() {
   const options = [{value:"active",label:"Active"},{value:"pending",label:"Pending"}];
   return <DescriptionList layout="stacked" items={[
     {id:"name",label:"Name",value:<InlineEdit label="Name" value={name} onCommit={setName} validate={next => next.trim() ? null : t("Required")}/>},
-    {id:"amount",label:"Amount",value:<InlineEditNumber label="Amount" value={amount} min={0} onCommit={setAmount}/>},
+    {id:"amount",label:"Amount",value:<InlineEditNumber label="Amount" value={amount} display={format.number(amount)} min={0} onCommit={setAmount}/>},
     {id:"select",label:"Select",value:<InlineEditSelect label="Select" value={status} options={options} onCommit={setStatus}/>},
-    {id:"date",label:"Date",value:<InlineEditDate label="Date" value={date} onCommit={setDate}/>},
+    {id:"date",label:"Date",value:<InlineEditDate label="Date" value={date} display={format.date(date)} onCommit={setDate}/>},
     {id:"status",label:"Status",value:<InlineEditStatus label="Status" value={status} options={options} onCommit={setStatus} allowedTransitions={{active:["pending"],pending:["active"]}}/>},
   ]}/>;
 }
@@ -270,21 +275,22 @@ export function FormDemo() {
 }
 
 export function BillingDemo() {
-  const {language} = useLocalization();
+  const {format} = useERP();
   const [quantity,setQuantity] = useState(2);
   const [price,setPrice] = useState(100);
   return <div className="space-y-3"><CardGrid columns={2}>
     <Input label="Quantity" type="number" min={0} value={quantity} onChange={e => setQuantity(Math.max(0,Number(e.target.value)))}/>
     <Input label="Unit price" type="number" min={0} step="0.01" value={price} onChange={e => setPrice(Math.max(0,Number(e.target.value)))}/>
-    </CardGrid><DescriptionList items={[{id:"total",label:"Total",value:<DataValue value={price*quantity} numeric format={value => new Intl.NumberFormat(language,{style:"currency",currency:"INR"}).format(value)}/>}]}/>
+    </CardGrid><DescriptionList items={[{id:"total",label:"Total",value:<DataValue value={price*quantity} numeric format={format.money}/>}]}/>
     <p><LocalizedText message="catalog.billingHint"/></p>
   </div>;
 }
 
 export function LocalizationDemo() {
   const locale = useLocalization();
+  const {format} = useERP();
   return <LocalizationProvider value={locale}><div dir={locale.direction} className="space-y-3"><LocalizedText message="catalog.localizationHint"/>
-    <Input label="Name"/><StatusBadge value="Active"/><DataValue value={1234.5} format={value => new Intl.NumberFormat(locale.language).format(value)}/></div></LocalizationProvider>;
+    <Input label="Name"/><StatusBadge value="Active"/><DataValue value={1234.5} format={format.number}/></div></LocalizationProvider>;
 }
 
 export function WorklistDemo() {
@@ -294,7 +300,7 @@ export function WorklistDemo() {
   const [sort,setSort] = useState<{key:string;direction:"asc"|"desc"}|null>(null);
   const [preview,setPreview] = useState<string|null>(null);
   const columns: DataColumn[] = [{key:"name",label:"Name",type:"text",sortable:true,editable:true},{key:"amount",label:"Amount",type:"money",sortable:true,editable:true},{key:"status",label:"Status",type:"status",sortable:true}];
-  const format = createFormatters(DEFAULT_PREFERENCES);
+  const {format,preferences} = useERP();
   const sorted = [...rows].sort((a,b) => {
     if(!sort) return 0;
     const left=a[sort.key as keyof typeof a],right=b[sort.key as keyof typeof b];
@@ -306,7 +312,7 @@ export function WorklistDemo() {
     sort={sort} onSort={column => setSort({key:column.key,direction:sort?.key === column.key && sort.direction === "asc" ? "desc" : "asc"})}
     onPreview={row => setPreview(String(row.name))} onView={row => setPreview(String(row.name))} onEdit={row => setPreview(String(row.name))}
     onCellCommit={(row,column,next) => setRows(current => current.map(item => item.id === row.id ? {...item,[column.key]:column.type === "money" ? Number(next) : next} : item))}
-    density="comfortable" format={format} zebra/>
+    density={preferences.density} format={format} zebra={preferences.zebraStripes} stickyHeader={preferences.stickyTableHeader} wrap={preferences.wrapCellText}/>
     <Modal open={preview !== null} onClose={() => setPreview(null)} title="Details"><DataValue value={preview}/><p>{t("catalog.sampleData")}</p></Modal>
   </div>;
 }

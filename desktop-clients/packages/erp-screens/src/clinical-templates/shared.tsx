@@ -31,6 +31,7 @@ import type {
   UserPreferences,
   Formatters,
 } from "@pepbits/erp-config";
+import type {PreferenceHost} from "../preference-choice";
 import type { ClinicalTemplateAdapter } from "@pepbits/erp-data";
 export type ClinicalView = "query" | "record" | "overview";
 export interface PatientDestination {
@@ -38,7 +39,7 @@ export interface PatientDestination {
   patientId?: string;
   mode?: "new" | "edit" | "view";
 }
-export interface ClinicalPageProps {
+export interface ClinicalPageProps extends PreferenceHost {
   preferenceControls?: React.ReactNode;
   adapter: ClinicalTemplateAdapter;
   metadata: PatientMetadata;

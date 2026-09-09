@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 1,
+  "recordId": "library-preferences-2026-09-09",
+  "status": "unreleased-working-tree",
+  "baseCommit": "82656eeedf809c8419bd6e2ae4674580cb3ff71a",
+  "commit": null,
+  "tag": null,
+  "published": false,
+  "deployed": false,
+  "ciRun": null,
+  "testGuideVersion": "1.0.0",
+  "documentationPolicyVersion": "1.0.0",
+  "implementationDigest": "417a968e91f57aef7bc323f622b632e6fecb07128f36cba988c9f29372840f4a",
+  "digestAlgorithm": "SHA-256 of sorted UTF-8 path + NUL + file SHA-256 + LF entries",
+  "identityScope": "Changed/new package sources, generated locale sources, API catalog files, scripts and browser tests. Unchanged source is pinned by baseCommit. Excludes documentation, documentation tooling, root rules, package script wiring and CI configuration. This identifies the delivered working tree, not the exact tree of every earlier test run.",
+  "files": [
+    {
+      "path": "desktop-clients/e2e/library-preferences.ts",
+      "sha256": "3a138b58a8baba446bf262bfbb1434465ceb5594c232d598df3843c5b181b826"
+    },
+    {
+      "path": "desktop-clients/e2e/suites.mjs",
+      "sha256": "5cb6669be84123c36ae68162d4ff4c14b4a6a783d357e2b7fd699dde3a7a8846"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/index.ts",
+      "sha256": "00c73a7d477f8192afe017ab4337aad601c1f39234583f126b137e2a65191c71"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/library-pages.ts",
+      "sha256": "da62bda428b1736e6cbcb01d0b10f8e78944a12f0798896027e9e85f5e77d5e3"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "6766b35937bb2a98ca6c7d1eb598677e756fa4ea6d765f76d35009e1e44c30ef"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "6f9b614e40bf5cb570073b5280003b0e6d6d2d3cb808994c349c8e077e53ecf3"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "734ac3105781b96c760968b29e310c30236e61bc0ee64dd0af740d1c41909d92"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "709d944d4ba723558b35582f7ae8c63a612d0c03be30c5db11d76ad339ae315e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/library-page.tsx",
+      "sha256": "3aff95f87007fdd3c15a86e782f2a92d58834510823f906d8ba20d637031fd77"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/patient-query.tsx",
+      "sha256": "134fe79fd045833f1d95dbc8dc7564af4c9d4e26290e1ba26270c7934f9f3c4c"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/query-detail.tsx",
+      "sha256": "ff18e89291a80a4557eedd584731e3c4cb8f708c68a5c332b5a498cb9f88cfdf"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/query-layout.module.css",
+      "sha256": "e395d2fecef0c78732991800bd20ea92d4a8ae06c770d8d670b4097933fb6a6e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/query-results.tsx",
+      "sha256": "84337027b7644174bd2cd68dbdbbd73ab5bf83da09fc43864c25b8fe0a7fc2f2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/query.test.tsx",
+      "sha256": "a85e7d29c9da834bd76cf8418e36cf485947db70570d676ca0ee9352b8210c08"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/record-layout.module.css",
+      "sha256": "61c9d01f18e3a3f79995e8c11de3b8e5fd845484a710318a557bffc2e6d08301"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/shared.tsx",
+      "sha256": "cd2faaddd20966f1c3f0f906f2f737e5c00beee4e7acaea9b594d552dd575282"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/clinical-templates/workspace.tsx",
+      "sha256": "8cfb9be4b4f6981965654825c8056aee56c178b7676372c3c9bb84fbf930f5fc"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/index.ts",
+      "sha256": "d9f4c2b74dce507e6318bff688f74be542c8678a505c074200e0672feea40206"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/component-catalog.tsx",
+      "sha256": "01f758aa51fe847920b743a06d3fba3ab17b4d094af034b77bba52d03bf11e25"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/demos.tsx",
+      "sha256": "12ab86ec945d2863a17cb5b42fe27397b6b2269f2a66a1cf01efba0529de206a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/examples.generated.json",
+      "sha256": "74978f3145e67d1b32eebf903193c955de07ec3f4b631bdd3f6a69510cbf4872"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/index.tsx",
+      "sha256": "2f4a64420b3eaf01efa08cb654355bc720b4a9d0d8c7fc9040853915ce557450"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/preference-compliance.test.tsx",
+      "sha256": "e5ae08cfdf98cfb100f3a11b21cf8c9bad2970519e898889b7074a2e267afbc9"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/reference-pages.tsx",
+      "sha256": "49c92c24ff64c5d66c65c973105a466477545c82021491d80a58fe0320a56976"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/page-renderer.tsx",
+      "sha256": "d2556e9918e961ee5ad3144912c9db94494b12ffd7909b149104aadcb3568d58"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/preference-choice.ts",
+      "sha256": "31587e6fcee3764203c4f60503c574e1ba6ccd886633257530960909ef9d760f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/preference-preview.tsx",
+      "sha256": "8ade1022d09c78514b8cd1676e5a1b74ebd4bf8b138d376ae00b6a1717290060"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/configured-template-page.tsx",
+      "sha256": "fad3e83013949d5884e7f211363ace6ca7bc1a83f431da82218c8eb246424e87"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/page-template.tsx",
+      "sha256": "6d29d0c026c43caaeb355a0ee691764a460b234be1e260c13f1167838671c88b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/preference-compliance.test.tsx",
+      "sha256": "33cd074d1f48cc7e8552741b4126aaea00851a24e64042d389c2b980b49ff719"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/template-demo.tsx",
+      "sha256": "c787c3bfb2133a86adbfcf69c221c80671c666f334217ab78b98a56688c1fe54"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/template-engines.tsx",
+      "sha256": "ba8bc3b4b236bb015b61e6362a00210d56e678197540c039e56880a2f027cbce"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/template-example.generated.json",
+      "sha256": "68ad27238b925ddb084a98358bcaeeef8b5f3bc6e7d9f3ddef71b39bfbe373d8"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/template-library.tsx",
+      "sha256": "f10006d65cefa9ea2dd25f72f46f3f892cb040b82734cde3f94cad9214461133"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/worklist/data-table.tsx",
+      "sha256": "e9029f711859bf45037e2cb032810a42f29747f8d67113bc6836086b0c174f6e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/worklist/worklist-page.tsx",
+      "sha256": "556eb839c669563570a0fae10b52e1926cacb3a0b9335bc49067ed1290f2e8fa"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/badge.tsx",
+      "sha256": "1834dafb4622a72f649b34aeeda984630827303f4ee72aec1898b48dc65adbd0"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/form-controls.tsx",
+      "sha256": "731cbf9cf423a09d97ba6df6b3dee66967e2a57a8dc0ea44799c4991ef95afc5"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/index.ts",
+      "sha256": "daaef343920e7aad9fd1b015bfddc9696ee6a06ed39f64b01cf96d97de0594b5"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "dfbbaf022e940b6a77dcc3428458aff1cefdf4ff5de0b667a26590c8156d30b6"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/pagination.tsx",
+      "sha256": "f838d0ce71b5eec180532627a93504aab923d021ded255fe36a805eecba8c753"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/presentation.tsx",
+      "sha256": "abdcab74b2ecf61ad8c8a1bffb93592f959c0a4e3a4efa9fe076a9fbb364245b"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/table.tsx",
+      "sha256": "6b2bde900ed2f8375f8a212c8f0a9614de914223a404e523adada8f00072f29a"
+    },
+    {
+      "path": "desktop-clients/packages/tokens/src/tokens.css",
+      "sha256": "8d674ed183ec69f9038092cca80d7ef5484c0f844563a335141cd6088bfa1125"
+    },
+    {
+      "path": "desktop-clients/scripts/templates/generate-example.ts",
+      "sha256": "9369fdd6387e835c822867cb6a25fb67a329b0aebd3d7f1f104095eb129b1902"
+    },
+    {
+      "path": "desktop-clients/scripts/verify-library-preferences.mjs",
+      "sha256": "3f7101aeb97678434ba3b5656b46ca2cb0984d7f7b1f282b1f536ff70dc6896d"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "4125fd4e8f23aa2db2932758f3e9a0a4d22c3cb4260cd34a167ea3a2e0c6940d"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "18275704599bbee20d66cf6e23a7f588bb3cf42808f11f2756a743657096b69d"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "b6388f1df9cc533dc520beed6bb367375f876ef170fedd452759030c02f76be0"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "ffcca4c8ede7414d2d6fe14dbb489c2ca6a01d5ba50a94518f706857d036c0b5"
+    }
+  ],
+  "packages": {
+    "desktop-clients/apps/desktop/package.json": {
+      "name": "desktop",
+      "version": "1.0.0",
+      "private": true
+    },
+    "desktop-clients/apps/web/package.json": {
+      "name": "web",
+      "version": "1.0.0",
+      "private": true
+    },
+    "desktop-clients/package.json": {
+      "name": "nexora-monorepo",
+      "version": "1.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/ai-client/package.json": {
+      "name": "@pepbits/ai-client",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/ai-config/package.json": {
+      "name": "@pepbits/ai-config",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/ai-ui/package.json": {
+      "name": "@pepbits/ai-ui",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/auth/package.json": {
+      "name": "@pepbits/auth",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/erp-config/package.json": {
+      "name": "@pepbits/erp-config",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/erp-data/package.json": {
+      "name": "@pepbits/erp-data",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/erp-screens/package.json": {
+      "name": "@pepbits/erp-screens",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/erp-shell/package.json": {
+      "name": "@pepbits/erp-shell",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/ops-ui/package.json": {
+      "name": "@pepbits/ops-ui",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/platform-ports/package.json": {
+      "name": "@pepbits/platform-ports",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/tokens/package.json": {
+      "name": "@pepbits/tokens",
+      "version": "0.0.0",
+      "private": true
+    },
+    "desktop-clients/packages/workspace-core/package.json": {
+      "name": "@pepbits/workspace-core",
+      "version": "0.0.0",
+      "private": true
+    }
+  },
+  "evidence": "verification-2026-09-09.md",
+  "limits": [
+    "WebKit failed to launch: missing system dependencies",
+    "Native Tauri executable not tested in this change",
+    "Native-speaker wording acceptance pending",
+    "No new remote CI, commit, tag, push, publication or deployment claimed"
+  ]
+}

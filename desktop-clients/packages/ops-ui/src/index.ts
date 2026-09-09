@@ -25,3 +25,5 @@ export * from "./calendar";
 export * from "./data-value";
 
 export * from './recovery-notice';
+
+export * from "./presentation";

@@ -1,5 +1,5 @@
 "use client";
-import { TableContainer } from "@pepbits/ops-ui";
+import { usePresentationPreferences, TableContainer } from "@pepbits/ops-ui";
 import { DataValue, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@pepbits/ops-ui";
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
@@ -73,6 +73,8 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
      CardGrid, and the two had already drifted by a step. `density` stays in the
      signature because CardGrid still uses it for column count. */
   const {t} = useLocalization();
+  const managed=usePresentationPreferences();
+  if(managed){density=managed.density;stickyHeader=managed.stickyTableHeader;zebra=managed.zebraStripes;wrap=managed.wrapCellText;}
   void density;
   const padding = "py-[var(--row-py)]";
   const allSelected = rows.length > 0 && rows.every((row) => selected.includes(String(row[primaryKey])));
@@ -97,7 +99,7 @@ export function DataTable({ rows, columns, primaryKey, displayKey, selected, onT
                selected whichever stripe it landed on. */
             const stripe = zebra && rowIndex % 2 === 1 && !checked ? "bg-[color-mix(in_srgb,var(--surface-2)_60%,transparent)]" : undefined;
             return (
-              <TableRow key={id} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
+              <TableRow key={id} data-selected={checked ? "true" : undefined} onDoubleClick={() => onView(row)} className={cn("group border-b border-[var(--border)] transition hover:bg-[var(--surface-2)]", stripe, checked && "bg-[var(--primary-soft)]")}>
                 <TableCell className={cn("px-3", padding)} onClick={(event) => event.stopPropagation()}><Checkbox aria-label={t("Select {item}",{item:id})} checked={checked} onChange={() => onToggle(id)} /></TableCell>
                 {columns.map((column, index) => <TableCell key={column.key} data-classification={classificationFor(column.key)} onClick={() => onPreview(row)} className={cn("cursor-pointer px-3 text-[length:calc(10.5px*var(--fs-scale))] font-medium text-[var(--text-muted)]", padding, index === 0 && "font-extrabold text-[var(--primary)]", column.key === displayKey && "font-extrabold text-[var(--text)]")}>{onCellCommit && column.editable
                     /* stopPropagation: the cell opens the record preview, and

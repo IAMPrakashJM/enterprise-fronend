@@ -4803,5 +4803,21 @@ export default {
   "template.clinical.closeDetails": "मरीज़ का विवरण बंद करें",
   "template.clinical.identifier": "पहचान संख्या",
   "template.clinical.onePatientFound": "1 मरीज़ मिला",
-  "template.clinical.demoQuery": "डेमो मरीज़ खोज"
+  "template.clinical.demoQuery": "डेमो मरीज़ खोज",
+  "catalog.reference.theme-studio": "अपनी थीम बदलें और वर्तमान प्राथमिकताओं के साथ साझा घटक देखें।",
+  "catalog.reference.accessibility": "पढ़ने और गति की सेटिंग बदलें, फिर सुलभ फ़ॉर्म का उदाहरण जाँचें।",
+  "catalog.reference.page-catalog": "अपने खाते के लिए उपलब्ध पृष्ठ खोजें और खोलें।",
+  "catalog.reference.component-contracts": "प्रत्येक साझा घटक का स्रोत, व्यवहार और एकीकरण उदाहरण देखें।",
+  "catalog.reference.keyboard-shortcuts": "यह कीबोर्ड संदर्भ अनुप्रयोग की शॉर्टकट सूची से बनता है।",
+  "catalog.reference.integration-guide": "शेल की नकल किए या नीति को दरकिनार किए बिना पुनः उपयोग योग्य पृष्ठ जोड़ें।",
+  "catalog.reference.livePreferences": "ये नियंत्रण आपकी वास्तविक प्राथमिकताएँ बदलते हैं। व्यवस्थापक के लॉक लागू होते हैं।",
+  "catalog.reference.accessibilityCheck": "Tab और Shift+Tab से नियंत्रणों के बीच जाएँ। फ़ोकस, लेबल और त्रुटि घोषणाएँ जाँचें।",
+  "catalog.reference.focusHelp": "लेबल और सहायता पाठ इस फ़ील्ड से जुड़े रहते हैं।",
+  "catalog.reference.accessibilityLimit": "यह उदाहरण मैन्युअल जाँच में मदद करता है; यह सुलभता प्रमाणन नहीं है।",
+  "catalog.reference.contract": "निर्यात किए गए घटक और उसके TypeScript props का उपयोग करें। अनूदित लेबल, सुलभ नाम, लागू प्राथमिकताएँ और वास्तविक क्रिया हैंडलर दें।",
+  "catalog.reference.shortcutScope": "⌘ का अर्थ macOS पर Command और अन्य प्रणालियों पर Ctrl है। कार्यक्षेत्र शॉर्टकट के लिए डेस्कटॉप क्षमता चाहिए। शॉर्टकट बंद होने पर सामान्य कीबोर्ड नेविगेशन उपलब्ध रहता है।",
+  "catalog.reference.providers": "अनुप्रयोग प्रोवाइडर",
+  "catalog.reference.providersHelp": "मौजूदा प्रमाणीकरण, उत्पाद, नेविगेशन, स्थानीयकरण और ERP प्रोवाइडर उपयोग करें। UI घटकों को API क्लाइंट से स्वतंत्र रखें।",
+  "catalog.reference.preferencesHelp": "पुनः उपयोग योग्य कार्यक्षेत्र को preferences, preferencePolicy, preferencesAvailable और onPreferenceChange दें। लॉक किए गए नीति मान स्थानीय विकल्पों से ऊपर हैं।",
+  "catalog.reference.integrationSteps": "टेम्पलेट चुनें, TypeScript उदाहरण खोलें और डेमो अडैप्टर की जगह प्रमाणित API अडैप्टर जोड़ें। रिलीज़ से पहले सत्यापन, टकराव, पुनर्प्राप्ति, अनुमतियाँ और प्राथमिकता लॉक जाँचें।"
 };

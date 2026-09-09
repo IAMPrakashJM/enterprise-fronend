@@ -1,0 +1,2 @@
+# Selected result lines; not the full raw log.
+WebKit launch blocked before any page case ran: missing libwoff1, libevent, GStreamer bad/libav plugins and libavif16.

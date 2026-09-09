@@ -137,7 +137,7 @@ export function WorklistPage({ page }: { page: PageDefinition }) {
 function WorklistContent({ page }: { page: PageDefinition }) {
   const { t } = useLocalization();
   const authedFetch = useProductRequest();
-  const { preferences, updatePreference, toast, format } = useERP();
+  const { preferences, preferencePolicy, preferencesAvailable, updatePreference, toast, format } = useERP();
   const { user } = useSession();
   const navigation = useNavigation();
   const product = useProduct();
@@ -507,7 +507,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
             {/* Was two IconButtons in a bordered box, which is a segmented
                 control drawn by hand: no group name, no radio semantics, and
                 two tab stops where there should be one. */}
-            <div data-tour="view">
+            <fieldset disabled={!preferencesAvailable||preferencePolicy.rules.resultView?.locked} data-tour="view" className="m-0 border-0 p-0">
               <Segmented
                 label="Result view"
                 value={preferences.resultView}
@@ -517,7 +517,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
                   { value: "cards", label: "Card grid view", icon: <Grid2X2 className="size-3.5" />, iconOnly: true },
                 ]}
               />
-            </div>
+            </fieldset>
           <IconButton data-tour="columns" label="ui.choose.columns.61b55093" onClick={() => setColumnOpen(true)}><Columns3 className="size-4" /></IconButton>
           <IconButton label="ui.refresh.results.04cc9c1a" disabled={loading || bulkBusy} onClick={() => { setEdits({}); setRefresh(value => value + 1); }}><RefreshCw className="size-4" /></IconButton>
           {page.id==="customer-master"?<Button onClick={()=>setApprovalOpen(true)}><LocalizedText message="ui.approval.inbox.a670f0ac" /></Button>:null}
@@ -606,7 +606,7 @@ function WorklistContent({ page }: { page: PageDefinition }) {
         ) : (
           <CardGrid rows={pageRows} columns={visibleColumns} primaryKey={config.primaryKey} displayKey={config.displayKey} selected={selected} onToggle={toggle} onPreview={setPreviewRow} onView={view} onEdit={edit} canEdit={canEdit} density={preferences.density} format={format} />
         ) : <EmptyState action={<Button variant="secondary" onClick={reset}><LocalizedText message="ui.clear.filters.7179ea00" /></Button>} />}
-        <Pagination page={pageNumber} pageSize={pageSize} total={total} onPageChange={setPageNumber} onPageSizeChange={(size) => { updatePreference("pageSize", size); setPageNumber(1); }} />
+        <Pagination pageSizeDisabled={!preferencesAvailable||preferencePolicy.rules.pageSize?.locked} page={pageNumber} pageSize={pageSize} total={total} onPageChange={setPageNumber} onPageSizeChange={(size) => { updatePreference("pageSize", size); setPageNumber(1); }} />
       </Card>
 
       <Modal open={approvalOpen} onClose={()=>setApprovalOpen(false)} title="ui.customer.approvals.1954476c" size="xl">{approvalOpen?<ApprovalWorkspace pageId={page.id} onReturn={()=>setApprovalOpen(false)}/>:null}</Modal>

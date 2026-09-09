@@ -343,6 +343,7 @@ export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", 
   onChange: (value: number) => void;
   className?: string;
 }) {
+  const {t}=useLocalization();
   return (
     <FieldShell label={label} hint={hint} className={className}>
       {(note) => (
@@ -350,7 +351,7 @@ export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", 
         <input
           type="range" min={min} max={max} step={step} value={value}
           onChange={(event) => onChange(Number(event.target.value))}
-          aria-label={label}
+          aria-label={t(label)}
           aria-describedby={note}
           className="focus-ring h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-[var(--surface-3)] accent-[var(--primary)]"
         />

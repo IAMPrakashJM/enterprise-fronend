@@ -1,0 +1,11 @@
+# Selected result lines; not the full raw log.
+ ✓ packages/erp-screens/src/library/component-catalog.test.tsx (5 tests) 582ms
+ ✓ packages/erp-screens/src/library/preference-compliance.test.tsx (4 tests) 941ms
+   ✓ all 12 component catalog routes render their actual examples under non-default preferences  591ms
+ ✓ packages/erp-screens/src/clinical-templates/query.test.tsx (7 tests) 1465ms
+   ✓ query waits for criteria and preserves filters after a failed search  616ms
+   ✓ inline details belong to the selected row and record actions use navigation  368ms
+ Test Files  3 passed (3)
+      Tests  16 passed (16)
+   Start at  13:19:24
+   Duration  3.91s (transform 1.99s, setup 2.40s, collect 2.23s, tests 2.99s, environment 1.29s, prepare 231ms)

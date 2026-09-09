@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "documentVersion": "1.0.0",
+  "guide": "v1.0.0/PRE-COMMIT.md",
+  "inventory": "v1.0.0/inventory.json",
+  "cases": "v1.0.0/USE-CASES.md",
+  "matrix": "v1.0.0/MODULE-MATRIX.md"
+}

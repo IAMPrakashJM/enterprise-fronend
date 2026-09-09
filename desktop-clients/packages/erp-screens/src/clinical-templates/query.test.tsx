@@ -21,6 +21,9 @@ import {
   type ClinicalTemplateAdapter,
 } from "@pepbits/erp-data";
 import { PatientQueryTemplate } from "./patient-query";
+import {exportRows} from "../worklist/export-rows";
+import type {ClinicalPageProps} from "./shared";
+vi.mock("../worklist/export-rows",()=>({exportRows:vi.fn()}));
 import { querySignature } from "./query-model";
 const fixture = patientFixtures[0] as PatientRecord;
 const row: PatientSummary = {
@@ -37,11 +40,12 @@ const row: PatientSummary = {
   registeredAt: fixture.activity[0].at,
   version: 1,
 };
-function setup() {
+function setup(overrides:Partial<ClinicalPageProps> = {}) {
   const adapter = {
     search: vi
       .fn()
       .mockResolvedValue({ rows: [row], total: 1, page: 1, pageSize: 20 }),
+    exportRows: vi.fn().mockResolvedValue({rows:[row]}),
     savedSearches: vi.fn().mockResolvedValue([]),
     load: vi.fn().mockResolvedValue(fixture),
     saveSearch: vi.fn().mockResolvedValue([]),
@@ -54,6 +58,7 @@ function setup() {
       preferences={DEFAULT_PREFERENCES}
       format={createFormatters(DEFAULT_PREFERENCES)}
       onOpen={onOpen}
+      {...overrides}
     />,
   );
   return { adapter, onOpen };
@@ -138,4 +143,30 @@ test("failed preset saves show their error in the dialog and preserve its name",
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
   );
   expect(adapter.saveSearch).toHaveBeenCalledTimes(2);
+});
+
+
+test("query locks disable view, inline preview and page size controls", async () => {
+  setup({preferencePolicy:{revision:1,rules:{resultView:{locked:true,value:'table'},previewMode:{locked:true,value:'left-drawer'},pageSize:{locked:true,value:10}}}});
+  fireEvent.change(screen.getByLabelText('First name',{exact:true}),{target:{value:'Alex'}});
+  fireEvent.click(screen.getByRole('button',{name:'Search'}));await screen.findByRole('button',{name:'Alex Morgan'});
+  expect(screen.getByRole('tab',{name:'Cards'})).toBeDisabled();
+  expect(screen.getByRole('tab',{name:'Inline'})).toBeDisabled();
+  expect(screen.getByRole('combobox',{name:'Rows per page'})).toBeDisabled();
+});
+test("disabled query shortcuts do not focus search or open help", async () => {
+  const rects=vi.spyOn(HTMLElement.prototype,'getClientRects').mockReturnValue([{}] as unknown as DOMRectList);
+  try {
+    setup({preferences:{...DEFAULT_PREFERENCES,keyboardShortcuts:false}});
+    fireEvent.keyDown(window,{key:'/'});expect(screen.getByLabelText('First name',{exact:true})).not.toHaveFocus();
+    fireEvent.keyDown(window,{key:'?'});expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  } finally {rects.mockRestore();}
+});
+test("query export uses the selected file format", async () => {
+  setup({preferences:{...DEFAULT_PREFERENCES,exportFormat:'xlsx'}});
+  fireEvent.change(screen.getByLabelText('First name',{exact:true}),{target:{value:'Alex'}});
+  fireEvent.click(screen.getByRole('button',{name:'Search'}));await screen.findByRole('button',{name:'Alex Morgan'});
+  fireEvent.click(screen.getByRole('button',{name:'Export'}));
+  fireEvent.click(within(screen.getByRole('dialog')).getByRole('button',{name:'Export'}));
+  await waitFor(()=>expect(exportRows).toHaveBeenCalledWith(expect.any(Array),expect.any(Array),expect.any(Object),'xlsx','clinical-demo-patients'));
 });

@@ -1,0 +1,4 @@
+# Selected result lines; not the full raw log.
+ Tasks:    2 successful, 2 total
+Cached:    0 cached, 2 total
+  Time:    15.07s 

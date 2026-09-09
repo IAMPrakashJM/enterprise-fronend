@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import {
   Avatar,
+  Card,
   Badge,
   Button,
   DescriptionList,
@@ -41,6 +42,7 @@ export function PatientQueryDetail({
   const root = useRef<HTMLDivElement>(null);
   const index = rows.findIndex((p) => p.id === patient.id);
   useEffect(() => {
+    if (!props.preferences.keyboardShortcuts) return;
     const key = (e: KeyboardEvent) => {
       if (!root.current?.getClientRects().length) return;
       if (
@@ -66,7 +68,7 @@ export function PatientQueryDetail({
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [rows, index, onSelect, onClose, mode, direction]);
+  }, [rows, index, onSelect, onClose, mode, direction, props.preferences.keyboardShortcuts]);
   if (!load.value)
     return <ClinicalLoading error={load.error} retry={load.retry} />;
   const p = load.value,
@@ -144,9 +146,10 @@ export function PatientQueryDetail({
     },
   ];
   return (
-    <div
-      className={`${styles.detail} ${mode === "drawer" ? styles.drawer : ""}`}
+    <Card
+      className={`${styles.detail} ${mode.endsWith("drawer") ? styles.drawer : ""}`}
       ref={root}
+      style={{"--fs-scale":"var(--fs-form)"} as React.CSSProperties}
       data-query-detail
     >
       <aside className={styles.rail}>
@@ -244,6 +247,6 @@ export function PatientQueryDetail({
           />
         </footer>
       </div>
-    </div>
+    </Card>
   );
 }

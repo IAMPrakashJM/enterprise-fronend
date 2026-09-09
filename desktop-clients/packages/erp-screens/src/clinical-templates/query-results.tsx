@@ -5,6 +5,7 @@ import {
   Badge,
   Button,
   Card,
+  CardGrid,
   Table,
   TableContainer,
   TableHeader,
@@ -227,7 +228,7 @@ export function PatientQueryResults({
   };
   if (view === "cards")
     return (
-      <div className={styles.grid}>
+      <CardGrid className={styles.grid} style={{"--fs-scale": "var(--fs-result)"} as React.CSSProperties}>
         {rows.map((p) => (
           <Fragment key={p.id}>
             <Card className={styles.card}>
@@ -266,7 +267,7 @@ export function PatientQueryResults({
             ) : null}
           </Fragment>
         ))}
-      </div>
+      </CardGrid>
     );
   return (
     <Card>
