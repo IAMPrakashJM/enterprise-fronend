@@ -18,7 +18,7 @@ templates → Patient Record** on the desktop shell.
 | Tabs and wizard | One section at a time; keyboard navigation, previous/next and one primary save action |
 | Numbered cards | Matching section titles, subtitles, icons, section numbers and Read/Reading controls |
 | Personal field arrangement | Twelve-column grid for names, demographics, birth time, calculated age and additional names |
-| Contact sections | Separate email and telephone collections plus communication preferences |
+| Contact sections | Separate email and telephone collections, compound country-code/phone controls and communication preferences |
 | Conditional details | Insurance policies, disability details, deceased fields, refusal and revocation details follow their controlling values |
 | MRN and registration | New records show automatic-generation guidance; saved identifiers and registration status display read-only |
 | Persistent footer | New/Cancel, mode-specific care actions, save, theme, layout and density controls remain accessible while the form scrolls |
@@ -82,6 +82,8 @@ responses remain those of this project. Native translation review remains pendin
 
 The targeted component suite covers retained edits, retry safety, read-only behavior,
 scope isolation, late-response isolation, new-record reset and calendar-age edge cases.
+Empty contact editors remain local until edited, and typing retains input focus; a
+regression test checks that untouched editors do not create saved rows.
 API tests cover saved identifiers and contact projection in addition to existing
 registration, scope, validation, concurrency, booking and eligibility checks.
 

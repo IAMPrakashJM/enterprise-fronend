@@ -762,6 +762,22 @@
       "title": "template.clinical.contacts",
       "fields": [
         {
+          "id": "contactCategory",
+          "label": "template.clinical.contactCategory",
+          "type": "select",
+          "span": 3,
+          "options": [
+            {
+              "value": "home",
+              "label": "template.clinical.home"
+            },
+            {
+              "value": "work",
+              "label": "template.clinical.work"
+            }
+          ]
+        },
+        {
           "id": "contactType",
           "label": "template.clinical.contactType",
           "type": "select",
@@ -787,7 +803,41 @@
           "label": "template.clinical.value",
           "type": "text",
           "required": true,
-          "span": 4
+          "span": 5
+        },
+        {
+          "id": "countryCode",
+          "label": "template.clinical.countryCode",
+          "type": "select",
+          "span": 4,
+          "hidden": true,
+          "allowCustom": true,
+          "options": [
+            {
+              "value": "+971",
+              "label": "+971"
+            },
+            {
+              "value": "+91",
+              "label": "+91"
+            },
+            {
+              "value": "+44",
+              "label": "+44"
+            },
+            {
+              "value": "+1",
+              "label": "+1"
+            },
+            {
+              "value": "+974",
+              "label": "+974"
+            },
+            {
+              "value": "+966",
+              "label": "+966"
+            }
+          ]
         },
         {
           "id": "primary",
@@ -805,28 +855,6 @@
           ],
           "span": 4,
           "control": "primary"
-        },
-        {
-          "id": "countryCode",
-          "label": "template.clinical.countryCode",
-          "type": "text",
-          "span": 4
-        },
-        {
-          "id": "contactCategory",
-          "label": "template.clinical.contactCategory",
-          "type": "select",
-          "span": 4,
-          "options": [
-            {
-              "value": "home",
-              "label": "template.clinical.home"
-            },
-            {
-              "value": "work",
-              "label": "template.clinical.work"
-            }
-          ]
         }
       ],
       "addRequires": "value"
@@ -1146,24 +1174,6 @@
           "span": 4
         },
         {
-          "id": "notes",
-          "label": "template.clinical.notes",
-          "type": "text",
-          "span": 4
-        },
-        {
-          "id": "issuedDate",
-          "label": "template.clinical.issuedDate",
-          "type": "date",
-          "span": 4
-        },
-        {
-          "id": "expiry",
-          "label": "template.clinical.expiry",
-          "type": "date",
-          "span": 4
-        },
-        {
           "id": "verified",
           "label": "template.clinical.verified",
           "type": "select",
@@ -1179,6 +1189,25 @@
             }
           ],
           "control": "toggle"
+        },
+        {
+          "id": "issuedDate",
+          "label": "template.clinical.issuedDate",
+          "type": "date",
+          "span": 4
+        },
+        {
+          "id": "expiry",
+          "label": "template.clinical.expiry",
+          "type": "date",
+          "span": 4
+        },
+        {
+          "id": "notes",
+          "label": "template.clinical.notes",
+          "type": "text",
+          "span": 4,
+          "hidden": true
         },
         {
           "id": "mimeType",
@@ -1287,19 +1316,6 @@
       "title": "template.clinical.collectionDisabilities",
       "fields": [
         {
-          "id": "description",
-          "label": "template.clinical.description",
-          "type": "text",
-          "required": true,
-          "span": 4
-        },
-        {
-          "id": "notes",
-          "label": "template.clinical.notes",
-          "type": "text",
-          "span": 4
-        },
-        {
           "id": "cause",
           "label": "template.clinical.cause",
           "type": "select",
@@ -1326,6 +1342,20 @@
               "label": "template.clinical.other"
             }
           ]
+        },
+        {
+          "id": "description",
+          "label": "template.clinical.description",
+          "type": "text",
+          "required": true,
+          "span": 8
+        },
+        {
+          "id": "notes",
+          "label": "template.clinical.notes",
+          "type": "text",
+          "span": 4,
+          "hidden": true
         }
       ],
       "addRequires": "cause",

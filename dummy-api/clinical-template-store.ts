@@ -539,9 +539,12 @@ export function createClinicalTemplateStore(file: string) {
           const rows = record.collections.contacts.filter((r) =>
             kinds.includes(r.contactType),
           );
-          return (
-            (rows.find((r) => r.primary === "yes") ?? rows[0])?.value ?? ""
-          );
+          const contact = rows.find((r) => r.primary === "yes") ?? rows[0];
+          if (!contact) return "";
+          return contact.contactType === "email" ||
+            contact.value.startsWith("+")
+            ? contact.value
+            : [contact.countryCode, contact.value].filter(Boolean).join(" ");
         };
         record.values.email = primaryContact(["email"]);
         record.values.mobile = primaryContact(["mobile", "phone"]);

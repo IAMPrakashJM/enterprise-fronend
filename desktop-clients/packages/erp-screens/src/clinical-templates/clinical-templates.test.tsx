@@ -215,3 +215,34 @@ test("New patient resets a saved record in a reused new-record tab", async () =>
   ).not.toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Create patient" })).toBeEnabled();
 });
+
+test("empty contact editors do not create rows until edited and retain focus while typing", async () => {
+  const a = adapter();
+  a.load = vi.fn().mockResolvedValue({
+    ...structuredClone(fixture),
+    collections: { ...fixture.collections, contacts: [] },
+  });
+  render(page(a));
+  const phone = await screen.findByRole("textbox", { name: "Phone" });
+  phone.focus();
+  fireEvent.change(phone, { target: { value: "5550011" } });
+  expect(screen.getByRole("textbox", { name: "Phone" })).toBe(phone);
+  expect(phone).toHaveFocus();
+  fireEvent.change(screen.getByRole("combobox", { name: "Country code" }), {
+    target: { value: "+971" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Save changes" }));
+  fireEvent.click(
+    within(await screen.findByRole("dialog")).getByRole("button", {
+      name: "Confirm",
+    }),
+  );
+  await screen.findByText("Patient record saved.");
+  const sent = vi.mocked(a.save).mock.calls[0][0].record.collections.contacts;
+  expect(sent).toHaveLength(1);
+  expect(sent[0]).toMatchObject({
+    contactType: "mobile",
+    countryCode: "+971",
+    value: "5550011",
+  });
+});

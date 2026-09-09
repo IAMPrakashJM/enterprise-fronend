@@ -1,4 +1,5 @@
 "use client";
+import { RecordPhoneField } from "./record-phone";
 import recordStyles from "./record-layout.module.css";
 import React, { useEffect, useState } from "react";
 import {
@@ -361,6 +362,16 @@ export function PatientCollectionEditor({
     shown = rows
       .map((row, index) => ({ row, index }))
       .filter(({ row }) => !subset || subset.values.includes(row.contactType));
+  if (subset && !reading && !shown.length)
+    shown.push({
+      index: -1,
+      row: Object.fromEntries([
+        ["id", `pending-${subset.values[0]}`],
+        ...definition.fields.map((f) => [f.id, ""]),
+        ["contactType", subset.values[0]],
+        ["primary", "yes"],
+      ]),
+    });
   const change = (next: typeof rows) =>
     update({ ...patient, collections: { ...patient.collections, [id]: next } });
   const fields = (row: Record<string, string>) =>
@@ -372,6 +383,29 @@ export function PatientCollectionEditor({
           (f.id !== "contactType" &&
             (f.id !== "countryCode" || subset.values[0] !== "email"))),
     );
+  const updateRow = (
+    index: number,
+    row: Record<string, string>,
+    key: string,
+    value: string,
+  ) => {
+    const patch = { ...row, [key]: value };
+    if (index < 0) {
+      change([...rows, patch]);
+      return;
+    }
+    change(
+      rows.map((r, i) =>
+        i === index
+          ? patch
+          : key === "primary" &&
+              value === "yes" &&
+              (id !== "contacts" || r.contactType === row.contactType)
+            ? { ...r, primary: "no" }
+            : r,
+      ),
+    );
+  };
   const add = () =>
     change([
       ...rows,
@@ -413,7 +447,7 @@ export function PatientCollectionEditor({
                     t(subset?.title ?? definition.title)}
                 </span>
               </div>
-              {!reading ? (
+              {!reading && index >= 0 && (!subset || shown.length > 1) ? (
                 <Button
                   size="sm"
                   variant="ghost"
@@ -451,40 +485,51 @@ export function PatientCollectionEditor({
                         } as React.CSSProperties
                       }
                     >
-                      <PatientFieldControl
-                        field={
-                          subset && field.id === "value"
-                            ? {
-                                ...field,
-                                label:
-                                  subset.values[0] === "email"
-                                    ? "template.clinical.email"
-                                    : "template.clinical.phone",
-                                type:
-                                  subset.values[0] === "email"
-                                    ? "email"
-                                    : "text",
-                              }
-                            : field
-                        }
-                        value={row[field.id] ?? ""}
-                        disabled={disabled}
-                        error={errors[`${id}.${index}.${field.id}`]}
-                        onChange={(value) =>
-                          change(
-                            rows.map((r, i) =>
-                              i === index
-                                ? { ...r, [field.id]: String(value) }
-                                : field.id === "primary" &&
-                                    value === "yes" &&
-                                    (id !== "contacts" ||
-                                      r.contactType === row.contactType)
-                                  ? { ...r, primary: "no" }
-                                  : r,
-                            ),
-                          )
-                        }
-                      />
+                      {subset?.values[0] !== "email" &&
+                      subset &&
+                      field.id === "value" ? (
+                        <RecordPhoneField
+                          value={row.value ?? ""}
+                          code={row.countryCode ?? ""}
+                          options={
+                            definition.fields.find(
+                              (f) => f.id === "countryCode",
+                            )?.options ?? []
+                          }
+                          disabled={disabled}
+                          error={errors[`${id}.${index}.value`]}
+                          onValue={(value) =>
+                            updateRow(index, row, "value", value)
+                          }
+                          onCode={(code) =>
+                            updateRow(index, row, "countryCode", code)
+                          }
+                        />
+                      ) : (
+                        <PatientFieldControl
+                          field={
+                            subset && field.id === "value"
+                              ? {
+                                  ...field,
+                                  label:
+                                    subset.values[0] === "email"
+                                      ? "template.clinical.email"
+                                      : "template.clinical.phone",
+                                  type:
+                                    subset.values[0] === "email"
+                                      ? "email"
+                                      : "text",
+                                }
+                              : field
+                          }
+                          value={row[field.id] ?? ""}
+                          disabled={disabled}
+                          error={errors[`${id}.${index}.${field.id}`]}
+                          onChange={(value) =>
+                            updateRow(index, row, field.id, String(value))
+                          }
+                        />
+                      )}
                     </div>
                   ))}
                 </div>
