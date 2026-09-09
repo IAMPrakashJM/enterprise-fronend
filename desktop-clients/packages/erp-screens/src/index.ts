@@ -33,3 +33,4 @@ export {PatientQueryFilters} from './clinical-templates/query-filters';
 export {PatientQueryResults,PatientQueryActions} from './clinical-templates/query-results';
 
 export type {PreferenceHost} from "./preference-choice";
+export {BillingClinicWorkspace,type BillingClinicWorkspaceProps} from './clinic-billing/workspace';

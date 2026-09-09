@@ -18,6 +18,8 @@
     "clinical-template-store.ts",
     "clinical-template-store.test.ts",
     "clinical-template-csv.ts",
-    "clinical-template-csv.test.ts"
+    "clinical-template-csv.test.ts",
+    "clinic-billing-store.ts",
+    "clinic-billing-store.test.ts"
   ]
 }

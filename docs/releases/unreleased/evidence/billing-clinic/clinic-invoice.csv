@@ -1,0 +1,4 @@
+﻿Invoice,MRN,Status,Service / item,Quantity,After discount,Tax,Estimated insurer share,Patient share
+INV-d147a39a-7d59-43f9-af52-18d8068df195,DEMO-000001,Payment due,Demo laboratory panel,1,AED 76.50,AED 0.00,AED 0.00,AED 76.50
+INV-d147a39a-7d59-43f9-af52-18d8068df195,DEMO-000001,Payment due,Demonstration pharmacy request,1,AED 22.50,AED 0.00,AED 0.00,AED 22.50
+INV-d147a39a-7d59-43f9-af52-18d8068df195,DEMO-000001,Payment due,Consultation,1,AED 135.00,AED 0.00,AED 0.00,AED 135.00

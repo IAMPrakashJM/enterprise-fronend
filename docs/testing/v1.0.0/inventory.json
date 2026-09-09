@@ -940,6 +940,13 @@
       "kind": "library",
       "engine": "case",
       "coverage": "Registry family preference, validation and shared renderer tests"
+    },
+    {
+      "id": "billing-clinic",
+      "title": "Billing Clinic",
+      "kind": "library",
+      "engine": null,
+      "coverage": "CLINIC-01; billing store, UI and API acceptance"
     }
   ],
   "tests": [

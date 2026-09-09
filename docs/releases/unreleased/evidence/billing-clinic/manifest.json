@@ -1,0 +1,26 @@
+{
+  "baseCommit": "cc63d0c",
+  "scope": "local working tree; no publication or deployment",
+  "sourceSha256": {
+    "desktop-clients/packages/erp-config/src/clinic-billing.ts": "d193dcecd1b4f076d041d4c19de3d9d1abb5e451a80bc27374e82f02da0eefc8",
+    "desktop-clients/packages/erp-data/src/clinic-billing.ts": "003876a8f1ea3aebcc6e9155a26fbe471372b4dc3e272c2fb5c4e74e8894192e",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/workspace.tsx": "72ba9c070fee5c7fd467f71f754e0077665c440766544053d8bc86ebfb291a65",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/format.ts": "441f0c09ae4eb83a3e30c4da273266a90d5bd0078ca0a8dfc182fbe93ec505b8",
+    "dummy-api/clinic-billing-store.ts": "553907a2eeffff26937ae1b98b0a19ba34bb481583ced26adab799c4b590951f",
+    "dummy-api/clinical-template-csv.ts": "d28c473241e5443424713ef041677d5b3c2ea38277540cd5c2fc2f293c95714e",
+    "dummy-api/server.mjs": "e5bd6223efdeae1a43ed70ebe01ef34b9c7149fd2024538aaaedfbaad1016dea",
+    "dummy-api/config/clinic-billing/services.csv": "1f6d45b2d7fe46ec16f1ae06e0c9070cf8c40de29cc18ea3da4f1edd8eefd5d9",
+    "desktop-clients/e2e/clinic-billing.mjs": "633e0b3ecda7e0bd5d9a50f82ab687b12f1039fde88d71514e3be1571b7f9ac1"
+  },
+  "artifactSha256": {
+    "clinic-invoice.csv": "93d5b85bb821511a0d207b2bb4f68c13e1ee1319ef4ce9685c66047415473ecd",
+    "languages.log": "a00009b2c9725683b61a6393001fbddc044a9cc82bebf22a8b0cdf74bbe70f66",
+    "api-tests.log": "225a82fc7f3520a034b2acd7a10f812a0c3165dbae6bde017d56615947ec37a6",
+    "clinic-invoice.pdf": "9958b41e1f3928679c85de88ad8fd4e8cb6ac8d50c546babcfc17a14bb91bd9d",
+    "clinic-workflow.png": "944f214f97d72214cfff62f97056d140da3d995c73bf481be9621e16b9d0e39d",
+    "frontend-tests.log": "2663b7207d229f346a4b2c36d725c70f4da7089faddd9f25383a86466818733a",
+    "clinic-invoice.xlsx": "4f07e5b7645977be795bcddfac423a0109173d56b612da1627302e316b152051",
+    "browser.log": "912d19d3866751d33e048a4cb3ede34b42dc5760953a2ce8b3ac46c011c0a74f",
+    "build.log": "21ba0af1a17d11313c30328580936e9d26dc663d6c5549117dc8af143f6d6da8"
+  }
+}

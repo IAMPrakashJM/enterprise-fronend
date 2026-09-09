@@ -4,6 +4,7 @@ This frontend is a reusable design and application framework. “Implemented” 
 
 | Feature family | Guidance | Current boundary |
 | --- | --- | --- |
+| Billing Clinic | [User and integration guide](billing-clinic.md) | CSV-backed demo billing; real payer, gateway and accounting integration remain separate |
 | Library preferences and component compliance | [Current detailed guide](library-preferences.md) | Local corrections implemented; publication and platform limits in the release record |
 | Component examples and copyable code | [Component Library](../../desktop-clients/docs/component-library.md) | Shared demos; new preference behavior is described in the current guide |
 | 97 configurable page templates | [Page Template Library](../../desktop-clients/docs/page-template-library.md) | Reusable engines and sample adapters; real domain services belong to applications |

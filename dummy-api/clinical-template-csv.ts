@@ -71,7 +71,10 @@ export function decodeClinicalCsv(source:string):ClinicalData {
 export const readClinicalCsv=(file:string)=>decodeClinicalCsv(readFileSync(file,'utf8'));
 /** One atomic snapshot contains records, related data and retry receipts together. */
 export function writeClinicalCsv(file:string,data:ClinicalData):void {
+ writeCsvSnapshot(file,encodeClinicalCsv(data));
+}
+export function writeCsvSnapshot(file:string,source:string):void {
  mkdirSync(dirname(file),{recursive:true,mode:0o700});const temporary=file+'.'+randomUUID()+'.tmp';
- try {writeFileSync(temporary,encodeClinicalCsv(data),{mode:0o600});const fd=openSync(temporary,'r');try{fsyncSync(fd);}finally{closeSync(fd);}renameSync(temporary,file);const directory=openSync(dirname(file),'r');try{fsyncSync(directory);}finally{closeSync(directory);}}
+ try {writeFileSync(temporary,source,{mode:0o600});const fd=openSync(temporary,'r');try{fsyncSync(fd);}finally{closeSync(fd);}renameSync(temporary,file);const directory=openSync(dirname(file),'r');try{fsyncSync(directory);}finally{closeSync(directory);}}
  finally {try{unlinkSync(temporary);}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;}}
 }

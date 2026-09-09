@@ -1,0 +1,725 @@
+"use client";
+import React, { useMemo, useRef, useState } from "react";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardGrid,
+  DescriptionList,
+  Input,
+  Select,
+  StatCard,
+  Modal,
+  PresentationProvider,
+  RecoveryNotice,
+  failureFromError,
+  useLocalization,
+} from "@pepbits/ops-ui";
+import {
+  effectivePreferences,
+  clinicBalance,
+  type ClinicBillingCommand,
+  type ClinicBillingMutation,
+  type UserPreferences,
+} from "@pepbits/erp-config";
+import type {
+  ClinicalTemplateAdapter,
+  ClinicBillingAdapter,
+} from "@pepbits/erp-data";
+import type { PreferenceHost } from "../preference-choice";
+import { RecordSectionLayout } from "../clinical-templates/record-layout";
+import {
+  PatientBanner,
+  ClinicalLoading,
+  useClinicalLoad,
+} from "../clinical-templates/shared";
+import { ClinicPanel, ClinicLedgerTable } from "./parts";
+import { ClinicOrders } from "./orders";
+import { ClinicInvoiceReview } from "./invoice";
+import { createClinicFormatters } from "./format";
+import { downloadClinicInvoice } from "./receipt";
+import { ClinicPayments } from "./payments";
+export interface BillingClinicWorkspaceProps extends PreferenceHost {
+  adapter: ClinicBillingAdapter;
+  patients: ClinicalTemplateAdapter;
+  scopeKey: string;
+  patientId?: string;
+}
+export function BillingClinicWorkspace(props: BillingClinicWorkspaceProps) {
+  const preferences = props.preferencePolicy
+    ? effectivePreferences(props.preferences, props.preferencePolicy)
+    : props.preferences;
+  return (
+    <PresentationProvider value={preferences}>
+      <ClinicSelector
+        key={props.scopeKey}
+        {...props}
+        preferences={preferences}
+      />
+    </PresentationProvider>
+  );
+}
+function ClinicSelector(props: BillingClinicWorkspaceProps) {
+  const { t } = useLocalization(),
+    [query, setQuery] = useState(""),
+    [id, setId] = useState(props.patientId ?? ""),
+    [dirty, setDirty] = useState(false),
+    [busy, setBusy] = useState(false),
+    [next, setNext] = useState<string | null>(null);
+  const patients = useClinicalLoad(
+    () => props.patients.search({ q: query, page: 1, pageSize: 50 }),
+    [props.patients, query],
+  );
+  const options = [
+    { value: "", label: "template.clinical.selectPatient" },
+    ...(patients.value?.rows ?? []).map((p) => ({
+      value: p.id,
+      label: p.mrn + " • " + p.name,
+    })),
+  ];
+  if (id && !options.some((o) => o.value === id))
+    options.push({ value: id, label: id });
+  const change = (value: string) => {
+    if (dirty) setNext(value);
+    else setId(value);
+  };
+  return (
+    <div
+      className="space-y-4"
+      data-billing-clinic
+      data-tour="billing-clinic"
+      style={{ "--fs-scale": "var(--fs-form)" } as React.CSSProperties}
+    >
+      <Card>
+        <CardContent>
+          <CardGrid columns={3}>
+            <Input
+              label="template.clinical.search"
+              value={query}
+              disabled={busy}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Select
+              label="template.clinical.selectPatient"
+              value={id}
+              options={options}
+              disabled={busy}
+              onChange={(e) => change(e.target.value)}
+            />
+            <div className="flex items-end">
+              <Badge tone="warning">{t("template.clinic.demo")}</Badge>
+            </div>
+          </CardGrid>
+          {patients.error ? (
+            <ClinicalLoading error={patients.error} retry={patients.retry} />
+          ) : null}
+        </CardContent>
+      </Card>
+      {id ? (
+        <ClinicEditor
+          key={id}
+          {...props}
+          patientId={id}
+          onDirty={setDirty}
+          onBusy={setBusy}
+        />
+      ) : (
+        <p>{t("template.clinic.choosePatient")}</p>
+      )}
+      <Modal
+        open={next !== null}
+        onClose={() => setNext(null)}
+        title={t("template.clinic.switchPatient")}
+        footer={
+          <>
+            <Button onClick={() => setNext(null)}>{t("Cancel")}</Button>
+            <Button
+              onClick={() => {
+                setId(next ?? "");
+                setNext(null);
+                setDirty(false);
+              }}
+            >
+              {t("template.clinical.discard")}
+            </Button>
+          </>
+        }
+      >
+        <p>{t("template.clinic.switchHint")}</p>
+      </Modal>
+    </div>
+  );
+}
+const sections = [
+  { id: "patient", title: "template.clinic.patientContext" },
+  { id: "orders", title: "template.clinic.orders" },
+  { id: "review", title: "template.clinic.review" },
+  { id: "payments", title: "template.clinic.payments" },
+  { id: "history", title: "template.clinic.history" },
+];
+function ClinicEditor({
+  adapter,
+  patientId,
+  preferences,
+  preferencesAvailable,
+  onDirty,
+  onBusy,
+}: BillingClinicWorkspaceProps & {
+  patientId: string;
+  onDirty: (v: boolean) => void;
+  onBusy: (v: boolean) => void;
+}) {
+  const { t, language } = useLocalization(),
+    loaded = useClinicalLoad(
+      () => adapter.load(patientId),
+      [adapter, patientId],
+    ),
+    [section, setSection] = useState("orders"),
+    [selected, setSelected] = useState<string[]>([]),
+    [service, setService] = useState(""),
+    [quantity, setQuantity] = useState("1"),
+    [doctor, setDoctor] = useState(""),
+    [discount, setDiscount] = useState("0"),
+    [insurance, setInsurance] = useState(""),
+    [authorization, setAuthorization] = useState(""),
+    [note, setNote] = useState(""),
+    [invoiceId, setInvoiceId] = useState(""),
+    [amount, setAmount] = useState(""),
+    [method, setMethod] = useState<"cash" | "card" | "transfer">("cash"),
+    [reference, setReference] = useState(""),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState<unknown>(null),
+    [confirm, setConfirm] = useState<ClinicBillingCommand | null>(null),
+    [receipt, setReceipt] = useState("");
+  const pending = useRef<ClinicBillingMutation | null>(null),
+    lock = useRef(false),
+    data = loaded.value;
+  const format = useMemo(
+    () =>
+      createClinicFormatters(
+        {
+          ...preferences,
+          language: language as UserPreferences["language"],
+        },
+        data?.currency ?? preferences.currencyCode,
+      ),
+    [preferences, language, data?.currency],
+  );
+  const edit =
+    <T,>(setter: (v: T) => void) =>
+    (value: T) => {
+      if (lock.current || pending.current) return;
+      setter(value);
+      onDirty(true);
+    };
+  const execute = async (command?: ClinicBillingCommand) => {
+    if (lock.current || !data?.canWrite || preferencesAvailable === false)
+      return;
+    lock.current = true;
+    setBusy(true);
+    onBusy(true);
+    setError(null);
+    pending.current ??= command
+      ? {
+          ...command,
+          patientId,
+          expectedVersion: data.state.version,
+          operationId: crypto.randomUUID(),
+        }
+      : null;
+    if (!pending.current) {
+      lock.current = false;
+      setBusy(false);
+      onBusy(false);
+      return;
+    }
+    try {
+      const next = await adapter.mutate(pending.current);
+      loaded.setValue(next);
+      const completed = pending.current,
+        action = completed.action;
+      pending.current = null;
+      setConfirm(null);
+      setSelected([]);
+      onDirty(false);
+      if (action === "invoice") {
+        setSection("payments");
+        setInvoiceId(next.state.invoices.at(-1)?.id ?? "");
+        setNote("");
+      }
+      if (action === "payment" || action === "refund") {
+        setAmount("");
+        setReference("");
+      }
+      if (completed.action === "export") {
+        if (completed.format === "print") window.print();
+        else
+          downloadClinicInvoice(
+            next,
+            completed.invoiceId,
+            format,
+            completed.format,
+            t,
+          );
+      }
+    } catch (e) {
+      setError(e);
+      setConfirm(null);
+      if (typeof e === "object" && e && "status" in e && e.status === 400)
+        pending.current = null;
+    } finally {
+      lock.current = false;
+      setBusy(false);
+      onBusy(false);
+    }
+  };
+  const refreshLedger = async () => {
+    if (lock.current) return;
+    lock.current = true;
+    setBusy(true);
+    onBusy(true);
+    try {
+      const latest = await adapter.load(patientId);
+      loaded.setValue(latest);
+      pending.current = null;
+      setError(null);
+      setSelected((ids) =>
+        ids.filter((id) =>
+          latest.state.orders.some((o) => o.id === id && o.status !== "billed"),
+        ),
+      );
+    } catch (e) {
+      setError(e);
+    } finally {
+      lock.current = false;
+      setBusy(false);
+      onBusy(false);
+    }
+  };
+  if (!data)
+    return <ClinicalLoading error={loaded.error} retry={loaded.retry} />;
+  const disabled =
+      busy ||
+      !!pending.current ||
+      !data.canWrite ||
+      preferencesAvailable === false,
+    money = (n: number) => format.money(n / 100),
+    ordered = data.state.orders.filter(
+      (o) => o.status === "ordered" && selected.includes(o.id),
+    ),
+    invoice = data.state.invoices.find((i) => i.id === receipt),
+    request = (command: ClinicBillingCommand) => setConfirm(command);
+  const errorKey =
+    error && typeof error === "object" && "fieldErrors" in error
+      ? (error as { fieldErrors: Record<string, string> }).fieldErrors.billing
+      : undefined;
+  const shared = { data, disabled, format, preferences, onCommand: request };
+  return (
+    <div className="space-y-4">
+      <PatientBanner patient={data.patient} format={format} />
+      <CardGrid columns={4}>
+        <StatCard
+          label="template.clinic.orders"
+          value={format.number(
+            data.state.orders.filter((o) => o.status !== "billed").length,
+          )}
+        />
+        <StatCard
+          label="template.clinic.total"
+          value={money(
+            data.state.invoices
+              .filter((i) => i.status === "issued")
+              .reduce((s, i) => s + i.total, 0),
+          )}
+        />
+        <StatCard
+          label="template.clinic.insurer"
+          value={money(
+            data.state.invoices
+              .filter((i) => i.status === "issued")
+              .reduce((s, i) => s + i.insurance, 0),
+          )}
+        />
+        <StatCard
+          label="template.clinic.balance"
+          value={money(
+            data.state.invoices.reduce(
+              (s, i) => s + clinicBalance(data.state, i),
+              0,
+            ),
+          )}
+        />
+      </CardGrid>
+      {error ? (
+        <div className="space-y-2">
+          <RecoveryNotice
+            failure={failureFromError(error)}
+            onRetry={() => void execute()}
+          />
+          {errorKey ? <p role="alert">{t(errorKey)}</p> : null}
+          <Button disabled={busy} onClick={() => void refreshLedger()}>
+            {t("template.clinic.loadLatest")}
+          </Button>
+        </div>
+      ) : null}
+      <RecordSectionLayout
+        sections={sections}
+        active={section}
+        onActive={setSection}
+        preferences={preferences}
+        isDone={(id) =>
+          id === "patient"
+            ? true
+            : id === "orders"
+              ? data.state.orders.length > 0
+              : id === "review"
+                ? data.state.invoices.length > 0
+                : id === "payments"
+                  ? data.state.invoices.some((i) => i.status === "issued") &&
+                    data.state.invoices.every(
+                      (i) => clinicBalance(data.state, i) === 0,
+                    )
+                  : data.state.history.length > 0
+        }
+        railHeader={<strong>{t("template.clinic.title")}</strong>}
+        identity={
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4">
+            <Badge tone="brand">{t("template.clinic.flow")}</Badge>
+            <Button disabled={busy} onClick={() => void refreshLedger()}>
+              {t("template.clinical.refresh")}
+            </Button>
+            <span>
+              {t("template.clinic.currency")}: {data.currency}
+            </span>
+            <Badge>
+              {t(
+                data.canWrite
+                  ? "template.clinic.cashier"
+                  : "template.clinic.readOnly",
+              )}
+            </Badge>
+          </div>
+        }
+        footer={
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3">
+            <span className="text-sm text-[var(--text-muted)]">
+              {t("template.clinic.preferencesHint")}
+            </span>
+            <div className="flex gap-2">
+              {preferences.formNavigation === "wizard" ? (
+                <>
+                  <Button
+                    disabled={section === "patient"}
+                    onClick={() =>
+                      setSection(
+                        sections[
+                          Math.max(
+                            0,
+                            sections.findIndex((s) => s.id === section) - 1,
+                          )
+                        ].id,
+                      )
+                    }
+                  >
+                    {t("template.previous")}
+                  </Button>
+                  <Button
+                    disabled={section === "history"}
+                    onClick={() =>
+                      setSection(
+                        sections[
+                          Math.min(
+                            4,
+                            sections.findIndex((s) => s.id === section) + 1,
+                          )
+                        ].id,
+                      )
+                    }
+                  >
+                    {t("template.next")}
+                  </Button>
+                </>
+              ) : null}
+              <Button
+                variant="primary"
+                loading={busy}
+                disabled={
+                  disabled ||
+                  !ordered.length ||
+                  !Number.isFinite(Number(discount)) ||
+                  Number(discount) < 0 ||
+                  Number(discount) > 100 ||
+                  (!!insurance && !authorization.trim())
+                }
+                onClick={() => {
+                  if (section !== "review") {
+                    setSection("review");
+                    return;
+                  }
+                  request({
+                    action: "invoice",
+                    orderIds: ordered.map((o) => o.id),
+                    discountBps: Math.round(Number(discount) * 100),
+                    insuranceId: insurance,
+                    authorization,
+                    note,
+                  });
+                }}
+              >
+                {t(
+                  section === "review"
+                    ? "template.clinic.issueInvoice"
+                    : "template.clinic.reviewBill",
+                )}
+              </Button>
+            </div>
+          </div>
+        }
+        renderSection={(item) => (
+          <div className="p-4">
+            {item.id === "patient" ? (
+              <ClinicPanel title="template.clinic.patientContext">
+                <DescriptionList
+                  items={[
+                    "mrn",
+                    "birthDate",
+                    "gender",
+                    "mobile",
+                    "email",
+                    "nationality",
+                  ].map((id) => ({
+                    id,
+                    label: "template.clinical." + id,
+                    value:
+                      id === "mrn"
+                        ? data.patient.mrn
+                        : id === "birthDate"
+                          ? format.date(String(data.patient.values[id] ?? ""))
+                          : id === "gender"
+                            ? t("template.clinical." + data.patient.values[id])
+                            : String(data.patient.values[id] || "—"),
+                  }))}
+                />
+                <ClinicLedgerTable
+                  preferences={preferences}
+                  headers={[
+                    "template.clinic.date",
+                    "template.clinic.service",
+                    "template.clinic.doctor",
+                    "template.clinic.status",
+                  ]}
+                  rows={data.context.map((row) => ({
+                    id: row.id,
+                    cells: [
+                      format.dateTime(row.date),
+                      <div>
+                        <strong>{t(row.title)}</strong>
+                        <p>{t(row.detail)}</p>
+                      </div>,
+                      row.provider || "—",
+                      t("template.clinical." + row.status),
+                    ],
+                  }))}
+                />
+              </ClinicPanel>
+            ) : item.id === "orders" ? (
+              <ClinicOrders
+                {...shared}
+                selected={selected}
+                onSelect={edit(setSelected)}
+                service={service}
+                onService={edit(setService)}
+                quantity={quantity}
+                onQuantity={edit(setQuantity)}
+                doctor={doctor}
+                onDoctor={edit(setDoctor)}
+              />
+            ) : item.id === "review" ? (
+              <ClinicInvoiceReview
+                {...shared}
+                selected={selected}
+                discount={discount}
+                onDiscount={edit(setDiscount)}
+                insurance={insurance}
+                onInsurance={edit(setInsurance)}
+                authorization={authorization}
+                onAuthorization={edit(setAuthorization)}
+                note={note}
+                onNote={edit(setNote)}
+              />
+            ) : item.id === "payments" ? (
+              <ClinicPayments
+                {...shared}
+                invoiceId={invoiceId}
+                onInvoice={edit(setInvoiceId)}
+                amount={amount}
+                onAmount={edit(setAmount)}
+                method={method}
+                onMethod={edit(setMethod)}
+                reference={reference}
+                onReference={edit(setReference)}
+                onPrint={setReceipt}
+              />
+            ) : (
+              <ClinicPanel title="template.clinic.history">
+                <ClinicLedgerTable
+                  preferences={preferences}
+                  headers={[
+                    "template.clinic.date",
+                    "template.clinic.event",
+                    "template.clinic.actor",
+                    "template.clinic.reference",
+                  ]}
+                  rows={data.state.history.map((h) => ({
+                    id: h.id,
+                    cells: [
+                      format.dateTime(h.at),
+                      t(h.messageKey),
+                      h.actor,
+                      h.reference,
+                    ],
+                  }))}
+                />
+              </ClinicPanel>
+            )}
+          </div>
+        )}
+      />
+      <Modal
+        open={!!invoice}
+        onClose={() => setReceipt("")}
+        title={t("template.clinic.receipt")}
+        footer={
+          <>
+            <Button
+              disabled={disabled}
+              onClick={() =>
+                request({
+                  action: "export",
+                  invoiceId: receipt,
+                  format: preferences.exportFormat,
+                })
+              }
+            >
+              {t("template.clinical.export")}
+            </Button>
+            <Button
+              disabled={disabled}
+              onClick={() =>
+                request({
+                  action: "export",
+                  invoiceId: receipt,
+                  format: "print",
+                })
+              }
+            >
+              {t("Save as PDF")}
+            </Button>
+          </>
+        }
+      >
+        <div data-invoice-print className="space-y-4">
+          {invoice ? (
+            <>
+              <Badge tone="warning">{t("template.clinic.demo")}</Badge>
+              <DescriptionList
+                items={[
+                  {
+                    id: "id",
+                    label: "template.clinic.invoice",
+                    value: invoice.id,
+                  },
+                  {
+                    id: "date",
+                    label: "template.clinic.date",
+                    value: format.dateTime(invoice.at),
+                  },
+                  {
+                    id: "patient",
+                    label: "template.clinical.mrn",
+                    value: data.patient.mrn,
+                  },
+                  {
+                    id: "total",
+                    label: "template.clinic.total",
+                    value: money(invoice.total),
+                  },
+                  {
+                    id: "insurer",
+                    label: "template.clinic.insurer",
+                    value: money(invoice.insurance),
+                  },
+                  {
+                    id: "balance",
+                    label: "template.clinic.balance",
+                    value: money(clinicBalance(data.state, invoice)),
+                  },
+                ]}
+              />
+              <ClinicLedgerTable
+                paginate={false}
+                preferences={preferences}
+                headers={[
+                  "template.clinic.service",
+                  "template.clinic.quantity",
+                  "template.clinic.patientShare",
+                ]}
+                rows={invoice.lines.map((l) => ({
+                  id: l.orderId,
+                  cells: [
+                    t(l.label),
+                    format.number(l.quantity),
+                    money(l.patient),
+                  ],
+                }))}
+              />
+              <ClinicLedgerTable
+                paginate={false}
+                preferences={preferences}
+                headers={[
+                  "template.clinic.receipt",
+                  "template.clinic.amount",
+                  "template.clinic.date",
+                ]}
+                rows={data.state.payments
+                  .filter((p) => p.invoiceId === invoice.id)
+                  .map((p) => ({
+                    id: p.id,
+                    cells: [p.id, money(p.amount), format.dateTime(p.at)],
+                  }))}
+              />
+            </>
+          ) : null}
+        </div>
+      </Modal>
+      <Modal
+        open={!!confirm}
+        onClose={() => {
+          if (!busy) setConfirm(null);
+        }}
+        title={t("template.clinic.confirm")}
+        footer={
+          <>
+            <Button disabled={busy} onClick={() => setConfirm(null)}>
+              {t("Cancel")}
+            </Button>
+            <Button
+              variant="primary"
+              loading={busy}
+              disabled={busy}
+              onClick={() => void execute(confirm ?? undefined)}
+            >
+              {t("template.clinical.confirm")}
+            </Button>
+          </>
+        }
+      >
+        <p>{t("template.clinic.confirm." + (confirm?.action ?? "invoice"))}</p>
+        {confirm?.action === "payment" ? (
+          <strong>{money(confirm.amount)}</strong>
+        ) : null}
+      </Modal>
+    </div>
+  );
+}

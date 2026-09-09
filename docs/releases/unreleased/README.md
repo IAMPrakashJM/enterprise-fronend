@@ -22,4 +22,6 @@ Publication fields remain null/false until the corresponding action actually suc
 
 Latest deployed set: [Registry design family](registry-design-family-2026-09-09.md#verified-deployment), verified on both demo sites.
 
-Local follow-up: [Page template CSV storage](page-templates-csv-2026-09-09.md), pending deployment.
+Deployed backend follow-up: [Page template CSV storage](page-templates-csv-2026-09-09.md).
+
+New local implementation: [Billing Clinic](billing-clinic-2026-09-09.md); not deployed.

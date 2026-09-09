@@ -31,6 +31,13 @@ import type { DataClassification } from "./filter-policy.ts";
  * name in someone else's log.
  */
 export const DATA_CLASSIFICATIONS: Record<string, DataClassification> = {
+  clinicInvoiceRef: "phi",
+  clinicServiceDescription: "clinical",
+  clinicQuantity: "operational",
+  clinicNet: "operational",
+  clinicTax: "operational",
+  clinicInsuranceShare: "operational",
+  clinicPatientShare: "operational",
   /* ---- Filtering, sorting, paging. Nothing here identifies a person. ---- */
   status: "operational",
   branch: "operational",
