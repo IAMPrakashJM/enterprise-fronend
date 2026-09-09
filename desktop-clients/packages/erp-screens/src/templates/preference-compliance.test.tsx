@@ -6,6 +6,7 @@ import {PageTemplateWorkspace} from './page-template';
 import {createTemplateSample} from './template-state';
 import {usePreferenceChoice,type PreferenceHost} from '../preference-choice';
 const scope={tenantId:'t',applicationId:'a',userId:'u',pageId:'p',recordId:'r'};
+// This case renders 194 workspaces; allow for slower hosts and concurrent builds.
 test('all 97 templates inherit managed table preferences in both density profiles',()=>{
   for(const density of ['compact','spacious'] as const)for(const definition of PAGE_TEMPLATES){
     const preferences={...DEFAULT_PREFERENCES,density,zebraStripes:false,stickyTableHeader:false,wrapCellText:true};
@@ -19,7 +20,7 @@ test('all 97 templates inherit managed table preferences in both density profile
     }
     cleanup();
   }
-});
+}, 15000);
 test('locked policy resolves conflicting input preferences and explicit layout overrides',()=>{
   const definition=TEMPLATE_BY_ID['template-patient-master'];
   const preferencePolicy:PreferencePolicy={revision:1,rules:{formNavigation:{locked:true,value:'rail'}}};
