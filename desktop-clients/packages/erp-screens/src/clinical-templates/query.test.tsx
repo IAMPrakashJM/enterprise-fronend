@@ -102,7 +102,6 @@ test("inline details belong to the selected row and record actions use navigatio
   fireEvent.click(
     within(detail as HTMLElement).getByRole("button", {
       name: "Edit",
-      exact: true,
     }),
   );
   expect(onOpen).toHaveBeenCalledWith({
