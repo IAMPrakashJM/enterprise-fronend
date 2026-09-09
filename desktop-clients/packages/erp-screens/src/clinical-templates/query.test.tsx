@@ -64,13 +64,13 @@ test("query waits for criteria and preserves filters after a failed search", asy
     .mockRejectedValueOnce(new ClinicalRequestFailure(503))
     .mockResolvedValue({ rows: [row], total: 1, page: 1, pageSize: 20 });
   expect(
-    screen.getByRole("button", { name: "Search", exact: true }),
+    screen.getByRole("button", { name: "Search" }),
   ).toBeDisabled();
   expect(adapter.search).not.toHaveBeenCalled();
   fireEvent.change(screen.getByLabelText("First name", { exact: true }), {
     target: { value: " Alex " },
   });
-  fireEvent.click(screen.getByRole("button", { name: "Search", exact: true }));
+  fireEvent.click(screen.getByRole("button", { name: "Search" }));
   await screen.findByRole("alert");
   expect(screen.getByLabelText("First name", { exact: true })).toHaveValue(
     "Alex",
@@ -92,9 +92,9 @@ test("inline details belong to the selected row and record actions use navigatio
   fireEvent.change(screen.getByLabelText("First name", { exact: true }), {
     target: { value: "Alex" },
   });
-  fireEvent.click(screen.getByRole("button", { name: "Search", exact: true }));
+  fireEvent.click(screen.getByRole("button", { name: "Search" }));
   await screen.findByRole("button", { name: "Alex Morgan" });
-  fireEvent.click(screen.getByRole("tab", { name: "Inline", exact: true }));
+  fireEvent.click(screen.getByRole("tab", { name: "Inline" }));
   fireEvent.click(screen.getByRole("button", { name: "Alex Morgan" }));
   await screen.findByRole("heading", { name: "Alex Morgan" });
   const detail = document.querySelector("[data-query-detail]")!;
