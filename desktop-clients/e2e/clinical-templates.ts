@@ -118,6 +118,22 @@ try {
   await page.screenshot({ path: "/tmp/record-parity-rail.png" });
   const footer = await record.locator("footer").boundingBox();
   assert.ok(footer && footer.y + footer.height <= 1100);
+  // A release/documentation notice may appear above this reusable template.
+  await record.evaluate((element) => {
+    const notice = document.createElement("div");
+    notice.id = "record-notice-regression";
+    notice.style.height = "90px";
+    element.before(notice);
+  });
+  await page.waitForFunction(() => {
+    const footer = document.querySelector("[data-clinical-record] footer");
+    return (
+      footer && footer.getBoundingClientRect().bottom <= window.innerHeight - 40
+    );
+  });
+  await page
+    .locator("#record-notice-regression")
+    .evaluate((element) => element.remove());
   assert.deepEqual(
     (await audit(page, { include: "[data-clinical-record]" })).filter((v) =>
       ["critical", "serious"].includes(v.impact),

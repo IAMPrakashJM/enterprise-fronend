@@ -28,6 +28,7 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
 }) {
   const instance = useId();
   const { t, direction } = useLocalization(),
+    surface = useRef<HTMLDivElement>(null),
     content = useRef<HTMLDivElement>(null),
     observed = useRef(active);
   const layout = preferences.formNavigation,
@@ -46,6 +47,42 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
   useEffect(() => {
     if (layout === "rail" && observed.current !== active) go(active);
   }, [active, layout]);
+  useEffect(() => {
+    const element = surface.current;
+    if (!element) return;
+    let frame = 0;
+    const measure = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!element.getClientRects().length) return;
+        // Account for shell chrome and page notices, preserving the status-bar gutter.
+        const height = Math.max(
+          520,
+          window.innerHeight -
+            Math.max(0, element.getBoundingClientRect().top) -
+            48,
+        );
+        element.style.height = `${height}px`;
+      });
+    };
+    const observer =
+      typeof ResizeObserver === "undefined"
+        ? undefined
+        : new ResizeObserver(measure);
+    for (
+      let ancestor = element.parentElement;
+      ancestor;
+      ancestor = ancestor.parentElement
+    )
+      observer?.observe(ancestor);
+    window.addEventListener("resize", measure);
+    measure();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
   const step = (s: T, i: number) => (
     <Button
       key={s.id}
@@ -99,6 +136,7 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
   );
   return (
     <div
+      ref={surface}
       className={styles.surface}
       data-layout={layout}
       data-density={preferences.density}
