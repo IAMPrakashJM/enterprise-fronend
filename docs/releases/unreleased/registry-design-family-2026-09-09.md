@@ -28,3 +28,9 @@ The isolated production build and packaged HTML/assets checks passed before acti
 The API was restarted to load the new navigation, catalogs and documentation version. Existing sessions must sign in again. Its data backup is retained locally with restricted permissions at `.deploy/api-backups/20260909154128708-9e6b266e/data.tar.gz`. The previous frontend release `20260909152041761-ecda5200` remains available for rollback.
 
 Remote CI was still in progress when this record was written; no complete remote CI, native executable or native-speaker acceptance is claimed. Documentation-only follow-up commits do not change the deployed application bundle.
+
+## Sidebar label follow-up
+
+Renamed the Library group “Clinical page templates” to “Page templates” in English, Arabic, Hindi and Malayalam. Existing navigation IDs, routes and localization keys stay stable. Generated offline catalogs use the same wording. This label-only follow-up is local and not included in the deployment recorded above.
+
+The same local label follow-up renames Patient Query to Worklist Query, Patient Record to Master Record - Main, and Patient 360 to 360 Data in all four languages. Sidebar entries, tab titles and other consumers share the existing message keys. Existing URLs and patient-demo behavior stay compatible.
