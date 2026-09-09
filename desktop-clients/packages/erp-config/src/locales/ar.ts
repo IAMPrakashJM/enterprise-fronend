@@ -4819,5 +4819,12 @@ export default {
   "catalog.reference.providers": "موفّرات التطبيق",
   "catalog.reference.providersHelp": "استخدم موفّرات المصادقة والمنتج والتنقل والترجمة وERP الحالية. افصل مكونات الواجهة الأساسية عن عملاء API.",
   "catalog.reference.preferencesHelp": "مرّر preferences وpreferencePolicy وpreferencesAvailable وonPreferenceChange إلى مساحات العمل القابلة لإعادة الاستخدام. تتقدم قيم السياسة المقفلة على الاختيارات المحلية.",
-  "catalog.reference.integrationSteps": "اختر قالبًا وافتح مثال TypeScript واستبدل محوّل العرض بمحوّل API موثّق. اختبر التحقق والتعارضات والاسترداد والصلاحيات وأقفال التفضيلات قبل الإصدار."
+  "catalog.reference.integrationSteps": "اختر قالبًا وافتح مثال TypeScript واستبدل محوّل العرض بمحوّل API موثّق. اختبر التحقق والتعارضات والاسترداد والصلاحيات وأقفال التفضيلات قبل الإصدار.",
+  "template.group.registry": "مجموعة تصميم السجل",
+  "template.help.registry": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي.",
+  "template.name.registry-worklist": "قائمة عمل السجل",
+  "template.name.registry-small-master": "البيانات الأساسية المبسطة",
+  "template.name.registry-billing": "الفوترة",
+  "template.name.registry-claim": "المطالبات",
+  "template.name.registry-consultation": "الاستشارة السريرية"
 };

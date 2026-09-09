@@ -21,3 +21,5 @@ This frontend is a reusable design and application framework. “Implemented” 
 Create a feature document using the [feature template](../releases/templates/feature.md). Include the trigger, user flow, settings and permissions, failure behavior, API/data ownership, integration example, accessibility/localization, test IDs, completed work and pending work. Link it from this catalog and the appropriate release record.
 
 Never substitute a screenshot, an empty route or a passing build for functional acceptance. Keep planned, implemented, tested, deployed and accepted states distinct.
+
+- [Registry design family](registry-design-family.md): worklist, small master, billing, claim and consultation templates.

@@ -1444,6 +1444,31 @@
       "id": "allyvora-patient-360",
       "titleKey": "template.clinical.overview",
       "subtitleKey": "template.clinical.demoNotice"
+    },
+    {
+      "id": "template-registry-worklist",
+      "titleKey": "page.template-registry-worklist.title",
+      "subtitleKey": "page.template-registry-worklist.subtitle"
+    },
+    {
+      "id": "template-registry-small-master",
+      "titleKey": "page.template-registry-small-master.title",
+      "subtitleKey": "page.template-registry-small-master.subtitle"
+    },
+    {
+      "id": "template-registry-billing",
+      "titleKey": "page.template-registry-billing.title",
+      "subtitleKey": "page.template-registry-billing.subtitle"
+    },
+    {
+      "id": "template-registry-claim",
+      "titleKey": "page.template-registry-claim.title",
+      "subtitleKey": "page.template-registry-claim.subtitle"
+    },
+    {
+      "id": "template-registry-consultation",
+      "titleKey": "page.template-registry-consultation.title",
+      "subtitleKey": "page.template-registry-consultation.subtitle"
     }
   ],
   "nodes": [
@@ -4738,6 +4763,54 @@
       "pageId": "allyvora-patient-360",
       "icon": "BookOpen",
       "order": 2
+    },
+    {
+      "id": "menu.library.template-group-registry",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.registry",
+      "order": 0,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-registry-worklist",
+      "kind": "page",
+      "parentId": "menu.library.template-group-registry",
+      "labelKey": "template.name.registry-worklist",
+      "pageId": "template-registry-worklist",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-registry-small-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-registry",
+      "labelKey": "template.name.registry-small-master",
+      "pageId": "template-registry-small-master",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-registry-billing",
+      "kind": "page",
+      "parentId": "menu.library.template-group-registry",
+      "labelKey": "template.name.registry-billing",
+      "pageId": "template-registry-billing",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-registry-claim",
+      "kind": "page",
+      "parentId": "menu.library.template-group-registry",
+      "labelKey": "template.name.registry-claim",
+      "pageId": "template-registry-claim",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-registry-consultation",
+      "kind": "page",
+      "parentId": "menu.library.template-group-registry",
+      "labelKey": "template.name.registry-consultation",
+      "pageId": "template-registry-consultation",
+      "order": 4
     }
   ]
 }

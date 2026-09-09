@@ -4819,5 +4819,12 @@ export default {
   "catalog.reference.providers": "ആപ്ലിക്കേഷൻ പ്രൊവൈഡറുകൾ",
   "catalog.reference.providersHelp": "നിലവിലുള്ള ഓതന്റിക്കേഷൻ, പ്രോഡക്റ്റ്, നാവിഗേഷൻ, ലോക്കലൈസേഷൻ, ERP പ്രൊവൈഡറുകൾ ഉപയോഗിക്കുക. UI ഘടകങ്ങളെ API ക്ലയന്റുകളിൽ നിന്ന് വേർതിരിക്കുക.",
   "catalog.reference.preferencesHelp": "പുനരുപയോഗിക്കാവുന്ന വർക്ക്‌സ്‌പേസുകൾക്ക് preferences, preferencePolicy, preferencesAvailable, onPreferenceChange നൽകുക. ലോക്ക് ചെയ്ത നയമൂല്യങ്ങൾ പ്രാദേശിക തിരഞ്ഞെടുപ്പുകളേക്കാൾ മുൻഗണന നേടും.",
-  "catalog.reference.integrationSteps": "ടെംപ്ലേറ്റ് തിരഞ്ഞെടുത്ത് TypeScript ഉദാഹരണം തുറന്ന് ഡെമോ അഡാപ്റ്ററിന് പകരം ഓതന്റിക്കേറ്റഡ് API അഡാപ്റ്റർ നൽകുക. റിലീസിന് മുമ്പ് വാലിഡേഷൻ, വൈരുധ്യങ്ങൾ, വീണ്ടെടുക്കൽ, അനുമതികൾ, മുൻഗണന ലോക്കുകൾ എന്നിവ പരിശോധിക്കുക."
+  "catalog.reference.integrationSteps": "ടെംപ്ലേറ്റ് തിരഞ്ഞെടുത്ത് TypeScript ഉദാഹരണം തുറന്ന് ഡെമോ അഡാപ്റ്ററിന് പകരം ഓതന്റിക്കേറ്റഡ് API അഡാപ്റ്റർ നൽകുക. റിലീസിന് മുമ്പ് വാലിഡേഷൻ, വൈരുധ്യങ്ങൾ, വീണ്ടെടുക്കൽ, അനുമതികൾ, മുൻഗണന ലോക്കുകൾ എന്നിവ പരിശോധിക്കുക.",
+  "template.group.registry": "രജിസ്ട്രി ഡിസൈൻ കൂട്ടം",
+  "template.help.registry": "അംഗീകരിച്ച രോഗി രജിസ്ട്രി, രോഗി മാസ്റ്റർ ഡിസൈനുകളെ അടിസ്ഥാനമാക്കിയുള്ള പുനരുപയോഗിക്കാവുന്ന ഡെസ്ക്ടോപ്പ് പേജുകൾ. രൂപം മാറ്റാൻ എന്റെ മുൻഗണനകൾ തുറക്കുക.",
+  "template.name.registry-worklist": "രജിസ്ട്രി വർക്ക്‌ലിസ്റ്റ്",
+  "template.name.registry-small-master": "ചെറിയ മാസ്റ്റർ",
+  "template.name.registry-billing": "ബില്ലിംഗ്",
+  "template.name.registry-claim": "ക്ലെയിം",
+  "template.name.registry-consultation": "ക്ലിനിക്കൽ കൺസൾട്ടേഷൻ"
 };

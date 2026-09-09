@@ -15301,6 +15301,23 @@
     "catalog.reference.integrationSteps": "اختر قالبًا وافتح مثال TypeScript واستبدل محوّل العرض بمحوّل API موثّق. اختبر التحقق والتعارضات والاسترداد والصلاحيات وأقفال التفضيلات قبل الإصدار.",
     "preferences.recordLayout.help": "يعرض التنقل الجانبي الأقسام بجانب النموذج. تعرض علامات التبويب قسمًا واحدًا في كل مرة. يضيف المعالج خطوتي السابق والتالي. ينطبق على نماذج الإنشاء والعرض والتحرير، بما فيها سجل المريض.",
     "preferences.spacing.title": "المسافات والزوايا",
-    "preferences.spacing.help": "اختر مسافات مضغوطة أو مريحة أو واسعة واستدارة الزوايا لمكونات الصفحات المشتركة. يستخدم سجل المريض هذه التفضيلات أيضًا."
+    "preferences.spacing.help": "اختر مسافات مضغوطة أو مريحة أو واسعة واستدارة الزوايا لمكونات الصفحات المشتركة. يستخدم سجل المريض هذه التفضيلات أيضًا.",
+    "template.group.registry": "مجموعة تصميم السجل",
+    "template.help.registry": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي.",
+    "template.name.registry-worklist": "قائمة عمل السجل",
+    "page.template-registry-worklist.title": "قائمة عمل السجل",
+    "page.template-registry-worklist.subtitle": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي.",
+    "template.name.registry-small-master": "البيانات الأساسية المبسطة",
+    "page.template-registry-small-master.title": "البيانات الأساسية المبسطة",
+    "page.template-registry-small-master.subtitle": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي.",
+    "template.name.registry-billing": "الفوترة",
+    "page.template-registry-billing.title": "الفوترة",
+    "page.template-registry-billing.subtitle": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي.",
+    "template.name.registry-claim": "المطالبات",
+    "page.template-registry-claim.title": "المطالبات",
+    "page.template-registry-claim.subtitle": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي.",
+    "template.name.registry-consultation": "الاستشارة السريرية",
+    "page.template-registry-consultation.title": "الاستشارة السريرية",
+    "page.template-registry-consultation.subtitle": "مساحات عمل قابلة لإعادة الاستخدام تستند إلى تصميمي سجل المرضى وبيانات المرضى المعتمدين. غيّر المظهر في تفضيلاتي."
   }
 }

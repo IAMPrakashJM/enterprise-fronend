@@ -4819,5 +4819,12 @@ export default {
   "catalog.reference.providers": "अनुप्रयोग प्रोवाइडर",
   "catalog.reference.providersHelp": "मौजूदा प्रमाणीकरण, उत्पाद, नेविगेशन, स्थानीयकरण और ERP प्रोवाइडर उपयोग करें। UI घटकों को API क्लाइंट से स्वतंत्र रखें।",
   "catalog.reference.preferencesHelp": "पुनः उपयोग योग्य कार्यक्षेत्र को preferences, preferencePolicy, preferencesAvailable और onPreferenceChange दें। लॉक किए गए नीति मान स्थानीय विकल्पों से ऊपर हैं।",
-  "catalog.reference.integrationSteps": "टेम्पलेट चुनें, TypeScript उदाहरण खोलें और डेमो अडैप्टर की जगह प्रमाणित API अडैप्टर जोड़ें। रिलीज़ से पहले सत्यापन, टकराव, पुनर्प्राप्ति, अनुमतियाँ और प्राथमिकता लॉक जाँचें।"
+  "catalog.reference.integrationSteps": "टेम्पलेट चुनें, TypeScript उदाहरण खोलें और डेमो अडैप्टर की जगह प्रमाणित API अडैप्टर जोड़ें। रिलीज़ से पहले सत्यापन, टकराव, पुनर्प्राप्ति, अनुमतियाँ और प्राथमिकता लॉक जाँचें।",
+  "template.group.registry": "रजिस्ट्री डिज़ाइन समूह",
+  "template.help.registry": "स्वीकृत रोगी रजिस्ट्री और रोगी मास्टर डिज़ाइन पर आधारित पुनः उपयोग योग्य डेस्कटॉप पेज। रूप बदलने के लिए मेरी प्राथमिकताएँ खोलें।",
+  "template.name.registry-worklist": "रजिस्ट्री कार्यसूची",
+  "template.name.registry-small-master": "छोटा मास्टर",
+  "template.name.registry-billing": "बिलिंग",
+  "template.name.registry-claim": "दावा",
+  "template.name.registry-consultation": "नैदानिक परामर्श"
 };

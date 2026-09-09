@@ -8,8 +8,9 @@ export interface TemplateSection {id:string;title:string;fields:TemplateField[]}
 export interface TemplateColumn {key:string;label:string;type?:"text"|"number"|"money"|"status"|"date"}
 export interface TemplateLine {id:string;description:string;quantity:number;price:number;debit:number;credit:number;result:string;reference:string;checked:boolean}
 export interface TemplateDocument {id:string;version:number;values:Record<string,TemplateValue>;lines:TemplateLine[];rows:Array<Record<string,TemplateValue>>}
-export interface PageTemplateDefinition {id:string;group:string;engine:TemplateEngine;title:string;description:string;layout:TemplateLayout;view:TemplateView;sections:TemplateSection[];columns:TemplateColumn[];stages:string[];tags:string[];editable:boolean}
+export interface PageTemplateDefinition {id:string;group:string;engine:TemplateEngine;title:string;description:string;layout:TemplateLayout;view:TemplateView;sections:TemplateSection[];columns:TemplateColumn[];stages:string[];tags:string[];editable:boolean;designFamily?:"registry"}
 export const TEMPLATE_GROUPS = [
+  {id:"registry",title:"template.group.registry"},
   {id:"masters",title:"template.group.masters"},{id:"worklists",title:"template.group.worklists"},
   {id:"orders",title:"template.group.orders"},{id:"bookings",title:"template.group.bookings"},
   {id:"cases",title:"template.group.cases"},{id:"results",title:"template.group.results"},
@@ -41,7 +42,19 @@ function define(id:string,group:string,engine:TemplateEngine,tags:string[],view:
  if(id==='invoice-billing'||id==='patient-billing'||id==='school-fees')sections=[order,{id:'payer',title:'template.section.accounts',fields:[field('payer','text',true),field('account'),field('reference'),field('notes','textarea')]}];
  return {id:`template-${id}`,group,engine,title:`template.name.${id}`,description:`template.help.${group}`,layout:person?"tabs":"rail",view,sections,columns,stages:["requested","inProgress","review","completed"],tags,editable:!["report","dashboard","entity"].includes(engine)||["document-workspace","communication-workspace"].includes(id)};
 }
+/** Registry family shares the approved query/record presentation, with domain-specific fields. */
+const registry = (id:string,engine:TemplateEngine,sections:TemplateSection[]):PageTemplateDefinition => ({
+ ...define(id,"registry",engine,["ERP","Healthcare","School"]),designFamily:"registry",sections,
+});
+export const REGISTRY_TEMPLATES:readonly PageTemplateDefinition[] = [
+ registry("registry-worklist","list",[order]),
+ registry("registry-small-master","master",[{id:"identity",title:"template.section.identity",fields:[field("code","text",true),field("name","text",true),field("category"),field("status","select",true),field("enabled","checkbox"),field("notes","textarea")]}]),
+ registry("registry-billing","order",[order,{id:"payer",title:"template.section.accounts",fields:[field("payer","text",true),field("account"),field("reference"),field("notes","textarea")]}]),
+ registry("registry-claim","order",[{id:"claim",title:"template.section.header",fields:[field("code","text",true),field("name","text",true),field("effectiveDate","date",true),field("reference","text",true)]},{id:"payer",title:"template.section.accounts",fields:[field("payer","text",true),field("account","text",true),field("dueDate","date"),field("notes","textarea")]}]),
+ registry("registry-consultation","case",[identity(true),clinical,{id:"review",title:"template.section.details",fields:[field("department"),field("owner"),field("notes","textarea"),field("enabled","checkbox")]}]),
+];
 export const PAGE_TEMPLATES:readonly PageTemplateDefinition[] = [
+  ...REGISTRY_TEMPLATES,
   define("simple-master","masters","master",["ERP", "Healthcare", "School"],"table"),
   define("detailed-master","masters","master",["ERP", "Healthcare", "School"],"table"),
   define("person-registration","masters","master",["ERP", "Healthcare", "School"],"table"),

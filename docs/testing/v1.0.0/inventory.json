@@ -905,13 +905,49 @@
       "kind": "ai-admin",
       "engine": null,
       "coverage": "LIB-01; renderer-specific cases in USE-CASES.md"
+    },
+    {
+      "id": "template-registry-worklist",
+      "title": "Registry Worklist",
+      "kind": "library",
+      "engine": "list",
+      "coverage": "Registry family preference, validation and shared renderer tests"
+    },
+    {
+      "id": "template-registry-small-master",
+      "title": "Registry Small Master",
+      "kind": "library",
+      "engine": "master",
+      "coverage": "Registry family preference, validation and shared renderer tests"
+    },
+    {
+      "id": "template-registry-billing",
+      "title": "Registry Billing",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "Registry family preference, validation and shared renderer tests"
+    },
+    {
+      "id": "template-registry-claim",
+      "title": "Registry Claim",
+      "kind": "library",
+      "engine": "order",
+      "coverage": "Registry family preference, validation and shared renderer tests"
+    },
+    {
+      "id": "template-registry-consultation",
+      "title": "Registry Clinical Consultation",
+      "kind": "library",
+      "engine": "case",
+      "coverage": "Registry family preference, validation and shared renderer tests"
     }
   ],
   "tests": [
     "desktop-clients/packages/erp-screens/src/templates/preference-compliance.test.tsx",
     "desktop-clients/packages/erp-screens/src/library/preference-compliance.test.tsx",
     "desktop-clients/packages/erp-screens/src/clinical-templates/query.test.tsx",
-    "desktop-clients/e2e/library-preferences.ts"
+    "desktop-clients/e2e/library-preferences.ts",
+    "desktop-clients/packages/erp-screens/src/templates/registry-template.test.tsx"
   ],
   "staticGate": "desktop-clients/scripts/verify-library-preferences.mjs"
 }

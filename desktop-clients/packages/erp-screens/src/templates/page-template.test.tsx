@@ -7,7 +7,7 @@ import {createTemplateSample,lineTotals,validateTemplate,type PageTemplateAdapte
 const scope={tenantId:'tenant',applicationId:'app',userId:'user',pageId:'patients',recordId:'DEMO-001'};
 function setup(id='template-patient-master',adapter?:PageTemplateAdapter){const definition=TEMPLATE_BY_ID[id],initialDocument=createTemplateSample(definition);const save=vi.fn(async(request)=>({...request.document,version:request.expectedVersion+1}));render(<PageTemplateWorkspace definition={definition} initialDocument={initialDocument} scope={scope} adapter={adapter??{save}}/>);return {save,definition,initialDocument};}
 test('every configured template renders real shared content and starts with valid sample data',()=>{
- expect(PAGE_TEMPLATES.length).toBe(97);expect(new Set(PAGE_TEMPLATES.map(item=>item.id)).size).toBe(97);
+ expect(PAGE_TEMPLATES.length).toBe(102);expect(new Set(PAGE_TEMPLATES.map(item=>item.id)).size).toBe(102);
  for(const definition of PAGE_TEMPLATES){
   const document=createTemplateSample(definition);expect(validateTemplate(definition,document),definition.id).toEqual({});
   const result=render(<PageTemplateWorkspace definition={definition} scope={scope} initialDocument={document} adapter={{save:async request=>({...request.document,version:2})}}/>);

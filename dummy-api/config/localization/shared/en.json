@@ -15301,6 +15301,23 @@
     "catalog.reference.integrationSteps": "Choose a template, open its TypeScript example, replace the demo adapter with your authenticated API adapter, and test validation, conflicts, recovery, permissions and preference locks before release.",
     "preferences.recordLayout.help": "Rail shows sections beside the form. Tabs show one section at a time. Wizard adds Previous and Next steps. Applies to new, view and edit forms, including Patient Record.",
     "preferences.spacing.title": "Spacing and corners",
-    "preferences.spacing.help": "Choose Compact, Comfortable or Spacious spacing and corner rounding for shared page components. Patient Record uses these preferences too."
+    "preferences.spacing.help": "Choose Compact, Comfortable or Spacious spacing and corner rounding for shared page components. Patient Record uses these preferences too.",
+    "template.group.registry": "Registry design family",
+    "template.help.registry": "Reusable desktop workspaces based on the approved Patient Registry and Patient Master designs. Change appearance in My Preferences.",
+    "template.name.registry-worklist": "Registry Worklist",
+    "page.template-registry-worklist.title": "Registry Worklist",
+    "page.template-registry-worklist.subtitle": "Reusable desktop workspaces based on the approved Patient Registry and Patient Master designs. Change appearance in My Preferences.",
+    "template.name.registry-small-master": "Registry Small Master",
+    "page.template-registry-small-master.title": "Registry Small Master",
+    "page.template-registry-small-master.subtitle": "Reusable desktop workspaces based on the approved Patient Registry and Patient Master designs. Change appearance in My Preferences.",
+    "template.name.registry-billing": "Registry Billing",
+    "page.template-registry-billing.title": "Registry Billing",
+    "page.template-registry-billing.subtitle": "Reusable desktop workspaces based on the approved Patient Registry and Patient Master designs. Change appearance in My Preferences.",
+    "template.name.registry-claim": "Registry Claim",
+    "page.template-registry-claim.title": "Registry Claim",
+    "page.template-registry-claim.subtitle": "Reusable desktop workspaces based on the approved Patient Registry and Patient Master designs. Change appearance in My Preferences.",
+    "template.name.registry-consultation": "Registry Clinical Consultation",
+    "page.template-registry-consultation.title": "Registry Clinical Consultation",
+    "page.template-registry-consultation.subtitle": "Reusable desktop workspaces based on the approved Patient Registry and Patient Master designs. Change appearance in My Preferences."
   }
 }

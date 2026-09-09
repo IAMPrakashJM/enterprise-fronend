@@ -1,5 +1,5 @@
 /** Compiled into each client so an older native build requests its own manifest. */
-export const DOCUMENTATION_RELEASE = '2026-09-08-documentation';
+export const DOCUMENTATION_RELEASE = '2026-09-09-registry-templates';
 export interface GuideSection {id:string;title:string;paragraphs:string[]}
 export interface DocumentationGuide {
  pageId:string;module:string;title:string;revision:number;status:'reference'|'authored';

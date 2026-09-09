@@ -6,8 +6,8 @@ import {PageTemplateWorkspace} from './page-template';
 import {createTemplateSample} from './template-state';
 import {usePreferenceChoice,type PreferenceHost} from '../preference-choice';
 const scope={tenantId:'t',applicationId:'a',userId:'u',pageId:'p',recordId:'r'};
-// This case renders 194 workspaces; allow for slower hosts and concurrent builds.
-test('all 97 templates inherit managed table preferences in both density profiles',()=>{
+// This case renders two workspaces per template; allow for slower hosts and concurrent builds.
+test('all registered templates inherit managed table preferences in both density profiles',()=>{
   for(const density of ['compact','spacious'] as const)for(const definition of PAGE_TEMPLATES){
     const preferences={...DEFAULT_PREFERENCES,density,zebraStripes:false,stickyTableHeader:false,wrapCellText:true};
     const {container}=render(<PageTemplateWorkspace definition={definition} preferences={preferences} scope={scope} initialDocument={createTemplateSample(definition)}/>);
