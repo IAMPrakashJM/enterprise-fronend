@@ -1,6 +1,6 @@
 # Clinical Triage — 9 September 2026
 
-Implemented locally on top of `1be944d`. This delivery is not committed, pushed or deployed.
+Implemented in `246feba`, with native Node export correction in `43c98df`. Committed, pushed and deployed to both demo sites on 9 September 2026 (UTC). Earlier local verification statements below preserve their original scope.
 
 ## Added and changed
 
@@ -32,3 +32,13 @@ No clinical scoring or automatic care routing is implemented. Native-speaker/cli
 ## Deployment preparation correction
 
 The previous Billing Clinic CI failed because two new config exports omitted the `.ts` extension required by native Node imports. The Billing Clinic and Clinical Triage exports now use explicit extensions. The full local `npm run verify` chain passed after the correction; [verification log](evidence/clinical-triage/deploy-verify.txt). Earlier source hashes remain the implementation-test snapshot. Deployment uses the corrected follow-up commit.
+
+## Verified deployment
+
+- Active frontend release: `20260909185538576-00ec1dd3`, built from corrected commit `43c98df2fe14ab7ff88d56d74f3fef0ce596afff`. Both isolated packages passed HTML/asset smoke tests before activation.
+- The demo API was restarted with the triage endpoint, navigation, configuration and localization. Existing clinical CSV hashes were unchanged after restart and live checks.
+- Backup: `.deploy/backups/clinical-triage-20260909T185603Z/` retains stopped API data and previous API source. Previous frontend release `20260909172532776-1997e17d` is available for rollback.
+- Chromium verified release identity, Clinical Triage navigation, authenticated patient/config/assessment responses, all three form sections, blank initial readings and no page errors on both `https://front-design.pepbits.com` and `https://desktop.front-design.pepbits.com`.
+- Billing Clinic also passed live navigation, patient/catalog/ledger and five-section checks on both hosts. Live checks did not save or complete assessments; the full write lifecycle was tested against isolated demo storage.
+- [Live triage checks](evidence/clinical-triage/live-triage.txt), [Billing Clinic regression](evidence/clinical-triage/live-billing.txt) and [activation log](evidence/clinical-triage/deployment.txt).
+- Hosted CI run `34391984520` was still running at verification time. A documentation follow-up push starts a replacement run; remote CI success is not claimed.
