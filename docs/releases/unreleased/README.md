@@ -1,6 +1,6 @@
 # Unreleased frontend delivery
 
-Record: `library-preferences-2026-09-09`. Status: **implemented locally; uncommitted and unpublished**.
+Record: `library-preferences-2026-09-09`. **Deployed to both demo sites.** See the [deployment follow-up](deployment-2026-09-09.md). Earlier records below retain their status at the time they were written.
 
 | Item | Record |
 | --- | --- |
