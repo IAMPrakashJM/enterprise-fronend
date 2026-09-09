@@ -1,6 +1,6 @@
 # Billing Clinic — 9 September 2026
 
-Local implementation based on `cc63d0c` plus the working tree. Not committed, pushed or deployed as part of this implementation task. The existing live release remains unchanged.
+Implemented in `30789e9672c41153a14f5f2ab491cbe2ce148d47`, with verification logs added in `fff513c1965b6d692f9e0640c142f118623c9f79`. Committed, pushed and deployed to both demo sites on 9 September 2026 (UTC). Earlier local verification statements below preserve their original scope.
 
 ## Added and changed
 
@@ -41,3 +41,13 @@ Native executable testing, native-speaker/domain acceptance, remote CI and deplo
 - Fictional artifacts: [desktop screenshot](evidence/billing-clinic/clinic-workflow.png), [CSV](evidence/billing-clinic/clinic-invoice.csv), [Excel](evidence/billing-clinic/clinic-invoice.xlsx), [PDF](evidence/billing-clinic/clinic-invoice.pdf). PDF generation was exercised in Chromium; printer-device acceptance and native-language PDF acceptance were not performed.
 
 Reproduce the browser suite with a Vite desktop shell pointing at the chosen local API origin, then run `node e2e/run.mjs features --suite=clinic-billing.mjs --managed-api` from `desktop-clients`, setting matching `E2E_API`, `E2E_DESKTOP` and `PLAYWRIGHT_PATH`. The managed API creates fresh disposable data; do not run the write workflow against live patient records.
+
+## Verified deployment
+
+- Frontend release: `20260909172532776-1997e17d`, built in isolation from implementation commit `30789e9`. Both packaged applications passed independent HTML/asset smoke tests before activation.
+- API: restarted with the Billing Clinic implementation and updated navigation, messages and documentation configuration. Existing clinical CSV SHA-256 remained unchanged through deployment and verification. The new live billing CSV exists with mode `0600`.
+- Backup: `.deploy/backups/billing-clinic-20260909T172706Z/` contains stopped API data and previous API source. Previous frontend release `20260909161011864-64158fe3` remains available for rollback.
+- On both `https://front-design.pepbits.com` and `https://desktop.front-design.pepbits.com`, Chromium verified release identity, Billing Clinic navigation, authenticated patient/catalog/ledger responses, all five sections and no page errors.
+- Worklist Query, Master Record - Main and 360 Data also passed navigation/render checks on both hosts. Live verification did not create invoices, collect payments or refund money; the complete write flow was verified on the isolated demo API.
+- The first remote CI run failed because ignored `.log` files were missing from Git. Commit `fff513c` included the five referenced verification logs. Replacement run `34382948256` was in progress when deployment verification finished; remote CI completion is not claimed.
+- [Live Billing Clinic checks](evidence/billing-clinic/live-billing.txt) and [existing template checks](evidence/billing-clinic/live-patient-templates.txt) retain the observed results.

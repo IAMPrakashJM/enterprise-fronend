@@ -1,0 +1,8 @@
+PASS https://front-design.pepbits.com Worklist Query
+PASS https://front-design.pepbits.com Master Record - Main
+PASS https://front-design.pepbits.com 360 Data
+PASS https://front-design.pepbits.com Page templates group and no page errors
+PASS https://desktop.front-design.pepbits.com Worklist Query
+PASS https://desktop.front-design.pepbits.com Master Record - Main
+PASS https://desktop.front-design.pepbits.com 360 Data
+PASS https://desktop.front-design.pepbits.com Page templates group and no page errors
