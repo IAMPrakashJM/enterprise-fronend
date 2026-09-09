@@ -30790,9 +30790,9 @@
         "component-library": {
           "pageId": "component-library",
           "module": "library",
-          "title": "Component Gallery",
-          "revision": 1,
-          "status": "reference",
+          "title": "Component Library",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -30800,177 +30800,28 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage component gallery records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "form-controls": {
           "pageId": "form-controls",
           "module": "library",
           "title": "Form Controls",
-          "revision": 1,
-          "status": "reference",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -30978,177 +30829,29 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage form controls records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Bind value and onChange to your form state. Required, hint, error and disabled control validation and availability."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "feedback-components": {
           "pageId": "feedback-components",
           "module": "library",
           "title": "Feedback & Overlays",
-          "revision": 1,
-          "status": "reference",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -31156,177 +30859,29 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage feedback & overlays records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Control overlays with open/onClose. Map failures to useful recovery actions and preserve input during retries."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "form-patterns": {
           "pageId": "form-patterns",
           "module": "library",
           "title": "Form Patterns",
-          "revision": 1,
-          "status": "reference",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -31334,177 +30889,29 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage form patterns records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Compose shared controls into a validated form. Replace the local submit callback with your authorized record adapter."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "data-patterns": {
           "pageId": "data-patterns",
           "module": "library",
           "title": "Data Worklists",
-          "revision": 1,
-          "status": "reference",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -31512,177 +30919,29 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage data worklists records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "DataTable receives rows, column definitions, selection, sorting and callbacks. The caller owns permissions and persistence."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "billing-patterns": {
           "pageId": "billing-patterns",
           "module": "library",
           "title": "Billing Workspace",
-          "revision": 1,
-          "status": "reference",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -31690,170 +30949,22 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage billing workspace records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Build line-entry and totals using shared number inputs and data display components. This demo is not a complete invoice service."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "spreadsheet-studio": {
           "pageId": "spreadsheet-studio",
@@ -32613,8 +31724,8 @@
           "pageId": "localization",
           "module": "library",
           "title": "Localization",
-          "revision": 1,
-          "status": "reference",
+          "revision": 2,
+          "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
           "sections": [
@@ -32622,170 +31733,22 @@
               "id": "purpose",
               "title": "Purpose",
               "paragraphs": [
-                "Search, review and manage localization records with saved views and configurable actions.",
-                "Reusable schema-driven record form."
+                "Explore shared components, try the demos, and copy the React code into your application."
               ]
             },
             {
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Component documentation and the page registry that every screen is rendered from.",
-                "Architecture, components, patterns and configuration are grouped in the sidebar."
-              ]
-            },
-            {
-              "id": "troubleshooting",
-              "title": "Troubleshooting",
-              "paragraphs": [
-                "Use the field reference below to check required values. If an action is unavailable, check your role and the current record state. Reload after a conflict and review the latest record before saving again."
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "The shell supplies LocalizationProvider. Reuse its translator for labels, direction and display formatting. Never translate identifiers or API values."
               ]
             }
           ],
-          "fields": [
-            {
-              "id": "code",
-              "label": "Code",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "name",
-              "label": "Name",
-              "type": "text",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "category",
-              "label": "Category",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "status",
-              "label": "Status",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveFrom",
-              "label": "Effective from",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "effectiveTo",
-              "label": "Effective to",
-              "type": "date",
-              "required": false,
-              "help": "",
-              "rules": [
-                "Cannot be before effectiveFrom."
-              ]
-            },
-            {
-              "id": "branch",
-              "label": "Branch",
-              "type": "select",
-              "required": true,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "department",
-              "label": "Department",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "owner",
-              "label": "Owner",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "tags",
-              "label": "Tags",
-              "type": "multiselect",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "description",
-              "label": "Description",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "externalRef",
-              "label": "External reference",
-              "type": "text",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "priority",
-              "label": "Priority",
-              "type": "select",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "changeReason",
-              "label": "Change reason",
-              "type": "textarea",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "approvalRequired",
-              "label": "Approval required",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            },
-            {
-              "id": "notifyOwner",
-              "label": "Notify owner",
-              "type": "toggle",
-              "required": false,
-              "help": "",
-              "rules": []
-            }
-          ],
-          "tour": [
-            {
-              "target": "module",
-              "title": "Developer library",
-              "text": "Component documentation and the page registry that every screen is rendered from."
-            },
-            {
-              "target": "sidebar",
-              "title": "Browse",
-              "text": "Architecture, components, patterns and configuration are grouped in the sidebar."
-            }
-          ]
+          "fields": [],
+          "tour": []
         },
         "accessibility": {
           "pageId": "accessibility",
@@ -34886,6 +33849,156 @@
           ],
           "fields": [],
           "tour": []
+        },
+        "date-components": {
+          "pageId": "date-components",
+          "module": "library",
+          "title": "Dates & Calendars",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "purpose",
+              "title": "Purpose",
+              "paragraphs": [
+                "Explore shared components, try the demos, and copy the React code into your application."
+              ]
+            },
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Keep ISO date and local time values in state. Apply min/max bounds; choose a timezone in your domain service."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
+        },
+        "card-components": {
+          "pageId": "card-components",
+          "module": "library",
+          "title": "Cards & Data Display",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "purpose",
+              "title": "Purpose",
+              "paragraphs": [
+                "Explore shared components, try the demos, and copy the React code into your application."
+              ]
+            },
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Compose cards, grids, statistics and typed values. Format amounts for the selected locale."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
+        },
+        "table-components": {
+          "pageId": "table-components",
+          "module": "library",
+          "title": "Tables",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "purpose",
+              "title": "Purpose",
+              "paragraphs": [
+                "Explore shared components, try the demos, and copy the React code into your application."
+              ]
+            },
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Use semantic table elements for static, striped, bordered and compact tables. DataTable adds selection, sorting and editing."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
+        },
+        "navigation-components": {
+          "pageId": "navigation-components",
+          "module": "library",
+          "title": "Buttons & Navigation",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "purpose",
+              "title": "Purpose",
+              "paragraphs": [
+                "Explore shared components, try the demos, and copy the React code into your application."
+              ]
+            },
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "Supply callbacks for actions, selected values, tabs and page changes. Icon buttons need accessible labels."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
+        },
+        "inline-components": {
+          "pageId": "inline-components",
+          "module": "library",
+          "title": "Inline Editing",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "purpose",
+              "title": "Purpose",
+              "paragraphs": [
+                "Explore shared components, try the demos, and copy the React code into your application."
+              ]
+            },
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Use these examples inside this workspace with its shared theme CSS and localization provider. Import components from the package shown in the code.",
+                "The example includes imports and local state. Code identifiers are not translated.",
+                "Demo changes stay in memory. Reset clears the example; no business records are saved.",
+                "onCommit may be asynchronous and reject with an error. Validate before saving; limit permitted status transitions."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
         }
       },
       "guidePageIds": [
@@ -35068,7 +34181,12 @@
         "ai-administration",
         "documentation-center",
         "error-monitor",
-        "draft-recovery"
+        "draft-recovery",
+        "date-components",
+        "card-components",
+        "table-components",
+        "navigation-components",
+        "inline-components"
       ],
       "sections": [
         {
@@ -35112,6 +34230,17 @@
       "sectionId": "workflow",
       "title": "Draft Recovery Center",
       "summary": "Find and resume your unfinished work.",
+      "requiresAcknowledgment": false
+    },
+    {
+      "id": "component-library-examples",
+      "revision": 1,
+      "releaseId": "2026-09-08-documentation",
+      "pageId": "component-library",
+      "sectionId": "workflow",
+      "category": "feature",
+      "title": "Component Library",
+      "summary": "Explore shared components, try the demos, and copy the React code into your application.",
       "requiresAcknowledgment": false
     }
   ]

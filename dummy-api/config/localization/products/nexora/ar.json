@@ -1,4 +1,27 @@
 {
   "schemaVersion": 1,
-  "messages": {}
+  "messages": {
+    "page.date-components.title": "التواريخ والتقويمات",
+    "page.date-components.subtitle": "احتفظ بقيم تاريخ ISO والوقت المحلي في الحالة. طبق حدود min/max وحدد المنطقة الزمنية في خدمتك.",
+    "menu.library.date-components.label": "التواريخ والتقويمات",
+    "page.card-components.title": "البطاقات وعرض البيانات",
+    "page.card-components.subtitle": "ركّب البطاقات والشبكات والإحصاءات والقيم. نسّق المبالغ حسب اللغة المختارة.",
+    "menu.library.card-components.label": "البطاقات وعرض البيانات",
+    "page.table-components.title": "الجداول",
+    "page.table-components.subtitle": "استخدم عناصر الجداول الدلالية للجداول الثابتة والمخططة والمحددة والمضغوطة. يضيف DataTable التحديد والفرز والتحرير.",
+    "menu.library.table-components.label": "الجداول",
+    "page.navigation-components.title": "الأزرار والتنقل",
+    "page.navigation-components.subtitle": "وفر دوال للإجراءات والقيم والتبويبات وتغيير الصفحات. تحتاج أزرار الأيقونات لتسميات واضحة.",
+    "menu.library.navigation-components.label": "الأزرار والتنقل",
+    "page.inline-components.title": "التحرير المباشر",
+    "page.inline-components.subtitle": "يمكن أن تكون onCommit غير متزامنة وترفض بخطأ. تحقق قبل الحفظ وحدد انتقالات الحالة.",
+    "menu.library.inline-components.label": "التحرير المباشر",
+    "page.component-library.subtitle": "استكشف المكونات المشتركة وجرّب الأمثلة وانسخ كود React إلى تطبيقك.",
+    "page.form-controls.subtitle": "اربط value وonChange بحالة النموذج. تضبط required وhint وerror وdisabled التحقق والإتاحة.",
+    "page.feedback-components.subtitle": "تحكم بالنوافذ عبر open/onClose. اربط الأخطاء بإجراءات استرداد واحفظ المدخلات أثناء المحاولة.",
+    "page.form-patterns.subtitle": "ركّب العناصر المشتركة في نموذج متحقق منه. استبدل الإرسال المحلي بمحول السجلات المصرح به.",
+    "page.data-patterns.subtitle": "يستقبل DataTable الصفوف والأعمدة والتحديد والفرز والدوال. يتولى المستدعي الصلاحيات والحفظ.",
+    "page.billing-patterns.subtitle": "أنشئ إدخال البنود والإجماليات بعناصر الأرقام والعرض المشتركة. هذا المثال ليس خدمة فواتير كاملة.",
+    "page.localization.subtitle": "يوفر الهيكل LocalizationProvider. استخدمه للتسميات والاتجاه والتنسيق. لا تترجم المعرّفات أو قيم API."
+  }
 }

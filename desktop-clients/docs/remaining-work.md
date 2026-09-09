@@ -6,6 +6,13 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Component Library — 9 September 2026
+
+The Library now has dedicated component groups, interactive demos and generated
+copyable React examples covering all public shared UI components. See
+[Component Library guide](component-library.md) for usage and integration.
+Native translation review remains pending.
+
 ## Draft Recovery Center — 8 September 2026
 
 The shared recovery center lists current-application drafts with search, type/status

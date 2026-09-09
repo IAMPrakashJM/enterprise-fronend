@@ -1,4 +1,27 @@
 {
   "schemaVersion": 1,
-  "messages": {}
+  "messages": {
+    "page.date-components.title": "Dates & Calendars",
+    "page.date-components.subtitle": "Keep ISO date and local time values in state. Apply min/max bounds; choose a timezone in your domain service.",
+    "menu.library.date-components.label": "Dates & Calendars",
+    "page.card-components.title": "Cards & Data Display",
+    "page.card-components.subtitle": "Compose cards, grids, statistics and typed values. Format amounts for the selected locale.",
+    "menu.library.card-components.label": "Cards & Data Display",
+    "page.table-components.title": "Tables",
+    "page.table-components.subtitle": "Use semantic table elements for static, striped, bordered and compact tables. DataTable adds selection, sorting and editing.",
+    "menu.library.table-components.label": "Tables",
+    "page.navigation-components.title": "Buttons & Navigation",
+    "page.navigation-components.subtitle": "Supply callbacks for actions, selected values, tabs and page changes. Icon buttons need accessible labels.",
+    "menu.library.navigation-components.label": "Buttons & Navigation",
+    "page.inline-components.title": "Inline Editing",
+    "page.inline-components.subtitle": "onCommit may be asynchronous and reject with an error. Validate before saving; limit permitted status transitions.",
+    "menu.library.inline-components.label": "Inline Editing",
+    "page.component-library.subtitle": "Explore shared components, try the demos, and copy the React code into your application.",
+    "page.form-controls.subtitle": "Bind value and onChange to your form state. Required, hint, error and disabled control validation and availability.",
+    "page.feedback-components.subtitle": "Control overlays with open/onClose. Map failures to useful recovery actions and preserve input during retries.",
+    "page.form-patterns.subtitle": "Compose shared controls into a validated form. Replace the local submit callback with your authorized record adapter.",
+    "page.data-patterns.subtitle": "DataTable receives rows, column definitions, selection, sorting and callbacks. The caller owns permissions and persistence.",
+    "page.billing-patterns.subtitle": "Build line-entry and totals using shared number inputs and data display components. This demo is not a complete invoice service.",
+    "page.localization.subtitle": "The shell supplies LocalizationProvider. Reuse its translator for labels, direction and display formatting. Never translate identifiers or API values."
+  }
 }

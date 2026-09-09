@@ -914,6 +914,31 @@
       "id": "draft-recovery",
       "titleKey": "Draft Recovery Center",
       "subtitleKey": "Find and resume your unfinished work."
+    },
+    {
+      "id": "date-components",
+      "titleKey": "page.date-components.title",
+      "subtitleKey": "page.date-components.subtitle"
+    },
+    {
+      "id": "card-components",
+      "titleKey": "page.card-components.title",
+      "subtitleKey": "page.card-components.subtitle"
+    },
+    {
+      "id": "table-components",
+      "titleKey": "page.table-components.title",
+      "subtitleKey": "page.table-components.subtitle"
+    },
+    {
+      "id": "navigation-components",
+      "titleKey": "page.navigation-components.title",
+      "subtitleKey": "page.navigation-components.subtitle"
+    },
+    {
+      "id": "inline-components",
+      "titleKey": "page.inline-components.title",
+      "subtitleKey": "page.inline-components.subtitle"
     }
   ],
   "nodes": [
@@ -3254,6 +3279,46 @@
       "labelKey": "Draft Recovery Center",
       "order": 1001,
       "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.date-components",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.date-components.label",
+      "order": 3,
+      "pageId": "date-components"
+    },
+    {
+      "id": "menu.library.card-components",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.card-components.label",
+      "order": 4,
+      "pageId": "card-components"
+    },
+    {
+      "id": "menu.library.table-components",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.table-components.label",
+      "order": 5,
+      "pageId": "table-components"
+    },
+    {
+      "id": "menu.library.navigation-components",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.navigation-components.label",
+      "order": 6,
+      "pageId": "navigation-components"
+    },
+    {
+      "id": "menu.library.inline-components",
+      "kind": "page",
+      "parentId": "menu.library.ui-primitives",
+      "labelKey": "menu.library.inline-components.label",
+      "order": 7,
+      "pageId": "inline-components"
     }
   ]
 }

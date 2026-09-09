@@ -4,12 +4,20 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@
 import { LocalizedText } from "@pepbits/ops-ui";
 
 
-import React, { useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import { BookOpen, FileSpreadsheet, WandSparkles } from "lucide-react";
 import { Calendar, CardGrid, DateInput, TimeInput, Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, Select, Toggle } from "@pepbits/ops-ui";
 import type { PageDefinition } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
+
+import { CATALOG_GROUPS } from "./catalog";
+const Catalog = lazy(() => import("./component-catalog").then(module => ({default:module.ComponentCatalog})));
+
+export function LibraryPage({page}: {page:PageDefinition}) {
+  if(page.id === "component-library" || CATALOG_GROUPS.some(group => group.pageId === page.id)) return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><Catalog key={page.id} page={page}/></Suspense>;
+  return <LegacyLibraryPage page={page}/>;
+}
 
 const COMPONENT_ROWS = [
   ["ui.components.cards", "ops-ui/src/card.tsx", "ui.components.cards.help"],
@@ -25,7 +33,7 @@ const COMPONENT_ROWS = [
   ["Application shell", "layout/enterprise-shell.tsx", "Header, module navigation, sidebar, tabs and footer"],
 ];
 
-export function LibraryPage({ page }: { page: PageDefinition }) {
+function LegacyLibraryPage({ page }: { page: PageDefinition }) {
   const { toast } = useERP();
   const [date, setDate] = useState("2026-09-08");
   const [time, setTime] = useState("09:00");

@@ -1,4 +1,27 @@
 {
   "schemaVersion": 1,
-  "messages": {}
+  "messages": {
+    "page.date-components.title": "तिथियाँ और कैलेंडर",
+    "page.date-components.subtitle": "स्थिति में ISO तिथि और स्थानीय समय रखें। min/max सीमा लगाएँ; सेवा में समय क्षेत्र तय करें।",
+    "menu.library.date-components.label": "तिथियाँ और कैलेंडर",
+    "page.card-components.title": "कार्ड और डेटा प्रदर्शन",
+    "page.card-components.subtitle": "कार्ड, ग्रिड, आँकड़े और मान मिलाएँ। चुने हुए लोकेल में राशि दिखाएँ।",
+    "menu.library.card-components.label": "कार्ड और डेटा प्रदर्शन",
+    "page.table-components.title": "तालिकाएँ",
+    "page.table-components.subtitle": "स्थिर, धारीदार, बॉर्डर और कॉम्पैक्ट तालिकाओं के लिए तालिका तत्व उपयोग करें। DataTable चयन, क्रम और संपादन जोड़ता है।",
+    "menu.library.table-components.label": "तालिकाएँ",
+    "page.navigation-components.title": "बटन और नेविगेशन",
+    "page.navigation-components.subtitle": "कार्रवाइयों, मानों, टैब और पृष्ठ बदलाव के लिए कॉलबैक दें। आइकन बटन को सुलभ लेबल दें।",
+    "menu.library.navigation-components.label": "बटन और नेविगेशन",
+    "page.inline-components.title": "इनलाइन संपादन",
+    "page.inline-components.subtitle": "onCommit असिंक्रोनस हो सकता है और त्रुटि दे सकता है। सहेजने से पहले जाँचें; अनुमत स्थिति परिवर्तन सीमित करें।",
+    "menu.library.inline-components.label": "इनलाइन संपादन",
+    "page.component-library.subtitle": "साझा घटक देखें, डेमो आज़माएँ और React कोड अपने अनुप्रयोग में कॉपी करें।",
+    "page.form-controls.subtitle": "value और onChange को फ़ॉर्म स्थिति से जोड़ें। required, hint, error और disabled सत्यापन और उपलब्धता नियंत्रित करते हैं।",
+    "page.feedback-components.subtitle": "ओवरले को open/onClose से नियंत्रित करें। विफलताओं को उचित बहाली कार्रवाइयों से जोड़ें और पुनः प्रयास में इनपुट रखें।",
+    "page.form-patterns.subtitle": "साझा नियंत्रणों से सत्यापित फ़ॉर्म बनाएँ। स्थानीय सबमिट कॉलबैक को अधिकृत रिकॉर्ड अडैप्टर से बदलें।",
+    "page.data-patterns.subtitle": "DataTable को पंक्तियाँ, कॉलम, चयन, क्रम और कॉलबैक दें। अनुमतियाँ और स्थायी संग्रह कॉलर संभालता है।",
+    "page.billing-patterns.subtitle": "साझा संख्या इनपुट और डेटा प्रदर्शन घटकों से लाइन प्रविष्टि और कुल बनाएँ। यह पूर्ण चालान सेवा नहीं है।",
+    "page.localization.subtitle": "शेल LocalizationProvider देता है। लेबल, दिशा और प्रदर्शन के लिए उसका अनुवादक उपयोग करें। पहचानकर्ता या API मान अनुवाद न करें।"
+  }
 }
