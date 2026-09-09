@@ -26,6 +26,6 @@ Deployed backend follow-up: [Page template CSV storage](page-templates-csv-2026-
 
 Previous deployment: [Billing Clinic](billing-clinic-2026-09-09.md#verified-deployment), verified on both demo sites.
 
-Latest deployment: [Clinical Triage](clinical-triage-2026-09-09.md#verified-deployment), verified on both demo sites.
+Previous deployment: [Clinical Triage](clinical-triage-2026-09-09.md#verified-deployment), verified on both demo sites.
 
-Latest local addition: [Clinical Consultation](clinical-consultation-2026-09-09.md), not yet deployed.
+Latest deployment: [Clinical Consultation](clinical-consultation-2026-09-09.md#verified-deployment), verified on both demo sites.

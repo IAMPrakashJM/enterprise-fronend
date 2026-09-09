@@ -1,6 +1,6 @@
 # Clinical Consultation — 9 September 2026
 
-Local implementation on top of `b54bd95`. Not committed, pushed or deployed.
+Implemented in `f146d67713130da7bf9ee684d29cc62d46bff070`. Committed, pushed and deployed to both demo sites on 9 September 2026 (UTC). Earlier local verification statements below preserve their original scope.
 
 ## Added and changed
 
@@ -29,3 +29,13 @@ Final local evidence is recorded below. Tests use fictional isolated data. Live 
 - Fictional screenshots: [compact desktop](evidence/clinical-consultation/consultation-initial.png), [completed note](evidence/clinical-consultation/consultation-completed.png), [Arabic](evidence/clinical-consultation/consultation-ar.png), [Hindi](evidence/clinical-consultation/consultation-hi.png), [Malayalam](evidence/clinical-consultation/consultation-ml.png).
 
 Reproduce with the desktop shell pointed at an isolated local API, using `node e2e/run.mjs features --suite=clinical-consultation.mjs --managed-api` from `desktop-clients`. Set matching `E2E_API`, `E2E_DESKTOP` and `PLAYWRIGHT_PATH`. Repeat with `--suite=clinical-triage.mjs` for the shared-workflow regression. The managed API uses disposable fictional data; live patient records were not changed.
+
+## Verified deployment
+
+- Active frontend release: `20260909192013277-c4aedb8e`, built in isolation from implementation commit `f146d67`. Both packaged shells passed isolated HTML/asset smoke tests before activation.
+- The demo API was restarted with the consultation endpoint, shared clinical-document store and updated navigation/help/catalogs. Existing CSV hashes were unchanged after restart and live verification.
+- Backup: `.deploy/backups/clinical-consultation-20260909T192024Z/` retains stopped API data and previous API source. Previous frontend release `20260909185538576-00ec1dd3` remains available for rollback.
+- Chromium verified the active release, Clinical Consultation navigation, authenticated patient/config/assessment API, all three sections, blank initial assessment and no page errors on both `https://front-design.pepbits.com` and `https://desktop.front-design.pepbits.com`.
+- Clinical Triage and Billing Clinic passed live navigation/API/section regression checks on both hosts. These checks did not save or complete patient records; write lifecycles were verified against disposable demo data during implementation.
+- Retained results: [Consultation](evidence/clinical-consultation/live-consultation.txt), [Triage](evidence/clinical-consultation/live-triage.txt), [Billing Clinic](evidence/clinical-consultation/live-billing.txt), [activation](evidence/clinical-consultation/deployment.txt).
+- Hosted CI run `34394445423` was still running at verification time. The previous baseline run `34392184342` failed four broad browser suites (Library preferences, clinical templates, page templates and documentation); those failures predate this consultation commit. Local targeted browser acceptance and full static verification passed, but broad remote CI success is not claimed. This documentation follow-up push starts a replacement CI run.

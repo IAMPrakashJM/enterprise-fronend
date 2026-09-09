@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: release identity, Clinical Triage navigation, authenticated patient/config/assessment API, three sections, blank readings, no page errors
+PASS https://desktop.front-design.pepbits.com: release identity, Clinical Triage navigation, authenticated patient/config/assessment API, three sections, blank readings, no page errors

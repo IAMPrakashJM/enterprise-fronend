@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: release identity, Clinical Consultation navigation, authenticated patient/config/assessment API, three sections, blank assessment, no page errors
+PASS https://desktop.front-design.pepbits.com: release identity, Clinical Consultation navigation, authenticated patient/config/assessment API, three sections, blank assessment, no page errors

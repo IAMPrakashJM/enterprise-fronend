@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: release identity, Billing Clinic navigation, authenticated API patient/catalog/ledger, five sections, no page errors
+PASS https://desktop.front-design.pepbits.com: release identity, Billing Clinic navigation, authenticated API patient/catalog/ledger, five sections, no page errors
