@@ -1,5 +1,6 @@
 /** One method contract for registered routes; unknown paths remain 404. */
 const methods = new Map(Object.entries({
+  '/clinical-templates': ['POST'],
   '/auth/login': ['POST'], '/auth/me': ['GET'], '/auth/logout': ['POST'],
   '/draft-center':['POST'], '/drafts':['POST'], '/draft-policy':['GET','PUT'],
   '/records': ['GET'], '/navigation': ['GET'], '/localization': ['GET'],

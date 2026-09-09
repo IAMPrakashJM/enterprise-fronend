@@ -25,3 +25,4 @@ export * from "./documentation.ts";
 export * from './draft-policy.ts';
 
 export * from "./page-templates.ts";
+export * from './clinical-templates.ts';

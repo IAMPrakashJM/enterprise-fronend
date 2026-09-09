@@ -11,12 +11,15 @@ import type { PageDefinition } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
 
-import { TEMPLATE_BY_ID } from "@pepbits/erp-config";
+import { TEMPLATE_BY_ID, CLINICAL_TEMPLATE_PAGES } from "@pepbits/erp-config";
 const TemplateLibrary = lazy(() => import("../templates/template-library").then(module => ({default:module.TemplateLibraryPage})));
 import { CATALOG_GROUPS } from "./catalog";
 const Catalog = lazy(() => import("./component-catalog").then(module => ({default:module.ComponentCatalog})));
 
-export function LibraryPage({page}: {page:PageDefinition}) {
+import type {NavigationTarget} from '@pepbits/platform-ports';
+const ClinicalLibrary=lazy(()=>import('../clinical-templates/library-page').then(m=>({default:m.ClinicalLibraryPage})));
+export function LibraryPage({page,target={pageId:page.id}}: {page:PageDefinition;target?:NavigationTarget}) {
+  if(CLINICAL_TEMPLATE_PAGES.some(p=>p.id===page.id))return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ClinicalLibrary page={page} target={target}/></Suspense>;
   if(page.id === "page-templates" || TEMPLATE_BY_ID[page.id]) return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><TemplateLibrary key={page.id} page={page}/></Suspense>;
   if(page.id === "component-library" || CATALOG_GROUPS.some(group => group.pageId === page.id)) return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><Catalog key={page.id} page={page}/></Suspense>;
   return <LegacyLibraryPage page={page}/>;

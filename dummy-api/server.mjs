@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createClinicalTemplateStore} from "./clinical-template-store.ts";
 import {createDraftCenter} from "./draft-center.mjs";
 import {createDraftPolicyStore} from "./draft-policy-store.mjs";
 import {createMonitoringStore} from "./monitoring-store.mjs";
@@ -107,6 +108,7 @@ const sessions = new Map();
    point of "log out, log back in, your settings are still there".
    Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
 const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "data");
+const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.json"));
 const monitoringStore=createMonitoringStore(join(DATA_DIR,"monitoring.sqlite"));
 const documentationStore=createDocumentationStore(join(DATA_DIR,"documentation.sqlite"),process.env.NEXORA_CONFIG_DIR ?? join(dirname(fileURLToPath(import.meta.url)),"config"),applicationConfig);
 const auditStore = createAuditStore(join(DATA_DIR,"audit.sqlite"), {retentionDays:Number(process.env.NEXORA_AUDIT_RETENTION_DAYS ?? 90)});
@@ -895,6 +897,17 @@ const server = createServer(async (req, res) => {
     const token = bearer(req);
     if (token) sessions.delete(token);
     return send(res,204);
+  }
+
+  if(pathname==="/clinical-templates"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='allyvora-patient-query'))return send(res,403,{error:'template.clinical.denied'});
+    let input;try{input=await readJson(req,262144);}catch{return send(res,400,{error:'template.clinical.invalid'});}
+    if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
+    try{const result=clinicalTemplates.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'template.clinical.saveFailed'});}
   }
 
   if(pathname==="/draft-center"){

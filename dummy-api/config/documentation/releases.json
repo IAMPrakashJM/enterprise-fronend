@@ -38201,6 +38201,81 @@
               "text": "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts."
             }
           ]
+        },
+        "allyvora-patient-query": {
+          "pageId": "allyvora-patient-query",
+          "module": "library",
+          "title": "Patient Query",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.",
+                "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.",
+                "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.",
+                "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.",
+                "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.",
+                "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
+        },
+        "allyvora-patient-record": {
+          "pageId": "allyvora-patient-record",
+          "module": "library",
+          "title": "Patient Record",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.",
+                "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.",
+                "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.",
+                "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.",
+                "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.",
+                "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
+        },
+        "allyvora-patient-360": {
+          "pageId": "allyvora-patient-360",
+          "module": "library",
+          "title": "Patient 360",
+          "revision": 1,
+          "status": "authored",
+          "language": "en",
+          "reviewStatus": "pending",
+          "sections": [
+            {
+              "id": "workflow",
+              "title": "How to use this page",
+              "paragraphs": [
+                "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.",
+                "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.",
+                "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.",
+                "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.",
+                "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.",
+                "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted."
+              ]
+            }
+          ],
+          "fields": [],
+          "tour": []
         }
       },
       "guidePageIds": [

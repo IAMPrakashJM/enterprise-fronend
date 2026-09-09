@@ -1429,6 +1429,21 @@
       "id": "template-integration-configuration",
       "titleKey": "template.name.integration-configuration",
       "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "allyvora-patient-query",
+      "titleKey": "template.clinical.query",
+      "subtitleKey": "template.clinical.demoNotice"
+    },
+    {
+      "id": "allyvora-patient-record",
+      "titleKey": "template.clinical.record",
+      "subtitleKey": "template.clinical.demoNotice"
+    },
+    {
+      "id": "allyvora-patient-360",
+      "titleKey": "template.clinical.overview",
+      "subtitleKey": "template.clinical.demoNotice"
     }
   ],
   "nodes": [
@@ -3540,7 +3555,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-tools.label",
-      "order": 3
+      "order": 4
     },
     {
       "id": "menu.library.workspace-tools",
@@ -3579,7 +3594,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-design.label",
-      "order": 4
+      "order": 5
     },
     {
       "id": "menu.library.design-tokens",
@@ -3619,7 +3634,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-docs.label",
-      "order": 5
+      "order": 6
     },
     {
       "id": "menu.library.engineering",
@@ -3666,7 +3681,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-settings.label",
-      "order": 6
+      "order": 7
     },
     {
       "id": "menu.library.personalization",
@@ -4689,6 +4704,40 @@
       "labelKey": "template.name.integration-configuration",
       "pageId": "template-integration-configuration",
       "order": 7
+    },
+    {
+      "id": "section.library.clinical-templates",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "template.clinical.library",
+      "order": 3
+    },
+    {
+      "id": "menu.library.allyvora-patient-query",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.clinical.query",
+      "pageId": "allyvora-patient-query",
+      "icon": "BookOpen",
+      "order": 0
+    },
+    {
+      "id": "menu.library.allyvora-patient-record",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.clinical.record",
+      "pageId": "allyvora-patient-record",
+      "icon": "BookOpen",
+      "order": 1
+    },
+    {
+      "id": "menu.library.allyvora-patient-360",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.clinical.overview",
+      "pageId": "allyvora-patient-360",
+      "icon": "BookOpen",
+      "order": 2
     }
   ]
 }

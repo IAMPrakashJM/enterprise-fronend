@@ -1,0 +1,1490 @@
+[
+  {
+    "id": "PT-0001",
+    "mrn": "DEMO-000001",
+    "internalCode": "DEMO-INTERNAL-0001",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Alex",
+      "middleName": "",
+      "lastName": "Morgan",
+      "birthDate": "1981-04-12",
+      "gender": "female",
+      "nationality": "uae",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000001",
+      "email": "patient1@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient1@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00001",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0001",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0002",
+    "mrn": "DEMO-000002",
+    "internalCode": "DEMO-INTERNAL-0002",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Sam",
+      "middleName": "",
+      "lastName": "Taylor",
+      "birthDate": "1982-04-12",
+      "gender": "male",
+      "nationality": "uk",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000002",
+      "email": "patient2@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient2@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00002",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0002",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0003",
+    "mrn": "DEMO-000003",
+    "internalCode": "DEMO-INTERNAL-0003",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Jamie",
+      "middleName": "",
+      "lastName": "Parker",
+      "birthDate": "1983-04-12",
+      "gender": "female",
+      "nationality": "india",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000003",
+      "email": "patient3@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient3@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00003",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0003",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0004",
+    "mrn": "DEMO-000004",
+    "internalCode": "DEMO-INTERNAL-0004",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Robin",
+      "middleName": "",
+      "lastName": "Casey",
+      "birthDate": "1984-04-12",
+      "gender": "male",
+      "nationality": "uae",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000004",
+      "email": "patient4@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient4@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00004",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0004",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0005",
+    "mrn": "DEMO-000005",
+    "internalCode": "DEMO-INTERNAL-0005",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Avery",
+      "middleName": "",
+      "lastName": "Quinn",
+      "birthDate": "1985-04-12",
+      "gender": "female",
+      "nationality": "uk",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000005",
+      "email": "patient5@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient5@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00005",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0005",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0006",
+    "mrn": "DEMO-000006",
+    "internalCode": "DEMO-INTERNAL-0006",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Drew",
+      "middleName": "",
+      "lastName": "Cameron",
+      "birthDate": "1986-04-12",
+      "gender": "male",
+      "nationality": "india",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000006",
+      "email": "patient6@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient6@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00006",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0006",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0007",
+    "mrn": "DEMO-000007",
+    "internalCode": "DEMO-INTERNAL-0007",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Skyler",
+      "middleName": "",
+      "lastName": "Lane",
+      "birthDate": "1987-04-12",
+      "gender": "female",
+      "nationality": "uae",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000007",
+      "email": "patient7@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient7@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00007",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0007",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0008",
+    "mrn": "DEMO-000008",
+    "internalCode": "DEMO-INTERNAL-0008",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Riley",
+      "middleName": "",
+      "lastName": "Brooks",
+      "birthDate": "1988-04-12",
+      "gender": "male",
+      "nationality": "uk",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000008",
+      "email": "patient8@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient8@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00008",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0008",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0009",
+    "mrn": "DEMO-000009",
+    "internalCode": "DEMO-INTERNAL-0009",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Emery",
+      "middleName": "",
+      "lastName": "Hayes",
+      "birthDate": "1989-04-12",
+      "gender": "female",
+      "nationality": "india",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000009",
+      "email": "patient9@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient9@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00009",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0009",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0010",
+    "mrn": "DEMO-000010",
+    "internalCode": "DEMO-INTERNAL-0010",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Jesse",
+      "middleName": "",
+      "lastName": "Reed",
+      "birthDate": "1990-04-12",
+      "gender": "male",
+      "nationality": "uae",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000010",
+      "email": "patient10@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient10@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00010",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0010",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0011",
+    "mrn": "DEMO-000011",
+    "internalCode": "DEMO-INTERNAL-0011",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Casey",
+      "middleName": "",
+      "lastName": "Blake",
+      "birthDate": "1991-04-12",
+      "gender": "female",
+      "nationality": "uk",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000011",
+      "email": "patient11@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient11@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00011",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0011",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  },
+  {
+    "id": "PT-0012",
+    "mrn": "DEMO-000012",
+    "internalCode": "DEMO-INTERNAL-0012",
+    "version": 1,
+    "values": {
+      "status": "active",
+      "preferredName": "",
+      "title": "",
+      "firstName": "Jordan",
+      "middleName": "",
+      "lastName": "Lee",
+      "birthDate": "1992-04-12",
+      "gender": "male",
+      "nationality": "india",
+      "language": "en",
+      "occupation": "",
+      "mobile": "+00000000012",
+      "email": "patient12@example.test",
+      "emergencyName": "",
+      "emergencyPhone": "",
+      "emergencyRelation": "",
+      "hasInsurance": true,
+      "bloodGroup": "oPositive",
+      "bloodVerified": true,
+      "deceased": false,
+      "deathDate": "",
+      "clinicalNotes": "",
+      "branch": "main",
+      "referral": "",
+      "notes": "",
+      "additionalDetails": "",
+      "privacyAccepted": true,
+      "marketingAllowed": false,
+      "dobPrecision": "",
+      "maritalStatus": "",
+      "race": "",
+      "ethnicity": "",
+      "religion": "",
+      "employer": "",
+      "birthPlace": "",
+      "birthCountry": "",
+      "educationLevel": "",
+      "incomeBracket": "",
+      "preferredContact": "",
+      "contactTime": "",
+      "hasDisability": false,
+      "registrationSource": "",
+      "referralDetails": ""
+    },
+    "collections": {
+      "names": [],
+      "contacts": [
+        {
+          "id": "c1",
+          "contactType": "email",
+          "value": "patient12@example.test",
+          "primary": "",
+          "countryCode": ""
+        }
+      ],
+      "addresses": [
+        {
+          "id": "a1",
+          "addressType": "home",
+          "line1": "Example Avenue",
+          "city": "Demo City",
+          "postalCode": "00000",
+          "country": "Demo Country",
+          "line2": "",
+          "state": "",
+          "primary": ""
+        }
+      ],
+      "related": [],
+      "identifiers": [
+        {
+          "id": "i1",
+          "identityType": "passport",
+          "value": "DEMO-00012",
+          "expiry": "2030-12-31",
+          "issuingCountry": "",
+          "verified": ""
+        }
+      ],
+      "documents": [],
+      "insurances": [
+        {
+          "id": "in1",
+          "payer": "Example Health",
+          "plan": "Demo Standard",
+          "memberNumber": "MEMBER-0012",
+          "expiry": "2030-12-31",
+          "insuranceType": "",
+          "policyNumber": ""
+        }
+      ],
+      "disabilities": [],
+      "consents": [
+        {
+          "id": "co1",
+          "consentType": "treatment",
+          "decision": "granted",
+          "date": "2026-09-01",
+          "validUntil": "",
+          "givenBy": "",
+          "consentText": "",
+          "refusalReason": "",
+          "revokedAt": "",
+          "revocationReason": ""
+        }
+      ],
+      "communications": []
+    },
+    "activity": [
+      {
+        "id": "act1",
+        "at": "2026-09-01T09:00:00Z",
+        "messageKey": "template.clinical.registered",
+        "actor": "Demo registration",
+        "detail": "template.clinical.registered"
+      }
+    ]
+  }
+]

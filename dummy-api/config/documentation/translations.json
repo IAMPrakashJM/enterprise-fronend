@@ -166,7 +166,16 @@
     "Shared components": "المكونات المشتركة",
     "Pages reuse shared fields, cards, tables, calendars, overlays and recovery messages. Configuration supplies labels, sections and actions.": "تعيد الصفحات استخدام الحقول والبطاقات والجداول والتقويمات والنوافذ ورسائل الاسترداد المشتركة. تحدد الإعدادات التسميات والأقسام والإجراءات.",
     "Save changes": "حفظ التغييرات",
-    "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts.": "اربط التحميل والحفظ بمحول محدد الأنواع. يجب أن يفرض الخادم الصلاحيات والتحقق والإصدارات وإيصالات إعادة المحاولة."
+    "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts.": "اربط التحميل والحفظ بمحول محدد الأنواع. يجب أن يفرض الخادم الصلاحيات والتحقق والإصدارات وإيصالات إعادة المحاولة.",
+    "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.": "ابحث عن المرضى واعرض تفاصيلهم السريعة، ثم افتح سجلهم أو النظرة الشاملة. يحافظ التنقل على هوية المريض.",
+    "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.": "تكوّن البطاقات والحقول والجداول والتبويبات واللوحات والحوارات وضوابط التاريخ والوقت المشتركة صفحات المرضى الثلاث.",
+    "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.": "مرر ClinicalTemplateAdapter إلى ClinicalPatientWorkspace. يستخدم المحول التجريبي نقطة clinical-templates المصادق عليها؛ تأتي البيانات وإعدادات النموذج من API.",
+    "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.": "يتحقق الحفظ من الحقول وتكرار الهوية ونسخ السجل ويعيد استخدام معرّفات العمليات عند المحاولة مجدداً. راجع أحدث سجل صراحةً عند التعارض.",
+    "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.": "يوفر الإطار المشترك اللغة والاتجاه والمظهر والخط والكثافة والتنسيق وتفضيلات التنقل. لا تغيّر أدوات المعاينة سياسة المستأجر.",
+    "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted.": "بيانات الرعاية التجريبية وهمية. تتطلب القرارات السريرية والأهلية وتخزين الملفات والإشعارات خدمات معتمدة. تبقى القيم غير المحفوظة في الذاكرة؛ لا تُحفظ مسودات حساسة تلقائياً.",
+    "Patient Query": "البحث عن المرضى",
+    "Patient Record": "سجل المريض",
+    "Patient 360": "نظرة شاملة للمريض"
   },
   "hi": {
     "Use Customer Master to find and maintain customer records.": "ग्राहकों के रिकॉर्ड खोजने और बनाए रखने के लिए ग्राहक मास्टर का उपयोग करें।",
@@ -335,7 +344,16 @@
     "Shared components": "साझा घटक",
     "Pages reuse shared fields, cards, tables, calendars, overlays and recovery messages. Configuration supplies labels, sections and actions.": "पृष्ठ साझा फ़ील्ड, कार्ड, तालिका, कैलेंडर, ओवरले और बहाली संदेश उपयोग करते हैं। कॉन्फ़िगरेशन लेबल, अनुभाग और कार्रवाइयाँ देता है।",
     "Save changes": "बदलाव सहेजें",
-    "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts.": "लोड और सेव को टाइपयुक्त अडैप्टर से जोड़ें। सर्वर अनुमतियाँ, सत्यापन, संस्करण और पुनः प्रयास रसीदें लागू करे।"
+    "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts.": "लोड और सेव को टाइपयुक्त अडैप्टर से जोड़ें। सर्वर अनुमतियाँ, सत्यापन, संस्करण और पुनः प्रयास रसीदें लागू करे।",
+    "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.": "रोगी खोजें, त्वरित विवरण देखें, फिर रिकॉर्ड या समग्र विवरण खोलें। नेविगेशन रोगी की पहचान बनाए रखता है।",
+    "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.": "साझा कार्ड, फ़ील्ड, तालिकाएँ, टैब, पैनल, संवाद और दिनांक/समय नियंत्रण तीनों रोगी पृष्ठ बनाते हैं।",
+    "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.": "ClinicalPatientWorkspace को ClinicalTemplateAdapter दें। डेमो एडाप्टर प्रमाणित clinical-templates एंडपॉइंट उपयोग करता है; डेटा और फ़ॉर्म मेटाडेटा API से आते हैं।",
+    "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.": "सहेजते समय फ़ील्ड, दोहरी पहचान और रिकॉर्ड संस्करण जाँचे जाते हैं; पुनः प्रयास में वही ऑपरेशन ID उपयोग होती है। टकराव पर नवीनतम रिकॉर्ड की स्पष्ट समीक्षा करें।",
+    "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.": "साझा शेल भाषा, दिशा, थीम, फ़ॉन्ट, घनत्व, प्रारूप और फ़ॉर्म नेविगेशन प्राथमिकताएँ देता है। पूर्वावलोकन नियंत्रण टेनेंट नीति नहीं बदलते।",
+    "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted.": "डेमो देखभाल डेटा काल्पनिक है। वास्तविक नैदानिक निर्णय, पात्रता, फ़ाइल भंडारण और सूचनाओं के लिए अधिकृत सेवाएँ चाहिए। असहेजे मान मेमोरी में रहते हैं; संवेदनशील ड्राफ़्ट स्वतः नहीं सहेजे जाते।",
+    "Patient Query": "रोगी खोज",
+    "Patient Record": "रोगी रिकॉर्ड",
+    "Patient 360": "रोगी का समग्र विवरण"
   },
   "ml": {
     "Use Customer Master to find and maintain customer records.": "ഉപഭോക്തൃ രേഖകൾ കണ്ടെത്താനും പരിപാലിക്കാനും കസ്റ്റമർ മാസ്റ്റർ ഉപയോഗിക്കുക.",
@@ -504,6 +522,15 @@
     "Shared components": "പങ്കിട്ട ഘടകങ്ങൾ",
     "Pages reuse shared fields, cards, tables, calendars, overlays and recovery messages. Configuration supplies labels, sections and actions.": "പേജുകൾ പങ്കിട്ട ഫീൽഡുകൾ, കാർഡുകൾ, പട്ടികകൾ, കലണ്ടറുകൾ, ഓവർലേകൾ, വീണ്ടെടുക്കൽ സന്ദേശങ്ങൾ എന്നിവ ഉപയോഗിക്കുന്നു. ക്രമീകരണം ലേബലുകളും വിഭാഗങ്ങളും പ്രവർത്തനങ്ങളും നൽകുന്നു.",
     "Save changes": "മാറ്റങ്ങൾ സംരക്ഷിക്കുക",
-    "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts.": "ലോഡും സേവും ടൈപ്പ് ചെയ്ത അഡാപ്റ്ററിലൂടെ ബന്ധിപ്പിക്കുക. അനുമതികൾ, പരിശോധന, പതിപ്പുകൾ, വീണ്ടും ശ്രമിച്ച പ്രവർത്തനങ്ങളുടെ രസീതുകൾ എന്നിവ സെർവർ നടപ്പാക്കണം."
+    "Connect load and save through a typed adapter. The server must enforce authorization, validation, versions and retry receipts.": "ലോഡും സേവും ടൈപ്പ് ചെയ്ത അഡാപ്റ്ററിലൂടെ ബന്ധിപ്പിക്കുക. അനുമതികൾ, പരിശോധന, പതിപ്പുകൾ, വീണ്ടും ശ്രമിച്ച പ്രവർത്തനങ്ങളുടെ രസീതുകൾ എന്നിവ സെർവർ നടപ്പാക്കണം.",
+    "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.": "രോഗികളെ തിരയുക, ദ്രുത വിവരങ്ങൾ പരിശോധിക്കുക, തുടർന്ന് രേഖയോ സമഗ്ര കാഴ്ചയോ തുറക്കുക. നാവിഗേഷനിൽ രോഗിയുടെ തിരിച്ചറിയൽ നിലനിർത്തുന്നു.",
+    "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.": "പങ്കിട്ട കാർഡുകൾ, ഫീൽഡുകൾ, പട്ടികകൾ, ടാബുകൾ, പാനലുകൾ, ഡയലോഗുകൾ, തീയതി/സമയ നിയന്ത്രണങ്ങൾ എന്നിവയാണ് മൂന്ന് രോഗി പേജുകളും നിർമ്മിക്കുന്നത്.",
+    "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.": "ClinicalPatientWorkspace-ന് ClinicalTemplateAdapter നൽകുക. ഡെമോ അഡാപ്റ്റർ അംഗീകൃത clinical-templates എൻഡ്പോയിന്റ് ഉപയോഗിക്കുന്നു; വിവരങ്ങളും ഫോം മെറ്റാഡാറ്റയും API-യിൽ നിന്നാണ്.",
+    "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.": "സംരക്ഷിക്കുമ്പോൾ ഫീൽഡുകൾ, ആവർത്തിച്ച തിരിച്ചറിയൽ, രേഖാപതിപ്പുകൾ എന്നിവ പരിശോധിക്കുന്നു; വീണ്ടും ശ്രമിക്കുമ്പോൾ അതേ പ്രവർത്തന ID ഉപയോഗിക്കുന്നു. വൈരുദ്ധ്യമുണ്ടെങ്കിൽ പുതിയ രേഖ വ്യക്തമായി പരിശോധിക്കുക.",
+    "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.": "പങ്കിട്ട ഷെൽ ഭാഷ, ദിശ, തീം, ഫോണ്ട്, സാന്ദ്രത, ഫോർമാറ്റിംഗ്, ഫോം നാവിഗേഷൻ മുൻഗണനകൾ നൽകുന്നു. പ്രിവ്യൂ നിയന്ത്രണങ്ങൾ ടെനന്റ് നയം മാറ്റുന്നില്ല.",
+    "Demo care data is fictional. Production clinical decisions, eligibility, file storage and notifications require authorized domain services. Unsaved values stay in memory; no sensitive drafts are silently persisted.": "ഡെമോ പരിചരണ വിവരങ്ങൾ സാങ്കൽപ്പികമാണ്. യഥാർത്ഥ ക്ലിനിക്കൽ തീരുമാനങ്ങൾ, അർഹത, ഫയൽ സംഭരണം, അറിയിപ്പുകൾ എന്നിവയ്ക്ക് അംഗീകൃത സേവനങ്ങൾ വേണം. സംരക്ഷിക്കാത്ത മൂല്യങ്ങൾ മെമ്മറിയിൽ തുടരും; രഹസ്യ ഡ്രാഫ്റ്റുകൾ സ്വയം സൂക്ഷിക്കില്ല.",
+    "Patient Query": "രോഗിയെ തിരയുക",
+    "Patient Record": "രോഗിയുടെ രേഖ",
+    "Patient 360": "രോഗിയുടെ സമഗ്ര വിവരങ്ങൾ"
   }
 }

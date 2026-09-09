@@ -70,7 +70,7 @@ export function PageRenderer({ target, showTabPreferences = true }: { target: Na
     case "preferences": return <PreferencesPage showTabPreferences={showTabPreferences} />;
     case "spreadsheet": return <SpreadsheetPage />;
     case "template": return <React.Suspense fallback={<FormSkeleton/>}><ConfiguredTemplatePage page={page} target={target}/></React.Suspense>;
-    case "library": return <LibraryPage page={page} />;
+    case "library": return <LibraryPage page={page} target={target} />;
     case "ai-admin": return <AiAdministration />;
     case "inbox": return <InboxPage page={page} />;
     case "consultation": return withPanels(<ConsultationPage page={page} target={target} />);

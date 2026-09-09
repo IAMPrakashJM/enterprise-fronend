@@ -6,6 +6,14 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Clinical page templates — 9 September 2026
+
+Added Patient Query, Patient Record and Patient 360 to Library with modular shared
+components, typed adapters, API-backed metadata/data and four-language copy.
+See [Clinical page templates](clinical-page-templates.md) for workflows, integration,
+source correspondence and explicit demo limitations. Real domain services, governed
+draft persistence and native-speaker review remain integration/review work.
+
 ## Page Template Library — 9 September 2026
 
 Implemented 97 presets in 11 Library sidebar groups with shared TypeScript renderers,

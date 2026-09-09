@@ -808,3 +808,8 @@ MODULES.library.navigation.splice(2,0,{id:'lib-page-templates',label:'template.l
  {id:'page-templates',label:'template.library',pageId:'page-templates',icon:BookOpen},
  ...TEMPLATE_GROUPS.map(group=>({id:`template-group-${group.id}`,label:group.title,icon:BookOpen,children:PAGE_TEMPLATES.filter(template=>template.group===group.id).map(template=>({id:template.id,label:template.title,pageId:template.id}))})),
 ]});
+
+// Specialized clinical compositions are additive; existing presets remain unchanged.
+import {CLINICAL_TEMPLATE_PAGES} from './clinical-templates.ts';
+for(const page of CLINICAL_TEMPLATE_PAGES)PAGE_REGISTRY[page.id]={id:page.id,title:({'allyvora-patient-query':'Patient Query','allyvora-patient-record':'Patient Record','allyvora-patient-360':'Patient 360'} as Record<string,string>)[page.id],titleKey:page.title,subtitle:'template.clinical.demoNotice',kind:'library',module:'library',icon:BookOpen};
+MODULES.library.navigation.splice(3,0,{id:'lib-clinical-templates',label:'template.clinical.library',items:CLINICAL_TEMPLATE_PAGES.map(page=>({id:page.id,label:page.title,pageId:page.id,icon:BookOpen}))});

@@ -64,7 +64,7 @@
     "e2e:native-localization": "node e2e/native-localization.mjs",
     "e2e:components": "node e2e/shared-components.mjs",
     "verify:shared-components": "node scripts/verify-shared-components.mjs",
-    "test:api": "node --test ../dummy-api/*.test.mjs",
+    "test:api": "node --test ../dummy-api/*.test.mjs && npm run test:clinical-api",
     "test:e2e-registry": "node --test e2e/tests/*.test.mjs",
     "e2e:features": "node e2e/run.mjs features",
     "e2e:navigation": "node e2e/run.mjs navigation",
@@ -76,7 +76,8 @@
     "library:sync": "node scripts/library/generate-examples.mjs",
     "verify:library": "node scripts/library/generate-examples.mjs --check",
     "templates:sync": "node scripts/templates/generate-example.ts",
-    "verify:templates": "node scripts/templates/generate-example.ts --check"
+    "verify:templates": "node scripts/templates/generate-example.ts --check",
+    "test:clinical-api": "tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

@@ -1,0 +1,967 @@
+{
+  "schemaVersion": 1,
+  "sections": [
+    {
+      "id": "mrn",
+      "title": "template.clinical.mrn",
+      "subtitle": "template.clinical.sectionHelp.mrn",
+      "fields": [
+        {
+          "id": "status",
+          "label": "template.clinical.status",
+          "type": "select",
+          "options": [
+            {
+              "value": "active",
+              "label": "template.clinical.active"
+            },
+            {
+              "value": "temporary",
+              "label": "template.clinical.temporary"
+            },
+            {
+              "value": "inactive",
+              "label": "template.clinical.inactive"
+            }
+          ]
+        },
+        {
+          "id": "preferredName",
+          "label": "template.clinical.preferredName",
+          "type": "text"
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "personal",
+      "title": "template.clinical.personal",
+      "subtitle": "template.clinical.sectionHelp.personal",
+      "fields": [
+        {
+          "id": "title",
+          "label": "template.clinical.title",
+          "type": "select",
+          "options": [
+            {
+              "value": "mr",
+              "label": "template.clinical.mr"
+            },
+            {
+              "value": "ms",
+              "label": "template.clinical.ms"
+            },
+            {
+              "value": "dr",
+              "label": "template.clinical.dr"
+            }
+          ]
+        },
+        {
+          "id": "firstName",
+          "label": "template.clinical.firstName",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "middleName",
+          "label": "template.clinical.middleName",
+          "type": "text"
+        },
+        {
+          "id": "lastName",
+          "label": "template.clinical.lastName",
+          "type": "text"
+        },
+        {
+          "id": "birthDate",
+          "label": "template.clinical.birthDate",
+          "type": "date"
+        },
+        {
+          "id": "gender",
+          "label": "template.clinical.gender",
+          "type": "select",
+          "options": [
+            {
+              "value": "female",
+              "label": "template.clinical.female"
+            },
+            {
+              "value": "male",
+              "label": "template.clinical.male"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ]
+        },
+        {
+          "id": "nationality",
+          "label": "template.clinical.nationality",
+          "type": "select",
+          "options": [
+            {
+              "value": "india",
+              "label": "template.clinical.india"
+            },
+            {
+              "value": "uae",
+              "label": "template.clinical.uae"
+            },
+            {
+              "value": "uk",
+              "label": "template.clinical.uk"
+            }
+          ]
+        },
+        {
+          "id": "language",
+          "label": "template.clinical.language",
+          "type": "select",
+          "options": [
+            {
+              "value": "en",
+              "label": "template.clinical.en"
+            },
+            {
+              "value": "ar",
+              "label": "template.clinical.ar"
+            },
+            {
+              "value": "hi",
+              "label": "template.clinical.hi"
+            },
+            {
+              "value": "ml",
+              "label": "template.clinical.ml"
+            }
+          ]
+        },
+        {
+          "id": "occupation",
+          "label": "template.clinical.occupation",
+          "type": "text"
+        },
+        {
+          "id": "dobPrecision",
+          "label": "template.clinical.dobPrecision",
+          "type": "select",
+          "options": [
+            {
+              "value": "exact",
+              "label": "template.clinical.exact"
+            },
+            {
+              "value": "estimated",
+              "label": "template.clinical.estimated"
+            },
+            {
+              "value": "unknown",
+              "label": "template.clinical.unknown"
+            }
+          ]
+        },
+        {
+          "id": "maritalStatus",
+          "label": "template.clinical.maritalStatus",
+          "type": "select",
+          "options": [
+            {
+              "value": "single",
+              "label": "template.clinical.single"
+            },
+            {
+              "value": "married",
+              "label": "template.clinical.married"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ]
+        },
+        {
+          "id": "race",
+          "label": "template.clinical.race",
+          "type": "text"
+        },
+        {
+          "id": "ethnicity",
+          "label": "template.clinical.ethnicity",
+          "type": "text"
+        },
+        {
+          "id": "religion",
+          "label": "template.clinical.religion",
+          "type": "text"
+        },
+        {
+          "id": "employer",
+          "label": "template.clinical.employer",
+          "type": "text"
+        },
+        {
+          "id": "birthPlace",
+          "label": "template.clinical.birthPlace",
+          "type": "text"
+        },
+        {
+          "id": "birthCountry",
+          "label": "template.clinical.birthCountry",
+          "type": "select",
+          "options": [
+            {
+              "value": "india",
+              "label": "template.clinical.india"
+            },
+            {
+              "value": "uae",
+              "label": "template.clinical.uae"
+            },
+            {
+              "value": "uk",
+              "label": "template.clinical.uk"
+            }
+          ]
+        },
+        {
+          "id": "educationLevel",
+          "label": "template.clinical.educationLevel",
+          "type": "text"
+        },
+        {
+          "id": "incomeBracket",
+          "label": "template.clinical.incomeBracket",
+          "type": "text"
+        }
+      ],
+      "collections": [
+        "names"
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "template.clinical.contact",
+      "subtitle": "template.clinical.sectionHelp.contact",
+      "fields": [
+        {
+          "id": "mobile",
+          "label": "template.clinical.mobile",
+          "type": "text"
+        },
+        {
+          "id": "email",
+          "label": "template.clinical.email",
+          "type": "email"
+        },
+        {
+          "id": "preferredContact",
+          "label": "template.clinical.preferredContact",
+          "type": "select",
+          "options": [
+            {
+              "value": "mobile",
+              "label": "template.clinical.mobile"
+            },
+            {
+              "value": "email",
+              "label": "template.clinical.email"
+            },
+            {
+              "value": "phone",
+              "label": "template.clinical.phone"
+            }
+          ]
+        },
+        {
+          "id": "contactTime",
+          "label": "template.clinical.contactTime",
+          "type": "text"
+        }
+      ],
+      "collections": [
+        "contacts"
+      ]
+    },
+    {
+      "id": "address",
+      "title": "template.clinical.address",
+      "subtitle": "template.clinical.sectionHelp.address",
+      "fields": [
+        {
+          "id": "emergencyName",
+          "label": "template.clinical.emergencyName",
+          "type": "text"
+        },
+        {
+          "id": "emergencyPhone",
+          "label": "template.clinical.emergencyPhone",
+          "type": "text"
+        },
+        {
+          "id": "emergencyRelation",
+          "label": "template.clinical.emergencyRelation",
+          "type": "text"
+        }
+      ],
+      "collections": [
+        "addresses",
+        "related"
+      ]
+    },
+    {
+      "id": "identity",
+      "title": "template.clinical.identity",
+      "subtitle": "template.clinical.sectionHelp.identity",
+      "fields": [],
+      "collections": [
+        "identifiers",
+        "documents"
+      ]
+    },
+    {
+      "id": "insurance",
+      "title": "template.clinical.insurance",
+      "subtitle": "template.clinical.sectionHelp.insurance",
+      "fields": [
+        {
+          "id": "hasInsurance",
+          "label": "template.clinical.hasInsurance",
+          "type": "checkbox"
+        }
+      ],
+      "collections": [
+        "insurances"
+      ]
+    },
+    {
+      "id": "clinical",
+      "title": "template.clinical.clinical",
+      "subtitle": "template.clinical.sectionHelp.clinical",
+      "fields": [
+        {
+          "id": "bloodGroup",
+          "label": "template.clinical.bloodGroup",
+          "type": "select",
+          "options": [
+            {
+              "value": "aPositive",
+              "label": "template.clinical.aPositive"
+            },
+            {
+              "value": "bPositive",
+              "label": "template.clinical.bPositive"
+            },
+            {
+              "value": "oPositive",
+              "label": "template.clinical.oPositive"
+            },
+            {
+              "value": "abPositive",
+              "label": "template.clinical.abPositive"
+            }
+          ]
+        },
+        {
+          "id": "bloodVerified",
+          "label": "template.clinical.bloodVerified",
+          "type": "checkbox"
+        },
+        {
+          "id": "deceased",
+          "label": "template.clinical.deceased",
+          "type": "checkbox"
+        },
+        {
+          "id": "deathDate",
+          "label": "template.clinical.deathDate",
+          "type": "date"
+        },
+        {
+          "id": "clinicalNotes",
+          "label": "template.clinical.clinicalNotes",
+          "type": "textarea"
+        },
+        {
+          "id": "hasDisability",
+          "label": "template.clinical.hasDisability",
+          "type": "checkbox"
+        }
+      ],
+      "collections": [
+        "disabilities"
+      ]
+    },
+    {
+      "id": "registration",
+      "title": "template.clinical.registration",
+      "subtitle": "template.clinical.sectionHelp.registration",
+      "fields": [
+        {
+          "id": "branch",
+          "label": "template.clinical.branch",
+          "type": "select",
+          "options": [
+            {
+              "value": "main",
+              "label": "template.clinical.main"
+            },
+            {
+              "value": "north",
+              "label": "template.clinical.north"
+            }
+          ]
+        },
+        {
+          "id": "referral",
+          "label": "template.clinical.referral",
+          "type": "text"
+        },
+        {
+          "id": "notes",
+          "label": "template.clinical.notes",
+          "type": "textarea"
+        },
+        {
+          "id": "additionalDetails",
+          "label": "template.clinical.additionalDetails",
+          "type": "textarea"
+        },
+        {
+          "id": "registrationSource",
+          "label": "template.clinical.registrationSource",
+          "type": "text"
+        },
+        {
+          "id": "referralDetails",
+          "label": "template.clinical.referralDetails",
+          "type": "textarea"
+        }
+      ],
+      "collections": []
+    },
+    {
+      "id": "consent",
+      "title": "template.clinical.consent",
+      "subtitle": "template.clinical.sectionHelp.consent",
+      "fields": [
+        {
+          "id": "privacyAccepted",
+          "label": "template.clinical.privacyAccepted",
+          "type": "checkbox"
+        },
+        {
+          "id": "marketingAllowed",
+          "label": "template.clinical.marketingAllowed",
+          "type": "checkbox"
+        }
+      ],
+      "collections": [
+        "consents",
+        "communications"
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "id": "names",
+      "title": "template.clinical.names",
+      "fields": [
+        {
+          "id": "name",
+          "label": "template.clinical.name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "relationship",
+          "label": "template.clinical.relationship",
+          "type": "text"
+        },
+        {
+          "id": "nameType",
+          "label": "template.clinical.nameType",
+          "type": "select",
+          "options": [
+            {
+              "value": "alias",
+              "label": "template.clinical.alias"
+            },
+            {
+              "value": "maiden",
+              "label": "template.clinical.maiden"
+            },
+            {
+              "value": "local",
+              "label": "template.clinical.local"
+            }
+          ]
+        },
+        {
+          "id": "localScript",
+          "label": "template.clinical.localScript",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "contacts",
+      "title": "template.clinical.contacts",
+      "fields": [
+        {
+          "id": "contactType",
+          "label": "template.clinical.contactType",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "mobile",
+              "label": "template.clinical.mobile"
+            },
+            {
+              "value": "email",
+              "label": "template.clinical.email"
+            },
+            {
+              "value": "phone",
+              "label": "template.clinical.phone"
+            }
+          ]
+        },
+        {
+          "id": "value",
+          "label": "template.clinical.value",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "primary",
+          "label": "template.clinical.primary",
+          "type": "select",
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ]
+        },
+        {
+          "id": "countryCode",
+          "label": "template.clinical.countryCode",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "addresses",
+      "title": "template.clinical.addresses",
+      "fields": [
+        {
+          "id": "addressType",
+          "label": "template.clinical.addressType",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "home",
+              "label": "template.clinical.home"
+            },
+            {
+              "value": "work",
+              "label": "template.clinical.work"
+            }
+          ]
+        },
+        {
+          "id": "line1",
+          "label": "template.clinical.line1",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "city",
+          "label": "template.clinical.city",
+          "type": "text"
+        },
+        {
+          "id": "postalCode",
+          "label": "template.clinical.postalCode",
+          "type": "text"
+        },
+        {
+          "id": "country",
+          "label": "template.clinical.country",
+          "type": "text"
+        },
+        {
+          "id": "line2",
+          "label": "template.clinical.line2",
+          "type": "text"
+        },
+        {
+          "id": "state",
+          "label": "template.clinical.state",
+          "type": "text"
+        },
+        {
+          "id": "primary",
+          "label": "template.clinical.primary",
+          "type": "select",
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "related",
+      "title": "template.clinical.related",
+      "fields": [
+        {
+          "id": "name",
+          "label": "template.clinical.name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "relationship",
+          "label": "template.clinical.relationship",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "phone",
+          "label": "template.clinical.phone",
+          "type": "text"
+        },
+        {
+          "id": "email",
+          "label": "template.clinical.email",
+          "type": "email"
+        },
+        {
+          "id": "guardian",
+          "label": "template.clinical.guardian",
+          "type": "select",
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ]
+        },
+        {
+          "id": "emergency",
+          "label": "template.clinical.emergency",
+          "type": "select",
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "identifiers",
+      "title": "template.clinical.identifiers",
+      "fields": [
+        {
+          "id": "identityType",
+          "label": "template.clinical.identityType",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "passport",
+              "label": "template.clinical.passport"
+            },
+            {
+              "value": "nationalId",
+              "label": "template.clinical.nationalId"
+            }
+          ]
+        },
+        {
+          "id": "value",
+          "label": "template.clinical.value",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "expiry",
+          "label": "template.clinical.expiry",
+          "type": "date"
+        },
+        {
+          "id": "issuingCountry",
+          "label": "template.clinical.issuingCountry",
+          "type": "text"
+        },
+        {
+          "id": "verified",
+          "label": "template.clinical.verified",
+          "type": "select",
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "documents",
+      "title": "template.clinical.documents",
+      "fields": [
+        {
+          "id": "documentType",
+          "label": "template.clinical.documentType",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "fileName",
+          "label": "template.clinical.fileName",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "notes",
+          "label": "template.clinical.notes",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "insurances",
+      "title": "template.clinical.insurances",
+      "fields": [
+        {
+          "id": "payer",
+          "label": "template.clinical.payer",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "plan",
+          "label": "template.clinical.plan",
+          "type": "text"
+        },
+        {
+          "id": "memberNumber",
+          "label": "template.clinical.memberNumber",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "expiry",
+          "label": "template.clinical.expiry",
+          "type": "date"
+        },
+        {
+          "id": "insuranceType",
+          "label": "template.clinical.insuranceType",
+          "type": "select",
+          "options": [
+            {
+              "value": "primary",
+              "label": "template.clinical.primary"
+            },
+            {
+              "value": "secondary",
+              "label": "template.clinical.secondary"
+            }
+          ]
+        },
+        {
+          "id": "policyNumber",
+          "label": "template.clinical.policyNumber",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "disabilities",
+      "title": "template.clinical.disabilities",
+      "fields": [
+        {
+          "id": "description",
+          "label": "template.clinical.description",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "notes",
+          "label": "template.clinical.notes",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "consents",
+      "title": "template.clinical.consents",
+      "fields": [
+        {
+          "id": "consentType",
+          "label": "template.clinical.consentType",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "treatment",
+              "label": "template.clinical.treatment"
+            },
+            {
+              "value": "dataSharing",
+              "label": "template.clinical.dataSharing"
+            },
+            {
+              "value": "marketing",
+              "label": "template.clinical.marketing"
+            }
+          ]
+        },
+        {
+          "id": "decision",
+          "label": "template.clinical.decision",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "granted",
+              "label": "template.clinical.granted"
+            },
+            {
+              "value": "declined",
+              "label": "template.clinical.declined"
+            },
+            {
+              "value": "revoked",
+              "label": "template.clinical.revoked"
+            }
+          ]
+        },
+        {
+          "id": "date",
+          "label": "template.clinical.date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "id": "validUntil",
+          "label": "template.clinical.validUntil",
+          "type": "date"
+        },
+        {
+          "id": "givenBy",
+          "label": "template.clinical.givenBy",
+          "type": "text"
+        },
+        {
+          "id": "consentText",
+          "label": "template.clinical.consentText",
+          "type": "textarea"
+        },
+        {
+          "id": "refusalReason",
+          "label": "template.clinical.refusalReason",
+          "type": "textarea"
+        },
+        {
+          "id": "revokedAt",
+          "label": "template.clinical.revokedAt",
+          "type": "date"
+        },
+        {
+          "id": "revocationReason",
+          "label": "template.clinical.revocationReason",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "id": "communications",
+      "title": "template.clinical.communications",
+      "fields": [
+        {
+          "id": "purpose",
+          "label": "template.clinical.purpose",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "appointment",
+              "label": "template.clinical.appointment"
+            },
+            {
+              "value": "results",
+              "label": "template.clinical.results"
+            },
+            {
+              "value": "billing",
+              "label": "template.clinical.billing"
+            },
+            {
+              "value": "general",
+              "label": "template.clinical.general"
+            }
+          ]
+        },
+        {
+          "id": "channel",
+          "label": "template.clinical.channel",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "email",
+              "label": "template.clinical.email"
+            },
+            {
+              "value": "mobile",
+              "label": "template.clinical.mobile"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "providers": [
+    {
+      "value": "provider-1",
+      "label": "Dr Demo Jordan"
+    },
+    {
+      "value": "provider-2",
+      "label": "Dr Demo Rivera"
+    }
+  ]
+}
