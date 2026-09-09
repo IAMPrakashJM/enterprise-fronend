@@ -4,6 +4,7 @@ This frontend is a reusable design and application framework. “Implemented” 
 
 | Feature family | Guidance | Current boundary |
 | --- | --- | --- |
+| Clinical Triage | [User and integration guide](clinical-triage.md) | API drafts, manual triage and handoff; clinical acceptance remains separate |
 | Billing Clinic | [User and integration guide](billing-clinic.md) | CSV-backed demo billing; real payer, gateway and accounting integration remain separate |
 | Library preferences and component compliance | [Current detailed guide](library-preferences.md) | Local corrections implemented; publication and platform limits in the release record |
 | Component examples and copyable code | [Component Library](../../desktop-clients/docs/component-library.md) | Shared demos; new preference behavior is described in the current guide |

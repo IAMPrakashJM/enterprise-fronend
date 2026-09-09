@@ -1,0 +1,11 @@
+
+> nexora-monorepo@1.0.0 verify:localization
+> node scripts/localization/check-copy.mjs && node scripts/localization/check-api-copy.mjs && node scripts/localization/sync-fallbacks.mjs --check
+
+PASS 15506 catalog keys in four languages; 1174 static presentation references; explicit data/code exceptions.
+PASS 167 static API errors registered with catalog message keys.
+
+> nexora-monorepo@1.0.0 verify:documentation
+> node scripts/verify-documentation.mjs
+
+PASS 293 page references; 125 authored workflows in four languages; 168 references await detailed workflow authoring. Native/domain reviews remain pending.

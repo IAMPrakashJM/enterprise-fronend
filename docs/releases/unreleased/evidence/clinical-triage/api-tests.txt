@@ -1,0 +1,31 @@
+
+> nexora-monorepo@1.0.0 test:clinical-api
+> tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts ../dummy-api/clinical-template-csv.test.ts ../dummy-api/clinic-billing-store.test.ts ../dummy-api/clinical-triage-store.test.ts
+
+✔ prescription → order → invoice → partial payments → refund survives restart and duplicate retries (48.2746ms)
+✔ permissions, conflicts, duplicate billing, input validation and tenant isolation (14.30629ms)
+✔ void returns unpaid orders for rebilling and blocks paid invoice cancellation (30.415997ms)
+✔ CSV create round-trips commas quotes Unicode newlines and booleans; query and 360 read the saved record after restart (57.36236ms)
+✔ CSV changes are read on the next API operation; legacy JSON migration preserves records and leaves source intact (55.24592ms)
+✔ corrupt CSV fails closed instead of replacing saved records with seed data (2.784262ms)
+✔ CSV parser enforces quoting, row width and duplicate entity identities (0.347793ms)
+✔ new related entries and their retry receipts survive restart and appear in 360 from CSV (38.190209ms)
+✔ patient search applies combined filters, sorting and pagination (40.757989ms)
+✔ complete registration is atomic, persisted and retried idempotently (44.331354ms)
+✔ validation, duplicate identity and stale versions cannot alter records (24.731193ms)
+✔ patient mutations are tenant/application scoped and permissions are enforced (55.08072ms)
+✔ saved searches are user scoped; appointment writes are patient scoped and retry safe (53.419433ms)
+✔ eligibility reads the saved policy and rejects unknown policy identities (12.225321ms)
+✔ patient record keeps identifiers server managed and projects contact edits into search values (14.941973ms)
+✔ registry search uses whole words, phrases, exclusions and child-record values (55.525373ms)
+✔ draft persists and retries keep one identity; complete locks history and new assessments are blank (17.321622ms)
+✔ completion requires explicit safety/priority and measurements or a reason; malformed input is rejected (4.496518ms)
+✔ server roles, tenant scope, optimistic versions and corrupt CSV are enforced (4.449669ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 526.201035

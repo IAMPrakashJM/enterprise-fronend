@@ -1,0 +1,17 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/clinical-triage/editor.test.tsx packages/ops-ui/src/segmented.test.tsx packages/erp-screens/src/clinic-billing/workspace.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/ops-ui/src/segmented.test.tsx (9 tests) 258ms
+ ✓ packages/erp-screens/src/clinical-triage/editor.test.tsx (3 tests) 635ms
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (3 tests) 654ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  508ms
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  18:28:48
+   Duration  3.36s (transform 1.84s, setup 2.41s, collect 2.20s, tests 1.55s, environment 1.36s, prepare 279ms)
+

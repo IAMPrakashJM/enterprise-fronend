@@ -1474,6 +1474,11 @@
       "id": "billing-clinic",
       "titleKey": "template.clinic.title",
       "subtitleKey": "template.clinic.subtitle"
+    },
+    {
+      "id": "clinical-triage",
+      "titleKey": "template.triage.title",
+      "subtitleKey": "template.triage.subtitle"
     }
   ],
   "nodes": [
@@ -4825,6 +4830,15 @@
       "pageId": "billing-clinic",
       "icon": "BookOpen",
       "order": 3
+    },
+    {
+      "id": "menu.library.clinical-triage",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.triage.title",
+      "pageId": "clinical-triage",
+      "icon": "BookOpen",
+      "order": 4
     }
   ]
 }

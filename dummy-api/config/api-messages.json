@@ -223,5 +223,11 @@
   "template.clinic.error.insurance": "template.clinic.error.insurance",
   "template.clinic.error.payment": "template.clinic.error.payment",
   "template.clinic.error.refund": "template.clinic.error.refund",
-  "template.clinic.error.void": "template.clinic.error.void"
+  "template.clinic.error.void": "template.clinic.error.void",
+  "template.triage.invalid": "template.triage.invalid",
+  "template.triage.denied": "template.triage.denied",
+  "template.triage.storage": "template.triage.storage",
+  "template.triage.conflict": "template.triage.conflict",
+  "template.triage.completedLocked": "template.triage.completedLocked",
+  "template.triage.notFound": "template.triage.notFound"
 }

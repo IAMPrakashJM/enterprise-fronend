@@ -10,3 +10,4 @@ export {reportRows} from "./report-data";
 export * from './drafts';
 export * from './clinical-templates';
 export * from './clinic-billing';
+export * from './clinical-triage';

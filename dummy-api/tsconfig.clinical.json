@@ -20,6 +20,8 @@
     "clinical-template-csv.ts",
     "clinical-template-csv.test.ts",
     "clinic-billing-store.ts",
-    "clinic-billing-store.test.ts"
+    "clinic-billing-store.test.ts",
+    "clinical-triage-store.ts",
+    "clinical-triage-store.test.ts"
   ]
 }

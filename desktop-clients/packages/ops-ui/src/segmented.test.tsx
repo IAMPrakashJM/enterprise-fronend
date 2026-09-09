@@ -74,3 +74,7 @@ describe("Segmented", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 });
+
+test('an unanswered group remains keyboard reachable without preselecting a value',async()=>{
+ render_({value:''});await userEvent.tab();expect(screen.getByRole('radio',{name:'Table'})).toHaveFocus();expect(screen.getAllByRole('radio').every(r=>r.getAttribute('aria-checked')==='false')).toBe(true);
+});

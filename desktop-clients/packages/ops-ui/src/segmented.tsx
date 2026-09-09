@@ -59,7 +59,7 @@ export function Segmented({ label, options, value, onChange, size = "md", classN
       ref={groupRef}
       role="radiogroup"
       aria-label={t(label)}
-      className={cn("inline-flex shrink-0 rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] p-0.5", className)}
+      className={cn("inline-flex shrink-0 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-2)] p-0.5", className)}
     >
       {options.map((option) => {
         const chosen = option.value === value;
@@ -75,14 +75,14 @@ export function Segmented({ label, options, value, onChange, size = "md", classN
             /* One tab stop for the group: only the chosen option is reachable
                by Tab, and arrows move within. Three options costing three tab
                presses to step over makes a toolbar of these unusable. */
-            tabIndex={chosen ? 0 : -1}
+            tabIndex={chosen || (!options.some(o => o.value === value && !o.disabled) && options.find(o => !o.disabled)?.value === option.value) ? 0 : -1}
             onClick={() => { if (!chosen && !option.disabled) onChange(option.value); }}
             onKeyDown={(event) => {
               if (event.key === "ArrowRight" || event.key === "ArrowDown") { event.preventDefault(); step(1); }
               else if (event.key === "ArrowLeft" || event.key === "ArrowUp") { event.preventDefault(); step(-1); }
             }}
             className={cn(
-              "focus-ring flex shrink-0 items-center justify-center gap-1.5 rounded-lg font-bold transition disabled:cursor-not-allowed disabled:opacity-40",
+              "focus-ring flex shrink-0 items-center justify-center gap-1.5 rounded-[var(--radius)] font-bold transition disabled:cursor-not-allowed disabled:opacity-40",
               size === "sm" ? "h-6 px-2 text-[length:calc(9.5px*var(--fs-scale))]" : "h-7 px-2.5 text-[length:calc(10.5px*var(--fs-scale))]",
               chosen ? "bg-[var(--surface)] text-[var(--text)] shadow-[var(--shadow-sm)]" : "text-[var(--text-muted)] hover:text-[var(--text)]",
             )}

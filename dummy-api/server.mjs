@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createClinicalTriageStore} from "./clinical-triage-store.ts";
 import {createClinicBillingStore} from "./clinic-billing-store.ts";
 import {createClinicalTemplateStore} from "./clinical-template-store.ts";
 import {createDraftCenter} from "./draft-center.mjs";
@@ -110,6 +111,7 @@ const sessions = new Map();
    Shape: { "<userId>": { <only the keys that differ from the client's defaults> } } */
 const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "data");
 const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.csv"));
+const clinicalTriage=createClinicalTriageStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-triage.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const clinicBilling=createClinicBillingStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinic-billing.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const monitoringStore=createMonitoringStore(join(DATA_DIR,"monitoring.sqlite"));
 const documentationStore=createDocumentationStore(join(DATA_DIR,"documentation.sqlite"),process.env.NEXORA_CONFIG_DIR ?? join(dirname(fileURLToPath(import.meta.url)),"config"),applicationConfig);
@@ -899,6 +901,17 @@ const server = createServer(async (req, res) => {
     const token = bearer(req);
     if (token) sessions.delete(token);
     return send(res,204);
+  }
+
+  if(pathname==="/clinical-triage"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    if(req.method!=="POST")return send(res,405,{error:"template.triage.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='clinical-triage'))return send(res,403,{error:'template.triage.denied'});
+    const input=await readJson(req,262144).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
+    try{const result=clinicalTriage.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'template.triage.storage'});}
   }
 
   if(pathname==="/clinic-billing"){

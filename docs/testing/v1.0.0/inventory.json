@@ -947,6 +947,13 @@
       "kind": "library",
       "engine": null,
       "coverage": "CLINIC-01; billing store, UI and API acceptance"
+    },
+    {
+      "id": "clinical-triage",
+      "title": "Clinical Triage",
+      "kind": "library",
+      "engine": null,
+      "coverage": "TRIAGE-01; triage store, UI, preference and browser checks"
     }
   ],
   "tests": [

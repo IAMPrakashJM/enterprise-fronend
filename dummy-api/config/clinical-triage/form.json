@@ -1,0 +1,14 @@
+{
+  "vitals": [
+    {"id":"systolic","label":"template.triage.systolic","unit":"mmHg","requiredReading":true,"step":"1"},
+    {"id":"diastolic","label":"template.triage.diastolic","unit":"mmHg","requiredReading":true,"step":"1"},
+    {"id":"pulse","label":"template.triage.pulse","unit":"/min","requiredReading":true,"step":"1"},
+    {"id":"respiratoryRate","label":"template.triage.respiratoryRate","unit":"/min","requiredReading":true,"step":"1"},
+    {"id":"oxygenSaturation","label":"template.triage.oxygenSaturation","unit":"%","requiredReading":true,"max":100,"step":"1"},
+    {"id":"temperature","label":"template.triage.temperature","unit":"°C","requiredReading":true,"step":"0.1"},
+    {"id":"pain","label":"template.triage.pain","unit":"/10","requiredReading":false,"max":10,"step":"1"},
+    {"id":"weight","label":"template.triage.weight","unit":"kg","requiredReading":false,"step":"0.1"}
+  ],
+  "priorities":[{"value":"immediate","label":"template.triage.immediate"},{"value":"urgent","label":"template.triage.urgent"},{"value":"standard","label":"template.triage.standard"}],
+  "destinations":[{"value":"assessment","label":"template.triage.assessment"},{"value":"treatment","label":"template.triage.treatment"},{"value":"review","label":"template.triage.review"}]
+}

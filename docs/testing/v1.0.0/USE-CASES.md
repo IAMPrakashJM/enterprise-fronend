@@ -31,3 +31,13 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | CLINIC-03 | Change a locked form layout during editing, then encounter a network failure | Effective layout changes without losing input; retry reuses the same payload and operation ID | Billing workspace tests |
 | CLINIC-04 | Select whole-number display or another preferred currency | Billing monetary display/exports retain cents and API ledger currency; quantities retain number settings | Billing formatter test and real CSV/Excel download checks |
 | CLINIC-05 | Use Arabic, Hindi or Malayalam | Catalog keys resolve, direction follows the language, desktop page width stays contained | Isolated Chromium language checks; native wording acceptance remains pending |
+
+## Clinical Triage
+
+| ID | Trigger | Expected result | Evidence source |
+| --- | --- | --- | --- |
+| TRIAGE-01 | Open default rail layout at 1600 × 900 | All three sections and completion action fit above the shell status bar; no horizontal overflow | Registered clinical-triage browser suite |
+| TRIAGE-02 | Save, reload, complete and reassess | Draft persists; completed form locks; new assessment has blank readings; history opens previous record | Browser suite and triage store tests |
+| TRIAGE-03 | Submit missing/manual choices, malformed readings, stale version, retry, wrong role or tenant | Required fields and server scope/version/permission checks apply; repeated operation has one result | Triage store tests |
+| TRIAGE-04 | Change locked form navigation or retry a failed request | Effective preference wins; mounted input and retry identity survive | Triage editor tests |
+| TRIAGE-05 | Select Arabic, Hindi, Malayalam and English | Keys resolve, direction is correct and desktop width stays contained | Browser suite; native wording approval remains pending |

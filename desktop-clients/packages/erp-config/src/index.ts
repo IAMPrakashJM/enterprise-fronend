@@ -29,3 +29,4 @@ export * from './clinical-templates.ts';
 
 export {LIBRARY_PAGE_IDS} from "./library-pages.ts";
 export * from './clinic-billing';
+export * from './clinical-triage';
