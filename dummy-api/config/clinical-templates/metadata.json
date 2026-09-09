@@ -698,44 +698,59 @@
               "label": "template.clinical.local"
             }
           ],
-          "span": 4
+          "span": 3
         },
         {
           "id": "title",
           "label": "template.clinical.title",
-          "type": "text",
-          "span": 4
+          "type": "select",
+          "span": 3,
+          "options": [
+            {
+              "value": "mr",
+              "label": "template.clinical.mr"
+            },
+            {
+              "value": "ms",
+              "label": "template.clinical.ms"
+            },
+            {
+              "value": "dr",
+              "label": "template.clinical.dr"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "firstName",
           "label": "template.clinical.firstName",
           "type": "text",
-          "span": 4
+          "span": 3
         },
         {
           "id": "lastName",
           "label": "template.clinical.lastName",
           "type": "text",
-          "span": 4
+          "span": 3
         },
         {
           "id": "name",
           "label": "template.clinical.name",
           "type": "text",
           "required": true,
-          "span": 4
+          "span": 6
         },
         {
           "id": "localScript",
           "label": "template.clinical.localScript",
           "type": "text",
-          "span": 4
+          "span": 6
         },
         {
           "id": "relationship",
           "label": "template.clinical.relationship",
           "type": "text",
-          "span": 4,
+          "span": 3,
           "hidden": true
         }
       ],
@@ -851,7 +866,7 @@
               "label": "template.clinical.no"
             }
           ],
-          "span": 4,
+          "span": 8,
           "control": "primary"
         },
         {
@@ -859,25 +874,51 @@
           "label": "template.clinical.line1",
           "type": "text",
           "required": true,
-          "span": 4
+          "span": 6
         },
         {
           "id": "line2",
           "label": "template.clinical.line2",
           "type": "text",
-          "span": 4
+          "span": 6
         },
         {
           "id": "country",
           "label": "template.clinical.country",
-          "type": "text",
-          "span": 4
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "india",
+              "label": "template.clinical.india"
+            },
+            {
+              "value": "uae",
+              "label": "template.clinical.uae"
+            },
+            {
+              "value": "uk",
+              "label": "template.clinical.uk"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "state",
           "label": "template.clinical.state",
-          "type": "text",
-          "span": 4
+          "type": "select",
+          "span": 4,
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "city",
@@ -900,15 +941,26 @@
       "title": "template.clinical.collectionRelated",
       "fields": [
         {
-          "id": "name",
-          "label": "template.clinical.name",
-          "type": "text",
-          "required": true,
-          "span": 4
-        },
-        {
           "id": "relationship",
           "label": "template.clinical.relationship",
+          "type": "select",
+          "required": true,
+          "span": 4,
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
+        },
+        {
+          "id": "name",
+          "label": "template.clinical.name",
           "type": "text",
           "required": true,
           "span": 4
@@ -923,24 +975,7 @@
           "id": "email",
           "label": "template.clinical.email",
           "type": "email",
-          "span": 4
-        },
-        {
-          "id": "guardian",
-          "label": "template.clinical.guardian",
-          "type": "select",
-          "options": [
-            {
-              "value": "yes",
-              "label": "template.clinical.yes"
-            },
-            {
-              "value": "no",
-              "label": "template.clinical.no"
-            }
-          ],
-          "span": 4,
-          "control": "toggle"
+          "span": 6
         },
         {
           "id": "emergency",
@@ -956,7 +991,24 @@
               "label": "template.clinical.no"
             }
           ],
-          "span": 4,
+          "span": 3,
+          "control": "toggle"
+        },
+        {
+          "id": "guardian",
+          "label": "template.clinical.guardian",
+          "type": "select",
+          "options": [
+            {
+              "value": "yes",
+              "label": "template.clinical.yes"
+            },
+            {
+              "value": "no",
+              "label": "template.clinical.no"
+            }
+          ],
+          "span": 3,
           "control": "toggle"
         }
       ],
@@ -982,25 +1034,57 @@
               "label": "template.clinical.nationalId"
             }
           ],
-          "span": 4
+          "span": 3
+        },
+        {
+          "id": "nationalIdType",
+          "label": "template.clinical.nationalIdType",
+          "type": "select",
+          "span": 3,
+          "options": [
+            {
+              "value": "notStated",
+              "label": "template.clinical.notStated"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "value",
           "label": "template.clinical.value",
           "type": "text",
           "required": true,
-          "span": 4
+          "span": 3
+        },
+        {
+          "id": "issuingCountry",
+          "label": "template.clinical.issuingCountry",
+          "type": "select",
+          "span": 3,
+          "options": [
+            {
+              "value": "india",
+              "label": "template.clinical.india"
+            },
+            {
+              "value": "uae",
+              "label": "template.clinical.uae"
+            },
+            {
+              "value": "uk",
+              "label": "template.clinical.uk"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "expiry",
           "label": "template.clinical.expiry",
           "type": "date",
-          "span": 4
-        },
-        {
-          "id": "issuingCountry",
-          "label": "template.clinical.issuingCountry",
-          "type": "text",
           "span": 4
         },
         {
@@ -1019,12 +1103,6 @@
           ],
           "span": 4,
           "control": "toggle"
-        },
-        {
-          "id": "nationalIdType",
-          "label": "template.clinical.nationalIdType",
-          "type": "text",
-          "span": 4
         }
       ],
       "addRequires": "value",
@@ -1037,9 +1115,28 @@
         {
           "id": "documentType",
           "label": "template.clinical.documentType",
-          "type": "text",
+          "type": "select",
           "required": true,
-          "span": 4
+          "span": 4,
+          "options": [
+            {
+              "value": "passport",
+              "label": "template.clinical.passport"
+            },
+            {
+              "value": "nationalId",
+              "label": "template.clinical.nationalId"
+            },
+            {
+              "value": "insurance",
+              "label": "template.clinical.insurance"
+            },
+            {
+              "value": "other",
+              "label": "template.clinical.other"
+            }
+          ],
+          "allowCustom": true
         },
         {
           "id": "fileName",
