@@ -229,5 +229,11 @@
   "template.triage.storage": "template.triage.storage",
   "template.triage.conflict": "template.triage.conflict",
   "template.triage.completedLocked": "template.triage.completedLocked",
-  "template.triage.notFound": "template.triage.notFound"
+  "template.triage.notFound": "template.triage.notFound",
+  "template.consultation.invalid": "template.consultation.invalid",
+  "template.consultation.denied": "template.consultation.denied",
+  "template.consultation.storage": "template.consultation.storage",
+  "template.consultation.conflict": "template.consultation.conflict",
+  "template.consultation.completedLocked": "template.consultation.completedLocked",
+  "template.consultation.notFound": "template.consultation.notFound"
 }

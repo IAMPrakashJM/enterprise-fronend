@@ -1,0 +1,92 @@
+
+> nexora-monorepo@1.0.0 build
+> turbo run build
+
+• turbo 2.10.12
+
+   • Packages in scope: @pepbits/ai-client, @pepbits/ai-config, @pepbits/ai-ui, @pepbits/auth, @pepbits/erp-config, @pepbits/erp-data, @pepbits/erp-screens, @pepbits/erp-shell, @pepbits/ops-ui, @pepbits/platform-ports, @pepbits/tokens, @pepbits/workspace-core, desktop, web
+   • Running build in 14 packages
+   • Remote caching disabled
+
+web:build: cache miss, executing e0d0b50bb09925ce
+desktop:build: cache miss, executing b9afacefafb9a326
+web:build: 
+web:build: > web@1.0.0 build
+web:build: > rm -rf .next/static && next build && node ../../scripts/stamp-api.mjs NEXT_PUBLIC_API_URL .next
+web:build: 
+desktop:build: 
+desktop:build: > desktop@1.0.0 build
+desktop:build: > rm -rf dist && tsc --noEmit && vite build && node ../../scripts/stamp-api.mjs VITE_API_URL dist
+desktop:build: 
+web:build: ▲ Next.js 16.3.3 (Turbopack)
+web:build: - Environments: .env.local
+web:build: ✓ Running next.config.ts took 39ms
+web:build: 
+web:build:   Creating an optimized production build ...
+web:build: ✓ Compiled successfully in 1096ms
+web:build:   Running TypeScript ...
+desktop:build: vite v7.3.6 building client environment for production...
+desktop:build: transforming...
+web:build:   Finished TypeScript in 9.7s ...
+web:build:   Collecting page data using 3 workers ...
+web:build:   Generating static pages using 3 workers (0/3) ...
+web:build: ✓ Generating static pages using 3 workers (3/3) in 333ms
+web:build:   Finalizing page optimization ...
+web:build: 
+web:build: Route (app)
+web:build: ┌ ○ /
+web:build: ├ ○ /_not-found
+web:build: ├ ƒ /[module]/[page]
+web:build: ├ ƒ /[module]/[page]/[recordId]
+web:build: ├ ƒ /[module]/[page]/[recordId]/edit
+web:build: ├ ƒ /[module]/[page]/new
+web:build: └ ƒ /view/[viewId]
+web:build: 
+web:build: 
+web:build: ○  (Static)   prerendered as static content
+web:build: ƒ  (Dynamic)  server-rendered on demand
+web:build: 
+desktop:build: ✓ 1826 modules transformed.
+desktop:build: rendering chunks...
+desktop:build: [plugin vite:reporter] 
+desktop:build: (!) /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/core.js is dynamically imported by /home/pepadmin/enterprice/desktop-clients/packages/erp-shell/src/sentinel.tsx, /home/pepadmin/enterprice/desktop-clients/packages/erp-shell/src/sentinel.tsx but also statically imported by /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/dpi.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/event.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/image.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webview.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webviewWindow.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/window.js, dynamic import will not move module into another chunk.
+desktop:build: 
+desktop:build: [plugin vite:reporter] 
+desktop:build: (!) /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/event.js is dynamically imported by /home/pepadmin/enterprice/desktop-clients/packages/erp-shell/src/sentinel.tsx but also statically imported by /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webview.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webviewWindow.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/window.js, dynamic import will not move module into another chunk.
+desktop:build: 
+desktop:build: computing gzip size...
+desktop:build: dist/index.html                                       0.96 kB │ gzip:   0.49 kB
+desktop:build: dist/assets/page-template-DHkRpzaa.css                2.17 kB │ gzip:   0.74 kB
+desktop:build: dist/assets/library-page-Bnk30RYg.css                 5.02 kB │ gzip:   1.41 kB
+desktop:build: dist/assets/record-layout-CydyrNUD.css                5.32 kB │ gzip:   1.55 kB
+desktop:build: 
+desktop:build: dist/assets/index-BZb1EE7W.css                       84.11 kB │ gzip:  15.29 kB
+desktop:build: dist/assets/preference-choice-COR7O5Ck.js             0.40 kB │ gzip:   0.26 kB
+desktop:build: dist/assets/record-layout.module-BeXZuZVB.js          0.73 kB │ gzip:   0.37 kB
+desktop:build: (!) Some chunks are larger than 500 kB after minification. Consider:
+desktop:build: dist/assets/parts-egBS0ls6.js                         1.03 kB │ gzip:   0.57 kB
+desktop:build: dist/assets/configured-template-page-7F2-q-K6.js      1.80 kB │ gzip:   0.90 kB
+desktop:build: dist/assets/calendar-D5VYL5Cn.js                      3.49 kB │ gzip:   1.61 kB
+desktop:build: dist/assets/record-layout-D3P9dd0t.js                 3.57 kB │ gzip:   1.58 kB
+desktop:build: dist/assets/library-page-BC_lGgc-.js                  5.72 kB │ gzip:   2.17 kB
+desktop:build: dist/assets/library-page-BO5SXh2u.js                  8.15 kB │ gzip:   2.88 kB
+desktop:build: dist/assets/shared-C2Pf_CHA.js                        8.88 kB │ gzip:   3.34 kB
+desktop:build: dist/assets/workspace-CSOfNfbw.js                     9.16 kB │ gzip:   3.41 kB
+desktop:build: - Using dynamic import() to code-split the application
+desktop:build: dist/assets/template-library-WSZc9oBT.js              9.83 kB │ gzip:   3.31 kB
+desktop:build: dist/assets/library-page-GFKy1bqm.js                 21.32 kB │ gzip:   6.58 kB
+desktop:build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+desktop:build: dist/assets/page-template-2Sro4NYX.js                38.22 kB │ gzip:  11.10 kB
+desktop:build: dist/assets/library-page-t7uiTMyN.js                 48.13 kB │ gzip:  14.75 kB
+desktop:build: dist/assets/component-catalog-C9zVnyhL.js            49.19 kB │ gzip:  12.51 kB
+desktop:build: dist/assets/ar-Ckrl7Vrz.js                          368.47 kB │ gzip: 109.70 kB
+desktop:build: dist/assets/hi-FPu2lO_E.js                          480.83 kB │ gzip: 116.61 kB
+desktop:build: dist/assets/ml-fUPsJOew.js                          570.07 kB │ gzip: 124.72 kB
+desktop:build: dist/assets/index-sxGzi3R5.js                     1,756.98 kB │ gzip: 525.93 kB
+desktop:build: ✓ built in 6.64s
+desktop:build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+ Tasks:    2 successful, 2 total
+Cached:    0 cached, 2 total
+  Time:    17.051s 
+

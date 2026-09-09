@@ -1,0 +1,22 @@
+{
+  "clinicians": [
+    {
+      "value": "demo-clinician-1",
+      "label": "template.consultation.clinicianOne"
+    },
+    {
+      "value": "demo-clinician-2",
+      "label": "template.consultation.clinicianTwo"
+    }
+  ],
+  "visitTypes": [
+    {
+      "value": "new",
+      "label": "template.consultation.newVisit"
+    },
+    {
+      "value": "follow-up",
+      "label": "template.consultation.followUpVisit"
+    }
+  ]
+}

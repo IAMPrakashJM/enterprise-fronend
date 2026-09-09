@@ -1,4 +1,8 @@
-import type { PatientRecord, PatientCareRow } from "./clinical-templates";
+import type {
+  ClinicalDocument,
+  ClinicalDocumentView,
+  ClinicalDocumentSave,
+} from "./clinical-document";
 export const TRIAGE_VITALS = [
   "systolic",
   "diastolic",
@@ -23,17 +27,7 @@ export interface TriageValues {
   measuredAt: string;
   vitals: Record<TriageVital, string>;
 }
-export interface TriageAssessment {
-  id: string;
-  patientId: string;
-  encounterId: string;
-  version: number;
-  status: "draft" | "completed";
-  values: TriageValues;
-  updatedAt: string;
-  actor: string;
-  history: Array<{ at: string; actor: string; messageKey: string }>;
-}
+export type TriageAssessment = ClinicalDocument<TriageValues>;
 export interface TriageField {
   id: TriageVital;
   label: string;
@@ -47,21 +41,11 @@ export interface TriageConfiguration {
   priorities: Array<{ value: string; label: string }>;
   destinations: Array<{ value: string; label: string }>;
 }
-export interface TriageView {
-  patient: PatientRecord;
-  encounters: PatientCareRow[];
-  assessments: TriageAssessment[];
-  blank: TriageAssessment;
-  config: TriageConfiguration;
-  canWrite: boolean;
-}
-export interface TriageSave {
-  patientId: string;
-  assessment: TriageAssessment;
-  expectedVersion: number;
-  operationId: string;
-  complete: boolean;
-}
+export type TriageView = ClinicalDocumentView<
+  TriageValues,
+  TriageConfiguration
+>;
+export type TriageSave = ClinicalDocumentSave<TriageValues>;
 /** Data-entry validation only. No vital-based diagnosis, score, priority or treatment recommendation. */
 export function validateTriage(
   values: TriageValues,

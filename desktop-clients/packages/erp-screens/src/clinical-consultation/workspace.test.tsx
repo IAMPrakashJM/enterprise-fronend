@@ -1,0 +1,97 @@
+import React from "react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  cleanup,
+} from "@testing-library/react";
+import { test, expect, vi, afterEach } from "vitest";
+import {
+  DEFAULT_PREFERENCES,
+  blankConsultation,
+  createFormatters,
+  type ConsultationView,
+} from "@pepbits/erp-config";
+import { ClinicalDocumentEditor } from "../clinical-document/editor";
+import { consultationDefinition } from "./workspace";
+import config from "../../../../../dummy-api/config/clinical-consultation/form.json";
+afterEach(cleanup);
+const view: ConsultationView = {
+  patient: {
+    id: "p",
+    mrn: "DEMO",
+    values: {},
+    collections: {},
+  } as ConsultationView["patient"],
+  encounters: [],
+  assessments: [],
+  blank: {
+    id: "new",
+    patientId: "p",
+    encounterId: "",
+    version: 0,
+    status: "draft",
+    values: blankConsultation(),
+    updatedAt: "",
+    actor: "",
+    history: [],
+  },
+  config,
+  canWrite: true,
+};
+const props = () => ({
+  initial: view,
+  definition: consultationDefinition,
+  adapter: { load: vi.fn().mockResolvedValue(view), save: vi.fn() },
+  preferences: DEFAULT_PREFERENCES,
+  format: createFormatters(DEFAULT_PREFERENCES),
+  onDirty: vi.fn(),
+  onBusy: vi.fn(),
+});
+test("completion requires explicit clinical fields and focuses the first missing field", () => {
+  const p = props();
+  render(<ClinicalDocumentEditor {...p} />);
+  fireEvent.click(
+    screen.getByRole("button", { name: "Complete consultation" }),
+  );
+  expect(p.adapter.save).not.toHaveBeenCalled();
+  expect(
+    screen.getAllByText("Complete this field before finishing consultation.")
+      .length,
+  ).toBeGreaterThan(0);
+  expect(
+    screen.getByRole("textbox", { name: /Clinical assessment/ }),
+  ).toHaveValue("");
+});
+test("failed save retains consultation input and retry identity; layout changes retain input", async () => {
+  const p = props();
+  p.adapter.save
+    .mockRejectedValueOnce(new Error("offline"))
+    .mockImplementation(async (input) => ({
+      ...input.assessment,
+      id: "CON-1",
+      version: 1,
+      updatedAt: "2026-09-09T12:00:00Z",
+    }));
+  const ui = render(<ClinicalDocumentEditor {...p} />);
+  fireEvent.change(screen.getByRole("textbox", { name: /Chief complaint/ }), {
+    target: { value: "Fictional concern" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Save draft" }));
+  await waitFor(() => expect(p.adapter.save).toHaveBeenCalledTimes(1));
+  fireEvent.click(await screen.findByRole("button", { name: /Retry/ }));
+  await waitFor(() => expect(p.adapter.save).toHaveBeenCalledTimes(2));
+  expect(p.adapter.save.mock.calls[1][0]).toEqual(
+    p.adapter.save.mock.calls[0][0],
+  );
+  ui.rerender(
+    <ClinicalDocumentEditor
+      {...p}
+      preferences={{ ...DEFAULT_PREFERENCES, formNavigation: "tabs" }}
+    />,
+  );
+  expect(screen.getByRole("textbox", { name: /Chief complaint/ })).toHaveValue(
+    "Fictional concern",
+  );
+});

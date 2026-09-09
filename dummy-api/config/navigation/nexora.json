@@ -1479,6 +1479,11 @@
       "id": "clinical-triage",
       "titleKey": "template.triage.title",
       "subtitleKey": "template.triage.subtitle"
+    },
+    {
+      "id": "clinical-consultation",
+      "titleKey": "template.consultation.title",
+      "subtitleKey": "template.consultation.subtitle"
     }
   ],
   "nodes": [
@@ -4839,6 +4844,15 @@
       "pageId": "clinical-triage",
       "icon": "BookOpen",
       "order": 4
+    },
+    {
+      "id": "menu.library.clinical-consultation",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.consultation.title",
+      "pageId": "clinical-consultation",
+      "icon": "BookOpen",
+      "order": 5
     }
   ]
 }

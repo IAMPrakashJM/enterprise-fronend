@@ -30,3 +30,7 @@ export * from './clinical-templates.ts';
 export {LIBRARY_PAGE_IDS} from "./library-pages.ts";
 export * from './clinic-billing.ts';
 export * from './clinical-triage.ts';
+
+export * from "./clinical-document.ts";
+
+export * from "./clinical-consultation.ts";

@@ -1,0 +1,21 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/clinical-consultation/workspace.test.tsx packages/erp-screens/src/clinical-triage/editor.test.tsx packages/erp-screens/src/clinic-billing/workspace.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/clinical-consultation/workspace.test.tsx (2 tests) 694ms
+   ✓ completion requires explicit clinical fields and focuses the first missing field  384ms
+   ✓ failed save retains consultation input and retry identity; layout changes retain input  309ms
+ ✓ packages/erp-screens/src/clinical-triage/editor.test.tsx (3 tests) 1031ms
+   ✓ blank readings and unanswered safety choices; completion focuses required complaint  496ms
+   ✓ recoverable failure retains input and retry uses exactly the same request  367ms
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (3 tests) 770ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  659ms
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  19:17:28
+   Duration  3.44s (transform 1.89s, setup 2.24s, collect 3.03s, tests 2.49s, environment 1.30s, prepare 233ms)
+

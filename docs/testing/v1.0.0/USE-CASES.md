@@ -41,3 +41,13 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | TRIAGE-03 | Submit missing/manual choices, malformed readings, stale version, retry, wrong role or tenant | Required fields and server scope/version/permission checks apply; repeated operation has one result | Triage store tests |
 | TRIAGE-04 | Change locked form navigation or retry a failed request | Effective preference wins; mounted input and retry identity survive | Triage editor tests |
 | TRIAGE-05 | Select Arabic, Hindi, Malayalam and English | Keys resolve, direction is correct and desktop width stays contained | Browser suite; native wording approval remains pending |
+
+## Clinical Consultation
+
+| ID | Trigger | Expected result | Evidence source |
+| --- | --- | --- | --- |
+| CONSULT-01 | Open default English layout at 1600 × 900 | Three sections and final actions fit above the status bar | Consultation browser suite |
+| CONSULT-02 | Save, reopen, complete, open history and create a new note | Draft persists, completion locks, new note is blank | Consultation API and browser suites |
+| CONSULT-03 | Retry or submit stale revision, unauthorized role/scope or invalid options | No duplicate write; server checks reject invalid operations | Consultation store tests |
+| CONSULT-04 | Change layout during editing or retry a failed save | Input and retry identity survive shared editor changes | Consultation and triage frontend tests |
+| CONSULT-05 | Switch four languages; re-exercise triage | Labels/direction resolve, width stays contained; existing triage flow works | Consultation and triage browser suites |

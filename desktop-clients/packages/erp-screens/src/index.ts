@@ -36,3 +36,5 @@ export type {PreferenceHost} from "./preference-choice";
 export {BillingClinicWorkspace,type BillingClinicWorkspaceProps} from './clinic-billing/workspace';
 
 export {ClinicalTriageWorkspace,type ClinicalTriageWorkspaceProps} from './clinical-triage/workspace';
+
+export * from "./clinical-consultation/workspace";

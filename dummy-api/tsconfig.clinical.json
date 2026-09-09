@@ -22,6 +22,9 @@
     "clinic-billing-store.ts",
     "clinic-billing-store.test.ts",
     "clinical-triage-store.ts",
-    "clinical-triage-store.test.ts"
+    "clinical-triage-store.test.ts",
+    "clinical-document-store.ts",
+    "clinical-consultation-store.ts",
+    "clinical-consultation-store.test.ts"
   ]
 }
