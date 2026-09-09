@@ -1,6 +1,6 @@
 # Page templates CSV persistence — 9 September 2026
 
-Local implementation; not committed, pushed or deployed as part of this task.
+Committed and pushed as `ca261731793eabe279029633e79f48678f4ce0ab`; deployed to the shared live demo API on 9 September 2026 (UTC).
 
 Worklist Query, Master Record - Main and 360 Data already used the typed demo API adapter. The API now loads records and related data from CSV, persists creates/updates and operation receipts to an atomic CSV snapshot, and reads that snapshot for every operation. Runtime-generated 360 rows were removed. New records begin with empty related history.
 
@@ -28,3 +28,14 @@ cbc64cf89b07eb173165264297a9920f383af7ead3c18f6031da82415c699585  dummy-api/clin
 dc993e367906fba39563fa07d794d92263441633d2d00b54a2d1d843ba66335a  dummy-api/config/clinical-templates/seed.csv
 05a666a621841d5c686bef5f564a3a64fad64aa930bc1ebed41f2c7ed75381f6  dummy-api/server.mjs
 ```
+
+## Live deployment evidence
+
+- Backed up the stopped API data and previous API source to `.deploy/backups/api-csv-20260909T163139Z/` with restricted permissions before activation.
+- No legacy clinical-template JSON file existed in the live data directory. The CSV initialized from the checked-in seed; no saved clinical file required migration.
+- Restarted the API on port 3200 with implementation commit `ca261731793eabe279029633e79f48678f4ce0ab`. Authoritative runtime storage is `dummy-api/data/clinical-templates.csv`.
+- Retained compatible frontend release `20260909161011864-64158fe3`; this change requires no new frontend bundle.
+- Chromium verified Worklist Query, Master Record - Main, 360 Data and their navigation on both `https://front-design.pepbits.com` and `https://desktop.front-design.pepbits.com`, with no page errors.
+- Created one clearly named `CSVDeployment… Persisted` fictional record through the live Master Record form. Confirmed its CSV write and visibility in Worklist Query and 360 Data without request interception.
+- Restarted the live API again, then authenticated through each public host and verified load, search and empty initial 360 history for that record. The fictional verification record remains available in the demo.
+- Remote CI run `34376956990` was in progress at deployment verification time; completion is not claimed. Native desktop executable testing was not performed.
