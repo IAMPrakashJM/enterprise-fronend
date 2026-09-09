@@ -88,9 +88,27 @@ API; recent searches intentionally remain session-only.
 ## Verification
 
 Component tests cover empty initial search, retained criteria after failure, retry,
-inline detail placement, record navigation and recent-search deduplication. API tests
+inline detail placement, record navigation and recent-search deduplication. A failed preset save displays its error inside the
+dialog and preserves the entered name for retry. API tests
 cover whole words, phrases, exclusions, child fields, partial names, ID type, custom
 countries and phone codes. The browser suite exercises table/cards, advanced filters,
 all three detail modes, accessibility, saved presets, registration recovery, care,
-exports and four-language behavior. Final CI and live release evidence is recorded
-below after verification.
+exports and four-language behavior. Final CI and live release evidence follows below.
+
+
+## Released and verified
+
+- Runtime commit: `cf0bc823033d3626d142ef4c98f54900e6281cc4`.
+- [Final CI run](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34349676209):
+  all six jobs passed. This includes 1,474 tests in 99 files, eight clinical API tests,
+  existing API checks, both builds, project checks, browser workflows, product integration,
+  navigation and native Linux lifecycle/localization.
+- Release `20260909121226627-bea290e0` is active on both public demos.
+- Live browser checks passed on `front-design.pepbits.com` and
+  `desktop.front-design.pepbits.com`: no initial registry request, required criterion,
+  API filter options, full-width search, table/cards and drawer/inline/modal details.
+  No runtime errors or patient mutation/export requests occurred in these live checks.
+- The previous frontend release and an API source/data backup are retained for rollback.
+
+The screenshots above show the deployed web page. Authenticated-reference visual
+comparison and native-speaker review remain pending as described above.
