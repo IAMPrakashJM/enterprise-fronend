@@ -28,3 +28,7 @@ Reproduce with the desktop Vite shell pointing at an isolated local API, then ru
 ## Remaining boundaries
 
 No clinical scoring or automatic care routing is implemented. Native-speaker/clinical protocol acceptance, production EHR/database integration, native executable testing, remote CI and deployment are not claimed. Saved API drafts persist; unsaved browser-close restoration is not connected for this workspace.
+
+## Deployment preparation correction
+
+The previous Billing Clinic CI failed because two new config exports omitted the `.ts` extension required by native Node imports. The Billing Clinic and Clinical Triage exports now use explicit extensions. The full local `npm run verify` chain passed after the correction; [verification log](evidence/clinical-triage/deploy-verify.txt). Earlier source hashes remain the implementation-test snapshot. Deployment uses the corrected follow-up commit.

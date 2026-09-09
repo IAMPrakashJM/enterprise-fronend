@@ -28,5 +28,5 @@ export * from "./page-templates.ts";
 export * from './clinical-templates.ts';
 
 export {LIBRARY_PAGE_IDS} from "./library-pages.ts";
-export * from './clinic-billing';
-export * from './clinical-triage';
+export * from './clinic-billing.ts';
+export * from './clinical-triage.ts';
