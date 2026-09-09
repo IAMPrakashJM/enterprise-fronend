@@ -6,7 +6,10 @@ import {localizeApiMessage} from "@pepbits/erp-config";
 import type { DraftCenterAdapter, DraftAdapter, RecordAdapter, RecordPanelsAdapter, ImportAdapter, ApprovalAdapter } from "@pepbits/erp-data";
 
 export type ProductRequest = (path: string, init?: RequestInit) => Promise<Response>;
+import type {PageTemplateAdapter} from "./templates/template-state";
+export const ProductPageTemplateContext = createContext<PageTemplateAdapter|null>(null);
 export interface ProductServices {
+  pageTemplates?: PageTemplateAdapter;
   /** Worklist search/archive/cell edits, personal views, reference lists and export audit. */
   request?: ProductRequest;
   /** Optional domain implementation of the versioned record/draft contract. */
@@ -26,7 +29,7 @@ export const ProductRecordContext = createContext<RecordAdapter | null>(null);
 const RequestContext = createContext<ProductRequest>(authedFetch);
 export function ProductServicesProvider({services,children}: {services:ProductServices;children:React.ReactNode}) {
   return <RequestContext.Provider value={services.request ?? authedFetch}>
-    <ProductDraftCenterContext.Provider value={services.draftCenter ?? null}><ProductDraftContext.Provider value={services.drafts ?? null}><ProductApprovalContext.Provider value={services.approvals ?? null}><ProductImportContext.Provider value={services.imports ?? null}><ProductRecordContext.Provider value={services.records ?? null}><ProductPanelsContext.Provider value={services.panels ?? null}>{children}</ProductPanelsContext.Provider></ProductRecordContext.Provider></ProductImportContext.Provider></ProductApprovalContext.Provider></ProductDraftContext.Provider></ProductDraftCenterContext.Provider>
+    <ProductPageTemplateContext.Provider value={services.pageTemplates ?? null}><ProductDraftCenterContext.Provider value={services.draftCenter ?? null}><ProductDraftContext.Provider value={services.drafts ?? null}><ProductApprovalContext.Provider value={services.approvals ?? null}><ProductImportContext.Provider value={services.imports ?? null}><ProductRecordContext.Provider value={services.records ?? null}><ProductPanelsContext.Provider value={services.panels ?? null}>{children}</ProductPanelsContext.Provider></ProductRecordContext.Provider></ProductImportContext.Provider></ProductApprovalContext.Provider></ProductDraftContext.Provider></ProductDraftCenterContext.Provider></ProductPageTemplateContext.Provider>
   </RequestContext.Provider>;
 }
 export function useProductRequest(): ProductRequest {

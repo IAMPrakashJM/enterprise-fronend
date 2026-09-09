@@ -694,6 +694,7 @@ function defaultAiFor(kind: PageKind): PageAiConfig {
        nothing an approved use case may read, and inventing one to fill the hole
        would mean writing a `reads` list to fit a screen rather than a purpose.
        They opt out at gate 1, which is exactly what { enabled: false } is for. */
+    case "template":
     case "library":
     case "spreadsheet":
     case "preferences":
@@ -797,3 +798,13 @@ export const HEADER_QUICK_PAGES = [
 ];
 
 PAGE_REGISTRY["draft-recovery"] = {id:"draft-recovery",title:"Draft Recovery Center",subtitle:"Find and resume your unfinished work.",kind:"library",module:"shared",icon:BookOpen};
+
+
+// Page templates share rendering engines but retain stable application-specific menu IDs.
+import {PAGE_TEMPLATES,TEMPLATE_GROUPS} from './page-templates.ts';
+PAGE_REGISTRY['page-templates']={id:'page-templates',title:'template.library',subtitle:'template.libraryHelp',kind:'library',module:'library',icon:BookOpen};
+for(const template of PAGE_TEMPLATES)PAGE_REGISTRY[template.id]={id:template.id,title:template.title,subtitle:template.description,kind:'library',module:'library',icon:BookOpen};
+MODULES.library.navigation.splice(2,0,{id:'lib-page-templates',label:'template.library',items:[
+ {id:'page-templates',label:'template.library',pageId:'page-templates',icon:BookOpen},
+ ...TEMPLATE_GROUPS.map(group=>({id:`template-group-${group.id}`,label:group.title,icon:BookOpen,children:PAGE_TEMPLATES.filter(template=>template.group===group.id).map(template=>({id:template.id,label:template.title,pageId:template.id}))})),
+]});

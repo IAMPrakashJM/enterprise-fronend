@@ -11,10 +11,13 @@ import type { PageDefinition } from "@pepbits/erp-config";
 import { useNavigation } from "@pepbits/platform-ports";
 import { useERP } from "@pepbits/erp-shell";
 
+import { TEMPLATE_BY_ID } from "@pepbits/erp-config";
+const TemplateLibrary = lazy(() => import("../templates/template-library").then(module => ({default:module.TemplateLibraryPage})));
 import { CATALOG_GROUPS } from "./catalog";
 const Catalog = lazy(() => import("./component-catalog").then(module => ({default:module.ComponentCatalog})));
 
 export function LibraryPage({page}: {page:PageDefinition}) {
+  if(page.id === "page-templates" || TEMPLATE_BY_ID[page.id]) return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><TemplateLibrary key={page.id} page={page}/></Suspense>;
   if(page.id === "component-library" || CATALOG_GROUPS.some(group => group.pageId === page.id)) return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><Catalog key={page.id} page={page}/></Suspense>;
   return <LegacyLibraryPage page={page}/>;
 }

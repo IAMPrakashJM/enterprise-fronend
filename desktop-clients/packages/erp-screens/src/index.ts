@@ -21,3 +21,6 @@ export * from "./product-services";
 export * from "./records/record-panels";
 export * from "./approvals/approval-workspace";
 export * from "./worklist/data-table";
+
+export * from "./templates/page-template";
+export * from "./templates/template-state";

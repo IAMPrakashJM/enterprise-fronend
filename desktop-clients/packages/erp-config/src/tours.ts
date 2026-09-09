@@ -16,6 +16,7 @@ export interface TourStep {
 }
 
 export const TOURS: Record<PageKind | "default", TourStep[]> = {
+  template: [{target:"template-body",title:"template.components",text:"template.componentHelp"},{target:"template-actions",title:"template.save",text:"template.adapterHelp"}],
   /* Deliberately short. This screen is read by someone who already knows what a
      provider key is; a tour that explains the obvious is the one people learn to
      dismiss without reading. */

@@ -15,6 +15,7 @@ import { BillingPage } from "./billing/billing-page";
 import { ReportsPage } from "./reports/reports-page";
 import { PreferencesPage } from "./preferences";
 import { SpreadsheetPage } from "./spreadsheet";
+const ConfiguredTemplatePage=React.lazy(()=>import("./templates/configured-template-page").then(module=>({default:module.ConfiguredTemplatePage})));
 import { LibraryPage } from "./library";
 import { AiAdministration } from "@pepbits/ai-ui";
 import { InboxPage } from "./inbox";
@@ -43,7 +44,7 @@ import { ConsultationPage } from "./consultation";
  */
 export function SkeletonFor({ kind }: { kind: string }) {
   if (kind === "dashboard") return <DashboardSkeleton />;
-  if (kind === "form" || kind === "billing" || kind === "consultation") return <FormSkeleton />;
+  if (kind === "template" || kind === "form" || kind === "billing" || kind === "consultation") return <FormSkeleton />;
   return <TableSkeleton />;
 }
 
@@ -68,6 +69,7 @@ export function PageRenderer({ target, showTabPreferences = true }: { target: Na
     case "reports": return <ReportsPage page={page} />;
     case "preferences": return <PreferencesPage showTabPreferences={showTabPreferences} />;
     case "spreadsheet": return <SpreadsheetPage />;
+    case "template": return <React.Suspense fallback={<FormSkeleton/>}><ConfiguredTemplatePage page={page} target={target}/></React.Suspense>;
     case "library": return <LibraryPage page={page} />;
     case "ai-admin": return <AiAdministration />;
     case "inbox": return <InboxPage page={page} />;

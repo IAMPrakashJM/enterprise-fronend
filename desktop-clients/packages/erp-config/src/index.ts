@@ -23,3 +23,5 @@ export * from "./application-config.ts";
 export * from './preference-policy.ts';
 export * from "./documentation.ts";
 export * from './draft-policy.ts';
+
+export * from "./page-templates.ts";

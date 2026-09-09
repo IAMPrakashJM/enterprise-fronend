@@ -6,6 +6,14 @@ Written after the client-side work reached the point where the obvious things
 are done. This is the ranked list of what remains, what each would cost, and —
 for the ones that are not ours to do — who they are waiting on.
 
+## Page Template Library — 9 September 2026
+
+Implemented 97 presets in 11 Library sidebar groups with shared TypeScript renderers,
+interactive previews, copyable examples, four-language copy and page help. An explicit
+adapter supports loading and versioned saves. See the [guide](page-template-library.md).
+Production domain services, durable draft wiring for this generic engine and native
+translation review remain application/review work.
+
 ## Component Library — 9 September 2026
 
 The Library now has dedicated component groups, interactive demos and generated

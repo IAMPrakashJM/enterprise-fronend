@@ -29,7 +29,7 @@
     "test:deployment": "node --test scripts/deployment/*.test.mjs",
     "test:watch": "vitest",
     "typecheck": "node scripts/typecheck.mjs",
-    "verify": "npm run -s verify:parity && npm run -s verify:ai-gates && npm run -s verify:ai-modes && npm run -s verify:ai-context && npm run -s verify:ai-limits && npm run -s verify:em-levels && npm run -s verify:filter-safety && npm run -s verify:ai-egress && npm run -s verify:export-safety && npm run -s verify:contrast && npm run -s verify:form-controls && npm run -s verify:shared-components && npm run -s verify:deployable && npm run -s verify:ai-hardening && npm run -s verify:localization && npm run -s verify:e2e-registry && npm run -s verify:bundle && npm run -s verify:documentation && npm run -s verify:library",
+    "verify": "npm run -s verify:parity && npm run -s verify:ai-gates && npm run -s verify:ai-modes && npm run -s verify:ai-context && npm run -s verify:ai-limits && npm run -s verify:em-levels && npm run -s verify:filter-safety && npm run -s verify:ai-egress && npm run -s verify:export-safety && npm run -s verify:contrast && npm run -s verify:form-controls && npm run -s verify:shared-components && npm run -s verify:deployable && npm run -s verify:ai-hardening && npm run -s verify:localization && npm run -s verify:e2e-registry && npm run -s verify:bundle && npm run -s verify:documentation && npm run -s verify:library && npm run -s verify:templates",
     "verify:ai-context": "node scripts/verify-ai-context.mjs",
     "verify:ai-credential": "node scripts/verify-ai-credential.mjs",
     "verify:ai-egress": "node scripts/verify-ai-egress.mjs",
@@ -74,7 +74,9 @@
     "verify:bundle": "node scripts/verify-bundle.mjs",
     "verify:documentation": "node scripts/verify-documentation.mjs",
     "library:sync": "node scripts/library/generate-examples.mjs",
-    "verify:library": "node scripts/library/generate-examples.mjs --check"
+    "verify:library": "node scripts/library/generate-examples.mjs --check",
+    "templates:sync": "node scripts/templates/generate-example.ts",
+    "verify:templates": "node scripts/templates/generate-example.ts --check"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

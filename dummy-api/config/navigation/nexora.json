@@ -939,6 +939,496 @@
       "id": "inline-components",
       "titleKey": "page.inline-components.title",
       "subtitleKey": "page.inline-components.subtitle"
+    },
+    {
+      "id": "page-templates",
+      "titleKey": "template.library",
+      "subtitleKey": "template.libraryHelp"
+    },
+    {
+      "id": "template-simple-master",
+      "titleKey": "template.name.simple-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-detailed-master",
+      "titleKey": "template.name.detailed-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-person-registration",
+      "titleKey": "template.name.person-registration",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-person-profile",
+      "titleKey": "template.name.person-profile",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-organization-profile",
+      "titleKey": "template.name.organization-profile",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-item-service-master",
+      "titleKey": "template.name.item-service-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-hierarchical-master",
+      "titleKey": "template.name.hierarchical-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-relationship-master",
+      "titleKey": "template.name.relationship-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-configuration-master",
+      "titleKey": "template.name.configuration-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-patient-master",
+      "titleKey": "template.name.patient-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-employee-master",
+      "titleKey": "template.name.employee-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-customer-master",
+      "titleKey": "template.name.customer-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-supplier-master",
+      "titleKey": "template.name.supplier-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-student-master",
+      "titleKey": "template.name.student-master",
+      "subtitleKey": "template.help.masters"
+    },
+    {
+      "id": "template-master-list",
+      "titleKey": "template.name.master-list",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-transaction-register",
+      "titleKey": "template.name.transaction-register",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-operational-worklist",
+      "titleKey": "template.name.operational-worklist",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-assignment-queue",
+      "titleKey": "template.name.assignment-queue",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-approval-inbox",
+      "titleKey": "template.name.approval-inbox",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-exception-queue",
+      "titleKey": "template.name.exception-queue",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-board-workspace",
+      "titleKey": "template.name.board-workspace",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-split-list-detail",
+      "titleKey": "template.name.split-list-detail",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-batch-processing",
+      "titleKey": "template.name.batch-processing",
+      "subtitleKey": "template.help.worklists"
+    },
+    {
+      "id": "template-header-lines-order",
+      "titleKey": "template.name.header-lines-order",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-service-test-order",
+      "titleKey": "template.name.service-test-order",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-quotation-estimate",
+      "titleKey": "template.name.quotation-estimate",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-order-fulfillment",
+      "titleKey": "template.name.order-fulfillment",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-return-cancellation",
+      "titleKey": "template.name.return-cancellation",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-order-comparison",
+      "titleKey": "template.name.order-comparison",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-recurring-order",
+      "titleKey": "template.name.recurring-order",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-purchase-order",
+      "titleKey": "template.name.purchase-order",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-sales-order",
+      "titleKey": "template.name.sales-order",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-lab-order",
+      "titleKey": "template.name.lab-order",
+      "subtitleKey": "template.help.orders"
+    },
+    {
+      "id": "template-appointment",
+      "titleKey": "template.name.appointment",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-calendar-workspace",
+      "titleKey": "template.name.calendar-workspace",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-resource-timeline",
+      "titleKey": "template.name.resource-timeline",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-occupancy-board",
+      "titleKey": "template.name.occupancy-board",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-allocation-workspace",
+      "titleKey": "template.name.allocation-workspace",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-roster-timetable",
+      "titleKey": "template.name.roster-timetable",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-waitlist-check-in",
+      "titleKey": "template.name.waitlist-check-in",
+      "subtitleKey": "template.help.bookings"
+    },
+    {
+      "id": "template-patient-encounter",
+      "titleKey": "template.name.patient-encounter",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-service-case",
+      "titleKey": "template.name.service-case",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-long-running-episode",
+      "titleKey": "template.name.long-running-episode",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-procedure-planning",
+      "titleKey": "template.name.procedure-planning",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-surgery-workspace",
+      "titleKey": "template.name.surgery-workspace",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-procedure-execution",
+      "titleKey": "template.name.procedure-execution",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-checklist-workspace",
+      "titleKey": "template.name.checklist-workspace",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-discharge-closure",
+      "titleKey": "template.name.discharge-closure",
+      "subtitleKey": "template.help.cases"
+    },
+    {
+      "id": "template-structured-result",
+      "titleKey": "template.name.structured-result",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-lab-result",
+      "titleKey": "template.name.lab-result",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-narrative-result",
+      "titleKey": "template.name.narrative-result",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-observation-chart",
+      "titleKey": "template.name.observation-chart",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-assessment-scoring",
+      "titleKey": "template.name.assessment-scoring",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-result-verification",
+      "titleKey": "template.name.result-verification",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-result-comparison",
+      "titleKey": "template.name.result-comparison",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-certificate-output",
+      "titleKey": "template.name.certificate-output",
+      "subtitleKey": "template.help.results"
+    },
+    {
+      "id": "template-goods-receipt",
+      "titleKey": "template.name.goods-receipt",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-issue-dispatch",
+      "titleKey": "template.name.issue-dispatch",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-stock-transfer",
+      "titleKey": "template.name.stock-transfer",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-stock-count",
+      "titleKey": "template.name.stock-count",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-batch-serial-tracking",
+      "titleKey": "template.name.batch-serial-tracking",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-pick-pack",
+      "titleKey": "template.name.pick-pack",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-transport-plan",
+      "titleKey": "template.name.transport-plan",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-dispatch-board",
+      "titleKey": "template.name.dispatch-board",
+      "subtitleKey": "template.help.logistics"
+    },
+    {
+      "id": "template-journal-voucher",
+      "titleKey": "template.name.journal-voucher",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-payment-voucher",
+      "titleKey": "template.name.payment-voucher",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-receipt-voucher",
+      "titleKey": "template.name.receipt-voucher",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-invoice-billing",
+      "titleKey": "template.name.invoice-billing",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-patient-billing",
+      "titleKey": "template.name.patient-billing",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-school-fees",
+      "titleKey": "template.name.school-fees",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-credit-debit-note",
+      "titleKey": "template.name.credit-debit-note",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-allocation-settlement",
+      "titleKey": "template.name.allocation-settlement",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-bank-reconciliation",
+      "titleKey": "template.name.bank-reconciliation",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-budget-workspace",
+      "titleKey": "template.name.budget-workspace",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-period-processing",
+      "titleKey": "template.name.period-processing",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-statement-account",
+      "titleKey": "template.name.statement-account",
+      "subtitleKey": "template.help.finance"
+    },
+    {
+      "id": "template-report-parameters",
+      "titleKey": "template.name.report-parameters",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-tabular-report",
+      "titleKey": "template.name.tabular-report",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-grouped-report",
+      "titleKey": "template.name.grouped-report",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-pivot-report",
+      "titleKey": "template.name.pivot-report",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-printable-report",
+      "titleKey": "template.name.printable-report",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-operational-dashboard",
+      "titleKey": "template.name.operational-dashboard",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-management-dashboard",
+      "titleKey": "template.name.management-dashboard",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-analytical-workspace",
+      "titleKey": "template.name.analytical-workspace",
+      "subtitleKey": "template.help.reports"
+    },
+    {
+      "id": "template-entity-360",
+      "titleKey": "template.name.entity-360",
+      "subtitleKey": "template.help.entity"
+    },
+    {
+      "id": "template-history-timeline",
+      "titleKey": "template.name.history-timeline",
+      "subtitleKey": "template.help.entity"
+    },
+    {
+      "id": "template-document-workspace",
+      "titleKey": "template.name.document-workspace",
+      "subtitleKey": "template.help.entity"
+    },
+    {
+      "id": "template-task-workspace",
+      "titleKey": "template.name.task-workspace",
+      "subtitleKey": "template.help.entity"
+    },
+    {
+      "id": "template-communication-workspace",
+      "titleKey": "template.name.communication-workspace",
+      "subtitleKey": "template.help.entity"
+    },
+    {
+      "id": "template-policy-editor",
+      "titleKey": "template.name.policy-editor",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-permissions-matrix",
+      "titleKey": "template.name.permissions-matrix",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-workflow-configuration",
+      "titleKey": "template.name.workflow-configuration",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-import-wizard",
+      "titleKey": "template.name.import-wizard",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-background-jobs",
+      "titleKey": "template.name.background-jobs",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-schedule-configuration",
+      "titleKey": "template.name.schedule-configuration",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-audit-explorer",
+      "titleKey": "template.name.audit-explorer",
+      "subtitleKey": "template.help.administration"
+    },
+    {
+      "id": "template-integration-configuration",
+      "titleKey": "template.name.integration-configuration",
+      "subtitleKey": "template.help.administration"
     }
   ],
   "nodes": [
@@ -3050,7 +3540,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-tools.label",
-      "order": 2
+      "order": 3
     },
     {
       "id": "menu.library.workspace-tools",
@@ -3089,7 +3579,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-design.label",
-      "order": 3
+      "order": 4
     },
     {
       "id": "menu.library.design-tokens",
@@ -3129,7 +3619,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-docs.label",
-      "order": 4
+      "order": 5
     },
     {
       "id": "menu.library.engineering",
@@ -3176,7 +3666,7 @@
       "kind": "section",
       "parentId": "module.library",
       "labelKey": "section.library.lib-settings.label",
-      "order": 5
+      "order": 6
     },
     {
       "id": "menu.library.personalization",
@@ -3319,6 +3809,886 @@
       "labelKey": "menu.library.inline-components.label",
       "order": 7,
       "pageId": "inline-components"
+    },
+    {
+      "id": "section.library.page-templates",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "template.library",
+      "order": 2
+    },
+    {
+      "id": "menu.library.page-templates",
+      "kind": "page",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.library",
+      "order": 0,
+      "pageId": "page-templates",
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-group-masters",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.masters",
+      "order": 1,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-simple-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.simple-master",
+      "pageId": "template-simple-master",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-detailed-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.detailed-master",
+      "pageId": "template-detailed-master",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-person-registration",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.person-registration",
+      "pageId": "template-person-registration",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-person-profile",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.person-profile",
+      "pageId": "template-person-profile",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-organization-profile",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.organization-profile",
+      "pageId": "template-organization-profile",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-item-service-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.item-service-master",
+      "pageId": "template-item-service-master",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-hierarchical-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.hierarchical-master",
+      "pageId": "template-hierarchical-master",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-relationship-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.relationship-master",
+      "pageId": "template-relationship-master",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-configuration-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.configuration-master",
+      "pageId": "template-configuration-master",
+      "order": 8
+    },
+    {
+      "id": "menu.library.template-patient-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.patient-master",
+      "pageId": "template-patient-master",
+      "order": 9
+    },
+    {
+      "id": "menu.library.template-employee-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.employee-master",
+      "pageId": "template-employee-master",
+      "order": 10
+    },
+    {
+      "id": "menu.library.template-customer-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.customer-master",
+      "pageId": "template-customer-master",
+      "order": 11
+    },
+    {
+      "id": "menu.library.template-supplier-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.supplier-master",
+      "pageId": "template-supplier-master",
+      "order": 12
+    },
+    {
+      "id": "menu.library.template-student-master",
+      "kind": "page",
+      "parentId": "menu.library.template-group-masters",
+      "labelKey": "template.name.student-master",
+      "pageId": "template-student-master",
+      "order": 13
+    },
+    {
+      "id": "menu.library.template-group-worklists",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.worklists",
+      "order": 2,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-master-list",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.master-list",
+      "pageId": "template-master-list",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-transaction-register",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.transaction-register",
+      "pageId": "template-transaction-register",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-operational-worklist",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.operational-worklist",
+      "pageId": "template-operational-worklist",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-assignment-queue",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.assignment-queue",
+      "pageId": "template-assignment-queue",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-approval-inbox",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.approval-inbox",
+      "pageId": "template-approval-inbox",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-exception-queue",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.exception-queue",
+      "pageId": "template-exception-queue",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-board-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.board-workspace",
+      "pageId": "template-board-workspace",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-split-list-detail",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.split-list-detail",
+      "pageId": "template-split-list-detail",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-batch-processing",
+      "kind": "page",
+      "parentId": "menu.library.template-group-worklists",
+      "labelKey": "template.name.batch-processing",
+      "pageId": "template-batch-processing",
+      "order": 8
+    },
+    {
+      "id": "menu.library.template-group-orders",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.orders",
+      "order": 3,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-header-lines-order",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.header-lines-order",
+      "pageId": "template-header-lines-order",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-service-test-order",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.service-test-order",
+      "pageId": "template-service-test-order",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-quotation-estimate",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.quotation-estimate",
+      "pageId": "template-quotation-estimate",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-order-fulfillment",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.order-fulfillment",
+      "pageId": "template-order-fulfillment",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-return-cancellation",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.return-cancellation",
+      "pageId": "template-return-cancellation",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-order-comparison",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.order-comparison",
+      "pageId": "template-order-comparison",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-recurring-order",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.recurring-order",
+      "pageId": "template-recurring-order",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-purchase-order",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.purchase-order",
+      "pageId": "template-purchase-order",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-sales-order",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.sales-order",
+      "pageId": "template-sales-order",
+      "order": 8
+    },
+    {
+      "id": "menu.library.template-lab-order",
+      "kind": "page",
+      "parentId": "menu.library.template-group-orders",
+      "labelKey": "template.name.lab-order",
+      "pageId": "template-lab-order",
+      "order": 9
+    },
+    {
+      "id": "menu.library.template-group-bookings",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.bookings",
+      "order": 4,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-appointment",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.appointment",
+      "pageId": "template-appointment",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-calendar-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.calendar-workspace",
+      "pageId": "template-calendar-workspace",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-resource-timeline",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.resource-timeline",
+      "pageId": "template-resource-timeline",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-occupancy-board",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.occupancy-board",
+      "pageId": "template-occupancy-board",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-allocation-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.allocation-workspace",
+      "pageId": "template-allocation-workspace",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-roster-timetable",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.roster-timetable",
+      "pageId": "template-roster-timetable",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-waitlist-check-in",
+      "kind": "page",
+      "parentId": "menu.library.template-group-bookings",
+      "labelKey": "template.name.waitlist-check-in",
+      "pageId": "template-waitlist-check-in",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-group-cases",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.cases",
+      "order": 5,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-patient-encounter",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.patient-encounter",
+      "pageId": "template-patient-encounter",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-service-case",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.service-case",
+      "pageId": "template-service-case",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-long-running-episode",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.long-running-episode",
+      "pageId": "template-long-running-episode",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-procedure-planning",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.procedure-planning",
+      "pageId": "template-procedure-planning",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-surgery-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.surgery-workspace",
+      "pageId": "template-surgery-workspace",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-procedure-execution",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.procedure-execution",
+      "pageId": "template-procedure-execution",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-checklist-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.checklist-workspace",
+      "pageId": "template-checklist-workspace",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-discharge-closure",
+      "kind": "page",
+      "parentId": "menu.library.template-group-cases",
+      "labelKey": "template.name.discharge-closure",
+      "pageId": "template-discharge-closure",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-group-results",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.results",
+      "order": 6,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-structured-result",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.structured-result",
+      "pageId": "template-structured-result",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-lab-result",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.lab-result",
+      "pageId": "template-lab-result",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-narrative-result",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.narrative-result",
+      "pageId": "template-narrative-result",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-observation-chart",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.observation-chart",
+      "pageId": "template-observation-chart",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-assessment-scoring",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.assessment-scoring",
+      "pageId": "template-assessment-scoring",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-result-verification",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.result-verification",
+      "pageId": "template-result-verification",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-result-comparison",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.result-comparison",
+      "pageId": "template-result-comparison",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-certificate-output",
+      "kind": "page",
+      "parentId": "menu.library.template-group-results",
+      "labelKey": "template.name.certificate-output",
+      "pageId": "template-certificate-output",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-group-logistics",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.logistics",
+      "order": 7,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-goods-receipt",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.goods-receipt",
+      "pageId": "template-goods-receipt",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-issue-dispatch",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.issue-dispatch",
+      "pageId": "template-issue-dispatch",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-stock-transfer",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.stock-transfer",
+      "pageId": "template-stock-transfer",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-stock-count",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.stock-count",
+      "pageId": "template-stock-count",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-batch-serial-tracking",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.batch-serial-tracking",
+      "pageId": "template-batch-serial-tracking",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-pick-pack",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.pick-pack",
+      "pageId": "template-pick-pack",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-transport-plan",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.transport-plan",
+      "pageId": "template-transport-plan",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-dispatch-board",
+      "kind": "page",
+      "parentId": "menu.library.template-group-logistics",
+      "labelKey": "template.name.dispatch-board",
+      "pageId": "template-dispatch-board",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-group-finance",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.finance",
+      "order": 8,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-journal-voucher",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.journal-voucher",
+      "pageId": "template-journal-voucher",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-payment-voucher",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.payment-voucher",
+      "pageId": "template-payment-voucher",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-receipt-voucher",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.receipt-voucher",
+      "pageId": "template-receipt-voucher",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-invoice-billing",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.invoice-billing",
+      "pageId": "template-invoice-billing",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-patient-billing",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.patient-billing",
+      "pageId": "template-patient-billing",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-school-fees",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.school-fees",
+      "pageId": "template-school-fees",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-credit-debit-note",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.credit-debit-note",
+      "pageId": "template-credit-debit-note",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-allocation-settlement",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.allocation-settlement",
+      "pageId": "template-allocation-settlement",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-bank-reconciliation",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.bank-reconciliation",
+      "pageId": "template-bank-reconciliation",
+      "order": 8
+    },
+    {
+      "id": "menu.library.template-budget-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.budget-workspace",
+      "pageId": "template-budget-workspace",
+      "order": 9
+    },
+    {
+      "id": "menu.library.template-period-processing",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.period-processing",
+      "pageId": "template-period-processing",
+      "order": 10
+    },
+    {
+      "id": "menu.library.template-statement-account",
+      "kind": "page",
+      "parentId": "menu.library.template-group-finance",
+      "labelKey": "template.name.statement-account",
+      "pageId": "template-statement-account",
+      "order": 11
+    },
+    {
+      "id": "menu.library.template-group-reports",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.reports",
+      "order": 9,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-report-parameters",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.report-parameters",
+      "pageId": "template-report-parameters",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-tabular-report",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.tabular-report",
+      "pageId": "template-tabular-report",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-grouped-report",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.grouped-report",
+      "pageId": "template-grouped-report",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-pivot-report",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.pivot-report",
+      "pageId": "template-pivot-report",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-printable-report",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.printable-report",
+      "pageId": "template-printable-report",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-operational-dashboard",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.operational-dashboard",
+      "pageId": "template-operational-dashboard",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-management-dashboard",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.management-dashboard",
+      "pageId": "template-management-dashboard",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-analytical-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-reports",
+      "labelKey": "template.name.analytical-workspace",
+      "pageId": "template-analytical-workspace",
+      "order": 7
+    },
+    {
+      "id": "menu.library.template-group-entity",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.entity",
+      "order": 10,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-entity-360",
+      "kind": "page",
+      "parentId": "menu.library.template-group-entity",
+      "labelKey": "template.name.entity-360",
+      "pageId": "template-entity-360",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-history-timeline",
+      "kind": "page",
+      "parentId": "menu.library.template-group-entity",
+      "labelKey": "template.name.history-timeline",
+      "pageId": "template-history-timeline",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-document-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-entity",
+      "labelKey": "template.name.document-workspace",
+      "pageId": "template-document-workspace",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-task-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-entity",
+      "labelKey": "template.name.task-workspace",
+      "pageId": "template-task-workspace",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-communication-workspace",
+      "kind": "page",
+      "parentId": "menu.library.template-group-entity",
+      "labelKey": "template.name.communication-workspace",
+      "pageId": "template-communication-workspace",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-group-administration",
+      "kind": "group",
+      "parentId": "section.library.page-templates",
+      "labelKey": "template.group.administration",
+      "order": 11,
+      "icon": "BookOpen"
+    },
+    {
+      "id": "menu.library.template-policy-editor",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.policy-editor",
+      "pageId": "template-policy-editor",
+      "order": 0
+    },
+    {
+      "id": "menu.library.template-permissions-matrix",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.permissions-matrix",
+      "pageId": "template-permissions-matrix",
+      "order": 1
+    },
+    {
+      "id": "menu.library.template-workflow-configuration",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.workflow-configuration",
+      "pageId": "template-workflow-configuration",
+      "order": 2
+    },
+    {
+      "id": "menu.library.template-import-wizard",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.import-wizard",
+      "pageId": "template-import-wizard",
+      "order": 3
+    },
+    {
+      "id": "menu.library.template-background-jobs",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.background-jobs",
+      "pageId": "template-background-jobs",
+      "order": 4
+    },
+    {
+      "id": "menu.library.template-schedule-configuration",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.schedule-configuration",
+      "pageId": "template-schedule-configuration",
+      "order": 5
+    },
+    {
+      "id": "menu.library.template-audit-explorer",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.audit-explorer",
+      "pageId": "template-audit-explorer",
+      "order": 6
+    },
+    {
+      "id": "menu.library.template-integration-configuration",
+      "kind": "page",
+      "parentId": "menu.library.template-group-administration",
+      "labelKey": "template.name.integration-configuration",
+      "pageId": "template-integration-configuration",
+      "order": 7
     }
   ]
 }

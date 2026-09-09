@@ -1,3 +1,4 @@
+import type {PageTemplateDefinition} from "./page-templates";
 import type { LucideIcon } from "lucide-react";
 
 export type ModuleKey = "hr" | "finance" | "payroll" | "sales" | "supply" | "healthcare" | "pharmacy" | "library";
@@ -11,7 +12,7 @@ export type Density = "compact" | "comfortable" | "spacious";
 export type ToastPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
 export type BillingLayout = "workspace" | "vertical" | "split";
 export type LanguageKey = "en" | "ar" | "hi" | "ml";
-export type PageKind = "dashboard" | "worklist" | "form" | "billing" | "reports" | "preferences" | "spreadsheet" | "library" | "ai-admin" | "inbox" | "consultation";
+export type PageKind = "template" | "dashboard" | "worklist" | "form" | "billing" | "reports" | "preferences" | "spreadsheet" | "library" | "ai-admin" | "inbox" | "consultation";
 export type FieldType = "text" | "email" | "phone" | "number" | "date" | "select" | "multiselect" | "textarea" | "toggle";
 export type OpenRecordsIn = "new-tab" | "same-tab";
 export type DateFormat = "iso" | "dmy" | "mdy" | "medium";
@@ -204,6 +205,8 @@ export interface PageAiConfig {
 }
 
 export interface PageDefinition {
+  templateId?: string;
+  templateDefinition?: PageTemplateDefinition;
   titleKey?: string;
   subtitleKey?: string;
   id: string;
