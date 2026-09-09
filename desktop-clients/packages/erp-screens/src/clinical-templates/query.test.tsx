@@ -63,9 +63,7 @@ test("query waits for criteria and preserves filters after a failed search", asy
   vi.mocked(adapter.search)
     .mockRejectedValueOnce(new ClinicalRequestFailure(503))
     .mockResolvedValue({ rows: [row], total: 1, page: 1, pageSize: 20 });
-  expect(
-    screen.getByRole("button", { name: "Search" }),
-  ).toBeDisabled();
+  expect(screen.getByRole("button", { name: "Search" })).toBeDisabled();
   expect(adapter.search).not.toHaveBeenCalled();
   fireEvent.change(screen.getByLabelText("First name", { exact: true }), {
     target: { value: " Alex " },
@@ -117,4 +115,27 @@ test("recent search signatures ignore case, whitespace and unattached country co
   expect(querySignature({ mobile: "123", mobileCode: "+971" })).not.toBe(
     querySignature({ mobile: "123", mobileCode: "+91" }),
   );
+});
+
+test("failed preset saves show their error in the dialog and preserve its name", async () => {
+  const { adapter } = setup();
+  vi.mocked(adapter.saveSearch)
+    .mockRejectedValueOnce(new ClinicalRequestFailure(503))
+    .mockResolvedValue([]);
+  fireEvent.change(screen.getByLabelText("First name"), {
+    target: { value: "Alex" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Save preset" }));
+  const dialog = await screen.findByRole("dialog");
+  fireEvent.change(within(dialog).getByLabelText("Search name"), {
+    target: { value: "My search" },
+  });
+  fireEvent.click(within(dialog).getByRole("button", { name: "Save search" }));
+  await within(dialog).findByRole("alert");
+  expect(within(dialog).getByLabelText("Search name")).toHaveValue("My search");
+  fireEvent.click(within(dialog).getByRole("button", { name: "Save search" }));
+  await waitFor(() =>
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
+  );
+  expect(adapter.saveSearch).toHaveBeenCalledTimes(2);
 });

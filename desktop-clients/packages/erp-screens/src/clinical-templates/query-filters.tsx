@@ -8,6 +8,8 @@ import {
   Select,
   DateInput,
   Modal,
+  RecoveryNotice,
+  failureFromError,
   useLocalization,
 } from "@pepbits/ops-ui";
 import {
@@ -37,6 +39,7 @@ export function PatientQueryFilters({
   recents,
   busy,
   presetBusy,
+  error,
   inputRef,
   onChange,
   onSearch,
@@ -53,6 +56,7 @@ export function PatientQueryFilters({
   recents: PatientFilters[];
   busy: boolean;
   presetBusy: boolean;
+  error?: unknown;
   inputRef: RefObject<HTMLDivElement | null>;
   onChange: (key: QueryField | "mobileCode", value: string) => void;
   onSearch: () => void;
@@ -286,6 +290,7 @@ export function PatientQueryFilters({
               });
           }}
         >
+          {error ? <RecoveryNotice failure={failureFromError(error)} /> : null}
           <Input
             label="template.clinical.searchName"
             value={name}

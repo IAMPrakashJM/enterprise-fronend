@@ -259,6 +259,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
         recents={recents}
         busy={!!applied && !search.value && !search.error}
         presetBusy={presetBusy}
+        error={error}
         inputRef={nameRef}
         onChange={(key: QueryField | "mobileCode", value: string) =>
           setFilters((f) => ({ ...f, [key]: value }))
