@@ -69,7 +69,16 @@ deploy. Its API URLs must still match the deployment config:
 npm run deploy -- --activate PREVIOUS_RELEASE_ID
 ```
 
-## Latest activation — Draft Recovery Center, 8 September 2026
+## Latest activation — Component Library, 9 September 2026
+
+Release `20260909012454211-3a549a4a`, from application commit `6796689`, is active
+on both demo hosts. All six CI jobs and public Library, localization, asset and
+API checks passed. Previous API source and data are retained under
+`.deploy/api-backups/20260909012454211-3a549a4a/`; previous frontend release
+`20260908194545473-e14bcece` remains available for rollback. The API restart
+invalidated existing demo sessions. See [Component Library verification](component-library.md#verified-deployment--9-september-2026).
+
+## Earlier activation — Draft Recovery Center, 8 September 2026
 
 Release `20260908194545473-e14bcece`, from application commit `c9fa329`, is active
 on both demo hosts. All six CI jobs and public recovery-center, localization,

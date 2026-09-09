@@ -71,3 +71,12 @@ To add a shared component, export it from the shared package, add a self-contain
 Component tests cover export coverage, search/reset, actual code copying, blocked clipboard fallback, product-aware navigation and input-preserving recovery. The browser suite checks every group, overlays, tables, accessibility and the absence of business-write requests. The existing calendar regression checks date/time input, keyboard navigation and direction in English, Arabic, Hindi and Malayalam.
 
 Local validation passed: 1,450 unit tests, API/deployment checks, both production builds and repository verification. The isolated catalog browser suite passed, including sorting, inline edits and zero business-write requests. Calendar interaction and direction checks passed in all four languages.
+
+
+## Verified deployment — 9 September 2026
+
+Application commit `6796689d2cbaeb96ec532396327dcd2fac5d76c6` passed all six jobs in [CI run 34299082028](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34299082028): 1,450 unit tests, 61 API tests, 2 suite-registry tests, 14 deployment tests and all 35 runtime suites (9 browser, 21 feature, 1 product, 1 navigation and 3 native Linux).
+
+Release `20260909012454211-3a549a4a` is deployed on [the web demo](https://front-design.pepbits.com) and [the desktop demo](https://desktop.front-design.pepbits.com). Public checks passed Library navigation, component search, generated code, the clipboard action, date-group navigation and catalogs in all four languages. Both hosts also passed HTML/assets, health, login, navigation and Arabic-catalog checks. No runtime errors or business-write requests were observed in the Library checks.
+
+The demo API was stopped for a consistent data backup and restarted to load the updated configuration. Existing sessions need to sign in again. Previous API source and data are retained in `.deploy/api-backups/20260909012454211-3a549a4a/`; frontend release `20260908194545473-e14bcece` remains available for rollback. No native installer was published. Native-speaker wording approval remains pending; automated translation and interaction checks are not human review.

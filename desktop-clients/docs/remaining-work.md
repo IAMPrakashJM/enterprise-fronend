@@ -9,7 +9,9 @@ for the ones that are not ours to do — who they are waiting on.
 ## Component Library — 9 September 2026
 
 The Library now has dedicated component groups, interactive demos and generated
-copyable React examples covering all public shared UI components. See
+copyable React examples covering all 75 public shared UI components.
+Deployed to both demo sites after all six remote CI jobs passed; public Library
+and four-language catalog checks passed. See
 [Component Library guide](component-library.md) for usage and integration.
 Native translation review remains pending.
 
