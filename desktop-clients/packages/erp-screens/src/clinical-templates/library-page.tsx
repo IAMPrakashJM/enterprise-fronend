@@ -49,7 +49,7 @@ export function ClinicalLibraryPage({
   const code = `import { ClinicalPatientWorkspace } from '@pepbits/erp-screens';\nimport { createClinicalTemplateAdapter } from '@pepbits/erp-data';\nimport type { UserPreferences } from '@pepbits/erp-config';\n\nexport function PatientPage({ request, productId, scopeKey, preferences }: {\n  request: (path: string, init?: RequestInit) => Promise<Response>;\n  productId: string;\n  scopeKey: string; // tenant + application + user + record\n  preferences: UserPreferences;\n}) {\n  const adapter = React.useMemo(() => createClinicalTemplateAdapter(request, productId), [request, productId]);\n  return <ClinicalPatientWorkspace adapter={adapter} scopeKey={scopeKey}\n    initialPage={{ view: '${view}' }} preferences={preferences} />;\n}\n`;
   return (
     <div className="space-y-4" data-clinical-library={page.id}>
-      {view === "record" ? (
+      {view !== "overview" ? (
         <div className="flex items-center justify-between gap-2">
           <Tabs
             items={[
@@ -60,7 +60,13 @@ export function ClinicalLibraryPage({
             value={tab}
             onChange={setTab}
           />
-          <Badge>{t("template.clinical.demoRecord")}</Badge>
+          <Badge>
+            {t(
+              view === "record"
+                ? "template.clinical.demoRecord"
+                : "template.clinical.demoQuery",
+            )}
+          </Badge>
         </div>
       ) : (
         <Card>

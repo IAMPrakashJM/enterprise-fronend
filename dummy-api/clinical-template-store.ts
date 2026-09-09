@@ -1,3 +1,4 @@
+import { searchMatch } from "./clinical-template-search.ts";
 import { readFileSync, mkdirSync, writeFileSync, renameSync } from "node:fs";
 import { dirname } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
@@ -40,6 +41,16 @@ const text = (value: unknown) =>
   typeof value === "string" ? value.trim() : "";
 function summary(p: PatientRecord): PatientSummary {
   return {
+    country:
+      (
+        p.collections.addresses.find((r) => r.primary === "yes") ??
+        p.collections.addresses[0]
+      )?.country ?? "",
+    identifier:
+      (
+        p.collections.identifiers.find((r) => r.primary === "yes") ??
+        p.collections.identifiers[0]
+      )?.value ?? "",
     id: p.id,
     mrn: p.mrn,
     internalCode: p.internalCode,
@@ -318,7 +329,22 @@ export function createClinicalTemplateStore(file: string) {
         rows: b.care[id] ?? [],
         loadedAt: new Date().toISOString(),
       });
-      if (action === "metadata") return ok({ ...metadata, canWrite });
+      if (action === "metadata") {
+        const known =
+          metadata.collections
+            .find((c) => c.id === "addresses")
+            ?.fields.find((f) => f.id === "country")?.options ?? [];
+        const country = [...known];
+        for (const value of new Set(
+          bucket.records
+            .flatMap((p) => p.collections.addresses.map((r) => r.country))
+            .filter(Boolean),
+        )) {
+          if (!country.some((o) => o.value === value))
+            country.push({ value, label: value });
+        }
+        return ok({ ...metadata, canWrite, searchOptions: { country } });
+      }
       if (action === "new")
         return canWrite
           ? ok(newRecord())
@@ -350,34 +376,28 @@ export function createClinicalTemplateStore(file: string) {
       if (action === "search" || action === "export") {
         const f = (body.filters ?? {}) as PatientFilters;
         if (!f || typeof f !== "object" || Array.isArray(f)) return fail(400);
-        const rows = bucket.records
-          .filter((p) => {
-            const s = summary(p);
-            return Object.entries(f).every(([k, v]) => {
-              const q = text(v).toLowerCase();
-              if (!q) return true;
-              if (k === "q")
-                return JSON.stringify([s, p.values, p.collections.identifiers])
-                  .toLowerCase()
-                  .includes(q);
-              if (k === "identity")
-                return p.collections.identifiers.some((r) =>
-                  r.value?.toLowerCase().includes(q),
-                );
-              if (["page", "pageSize", "sort", "direction"].includes(k))
-                return true;
-              const actual =
-                k in s ? s[k as keyof PatientSummary] : p.values[k];
-              return ["gender", "nationality", "status", "birthDate"].includes(
-                k,
-              )
-                ? String(actual ?? "").toLowerCase() === q
-                : String(actual ?? "")
-                    .toLowerCase()
-                    .startsWith(q);
-            });
-          })
-          .map(summary);
+        const duplicateKey = (p: PatientRecord) =>
+          [p.values.firstName, p.values.lastName, p.values.birthDate]
+            .map((v) => text(v).toLowerCase())
+            .join("|");
+        const counts = new Map<string, number>();
+        bucket.records.forEach((p) =>
+          counts.set(duplicateKey(p), (counts.get(duplicateKey(p)) ?? 0) + 1),
+        );
+        const rows = bucket.records.flatMap((p) => {
+          const match = searchMatch(p, f);
+          return match.matches
+            ? [
+                {
+                  ...summary(p),
+                  matchedIn: match.matchedIn,
+                  possibleDuplicate:
+                    !!p.values.birthDate &&
+                    (counts.get(duplicateKey(p)) ?? 0) > 1,
+                },
+              ]
+            : [];
+        });
         const sort = ["name", "mrn", "birthDate", "registeredAt"].includes(
           f.sort ?? "",
         )

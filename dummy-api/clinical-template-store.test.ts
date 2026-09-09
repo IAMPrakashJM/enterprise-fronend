@@ -269,3 +269,54 @@ test("patient record keeps identifiers server managed and projects contact edits
     x.close();
   }
 });
+
+test("registry search uses whole words, phrases, exclusions and child-record values", () => {
+  const x = setup();
+  try {
+    const search = (filters: Record<string, string>) =>
+      x.call({ action: "search", filters }).body as PatientSearchResult;
+    assert.equal(search({ q: "Alex" }).total, 1);
+    assert.equal(search({ q: "Ale" }).total, 0);
+    assert.equal(search({ q: '"Alex Morgan"' }).total, 1);
+    assert.equal(search({ q: "Alex -Morgan" }).total, 0);
+    assert.equal(search({ firstName: "lex" }).total, 1);
+    const row = search({ firstName: "Alex" }).rows[0];
+    const p = x.call({ action: "load", id: row.id }).body as PatientRecord;
+    const contact = p.collections.contacts.find(
+      (c) => c.contactType === "email",
+    );
+    assert.ok(contact);
+    assert.equal(search({ q: contact.value }).rows[0].id, row.id);
+    const address = p.collections.addresses[0];
+    assert.ok(address?.country);
+    assert.ok(
+      search({ country: address.country }).rows.some((r) => r.id === row.id),
+    );
+    const identifier = p.collections.identifiers[0];
+    assert.ok(identifier?.identityType);
+    {
+      assert.equal(
+        search({
+          identity: identifier.value,
+          identityType: identifier.identityType,
+        }).rows[0].id,
+        row.id,
+      );
+      assert.equal(
+        search({ identity: identifier.value, identityType: "nonexistent" })
+          .total,
+        0,
+      );
+    }
+    assert.equal(search({ q: "zzzz-unmatched" }).total, 0);
+    assert.equal(search({ mobile: "not-a-phone" }).total, 0);
+    assert.equal(
+      search({ mobile: "00000000001", mobileCode: "+0" }).rows[0].id,
+      row.id,
+    );
+    assert.equal(search({ mobile: "00000000001", mobileCode: "+91" }).total, 0);
+    assert.equal(search({ q: "!!!" }).total, 0);
+  } finally {
+    x.close();
+  }
+});

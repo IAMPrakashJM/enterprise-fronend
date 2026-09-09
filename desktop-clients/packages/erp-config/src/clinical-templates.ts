@@ -50,6 +50,10 @@ export interface PatientRecord {
   activity: PatientActivity[];
 }
 export interface PatientSummary {
+  country?: string;
+  identifier?: string;
+  matchedIn?: string[];
+  possibleDuplicate?: boolean;
   id: string;
   mrn: string;
   internalCode: string;
@@ -64,6 +68,9 @@ export interface PatientSummary {
   version: number;
 }
 export interface PatientFilters {
+  identityType?: string;
+  country?: string;
+  mobileCode?: string;
   q?: string;
   mrn?: string;
   firstName?: string;
@@ -110,6 +117,7 @@ export interface PatientOverview {
   loadedAt: string;
 }
 export interface PatientMetadata {
+  searchOptions?: Record<string, Array<{ value: string; label: string }>>;
   sections: PatientSection[];
   collections: PatientCollection[];
   providers: Array<{ value: string; label: string }>;

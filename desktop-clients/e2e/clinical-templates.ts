@@ -61,16 +61,30 @@ try {
   }
   await open("allyvora-patient-query");
   let query = page.locator("[data-clinical-query]");
-  await query.getByText("12 patients found", { exact: true }).waitFor();
+  await query
+    .getByRole("heading", { name: "Search the patient registry", exact: true })
+    .waitFor();
+  assert.equal(actions.filter((a) => a === "search").length, 0);
+  assert.equal(
+    await query
+      .getByRole("button", { name: "Search", exact: true })
+      .isDisabled(),
+    true,
+  );
   await query
     .getByRole("textbox", { name: "First name", exact: true })
     .fill("Alex");
   await query.getByRole("button", { name: "Search", exact: true }).click();
-  await query.getByText("1 patients found", { exact: true }).waitFor();
-  await query
+  await query.getByText("1 patient found", { exact: true }).waitFor();
+  await query.getByRole("button", { name: "Save preset", exact: true }).click();
+  await page
+    .getByRole("dialog")
     .getByRole("textbox", { name: "Search name", exact: true })
     .fill("My demo search");
-  await query.getByRole("button", { name: "Save search", exact: true }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Save search", exact: true })
+    .click();
   await query
     .getByRole("combobox", { name: "Saved searches", exact: true })
     .getByRole("option", { name: "My demo search", exact: true })
@@ -85,6 +99,52 @@ try {
     .getByRole("button", { name: "Close", exact: true })
     .last()
     .click();
+  await query
+    .getByRole("button", { name: "More filters", exact: true })
+    .click();
+  await query
+    .getByRole("combobox", { name: "Residing country", exact: true })
+    .selectOption("Demo Country");
+  await query.getByRole("button", { name: "Search", exact: true }).click();
+  await query.getByText("1 patient found", { exact: true }).waitFor();
+  await query.getByRole("button", { name: /More filters/ }).click();
+  await query.getByRole("tab", { name: "Inline", exact: true }).click();
+  await query.getByRole("button", { name: "Alex Morgan", exact: true }).click();
+  await query
+    .locator("[data-query-detail]")
+    .getByRole("heading", { name: "Alex Morgan", exact: true })
+    .waitFor();
+  assert.equal(
+    await query
+      .locator("[data-query-detail]")
+      .evaluate((e) => !!e.closest("tr")),
+    true,
+  );
+  await query
+    .locator("[data-query-detail]")
+    .getByRole("button", { name: "Close", exact: true })
+    .click();
+  await query.getByRole("tab", { name: "Modal", exact: true }).click();
+  await query.getByRole("button", { name: "Alex Morgan", exact: true }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("heading", { name: "Alex Morgan", exact: true })
+    .waitFor();
+  await page.screenshot({ path: "/tmp/query-modal.png" });
+  assert.deepEqual(
+    (await audit(page, { include: '[role="dialog"]' })).filter((v) =>
+      ["critical", "serious"].includes(v.impact),
+    ),
+    [],
+  );
+  await page.keyboard.press("Escape");
+  await query.getByRole("tab", { name: "Cards", exact: true }).click();
+  await query
+    .getByRole("button", { name: "Alex Morgan", exact: true })
+    .waitFor();
+  await page.screenshot({ path: "/tmp/query-cards.png" });
+  await query.getByRole("tab", { name: "Table", exact: true }).click();
+  await query.getByRole("tab", { name: "Drawer", exact: true }).click();
   await page
     .locator("[data-clinical-library]")
     .first()
@@ -227,7 +287,14 @@ try {
   await page.screenshot({ path: "/tmp/clinical-patient-360.png" });
   await open("allyvora-patient-query");
   query = page.locator("[data-clinical-query]");
-  await query.getByRole("button", { name: "Clear", exact: true }).click();
+  if (
+    await query.getByRole("button", { name: "Clear all", exact: true }).count()
+  )
+    await query.getByRole("button", { name: "Clear all", exact: true }).click();
+  await query
+    .getByRole("textbox", { name: "MRN / UHID", exact: true })
+    .fill("DEMO-");
+  await query.getByRole("button", { name: "Search", exact: true }).click();
   await query.getByText("13 patients found", { exact: true }).waitFor();
   await query.getByRole("button", { name: "Export", exact: true }).click();
   const download = page.waitForEvent("download");
@@ -271,7 +338,7 @@ try {
     await page
       .locator("[data-clinical-query]")
       .getByRole("heading", {
-        name: catalog["template.clinical.query"],
+        name: catalog["template.clinical.findPatient"],
         exact: true,
       })
       .waitFor();

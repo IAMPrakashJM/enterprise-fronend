@@ -27,6 +27,9 @@ accounts can read. The API enforces write permission independently of disabled b
 
 ## Patient Query
 
+See [Patient Query alignment](patient-query-parity.md) for the updated full-width
+search panel, search semantics, quick-detail modes and integration notes.
+
 ![Patient Query](images/clinical-patient-query.png)
 
 1. Enter a name, MRN, identity number or other filter. Filters combine together.

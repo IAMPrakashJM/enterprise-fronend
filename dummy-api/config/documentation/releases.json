@@ -38206,7 +38206,7 @@
           "pageId": "allyvora-patient-query",
           "module": "library",
           "title": "Patient Query",
-          "revision": 1,
+          "revision": 2,
           "status": "authored",
           "language": "en",
           "reviewStatus": "pending",
@@ -38215,8 +38215,8 @@
               "id": "workflow",
               "title": "How to use this page",
               "paragraphs": [
-                "Search patients, inspect quick details, then open their record or Patient 360. Navigation retains patient identity.",
-                "Shared cards, fields, tables, tabs, drawers, dialogs and date/time controls compose the three patient pages.",
+                "Enter at least one search criterion, then select Search. Search anywhere matches whole words, quoted phrases and exclusions; the labelled fields support partial values. More filters includes ID type, nationality, residing country, gender, date of birth and status.",
+                "Choose table or cards and open patient details inline, in a dialog, or in a drawer. Previous and next navigate the current result page. Save a named preset to the API, or reuse recent searches kept only in this workspace session. Record, booking, encounter and 360 actions retain patient identity.",
                 "Pass a ClinicalTemplateAdapter to ClinicalPatientWorkspace. The demo adapter uses the authenticated clinical-templates endpoint; business data and form metadata come from the API.",
                 "Saves validate fields and identity duplicates, enforce record versions and reuse operation IDs for retries. Review the latest record explicitly after a conflict.",
                 "The shared shell supplies language, direction, theme, font, density, formatting and form navigation preferences. Preview controls do not change tenant policy.",
@@ -38638,6 +38638,17 @@
       "category": "improvement",
       "title": "Patient Record",
       "summary": "Use the section rail to scroll all nine patient sections. Tabs and wizard show one section at a time. The footer keeps New, Cancel, save and available care actions accessible while the form scrolls.",
+      "requiresAcknowledgment": false
+    },
+    {
+      "id": "patient-query-layout",
+      "revision": 1,
+      "releaseId": "2026-09-08-documentation",
+      "pageId": "allyvora-patient-query",
+      "sectionId": "workflow",
+      "category": "improvement",
+      "title": "Patient Query",
+      "summary": "Enter at least one search criterion, then select Search. Search anywhere matches whole words, quoted phrases and exclusions; the labelled fields support partial values. More filters includes ID type, nationality, residing country, gender, date of birth and status.",
       "requiresAcknowledgment": false
     }
   ]

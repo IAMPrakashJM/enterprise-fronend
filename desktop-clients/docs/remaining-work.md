@@ -295,3 +295,10 @@ definitions and production bulk-processing adapters remain integration work.
 The Customer Master approval workflow is implemented through a reusable adapter.
 See [approvals.md](approvals.md). Additional entities, production workflow storage
 and email/push delivery remain integration work.
+
+## Patient Query source alignment — 9 September 2026
+
+The query template now uses the source search-panel/results composition, shared
+patient quick details and extended demo search filters. See
+[the query guide](patient-query-parity.md). Authenticated-reference pixel comparison,
+native-speaker review and real clinical service integration remain outside the demo.
