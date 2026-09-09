@@ -74,7 +74,7 @@ export const PREFERENCE_OPTIONS: Partial<Record<keyof UserPreferences, ReadonlyA
   theme: THEME_IDS,
   formNavigation: ["rail", "tabs", "wizard"],
   resultView: ["table", "cards"],
-  previewMode: ["center-card", "center-modal", "left-drawer", "right-drawer"],
+  previewMode: ["inline", "center-card", "center-modal", "left-drawer", "right-drawer"],
   sidebarPlacement: ["left", "right"],
   density: ["compact", "comfortable", "spacious"],
   pageSize: [10, 20, 50, 100],

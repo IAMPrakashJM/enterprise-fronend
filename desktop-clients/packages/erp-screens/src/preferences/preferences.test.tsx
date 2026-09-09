@@ -10,6 +10,8 @@ test('record layout and all three density options use the central preference upd
  render(<PreferencesPage/>);
  fireEvent.change(screen.getByRole('combobox',{name:'Record form style'}),{target:{value:'wizard'}});
  expect(state.update).toHaveBeenCalledWith('formNavigation','wizard');
+ fireEvent.change(screen.getByRole('combobox',{name:'Quick view style'}),{target:{value:'inline'}});
+ expect(state.update).toHaveBeenCalledWith('previewMode','inline');
  fireEvent.click(screen.getByRole('tab',{name:'Page'}));
  const density=screen.getByRole('combobox',{name:'Density'});
  for(const value of ['compact','comfortable','spacious']){

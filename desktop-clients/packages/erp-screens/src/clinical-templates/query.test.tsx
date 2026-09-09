@@ -91,13 +91,12 @@ test("query waits for criteria and preserves filters after a failed search", asy
   expect(adapter.search).toHaveBeenCalledTimes(2);
 });
 test("inline details belong to the selected row and record actions use navigation", async () => {
-  const { onOpen } = setup();
+  const { onOpen } = setup({preferences:{...DEFAULT_PREFERENCES,previewMode:"inline"}});
   fireEvent.change(screen.getByLabelText("First name", { exact: true }), {
     target: { value: "Alex" },
   });
   fireEvent.click(screen.getByRole("button", { name: "Search" }));
   await screen.findByRole("button", { name: "Alex Morgan" });
-  fireEvent.click(screen.getByRole("tab", { name: "Inline" }));
   fireEvent.click(screen.getByRole("button", { name: "Alex Morgan" }));
   await screen.findByRole("heading", { name: "Alex Morgan" });
   const detail = document.querySelector("[data-query-detail]")!;
@@ -146,12 +145,12 @@ test("failed preset saves show their error in the dialog and preserve its name",
 });
 
 
-test("query locks disable view, inline preview and page size controls", async () => {
+test("query has no presentation selectors and honors locked page size", async () => {
   setup({preferencePolicy:{revision:1,rules:{resultView:{locked:true,value:'table'},previewMode:{locked:true,value:'left-drawer'},pageSize:{locked:true,value:10}}}});
   fireEvent.change(screen.getByLabelText('First name',{exact:true}),{target:{value:'Alex'}});
   fireEvent.click(screen.getByRole('button',{name:'Search'}));await screen.findByRole('button',{name:'Alex Morgan'});
-  expect(screen.getByRole('tab',{name:'Cards'})).toBeDisabled();
-  expect(screen.getByRole('tab',{name:'Inline'})).toBeDisabled();
+  expect(screen.queryByRole('tab',{name:'Cards'})).not.toBeInTheDocument();
+  expect(screen.queryByRole('tab',{name:'Inline'})).not.toBeInTheDocument();
   expect(screen.getByRole('combobox',{name:'Rows per page'})).toBeDisabled();
 });
 test("disabled query shortcuts do not focus search or open help", async () => {

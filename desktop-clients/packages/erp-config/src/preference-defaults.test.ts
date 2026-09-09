@@ -14,3 +14,9 @@ describe("optional features stay off", () => {
     expect(DEFAULT_PREFERENCES.openRecordsInTabs).toBe(true);
   });
 });
+
+import {validPreference, effectivePreferences} from "./preference-policy";
+test("inline preview is a valid persisted preference and respects managed policy",()=>{
+ expect(validPreference("previewMode","inline")).toBe(true);
+ expect(effectivePreferences({previewMode:"inline"},{revision:1,rules:{previewMode:{locked:true,value:"left-drawer"}}}).previewMode).toBe("left-drawer");
+});

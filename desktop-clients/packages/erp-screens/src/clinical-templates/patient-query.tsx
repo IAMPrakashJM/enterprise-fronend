@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
-  Tabs,
   Drawer,
   CenterRecordCard,
   Modal,
@@ -15,11 +14,6 @@ import {
 } from "@pepbits/ops-ui";
 import {
   Search,
-  Rows3,
-  LayoutGrid,
-  PanelRight,
-  PanelsTopLeft,
-  Rows2,
   Columns3,
   Download,
 } from "lucide-react";
@@ -61,7 +55,6 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
     ),
     [columnsOpen, setColumnsOpen] = useState(false),
     [selected, setSelected] = useState<PatientSummary | null>(null),
-    [inline, setInline] = useState(false),
     [care, setCare] = useState<{
       kind: "appointment" | "encounter";
       id: string;
@@ -73,11 +66,9 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
     [exportBusy, setExportBusy] = useState(false),
     [presetBusy, setPresetBusy] = useState(false),
     [help, setHelp] = useState(false);
-  const [view, setView, viewLocked] = usePreferenceChoice(props, "resultView");
-  const [preview, setPreview, previewLocked] = usePreferenceChoice(props, "previewMode");
+  const [view] = usePreferenceChoice(props, "resultView");
+  const [detail] = usePreferenceChoice(props, "previewMode");
   const [pageSize, setPageSize, pageSizeLocked] = usePreferenceChoice(props, "pageSize");
-  const detail = inline && !previewLocked ? "inline" : preview;
-  useEffect(() => setInline(false), [preferences.previewMode, previewLocked]);
   useEffect(() => { setApplied(a => a && a.pageSize !== pageSize ? {...a, pageSize, page: 1} : a); }, [pageSize]);
   const search = useClinicalLoad(
     () => (applied ? adapter.search(applied) : Promise.resolve(null)),
@@ -126,14 +117,10 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
         e.preventDefault();
         setHelp(true);
       }
-      if (e.key.toLowerCase() === "v") {
-        e.preventDefault();
-        setView(view === "table" ? "cards" : "table");
-      }
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [preferences.keyboardShortcuts, view, viewLocked, setView]);
+  }, [preferences.keyboardShortcuts]);
   const apply = (value = filters) => {
     const normalized = normalizeQuery(value);
     if (!queryFields.some((k) => normalized[k])) return;
@@ -325,58 +312,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
                 <Download size={14} />
                 {t("template.clinical.export")}
               </Button>
-              <span className={styles.hint}>
-                {t("template.clinical.openAs")}
-              </span>
-              <fieldset disabled={previewLocked} className="contents">
-              <Tabs
-                variant="segmented"
-                items={[
-                  {
-                    id: "inline",
-                    label: "template.clinical.inline",
-                    icon: <Rows2 size={14} />,
-                  },
-                  {
-                    id: "center-modal",
-                    label: "template.clinical.modal",
-                    icon: <PanelsTopLeft size={14} />,
-                  },
-                  {
-                    id: "right-drawer",
-                    label: "Right side panel",
-                    icon: <PanelRight size={14} />,
-                  },
-                  {id: "left-drawer", label: "Left side panel"},
-                  {id: "center-card", label: "Centered record card"},
-                ]}
-                value={detail}
-                onChange={(v) => {
-                  if (previewLocked) return;
-                  setInline(v === "inline");
-                  if (v !== "inline") setPreview(v as typeof preview);
-                }}
-              />
-              </fieldset>
-              <fieldset disabled={viewLocked} className="contents">
-              <Tabs
-                variant="segmented"
-                items={[
-                  {
-                    id: "table",
-                    label: "template.clinical.table",
-                    icon: <Rows3 size={14} />,
-                  },
-                  {
-                    id: "cards",
-                    label: "template.clinical.cards",
-                    icon: <LayoutGrid size={14} />,
-                  },
-                ]}
-                value={view}
-                onChange={(v) => setView(v as typeof view)}
-              />
-              </fieldset>
+
             </div>
           </div>
           {!search.value ? (
@@ -486,7 +422,6 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
         <div className="space-y-3">
           {[
             ["/", "searchAnywhere"],
-            ["V", "resultLayout"],
             ["?", "keyboardShortcuts"],
             ["← →", "patientNavigation"],
             ["Esc", "closeDetails"],

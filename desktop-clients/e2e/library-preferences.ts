@@ -36,7 +36,7 @@ try {
  let root=await open('template-patient-master');assert.ok(await root.getByLabel('Preview layout').isDisabled());
  root=await open('table-components');assert.ok(await root.getByRole('switch',{name:'Compact',exact:true}).isDisabled());
  root=await open('allyvora-patient-query');await root.locator('[data-clinical-query]').waitFor();await root.getByRole('textbox',{name:'MRN / UHID',exact:true}).fill('DEMO-');await root.getByRole('button',{name:'Search',exact:true}).click();await root.locator('tbody tr').first().waitFor();
- assert.ok(await root.getByRole('tab',{name:'Cards',exact:true}).isDisabled());assert.ok(await root.getByRole('tab',{name:'Inline',exact:true}).isDisabled());assert.ok(await root.getByRole('combobox',{name:'Rows per page'}).isDisabled());
+ assert.equal(await root.getByRole('tab',{name:'Cards',exact:true}).count(),0);assert.equal(await root.getByRole('tab',{name:'Inline',exact:true}).count(),0);assert.ok(await root.getByRole('combobox',{name:'Rows per page'}).isDisabled());
  assert.equal(await root.locator('tbody td').first().evaluate(e=>getComputedStyle(e).paddingTop),expectedPadding);const scales=await root.locator('[data-clinical-query]').evaluate(e=>({form:parseFloat(getComputedStyle(e).getPropertyValue('--fs-scale')),result:parseFloat(getComputedStyle(e.querySelector('table')!).getPropertyValue('--fs-scale')),radius:getComputedStyle(e.firstElementChild!).borderRadius}));
  assert.ok(Math.abs(scales.form-17/13)<0.001);assert.ok(Math.abs(scales.result-15/13)<0.001);assert.equal(scales.radius,'0px');
  const badge=root.locator('table').getByText('Active',{exact:true}).first();if(await badge.count())assert.equal(await badge.evaluate(e=>getComputedStyle(e).whiteSpace),'nowrap');

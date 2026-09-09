@@ -6,7 +6,7 @@ export type ThemeKey = "nexora" | "midnight" | "emerald" | "sand" | "rose" | "sl
   | "indigo" | "lagoon" | "sunset" | "graphite" | "plum" | "nord" | "solarized";
 export type FormNavigation = "rail" | "tabs" | "wizard";
 export type ResultView = "table" | "cards";
-export type PreviewMode = "center-card" | "center-modal" | "left-drawer" | "right-drawer";
+export type PreviewMode = "inline" | "center-card" | "center-modal" | "left-drawer" | "right-drawer";
 export type SidebarPlacement = "left" | "right";
 export type Density = "compact" | "comfortable" | "spacious";
 export type ToastPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";

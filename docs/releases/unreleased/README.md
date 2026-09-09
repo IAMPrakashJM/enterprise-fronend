@@ -4,6 +4,7 @@ Record: `library-preferences-2026-09-09`. **Deployed to both demo sites.** See t
 
 | Item | Record |
 | --- | --- |
+| Patient Query display controls | [Query preference consolidation](query-preferences-2026-09-09.md) |
 | Patient Record footer and Preferences follow-up | [Preference consolidation](record-preferences-2026-09-09.md) |
 | Documentation follow-up and its own validation | [Documentation delivery](documentation-2026-09-09.md) |
 | Detailed change/recovery notes | [Library preference delivery](library-preferences-2026-09-09.md) |

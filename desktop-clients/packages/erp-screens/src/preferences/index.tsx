@@ -284,14 +284,14 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           {/* ================= BEHAVIOUR ================= */}
           {/* Row for row, Vantage's Layout group -- same labels, same hints. */}
           <PreferenceSection {...common} tab="behaviour" tour="prefs-layout" title="Layout" subtitle="Honoured by every module and page." icon={<PanelLeft className="size-4" />}
-            keys={["formNavigation", "resultView", "previewMode", "pageSize"]} keywords="layout record form style rail tabs wizard worklist result view table cards quick view preview card modal panel rows per page size">
+            keys={["formNavigation", "resultView", "previewMode", "pageSize"]} keywords="layout record form style rail tabs wizard worklist result view table cards quick view preview inline card modal panel rows per page size">
             <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>
               <PreferenceControl preferenceKey="formNavigation"><Select label="Record form style" hint="preferences.recordLayout.help" value={preferences.formNavigation} onChange={(event) => set("formNavigation", event.target.value as FormNavigation)} options={[{ value: "rail", label: "Rail" }, { value: "tabs", label: "Tabs" }, { value: "wizard", label: "Wizard" }]} /></PreferenceControl>
               <PreferenceControl preferenceKey="resultView"><Row label="Worklist result view">
                 <Segmented<ResultView> label="Worklist result view" value={preferences.resultView} onChange={(value) => set("resultView", value)} options={[{ value: "table", label: "Table" }, { value: "cards", label: "Card grid" }]} />
               </Row></PreferenceControl>
               <PreferenceControl preferenceKey="previewMode"><Row label="Quick view style" hint="Shown when clicking a result row">
-                <Select aria-label="ui.quick.view.style.c03cba44" value={preferences.previewMode} onChange={(event) => set("previewMode", event.target.value as PreviewMode)} options={[{ label: "Centered record card", value: "center-card" }, { label: "Center modal", value: "center-modal" }, { label: "Left side panel", value: "left-drawer" }, { label: "Right side panel", value: "right-drawer" }]} />
+                <Select aria-label="ui.quick.view.style.c03cba44" value={preferences.previewMode} onChange={(event) => set("previewMode", event.target.value as PreviewMode)} options={[{ label: "template.clinical.inline", value: "inline" }, { label: "Centered record card", value: "center-card" }, { label: "Center modal", value: "center-modal" }, { label: "Left side panel", value: "left-drawer" }, { label: "Right side panel", value: "right-drawer" }]} />
               </Row></PreferenceControl>
               <PreferenceControl preferenceKey="pageSize"><Row label="Default rows per page">
                 <Select aria-label="ui.default.rows.per.page.c972be79" value={String(preferences.pageSize)} onChange={(event) => set("pageSize", Number(event.target.value) as 10 | 20 | 50 | 100)} options={[{ label: "10", value: "10" }, { label: "20", value: "20" }, { label: "50", value: "50" }, { label: "100", value: "100" }]} />

@@ -74,6 +74,14 @@ See the [policy API/storage guide](../../desktop-clients/docs/tenant-preference-
 
 A specialized example still demonstrates its named pattern: a calendar remains a calendar and a skeleton demonstration remains visible as an example. This does not permit a normal page to ignore applicable runtime preferences. Document any new non-applicable setting with its reason and acceptance case.
 
+## Patient Query display preferences
+
+Use **My Preferences → Behaviour → Layout** to choose **Worklist result view** (Table or Card grid) and **Quick view style** (Inline, Centered record card, Center modal, Left side panel or Right side panel).
+
+Patient Query consumes these effective settings directly. Its result toolbar no longer has Table/Cards or preview placement selectors, and the V shortcut no longer changes the result view. Search, filters, Columns, Export, Recent, Save preset and pagination remain available for the current search.
+
+Inline displays patient details below the selected row/card. Other shared preview consumers show an inline card in their content flow. The existing `previewMode` preference now accepts `inline`; its default remains right-drawer. The frontend and demo API share this validator, so tenant locks, persistence and preference import/export apply to Inline as they do to the other modes. Deploy both the updated frontend and restart the demo API before saving this new value.
+
 ## User flow: Patient Query
 
 Enter criteria and retrieve results from the demo API. Use column visibility, sort and pagination where available. When editable, the result preference changes table/cards. The preview preference selects left/right drawers, a centered card or a modal; inline preview is available only while the preview setting permits changes.

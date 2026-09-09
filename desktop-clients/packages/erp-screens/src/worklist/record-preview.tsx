@@ -3,6 +3,7 @@ import { Card } from "@pepbits/ops-ui";
 import { DataValue, DescriptionList, LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 import React from "react";
+import {InlineRecordPreview} from "../preference-preview";
 import { ExternalLink, Pencil, ShieldCheck } from "lucide-react";
 import { useERP } from "@pepbits/erp-shell";
 import { Button } from "@pepbits/ops-ui";
@@ -42,6 +43,7 @@ export function RecordPreview({ row, config, onClose, onView, onEdit, canEdit = 
   const title = `${config.title} preview`;
   const footer = <><Button variant="ghost" onClick={onClose}><LocalizedText message="ui.close.7d9eb7ac" /></Button><Button variant="secondary" leftIcon={<ExternalLink className="size-3.5" />} onClick={onView}><LocalizedText message="ui.open.full.record.02ac0023" /></Button><Button variant="primary" leftIcon={<Pencil className="size-3.5" />} disabled={!canEdit} onClick={onEdit}><LocalizedText message="ui.edit.464c4ffd" /></Button></>;
   const content = <PreviewContent row={row} config={config} />;
+  if (preferences.previewMode === "inline") return <InlineRecordPreview open={open} onClose={onClose} title={title} footer={footer}>{content}</InlineRecordPreview>;
   if (preferences.previewMode === "left-drawer" || preferences.previewMode === "right-drawer") return <Drawer open={open} onClose={onClose} title={title} subtitle="Contextual limited-data preview" side={preferences.previewMode === "left-drawer" ? "left" : "right"} footer={footer}><div className="p-5">{content}</div></Drawer>;
   if (preferences.previewMode === "center-modal") return <Modal open={open} onClose={onClose} title={title} subtitle="ui.contextual.limited.data.preview.ab741383" size="md" footer={footer}><div className="p-5">{content}</div></Modal>;
   return <CenterRecordCard open={open} onClose={onClose} title={title} footer={footer}>{content}</CenterRecordCard>;

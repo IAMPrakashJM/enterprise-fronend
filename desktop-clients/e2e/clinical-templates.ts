@@ -59,6 +59,15 @@ try {
     await d.locator("button.group").first().click();
     await page.locator(`[data-clinical-library="${id}"]`).waitFor();
   }
+  async function changeQueryPreference(label: string, value: string) {
+    await page.keyboard.press("Control+k");
+    const picker = page.getByRole("dialog");
+    await picker.locator("input").first().fill("preferences");
+    await picker.locator("button.group").first().click();
+    if(label === "Worklist result view") await page.getByRole("radiogroup", {name:label}).getByRole("radio", {name:value === "cards" ? "Card grid" : "Table",exact:true}).click();
+    else await page.getByRole("combobox", {name: label, exact: true}).selectOption(value);
+    await open("allyvora-patient-query");
+  }
   await open("allyvora-patient-query");
   let query = page.locator("[data-clinical-query]");
   await query
@@ -108,7 +117,7 @@ try {
   await query.getByRole("button", { name: "Search", exact: true }).click();
   await query.getByText("1 patient found", { exact: true }).waitFor();
   await query.getByRole("button", { name: /More filters/ }).click();
-  await query.getByRole("tab", { name: "Inline", exact: true }).click();
+  await changeQueryPreference("Quick view style", "inline");
   await query.getByRole("button", { name: "Alex Morgan", exact: true }).click();
   await query
     .locator("[data-query-detail]")
@@ -124,7 +133,7 @@ try {
     .locator("[data-query-detail]")
     .getByRole("button", { name: "Close", exact: true })
     .click();
-  await query.getByRole("tab", { name: "Modal", exact: true }).click();
+  await changeQueryPreference("Quick view style", "center-modal");
   await query.getByRole("button", { name: "Alex Morgan", exact: true }).click();
   await page
     .getByRole("dialog")
@@ -138,13 +147,13 @@ try {
     [],
   );
   await page.keyboard.press("Escape");
-  await query.getByRole("tab", { name: "Cards", exact: true }).click();
+  await changeQueryPreference("Worklist result view", "cards");
   await query
     .getByRole("button", { name: "Alex Morgan", exact: true })
     .waitFor();
   await page.screenshot({ path: "/tmp/query-cards.png" });
-  await query.getByRole("tab", { name: "Table", exact: true }).click();
-  await query.getByRole("tab", { name: "Drawer", exact: true }).click();
+  await changeQueryPreference("Worklist result view", "table");
+  await changeQueryPreference("Quick view style", "right-drawer");
   await page
     .locator("[data-clinical-library]")
     .first()
