@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Avatar,
   Badge,
@@ -38,9 +38,11 @@ export function PatientQueryDetail({
       () => props.adapter.load(patient.id),
       [props.adapter, patient.id],
     );
+  const root = useRef<HTMLDivElement>(null);
   const index = rows.findIndex((p) => p.id === patient.id);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
+      if (!root.current?.getClientRects().length) return;
       if (
         ["INPUT", "TEXTAREA", "SELECT"].includes(
           (e.target as HTMLElement).tagName,
@@ -144,6 +146,7 @@ export function PatientQueryDetail({
   return (
     <div
       className={`${styles.detail} ${mode === "drawer" ? styles.drawer : ""}`}
+      ref={root}
       data-query-detail
     >
       <aside className={styles.rail}>

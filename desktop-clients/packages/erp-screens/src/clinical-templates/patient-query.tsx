@@ -214,11 +214,15 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
       setExportBusy(false);
     }
   };
+  const navigate: ClinicalPageProps["onOpen"] = (destination) => {
+    setSelected(null);
+    onOpen(destination);
+  };
   const actions = (p: PatientSummary) => (
     <PatientQueryActions
       patient={p}
       canWrite={metadata.canWrite}
-      onOpen={onOpen}
+      onOpen={navigate}
       onCare={onCare}
     />
   );
@@ -226,6 +230,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
     <PatientQueryDetail
       key={selected.id}
       {...props}
+      onOpen={navigate}
       patient={selected}
       rows={search.value?.rows ?? []}
       mode={detail}
@@ -269,7 +274,7 @@ export function PatientQueryTemplate(props: ClinicalPageProps) {
         onSave={savePreset}
         onDelete={(id) => void deletePreset(id)}
         onHelp={() => setHelp(true)}
-        onNew={() => onOpen({ view: "record", mode: "new" })}
+        onNew={() => navigate({ view: "record", mode: "new" })}
       />
       {!applied ? (
         <div className={styles.empty}>
