@@ -7,3 +7,9 @@ Adds Inline to the existing shared previewMode preference and validation; no new
 See the [user flow](../../features/library-preferences.md#patient-query-display-preferences). Existing stored values and defaults are unchanged. The demo API must restart to load the expanded shared validator. Browser suites now select display options through Preferences.
 
 Validation: full suite passed 1,488 tests and exposed one shared-card title prop error. After correction, all 13 targeted tests across four files passed. Final typechecking, four API preference-store tests, localization, shared-component, Library preference, browser-registry and documentation gates passed. Both isolated production packages passed HTML/asset checks. Release prepared: `20260909152041761-ecda5200`; activation is recorded separately after live verification. Native-speaker review is not part of this change; the Inline label reuses existing translations.
+
+## Verified deployment
+
+Application commit `3a1050459b2ef5b4df0219daac9dc99135a2cece` is pushed to main. Release `20260909152041761-ecda5200` is active on both front-design.pepbits.com and desktop.front-design.pepbits.com. The demo API was restarted after a restricted local data backup to load the shared Inline validator.
+
+Live Chromium checks on both hosts passed release identity, sign-in, a patient search, absence of Table/Cards and preview placement tabs, retained Export action, and Inline availability under Quick view style in Preferences. No page JavaScript errors occurred. Checks did not change stored preferences or policies. Remote CI was still running when recorded; native execution is not claimed. Previous frontend release `20260909150151741-7a1fdde4` is retained for rollback.
