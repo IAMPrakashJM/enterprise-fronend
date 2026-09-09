@@ -21,7 +21,7 @@ templates → Patient Record** on the desktop shell.
 | Contact sections | Separate email and telephone collections, compound country-code/phone controls and communication preferences |
 | Conditional details | Insurance policies, disability details, deceased fields, refusal and revocation details follow their controlling values |
 | MRN and registration | New records show automatic-generation guidance; saved identifiers and registration status display read-only |
-| Persistent footer | New/Cancel, mode-specific care actions, save, theme, layout and density controls remain accessible while the form scrolls |
+| Persistent footer | New/Cancel, mode-specific care actions, save, theme, layout and density controls remain accessible while the form scrolls, including when page notices appear above it |
 | Repeated details | Numbered row cards, primary toggles, conditional fields and gated Add buttons |
 | Document staging | Shared FilePicker stages file name, MIME type and byte count; the demo API saves metadata, as the reference source does |
 | Save/review | Review before saving, required fields and server errors, retained edits, retry identity and version conflict handling |
@@ -94,5 +94,25 @@ retry, care overview, booking, export and four-language/RTL behavior.
 Local full CI passed: 1,469 tests across 98 files, 61 existing API tests, seven
 clinical API tests, both builds and all project checks. The final browser run also
 passed after the footer/wizard refinements, including record accessibility, keyboard
-navigation and translated record fields. Remote CI and live evidence will be added
-after release validation.
+navigation and translated record fields. The final contact refinement also passed nine targeted tests, clinical API tests,
+package typechecks, production builds, project checks and the clinical browser suite.
+
+
+## Released and verified
+
+- Runtime commit: `2b3095f9bd4eba9709927bf6bf24185717a93276`.
+- [Final CI run](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34342533619):
+  all six jobs passed, including 1,470 tests in 98 files, API checks, browser workflows,
+  product integration, navigation and native Linux lifecycle/localization.
+- Release: `20260909105221034-acc45bbc`, activated on both public demos on 9 September 2026.
+- Live browser checks passed on `front-design.pepbits.com` and
+  `desktop.front-design.pepbits.com`: API-backed metadata/new record, 203 px rail,
+  nine sections, completion meter, source field groups, footer, tabs and wizard.
+  The footer remained inside the viewport with the documentation alert displayed.
+  No runtime errors or patient create/update/export requests occurred in these live checks.
+- A regression test inserts an extra page notice and verifies footer visibility.
+  The clinical browser suite also passed locally after that adjustment.
+- Previous frontend releases and the API/data backup are retained for rollback.
+
+The screenshot above is from the deployed web page. The authenticated-reference
+comparison and native-speaker review limits described above still apply.
