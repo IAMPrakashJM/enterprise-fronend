@@ -6,8 +6,9 @@ import {useERP,useProduct} from '@pepbits/erp-shell';
 import {Button,Card,Input,LocalizedText,Select,Table,TableBody,TableCell,TableHead,TableHeader,TableRow,Toggle} from '@pepbits/ops-ui';
 import {useProductRequest} from '../product-services';
 
-const POLICY_GROUPS = ["Behaviour", "Shell", "Page", "Notification", "Language & help", "General"] as const;
+const POLICY_GROUPS = ["preference.ownSettings","Behaviour", "Shell", "Page", "Notification", "Language & help", "General"] as const;
 const POLICY_GROUP_BY_KEY = {
+  defaultModule:"preference.ownSettings",
   formNavigation: "Behaviour",
   resultView: "Behaviour",
   previewMode: "Behaviour",
@@ -97,7 +98,7 @@ export function PreferencePolicyAdmin() {
     const options=PREFERENCE_OPTIONS[key],range=PREFERENCE_RANGES[key];
     return <TableRow key={key} data-policy-key={key}><TableCell>{label(key)}</TableCell><TableCell>
      <fieldset disabled={!ready||busy} className="m-0 border-0 p-0">
-      {typeof value==='boolean'?<Toggle label={label(key)} checked={value} onChange={value=>change(key,value,locked)} />:options?<Select aria-label={label(key)} value={String(value)} options={options.map(value=>({value:String(value),label:t(`preference.option.${key}.${value}`)}))} onChange={event=>change(key,typeof DEFAULT_PREFERENCES[key]==='number'?Number(event.target.value):event.target.value,locked)} />:<Input aria-label={label(key)} type="number" value={Number.isFinite(Number(value))?Number(value):""} min={range?.[0]} max={range?.[1]} step={key==='cornerRadius'?1:0.5} onChange={event=>change(key,event.target.value===''?NaN:Number(event.target.value),locked)} />}
+      {key==='defaultModule'?<Select aria-label={label(key)} placeholder="" value={String(value)} options={[{value:"",label:"Use application default"},...Object.values(product.modules).filter(module=>!!module).map(module=>({value:module!.id,label:module!.labelKey??module!.label}))]} onChange={event=>change(key,event.target.value,locked)}/>:typeof value==='boolean'?<Toggle label={label(key)} checked={value} onChange={value=>change(key,value,locked)} />:options?<Select aria-label={label(key)} value={String(value)} options={options.map(value=>({value:String(value),label:t(`preference.option.${key}.${value}`)}))} onChange={event=>change(key,typeof DEFAULT_PREFERENCES[key]==='number'?Number(event.target.value):event.target.value,locked)} />:<Input aria-label={label(key)} type="number" value={Number.isFinite(Number(value))?Number(value):""} min={range?.[0]} max={range?.[1]} step={key==='cornerRadius'?1:0.5} onChange={event=>change(key,event.target.value===''?NaN:Number(event.target.value),locked)} />}
      </fieldset>
     </TableCell><TableCell><Toggle label="Locked" checked={locked} disabled={!ready||busy} onChange={locked=>change(key,value,locked)} /></TableCell><TableCell><Button disabled={!ready||busy||!rule} onClick={()=>{setSaved(false);setPolicy(current=>{const rules={...current.rules};delete rules[key];return {...current,rules};});}}><LocalizedText message="Use application default" /></Button></TableCell></TableRow>;
    })}

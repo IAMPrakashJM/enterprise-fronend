@@ -18,3 +18,19 @@ test('preference HTTP rejects non-admin policy writes, locked imports and stale 
   assert.equal((await call('/preference-policy',admin,{revision:0,rules:{}})).status,409);
  }finally{await stop();}
 });
+test('API module preference changes startup navigation only for its account and application',async()=>{
+ const probe=createServer();probe.listen(0,'127.0.0.1');await once(probe,'listening');const api=`http://127.0.0.1:${probe.address().port}`;await new Promise(resolve=>probe.close(resolve));const stop=await startApi(api,'own-settings-http');
+ try{
+ const login=async username=>(await(await fetch(api+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password:username})})).json()).token;
+ const admin=await login('admin'),other=await login('user1');
+ const get=async(path,token=admin)=>(await fetch(api+path,{headers:{Authorization:`Bearer ${token}`,'X-Product-Id':'nexora'}})).json();
+ const before=await get('/navigation?productId=nexora');assert.ok(before.nodes.some(n=>n.moduleId==='library'));
+ const write=preferences=>fetch(api+'/preferences',{method:'PUT',headers:{Authorization:`Bearer ${admin}`,'Content-Type':'application/json','X-Product-Id':'nexora'},body:JSON.stringify({policyRevision:0,preferences})});
+ assert.equal((await write({defaultModule:'not-accessible'})).status,400);
+ assert.equal((await write({defaultModule:'library'})).status,200);
+ const nav=await get('/navigation?productId=nexora');assert.equal(nav.defaultModule,'library');assert.equal(nav.defaultPageId,'library-dashboard');assert.notEqual(nav.revision,before.revision);
+ assert.equal((await get('/navigation?productId=nexora',other)).defaultModule,before.defaultModule);
+ assert.equal((await get('/navigation?productId=ledger')).defaultModule,'finance');
+ assert.equal((await write({})).status,200);assert.equal((await get('/navigation?productId=nexora')).defaultModule,before.defaultModule);
+ }finally{await stop();}
+});

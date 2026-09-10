@@ -37,3 +37,14 @@ test('admin defaults apply to new users; unlocked personal choices and reset tak
  store.write(user,'nexora',{policyRevision:1,preferences:{theme:'midnight'}});assert.equal(store.read(user,'nexora').preferences.theme,'midnight');
  store.write(user,'nexora',{policyRevision:1,preferences:{}});assert.equal(store.read(user,'nexora').preferences.theme,'sand');
 });
+test('default module persists per account and respects access revocation and tenant locks',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'own-settings-')),file=join(dir,'prefs.sqlite');let allowed=['finance','sales'];let store=createPreferenceStore(file,{modules:()=>allowed});t.after(()=>{store.close();rmSync(dir,{recursive:true,force:true});});
+ assert.equal(store.write(user,'nexora',{preferences:{defaultModule:'sales'}}).status,200);
+ store.close();store=createPreferenceStore(file,{modules:()=>allowed});assert.equal(store.read(user,'nexora').preferences.defaultModule,'sales');
+ assert.equal(store.read({...user,id:'other'},'nexora').preferences.defaultModule,'');assert.equal(store.read(user,'other').preferences.defaultModule,'');
+ assert.equal(store.write(user,'nexora',{preferences:{defaultModule:'library'}}).status,400);
+ assert.equal(store.writePolicy(admin,'nexora',{revision:0,rules:{defaultModule:{value:'finance',locked:true}}}).status,200);
+ assert.equal(store.read(user,'nexora').preferences.defaultModule,'finance');assert.equal(store.write(user,'nexora',{policyRevision:1,preferences:{defaultModule:'sales'}}).status,403);
+ assert.equal(store.writePolicy(admin,'nexora',{revision:1,rules:{}}).status,200);assert.equal(store.read(user,'nexora').preferences.defaultModule,'sales');
+ allowed=['finance'];assert.equal(store.read(user,'nexora').preferences.defaultModule,'');assert.equal(store.write(user,'nexora',{policyRevision:2,preferences:{theme:'sand'}}).status,200);
+});

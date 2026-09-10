@@ -153,6 +153,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     if(policy.revision<policyRef.current.revision)return;
     if(policy.revision===policyRef.current.revision && body.userRevision!==undefined && userRevision.current!==undefined && body.userRevision<userRevision.current)return;
     const next=effectivePreferences(sanitizePreferences(body.preferences),policy);
+    if(next.defaultModule && !product.modules[next.defaultModule as ModuleKey]) next.defaultModule="";
     const request=++languageRequest.current;
     await (loadProductLanguage?loadProductLanguage(next.language):loadFallbackLanguage(next.language));
     if(!alive.current || request!==languageRequest.current)return;
@@ -160,7 +161,7 @@ export function ERPProvider({ children, fallback = null }: { children: React.Rea
     generation.current++;
     setPreferencesEdited(false);setPreferencePolicy(policy);setCanManagePreferencePolicy(body.canManage===true);
     setPreferences(next);setPreferencesAvailable(true);
-  },[loadProductLanguage]);
+  },[loadProductLanguage,product.modules]);
   const refreshPreferences=useCallback(async()=>{
     // Stop pending writes until the current server policy has been loaded.
     generation.current++;setPreferencesEdited(false);setPreferencesAvailable(false);

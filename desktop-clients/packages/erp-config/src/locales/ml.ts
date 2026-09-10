@@ -5329,5 +5329,9 @@ export default {
   "template.comprehensive.service.proc-2": "ദന്ത നടപടിക്രമം · ഡെമോ",
   "template.comprehensive.orderDraft": "ഡ്രാഫ്റ്റ് ഓർഡർ",
   "template.comprehensive.orderRecorded": "രേഖപ്പെടുത്തി · അയച്ചിട്ടില്ല",
-  "template.comprehensive.missingItems": "വിട്ടുപോയ വിവരങ്ങൾ പരിശോധിക്കുക"
+  "template.comprehensive.missingItems": "വിട്ടുപോയ വിവരങ്ങൾ പരിശോധിക്കുക",
+  "preference.ownSettings": "സ്വന്തം ക്രമീകരണങ്ങൾ",
+  "preference.label.defaultModule": "ഡിഫോൾട്ട് മൊഡ്യൂൾ",
+  "preference.defaultModule.help": "അടുത്ത സൈൻ-ഇനിലോ ആപ്ലിക്കേഷൻ ഹോമിലോ തുറക്കേണ്ട മൊഡ്യൂൾ തിരഞ്ഞെടുക്കുക. നേരിട്ടുള്ള പേജ് ലിങ്കുകൾ മാറില്ല. ആപ്ലിക്കേഷൻ ഡിഫോൾട്ട് നിലവിലുള്ള ആരംഭ ക്രമീകരണങ്ങൾ ഉപയോഗിക്കും.",
+  "preference.defaultModule.denied": "ഈ മൊഡ്യൂൾ നിങ്ങളുടെ അക്കൗണ്ടിൽ ലഭ്യമല്ല. മൊഡ്യൂൾ പട്ടിക വീണ്ടും ലോഡ് ചെയ്യുക."
 };

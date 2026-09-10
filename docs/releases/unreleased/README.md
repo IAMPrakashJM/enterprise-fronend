@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest local implementation: [Own Settings default module](own-settings-2026-09-10.md), not deployed.
+
 Latest deployment: [Comprehensive Consultation — both demo sites, 10 September 2026](comprehensive-deployment-2026-09-10.md). This supersedes the local-only implementation status below.
 
 Latest local implementation: [Comprehensive Consultation — 10 September 2026](comprehensive-consultation-2026-09-10.md), not deployed.

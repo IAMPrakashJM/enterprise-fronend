@@ -15821,6 +15821,10 @@
     "template.comprehensive.service.proc-2": "दंत प्रक्रिया · डेमो",
     "template.comprehensive.orderDraft": "मसौदा आदेश",
     "template.comprehensive.orderRecorded": "दर्ज · भेजा नहीं गया",
-    "template.comprehensive.missingItems": "छूटी प्रविष्टियाँ जाँचें"
+    "template.comprehensive.missingItems": "छूटी प्रविष्टियाँ जाँचें",
+    "preference.ownSettings": "मेरी सेटिंग्स",
+    "preference.label.defaultModule": "डिफ़ॉल्ट मॉड्यूल",
+    "preference.defaultModule.help": "अगले साइन-इन या एप्लिकेशन होम पर खुलने वाला मॉड्यूल चुनें। सीधे पृष्ठ लिंक यथावत रहेंगे। एप्लिकेशन डिफ़ॉल्ट मौजूदा स्टार्टअप सेटिंग्स का उपयोग करता है।",
+    "preference.defaultModule.denied": "यह मॉड्यूल आपके खाते के लिए उपलब्ध नहीं है। मॉड्यूल सूची फिर लोड करें।"
   }
 }

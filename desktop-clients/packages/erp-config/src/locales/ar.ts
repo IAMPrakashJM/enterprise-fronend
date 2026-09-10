@@ -5329,5 +5329,9 @@ export default {
   "template.comprehensive.service.proc-2": "إجراء أسنان · تجريبي",
   "template.comprehensive.orderDraft": "طلب مسودة",
   "template.comprehensive.orderRecorded": "مسجّل · لم يُرسل",
-  "template.comprehensive.missingItems": "مراجعة العناصر الناقصة"
+  "template.comprehensive.missingItems": "مراجعة العناصر الناقصة",
+  "preference.ownSettings": "إعداداتي الخاصة",
+  "preference.label.defaultModule": "الوحدة الافتراضية",
+  "preference.defaultModule.help": "اختر الوحدة التي تُفتح عند تسجيل الدخول التالي أو زيارة الصفحة الرئيسية. تبقى روابط الصفحات المباشرة كما هي. الخيار الافتراضي للتطبيق يستخدم إعدادات البدء الحالية.",
+  "preference.defaultModule.denied": "هذه الوحدة غير متاحة لحسابك. أعد تحميل قائمة الوحدات."
 };

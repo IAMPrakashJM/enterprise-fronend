@@ -54,6 +54,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   negativeStyle: "minus",
   cornerRadius: 14,
   landingPage: "module-dashboard",
+  defaultModule: "",
   stickyTableHeader: true,
   zebraStripes: false,
   wrapCellText: false,
@@ -136,6 +137,7 @@ export function sanitizePreferences(stored: unknown): UserPreferences {
   for (const [key, value] of Object.entries(stored as Record<string, unknown>)) {
     if (!Object.hasOwn(DEFAULT_PREFERENCES, key)) continue;              // unknown key
     const typed = key as keyof UserPreferences;
+    if (key === "defaultModule") { if (typeof value === "string" && (value === "" || /^[a-z][a-z0-9-]{0,63}$/.test(value))) result.defaultModule = value; continue; }
     const allowed = PREFERENCE_OPTIONS[typed];
     if (allowed) {
       if (allowed.includes(value)) (result as Record<string, unknown>)[key] = value;

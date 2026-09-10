@@ -1,0 +1,20 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/preferences/preferences.test.tsx packages/erp-config/src/preference-defaults.test.ts packages/erp-shell/src/erp-context.test.tsx packages/erp-shell/src/workspace/use-workspace-navigation.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-shell/src/erp-context.test.tsx (36 tests) 557ms
+ ✓ packages/erp-shell/src/workspace/use-workspace-navigation.test.tsx (17 tests) 1456ms
+ ✓ packages/erp-screens/src/preferences/preferences.test.tsx (3 tests) 1634ms
+   ✓ record layout and all three density options use the central preference update  950ms
+   ✓ live policy changes and unavailable preferences prevent layout updates  372ms
+   ✓ Own Settings uses accessible module options and honors locks  310ms
+ ✓ packages/erp-config/src/preference-defaults.test.ts (3 tests) 3ms
+
+ Test Files  4 passed (4)
+      Tests  59 passed (59)
+   Start at  04:13:23
+   Duration  4.35s (transform 2.27s, setup 2.91s, collect 2.61s, tests 3.65s, environment 1.96s, prepare 317ms)
+

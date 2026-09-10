@@ -1,0 +1,11 @@
+✔ broken destinations, headings and repository escapes fail; valid local links pass (3.143717ms)
+✔ release records cannot claim publication without identity or mutate recorded hashes (1.672219ms)
+✔ the repository documentation satisfies the current contract (189.74194ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 305.467627

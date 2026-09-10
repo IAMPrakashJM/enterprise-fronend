@@ -15821,6 +15821,10 @@
     "template.comprehensive.service.proc-2": "Dental procedure · demo",
     "template.comprehensive.orderDraft": "Draft order",
     "template.comprehensive.orderRecorded": "Recorded · not sent",
-    "template.comprehensive.missingItems": "Review missing items"
+    "template.comprehensive.missingItems": "Review missing items",
+    "preference.ownSettings": "Own Settings",
+    "preference.label.defaultModule": "Default module",
+    "preference.defaultModule.help": "Choose the module to open on your next sign-in or application home visit. Direct page links stay unchanged. Application default uses your existing start-up settings.",
+    "preference.defaultModule.denied": "This module is not available to your account. Reload your module list."
   }
 }

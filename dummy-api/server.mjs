@@ -208,6 +208,7 @@ function loadPrefs() {
 
 const preferences = loadPrefs();
 const preferenceStore=createPreferenceStore(join(DATA_DIR,"preferences.sqlite"),{
+ modules:(user,product)=>applicationConfig.navigation(user,product).body?.nodes.filter(node=>node.kind==="module").map(node=>node.moduleId)??[],
  legacy:(user,product)=>product==="nexora"&&ACCOUNTS.some(account=>account.user.id===user.id&&account.user.tenantId===user.tenantId)?preferences[user.id]??{}:{},
  audit:(...args)=>auditStore.append(...args),
 });
@@ -1043,6 +1044,17 @@ const server = createServer(async (req, res) => {
     const productId = requestUrl.searchParams.get("productId");
     const result = pathname === "/navigation" ? applicationConfig.navigation(user,productId) : applicationConfig.localization(user,productId,requestUrl.searchParams.get("language"));
     if (result.error) return send(res,result.status,{error:result.error});
+    if(pathname==="/navigation"){
+      const preferred=preferenceStore.read(user,productId).preferences.defaultModule;
+      const module=result.body.nodes.find(node=>node.kind==='module'&&node.moduleId===preferred);
+      if(module){
+        const descendants=new Set([module.id]);let size;
+        do{size=descendants.size;for(const node of result.body.nodes)if(descendants.has(node.parentId))descendants.add(node.id);}while(size!==descendants.size);
+        const pages=result.body.nodes.filter(node=>descendants.has(node.id)&&node.pageId).map(node=>node.pageId);
+        const page=pages.find(id=>id===preferred+'-dashboard')??pages[0];
+        if(page){result.body={...result.body,defaultModule:preferred,defaultPageId:page};result.body.revision=createHash('sha256').update(JSON.stringify(result.body)).digest('hex').slice(0,24);}
+      }
+    }
     const etag = `"${result.body.revision}"`;
     const headers = {"Cache-Control":"private, no-cache",ETag:etag,Vary:"Authorization, Accept-Encoding"};
     if (req.headers["if-none-match"] === etag) {res.writeHead(304,{...CORS,...headers});return res.end();}

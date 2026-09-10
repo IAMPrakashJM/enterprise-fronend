@@ -144,6 +144,7 @@ export interface UserPreferences {
   cornerRadius: number;
   /** Where "/" lands. "last-visited" restores the page you closed on. */
   landingPage: LandingPage;
+  defaultModule: string;
 
   stickyTableHeader: boolean;
   zebraStripes: boolean;

@@ -4,12 +4,13 @@ import {dirname} from 'node:path';
 import {parsePreferencePolicy,validPreference,effectivePreferences,EMPTY_PREFERENCE_POLICY} from '../desktop-clients/packages/erp-config/src/preference-policy.ts';
 
 export const canManagePreferences=user=>Array.isArray(user?.permissions)&&user.permissions.includes('preferences:manage');
-export function createPreferenceStore(file,{legacy=()=>({}),audit=()=>{}}={}) {
+export function createPreferenceStore(file,{legacy=()=>({}),audit=()=>{},modules=()=>[]}={}) {
  mkdirSync(dirname(file),{recursive:true,mode:0o700});const db=new DatabaseSync(file);chmodSync(file,0o600);
  db.exec(`PRAGMA journal_mode=WAL;PRAGMA synchronous=FULL;PRAGMA busy_timeout=5000;
  CREATE TABLE IF NOT EXISTS preference_policy(tenant TEXT,product TEXT,revision INTEGER,rules TEXT,PRIMARY KEY(tenant,product));
  CREATE TABLE IF NOT EXISTS personal_preference(tenant TEXT,product TEXT,owner TEXT,revision INTEGER,overrides TEXT,PRIMARY KEY(tenant,product,owner));
  CREATE TABLE IF NOT EXISTS preference_history(tenant TEXT,product TEXT,revision INTEGER,actor TEXT,at TEXT,rules TEXT,PRIMARY KEY(tenant,product,revision));`);
+ const allowedModule=(user,product,value)=>value===undefined||value===""||modules(user,product).includes(value);
  const scope=(user,product)=>[user.tenantId,product];
  const policy=(user,product)=>{
   const held=db.prepare('SELECT revision,rules FROM preference_policy WHERE tenant=? AND product=?').get(...scope(user,product));
@@ -18,7 +19,10 @@ export function createPreferenceStore(file,{legacy=()=>({}),audit=()=>{}}={}) {
  const read=(user,product)=>{
   const applied=policy(user,product),held=db.prepare('SELECT revision,overrides FROM personal_preference WHERE tenant=? AND product=? AND owner=?').get(...scope(user,product),user.id);
   const overrides=held?JSON.parse(held.overrides):Object.fromEntries(Object.entries(legacy(user,product)).filter(([key,value])=>validPreference(key,value)));
-  return {preferences:effectivePreferences(overrides,applied),overrides,policy:applied,userRevision:held?.revision??0,canManage:canManagePreferences(user)};
+  if (!allowedModule(user,product,overrides.defaultModule)) delete overrides.defaultModule;
+  const resolved=effectivePreferences(overrides,applied);
+  if (!allowedModule(user,product,resolved.defaultModule)) resolved.defaultModule="";
+  return {preferences:resolved,overrides,policy:applied,userRevision:held?.revision??0,canManage:canManagePreferences(user)};
  };
  const transaction=run=>{db.exec('BEGIN IMMEDIATE');try{const result=run();db.exec('COMMIT');return result;}catch(error){db.exec('ROLLBACK');throw error;}};
  const failure=(status,error)=>({status,body:{error}});
@@ -28,6 +32,7 @@ export function createPreferenceStore(file,{legacy=()=>({}),audit=()=>{}}={}) {
   writePolicy(user,product,input){
    if(!canManagePreferences(user))return failure(403,'Only a tenant administrator can manage preference policies.');
    let next;try{next=parsePreferencePolicy(input);}catch{return failure(400,'Invalid preference policy.');}
+   if(!allowedModule(user,product,next.rules.defaultModule?.value))return failure(400,'preference.defaultModule.denied');
    return transaction(()=>{
     if(next.revision!==policy(user,product).revision)return failure(409,'Preference policy changed. Reload before saving.');
     next={...next,revision:next.revision+1};
@@ -40,6 +45,7 @@ export function createPreferenceStore(file,{legacy=()=>({}),audit=()=>{}}={}) {
   write(user,product,body){
    const values=body?.preferences;
    if(!values||typeof values!=='object'||Array.isArray(values)||Object.entries(values).some(([key,value])=>!validPreference(key,value)))return failure(400,'Invalid preference values.');
+   if(!allowedModule(user,product,values.defaultModule))return failure(400,'preference.defaultModule.denied');
    return transaction(()=>{
     const current=read(user,product);
     if(body.policyRevision!==current.policy.revision && !(body.policyRevision===undefined&&current.policy.revision===0))return failure(409,'Preference policy changed. Reload before saving.');

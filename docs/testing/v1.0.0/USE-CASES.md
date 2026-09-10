@@ -71,3 +71,10 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 - CC-03: Scores distinguish zero, missing and not-testable inputs; E/M uses two of three levels with separate bounded time comparison.
 - CC-04: Failed save preserves exact retry identity. Reopen CSV-backed records, attest and sign, verify immutable controls and tenant isolation. Editing invalidates prior attestation.
 - CC-05: Four-language desktop rendering, API navigation and source/version evidence remain separate from native and clinical acceptance.
+
+## Own Settings default module
+
+- OWN-01: Only accessible API navigation modules appear; save persists for the account/application and survives restart.
+- OWN-02: Tenant default/lock wins; direct overrides and unavailable modules fail on the server. Revoked access falls back without granting access.
+- OWN-03: Desktop startup and web application home use the selected module; direct web URLs remain unchanged.
+- OWN-04: Preference control uses the central update flow and cannot bypass unavailable or locked settings.

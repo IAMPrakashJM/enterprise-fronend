@@ -20,14 +20,14 @@ import type {
   PreviewMode, ResultView, SearchMode, SidebarExpandOn, SidebarPlacement, SidebarTheme, SidebarTone, TimeFormat, ToastPosition,
   ToastStyle, UserPreferences,
 } from "@pepbits/erp-config";
-import { TOUR_REVEAL_EVENT, useERP } from "@pepbits/erp-shell";
+import { TOUR_REVEAL_EVENT, useERP, useProduct } from "@pepbits/erp-shell";
 
 /* Currency is fixed at the tenant's AED for now, so the picker is hidden rather
    than deleted: the preference, its default and the formatter path all stay, so
    flipping this back to true is the whole re-enable. */
 const SHOW_CURRENCY_PICKER = false;
 
-type PrefTab = "behaviour" | "sidebar" | "page" | "notification" | "language" | "general" | "policy";
+type PrefTab = "own" | "behaviour" | "sidebar" | "page" | "notification" | "language" | "general" | "policy";
 
 /** Which tab each tour anchor lives on. */
 const TOUR_TABS: Record<string, PrefTab> = {
@@ -40,6 +40,7 @@ const TOUR_TABS: Record<string, PrefTab> = {
 };
 
 const PREF_TABS: Array<{ id: PrefTab; label: string; icon: React.ReactNode }> = [
+  {id:"own",label:"preference.ownSettings",icon:<Settings2 className="size-3.5"/>},
   { id: "behaviour",    label: "Behaviour",    icon: <MonitorCog className="size-3.5" /> },
   { id: "sidebar",      label: "Shell",        icon: <PanelLeft className="size-3.5" /> },
   { id: "page",         label: "Page",         icon: <Sparkles className="size-3.5" /> },
@@ -194,6 +195,7 @@ function PreferenceSection({ title, subtitle, icon, tab, keys, keywords, activeT
 // ---------------------------------------------------------------------------
 
 export function PreferencesPage({ showTabPreferences = true }: { showTabPreferences?: boolean }) {
+  const product=useProduct();
   const { preferences, updatePreference, updatePreferences, resetPreferences, toast, branch, t, preferencePolicy, preferencesAvailable, canManagePreferencePolicy, preferenceSaveError, refreshPreferences } = useERP();
   const set = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     if (!preferencesAvailable || preferencePolicy.rules[key]?.locked) return;
@@ -283,6 +285,9 @@ export function PreferencesPage({ showTabPreferences = true }: { showTabPreferen
           {activeTab==="policy"&&canManagePreferencePolicy?<PreferencePolicyAdmin />:null}
           {/* ================= BEHAVIOUR ================= */}
           {/* Row for row, Vantage's Layout group -- same labels, same hints. */}
+          <PreferenceSection {...common} tab="own" title="preference.label.defaultModule" subtitle="preference.defaultModule.help" icon={<MonitorCog className="size-4"/>} keys={["defaultModule"]} keywords="own default module startup home">
+            <PreferenceControl preferenceKey="defaultModule"><Select label="preference.label.defaultModule" placeholder="" value={preferences.defaultModule} options={[{value:"",label:"Use application default"},...Object.values(product.modules).filter(module=>!!module).map(module=>({value:module!.id,label:module!.labelKey??module!.label}))]} onChange={event=>set("defaultModule",event.target.value)}/></PreferenceControl>
+          </PreferenceSection>
           <PreferenceSection {...common} tab="behaviour" tour="prefs-layout" title="Layout" subtitle="Honoured by every module and page." icon={<PanelLeft className="size-4" />}
             keys={["formNavigation", "resultView", "previewMode", "pageSize"]} keywords="layout record form style rail tabs wizard worklist result view table cards quick view preview inline card modal panel rows per page size">
             <div className="grid gap-x-5 gap-y-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))" }}>

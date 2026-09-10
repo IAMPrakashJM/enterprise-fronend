@@ -76,9 +76,11 @@ export function useWorkspaceNavigation(workspace: Workspace, options: { initialM
   const pendingAction = useRef<(() => void) | null>(null);
 
   const openHome = useCallback((module: ModuleKey) => {
-    const target: NavigationTarget = { pageId: dashboardPageId(module) };
+    const pageId=product.pages[dashboardPageId(module)]?.id ?? Object.values(product.pages).find(page=>page.module===module)?.id;
+    if(!pageId)return;
+    const target: NavigationTarget = { pageId };
     workspace.openDocument(documentFromTarget(target, { closable: false }));
-  }, [workspace]);
+  }, [workspace, product]);
 
   /* One home tab, opened on first render rather than in an effect: an effect
      would leave the very first paint with an empty workspace and no current
