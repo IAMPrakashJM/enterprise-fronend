@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest deployment: [Billing catalog launch — both demo sites](billing-catalog-launch-deployment-2026-09-10.md).
+
 Latest implementation: [Billing entry from the page catalog](billing-catalog-launch-2026-09-10.md).
 
 Latest deployment: [Catalog-only release notices — both demo sites](catalog-notices-deployment-2026-09-10.md).

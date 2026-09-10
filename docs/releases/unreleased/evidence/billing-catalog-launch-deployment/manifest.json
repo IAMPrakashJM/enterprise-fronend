@@ -1,0 +1,15 @@
+{
+  "commit": "fd275f19035d1faed72b7becbad57342becd5fd5",
+  "releaseId": "20260910075313100-3c6ad150",
+  "scope": "Live English Chromium, both demo hosts, API-backed patient launch and web reload. No live business writes.",
+  "artifactSha256": {
+    "activate.txt": "4d3f3f36580a4ae016b6ef037549aefe43e6c79ee05616489a646893a2c448e5",
+    "desktop-billing.png": "9d9f327d97d692b554b84d332d0ff8024aed6cf786f3dd291d064eb45322f069",
+    "desktop-catalog.png": "d5c13c649631c297277255e174cbed3486521d2023049c8e5b673c2b801d1389",
+    "live.txt": "ad8999f20e9278aa2c467918ad9bbe85f0af19c1725cd735a2d7c78ec5518614",
+    "prepare.txt": "b484873ffd8e47e72e53ecf0e94e8c6084c9d018261e0151362e5a9aec012699",
+    "typecheck.txt": "cc6d7e1a94dce15740ae72fd3759a5ba3d16cc4f92438f294a04c852e215d47a",
+    "web-billing.png": "1a3d04d931369b66fffd434264e651b6aab49b9662f9f819c082ae674738ec0a",
+    "web-catalog.png": "7b3c871fe04257e1a13f6437155582b0d3a83197809bf76e67954d86615e0023"
+  }
+}

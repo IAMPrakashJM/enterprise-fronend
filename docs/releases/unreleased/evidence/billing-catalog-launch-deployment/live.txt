@@ -1,0 +1,2 @@
+PASS front-design.pepbits.com: API patient selection opens patient billing in new context, patient identity verified, removed introductory cards absent; no record writes or page errors; URL and reload verified
+PASS desktop.front-design.pepbits.com: API patient selection opens patient billing in new context, patient identity verified, removed introductory cards absent; no record writes or page errors
