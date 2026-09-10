@@ -110,3 +110,8 @@ The underlying demo authentication remains a demo identity service. Production i
 - Documentation browser suite passed: guide navigation, release history, patch empty state, exact-section notice links, persistent read state and actual Arabic/Hindi/Malayalam article rendering with RTL checks.
 - Type checking, both production builds and the complete verification suite passed. The runtime suite registry now contains 29 suites; only the new documentation browser suite was executed locally for this change.
 - Deployment follow-up: application commit `0863354` passed all six remote CI jobs (31 end-to-end suites) and is deployed on both demo sites as `20260908162629872-aaba59f3`. The counts above record the initial documentation-only validation. See the [deployment report](sentinel-deployment-2026-09-08.md) for final combined validation and screenshots.
+
+
+## 10 September 2026 follow-up
+
+See the [shared lifecycle](../../docs/documentation/README.md) for API article reuse, page registration, impact receipts, translation revisions and strict review acceptance. Earlier coverage figures above remain historical.

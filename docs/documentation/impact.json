@@ -1,0 +1,2719 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "2026-09-10-unified-help",
+  "registeredPages": [
+    "accessibility",
+    "admission-worklist",
+    "ai-administration",
+    "allyvora-patient-360",
+    "allyvora-patient-query",
+    "allyvora-patient-record",
+    "appointment-worklist",
+    "approval-worklist",
+    "ar-aging-report",
+    "attendance-adjustment",
+    "attendance-anomalies",
+    "attendance-report",
+    "balance-sheet-report",
+    "bank-format",
+    "bank-master",
+    "bank-reconciliation",
+    "batch-expiry",
+    "bed-management",
+    "benefit-plan",
+    "billing-clinic",
+    "billing-entry",
+    "billing-patterns",
+    "billing-worklist",
+    "bulk-operations",
+    "card-components",
+    "carrier-master",
+    "chart-account",
+    "claim-worklist",
+    "clinical-consultation",
+    "clinical-notes",
+    "clinical-triage",
+    "clinician-master",
+    "compliance-report",
+    "component-contracts",
+    "component-library",
+    "comprehensive-consultation",
+    "consultation-entry",
+    "consultation-worklist",
+    "consumption-report",
+    "contractor-master",
+    "controlled-reconciliation",
+    "controlled-register",
+    "cost-center",
+    "credit-note",
+    "credit-profile",
+    "currency-config",
+    "customer-master",
+    "customer-worklist",
+    "data-patterns",
+    "date-components",
+    "deduction-master",
+    "delegation-master",
+    "denial-rate-report",
+    "denial-worklist",
+    "department-master",
+    "discharge-worklist",
+    "discount-rule",
+    "dispense-history",
+    "dispensing-rules",
+    "documentation-center",
+    "draft-recovery",
+    "drug-master",
+    "earning-master",
+    "employee-master",
+    "employee-onboarding",
+    "employee-separation",
+    "employee-transfer",
+    "employee-worklist",
+    "encounter-worklist",
+    "error-monitor",
+    "exception-worklist",
+    "expense-entry",
+    "expiry-risk-report",
+    "feedback-components",
+    "fin-approvals",
+    "final-settlement",
+    "finance-dashboard",
+    "fiscal-period",
+    "form-controls",
+    "form-patterns",
+    "formulary-setup",
+    "fulfillment-worklist",
+    "goods-receipt",
+    "grade-master",
+    "healthcare-dashboard",
+    "hr-dashboard",
+    "hr-numbering",
+    "hr-policy",
+    "hr-workflow",
+    "imaging-worklist",
+    "import-export",
+    "inline-components",
+    "integration-guide",
+    "inventory-count",
+    "inventory-valuation-report",
+    "item-master",
+    "journal-entry",
+    "journal-review",
+    "jurisdiction-master",
+    "keyboard-shortcuts",
+    "lab-results",
+    "leave-request",
+    "library-dashboard",
+    "list-of-pages",
+    "localization",
+    "location-master",
+    "los-report",
+    "margin-report",
+    "medication-orders",
+    "medication-review",
+    "messages",
+    "navigation-components",
+    "next-of-kin",
+    "notifications",
+    "occupancy-report",
+    "op-consultation",
+    "order-worklist",
+    "page-catalog",
+    "page-templates",
+    "patient-master",
+    "patient-merge",
+    "pay-approval",
+    "pay-calendar",
+    "pay-formula",
+    "pay-group",
+    "pay-register-report",
+    "payer-master",
+    "payroll-adjustment",
+    "payroll-dashboard",
+    "payroll-run",
+    "payroll-worklist",
+    "payslip-report",
+    "pharmacy-dashboard",
+    "pharmacy-goods-receipt",
+    "pharmacy-requisition",
+    "pharmacy-supplier",
+    "pipeline-report",
+    "position-master",
+    "posting-rules",
+    "preauthorization",
+    "preferences",
+    "prescription-queue",
+    "price-list",
+    "procurement-approval",
+    "procurement-worklist",
+    "product-master",
+    "profit-loss-report",
+    "purchase-order",
+    "purchase-requisition",
+    "quotation",
+    "receipt-entry",
+    "receivables-worklist",
+    "receiving-worklist",
+    "reorder-rules",
+    "reorder-worklist",
+    "revenue-report",
+    "role-master",
+    "sales-approval",
+    "sales-channel",
+    "sales-customer",
+    "sales-dashboard",
+    "sales-invoice",
+    "sales-numbering",
+    "sales-order",
+    "sales-return",
+    "sales-targets",
+    "saved-views",
+    "service-catalog",
+    "settlement-review",
+    "shift-roster",
+    "shortcut-manager",
+    "spreadsheet-studio",
+    "statutory-master",
+    "statutory-report",
+    "stock-adjustment",
+    "stock-aging-report",
+    "stock-on-hand",
+    "stock-transfer",
+    "stock-turn-report",
+    "supplier-contract",
+    "supplier-fin-master",
+    "supplier-master",
+    "supplier-performance-report",
+    "supply-dashboard",
+    "table-components",
+    "tax-master",
+    "tax-return-report",
+    "template-allocation-settlement",
+    "template-allocation-workspace",
+    "template-analytical-workspace",
+    "template-appointment",
+    "template-approval-inbox",
+    "template-assessment-scoring",
+    "template-assignment-queue",
+    "template-audit-explorer",
+    "template-background-jobs",
+    "template-bank-reconciliation",
+    "template-batch-processing",
+    "template-batch-serial-tracking",
+    "template-board-workspace",
+    "template-budget-workspace",
+    "template-calendar-workspace",
+    "template-certificate-output",
+    "template-checklist-workspace",
+    "template-communication-workspace",
+    "template-configuration-master",
+    "template-credit-debit-note",
+    "template-customer-master",
+    "template-detailed-master",
+    "template-discharge-closure",
+    "template-dispatch-board",
+    "template-document-workspace",
+    "template-employee-master",
+    "template-entity-360",
+    "template-exception-queue",
+    "template-goods-receipt",
+    "template-grouped-report",
+    "template-header-lines-order",
+    "template-hierarchical-master",
+    "template-history-timeline",
+    "template-import-wizard",
+    "template-integration-configuration",
+    "template-invoice-billing",
+    "template-issue-dispatch",
+    "template-item-service-master",
+    "template-journal-voucher",
+    "template-lab-order",
+    "template-lab-result",
+    "template-long-running-episode",
+    "template-management-dashboard",
+    "template-master-list",
+    "template-narrative-result",
+    "template-observation-chart",
+    "template-occupancy-board",
+    "template-operational-dashboard",
+    "template-operational-worklist",
+    "template-order-comparison",
+    "template-order-fulfillment",
+    "template-organization-profile",
+    "template-patient-billing",
+    "template-patient-encounter",
+    "template-patient-master",
+    "template-payment-voucher",
+    "template-period-processing",
+    "template-permissions-matrix",
+    "template-person-profile",
+    "template-person-registration",
+    "template-pick-pack",
+    "template-pivot-report",
+    "template-policy-editor",
+    "template-printable-report",
+    "template-procedure-execution",
+    "template-procedure-planning",
+    "template-purchase-order",
+    "template-quotation-estimate",
+    "template-receipt-voucher",
+    "template-recurring-order",
+    "template-registry-billing",
+    "template-registry-claim",
+    "template-registry-consultation",
+    "template-registry-small-master",
+    "template-registry-worklist",
+    "template-relationship-master",
+    "template-report-parameters",
+    "template-resource-timeline",
+    "template-result-comparison",
+    "template-result-verification",
+    "template-return-cancellation",
+    "template-roster-timetable",
+    "template-sales-order",
+    "template-schedule-configuration",
+    "template-school-fees",
+    "template-service-case",
+    "template-service-test-order",
+    "template-simple-master",
+    "template-split-list-detail",
+    "template-statement-account",
+    "template-stock-count",
+    "template-stock-transfer",
+    "template-structured-result",
+    "template-student-master",
+    "template-supplier-master",
+    "template-surgery-workspace",
+    "template-tabular-report",
+    "template-task-workspace",
+    "template-transaction-register",
+    "template-transport-plan",
+    "template-waitlist-check-in",
+    "template-workflow-configuration",
+    "territory-master",
+    "theme-studio",
+    "uom-master",
+    "user-master",
+    "valuation-method",
+    "vitals-worklist",
+    "warehouse-master",
+    "workforce-report"
+  ],
+  "legacyReferences": [
+    "hr-dashboard",
+    "user-master",
+    "role-master",
+    "delegation-master",
+    "employee-master",
+    "contractor-master",
+    "position-master",
+    "department-master",
+    "grade-master",
+    "location-master",
+    "employee-onboarding",
+    "employee-transfer",
+    "employee-separation",
+    "leave-request",
+    "attendance-adjustment",
+    "shift-roster",
+    "employee-worklist",
+    "approval-worklist",
+    "attendance-anomalies",
+    "workforce-report",
+    "attendance-report",
+    "compliance-report",
+    "hr-policy",
+    "hr-numbering",
+    "hr-workflow",
+    "finance-dashboard",
+    "supplier-fin-master",
+    "credit-profile",
+    "chart-account",
+    "cost-center",
+    "bank-master",
+    "tax-master",
+    "jurisdiction-master",
+    "fiscal-period",
+    "billing-entry",
+    "credit-note",
+    "receipt-entry",
+    "journal-entry",
+    "expense-entry",
+    "bank-reconciliation",
+    "billing-worklist",
+    "receivables-worklist",
+    "journal-review",
+    "profit-loss-report",
+    "balance-sheet-report",
+    "ar-aging-report",
+    "tax-return-report",
+    "currency-config",
+    "posting-rules",
+    "fin-approvals",
+    "payroll-dashboard",
+    "earning-master",
+    "deduction-master",
+    "pay-group",
+    "statutory-master",
+    "bank-format",
+    "benefit-plan",
+    "payroll-run",
+    "payroll-adjustment",
+    "final-settlement",
+    "payroll-worklist",
+    "exception-worklist",
+    "settlement-review",
+    "pay-register-report",
+    "payslip-report",
+    "statutory-report",
+    "pay-calendar",
+    "pay-formula",
+    "pay-approval",
+    "sales-dashboard",
+    "sales-customer",
+    "territory-master",
+    "sales-channel",
+    "product-master",
+    "price-list",
+    "discount-rule",
+    "quotation",
+    "sales-order",
+    "sales-invoice",
+    "sales-return",
+    "customer-worklist",
+    "order-worklist",
+    "fulfillment-worklist",
+    "pipeline-report",
+    "revenue-report",
+    "margin-report",
+    "sales-numbering",
+    "sales-approval",
+    "sales-targets",
+    "supply-dashboard",
+    "supplier-master",
+    "carrier-master",
+    "supplier-contract",
+    "item-master",
+    "warehouse-master",
+    "uom-master",
+    "purchase-requisition",
+    "purchase-order",
+    "goods-receipt",
+    "stock-transfer",
+    "inventory-count",
+    "stock-adjustment",
+    "procurement-worklist",
+    "receiving-worklist",
+    "reorder-worklist",
+    "inventory-valuation-report",
+    "supplier-performance-report",
+    "stock-aging-report",
+    "reorder-rules",
+    "procurement-approval",
+    "valuation-method",
+    "healthcare-dashboard",
+    "patient-merge",
+    "next-of-kin",
+    "appointment-worklist",
+    "admission-worklist",
+    "bed-management",
+    "discharge-worklist",
+    "encounter-worklist",
+    "consultation-worklist",
+    "consultation-entry",
+    "clinical-notes",
+    "vitals-worklist",
+    "lab-results",
+    "imaging-worklist",
+    "medication-orders",
+    "preauthorization",
+    "claim-worklist",
+    "denial-worklist",
+    "occupancy-report",
+    "los-report",
+    "denial-rate-report",
+    "service-catalog",
+    "payer-master",
+    "clinician-master",
+    "pharmacy-dashboard",
+    "prescription-queue",
+    "dispense-history",
+    "medication-review",
+    "drug-master",
+    "stock-on-hand",
+    "batch-expiry",
+    "controlled-register",
+    "controlled-reconciliation",
+    "pharmacy-requisition",
+    "pharmacy-goods-receipt",
+    "pharmacy-supplier",
+    "consumption-report",
+    "expiry-risk-report",
+    "stock-turn-report",
+    "formulary-setup",
+    "dispensing-rules",
+    "library-dashboard",
+    "spreadsheet-studio",
+    "import-export",
+    "bulk-operations",
+    "theme-studio",
+    "accessibility",
+    "page-catalog",
+    "component-contracts",
+    "keyboard-shortcuts",
+    "integration-guide",
+    "saved-views",
+    "shortcut-manager",
+    "notifications",
+    "messages",
+    "ai-administration",
+    "error-monitor"
+  ],
+  "receipts": {
+    "desktop-clients/packages/erp-screens/src/approvals/approval-workspace.tsx": {
+      "sha256": "eab38ee884a4375581f22ee5c4e1747d9ea32e1353c912017d8c425175ee351d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/billing/billing-page.tsx": {
+      "sha256": "51caedd2491ea9ae87de0ab9f5c51d318f8af633d24341769dac7c5b5071c4ff",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/bill-screen.tsx": {
+      "sha256": "ba00983234f0dd5d75448d8d52a84559209e7a64aa143c49ec3165b3ed5d63de",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/format.ts": {
+      "sha256": "441f0c09ae4eb83a3e30c4da273266a90d5bd0078ca0a8dfc182fbe93ec505b8",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/invoice.tsx": {
+      "sha256": "5e2c5f567949b097235e26fa0c67d3ea9a45d4a894c2e6b5a8493c99d2e72b7f",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/library-page.tsx": {
+      "sha256": "7f69a1e25249ee3fed8540d4ea2418fe97cef62b066e111d0106a9f8fcf17806",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/orders.tsx": {
+      "sha256": "0bea07b6678af9137a46e51b854ae1ff16711a5b69af97eee65a6503589a1fb7",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/parts.tsx": {
+      "sha256": "2eaa683db3cff146634f618ecd552a017c443cf8974408591e554272a058bfd2",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/payments.tsx": {
+      "sha256": "77946237883e9a62a68136524ecec6f472bb10e5befe5c640e53bd257db10662",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/receipt.ts": {
+      "sha256": "85545e55f00e9d9418bea389dac5c3cbb655f94fb4998700c5d132557a3bcd29",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinic-billing/workspace.tsx": {
+      "sha256": "6abd31b222544d63de241c78871ff1ab95aa3a02a3f5a9879ca8e55bf112e794",
+      "pages": [
+        "billing-clinic",
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/fields.tsx": {
+      "sha256": "35e2417427bc10669e0c86da60a4602dcfd28b702a4160cfb27f5c0c6bd195db",
+      "pages": [
+        "clinical-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/library-page.tsx": {
+      "sha256": "dc1470978f54d93da39a2ede672daefd6d745df568dc8c860fcad9aa52eb7aa2",
+      "pages": [
+        "clinical-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/sections.ts": {
+      "sha256": "bf0c978cdbc9a66cead3bc6bc911702762bb06d38a8dcd21b253d8ec23d53bed",
+      "pages": [
+        "clinical-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-consultation/workspace.tsx": {
+      "sha256": "fdde7303ff41cddcdfcd0affdcbbebd8a8ed3aa148ea01bed99eea848f744cdd",
+      "pages": [
+        "clinical-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-document/editor.tsx": {
+      "sha256": "d6026ebf4ffa2871e98e3c706e7a4b7d54886235023f0e3da2dd8cafba1c1a75",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-document/workspace.tsx": {
+      "sha256": "aec871eda38af28b1946f6f15611e87825e507601a9859bef7d9825e93da56dd",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/care-action.tsx": {
+      "sha256": "1bd34520d9875d66746c9c32c7d0b1d78605b6e578938c7d2662bf81c0223a6d",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/insurance-check.tsx": {
+      "sha256": "746d89f85e78ad551f8a543fc991a0ec85b8158eedc9d127795c156bf1ad416f",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/library-page.tsx": {
+      "sha256": "65d549365c7da1194bcefe1e33ccb7ecd1a9c99cb22e0e8c03450d119e44f62f",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/overview-data.ts": {
+      "sha256": "f1e78ec2becee5371eacb5109f179e04c2e0daeeca1dd1e19b7923849b77e2fc",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/patient-360.tsx": {
+      "sha256": "aeb66f379f40492c5ef05e83a92cc326cef874943419e3e8a8cebd59d4d4e1f5",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/patient-query.tsx": {
+      "sha256": "10494a6557ad508a5fb1a6650b5994ad2b2e1cdc9285caf7cdd72cfd2c408abd",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/patient-record.tsx": {
+      "sha256": "5650b05935e30db2e52b597932bf6051f3510f0b96fa1eecf7c1e959c09f0bd7",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query-detail.tsx": {
+      "sha256": "ff18e89291a80a4557eedd584731e3c4cb8f708c68a5c332b5a498cb9f88cfdf",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query-filters.tsx": {
+      "sha256": "96dfba369a55da54e4bc9792abf1f446724fa7644d509d577f6ec952aef25961",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query-layout.module.css": {
+      "sha256": "e395d2fecef0c78732991800bd20ea92d4a8ae06c770d8d670b4097933fb6a6e",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query-layout.module.css.d.ts": {
+      "sha256": "685037ba62fbb4e169391c9a13f7495fe8faec72dd4ff8da4dc998c366cb0da2",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query-model.ts": {
+      "sha256": "2055c058765d17b837970d85e6076bbe6646e48c833322f3e72a591ee1899dc9",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/query-results.tsx": {
+      "sha256": "84337027b7644174bd2cd68dbdbbd73ab5bf83da09fc43864c25b8fe0a7fc2f2",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-age.tsx": {
+      "sha256": "43b64b7a4e7a8e3f8a53afa6fbfb10d95722ecd7a0634c97304ad34329d91f60",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-layout.module.css": {
+      "sha256": "ee64cd00c44ed0b0f7447f8012627d77fdd49be09961da719abbac1ccb7480b7",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-layout.module.css.d.ts": {
+      "sha256": "da25fc232061c1341a9e26c5fd0b07ac974152f46b746a88519c0a945d0c43e6",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-layout.tsx": {
+      "sha256": "ce94fc86455d85705bbb29093bdd43f0558c8d174bd18a4a09578b8077633cb5",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-phone.tsx": {
+      "sha256": "a32e928e19f91c9d9a1237b9c8657e8e31d267960c864f958719936f333849ae",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-sections.tsx": {
+      "sha256": "7da2d1d001142b01fee7c9afb9b96c374136528ea701a608bc22cefb5872a76a",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/shared.tsx": {
+      "sha256": "cd2faaddd20966f1c3f0f906f2f737e5c00beee4e7acaea9b594d552dd575282",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-templates/workspace.tsx": {
+      "sha256": "8cfb9be4b4f6981965654825c8056aee56c178b7676372c3c9bb84fbf930f5fc",
+      "pages": [
+        "allyvora-patient-query",
+        "allyvora-patient-record",
+        "allyvora-patient-360",
+        "billing-clinic",
+        "clinical-triage",
+        "clinical-consultation",
+        "op-consultation",
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-triage/board.tsx": {
+      "sha256": "3400ccb79d41bb179838bb438175ed957421746c11a4049d4d0a5b047eccc6d4",
+      "pages": [
+        "clinical-triage"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-triage/editor.tsx": {
+      "sha256": "1eb6c5bc0245b96c59ef2aed6f887c4bfd746d09f2855552a3a2631882c1bbac",
+      "pages": [
+        "clinical-triage"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-triage/fields.tsx": {
+      "sha256": "8db4a82ad335e19b252453ca45b046066765b4eae3b1c004e29fad9fd0896a91",
+      "pages": [
+        "clinical-triage"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-triage/library-page.tsx": {
+      "sha256": "8fcb8de1f008bf0800848e9c52e74a7b1590f1f85c40141d819539a1d2d227d1",
+      "pages": [
+        "clinical-triage"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/clinical-triage/workspace.tsx": {
+      "sha256": "89da8210fc7bdeb009e6230e0492e084f4b8741c3190360a2c37accbd3455c4e",
+      "pages": [
+        "clinical-triage"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/board.tsx": {
+      "sha256": "a16e7655257e305f4d5131b095e350878eefbd226d12ef092199712b7a79ad1e",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/context-panels.tsx": {
+      "sha256": "27b6d81f11496fb1ed82a2754b160ad8d3f6a973a9e1fc13b77de17dbc9fe859",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/diagnoses.tsx": {
+      "sha256": "bf8c08bd33bf9dcba385744c61579e62f2f846151b47a1a26ed802c1a5fbeccc",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/library-page.tsx": {
+      "sha256": "7601b89e5555218fc3826c25604601dc521f3b07cc8184d1e71c938457393dc2",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/orders.tsx": {
+      "sha256": "2600d10f078b002fdaafe5249b631354a1f4633206278e30f33f18e4f050fd23",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/review.tsx": {
+      "sha256": "fa3eafa8692d462b07037593c14dbce11531b214042dc2838b4dc395e1b5e2a5",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/scores.tsx": {
+      "sha256": "108d81cc219a317ada32e121f48cd013daddde33942c457d13a126c0647ba353",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/shared.tsx": {
+      "sha256": "6fce3b4c467d67a261a333f4dabb52564b5ad0af9c8c8e77d5fe2da36a3e179a",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/comprehensive-consultation/workspace.tsx": {
+      "sha256": "f92ab94948d086eda3f653bf8dc879291350ad51f7cea48d53218e67cbfa3429",
+      "pages": [
+        "comprehensive-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/consultation/consultation-page.tsx": {
+      "sha256": "754cca144d94c9b771617f4868331b021f7a1b780842d8723f6d5fd6dc5aca31",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/consultation/index.ts": {
+      "sha256": "40cb284552ab2ed682ec0498b4f6f74041f06448be24d1d3acb36d316fc0bdd8",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/consultation/recorder.tsx": {
+      "sha256": "f0227d983de8e1d0adf36ba4f554f9fe50a8cde36d74376b27ea9f1b3929f92f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/dashboard/module-dashboard.tsx": {
+      "sha256": "4adb1dcdb45af71c21142a3870f325f25de9031733adf2920021a5ac1d1363ca",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/drafts/draft-center.tsx": {
+      "sha256": "9f643a6156ba61e25ba8fe6d05b646f2dc2932d022358d864a1402112da99742",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/drafts/use-shared-draft.tsx": {
+      "sha256": "78a2f7d4fec1d615a9f6db4a29080503e8f36b81ff57f4dd9839c04d378b85f6",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/forms/dynamic-record-form.tsx": {
+      "sha256": "4bdf04962a949bcdf529efd0c545d41b729f6018261da609f787d19ae882a35b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/forms/form-navigation.tsx": {
+      "sha256": "2658b8462b1608416006113c3660f818d6513e56ce9c1b5fe8dd79a78609906f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/imports/csv-import-dialog.tsx": {
+      "sha256": "5aae3bf985da4155cdb6a576fbab499561f835993903eb6e302c0adbea289d1e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/inbox/inbox-page.tsx": {
+      "sha256": "aa325bc4882ca2d9f3dbddce8b882c88ef31068df1e136a2d882b6f67636e5b2",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/inbox/index.ts": {
+      "sha256": "672f18bc4e4429b181eeef6a875799ca8ae089eef0b63eb578bfaac6c026aa96",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/index.ts": {
+      "sha256": "740b30e5b37ac5b4aaefdc7cce15669fd129845ddcde7ccdfc94b3f914ca4230",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/library/catalog.ts": {
+      "sha256": "ced17daa6b06dec906978dad6fe954ef35b87ca260a7a1d6860e76e6a9074663",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/library/component-catalog.tsx": {
+      "sha256": "01f758aa51fe847920b743a06d3fba3ab17b4d094af034b77bba52d03bf11e25",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/library/demos.tsx": {
+      "sha256": "12ab86ec945d2863a17cb5b42fe27397b6b2269f2a66a1cf01efba0529de206a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/library/index.tsx": {
+      "sha256": "b2f321ff0906bc61884341bdf46b1b745854f57eda29f9f7cde7eb88a8c5ddc1",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/library/reference-pages.tsx": {
+      "sha256": "49c92c24ff64c5d66c65c973105a466477545c82021491d80a58fe0320a56976",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/login/index.tsx": {
+      "sha256": "58081dce46945e72923780c9b9ba95897a8e9d3371306f45665dfa9fcf17df5e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/op-consultation/board.tsx": {
+      "sha256": "a5158d845f3b6eeadb668cbaa8618ab7bc14257e25c83786c6ba834f18e203b1",
+      "pages": [
+        "op-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/op-consultation/library-page.tsx": {
+      "sha256": "1edb2478df01d5516b4daa335d8f1fa278fc5ec3db1afcd0b40643c97f7333bb",
+      "pages": [
+        "op-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/op-consultation/patient-context.tsx": {
+      "sha256": "704fe71984d384cf4d752627f69686b91c2a28c07bc45fff209b40fbd10173be",
+      "pages": [
+        "op-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/op-consultation/workspace.tsx": {
+      "sha256": "cfdd419d6fd524379ef19c2e214215e876c90e916d8852be79ad22b951a9cc9c",
+      "pages": [
+        "op-consultation"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/page-library/billing-patient-launcher.tsx": {
+      "sha256": "f0cce822077d5e21ce60dfd5789f9829ae1e21492a61036b00728074dc1386c9",
+      "pages": [
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/page-library/catalog.ts": {
+      "sha256": "f085a748a39fb2c10d429871077afce1d6c299302254f8b2326f97be017f2515",
+      "pages": [
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/page-library/index.tsx": {
+      "sha256": "d42814b0d84f3cdb1dafeb4d4e5956b419f502c9ad80d71ed1cebecdec273563",
+      "pages": [
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Catalog guides use the API even when a newly registered page has no bundled TypeScript example; source-missing message still applies to code."
+    },
+    "desktop-clients/packages/erp-screens/src/page-library/resources.ts": {
+      "sha256": "be8afc0e01437f82bb508144968499a8fe4364f4369d1412087b1c0116a58d9c",
+      "pages": [
+        "list-of-pages"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Unified guide rendering and release-pointer update; domain flows documented in the new unified-help release, including the billing rail change."
+    },
+    "desktop-clients/packages/erp-screens/src/page-renderer.tsx": {
+      "sha256": "d2556e9918e961ee5ad3144912c9db94494b12ffd7909b149104aadcb3568d58",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/preference-choice.ts": {
+      "sha256": "31587e6fcee3764203c4f60503c574e1ba6ccd886633257530960909ef9d760f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/preference-preview.tsx": {
+      "sha256": "13b29adb909bbea41947c075903e3d1ce5fb38c592817f8d41e2e6ceb26a6d09",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/preferences/draft-policy-admin.tsx": {
+      "sha256": "f94b829e5f23bbf20f8314d72f59b41dba8029d91c25e3b97bf341c39352ab7f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/preferences/index.tsx": {
+      "sha256": "78fed725b75587230743fea60d3f62e8337d6a2b1d0a4f5ef6d522039a2a6efb",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/preferences/policy-admin.tsx": {
+      "sha256": "51257e940f63ca8401b91677d36c51dec0ad1ae9e702cbee9c882e893cbcaf6a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/preferences/policy-controls.tsx": {
+      "sha256": "24976b173a494ac2c1c0dc6c9c942e7ccd6d94e0580051ab9ecc48b882ea1c6f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/product-services.tsx": {
+      "sha256": "115b560121b6506aacc305fd116e4630b36790cbe880f321860b194af337c28d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/records/record-panels.tsx": {
+      "sha256": "703a95956f577b9731aa1d877d3584894ff88f6dff8066a218ee4936976192de",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/records/use-record-editor.tsx": {
+      "sha256": "91f4c8612f3ae23d84e51b6ff453f905c7d79b6093e2ee1fc377b59ac4c33af4",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/reports/reports-page.tsx": {
+      "sha256": "4532809ee030cd5170b1ae9b46608f87de3d5667ac5c68333c510bc5b007b5b3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/reports/schedule-modal.tsx": {
+      "sha256": "208b0b1c52e794249dca16313588229a65b95f53967627a07dbbf13fc06bdd8c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/spreadsheet/index.tsx": {
+      "sha256": "5060ed36bf394db29b706176f94be76db93cf039dcd87500087b0fbd17298c38",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/spreadsheet/model.ts": {
+      "sha256": "e208ae66674dc8f04e5e9ff75aeeb6d1deca894b37fd266f089afc01aa831f2d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/configured-template-page.tsx": {
+      "sha256": "fad3e83013949d5884e7f211363ace6ca7bc1a83f431da82218c8eb246424e87",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/page-template.tsx": {
+      "sha256": "0ee5691e76e036d30b0b106ba7527838770ac0ea17ded550b1b46c5fc62c75ee",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/registry-template.module.css": {
+      "sha256": "4b04c818b69b42743affeff9e8acdcdfb1d3532014adee52b9124d0552990179",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/registry-template.module.css.d.ts": {
+      "sha256": "685037ba62fbb4e169391c9a13f7495fe8faec72dd4ff8da4dc998c366cb0da2",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/registry-template.tsx": {
+      "sha256": "78eb1da5bdc37b36404f7a9e2698f4ec91112d666f080590aa4eea4504ceee24",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/template-demo.tsx": {
+      "sha256": "c787c3bfb2133a86adbfcf69c221c80671c666f334217ab78b98a56688c1fe54",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/template-engines.tsx": {
+      "sha256": "ba8bc3b4b236bb015b61e6362a00210d56e678197540c039e56880a2f027cbce",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/template-library.tsx": {
+      "sha256": "20275a44e094f3b91fc79755c32b9870cf6f737378b93df5ff21f5239c152f6a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/template-parts.tsx": {
+      "sha256": "b269257bae187d30d0651641efc6a1afb10b778c94777f5f5b4b36b3f1fc847b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/template-specialized.tsx": {
+      "sha256": "6e6af388b7942fbe2d45820e370d0ef7c779cc04321a02fa6696c6cd7ce5a88d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/templates/template-state.ts": {
+      "sha256": "8bb5f5d866428e4107c6881b9c3278873fe8e5ada7e7311004c504ce7bd041a8",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/card-grid.tsx": {
+      "sha256": "0a251f4a41c7cd9219de23159fd34bc61e8f336c72ca5904f7931df7ae758f36",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/column-manager.tsx": {
+      "sha256": "fdcd1749e2700806025591fba8e4a8e4cb6df5a051a9db46c41d62c1c2fadee3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/data-table.tsx": {
+      "sha256": "e9029f711859bf45037e2cb032810a42f29747f8d67113bc6836086b0c174f6e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/export-rows.ts": {
+      "sha256": "8094cad394d9baf23721acacb6aecb09c31569d685e7b5acc6c7f38ce65fc81f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/filter-bar.tsx": {
+      "sha256": "048952ddad398a58bafe7ab6f3449efa63dc6e99f354149a9c0c76ee4f3f8061",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/personal-views.tsx": {
+      "sha256": "e8b133523feb3fd4607a9164dda2fe36c6465291dc0c1c4ca050e6b709a7b78c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/record-preview.tsx": {
+      "sha256": "2024c99bc90ec5cf1ab9b1493e1ef8e47250c7e69d0c46debfb95287be69cee3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/saved-view.tsx": {
+      "sha256": "74f312d9b954b5499bc5690a56809c951225ea1dce1aa02441df047194b77b86",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/search-request.ts": {
+      "sha256": "9feced9a08375e013ea2d1d63f95ed4d760c78aa1c424536c656a9069f34334e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/use-column-layout.ts": {
+      "sha256": "f859cdb2a3568c63be87e430828b701ca6ba8c7fa9be146733a37e4177bb5194",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/use-filter-sync.tsx": {
+      "sha256": "d8e618e0f509a53b2e605eb62034f859b5b4ea635bd533043aff5f65dc511624",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-screens/src/worklist/worklist-page.tsx": {
+      "sha256": "556eb839c669563570a0fae10b52e1926cacb3a0b9335bc49067ed1290f2e8fa",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/chrome-palette.ts": {
+      "sha256": "4bfe3dccfd6ec662a4b9456e50e8d19bac5feb49db7e40407bb588f02407e01c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/documentation.tsx": {
+      "sha256": "03b60e1fc493129ce4cc8982e3b4e7933714133daca82e5872a19cfe500a2c25",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Shared article respects effective documentationEnabled preference without fetching hidden content; guide instructions unchanged."
+    },
+    "desktop-clients/packages/erp-shell/src/enterprise-shell.tsx": {
+      "sha256": "10a01f9f56cdc43d42a5bf2f222ce6970c6ed0b9fe0175a9dd4abfddf2b15f37",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/erp-context.tsx": {
+      "sha256": "e206d5b7cfaa3aeaf0e4628b6c17e8548ee5b8bf92c78803e57acecaee22be89",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/error-monitor.tsx": {
+      "sha256": "28281a9c0d00ba6ed46b1579a5cd9b8e3148645c97f86f508e9eb9665a1bff9f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/footer.tsx": {
+      "sha256": "040d596693f8600aff570be353c253fa762e583a1562e4e399c02d0f14588169",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/header-clock.tsx": {
+      "sha256": "e60c582b7aa9d04da4fd0557cdbf54e7c8c59ed9ea27d38f32bb22982612a5ce",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/header.tsx": {
+      "sha256": "3b42f9b7404c2220f55459ecc33c069037efbeb14bf478080256533502011778",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/index.ts": {
+      "sha256": "25bf37b3bb6c9d3df9f3d1513de16779e909254ad44a6c09a9c7ea5b061cbe6f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/layers/command-palette.tsx": {
+      "sha256": "450d1b7819316be27e91d5e6db6b05017ad2b60dcdbb99dc16078edada931b89",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/layers/documentation-drawer.tsx": {
+      "sha256": "ad6983e68acd3af41fed51e54b94e9746403a238cf13cbd6b6c857cf61df7a7f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/layers/help-assistant.tsx": {
+      "sha256": "d5b80cc735df5aa08c46cf0ef7e98b04f021022fed0edb70704ec04924bbac34",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/layers/index.tsx": {
+      "sha256": "b1ea5271244e0b14583da53476b928b738e40cc3d805e31ab2494756a1e6d9ee",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/layers/toast-viewport.tsx": {
+      "sha256": "f074681d959d4b6937779c319d97ca67415e52c0cba932ad5e9622a379c4c62b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/product-context.tsx": {
+      "sha256": "5458f10b5e13f69e17f01ee04919d90fbf1a1d7803e97c5ff258520ff38cb13a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/sentinel.tsx": {
+      "sha256": "012f0cccd3a77c29b8efa27b49a8402a5da1ceb61a2417a61c4c1129cc2e7283",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/session-lock.tsx": {
+      "sha256": "2ebd8a474bd7d747f20191c6841f51e682a4cdb29d66f16298147c16b0906753",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/sidebar.tsx": {
+      "sha256": "a2b84072e36f307286478bc479881731c1f6430dc699153015e9997ae1c10c0b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/use-clock.ts": {
+      "sha256": "fc6f5121dbbab7260dbf51244c3851c1ad0901e3fd683d06771449e820320ffd",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/index.ts": {
+      "sha256": "cd45f6eb358e7721da116d4100827fab3dc50ab82e8dab1b903c68e704e57dff",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/mdi-frames.ts": {
+      "sha256": "81853e48a72444081c5d1834e5cb2f6423a745d72dda7889192911f6c38611f3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/mdi-taskbar.tsx": {
+      "sha256": "9b541084360b64829cbacc54a5c9eb3327ab350081d911cd87ce29989cc8cb9a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/target-document.ts": {
+      "sha256": "f2f3e84e0d064e93f017fc96fbd2bd5822a204b5afe244cb15819352a13ee81c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/use-detached-windows.tsx": {
+      "sha256": "ad355b5b86ce417a6595cc8b49432af0edb1548e4044810e43c9bc9c1f527838",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/use-mdi-workspace.tsx": {
+      "sha256": "5e51a45545599ac604b8021c51315860b176c404410e3f4d16747b50ebe0ec52",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/use-workspace-navigation.tsx": {
+      "sha256": "bba1967bf7f6cbc359f96dd6ad76330db7ba34aa8a38b0cd8b024d840e336416",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/workspace-canvas.tsx": {
+      "sha256": "22359b2c9373aca7d51d1ea6f6e0f5e6285b44187ae0b3565c6faf8d550013a7",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-shell/src/workspace/workspace-tabs.tsx": {
+      "sha256": "f982f0d26d0ec9c8d4e2bcff5c7a83180817297a1bd68b095a37e74f5246bb2e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/application-config.ts": {
+      "sha256": "60260aa57bd5a61f3d41ba14dfe91b5108ab9b4b9da65f03050f99d116cfcb3d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/clinic-billing.ts": {
+      "sha256": "910d6d4efbb5db259b6d9b3a88224d4c2678f5b4f104ca1e3c07fa57a5143ffa",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/clinical-catalogue.ts": {
+      "sha256": "9fd91c03b26d7c21f8f7353121e7e0a31174a3fdff596b54f6a994d2dae3e667",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/clinical-consultation.ts": {
+      "sha256": "e4d0664123b75e48c19562c6ecb3fca65cc7c09b6c1744354bf43735481fc359",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/clinical-document.ts": {
+      "sha256": "6280103e24c2ac7d92db9f51bf146620d1d2785bf7074126d4c34565e5c5c5b1",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/clinical-templates.ts": {
+      "sha256": "d34a65d03b73efc1c7fc0a3b74daccb5d28f46fa479565c143b65c9dfe77e0bb",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/clinical-triage.ts": {
+      "sha256": "99f1dbd59f5191028507504a633788ef18c46b9cf59b77eaf1026c85aaaf34f0",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/comprehensive-consultation.ts": {
+      "sha256": "51aa0da7a36077ad9fd6232777b4a831f2a54bff17875dba37d1f008209b418e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/consultation-template.ts": {
+      "sha256": "3f6516623059abff9c83812e131ef641b493d8ec688d0cc0cd197e9bd4365bcc",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/data-classification.ts": {
+      "sha256": "c8689a55f9c2ddab40d80b871359ef6436ad2091485c3cfa3f891fc8535d8cc8",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/documentation.ts": {
+      "sha256": "64a19008163fce8133a0c0ef0b987e04ea82d81d2ac722cae2b17595a2e13c86",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Unified guide rendering and release-pointer update; domain flows documented in the new unified-help release, including the billing rail change."
+    },
+    "desktop-clients/packages/erp-config/src/draft-policy.ts": {
+      "sha256": "168ead6d7a776b03cff9c2d280261a3f13d59a284ac80203c4df73fad797511e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/em-coding.ts": {
+      "sha256": "6070bc3974b758332ad6c2c60fcc4f015fc8db4ca0d6e999c43b1ba166069c3a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/entity-schemas.ts": {
+      "sha256": "db91d84438c73cdd196fd2d81a66613d9d1298a39f7c894994a5348a0a19a69c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/export-policy.ts": {
+      "sha256": "f1ae8966de75694160c7a28c4c751ff9973796b0146faf299224e3b66ff64b7f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/filter-policy.ts": {
+      "sha256": "cb3a0e204cdb183c48dc9a8a72b3069bbb981ba0fe4f7f49e66762c3251e0216",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/form-rules.ts": {
+      "sha256": "2b099305858ce52ce12f44af7e3835d93983ce18e176709d7c9d7c1da9fb084c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/format.ts": {
+      "sha256": "e7724d464fd460f078b7fdc63428549273675887aa2bc4a017fdf1de243fce97",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/i18n.ts": {
+      "sha256": "0a6c6a9513da35010b3fc05c339d2ea0d5a19fa2abff8adb5f592cfa1249a748",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/imports.ts": {
+      "sha256": "9f2c268af21cf17644e171facba88c731a0197866ea95e6f8e913d26e24ed27e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/inbox.ts": {
+      "sha256": "374c8dc4edcc880114bdd2006644bb39b5646792f93ca91b7f781e7b6c2cca97",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/index.ts": {
+      "sha256": "8441626c89dcf5737c6ef1b67b162f1b6bba7bc9f20efccd76fde94eb2b0f29f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/library-pages.ts": {
+      "sha256": "da62bda428b1736e6cbcb01d0b10f8e78944a12f0798896027e9e85f5e77d5e3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/locale-messages.ts": {
+      "sha256": "dbb91664173c1c70375ed99d4ea97d0307da07219f414d6f83eaccbe7272dae0",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/navigation.ts": {
+      "sha256": "1cd0586da0ec8948b72ef2bb09c37009cc9859b7d1c614ca9948e5c89955ec72",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/page-templates.ts": {
+      "sha256": "1ab6ec44bf8cd4f7bdecc73084ea6c50bab4a5f115e04009ade85a60a7a2485f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/preference-defaults.ts": {
+      "sha256": "176ad8a37e69fb72a39967b7b11166939895d26c9ba9948b389fcaa93edae02b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/preference-policy.ts": {
+      "sha256": "c546216f5c0a32e59ecb5b421d478e6af76ca621f55844a37c7b5eb15ba2c22b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/product.ts": {
+      "sha256": "0c6bccc2847f7f746658a3ce1b9474890505873a10ba29c4ddfecbb7b2e31439",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/shortcuts.ts": {
+      "sha256": "70ca3b778f225c301305e27ee9d769fd587a1e692d4aaf9686956996925d625d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/themes.ts": {
+      "sha256": "8ccd60a6d5c5c5f4346000030936e32d9bcb6739c51bac546eb7f11f1d812b01",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/tours.ts": {
+      "sha256": "5bf060a9185113eee3ccb4b4bb34c492c340d78787f32fd72265c9a2a6919a60",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-config/src/types.ts": {
+      "sha256": "0311e7140612a1d0d826ef99e25f0fe816220d415e1d751069b2923f54003236",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/approvals.ts": {
+      "sha256": "489de643ba413b8dd93bd0c83a15ca4ab3e7a90480de25a683648ec746e3883b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/clinic-billing.ts": {
+      "sha256": "003876a8f1ea3aebcc6e9155a26fbe471372b4dc3e272c2fb5c4e74e8894192e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/clinical-consultation.ts": {
+      "sha256": "a10b20c2e95b4c60f71e6a19641f0d622f92b8068efa252b57301f3489c46f28",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/clinical-document.ts": {
+      "sha256": "77c8075d6cb7a681d1f537b0479eb85dc901e4b38061e9d2b5452b9494ccbb27",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/clinical-templates.ts": {
+      "sha256": "ad5e412c80b67b94da9c9b47ebaf9b0bebc3c2220374d40d24076f2d98ab9d85",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/clinical-triage.ts": {
+      "sha256": "fa78903f313a0d9cb701962460c368d99e1654748ceac830be395b92893873c5",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/comprehensive-consultation.ts": {
+      "sha256": "0a51f526d4b72afbaaec24aee73fc0d165c19e175c9eeaeddb16c5d91cd0fc65",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/csv-import.ts": {
+      "sha256": "ba518bd024a461cc1ce2e107ce44da4b5ddbe44265a301753530bf831fc3ab80",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/drafts.ts": {
+      "sha256": "cf0eb0b2383cb07a799cecd6d154a127af4678740f1f6221fe11cd65cb2f2d55",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/index.ts": {
+      "sha256": "bb7ec92813d41b2a048df557e3104b7a1286cead7198cfb1147568a27c06aa12",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/mock.ts": {
+      "sha256": "a3593ead408944273f7d72db41c40727301ec47e606eebf2ea1c639e5b214690",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/record-panels.ts": {
+      "sha256": "99befec6dec76b6c73e10d2f54766ea78c9992fc3cb47382793f5b1cad73809c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/records.ts": {
+      "sha256": "2adef440ad9193a6e6b91d0a55e9668b88819bdc1dc31d9afbf4c073c0833e74",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/erp-data/src/report-data.ts": {
+      "sha256": "ad59e0920cc065392103835d56953beafed940bca0d962bfe29d2097b64ef169",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/avatar.tsx": {
+      "sha256": "ab28db21fa67c4a15e5447036a03cc1aa99efe175b0a2dcaf43ae7145279350d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/badge.tsx": {
+      "sha256": "1834dafb4622a72f649b34aeeda984630827303f4ee72aec1898b48dc65adbd0",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/button.tsx": {
+      "sha256": "18714de3db15f6e23b63275c25ff1fa5e9307223db83be12ed31b42b46528918",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/calendar.tsx": {
+      "sha256": "e39a212559053d66e90e4e4abe748a9d6062f1abf54f585e0c4a4d5fb5bf8d80",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/card.tsx": {
+      "sha256": "6480ac442149023b6bca76b026d420e135c6f8ca9198932588e1592e61e4554b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/cn.ts": {
+      "sha256": "508ed802ea243f65ef21c01664c1f0966addcac6274f8a5b567b60bbf15754f4",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/data-value.tsx": {
+      "sha256": "85a596cf6b551211919c0bceaf0561e77f41261641864ab3d3a27d24f58c5726",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/date-time.tsx": {
+      "sha256": "f8b1f31097364a245e9303a9924dbc2e1f3316f84b5b0e29aa3b9c13f567b2ab",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/dropdown.tsx": {
+      "sha256": "b5d69c7238a0d703cd8576a73f603a87312970b07427f9e528d7e453742ae396",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/empty-state.tsx": {
+      "sha256": "558b655c55b81350fba38ea25df60ec88ea54da50a46a7000ca630eb6d4870b0",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/error-mapper.ts": {
+      "sha256": "11123cbc2a5bcf1379d469ec2bad551c7eac437cfe7962d7a9534acf77b86c90",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/form-controls.tsx": {
+      "sha256": "731cbf9cf423a09d97ba6df6b3dee66967e2a57a8dc0ea44799c4991ef95afc5",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/index.ts": {
+      "sha256": "daaef343920e7aad9fd1b015bfddc9696ee6a06ed39f64b01cf96d97de0594b5",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/inline-edit.tsx": {
+      "sha256": "44258ce45521a10cfbe04d0b2b188dec1fdd96aa1a99ef9eb8c1ed9f01905e86",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/localization.tsx": {
+      "sha256": "510d29adebbcec58a7ffdb7808cb5ebad5ef320752ec298fee1517fcd680bec2",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/nav-link.tsx": {
+      "sha256": "b9d1e4bf5ecaba164ac4ab79a9b37b354b4b4934dfc47d5a8bb41929da2291e7",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/option-filter.tsx": {
+      "sha256": "29b8010607d33fae267ad2a63e2b1e57119af45a899b9e0caa92fbfb68bbd1ae",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/overlay.tsx": {
+      "sha256": "6f9c3cc43c9880613d6dd0fa3571030bbfe19dbb43ece48c97f8189f5bcc304c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/pagination.tsx": {
+      "sha256": "f838d0ce71b5eec180532627a93504aab923d021ded255fe36a805eecba8c753",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/presentation.tsx": {
+      "sha256": "abdcab74b2ecf61ad8c8a1bffb93592f959c0a4e3a4efa9fe076a9fbb364245b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/recovery-notice.tsx": {
+      "sha256": "acfe5579a9503135230a270d8fd431dd7d29f52b9dcfb606779b8307186c009c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/reference-data.tsx": {
+      "sha256": "cd7562d312330e2481d6c3d8f94fd9f9ec435a114b31acd15402372cfa41bc49",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/search-select.tsx": {
+      "sha256": "9a03285283b9a23ca72b72ceeb1ec95b217249568bef092d163cb2f6d4572844",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/segmented.tsx": {
+      "sha256": "bbc8965eff4513e757c2a7040fadefa20d1c58d6f3131bb00bd426d19b154b14",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/skeleton.tsx": {
+      "sha256": "d946d229088734f81ba8234b9fdd74ee71f0b77f726db96db9ad473c4d65f8d7",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/stat-card.tsx": {
+      "sha256": "821c310d5fc77fea1458998028b84e63b7047dd1af40cb08f8092c7cc68c307c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/table.tsx": {
+      "sha256": "6b2bde900ed2f8375f8a212c8f0a9614de914223a404e523adada8f00072f29a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/packages/ops-ui/src/tabs.tsx": {
+      "sha256": "8e27ce765f3048ad5c7e3c6bee74285d0c05f58b0a59c511895f7b198c1b2b71",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
+    },
+    "desktop-clients/apps/web/src/app/[module]/[page]/[recordId]/edit/page.tsx": {
+      "sha256": "4a03cc79c891d90482125db45e6b99d1098eb2e40f437dc3a136f8dbbc51a3e7",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/[module]/[page]/[recordId]/page.tsx": {
+      "sha256": "9ae7524426a66c9e239f8ab918c937f1bb15d977676b31cb286a7addfb7b50e2",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/[module]/[page]/new/page.tsx": {
+      "sha256": "c65deb0cb516ba5217f7947d494201ddb0e4bd3944c4fade989ae552352a191c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/[module]/[page]/page.tsx": {
+      "sha256": "c8d9490346685e8b08d986668d8a031ea717b85eeb339d99dd93d08495068173",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/[module]/[page]/resolve.ts": {
+      "sha256": "ff543d227ea1ffb426a47bb9584ff61e98c4faf2c35befa911ecedb3ba5f39f0",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/globals.css": {
+      "sha256": "eadcc4da979ee21708193b36cdbfa4a78a73e35d72a18fbe133db75c10fa402c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/layout.tsx": {
+      "sha256": "bd5398fdc3da149b32bef616bf1017833cae7eb76669c04faf00e46f3c49d4b0",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/page.tsx": {
+      "sha256": "a63f6997f285ea72b7d45215bcce0a4b95135dd9a3e06a498a52915424d19bdf",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/view/[viewId]/page.tsx": {
+      "sha256": "6f50acfaaa99d22e0295d49a056baee985313c24ea6c49a0c2379821e8362941",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/app/view/[viewId]/route-client.tsx": {
+      "sha256": "a6cf329f402230f6f85b4bda988749f3e4fdb6e2c13849bc4caa29ef450482f3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/platform/landing-redirect.tsx": {
+      "sha256": "9ded5435482f133f9f773a98f46212a9022dc036cc43227c86464c0f4ef836b3",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/platform/providers.tsx": {
+      "sha256": "bb5e6093e6f82b83a4d396200fac2050b9cd859695b7ba65d8cf41896eca2763",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/web/src/platform/web-navigation.tsx": {
+      "sha256": "368864e7f781807b2a830a5e02fdfc71db5abcaf78f4f6b7b23d0a753aa2e65d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/desktop/src/globals.css": {
+      "sha256": "e1def8cb9cd011b38e8c1aebacb6c5f9fb447d7c9e5ce266a33c760dc0394910",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/desktop/src/main.tsx": {
+      "sha256": "bd32909aebcb0720c6b19626a3e5c4000b9a1856c27ef13bdbd5c520d5a2cff5",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "desktop-clients/apps/desktop/src/platform/tauri-windows.ts": {
+      "sha256": "b995485d5f8cdb6177a7f53488bca05e0aafcd4b1392d38c8f2587df20156fbe",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/ai-security.mjs": {
+      "sha256": "fa422135f256b6bb6dfe6105843c6df9d4f7370014ff4a67f5a517aff63e26bf",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/application-config.mjs": {
+      "sha256": "5f709d4d69836e4a11c988cc90920699681a9b7ac334b70dcd5c4608622d7f0f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/approval-store.mjs": {
+      "sha256": "a94ff441cc66267ce9482e104aec605232ec3f11d6a254d9ef6bfb9a8ec44cc1",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/audit-store.mjs": {
+      "sha256": "7caacf986bcfc59c2e53201e5c4f3278cecb280d322f49f3f8250010fff53d6c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/check-application-config.mjs": {
+      "sha256": "35cd861053dd47b0b4d5ce225e158ef79384cc2b3e967d01a59b826b53677174",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/credential-store.mjs": {
+      "sha256": "86103bee1418b812f159bf01d78094494fb0c8b6f8ae15b84e4245c23fcbcf8c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/documentation-revisions.mjs": {
+      "sha256": "8c576e49fc3be4383693761d5fcef98c3265e305ba2eb6b2105bb66358b51562",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Source-revision hashing includes field rules, required flags and tour targets so behavioral metadata changes invalidate native reviews."
+    },
+    "dummy-api/documentation-store.mjs": {
+      "sha256": "27b31a850e59ba7b001fec2e3f4e31513737055e3262f39fead9aa43a93d4629",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/draft-center.mjs": {
+      "sha256": "a26f8373cf39be8540d7215046618264681f9c546e4fb05293489b4387ad869d",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/draft-policy-store.mjs": {
+      "sha256": "c18fcc32ee4c143c4e94333a8388947eeb3f3eede32e2e2174e97c397fae693b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/import-store.mjs": {
+      "sha256": "6d6c59cc30ea3dd17308be7cdedacad836a0a080ade7fb68d3183987d35b3333",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/message-descriptors.mjs": {
+      "sha256": "62077410fe9a124e48cff28c6160a3d2cfb5c4c36ce3cac4c7d8f53182435a93",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/monitoring-store.mjs": {
+      "sha256": "f8af1e82371b79b74470c826b4304ff267f6e8094cd13670ff4c0371dba05388",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/preference-store.mjs": {
+      "sha256": "c916daa070239b14e74b44fcebecdc488dd1c5e32a69d981e60045bcca457813",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/record-panels-store.mjs": {
+      "sha256": "21d7d679e892c5722eea2722a2789f581b65e98c7f0143aadd5c83f6b5bbcc04",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/record-store.mjs": {
+      "sha256": "e5dd494fbf212adfb0d9e59a1a5d71706075cc80bfe3a9a2b47b4dcae5ac7a18",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/report-scheduler.mjs": {
+      "sha256": "aaa23a2d554a8111c558075e2424242248ae495a8fe637d887f92cd02a10427c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/route-methods.mjs": {
+      "sha256": "917c8e65543cbf6eab09443666e5889329f7b816d816e9d293bb7265783bb45e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/server.mjs": {
+      "sha256": "433f7f913d70303cc3f1febc209f67853be1153722e68fc8c1856c9c52d3ff4e",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/speech-gateway.mjs": {
+      "sha256": "12b5c8b3d677bc5c4084f06811db90e8beae36380abc6e7bfc65cb2daad36a9f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/workspace-store.mjs": {
+      "sha256": "15c89f02631a5a53331c0004eaa3a6ab4f318bd7190f795dbf379d328b93d82c",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/config/localization/shared/en.json": {
+      "sha256": "cffc02bcbdb094d3182f9a8f7a7b195da23cd7a2879ff34894c8267053c46c98",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/config/localization/shared/ar.json": {
+      "sha256": "10a88adaac3c10cd636dd885f5fd7fffa069e2b44aa47ebade6ac4339e7ba5c6",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/config/localization/shared/hi.json": {
+      "sha256": "f77a7fd99426fe813b185c02c29c0e495d931def044974849f0f214032c818bf",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/config/localization/shared/ml.json": {
+      "sha256": "e6da875c691a5cb78374f4092eaa205c2f6b2ba8d89cc48a02cefd0299de4491",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/config/navigation/ledger.json": {
+      "sha256": "189589dfe58cfef879089e8d19e466e31cfa66e2d9b813c8c167314fe1ef38b5",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    },
+    "dummy-api/config/navigation/nexora.json": {
+      "sha256": "c3f4fe032bfaa1025f9c8826cdce6c290638c0f4d99249446f87f160d9a1380f",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
+    }
+  }
+}

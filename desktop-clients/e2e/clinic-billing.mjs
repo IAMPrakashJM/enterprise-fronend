@@ -42,6 +42,19 @@ fs.mkdirSync(artifacts, { recursive: true });
     await root
       .getByRole("checkbox", { name: "Demonstration pharmacy request" })
       .waitFor();
+    assert.equal(await root.locator('[data-record-section]').count(), 1);
+    await root.locator('[data-record-section="orders"]').waitFor();
+    const rail = root.locator('nav');
+    if (await rail.count()) {
+      assert.ok(await rail.evaluate(e => e.scrollWidth <= e.clientWidth), 'rail labels fit');
+      const first = await rail.getByRole('tab').first().boundingBox();
+      const second = await rail.getByRole('tab').nth(1).boundingBox();
+      assert.ok(second.y - (first.y + first.height) < 20, 'rail items grouped at top');
+    }
+    const footerBox = await root.locator('footer').boundingBox();
+    assert.ok(footerBox.y + footerBox.height <= 1100, 'billing actions fit viewport');
+    await page.waitForTimeout(350);
+    await page.screenshot({path:join(artifacts,'clinic-rail.png'),fullPage:true});
     let latest;
     async function confirm(action) {
       const response = page.waitForResponse(
@@ -164,6 +177,7 @@ fs.mkdirSync(artifacts, { recursive: true });
       .getByRole("combobox", { name: "Export format", exact: true })
       .selectOption("xlsx");
     await page.getByRole("tab").filter({ hasText: "Billing Clinic" }).first().click();
+    await root.getByRole("tab", { name: "Invoices & payments", exact: true }).click();
     await root
       .getByRole("button", { name: "View bill", exact: true })
       .click();

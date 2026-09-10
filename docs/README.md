@@ -17,6 +17,8 @@ The documentation layout follows the [Pepbits framework documentation](https://g
 | Reuse release, feature and evidence templates | [Documentation templates](releases/templates/README.md) |
 | Find earlier illustrated guides and PDFs | [Reports index](reports/README.md) |
 
+See the [shared documentation lifecycle](documentation/README.md) for new pages, impact receipts, translation revisions and review requirements.
+
 ## Structure
 
 ```text

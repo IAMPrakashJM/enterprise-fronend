@@ -1,0 +1,27 @@
+
+> nexora-monorepo@1.0.0 typecheck
+> node scripts/typecheck.mjs
+
+
+  typecheck
+
+    ok    packages/ai-client
+    ok    packages/ai-config
+    ok    packages/ai-ui
+    ok    packages/auth
+    ok    packages/erp-config
+    ok    packages/erp-data
+    FAIL  packages/erp-screens
+          packages/erp-screens/src/page-library/catalog.test.tsx(98,92): error TS2769: No overload matches this call.
+            Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+              Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+            Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+              Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+    ok    packages/erp-shell
+    ok    packages/ops-ui
+    ok    packages/platform-ports
+    ok    packages/workspace-core
+    ok    apps/desktop
+
+  1 package(s) failed to typecheck.
+

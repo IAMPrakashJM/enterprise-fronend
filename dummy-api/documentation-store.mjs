@@ -1,3 +1,4 @@
+import {translationRevision} from './documentation-revisions.mjs';
 import {DatabaseSync} from 'node:sqlite';
 import {readFileSync,mkdirSync,chmodSync,existsSync} from 'node:fs';
 import {dirname,join} from 'node:path';
@@ -27,6 +28,8 @@ export function createDocumentationStore(file,configRoot,applicationConfig) {
  const availability=existsSync(availabilityPath)?JSON.parse(readFileSync(availabilityPath,'utf8')):null;
  const productContent=new Map();
  const contentFor=product=>{if(!productContent.has(product)){const path=join(configRoot,'documentation','products',product,'releases.json');productContent.set(product,existsSync(path)?validateDocumentation(JSON.parse(readFileSync(path,'utf8'))):content);}return productContent.get(product);};
+ const revisionPath=join(configRoot,'documentation/translation-revisions.json');
+ const revisions=existsSync(revisionPath)?JSON.parse(readFileSync(revisionPath,'utf8')):{};
  const translations=JSON.parse(readFileSync(join(configRoot,'documentation/translations.json'),'utf8'));
  mkdirSync(dirname(file),{recursive:true,mode:0o700});const db=new DatabaseSync(file);chmodSync(file,0o600);
  db.exec(`PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000;
@@ -56,7 +59,7 @@ export function createDocumentationStore(file,configRoot,applicationConfig) {
    const pageId=params.get('pageId');
    if(pageId){
     if(!pages.has(pageId))return fail(403,'Page is unavailable.');const guide=release.guides[pageId];if(!guide)return fail(404,'Documentation version is unavailable.');
-    const translated={...guide,title:text(guide.title),sections:guide.sections.map(s=>({...s,title:text(s.title),paragraphs:s.paragraphs.map(text)})),fields:guide.fields.map(f=>({...f,label:text(f.label),help:text(f.help),rules:f.rules.map(text)})),tour:guide.tour.map(s=>({...s,title:text(s.title),text:text(s.text)})),requestedLanguage:language,language,reviewStatus:'pending'};
+    const translated={...guide,title:text(guide.title),sections:guide.sections.map(s=>({...s,title:text(s.title),paragraphs:s.paragraphs.map(text)})),fields:guide.fields.map(f=>({...f,label:text(f.label),help:text(f.help),rules:f.rules.map(text)})),tour:guide.tour.map(s=>({...s,title:text(s.title),text:text(s.text)})),requestedLanguage:language,language,...translationRevision(guide,language,text,revisions[product]?.[releaseId]??revisions.default?.[releaseId])};
     translated.language=missing.size?'mixed':language;
     return {status:200,body:{guide:translated,releaseId,contentHash:createHash('sha256').update(JSON.stringify(translated)).digest('hex')}};
    }

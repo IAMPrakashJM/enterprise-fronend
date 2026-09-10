@@ -357,6 +357,8 @@ function ClinicEditor({
         />
       ) : (
         <RecordSectionLayout
+          activeOnly
+          railAlignment="start"
           sections={sections}
           active={section}
           onActive={setSection}

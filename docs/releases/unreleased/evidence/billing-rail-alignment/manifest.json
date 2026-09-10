@@ -1,0 +1,17 @@
+{
+  "baseCommit": "2696b1b467743a4a21b9be142d88d74da9247090",
+  "scope": "Local layout correction, isolated demo API Chromium. Typecheck before final scroll-reset effect, final tests/browser after. Not deployed.",
+  "sourceSha256": {
+    "desktop-clients/e2e/clinic-billing.mjs": "51f2eaf04028597271a5838e823f858623cce4fb45c803c3426c586b4c2a4cbf",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/workspace.test.tsx": "5df6bd6b1cfca6e6fe56a89edd0b49852e858c4ef8f21fc847de69a7ceb2b40b",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/workspace.tsx": "6abd31b222544d63de241c78871ff1ab95aa3a02a3f5a9879ca8e55bf112e794",
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-layout.module.css": "ee64cd00c44ed0b0f7447f8012627d77fdd49be09961da719abbac1ccb7480b7",
+    "desktop-clients/packages/erp-screens/src/clinical-templates/record-layout.tsx": "ce94fc86455d85705bbb29093bdd43f0558c8d174bd18a4a09578b8077633cb5"
+  },
+  "artifactSha256": {
+    "rail.png": "2447547053822cea4141e0ab4a37643d855a4469d21eadd1af48bf89450f6e2c",
+    "tests.txt": "d4a7a264319e3df910b8583e0a9aa9110b07d586fc415828c4de70a4dff29bb6",
+    "browser.txt": "912d19d3866751d33e048a4cb3ede34b42dc5760953a2ce8b3ac46c011c0a74f",
+    "typecheck.txt": "cc6d7e1a94dce15740ae72fd3759a5ba3d16cc4f92438f294a04c852e215d47a"
+  }
+}

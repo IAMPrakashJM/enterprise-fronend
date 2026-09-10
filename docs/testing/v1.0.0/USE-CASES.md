@@ -96,3 +96,19 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | PL-01 | Open List of pages and search | All accessible Page Library entries in API order; no self/duplicate/unrelated entries |
 | PL-02 | Open code and guide for each page | Correct public-import example and localized guide; access revocation removes an open resource |
 | PL-03 | Open each working page; select a billing patient from the catalog | Functional workspace and patient controls remain; developer tabs/demo header moved to catalog; shell release notice cards appear only on List of pages, never Billing Clinic or another working page |
+
+Billing rail follow-up: the billing browser suite asserts one active section, rail label containment, closely grouped navigation items and a footer inside the desktop viewport before executing the ledger workflow.
+
+
+## Documentation lifecycle
+
+| ID | Action | Expected result |
+| --- | --- | --- |
+| DOC-01 | Open a catalog guide and current-page Help in each supported language | Same versioned API article and language; Arabic direction; no separate guide prose |
+| DOC-02 | Modify a tracked source without a receipt | Lifecycle check fails and identifies the source |
+| DOC-03 | Add a page with missing/reference/placeholder documentation | Registration check fails; required sections and stable tour anchors required |
+| DOC-04 | Change guide text, field rules or translated text after review | Translation becomes outdated and review becomes pending |
+| DOC-05 | Modify a published snapshot | History comparison fails; a new release snapshot is required |
+| DOC-06 | Run strict acceptance with pending authoring/native reviews | Strict check fails; normal checks retain the explicit inherited backlog |
+
+DOC-01 is registered in `unified-help.mjs`; contract tests exercise source fingerprints and translation invalidation. The lifecycle checker enforces registration/history/strict acceptance. These are distinct from reviewer approval and native executable tests.

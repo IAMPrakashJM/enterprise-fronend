@@ -2,7 +2,7 @@
 import { LocalizedText, useLocalization } from "@pepbits/ops-ui";
 
 
-import {useDocumentationRequest} from "../documentation";
+import {DocumentationArticle, useDocumentationRequest} from "../documentation";
 import {DOCUMENTATION_RELEASE} from "@pepbits/erp-config";
 import { useProduct } from "../product-context";
 
@@ -53,7 +53,7 @@ export function HelpAssistant() {
   const page = product.pages[navigation.current.pageId];
   const kind = page?.kind ?? "dashboard";
 
-  const [tab, setTab] = useState<Tab>("tour");
+  const [tab, setTab] = useState<Tab>("docs");
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   /* Whether the tour is RUNNING, as distinct from whether the panel is open.
@@ -71,8 +71,8 @@ export function HelpAssistant() {
   useEffect(() => {
     if (!helpOpen) return;
     const controller=new AbortController();
-    const apply=(all:TourStep[])=>{const present=presentSteps(all);setSteps(present.length?present:presentSteps(TOURS.default));};
-    apply(TOURS[kind] ?? TOURS.default);
+    const apply=(all:TourStep[])=>setSteps(presentSteps(all));
+    apply([]);
     void documentationRequest(`/documentation?releaseId=${DOCUMENTATION_RELEASE}&pageId=${encodeURIComponent(navigation.current.pageId)}&language=${preferences.language}`,{signal:controller.signal}).then(body=>{if(!controller.signal.aborted)apply(body.guide.tour);}).catch(()=>{});
     setStep(0);
     setPlaying(false);
@@ -182,13 +182,7 @@ export function HelpAssistant() {
 
           {tab === "docs" ? (
             <div className="nex-scrollbar flex flex-col gap-2.5 overflow-auto px-4 py-3.5">
-              <span className="text-[length:calc(12px*var(--fs-scale))] font-black">{page?.title ?? "Workspace"}</span>
-              <span className="text-[length:calc(10.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]">{page?.subtitle ?? "Rendered from the central page registry using the shared shell, theme, access and preference contracts."}</span>
-              <span className="border-t border-[var(--border)] pt-2.5 text-[length:calc(9.5px*var(--fs-scale))] leading-relaxed text-[var(--text-muted)]"><LocalizedText message="ui.the.full.page.guide.the.component.library.and.the.develo.c84664a6" /></span>
-              <div className="flex flex-wrap gap-2">
-                {preferences.documentationEnabled ? <Button size="sm" variant="primary" leftIcon={<BookOpen className="size-3.5" />} onClick={() => { setHelpOpen(false); setDocumentationOpen(true); }}><LocalizedText message="ui.open.documentation.61139361" /></Button> : null}
-                <Button size="sm" variant="secondary" onClick={() => { navigation.open({ pageId: "library-dashboard" }); setHelpOpen(false); }}><LocalizedText message="ui.open.library.98c4cfdd" /></Button>
-              </div>
+              {preferences.documentationEnabled ? <DocumentationArticle pageId={navigation.current.pageId} onTour={() => setTab("tour")} /> : null}
             </div>
           ) : null}
 

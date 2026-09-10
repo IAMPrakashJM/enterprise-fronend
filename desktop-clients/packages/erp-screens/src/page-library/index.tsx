@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useERP, useProduct } from "@pepbits/erp-shell";
+import { DocumentationArticle, useERP, useProduct } from "@pepbits/erp-shell";
 import { useNavigation } from "@pepbits/platform-ports";
 import {
   Badge,
@@ -33,10 +33,10 @@ function PageResource({
   const { t } = useLocalization();
   const [copy, setCopy] = useState<"idle" | "copied" | "failed">("idle");
   const resource = PAGE_LIBRARY_RESOURCES[id];
-  if (!resource) return <p>{t("template.pageLibrary.noResource")}</p>;
+  if (!resource && tab === "code") return <p>{t("template.pageLibrary.noResource")}</p>;
   return (
     <div className="space-y-4" data-page-resource={id}>
-      <Badge tone="warning">{t(resource.demo)}</Badge>
+      {resource ? <Badge tone="warning">{t(resource.demo)}</Badge> : null}
       <Tabs
         items={[
           { id: "code", label: "template.typescript" },
@@ -51,7 +51,7 @@ function PageResource({
             <Button
               onClick={async () => {
                 try {
-                  await navigator.clipboard.writeText(resource.source);
+                  await navigator.clipboard.writeText(resource?.source ?? "");
                   setCopy("copied");
                 } catch {
                   setCopy("failed");
@@ -63,7 +63,7 @@ function PageResource({
           </div>
           <Textarea
             label="template.source"
-            value={resource.source}
+            value={resource?.source ?? ""}
             readOnly
             spellCheck={false}
             dir="ltr"
@@ -81,11 +81,7 @@ function PageResource({
           </p>
         </>
       ) : (
-        resource.guides.map((key) => (
-          <p key={key} className="text-sm">
-            {t(key)}
-          </p>
-        ))
+        <DocumentationArticle pageId={id} />
       )}
     </div>
   );

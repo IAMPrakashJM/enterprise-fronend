@@ -1,0 +1,21 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run packages/erp-screens/src/clinic-billing/workspace.test.tsx packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (5 tests) 944ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  421ms
+   ✓ bill correction retains input and operation identity on failure; read-only view can return  420ms
+ ✓ packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx (7 tests) 2663ms
+   ✓ patient form preserves edits through section changes and retries with the same operation  1126ms
+   ✓ scope remounts cannot retain another user patient edits  300ms
+   ✓ New patient resets a saved record in a reused new-record tab  389ms
+   ✓ empty contact editors do not create rows until edited and retain focus while typing  561ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  08:02:22
+   Duration  6.00s (transform 2.79s, setup 2.26s, collect 2.60s, tests 3.61s, environment 888ms, prepare 195ms)
+

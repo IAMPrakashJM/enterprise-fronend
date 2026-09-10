@@ -1,0 +1,16 @@
+{
+  "pageId": "replace-with-page-id",
+  "module": "replace-with-module",
+  "title": "Page title",
+  "revision": 1,
+  "status": "reference",
+  "sections": [
+    {"id":"overview","title":"Overview","paragraphs":["Explain the page purpose and intended users."]},
+    {"id":"workflow","title":"How to use this page","paragraphs":["Describe the verified sequence, inputs and outcome."]},
+    {"id":"validation","title":"Validation and recovery","paragraphs":["Describe actual validation rules, failures and recovery actions."]},
+    {"id":"access","title":"Access and preferences","paragraphs":["Describe permissions, managed settings and formatting."]},
+    {"id":"integration","title":"Integration","paragraphs":["Document API adapters, identifiers and host responsibilities."]}
+  ],
+  "fields": [],
+  "tour": []
+}

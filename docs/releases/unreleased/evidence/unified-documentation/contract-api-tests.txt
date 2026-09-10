@@ -1,0 +1,16 @@
+✔ source edits and mapping changes require fresh impact review; explanations are mandatory (1.792062ms)
+✔ source edits invalidate reviewed translations even when their text is unchanged (0.800362ms)
+✔ required-field metadata invalidates a translation review even if visible strings do not change (0.36781ms)
+✔ documentation HTTP authorizes every view and persists scoped read state (1178.685513ms)
+✔ versioned guides, role-filtered search, explicit language fallback and invalid requests (37.509249ms)
+✔ reading state is idempotent, persistent and isolated; only explicit acknowledgment acknowledges (39.89846ms)
+✔ manifest rejects broken notices, duplicate versions and invalid tour anchors (1.26987ms)
+✔ tenant rollout refuses future snapshots and product manifests stay separate (15.408341ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1278.019127

@@ -291,3 +291,24 @@
     animation: none;
   }
 }
+
+/* Operational workspaces keep navigation together and align the active pane. */
+.surface[data-rail-alignment="start"] .body { gap: 0; }
+.surface[data-rail-alignment="start"] .rail { width: clamp(220px, 19vw, 280px); }
+.surface[data-rail-alignment="start"] .steps { justify-content: flex-start; gap: 6px; }
+.surface[data-rail-alignment="start"] .rail .step {
+  flex-shrink: 0;
+  white-space: normal;
+  height: auto;
+  min-width: 0;
+  align-items: flex-start;
+}
+.surface[data-rail-alignment="start"] .rail .step > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.surface[data-rail-alignment="start"] .content { padding: 0; }
+.surface[data-rail-alignment="start"] .section { margin-bottom: 0; }
+.surface[data-rail-alignment="start"] .footer { padding: 0; }
+.surface[data-rail-alignment="start"] .footer > * { width: 100%; min-width: 0; }

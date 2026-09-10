@@ -8,6 +8,7 @@ import styles from "./record-layout.module.css";
 export function RecordSectionLayout<T extends { id: string; title: string }>({
   sections,
   activeOnly = false,
+  railAlignment = "spread",
   active,
   onActive,
   preferences,
@@ -20,6 +21,8 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
   sections: T[];
   /** Reuse the record rail with a focused pane instead of stacked sections. */
   activeOnly?: boolean;
+  /** Compact top-aligned navigation for operational workspaces. */
+  railAlignment?: "spread" | "start";
   active: string;
   onActive: (id: string) => void;
   preferences: UserPreferences;
@@ -47,6 +50,9 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
           behavior: preferences.reducedMotion ? "instant" : "smooth",
         });
   };
+  useEffect(() => {
+    if (activeOnly && content.current) content.current.scrollTop = 0;
+  }, [active, activeOnly]);
   useEffect(() => {
     if (layout === "rail" && !activeOnly && observed.current !== active)
       go(active);
@@ -143,6 +149,7 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
       ref={surface}
       className={styles.surface}
       data-layout={layout}
+      data-rail-alignment={railAlignment}
       data-density={preferences.density}
       data-motion={preferences.reducedMotion ? "reduced" : "full"}
     >

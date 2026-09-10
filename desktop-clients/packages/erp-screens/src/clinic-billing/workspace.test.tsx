@@ -194,6 +194,7 @@ test("bill correction retains input and operation identity on failure; read-only
       {...props({ load: vi.fn().mockResolvedValue(billed), mutate })}
     />,
   );
+  fireEvent.click(await screen.findByRole("tab", { name: "Invoices & payments" }));
   fireEvent.click(
     await screen.findByRole("button", { name: "Edit bill" }),
   );
@@ -233,6 +234,7 @@ test("bill correction retains input and operation identity on failure; read-only
       })}
     />,
   );
+  fireEvent.click(await screen.findByRole("tab", { name: "Invoices & payments" }));
   fireEvent.click(
     await screen.findByRole("button", { name: "View bill" }),
   );

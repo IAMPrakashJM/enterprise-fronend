@@ -64,3 +64,7 @@ A specialized skeleton or calendar demo demonstrates that component. This is not
 The intended behavior works through shared components and applicable settings; relevant failures and locks are tested; examples/translations/help are updated; feature and release notes state the actual result; documentation checks pass; unresolved product/platform dependencies are named. Mark publication or deployment complete only after that action succeeds and is verified.
 
 See the [testing gate](../testing/v1.0.0/PRE-COMMIT.md) and [versioning policy](../releases/VERSIONING.md). These rules add no independent user-approval flow and do not authorize changes outside the requested scope.
+
+## Documentation change-impact enforcement
+
+Follow the [documentation lifecycle](../documentation/README.md). Source edits require impact receipts for affected pages. New pages require authored guides; inherited reference-only guides remain tracked backlog. Do not rewrite historical release snapshots or silently reset translation-review status. Human review and protected-branch requirements are distinct from automated validation.

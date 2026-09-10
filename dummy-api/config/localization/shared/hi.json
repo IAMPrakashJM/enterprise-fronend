@@ -15844,6 +15844,7 @@
     "template.pageLibrary.count": "{total} में से {count} पृष्ठ दिखाए गए",
     "template.pageLibrary.open": "पृष्ठ खोलें",
     "template.pageLibrary.empty": "कोई मिलते-जुलते पृष्ठ नहीं",
-    "template.pageLibrary.noResource": "इस पृष्ठ के लिए विशेष उदाहरण और गाइड अभी नहीं जोड़े गए हैं।"
+    "template.pageLibrary.noResource": "इस पृष्ठ के लिए विशेष उदाहरण और गाइड अभी नहीं जोड़े गए हैं।",
+    "documentation.translation.outdated": "यह अनुवाद पुराना है। इन निर्देशों पर भरोसा करने से पहले नवीनतम मूल मार्गदर्शिका देखें।"
   }
 }

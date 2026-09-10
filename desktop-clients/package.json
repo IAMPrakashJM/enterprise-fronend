@@ -72,7 +72,7 @@
     "e2e:native:all": "node e2e/run.mjs native",
     "verify:e2e-registry": "node e2e/run.mjs --check",
     "verify:bundle": "node scripts/verify-bundle.mjs",
-    "verify:documentation": "node scripts/verify-documentation.mjs",
+    "verify:documentation": "node scripts/verify-documentation.mjs && node ../docs/tools/documentation-lifecycle.mjs check",
     "library:sync": "node scripts/library/generate-examples.mjs",
     "verify:library": "node scripts/library/generate-examples.mjs --check",
     "templates:sync": "node scripts/templates/generate-example.ts",

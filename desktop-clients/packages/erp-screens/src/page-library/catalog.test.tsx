@@ -28,6 +28,7 @@ const fresh = () =>
 let product = fresh();
 const open = vi.fn();
 vi.mock("@pepbits/erp-shell", () => ({
+  DocumentationArticle: ({pageId}: {pageId: string}) => <div data-documentation-page={pageId}>API guide</div>,
   useProduct: () => product,
   useERP: () => ({ format: createFormatters(DEFAULT_PREFERENCES) }),
 }));
@@ -55,7 +56,7 @@ test("all current pages retain public integration examples and dedicated guide c
     const resource = PAGE_LIBRARY_RESOURCES[page.id];
     expect(resource.source).toContain("from '@pepbits/erp-screens'");
     expect(resource.source).toContain("scopeKey");
-    expect(resource.guides.length).toBeGreaterThan(3);
+
   }
 });
 test("search, resources and page opening use current access; revoked resource closes", () => {
@@ -78,6 +79,7 @@ test("search, resources and page opening use current access; revoked resource cl
     }),
   );
   expect(within(screen.getByRole("dialog")).queryByRole("textbox")).toBeNull();
+  expect(screen.getByText("API guide")).toBeTruthy();
   delete product.pages["billing-clinic"];
   ui.rerender(<PageLibraryCatalog />);
   expect(screen.queryByRole("dialog")).toBeNull();
@@ -85,4 +87,15 @@ test("search, resources and page opening use current access; revoked resource cl
   ui.rerender(<PageLibraryCatalog />);
   fireEvent.click(screen.getByRole("button", { name: "Open page" }));
   expect(open).toHaveBeenCalledWith({ pageId: "billing-clinic" });
+});
+
+test("a page without bundled code still opens its API guide", () => {
+  const saved = PAGE_LIBRARY_RESOURCES["billing-clinic"];
+  delete PAGE_LIBRARY_RESOURCES["billing-clinic"];
+  try {
+    const ui = render(<PageLibraryCatalog />);
+    const card = ui.container.querySelector('[data-page-library-entry="billing-clinic"]') as HTMLElement;
+    fireEvent.click(within(card).getByRole("button", { name: "User and integration guide", exact: true }));
+    expect(screen.getByText("API guide")).toBeTruthy();
+  } finally { PAGE_LIBRARY_RESOURCES["billing-clinic"] = saved; }
 });

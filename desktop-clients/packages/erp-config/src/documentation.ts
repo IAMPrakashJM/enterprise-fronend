@@ -1,9 +1,9 @@
 /** Compiled into each client so an older native build requests its own manifest. */
-export const DOCUMENTATION_RELEASE = '2026-09-10-page-library-catalog';
+export const DOCUMENTATION_RELEASE = '2026-09-10-unified-help';
 export interface GuideSection {id:string;title:string;paragraphs:string[]}
 export interface DocumentationGuide {
  pageId:string;module:string;title:string;revision:number;status:'reference'|'authored';
- language:string;requestedLanguage:string;reviewStatus:string;sections:GuideSection[];
+ language:string;requestedLanguage:string;reviewStatus:string;translationStatus?:'source'|'current'|'incomplete'|'outdated';sourceHash?:string;translationHash?:string;sections:GuideSection[];
  fields:Array<{id:string;label:string;type:string;required:boolean;help:string;rules:string[]}>;
  tour:Array<{target:string;title:string;text:string}>;
 }

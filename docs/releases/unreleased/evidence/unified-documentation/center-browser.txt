@@ -1,0 +1,5 @@
+PASS documentation language ar
+PASS documentation language hi
+PASS documentation language ml
+PASS documentation: page guide, release archive, patch empty state, exact-section notice, durable read state Arabic, Hindi and Malayalam
+1/1 features suites passed

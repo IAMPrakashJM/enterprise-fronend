@@ -25,6 +25,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # 24, because the packages ship raw TypeScript and Node's type stripping
       # is what lets the verify scripts import the REAL modules with no build
@@ -42,9 +44,12 @@ jobs:
         run: npm ci
 
       - name: Documentation contracts
+        env:
+          DOCS_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           node ../docs/tools/check-docs.mjs
-          node --test ../docs/tools/check-docs.test.mjs
+          node --test ../docs/tools/check-docs.test.mjs ../docs/tools/documentation-contracts.test.mjs
+          node ../docs/tools/documentation-lifecycle.mjs check
 
       # Before the tests, because it is the fastest check and the one most
       # likely to be red — vitest transpiles and does not typecheck, so a green

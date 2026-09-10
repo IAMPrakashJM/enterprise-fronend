@@ -40,15 +40,17 @@ function useChangeAction(){const request=useDocumentationRequest();return useCal
 
 export function DocumentationArticle({pageId,releaseId=DOCUMENTATION_RELEASE,sectionId,onTour}:{pageId:string;releaseId?:string;sectionId?:string;onTour?:()=>void}){
  const request=useDocumentationRequest();const {preferences,t}=useERP();const [guide,setGuide]=useState<DocumentationGuide>();const [offline,setOffline]=useState(false);const [error,setError]=useState(false);const [attempt,retry]=useState(0);
- useEffect(()=>{const controller=new AbortController();setGuide(undefined);setError(false);request(`/documentation?releaseId=${encodeURIComponent(releaseId)}&language=${preferences.language}&pageId=${encodeURIComponent(pageId)}`,{signal:controller.signal}).then(body=>{if(!controller.signal.aborted){setGuide(body.guide);setOffline(body.offline===true);}}).catch(()=>{if(!controller.signal.aborted)setError(true);});return()=>controller.abort();},[request,pageId,releaseId,preferences.language,attempt]);
+ useEffect(()=>{const controller=new AbortController();setGuide(undefined);setError(false);if(!preferences.documentationEnabled)return;request(`/documentation?releaseId=${encodeURIComponent(releaseId)}&language=${preferences.language}&pageId=${encodeURIComponent(pageId)}`,{signal:controller.signal}).then(body=>{if(!controller.signal.aborted){setGuide(body.guide);setOffline(body.offline===true);}}).catch(()=>{if(!controller.signal.aborted)setError(true);});return()=>controller.abort();},[request,pageId,releaseId,preferences.language,preferences.documentationEnabled,attempt]);
  useEffect(()=>{if(guide&&sectionId)document.getElementById(`doc-${pageId}-${sectionId}`)?.scrollIntoView({block:'start',behavior:preferences.reducedMotion?'auto':'smooth'});},[guide,sectionId,pageId,preferences.reducedMotion]);
+ if(!preferences.documentationEnabled)return null;
  if(error)return <p role="alert"><LocalizedText message="Could not load documentation." /> <Button onClick={()=>retry(n=>n+1)}><LocalizedText message="Retry" /></Button></p>;
  if(!guide)return <p role="status"><LocalizedText message="Loading…" /></p>;
  return <article className="space-y-5" data-documentation-page={pageId}>
   <h2 className="text-lg font-bold">{guide.title}</h2>
   {offline?<p role="status"><LocalizedText message="Offline copy. Reconnect to check for updates." /></p>:null}
   {guide.status==='reference'?<p className="rounded-lg bg-[var(--surface-2)] p-3 text-sm"><LocalizedText message="Reference guide; detailed workflow review pending." /></p>:null}
-  {guide.requestedLanguage!=='en'?<p className="text-sm text-[var(--text-muted)]"><LocalizedText message={guide.language==='mixed'?'Some content is shown in English.':'Translation review pending.'} /></p>:null}
+  {guide.translationStatus==='outdated'?<p role="status"><LocalizedText message="documentation.translation.outdated" /></p>:null}
+  {guide.requestedLanguage!=='en'&&guide.reviewStatus!=='reviewed'?<p className="text-sm text-[var(--text-muted)]"><LocalizedText message={guide.language==='mixed'?'Some content is shown in English.':'Translation review pending.'} /></p>:null}
   {onTour&&preferences.helperEnabled?<Button onClick={onTour}><LocalizedText message="Start tour" /></Button>:null}
   <nav className="flex flex-wrap gap-3">{guide.sections.map(section=><a key={section.id} className="text-[var(--primary)] underline" href={`#doc-${pageId}-${section.id}`}>{section.title}</a>)}</nav>
   {guide.sections.map(section=><section key={section.id} id={`doc-${pageId}-${section.id}`} className="scroll-mt-4 space-y-2"><h3 className="font-semibold">{section.title}</h3>{section.paragraphs.map((text,index)=><p key={index} className="text-sm leading-relaxed">{text}</p>)}</section>)}

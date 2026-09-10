@@ -15844,6 +15844,7 @@
     "template.pageLibrary.count": "{total} പേജുകളിൽ {count} കാണിക്കുന്നു",
     "template.pageLibrary.open": "പേജ് തുറക്കുക",
     "template.pageLibrary.empty": "പൊരുത്തപ്പെടുന്ന പേജുകളില്ല",
-    "template.pageLibrary.noResource": "ഈ പേജിന് പ്രത്യേക ഉദാഹരണവും ഗൈഡും ഇതുവരെ ചേർത്തിട്ടില്ല."
+    "template.pageLibrary.noResource": "ഈ പേജിന് പ്രത്യേക ഉദാഹരണവും ഗൈഡും ഇതുവരെ ചേർത്തിട്ടില്ല.",
+    "documentation.translation.outdated": "ഈ പരിഭാഷ പഴയതാണ്. ഈ നിർദ്ദേശങ്ങൾ ഉപയോഗിക്കുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ മൂല മാർഗ്ഗനിർദ്ദേശം പരിശോധിക്കുക."
   }
 }

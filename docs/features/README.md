@@ -37,3 +37,5 @@ Never substitute a screenshot, an empty route or a passing build for functional 
 - [Billing corrections and shared clinical workspaces](clinical-workspace-update.md)
 
 - [Page Library: List of pages](page-library-catalog.md)
+
+- [Shared help and documentation lifecycle](../documentation/README.md): API articles, new-page scaffolding, impact checks and translation-review evidence.

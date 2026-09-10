@@ -15844,6 +15844,7 @@
     "template.pageLibrary.count": "عرض {count} من {total} صفحة",
     "template.pageLibrary.open": "فتح الصفحة",
     "template.pageLibrary.empty": "لا توجد صفحات مطابقة",
-    "template.pageLibrary.noResource": "لم تتم إضافة مثال ودليل مخصصين لهذه الصفحة بعد."
+    "template.pageLibrary.noResource": "لم تتم إضافة مثال ودليل مخصصين لهذه الصفحة بعد.",
+    "documentation.translation.outdated": "هذه الترجمة قديمة. راجع أحدث دليل مصدر قبل الاعتماد على هذه التعليمات."
   }
 }

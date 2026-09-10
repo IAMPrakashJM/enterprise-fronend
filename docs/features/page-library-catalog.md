@@ -38,3 +38,7 @@ The navigation list, resource relocation, eight examples/guides and direct works
 The Billing Clinic launcher searches through `ClinicalTemplateAdapter` and sends the selected ID as `NavigationTarget.recordId`. The billing host passes it to `BillingClinicWorkspace` with `patientSelection="external"`. This preserves reload/deep-link identity without copying patient payloads into browser storage. The server validates access and loads ledger data; invalid or unavailable IDs use the existing retry/error display. Tenant/application/user and patient identity remount the editor. The standalone workspace retains its optional inline selector for existing integrations.
 
 The hosted billing page removes the search/select/demo card, four summary statistics and workflow/currency/cashier banner. Orders, review, payments, history, financial formatting and server write permissions remain. Canonical four-language guide text and the public TypeScript example describe the new entry flow.
+
+## Billing rail alignment
+
+Billing uses the shared record layout with a top-aligned rail and one active section. Select a rail item to switch between patient context, orders, review, payments and history. Labels wrap within the rail; content and footer occupy the remaining aligned workspace. The selected section opens at the top instead of leaving earlier sections above it. Effective tabs/wizard preferences still apply. The shared layout’s new `railAlignment="start"` option is opt-in; existing record layouts retain their default spacing.

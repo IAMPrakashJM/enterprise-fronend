@@ -15844,6 +15844,7 @@
     "template.pageLibrary.count": "Showing {count} of {total} pages",
     "template.pageLibrary.open": "Open page",
     "template.pageLibrary.empty": "No matching pages",
-    "template.pageLibrary.noResource": "A dedicated example and guide have not been added for this page yet."
+    "template.pageLibrary.noResource": "A dedicated example and guide have not been added for this page yet.",
+    "documentation.translation.outdated": "This translation is outdated. Check the latest source guide before relying on these instructions."
   }
 }
