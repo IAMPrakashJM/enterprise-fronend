@@ -1,0 +1,18 @@
+Checking https://front-design.pepbits.com allyvora-patient-query
+Checking https://front-design.pepbits.com allyvora-patient-record
+Checking https://front-design.pepbits.com allyvora-patient-360
+Checking https://front-design.pepbits.com billing-clinic
+Checking https://front-design.pepbits.com clinical-triage
+Checking https://front-design.pepbits.com clinical-consultation
+Checking https://front-design.pepbits.com op-consultation
+Checking https://front-design.pepbits.com comprehensive-consultation
+PASS https://front-design.pepbits.com: release identity, authenticated API catalog/order, all eight examples/guides, search, working-page opens and relocated controls; no page errors or record/preference mutations
+Checking https://desktop.front-design.pepbits.com allyvora-patient-query
+Checking https://desktop.front-design.pepbits.com allyvora-patient-record
+Checking https://desktop.front-design.pepbits.com allyvora-patient-360
+Checking https://desktop.front-design.pepbits.com billing-clinic
+Checking https://desktop.front-design.pepbits.com clinical-triage
+Checking https://desktop.front-design.pepbits.com clinical-consultation
+Checking https://desktop.front-design.pepbits.com op-consultation
+Checking https://desktop.front-design.pepbits.com comprehensive-consultation
+PASS https://desktop.front-design.pepbits.com: release identity, authenticated API catalog/order, all eight examples/guides, search, working-page opens and relocated controls; no page errors or record/preference mutations

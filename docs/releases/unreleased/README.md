@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest deployment: [Page Library catalog — both demo sites, 10 September 2026](page-library-catalog-deployment-2026-09-10.md).
+
 - [Own Settings deployment — 10 September 2026](own-settings-deployment-2026-09-10.md)
 
 Latest local implementation: [Own Settings default module](own-settings-2026-09-10.md), not deployed.

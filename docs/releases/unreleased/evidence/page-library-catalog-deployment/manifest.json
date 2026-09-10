@@ -1,0 +1,15 @@
+{
+  "commit": "c0b91aa21da7d557bae80725109fb4d51ccdc333",
+  "releaseId": "20260910071728997-8c827861",
+  "previousReleaseId": "20260910065020266-69915bef",
+  "scope": "Public English Chromium verification on both demo hosts, 1700x1050. API-backed catalog and eight working pages. No record/preference writes. Initial HTTP 429 retained; paced final run passed. CI failed 4 feature browser suites. No native executable live acceptance.",
+  "artifactSha256": {
+    "activate.txt": "86a95f97b01bf82bac7eb77539f93714202e914eedff97817a8ebb25c8931b67",
+    "ci-failed.txt": "a6e800fc163c536c9aa10468fa50b8e495339d9ddbc76c58bbe7d6841136bdb7",
+    "desktop.png": "c0e9c9ca478f75c3e5cd18710b57e2b27d2dacf32959a4e449dfaf8f45a129b1",
+    "initial-rate-limit.txt": "1e7af3be0f5ba373eade9933d8c8af56948491da5d755056913c4ebf7944fb9c",
+    "live.txt": "897cb4b6632308c85ee7126632d0c55d2279f420c975c4abfd84b6e89eaaefeb",
+    "prepare.txt": "a7bca09b454ae28268569eb815aa00a10d1f19a1b520fe1760ef8cf840195fb8",
+    "web.png": "e077f5a0c74f98e6644ccca8a0ea61af4b85dc4365c4c0bdf9da094fac1acc48"
+  }
+}

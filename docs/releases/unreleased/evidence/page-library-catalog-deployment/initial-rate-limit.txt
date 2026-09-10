@@ -1,0 +1,12 @@
+Popup URL https://front-design.pepbits.com/library/clinical-triage
+Application configuration could not be loaded (429).
+
+Retry loading application
+[]
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('header, input[type=password]').first() to be visible[22m
+
+    at /tmp/page-catalog-diagnostic.cjs:12:429 {
+  name: 'TimeoutError'
+}

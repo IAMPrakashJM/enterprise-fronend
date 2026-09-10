@@ -1,0 +1,292 @@
+feature-browser (features)	Run registered suites	﻿2026-09-10T07:22:01.8899339Z ##[group]Run node e2e/run.mjs features
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8899771Z ^[[36;1mnode e2e/run.mjs features^[[0m
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8921671Z shell: /usr/bin/bash -e {0}
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8922091Z env:
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8922379Z   E2E_MANAGED_API: 1
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8922724Z   E2E_API: http://127.0.0.1:3330
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8923115Z   E2E_DESKTOP: http://127.0.0.1:3109
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8923525Z   VITE_API_URL: http://127.0.0.1:3330
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8923899Z   E2E_FIXTURE_DIR: /tmp/nexora-ci-fixture
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8924295Z   NEXORA_CONFIG_DIR: /tmp/nexora-ci-fixture/config
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8924714Z   NEXORA_DATA_DIR: /tmp/nexora-ci-fixture/data
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8925161Z   RECORD_DATA_DIR: /tmp/nexora-ci-fixture/data
+feature-browser (features)	Run registered suites	2026-09-10T07:22:01.8925512Z ##[endgroup]
+feature-browser (features)	Run registered suites	2026-09-10T07:22:21.7814265Z PASS API navigation list/order, eight page examples and guides, search, open-page actions, resources removed from working pages, four languages/direction/width, no page errors
+feature-browser (features)	Run registered suites	2026-09-10T07:22:26.1051762Z PASS API module choices, account save/reload, default-module startup, tenant policy selector and live lock enforcement
+feature-browser (features)	Run registered suites	2026-09-10T07:22:38.7868484Z PASS ar catalog and desktop layout
+feature-browser (features)	Run registered suites	2026-09-10T07:22:39.9963941Z PASS hi catalog and desktop layout
+feature-browser (features)	Run registered suites	2026-09-10T07:22:41.2526361Z PASS ml catalog and desktop layout
+feature-browser (features)	Run registered suites	2026-09-10T07:22:42.1852080Z PASS en catalog and desktop layout
+feature-browser (features)	Run registered suites	2026-09-10T07:22:42.1853615Z PASS comprehensive real API configuration, specialty preservation, diagnosis/order links, four order types, edit, score, E/M, full preview, retry identity, CSV save/reload/sign and immutable controls
+feature-browser (features)	Run registered suites	2026-09-10T07:22:50.1363348Z PASS ar catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:22:51.2664593Z PASS hi catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:22:52.4198728Z PASS ml catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:22:53.3037865Z PASS en catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:22:53.3039069Z PASS real API draft/save/reload/complete/immutable history/new blank consultation; no page errors
+feature-browser (features)	Run registered suites	2026-09-10T07:23:01.0178460Z PASS ar catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:02.1658082Z PASS hi catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:03.2684834Z PASS ml catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:04.2866874Z PASS en catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:04.2868072Z PASS real API draft/save/reload/complete/immutable history/new blank consultation; no page errors
+feature-browser (features)	Run registered suites	2026-09-10T07:23:11.4435416Z PASS ar catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:12.5534539Z PASS hi catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:13.7213593Z PASS ml catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:14.7033781Z PASS en catalog rendering, direction and desktop width
+feature-browser (features)	Run registered suites	2026-09-10T07:23:14.7034505Z PASS real API draft/save/reload/complete/immutable history/new blank assessment; no page errors
+feature-browser (features)	Run registered suites	2026-09-10T07:23:23.9416259Z PASS real browser prescription/order/invoice/partial payment/refund/export/print flow; no page errors
+feature-browser (features)	Run registered suites	2026-09-10T07:23:24.8463451Z (node:3603) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/library-preferences.ts is not specified and it doesn't parse as CommonJS.
+feature-browser (features)	Run registered suites	2026-09-10T07:23:24.8468330Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+feature-browser (features)	Run registered suites	2026-09-10T07:23:24.8471094Z To eliminate this warning, add "type": "module" to /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/package.json.
+feature-browser (features)	Run registered suites	2026-09-10T07:23:24.8473579Z (Use `node --trace-warnings ...` to show where the warning was created)
+feature-browser (features)	Run registered suites	2026-09-10T07:23:25.9638606Z PASS route library-dashboard
+feature-browser (features)	Run registered suites	2026-09-10T07:23:26.5358499Z PASS route component-library
+feature-browser (features)	Run registered suites	2026-09-10T07:23:26.6872113Z PASS route form-controls
+feature-browser (features)	Run registered suites	2026-09-10T07:23:26.8313918Z PASS route feedback-components
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.0286415Z PASS route date-components
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.1934255Z PASS route card-components
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.3191389Z PASS route table-components
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.4784339Z PASS route navigation-components
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.7204746Z PASS route inline-components
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.8649363Z PASS route form-patterns
+feature-browser (features)	Run registered suites	2026-09-10T07:23:27.9879201Z PASS route data-patterns
+feature-browser (features)	Run registered suites	2026-09-10T07:23:28.1003893Z PASS route billing-patterns
+feature-browser (features)	Run registered suites	2026-09-10T07:23:28.9409493Z PASS route page-templates
+feature-browser (features)	Run registered suites	2026-09-10T07:23:29.0993633Z PASS route template-registry-worklist
+feature-browser (features)	Run registered suites	2026-09-10T07:23:29.3329330Z PASS route template-registry-small-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:29.4990104Z PASS route template-registry-billing
+feature-browser (features)	Run registered suites	2026-09-10T07:23:29.7315606Z PASS route template-registry-claim
+feature-browser (features)	Run registered suites	2026-09-10T07:23:29.9562070Z PASS route template-registry-consultation
+feature-browser (features)	Run registered suites	2026-09-10T07:23:30.1484047Z PASS route template-simple-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:30.2973808Z PASS route template-detailed-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:30.5144477Z PASS route template-person-registration
+feature-browser (features)	Run registered suites	2026-09-10T07:23:30.7432672Z PASS route template-person-profile
+feature-browser (features)	Run registered suites	2026-09-10T07:23:30.9718006Z PASS route template-organization-profile
+feature-browser (features)	Run registered suites	2026-09-10T07:23:31.2024709Z PASS route template-item-service-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:31.3589698Z PASS route template-hierarchical-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:31.5816378Z PASS route template-relationship-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:31.7370979Z PASS route template-configuration-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:31.9967257Z PASS route template-patient-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:32.2500095Z PASS route template-employee-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:32.4790824Z PASS route template-customer-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:32.6537243Z PASS route template-supplier-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:32.8760064Z PASS route template-student-master
+feature-browser (features)	Run registered suites	2026-09-10T07:23:33.0769621Z PASS route template-master-list
+feature-browser (features)	Run registered suites	2026-09-10T07:23:33.2153439Z PASS route template-transaction-register
+feature-browser (features)	Run registered suites	2026-09-10T07:23:33.4012988Z PASS route template-operational-worklist
+feature-browser (features)	Run registered suites	2026-09-10T07:23:33.5326435Z PASS route template-assignment-queue
+feature-browser (features)	Run registered suites	2026-09-10T07:23:33.7974785Z PASS route template-approval-inbox
+feature-browser (features)	Run registered suites	2026-09-10T07:23:33.9719684Z PASS route template-exception-queue
+feature-browser (features)	Run registered suites	2026-09-10T07:23:34.0953386Z PASS route template-board-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:34.2681204Z PASS route template-split-list-detail
+feature-browser (features)	Run registered suites	2026-09-10T07:23:34.5479362Z PASS route template-batch-processing
+feature-browser (features)	Run registered suites	2026-09-10T07:23:34.7328594Z PASS route template-header-lines-order
+feature-browser (features)	Run registered suites	2026-09-10T07:23:34.9716310Z PASS route template-service-test-order
+feature-browser (features)	Run registered suites	2026-09-10T07:23:35.1361053Z PASS route template-quotation-estimate
+feature-browser (features)	Run registered suites	2026-09-10T07:23:35.3857442Z PASS route template-order-fulfillment
+feature-browser (features)	Run registered suites	2026-09-10T07:23:35.5521860Z PASS route template-return-cancellation
+feature-browser (features)	Run registered suites	2026-09-10T07:23:35.7457616Z PASS route template-order-comparison
+feature-browser (features)	Run registered suites	2026-09-10T07:23:35.9190000Z PASS route template-recurring-order
+feature-browser (features)	Run registered suites	2026-09-10T07:23:36.1494719Z PASS route template-purchase-order
+feature-browser (features)	Run registered suites	2026-09-10T07:23:36.3266722Z PASS route template-sales-order
+feature-browser (features)	Run registered suites	2026-09-10T07:23:36.5342690Z PASS route template-lab-order
+feature-browser (features)	Run registered suites	2026-09-10T07:23:36.7209441Z PASS route template-appointment
+feature-browser (features)	Run registered suites	2026-09-10T07:23:36.9040059Z PASS route template-calendar-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:37.0662766Z PASS route template-resource-timeline
+feature-browser (features)	Run registered suites	2026-09-10T07:23:37.3138615Z PASS route template-occupancy-board
+feature-browser (features)	Run registered suites	2026-09-10T07:23:37.4981889Z PASS route template-allocation-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:37.6946210Z PASS route template-roster-timetable
+feature-browser (features)	Run registered suites	2026-09-10T07:23:37.8803086Z PASS route template-waitlist-check-in
+feature-browser (features)	Run registered suites	2026-09-10T07:23:38.1324234Z PASS route template-patient-encounter
+feature-browser (features)	Run registered suites	2026-09-10T07:23:38.3745640Z PASS route template-service-case
+feature-browser (features)	Run registered suites	2026-09-10T07:23:38.5568196Z PASS route template-long-running-episode
+feature-browser (features)	Run registered suites	2026-09-10T07:23:38.7402783Z PASS route template-procedure-planning
+feature-browser (features)	Run registered suites	2026-09-10T07:23:38.9743737Z PASS route template-surgery-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:39.1590712Z PASS route template-procedure-execution
+feature-browser (features)	Run registered suites	2026-09-10T07:23:39.3238749Z PASS route template-checklist-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:39.5573554Z PASS route template-discharge-closure
+feature-browser (features)	Run registered suites	2026-09-10T07:23:39.8026461Z PASS route template-structured-result
+feature-browser (features)	Run registered suites	2026-09-10T07:23:39.9648277Z PASS route template-lab-result
+feature-browser (features)	Run registered suites	2026-09-10T07:23:40.1942027Z PASS route template-narrative-result
+feature-browser (features)	Run registered suites	2026-09-10T07:23:40.3349537Z PASS route template-observation-chart
+feature-browser (features)	Run registered suites	2026-09-10T07:23:40.6331477Z PASS route template-assessment-scoring
+feature-browser (features)	Run registered suites	2026-09-10T07:23:40.8035123Z PASS route template-result-verification
+feature-browser (features)	Run registered suites	2026-09-10T07:23:41.0338752Z PASS route template-result-comparison
+feature-browser (features)	Run registered suites	2026-09-10T07:23:41.1888769Z PASS route template-certificate-output
+feature-browser (features)	Run registered suites	2026-09-10T07:23:41.3875731Z PASS route template-goods-receipt
+feature-browser (features)	Run registered suites	2026-09-10T07:23:41.5563225Z PASS route template-issue-dispatch
+feature-browser (features)	Run registered suites	2026-09-10T07:23:41.8037812Z PASS route template-stock-transfer
+feature-browser (features)	Run registered suites	2026-09-10T07:23:41.9444202Z PASS route template-stock-count
+feature-browser (features)	Run registered suites	2026-09-10T07:23:42.1874883Z PASS route template-batch-serial-tracking
+feature-browser (features)	Run registered suites	2026-09-10T07:23:42.3496612Z PASS route template-pick-pack
+feature-browser (features)	Run registered suites	2026-09-10T07:23:42.5804377Z PASS route template-transport-plan
+feature-browser (features)	Run registered suites	2026-09-10T07:23:42.7362780Z PASS route template-dispatch-board
+feature-browser (features)	Run registered suites	2026-09-10T07:23:42.9078737Z PASS route template-journal-voucher
+feature-browser (features)	Run registered suites	2026-09-10T07:23:43.1476562Z PASS route template-payment-voucher
+feature-browser (features)	Run registered suites	2026-09-10T07:23:43.2783738Z PASS route template-receipt-voucher
+feature-browser (features)	Run registered suites	2026-09-10T07:23:43.5240945Z PASS route template-invoice-billing
+feature-browser (features)	Run registered suites	2026-09-10T07:23:43.6900246Z PASS route template-patient-billing
+feature-browser (features)	Run registered suites	2026-09-10T07:23:43.9151137Z PASS route template-school-fees
+feature-browser (features)	Run registered suites	2026-09-10T07:23:44.0719017Z PASS route template-credit-debit-note
+feature-browser (features)	Run registered suites	2026-09-10T07:23:44.2967857Z PASS route template-allocation-settlement
+feature-browser (features)	Run registered suites	2026-09-10T07:23:44.4023045Z PASS route template-bank-reconciliation
+feature-browser (features)	Run registered suites	2026-09-10T07:23:44.5178372Z PASS route template-budget-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:44.7204513Z PASS route template-period-processing
+feature-browser (features)	Run registered suites	2026-09-10T07:23:44.8884859Z PASS route template-statement-account
+feature-browser (features)	Run registered suites	2026-09-10T07:23:45.0558426Z PASS route template-report-parameters
+feature-browser (features)	Run registered suites	2026-09-10T07:23:45.1851519Z PASS route template-tabular-report
+feature-browser (features)	Run registered suites	2026-09-10T07:23:45.4300213Z PASS route template-grouped-report
+feature-browser (features)	Run registered suites	2026-09-10T07:23:45.5700769Z PASS route template-pivot-report
+feature-browser (features)	Run registered suites	2026-09-10T07:23:45.6994358Z PASS route template-printable-report
+feature-browser (features)	Run registered suites	2026-09-10T07:23:45.8722448Z PASS route template-operational-dashboard
+feature-browser (features)	Run registered suites	2026-09-10T07:23:46.1174049Z PASS route template-management-dashboard
+feature-browser (features)	Run registered suites	2026-09-10T07:23:46.2472181Z PASS route template-analytical-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:46.3911129Z PASS route template-entity-360
+feature-browser (features)	Run registered suites	2026-09-10T07:23:46.6213760Z PASS route template-history-timeline
+feature-browser (features)	Run registered suites	2026-09-10T07:23:46.8476837Z PASS route template-document-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:46.9577285Z PASS route template-task-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:47.0726131Z PASS route template-communication-workspace
+feature-browser (features)	Run registered suites	2026-09-10T07:23:47.2572610Z PASS route template-policy-editor
+feature-browser (features)	Run registered suites	2026-09-10T07:23:47.5059463Z PASS route template-permissions-matrix
+feature-browser (features)	Run registered suites	2026-09-10T07:23:47.7426116Z PASS route template-workflow-configuration
+feature-browser (features)	Run registered suites	2026-09-10T07:23:47.9208453Z PASS route template-import-wizard
+feature-browser (features)	Run registered suites	2026-09-10T07:23:48.0646599Z PASS route template-background-jobs
+feature-browser (features)	Run registered suites	2026-09-10T07:23:48.1878254Z PASS route template-schedule-configuration
+feature-browser (features)	Run registered suites	2026-09-10T07:23:48.4582966Z PASS route template-audit-explorer
+feature-browser (features)	Run registered suites	2026-09-10T07:23:48.5781778Z PASS route template-integration-configuration
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8347905Z node:internal/modules/run_main:107
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8348643Z     triggerUncaughtException(
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8349533Z     ^
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8352783Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8353311Z locator.waitFor: Timeout 30000ms exceeded.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8354024Z Call log:
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8355050Z   - waiting for locator('.library-preferences[data-page-id="list-of-pages"]:visible').last().locator('[data-component-catalog], [data-library-reference]') to be visible
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8355624Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8356284Z     at /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/library-preferences.ts:28:112 {
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8356904Z   name: 'TimeoutError'
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8357175Z }
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8357354Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8357460Z Node.js v24.20.0
+feature-browser (features)	Run registered suites	2026-09-10T07:24:18.8438184Z FAIL features/library-preferences.ts: Command failed: /opt/hostedtoolcache/node/24.20.0/x64/bin/node /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/library-preferences.ts
+feature-browser (features)	Run registered suites	2026-09-10T07:24:19.5528631Z (node:3684) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/clinical-templates.ts is not specified and it doesn't parse as CommonJS.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:19.5530651Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:19.5532022Z To eliminate this warning, add "type": "module" to /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/package.json.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:19.5533129Z (Use `node --trace-warnings ...` to show where the warning was created)
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9469962Z node:internal/modules/run_main:107
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9470822Z     triggerUncaughtException(
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9471234Z     ^
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9471427Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9471702Z locator.click: Timeout 30000ms exceeded.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9472235Z Call log:
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9472993Z   - waiting for locator('[data-clinical-record]').getByRole('button', { name: 'Rail layout', exact: true })
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9473488Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9474077Z     at /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/clinical-templates.ts:179:6 {
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9474844Z   name: 'TimeoutError'
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9475231Z }
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9475430Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9475645Z Node.js v24.20.0
+feature-browser (features)	Run registered suites	2026-09-10T07:24:54.9540417Z FAIL features/clinical-templates.ts: Command failed: /opt/hostedtoolcache/node/24.20.0/x64/bin/node /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/clinical-templates.ts
+feature-browser (features)	Run registered suites	2026-09-10T07:24:55.6471613Z (node:3765) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/page-templates.ts is not specified and it doesn't parse as CommonJS.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:55.6474718Z Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:55.6475597Z To eliminate this warning, add "type": "module" to /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/package.json.
+feature-browser (features)	Run registered suites	2026-09-10T07:24:55.6476724Z (Use `node --trace-warnings ...` to show where the warning was created)
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1098900Z node:internal/modules/run_main:107
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1099536Z     triggerUncaughtException(
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1100037Z     ^
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1100280Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1100681Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1101206Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1101425Z 102 !== 97
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1101664Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1102404Z     at file:///home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/page-templates.ts:14:104 {
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1103109Z   generatedMessage: true,
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1103622Z   code: 'ERR_ASSERTION',
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1104015Z   actual: 102,
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1104384Z   expected: 97,
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1104819Z   operator: 'strictEqual',
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1105144Z   diff: 'simple'
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1105455Z }
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1105615Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1105788Z Node.js v24.20.0
+feature-browser (features)	Run registered suites	2026-09-10T07:24:57.1151831Z FAIL features/page-templates.ts: Command failed: /opt/hostedtoolcache/node/24.20.0/x64/bin/node /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/page-templates.ts
+feature-browser (features)	Run registered suites	2026-09-10T07:24:58.7388813Z Opening Library page: form-controls
+feature-browser (features)	Run registered suites	2026-09-10T07:25:00.3871716Z Opening Library page: feedback-components
+feature-browser (features)	Run registered suites	2026-09-10T07:25:00.6087630Z Opening Library page: data-patterns
+feature-browser (features)	Run registered suites	2026-09-10T07:25:00.9020352Z Opening Library page: component-library
+feature-browser (features)	Run registered suites	2026-09-10T07:25:01.0927465Z Opening Library page: card-components
+feature-browser (features)	Run registered suites	2026-09-10T07:25:01.2565204Z Opening Library page: table-components
+feature-browser (features)	Run registered suites	2026-09-10T07:25:01.4305050Z Opening Library page: navigation-components
+feature-browser (features)	Run registered suites	2026-09-10T07:25:01.5641971Z Opening Library page: inline-components
+feature-browser (features)	Run registered suites	2026-09-10T07:25:01.7947385Z Opening Library page: form-patterns
+feature-browser (features)	Run registered suites	2026-09-10T07:25:01.9415488Z Opening Library page: billing-patterns
+feature-browser (features)	Run registered suites	2026-09-10T07:25:02.0454668Z Opening Library page: localization
+feature-browser (features)	Run registered suites	2026-09-10T07:25:02.0946957Z PASS component groups, live state/reset, source code, clipboard fallback, API navigation, overlays, table, accessibility and zero business writes
+feature-browser (features)	Run registered suites	2026-09-10T07:25:05.6089700Z PASS center metadata privacy, filters, unavailable-record controls, accessibility and form navigation
+feature-browser (features)	Run registered suites	2026-09-10T07:25:08.8199966Z PASS open approval/import workflows and durable discard from the center
+feature-browser (features)	Run registered suites	2026-09-10T07:25:12.9278123Z PASS form draft survives reload and restores only after explicit choice
+feature-browser (features)	Run registered suites	2026-09-10T07:25:15.7917085Z PASS import mapping survives reload, requires matching CSV headers and preserves manual selection
+feature-browser (features)	Run registered suites	2026-09-10T07:25:21.0868170Z PASS approval comment survives reload, stays outside browser storage and explicit discard persists
+feature-browser (features)	Run registered suites	2026-09-10T07:25:23.5530892Z PASS administrator retention/exclusion controls, retroactive field removal and disabled storage purge
+feature-browser (features)	Run registered suites	2026-09-10T07:25:27.4887313Z PASS form: disconnected write retains values and operation identity; same-user sign-in retains mounted editor
+feature-browser (features)	Run registered suites	2026-09-10T07:25:28.4536223Z PASS table permission recovery and export audit retry without duplicate download
+feature-browser (features)	Run registered suites	2026-09-10T07:25:28.5997753Z PASS local export failure is localized, retains rows and can be retried explicitly
+feature-browser (features)	Run registered suites	2026-09-10T07:25:32.3717635Z PASS import: CSV rows, manual mapping and preview operation ID survive a failed validation request
+feature-browser (features)	Run registered suites	2026-09-10T07:26:18.8780644Z PASS Sentinel: runtime and promise capture, sanitized upload, administrator inbox, status update denied non-admin access offline/503/timeout recovery with stable event IDs and monitoring-auth failure isolation
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0854319Z node:internal/modules/run_main:107
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0854944Z     triggerUncaughtException(
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0855523Z     ^
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0855773Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0856292Z locator.waitFor: Timeout 30000ms exceeded.
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0858028Z Call log:
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0859689Z   - waiting for locator('[data-tour=documentation-center]').getByText('No published patches for this version.', { exact: true }) to be visible
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0860465Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0861111Z     at /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/documentation.mjs:15:149 {
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0861920Z   name: 'TimeoutError'
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0862387Z }
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0862565Z 
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0862746Z Node.js v24.20.0
+feature-browser (features)	Run registered suites	2026-09-10T07:26:51.0907447Z FAIL features/documentation.mjs: Command failed: /opt/hostedtoolcache/node/24.20.0/x64/bin/node /home/runner/work/enterprise-fronend/enterprise-fronend/desktop-clients/e2e/documentation.mjs
+feature-browser (features)	Run registered suites	2026-09-10T07:26:56.3838523Z PASS preference policy: tenant admin UI, locks, imports, resets, API rejection, unlock restoration and live/boot language enforcement
+feature-browser (features)	Run registered suites	2026-09-10T07:28:03.8600051Z PASS scheduled reports: form, persisted schedule, background CSV delivery, download and pause
+feature-browser (features)	Run registered suites	2026-09-10T07:28:05.8705573Z PASS costing policy: unknown import rejected, mapped headers round-trip, schema classification, value-free audit, audit failure prevents download
+feature-browser (features)	Run registered suites	2026-09-10T07:28:08.0288384Z PASS language loading: one initial catalog, failed switch preserves preference, successful retry applies RTL without unrelated language downloads
+feature-browser (features)	Run registered suites	2026-09-10T07:28:11.9049871Z PASS refresh/reopen recovery
+feature-browser (features)	Run registered suites	2026-09-10T07:28:11.9777438Z PASS discard and no runtime errors
+feature-browser (features)	Run registered suites	2026-09-10T07:28:16.8435413Z PASS create, confirmed save and worklist discovery; no runtime errors
+feature-browser (features)	Run registered suites	2026-09-10T07:28:19.8789168Z PASS server paging and refresh
+feature-browser (features)	Run registered suites	2026-09-10T07:28:20.4198039Z PASS partial archive failure retains only failed selection
+feature-browser (features)	Run registered suites	2026-09-10T07:28:22.1559814Z PASS saved-view create/rename/default/reload/delete; nested modal keyboard focus
+feature-browser (features)	Run registered suites	2026-09-10T07:28:23.2185765Z PASS light, dark and high-contrast desktop accessibility
+feature-browser (features)	Run registered suites	2026-09-10T07:28:23.4093608Z PASS split worklist/form and keyboard navigation
+feature-browser (features)	Run registered suites	2026-09-10T07:28:23.7600908Z PASS dependent and conditional fields; no runtime errors
+feature-browser (features)	Run registered suites	2026-09-10T07:28:26.0104475Z PASS upload and authenticated download bytes
+feature-browser (features)	Run registered suites	2026-09-10T07:28:26.9950675Z PASS comment persistence after reload
+feature-browser (features)	Run registered suites	2026-09-10T07:28:27.4828768Z PASS related navigation and acknowledged activity
+feature-browser (features)	Run registered suites	2026-09-10T07:28:27.9607515Z PASS attachment removal, panel accessibility and no runtime errors
+feature-browser (features)	Run registered suites	2026-09-10T07:28:30.2069747Z PASS CSV preview, manual mapping, validation, explicit confirmation and two import batches
+feature-browser (features)	Run registered suites	2026-09-10T07:28:31.2527675Z PASS saved results restored after reload and error report download
+feature-browser (features)	Run registered suites	2026-09-10T07:28:31.5986946Z PASS existing-record duplicates blocked, dialog accessibility and no runtime errors
+feature-browser (features)	Run registered suites	2026-09-10T07:28:38.5157738Z PASS configured stages, record submission, bulk change requests, resubmission and finance stage
+feature-browser (features)	Run registered suites	2026-09-10T07:28:39.9940511Z PASS final approval/rejection, requester filters, history, notifications, read receipts and accessibility
+feature-browser (features)	Run registered suites	2026-09-10T07:28:40.8817599Z PASS notification read state survives reload
+feature-browser (features)	Run registered suites	2026-09-10T07:28:46.2017617Z PASS four languages, left sidebar geometry, stable record IDs, preference reload
+feature-browser (features)	Run registered suites	2026-09-10T07:28:50.4448457Z PASS four languages, right sidebar geometry, stable record IDs, preference reload
+feature-browser (features)	Run registered suites	2026-09-10T07:28:53.8006660Z PASS en: dashboard, billing/print, composed consultation, spreadsheet, report, AI, CSV and approvals
+feature-browser (features)	Run registered suites	2026-09-10T07:28:56.3958849Z PASS ar: dashboard, billing/print, composed consultation, spreadsheet, report, AI, CSV and approvals
+feature-browser (features)	Run registered suites	2026-09-10T07:28:59.0032500Z PASS hi: dashboard, billing/print, composed consultation, spreadsheet, report, AI, CSV and approvals
+feature-browser (features)	Run registered suites	2026-09-10T07:29:01.7607696Z PASS ml: dashboard, billing/print, composed consultation, spreadsheet, report, AI, CSV and approvals
+feature-browser (features)	Run registered suites	2026-09-10T07:29:03.6555694Z PASS ar: de-DE/EUR overrides browser en-US; totals agree; cells unchanged
+feature-browser (features)	Run registered suites	2026-09-10T07:29:04.5732191Z PASS hi: en-IN/INR overrides browser en-US; totals agree; cells unchanged
+feature-browser (features)	Run registered suites	2026-09-10T07:29:07.0442927Z PASS en: actual API error descriptor, notification, activity, unchanged comment
+feature-browser (features)	Run registered suites	2026-09-10T07:29:08.4027191Z PASS ar: actual API error descriptor, notification, activity, unchanged comment
+feature-browser (features)	Run registered suites	2026-09-10T07:29:09.8558782Z PASS hi: actual API error descriptor, notification, activity, unchanged comment
+feature-browser (features)	Run registered suites	2026-09-10T07:29:11.2336511Z PASS ml: actual API error descriptor, notification, activity, unchanged comment
+feature-browser (features)	Run registered suites	2026-09-10T07:29:14.1317849Z PASS en: real XLSX contents, invoice PDF/formatting, honest scheduling state
+feature-browser (features)	Run registered suites	2026-09-10T07:29:16.4723469Z PASS ar: real XLSX contents, invoice PDF/formatting, honest scheduling state
+feature-browser (features)	Run registered suites	2026-09-10T07:29:18.4437722Z PASS hi: real XLSX contents, invoice PDF/formatting, honest scheduling state
+feature-browser (features)	Run registered suites	2026-09-10T07:29:20.5477678Z PASS ml: real XLSX contents, invoice PDF/formatting, honest scheduling state
+feature-browser (features)	Run registered suites	2026-09-10T07:29:22.8866384Z PASS en: gallery, calendar selection, keyboard, month navigation, ISO date/time and direction
+feature-browser (features)	Run registered suites	2026-09-10T07:29:24.2673191Z PASS ar: gallery, calendar selection, keyboard, month navigation, ISO date/time and direction
+feature-browser (features)	Run registered suites	2026-09-10T07:29:25.7162086Z PASS hi: gallery, calendar selection, keyboard, month navigation, ISO date/time and direction
+feature-browser (features)	Run registered suites	2026-09-10T07:29:27.2034033Z PASS ml: gallery, calendar selection, keyboard, month navigation, ISO date/time and direction
+feature-browser (features)	Run registered suites	2026-09-10T07:29:27.2392231Z 27/31 features suites passed
+feature-browser (features)	Run registered suites	2026-09-10T07:29:27.2453755Z ##[error]Process completed with exit code 1.
