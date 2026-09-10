@@ -2,7 +2,7 @@
 
 > Historical review. See the [verified follow-up and corrections](review-follow-up-2026-09-08.md) for current implementation and test wiring.
 
-_8 September 2026, 11:00 UTC._
+_8 September 2026, 11:00 UTC. Status pass added 10 September — see the last section._
 
 A consolidated review of everything built in the twenty hours to 11:00 on
 8 September, almost all of it by a second session working in this repository at
@@ -283,3 +283,154 @@ comment describing *why it is not the obvious thing* is load-bearing.
 None of this blocks committing the working set, and the working set should be
 committed today. All of it is cheaper now than after the next ten subsystems
 land on top.
+
+
+---
+
+# Status pass — 10 September 2026, 02:00 UTC
+
+Two days on. The working set described above is **committed**: 61 commits, a
+clean tree, in sync with origin. Most of the findings were acted on, one of them
+better than the recommendation, and the repository has grown in a way that was
+not visible before.
+
+## Health
+
+| | 8 Sept | 10 Sept |
+|---|---|---|
+| Unit tests | 1383 / 82 files | **1510 / 108 files** |
+| Verify checks | 16 | **22** |
+| Uncommitted files | 200 | **0** |
+| Web bundle (gzip) | 654 KB | **192 KB** |
+
+`typecheck` clean, every verify check passing, both shells building.
+
+## What was fixed
+
+**F2 — bundle. Fixed, as recommended.** `locale-messages.ts` went from 1.3 MB to
+a 4 KB loader: *"English is immediate; other offline fallbacks load on demand."*
+A `verify:bundle` check now holds a written budget and is in the chain:
+
+```
+web      196,812 gzip bytes    budget 550,000
+desktop  537,182 gzip bytes    budget 550,000
+```
+
+The web bundle is down about 70%. The desktop shell is at 98% of its budget,
+which is worth watching rather than acting on.
+
+**F1 — unwired suites. Fixed, and better than the recommendation.** The proposal
+here was to rename the files so the runner's glob would find them. What was
+built instead is a registry: `e2e/suites.mjs` declares every suite by runtime
+group, and `validateSuites()` throws on anything unregistered, missing or
+duplicated — *"A new root .mjs must be a suite or helper."* `run.mjs` takes a
+group argument, each group has a script, `verify:e2e-registry` is in the verify
+chain, and CI runs it.
+
+That is the better answer. A rename would have forced forty-one suites into one
+runtime; the registry keeps `features`, `navigation`, `product` and `native`
+isolated, which they need because each brings up its own stack. The property the
+finding actually cared about — that a suite cannot be silently ignored — is now
+enforced rather than conventional.
+
+**F5 — dense files. Fixed.** Every file named was reformatted, and grew while
+getting sparser:
+
+| | 8 Sept | 10 Sept |
+|---|---|---|
+| `csv-import.ts` | 12 of 53 lines | 4 of 123 |
+| `records.ts` | 18 of 211 | 6 of 324 |
+| `application-config.ts` | 14 of 85 | 1 of 145 |
+| `ops-ui/localization.tsx` | most of it | 0 of 22 |
+
+**F7 — harness bypass. Answered differently, and acceptably.** Nine of
+thirty-nine suites use `signIn`/`requireApi`. The rest now bring up an isolated
+API through a new `managed-api.mjs` helper, so they control both ends and the
+preflight has nothing to catch. That is a legitimate answer; the finding is
+closed rather than fixed.
+
+## What is still open
+
+**F3 — method guards. Moved backwards.** Thirty-two routes now carry eleven
+`405` guards, against twenty-eight and twelve before. The new routes still
+answer `404` for a wrong method, and `classifyFailure` turns that into "This
+record does not exist" about an endpoint that does exist. The suggested route
+helper was not taken up, and it is still the only change that makes omitting the
+guard impossible rather than merely discouraged.
+
+**F4 — imported columns. Unchanged.** Re-executed:
+
+```
+reviewExport(["Invoice ref", "amount_due", "site"])
+  carried:  (none)
+  withheld: Invoice ref, amount_due, site
+```
+
+Neither `csv-import.ts` nor `imports.ts` consults the classification registry. A
+user can still import a spreadsheet and export a file with none of their columns
+in it. This remains the one finding that needs a decision rather than an edit,
+and it has now survived two reviews.
+
+**F6 — removed reasoning. Unchanged.** The note in `sources.tsx` explaining why
+`publish` and `retract` must not share a `useMemo`, and the note in
+`session.tsx` explaining that an unreachable API is indistinguishable from a bad
+token, are both still absent.
+
+## What is new: the repository is growing fast
+
+`.git` went from **14 MB to 63 MB in two days**. The dominant cause is one file:
+
+```
+dummy-api/config/documentation/releases.json
+  current size        8.7 MB
+  revisions            13
+  total blob history  ~42 MB
+  growth              ~1.2 MB per deployment record
+```
+
+Twenty of the sixty-one commits are deployment records — "Record verified X
+deployment", most marked `[skip ci]` — and each rewrites this file in full. Git
+stores a new complete blob every time, because JSON of this size does not delta
+well against a reordered predecessor.
+
+The rest of the growth: 79 PNG screenshots, five PDFs (one of them the 1.4 MB
+generated handbook, which was F8), five tracked `.log` files, and ~6.3 MB of
+server-side localization JSON. The localization files are correct where they are
+— moving them server-side is what fixed F2 — but they are generated, large, and
+tracked.
+
+At the current rate the repository doubles about every two days. Nothing is
+broken; a clone is simply becoming expensive, and history that large is
+difficult to walk back.
+
+**Suggested, in order of return:**
+
+1. **Stop committing `releases.json` in full.** Either append records to a file
+   git can delta (one line per release, newest last), or move deployment records
+   out of the repository entirely — they describe events, not code, and nothing
+   in the build reads them. This single change removes ~90% of the growth.
+2. **Decide whether the generated artefacts belong in git.** The handbook PDF is
+   built from its markdown by `build_pdf.py`; the screenshots are captured by
+   `capture_screenshots.mjs`. Both are reproducible. Release artefacts, not
+   sources.
+3. **Untrack the five `.log` files.**
+
+## Revised improvement list
+
+The structural recommendations from 8 September stand, with two settled:
+
+| | Status |
+|---|---|
+| A runner that refuses to be silent | **done** — as a registry, better than proposed |
+| A bundle budget in the shape of the other checks | **done** |
+| One route helper instead of twelve copies | open — F3 got worse |
+| A classification decision at the import boundary | open — F4, needs an owner |
+| Commit in units, on branches | **done in effect** — 61 commits, clean tree |
+| Two sessions, two worktrees | untested since; no collisions this window |
+| Ask what a comment was buying before deleting it | open — F6 |
+
+And one added by this pass: **treat the repository's own weight as something
+with a budget**, the same way the client bundle now has one. A check that fails
+when a tracked file crosses a size threshold, or when `.git` grows by more than
+a stated amount in a release, would have caught `releases.json` on its second
+revision rather than its thirteenth.
