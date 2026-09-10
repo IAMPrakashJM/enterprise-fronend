@@ -1,6 +1,6 @@
 # Clinical Triage — user and integration guide
 
-Open **Library → Page templates → Clinical Triage**, immediately after Billing Clinic. The page provides a reusable triage form with fictional patients from the demo API. The Library also provides a copyable TypeScript example and an in-page guide.
+Open **Library → Page Library → Clinical Triage**, immediately after Billing Clinic. The page provides a reusable triage form with fictional patients from the demo API. The Library also provides a copyable TypeScript example and an in-page guide.
 
 ## Using the page
 

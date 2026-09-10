@@ -1,6 +1,6 @@
 # Billing Clinic — user and integration guide
 
-Feature ID: `CLINIC`. State: implemented; validation and publication status are recorded in the [delivery evidence](../releases/unreleased/billing-clinic-2026-09-09.md). Location: **Library → Page templates → Billing Clinic** (`billing-clinic`).
+Feature ID: `CLINIC`. State: implemented; validation and publication status are recorded in the [delivery evidence](../releases/unreleased/billing-clinic-2026-09-09.md). Location: **Library → Page Library → Billing Clinic** (`billing-clinic`).
 
 ## User problem and outcome
 

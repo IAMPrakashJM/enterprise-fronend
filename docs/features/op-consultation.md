@@ -1,6 +1,6 @@
 # OP Consultation
 
-Open **Library → Page templates → OP Consultation**, after Clinical Consultation. This dedicated outpatient workspace uses the same 44-field consultation records and demo API as Clinical Consultation, with a focused form, section navigation and live documentation summary. It does not create a second set of patient notes.
+Open **Library → Page Library → OP Consultation**, after Clinical Consultation. This dedicated outpatient workspace uses the same 44-field consultation records and demo API as Clinical Consultation, with a focused form, section navigation and live documentation summary. It does not create a second set of patient notes.
 
 ## Workflow
 

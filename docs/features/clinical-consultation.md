@@ -1,6 +1,6 @@
 # Clinical Consultation — user and integration guide
 
-Open **Library → Page templates → Clinical Consultation**, immediately after Clinical Triage. This is a direct-entry consultation template with fictional API data. The existing specialty/template composer remains available separately.
+Open **Library → Page Library → Clinical Consultation**, immediately after Clinical Triage. This is a direct-entry consultation template with fictional API data. The existing specialty/template composer remains available separately.
 
 ## Expanded consultation workspace
 

@@ -1,6 +1,6 @@
 # Billing view/edit and shared clinical workspaces
 
-These changes apply to Billing Clinic, Clinical Triage and Comprehensive Consultation in Library → Page templates. They are local implementation until a separate deployment is recorded.
+These changes apply to Billing Clinic, Clinical Triage and Comprehensive Consultation in Library → Page Library. They are local implementation until a separate deployment is recorded.
 
 ## Billing flow
 

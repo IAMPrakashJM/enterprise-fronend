@@ -1,6 +1,6 @@
 # Comprehensive Consultation
 
-Feature ID: CC. Implemented demo page at **Library → Page templates → Comprehensive Consultation**, after OP Consultation. This is a separate consultation record type; existing OP/Clinical Consultation records are preserved in their original CSV.
+Feature ID: CC. Implemented demo page at **Library → Page Library → Comprehensive Consultation**, after OP Consultation. This is a separate consultation record type; existing OP/Clinical Consultation records are preserved in their original CSV.
 
 ## User workflow
 
