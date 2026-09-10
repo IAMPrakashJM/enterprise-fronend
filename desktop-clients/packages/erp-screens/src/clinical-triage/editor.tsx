@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { CardGrid } from "@pepbits/ops-ui";
 import {
   validateTriage,
   type TriageValues,
@@ -10,12 +9,14 @@ import {
   ClinicalDocumentEditor,
   type ClinicalDocumentDefinition,
 } from "../clinical-document/editor";
-import { TriageIntake, TriageVitals, TriageHandoff } from "./fields";
+import { TriageBoard } from "./board";
 export const triageDefinition: ClinicalDocumentDefinition<
   TriageValues,
   TriageConfiguration
 > = {
   prefix: "template.triage.",
+  inlineActions: true,
+  recordLayout: true,
   sections: [
     { id: "intake", label: "template.triage.intake" },
     { id: "vitals", label: "template.triage.vitals" },
@@ -35,26 +36,7 @@ export const triageDefinition: ClinicalDocumentDefinition<
         ? "intake"
         : "vitals",
   fresh: (values) => ({ ...values, measuredAt: new Date().toISOString() }),
-  render: (props, section, flat) =>
-    flat ? (
-      <CardGrid
-        columns={3}
-        style={{
-          gridTemplateColumns:
-            "minmax(0, 1.15fr) minmax(0, 1.35fr) minmax(0, .7fr)",
-        }}
-      >
-        <TriageIntake {...props} />
-        <TriageVitals {...props} />
-        <TriageHandoff {...props} vertical />
-      </CardGrid>
-    ) : section === "intake" ? (
-      <TriageIntake {...props} />
-    ) : section === "vitals" ? (
-      <TriageVitals {...props} />
-    ) : (
-      <TriageHandoff {...props} />
-    ),
+  render: (props, section) => <TriageBoard {...props} section={section} />,
   confirmation: (values, config, t) => (
     <>
       {t(

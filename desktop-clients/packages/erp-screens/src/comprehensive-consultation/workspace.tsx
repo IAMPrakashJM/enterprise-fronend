@@ -26,6 +26,7 @@ const definition: ClinicalDocumentDefinition<
 > = {
   prefix: key(""),
   inlineActions: true,
+  recordLayout: true,
   afterChange: (v, key) => (key === "attested" ? v : { ...v, attested: false }),
   sections: comprehensiveSections,
   validate: validateComprehensive,

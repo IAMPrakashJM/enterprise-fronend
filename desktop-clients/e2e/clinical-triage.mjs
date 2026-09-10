@@ -75,9 +75,11 @@ fs.mkdirSync(artifacts, { recursive: true });
       .getByRole("radiogroup", { name: "Allergy review" })
       .getByRole("radio", { name: "Unknown", exact: true })
       .click();
+    await root.getByRole("tab", {name:"Vital signs",exact:true}).click();
     await root
       .getByRole("textbox", { name: "Reason for unmeasured required readings" })
       .fill("Readings not taken for fictional UI test");
+    await root.getByRole("tab", {name:"Disposition & handoff",exact:true}).click();
     await root
       .getByRole("combobox", { name: "Next care area" })
       .selectOption("review");
@@ -126,6 +128,7 @@ fs.mkdirSync(artifacts, { recursive: true });
     await root
       .getByRole("button", { name: "New assessment", exact: true })
       .click();
+    await root.getByRole("tab", {name:"Vital signs",exact:true}).click();
     assert.equal(
       await root.getByRole("spinbutton", { name: "Pulse (/min)" }).inputValue(),
       "",

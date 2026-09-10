@@ -21,6 +21,7 @@ import {
   type Formatters,
 } from "@pepbits/erp-config";
 import type { ClinicalDocumentAdapter } from "@pepbits/erp-data";
+import { RecordSectionLayout } from "../clinical-templates/record-layout";
 import { ClinicLedgerTable } from "../clinic-billing/parts";
 export interface DocumentFieldsProps<V, C> {
   values: V;
@@ -36,6 +37,7 @@ export interface DocumentFieldsProps<V, C> {
 export interface ClinicalDocumentDefinition<V, C> {
   prefix: string;
   inlineActions?: boolean;
+  recordLayout?: boolean;
   afterChange?: (values: V, key: keyof V | "encounterId") => V;
   sections: Array<{ id: string; label: string }>;
   validate: (values: V, config: C, complete: boolean) => Record<string, string>;
@@ -410,25 +412,52 @@ export function ClinicalDocumentEditor<V, C>({
         </Button>
       ) : null}
       {errors.form ? <p role="alert">{t(errors.form)}</p> : null}
-      {!flat ? (
-        <Tabs
-          className="flex-wrap"
-          items={sections}
-          value={section}
-          onChange={setSection}
+      {definition.recordLayout ? (
+        <RecordSectionLayout
+          activeOnly
+          sections={sections.map((s) => ({ id: s.id, title: s.label }))}
+          active={section}
+          onActive={setSection}
+          preferences={preferences}
+          isDone={(id) =>
+            !Object.keys(
+              validateDocument(record.values, data.config, true),
+            ).some((field) => definition.sectionFor(field) === id)
+          }
+          railHeader={<strong>{t(prefix + "title")}</strong>}
+          footer={
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3">
+              {saveStatus}
+              {!definition.inlineActions ? actions : null}
+            </div>
+          }
+          renderSection={(s) => (
+            <div className="p-3">{definition.render(props, s.id, false)}</div>
+          )}
         />
-      ) : null}
-      {definition.render(props, section, flat)}
-      {!definition.inlineActions && (
-        <Card className="sticky bottom-0 z-10">
-          <CardContent
-            style={{ paddingBlock: ".5rem" }}
-            className="flex flex-wrap items-center justify-between gap-3"
-          >
-            {saveStatus}
-            {actions}
-          </CardContent>
-        </Card>
+      ) : (
+        <>
+          {!flat ? (
+            <Tabs
+              className="flex-wrap"
+              items={sections}
+              value={section}
+              onChange={setSection}
+            />
+          ) : null}
+          {definition.render(props, section, flat)}
+          {!definition.inlineActions && (
+            <Card className="sticky bottom-0 z-10">
+              <CardContent
+                style={{ paddingBlock: ".5rem" }}
+                className="flex flex-wrap items-center justify-between gap-3"
+              >
+                {saveStatus}
+                {actions}
+              </CardContent>
+            </Card>
+          )}
+        </>
       )}
       <Modal
         open={history}

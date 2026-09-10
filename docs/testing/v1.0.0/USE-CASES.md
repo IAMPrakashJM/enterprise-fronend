@@ -78,3 +78,13 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 - OWN-02: Tenant default/lock wins; direct overrides and unavailable modules fail on the server. Revoked access falls back without granting access.
 - OWN-03: Desktop startup and web application home use the selected module; direct web URLs remain unchanged.
 - OWN-04: Preference control uses the central update flow and cannot bypass unavailable or locked settings.
+
+## Clinical workspace update
+
+| ID | Flow | Expected result |
+| --- | --- | --- |
+| CW-01 | Open View bill and Edit bill | Full API invoice view; correction fields and reason; return to ledger |
+| CW-02 | Save correction, retry lost response, reopen CSV | One correction; previous snapshot retained; authoritative totals |
+| CW-03 | Edit paid/refunded/void invoice or stale/unauthorized request | Rejected server-side; protected UI |
+| CW-04 | Switch triage/consultation rail sections and locked layout | Same master-record rail; one section; values retained |
+| CW-05 | Save/reopen/complete clinical document | Existing API version, retry and immutable completion behavior retained |

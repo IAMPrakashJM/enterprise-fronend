@@ -39,6 +39,7 @@ import { ClinicOrders } from "./orders";
 import { ClinicInvoiceReview } from "./invoice";
 import { createClinicFormatters } from "./format";
 import { downloadClinicInvoice } from "./receipt";
+import { ClinicBillScreen } from "./bill-screen";
 import { ClinicPayments } from "./payments";
 export interface BillingClinicWorkspaceProps extends PreferenceHost {
   adapter: ClinicBillingAdapter;
@@ -191,7 +192,10 @@ function ClinicEditor({
     [busy, setBusy] = useState(false),
     [error, setError] = useState<unknown>(null),
     [confirm, setConfirm] = useState<ClinicBillingCommand | null>(null),
-    [receipt, setReceipt] = useState("");
+    [billScreen, setBillScreen] = useState<{
+      id: string;
+      mode: "view" | "edit";
+    } | null>(null);
   const pending = useRef<ClinicBillingMutation | null>(null),
     lock = useRef(false),
     data = loaded.value;
@@ -248,6 +252,8 @@ function ClinicEditor({
         setInvoiceId(next.state.invoices.at(-1)?.id ?? "");
         setNote("");
       }
+      if (action === "editInvoice")
+        setBillScreen({ id: completed.invoiceId, mode: "view" });
       if (action === "payment" || action === "refund") {
         setAmount("");
         setReference("");
@@ -308,7 +314,6 @@ function ClinicEditor({
     ordered = data.state.orders.filter(
       (o) => o.status === "ordered" && selected.includes(o.id),
     ),
-    invoice = data.state.invoices.find((i) => i.id === receipt),
     request = (command: ClinicBillingCommand) => setConfirm(command);
   const errorKey =
     error && typeof error === "object" && "fieldErrors" in error
@@ -363,336 +368,246 @@ function ClinicEditor({
           </Button>
         </div>
       ) : null}
-      <RecordSectionLayout
-        sections={sections}
-        active={section}
-        onActive={setSection}
-        preferences={preferences}
-        isDone={(id) =>
-          id === "patient"
-            ? true
-            : id === "orders"
-              ? data.state.orders.length > 0
-              : id === "review"
-                ? data.state.invoices.length > 0
-                : id === "payments"
-                  ? data.state.invoices.some((i) => i.status === "issued") &&
-                    data.state.invoices.every(
-                      (i) => clinicBalance(data.state, i) === 0,
-                    )
-                  : data.state.history.length > 0
-        }
-        railHeader={<strong>{t("template.clinic.title")}</strong>}
-        identity={
-          <div className="flex flex-wrap items-center justify-between gap-3 p-4">
-            <Badge tone="brand">{t("template.clinic.flow")}</Badge>
-            <Button disabled={busy} onClick={() => void refreshLedger()}>
-              {t("template.clinical.refresh")}
-            </Button>
-            <span>
-              {t("template.clinic.currency")}: {data.currency}
-            </span>
-            <Badge>
-              {t(
-                data.canWrite
-                  ? "template.clinic.cashier"
-                  : "template.clinic.readOnly",
-              )}
-            </Badge>
-          </div>
-        }
-        footer={
-          <div className="flex flex-wrap items-center justify-between gap-3 p-3">
-            <span className="text-sm text-[var(--text-muted)]">
-              {t("template.clinic.preferencesHint")}
-            </span>
-            <div className="flex gap-2">
-              {preferences.formNavigation === "wizard" ? (
-                <>
-                  <Button
-                    disabled={section === "patient"}
-                    onClick={() =>
-                      setSection(
-                        sections[
-                          Math.max(
-                            0,
-                            sections.findIndex((s) => s.id === section) - 1,
-                          )
-                        ].id,
+      {billScreen ? (
+        <ClinicBillScreen
+          key={billScreen.id + billScreen.mode}
+          {...shared}
+          invoiceId={billScreen.id}
+          mode={billScreen.mode}
+          busy={busy || !!pending.current}
+          onDirty={onDirty}
+          onBack={() => setBillScreen(null)}
+          onEdit={() => setBillScreen({ ...billScreen, mode: "edit" })}
+        />
+      ) : (
+        <RecordSectionLayout
+          sections={sections}
+          active={section}
+          onActive={setSection}
+          preferences={preferences}
+          isDone={(id) =>
+            id === "patient"
+              ? true
+              : id === "orders"
+                ? data.state.orders.length > 0
+                : id === "review"
+                  ? data.state.invoices.length > 0
+                  : id === "payments"
+                    ? data.state.invoices.some((i) => i.status === "issued") &&
+                      data.state.invoices.every(
+                        (i) => clinicBalance(data.state, i) === 0,
                       )
-                    }
-                  >
-                    {t("template.previous")}
-                  </Button>
-                  <Button
-                    disabled={section === "history"}
-                    onClick={() =>
-                      setSection(
-                        sections[
-                          Math.min(
-                            4,
-                            sections.findIndex((s) => s.id === section) + 1,
-                          )
-                        ].id,
-                      )
-                    }
-                  >
-                    {t("template.next")}
-                  </Button>
-                </>
-              ) : null}
-              <Button
-                variant="primary"
-                loading={busy}
-                disabled={
-                  disabled ||
-                  !ordered.length ||
-                  !Number.isFinite(Number(discount)) ||
-                  Number(discount) < 0 ||
-                  Number(discount) > 100 ||
-                  (!!insurance && !authorization.trim())
-                }
-                onClick={() => {
-                  if (section !== "review") {
-                    setSection("review");
-                    return;
-                  }
-                  request({
-                    action: "invoice",
-                    orderIds: ordered.map((o) => o.id),
-                    discountBps: Math.round(Number(discount) * 100),
-                    insuranceId: insurance,
-                    authorization,
-                    note,
-                  });
-                }}
-              >
-                {t(
-                  section === "review"
-                    ? "template.clinic.issueInvoice"
-                    : "template.clinic.reviewBill",
-                )}
+                    : data.state.history.length > 0
+          }
+          railHeader={<strong>{t("template.clinic.title")}</strong>}
+          identity={
+            <div className="flex flex-wrap items-center justify-between gap-3 p-4">
+              <Badge tone="brand">{t("template.clinic.flow")}</Badge>
+              <Button disabled={busy} onClick={() => void refreshLedger()}>
+                {t("template.clinical.refresh")}
               </Button>
+              <span>
+                {t("template.clinic.currency")}: {data.currency}
+              </span>
+              <Badge>
+                {t(
+                  data.canWrite
+                    ? "template.clinic.cashier"
+                    : "template.clinic.readOnly",
+                )}
+              </Badge>
             </div>
-          </div>
-        }
-        renderSection={(item) => (
-          <div className="p-4">
-            {item.id === "patient" ? (
-              <ClinicPanel title="template.clinic.patientContext">
-                <DescriptionList
-                  items={[
-                    "mrn",
-                    "birthDate",
-                    "gender",
-                    "mobile",
-                    "email",
-                    "nationality",
-                  ].map((id) => ({
-                    id,
-                    label: "template.clinical." + id,
-                    value:
-                      id === "mrn"
-                        ? data.patient.mrn
-                        : id === "birthDate"
-                          ? format.date(String(data.patient.values[id] ?? ""))
-                          : id === "gender"
-                            ? t("template.clinical." + data.patient.values[id])
-                            : String(data.patient.values[id] || "—"),
-                  }))}
+          }
+          footer={
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3">
+              <span className="text-sm text-[var(--text-muted)]">
+                {t("template.clinic.preferencesHint")}
+              </span>
+              <div className="flex gap-2">
+                {preferences.formNavigation === "wizard" ? (
+                  <>
+                    <Button
+                      disabled={section === "patient"}
+                      onClick={() =>
+                        setSection(
+                          sections[
+                            Math.max(
+                              0,
+                              sections.findIndex((s) => s.id === section) - 1,
+                            )
+                          ].id,
+                        )
+                      }
+                    >
+                      {t("template.previous")}
+                    </Button>
+                    <Button
+                      disabled={section === "history"}
+                      onClick={() =>
+                        setSection(
+                          sections[
+                            Math.min(
+                              4,
+                              sections.findIndex((s) => s.id === section) + 1,
+                            )
+                          ].id,
+                        )
+                      }
+                    >
+                      {t("template.next")}
+                    </Button>
+                  </>
+                ) : null}
+                <Button
+                  variant="primary"
+                  loading={busy}
+                  disabled={
+                    disabled ||
+                    !ordered.length ||
+                    !Number.isFinite(Number(discount)) ||
+                    Number(discount) < 0 ||
+                    Number(discount) > 100 ||
+                    (!!insurance && !authorization.trim())
+                  }
+                  onClick={() => {
+                    if (section !== "review") {
+                      setSection("review");
+                      return;
+                    }
+                    request({
+                      action: "invoice",
+                      orderIds: ordered.map((o) => o.id),
+                      discountBps: Math.round(Number(discount) * 100),
+                      insuranceId: insurance,
+                      authorization,
+                      note,
+                    });
+                  }}
+                >
+                  {t(
+                    section === "review"
+                      ? "template.clinic.issueInvoice"
+                      : "template.clinic.reviewBill",
+                  )}
+                </Button>
+              </div>
+            </div>
+          }
+          renderSection={(item) => (
+            <div className="p-4">
+              {item.id === "patient" ? (
+                <ClinicPanel title="template.clinic.patientContext">
+                  <DescriptionList
+                    items={[
+                      "mrn",
+                      "birthDate",
+                      "gender",
+                      "mobile",
+                      "email",
+                      "nationality",
+                    ].map((id) => ({
+                      id,
+                      label: "template.clinical." + id,
+                      value:
+                        id === "mrn"
+                          ? data.patient.mrn
+                          : id === "birthDate"
+                            ? format.date(String(data.patient.values[id] ?? ""))
+                            : id === "gender"
+                              ? t(
+                                  "template.clinical." +
+                                    data.patient.values[id],
+                                )
+                              : String(data.patient.values[id] || "—"),
+                    }))}
+                  />
+                  <ClinicLedgerTable
+                    preferences={preferences}
+                    headers={[
+                      "template.clinic.date",
+                      "template.clinic.service",
+                      "template.clinic.doctor",
+                      "template.clinic.status",
+                    ]}
+                    rows={data.context.map((row) => ({
+                      id: row.id,
+                      cells: [
+                        format.dateTime(row.date),
+                        <div>
+                          <strong>{t(row.title)}</strong>
+                          <p>{t(row.detail)}</p>
+                        </div>,
+                        row.provider || "—",
+                        t("template.clinical." + row.status),
+                      ],
+                    }))}
+                  />
+                </ClinicPanel>
+              ) : item.id === "orders" ? (
+                <ClinicOrders
+                  {...shared}
+                  selected={selected}
+                  onSelect={edit(setSelected)}
+                  service={service}
+                  onService={edit(setService)}
+                  quantity={quantity}
+                  onQuantity={edit(setQuantity)}
+                  doctor={doctor}
+                  onDoctor={edit(setDoctor)}
                 />
-                <ClinicLedgerTable
-                  preferences={preferences}
-                  headers={[
-                    "template.clinic.date",
-                    "template.clinic.service",
-                    "template.clinic.doctor",
-                    "template.clinic.status",
-                  ]}
-                  rows={data.context.map((row) => ({
-                    id: row.id,
-                    cells: [
-                      format.dateTime(row.date),
-                      <div>
-                        <strong>{t(row.title)}</strong>
-                        <p>{t(row.detail)}</p>
-                      </div>,
-                      row.provider || "—",
-                      t("template.clinical." + row.status),
-                    ],
-                  }))}
+              ) : item.id === "review" ? (
+                <ClinicInvoiceReview
+                  {...shared}
+                  selected={selected}
+                  discount={discount}
+                  onDiscount={edit(setDiscount)}
+                  insurance={insurance}
+                  onInsurance={edit(setInsurance)}
+                  authorization={authorization}
+                  onAuthorization={edit(setAuthorization)}
+                  note={note}
+                  onNote={edit(setNote)}
                 />
-              </ClinicPanel>
-            ) : item.id === "orders" ? (
-              <ClinicOrders
-                {...shared}
-                selected={selected}
-                onSelect={edit(setSelected)}
-                service={service}
-                onService={edit(setService)}
-                quantity={quantity}
-                onQuantity={edit(setQuantity)}
-                doctor={doctor}
-                onDoctor={edit(setDoctor)}
-              />
-            ) : item.id === "review" ? (
-              <ClinicInvoiceReview
-                {...shared}
-                selected={selected}
-                discount={discount}
-                onDiscount={edit(setDiscount)}
-                insurance={insurance}
-                onInsurance={edit(setInsurance)}
-                authorization={authorization}
-                onAuthorization={edit(setAuthorization)}
-                note={note}
-                onNote={edit(setNote)}
-              />
-            ) : item.id === "payments" ? (
-              <ClinicPayments
-                {...shared}
-                invoiceId={invoiceId}
-                onInvoice={edit(setInvoiceId)}
-                amount={amount}
-                onAmount={edit(setAmount)}
-                method={method}
-                onMethod={edit(setMethod)}
-                reference={reference}
-                onReference={edit(setReference)}
-                onPrint={setReceipt}
-              />
-            ) : (
-              <ClinicPanel title="template.clinic.history">
-                <ClinicLedgerTable
-                  preferences={preferences}
-                  headers={[
-                    "template.clinic.date",
-                    "template.clinic.event",
-                    "template.clinic.actor",
-                    "template.clinic.reference",
-                  ]}
-                  rows={data.state.history.map((h) => ({
-                    id: h.id,
-                    cells: [
-                      format.dateTime(h.at),
-                      t(h.messageKey),
-                      h.actor,
-                      h.reference,
-                    ],
-                  }))}
+              ) : item.id === "payments" ? (
+                <ClinicPayments
+                  {...shared}
+                  invoiceId={invoiceId}
+                  onInvoice={edit(setInvoiceId)}
+                  amount={amount}
+                  onAmount={edit(setAmount)}
+                  method={method}
+                  onMethod={edit(setMethod)}
+                  reference={reference}
+                  onReference={edit(setReference)}
+                  onPrint={(id) => setBillScreen({ id, mode: "view" })}
+                  onEdit={(id) => setBillScreen({ id, mode: "edit" })}
                 />
-              </ClinicPanel>
-            )}
-          </div>
-        )}
-      />
-      <Modal
-        open={!!invoice}
-        onClose={() => setReceipt("")}
-        title={t("template.clinic.receipt")}
-        footer={
-          <>
-            <Button
-              disabled={disabled}
-              onClick={() =>
-                request({
-                  action: "export",
-                  invoiceId: receipt,
-                  format: preferences.exportFormat,
-                })
-              }
-            >
-              {t("template.clinical.export")}
-            </Button>
-            <Button
-              disabled={disabled}
-              onClick={() =>
-                request({
-                  action: "export",
-                  invoiceId: receipt,
-                  format: "print",
-                })
-              }
-            >
-              {t("Save as PDF")}
-            </Button>
-          </>
-        }
-      >
-        <div data-invoice-print className="space-y-4">
-          {invoice ? (
-            <>
-              <Badge tone="warning">{t("template.clinic.demo")}</Badge>
-              <DescriptionList
-                items={[
-                  {
-                    id: "id",
-                    label: "template.clinic.invoice",
-                    value: invoice.id,
-                  },
-                  {
-                    id: "date",
-                    label: "template.clinic.date",
-                    value: format.dateTime(invoice.at),
-                  },
-                  {
-                    id: "patient",
-                    label: "template.clinical.mrn",
-                    value: data.patient.mrn,
-                  },
-                  {
-                    id: "total",
-                    label: "template.clinic.total",
-                    value: money(invoice.total),
-                  },
-                  {
-                    id: "insurer",
-                    label: "template.clinic.insurer",
-                    value: money(invoice.insurance),
-                  },
-                  {
-                    id: "balance",
-                    label: "template.clinic.balance",
-                    value: money(clinicBalance(data.state, invoice)),
-                  },
-                ]}
-              />
-              <ClinicLedgerTable
-                paginate={false}
-                preferences={preferences}
-                headers={[
-                  "template.clinic.service",
-                  "template.clinic.quantity",
-                  "template.clinic.patientShare",
-                ]}
-                rows={invoice.lines.map((l) => ({
-                  id: l.orderId,
-                  cells: [
-                    t(l.label),
-                    format.number(l.quantity),
-                    money(l.patient),
-                  ],
-                }))}
-              />
-              <ClinicLedgerTable
-                paginate={false}
-                preferences={preferences}
-                headers={[
-                  "template.clinic.receipt",
-                  "template.clinic.amount",
-                  "template.clinic.date",
-                ]}
-                rows={data.state.payments
-                  .filter((p) => p.invoiceId === invoice.id)
-                  .map((p) => ({
-                    id: p.id,
-                    cells: [p.id, money(p.amount), format.dateTime(p.at)],
-                  }))}
-              />
-            </>
-          ) : null}
-        </div>
-      </Modal>
+              ) : (
+                <ClinicPanel title="template.clinic.history">
+                  <ClinicLedgerTable
+                    preferences={preferences}
+                    headers={[
+                      "template.clinic.date",
+                      "template.clinic.event",
+                      "template.clinic.actor",
+                      "template.clinic.reference",
+                    ]}
+                    rows={data.state.history.map((h) => ({
+                      id: h.id,
+                      cells: [
+                        format.dateTime(h.at),
+                        t(h.messageKey),
+                        h.actor,
+                        h.reference,
+                      ],
+                    }))}
+                  />
+                </ClinicPanel>
+              )}
+            </div>
+          )}
+        />
+      )}
       <Modal
         open={!!confirm}
         onClose={() => {

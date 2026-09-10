@@ -29,6 +29,7 @@ export function ClinicPayments({
   disabled,
   onCommand,
   onPrint,
+  onEdit,
   format,
   preferences,
 }: {
@@ -44,6 +45,7 @@ export function ClinicPayments({
   disabled: boolean;
   onCommand: (c: ClinicBillingCommand) => void;
   onPrint: (id: string) => void;
+  onEdit: (id: string) => void;
   format: Formatters;
   preferences: UserPreferences;
 }) {
@@ -93,7 +95,18 @@ export function ClinicPayments({
             </Badge>,
             <div className="flex gap-2">
               <Button size="sm" onClick={() => onPrint(i.id)}>
-                {t("template.clinic.receipt")}
+                {t("template.clinic.viewBill")}
+              </Button>
+              <Button
+                size="sm"
+                disabled={
+                  disabled ||
+                  i.status !== "issued" ||
+                  data.state.payments.some((p) => p.invoiceId === i.id)
+                }
+                onClick={() => onEdit(i.id)}
+              >
+                {t("template.clinic.editBill")}
               </Button>
               <Button
                 size="sm"

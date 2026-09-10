@@ -11,7 +11,7 @@ Open **Library → Page templates → Clinical Triage**, immediately after Billi
 5. **Save draft** stores an editable assessment on the API. When enabled in preferences, Ctrl/Cmd+S saves while focus is inside the assessment. Reopening the patient loads the latest saved assessment.
 6. **Complete triage** validates the form and asks for confirmation. A completed assessment is read-only. Use **New assessment** for a separate reassessment, or **Previous assessments** to open history.
 
-The default rail preference shows complaint, vital signs and handoff side by side. At the tested English default of 1600 × 900, all fields and final actions fit without scrolling, including the Library tabs and feature alert. Tabs and wizard preferences show one group at a time. Larger fonts, longer translations, validation messages and smaller windows can require scrolling; the form never clips field content to force a fixed height.
+The rail preference now uses the same numbered `RecordSectionLayout` as Master Record – Main and Comprehensive Consultation. One selected section appears beside a live triage snapshot. Save and complete actions stay in the action bar. Tabs and wizard still follow effective preferences and tenant locks. Larger fonts and long translations use the internal record scroll area. See the [clinical workspace update](clinical-workspace-update.md) for the current behavior; older screenshots remain historical evidence.
 
 ## Recovery and record integrity
 

@@ -70,9 +70,11 @@ const props = (save = vi.fn()) => ({
 });
 test("blank readings and unanswered safety choices; completion focuses required complaint", () => {
   render(<ClinicalTriageEditor {...props()} />);
+  fireEvent.click(screen.getByRole("tab", { name: "Vital signs" }));
   expect(screen.getByRole("spinbutton", { name: "Pulse (/min)" })).toHaveValue(
     null,
   );
+  fireEvent.click(screen.getByRole("tab", { name: "Complaint & safety" }));
   expect(
     within(
       screen.getByRole("radiogroup", { name: "Clinician-assigned priority" }),

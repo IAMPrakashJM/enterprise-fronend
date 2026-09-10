@@ -53,6 +53,12 @@ export interface ClinicInvoice {
   insuranceId: string;
   authorization: string;
   note: string;
+  revisions?: Array<{
+    at: string;
+    actor: string;
+    reason: string;
+    invoice: Omit<ClinicInvoice, "revisions">;
+  }>;
 }
 export interface ClinicAudit {
   id: string;
@@ -78,6 +84,16 @@ export interface ClinicBillingView {
   currency: CurrencyCode;
 }
 export type ClinicBillingCommand =
+  | {
+      action: "editInvoice";
+      invoiceId: string;
+      quantities: Array<{ orderId: string; quantity: number }>;
+      discountBps: number;
+      insuranceId: string;
+      authorization: string;
+      note: string;
+      reason: string;
+    }
   | { action: "order"; orderIds: string[] }
   | { action: "add"; serviceId: string; quantity: number; doctor: string }
   | {

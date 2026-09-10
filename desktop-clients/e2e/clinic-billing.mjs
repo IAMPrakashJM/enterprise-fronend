@@ -32,6 +32,7 @@ fs.mkdirSync(artifacts, { recursive: true });
     const root = page.locator("[data-billing-clinic]");
     await root.waitFor();
     const select = root.getByRole("combobox", { name: "Select patient" });
+    await select.locator("option").filter({hasText:"DEMO-000001"}).waitFor({state:"attached"});
     await select.selectOption(
       await select
         .locator("option")
@@ -92,10 +93,23 @@ fs.mkdirSync(artifacts, { recursive: true });
     assert.equal(latest.state.invoices.length, 1);
     const invoice = latest.state.invoices[0];
     assert.equal(invoice.total, 23400);
+    await root.getByRole('button',{name:'Edit bill',exact:true}).click();
+    const editScreen=root.locator('[data-clinic-bill-screen="edit"]');
+    await editScreen.getByRole('textbox',{name:'Billing notes',exact:true}).fill('Corrected fictional note');
+    await editScreen.getByRole('textbox',{name:/Reason for correction/}).fill('Demo correction');
+    await page.screenshot({path:join(artifacts,'clinic-edit.png'),fullPage:true});
+    await editScreen.getByRole('button',{name:'Save bill changes',exact:true}).click();
+    await confirm('editInvoice');
+    assert.equal(latest.state.invoices[0].note,'Corrected fictional note');
+    assert.equal(latest.state.invoices[0].revisions[0].invoice.note,'Fictional browser workflow');
+    await root.locator('[data-clinic-bill-screen="view"]').waitFor();
+    await page.screenshot({path:join(artifacts,'clinic-view.png'),fullPage:true});
+    await root.getByRole('button',{name:'Back to billing',exact:true}).click();
     await root.getByRole("spinbutton", { name: "Payment amount" }).fill("10");
     await root.getByRole("button", { name: "Record demo payment" }).click();
     await confirm("payment");
     assert.equal(latest.state.payments.length, 1);
+    assert.equal(await root.getByRole("button",{name:"Edit bill",exact:true}).isDisabled(),true);
     assert.equal(latest.state.payments[0].amount, 1000);
     await root
       .getByRole("textbox", {
@@ -111,11 +125,11 @@ fs.mkdirSync(artifacts, { recursive: true });
       0,
     );
     await root
-      .getByRole("button", { name: "View invoice & receipts", exact: true })
+      .getByRole("button", { name: "View bill", exact: true })
       .click();
+    assert.ok((await root.locator("[data-invoice-print]").innerText()).includes(invoice.id));
     const file = page.waitForEvent("download").catch(() => null);
-    await page
-      .getByRole("dialog")
+    await root.locator('[data-clinic-bill-screen="view"]')
       .getByRole("button", { name: "Export", exact: true })
       .click();
     await confirm("export");
@@ -137,9 +151,8 @@ fs.mkdirSync(artifacts, { recursive: true });
       printBackground: true,
     });
     await page.emulateMedia({ media: "screen" });
-    await page
-      .getByRole("dialog")
-      .getByRole("button", { name: "Close", exact: true })
+    await root
+      .getByRole("button", { name: "Back to billing", exact: true })
       .click();
     await page.keyboard.press("Control+k");
     let picker = page.getByRole("dialog");
@@ -154,11 +167,10 @@ fs.mkdirSync(artifacts, { recursive: true });
     await picker.locator("input").first().fill("billing-clinic");
     await picker.locator("button.group").first().click();
     await root
-      .getByRole("button", { name: "View invoice & receipts", exact: true })
+      .getByRole("button", { name: "View bill", exact: true })
       .click();
     const workbookDownload = page.waitForEvent("download").catch(() => null);
-    await page
-      .getByRole("dialog")
+    await root.locator('[data-clinic-bill-screen="view"]')
       .getByRole("button", { name: "Export", exact: true })
       .click();
     await confirm("export");
@@ -174,9 +186,8 @@ fs.mkdirSync(artifacts, { recursive: true });
     });
     assert.equal(cells.length, 4);
     assert.ok(JSON.stringify(cells).includes("76.50"));
-    await page
-      .getByRole("dialog")
-      .getByRole("button", { name: "Close", exact: true })
+    await root
+      .getByRole("button", { name: "Back to billing", exact: true })
       .click();
     await page.screenshot({
       path: join(artifacts, "clinic-workflow.png"),

@@ -290,3 +290,128 @@ test("void returns unpaid orders for rebilling and blocks paid invoice cancellat
     s.dispose();
   }
 });
+
+test("unpaid bill corrections preserve revisions and survive retries; paid, stale and unauthorized edits fail", () => {
+  const s = setup();
+  try {
+    let store = s.open();
+    let v = store.handle(user, "app", { action: "load", patientId: "p" }, true)
+      .body as ClinicBillingView;
+    const send = (c: object) => {
+      const r = store.handle(
+        user,
+        "app",
+        {
+          ...c,
+          patientId: "p",
+          expectedVersion: v.state.version,
+          operationId: crypto.randomUUID(),
+        },
+        true,
+      );
+      assert.equal(r.status, 200);
+      v = r.body as ClinicBillingView;
+    };
+    send({ action: "order", orderIds: [v.state.orders[0].id] });
+    send({
+      action: "invoice",
+      orderIds: [v.state.orders[0].id],
+      discountBps: 0,
+      insuranceId: "",
+      authorization: "",
+      note: "Original",
+    });
+    const original = structuredClone(v.state.invoices[0]);
+    const cmd = {
+      action: "editInvoice",
+      patientId: "p",
+      expectedVersion: v.state.version,
+      operationId: "correction",
+      invoiceId: original.id,
+      quantities: [{ orderId: original.lines[0].orderId, quantity: 2 }],
+      discountBps: 1000,
+      insuranceId: "policy",
+      authorization: "DEMO",
+      note: "Corrected",
+      reason: "Quantity correction",
+    };
+    assert.equal(store.handle(user, "app", cmd, false).status, 403);
+    assert.equal(
+      store.handle(user, "app", { ...cmd, reason: "" }, true).status,
+      400,
+    );
+    assert.equal(
+      store.handle(
+        user,
+        "app",
+        { ...cmd, quantities: [{ orderId: "foreign", quantity: 2 }] },
+        true,
+      ).status,
+      400,
+    );
+    assert.equal(
+      store.handle(user, "app", { ...cmd, insuranceId: "missing" }, true)
+        .status,
+      400,
+    );
+    const result = store.handle(user, "app", cmd, true);
+    assert.equal(result.status, 200);
+    v = result.body as ClinicBillingView;
+    assert.equal(v.state.invoices[0].total, 4500);
+    assert.equal(v.state.invoices[0].insurance, 2250);
+    assert.deepEqual(v.state.invoices[0].revisions?.[0].invoice, original);
+    assert.equal(
+      v.state.invoices[0].revisions?.[0].reason,
+      "Quantity correction",
+    );
+    store = s.open();
+    assert.deepEqual(store.handle(user, "app", cmd, true), result);
+    assert.equal(
+      store.handle(user, "app", { ...cmd, operationId: "stale" }, true).status,
+      409,
+    );
+    assert.equal(
+      (
+        store.handle(
+          { ...user, tenantId: "other" },
+          "app",
+          { action: "load", patientId: "p" },
+          true,
+        ).body as ClinicBillingView
+      ).state.invoices.length,
+      0,
+    );
+    send({
+      action: "payment",
+      invoiceId: original.id,
+      amount: 100,
+      method: "cash",
+      reference: "",
+    });
+    assert.equal(
+      store.handle(
+        user,
+        "app",
+        { ...cmd, operationId: "paid", expectedVersion: v.state.version },
+        true,
+      ).status,
+      400,
+    );
+    send({
+      action: "refund",
+      paymentId: v.state.payments[0].id,
+      reference: "Demo refund",
+    });
+    assert.equal(
+      store.handle(
+        user,
+        "app",
+        { ...cmd, operationId: "refunded", expectedVersion: v.state.version },
+        true,
+      ).status,
+      400,
+    );
+  } finally {
+    s.dispose();
+  }
+});

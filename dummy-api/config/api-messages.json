@@ -242,5 +242,6 @@
   "template.comprehensive.conflict": "template.comprehensive.conflict",
   "template.comprehensive.completedLocked": "template.comprehensive.completedLocked",
   "template.comprehensive.notFound": "template.comprehensive.notFound",
-  "preference.defaultModule.denied": "preference.defaultModule.denied"
+  "preference.defaultModule.denied": "preference.defaultModule.denied",
+  "template.clinic.error.editLocked": "template.clinic.error.editLocked"
 }

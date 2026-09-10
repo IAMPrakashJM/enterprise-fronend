@@ -7,6 +7,7 @@ import styles from "./record-layout.module.css";
 /** Presentation slots keep this long-record layout reusable outside patient registration. */
 export function RecordSectionLayout<T extends { id: string; title: string }>({
   sections,
+  activeOnly = false,
   active,
   onActive,
   preferences,
@@ -17,6 +18,8 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
   renderSection,
 }: {
   sections: T[];
+  /** Reuse the record rail with a focused pane instead of stacked sections. */
+  activeOnly?: boolean;
   active: string;
   onActive: (id: string) => void;
   preferences: UserPreferences;
@@ -36,7 +39,7 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
   const go = (id: string) => {
     observed.current = id;
     onActive(id);
-    if (layout === "rail")
+    if (layout === "rail" && !activeOnly)
       content.current
         ?.querySelector<HTMLElement>(`[data-record-section="${id}"]`)
         ?.scrollIntoView?.({
@@ -45,7 +48,8 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
         });
   };
   useEffect(() => {
-    if (layout === "rail" && observed.current !== active) go(active);
+    if (layout === "rail" && !activeOnly && observed.current !== active)
+      go(active);
   }, [active, layout]);
   useEffect(() => {
     const element = surface.current;
@@ -92,7 +96,7 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
       id={`${instance}-tab-${s.id}`}
       tabIndex={active === s.id ? 0 : -1}
       aria-controls={
-        layout === "rail" || active === s.id
+        (layout === "rail" && !activeOnly) || active === s.id
           ? `${instance}-section-${s.id}`
           : undefined
       }
@@ -189,7 +193,7 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
             ref={content}
             className={styles.content}
             onScroll={() => {
-              if (layout !== "rail" || !content.current) return;
+              if (activeOnly || layout !== "rail" || !content.current) return;
               const top = content.current.getBoundingClientRect().top;
               const nodes = Array.from(
                 content.current.querySelectorAll<HTMLElement>(
@@ -208,7 +212,9 @@ export function RecordSectionLayout<T extends { id: string; title: string }>({
             }}
           >
             {sections
-              .filter((s) => layout === "rail" || s.id === active)
+              .filter(
+                (s) => (layout === "rail" && !activeOnly) || s.id === active,
+              )
               .map((s) => (
                 <section
                   key={s.id}

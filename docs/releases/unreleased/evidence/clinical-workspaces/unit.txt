@@ -1,0 +1,29 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/clinic-billing/workspace.test.tsx packages/erp-screens/src/clinical-triage/editor.test.tsx packages/erp-screens/src/comprehensive-consultation/workspace.test.tsx packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/clinical-triage/editor.test.tsx (3 tests) 2158ms
+   ✓ blank readings and unanswered safety choices; completion focuses required complaint  953ms
+   ✓ recoverable failure retains input and retry uses exactly the same request  714ms
+   ✓ managed layouts change without clearing edits; completed assessments stay read only  486ms
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (4 tests) 3095ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  1162ms
+   ✓ read-only API access disables financial writes  495ms
+   ✓ bill correction retains input and operation identity on failure; read-only view can return  1427ms
+ ✓ packages/erp-screens/src/comprehensive-consultation/workspace.test.tsx (1 test) 892ms
+   ✓ specialty edits survive context and tenant-locked layout changes; preview never saves  889ms
+ ✓ packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx (7 tests) 6183ms
+   ✓ patient form preserves edits through section changes and retries with the same operation  3416ms
+   ✓ read-only metadata blocks saves and form inputs  393ms
+   ✓ scope remounts cannot retain another user patient edits  676ms
+   ✓ New patient resets a saved record in a reused new-record tab  875ms
+   ✓ empty contact editors do not create rows until edited and retain focus while typing  590ms
+
+ Test Files  4 passed (4)
+      Tests  15 passed (15)
+   Start at  04:40:11
+   Duration  13.97s (transform 6.49s, setup 6.49s, collect 11.61s, tests 12.33s, environment 4.11s, prepare 765ms)
+

@@ -44,3 +44,7 @@ Sources used for implementation boundaries: [AMA office E/M framework](https://w
 ## Acceptance and remaining work
 
 See the [implementation evidence](../releases/unreleased/comprehensive-consultation-2026-09-10.md) for exact local verification. Production terminology services, medication interaction checks, certified signatures/amendments, order dispatch, charge creation, claim/HIE/regulatory submissions, specialty-domain acceptance and native-language review are separate work. No deployment is claimed in this implementation record.
+
+## Shared rail update — 10 September 2026
+
+The master-record `RecordSectionLayout` now owns rail, tabs and wizard navigation. One selected section appears beside the consultation snapshot. The shared document engine retains unsaved values across navigation and effective policy changes. See the [clinical workspace update](clinical-workspace-update.md). Earlier screenshots above identify the previous navigator.

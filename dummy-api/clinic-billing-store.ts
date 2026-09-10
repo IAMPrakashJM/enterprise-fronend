@@ -295,6 +295,90 @@ export function createClinicBillingStore(
             order.status = "billed";
             order.invoiceId = reference;
           }
+      } else if (body.action === "editInvoice") {
+        const invoice = state.invoices.find((i) => i.id === body.invoiceId);
+        if (
+          !invoice ||
+          invoice.status !== "issued" ||
+          state.payments.some((p) => p.invoiceId === invoice.id)
+        )
+          return fail(400, "editLocked");
+        if (
+          !validText(body.reason, 500) ||
+          !body.reason.trim() ||
+          !validText(body.note, 1000) ||
+          !validText(body.authorization, 150) ||
+          !validText(body.insuranceId, 100) ||
+          !Number.isSafeInteger(body.discountBps) ||
+          body.discountBps < 0 ||
+          body.discountBps > 10000 ||
+          !Array.isArray(body.quantities) ||
+          body.quantities.length !== invoice.lines.length ||
+          new Set(body.quantities.map((q) => q?.orderId)).size !==
+            invoice.lines.length ||
+          body.quantities.some(
+            (q) =>
+              !q ||
+              !invoice.lines.some((l) => l.orderId === q.orderId) ||
+              !Number.isSafeInteger(q.quantity) ||
+              q.quantity < 1 ||
+              q.quantity > 100,
+          )
+        )
+          return fail(400);
+        const insurance = patientView.patient.collections.insurances?.find(
+          (i) => i.id === body.insuranceId,
+        );
+        if (
+          body.insuranceId &&
+          (!insurance ||
+            !body.authorization.trim() ||
+            (insurance.expiry && insurance.expiry < at.slice(0, 10)))
+        )
+          return fail(400, "insurance");
+        const orders = invoice.lines.map((line) => {
+          const order = state.orders.find(
+            (o) =>
+              o.id === line.orderId &&
+              o.invoiceId === invoice.id &&
+              o.status === "billed",
+          );
+          return order
+            ? {
+                ...order,
+                quantity: body.quantities.find(
+                  (q) => q.orderId === line.orderId,
+                )!.quantity,
+              }
+            : undefined;
+        });
+        if (orders.some((o) => !o)) return fail(400);
+        const lines = clinicInvoiceLines(
+          orders.filter((o) => o !== undefined),
+          services,
+          body.discountBps,
+          !!insurance,
+        );
+        const { revisions: previous = [], ...snapshot } =
+          structuredClone(invoice);
+        invoice.revisions = [
+          ...previous,
+          { at, actor, reason: body.reason.trim(), invoice: snapshot },
+        ];
+        Object.assign(invoice, {
+          lines,
+          discountBps: body.discountBps,
+          insuranceId: body.insuranceId,
+          authorization: body.authorization,
+          note: body.note,
+          total: lines.reduce((s, l) => s + l.net + l.tax, 0),
+          insurance: lines.reduce((s, l) => s + l.insurance, 0),
+          patient: lines.reduce((s, l) => s + l.patient, 0),
+        });
+        for (const order of orders)
+          state.orders.find((o) => o.id === order!.id)!.quantity =
+            order!.quantity;
+        reference = invoice.id + " • " + body.reason.trim();
       } else if (body.action === "payment") {
         const invoice = state.invoices.find((i) => i.id === body.invoiceId);
         if (
