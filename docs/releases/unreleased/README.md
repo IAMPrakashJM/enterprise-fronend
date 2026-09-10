@@ -71,3 +71,11 @@ Latest local addition: [OP Consultation](op-consultation-2026-09-09.md), not yet
 - [Page Library navigation labels — 10 September 2026](page-library-labels-2026-09-10.md)
 
 - [Page Library catalog — 10 September 2026](page-library-catalog-2026-09-10.md)
+
+- [OP Registration — 10 September 2026](op-registration-2026-09-10.md): local implementation and verification; no deployment claimed.
+
+- [Barcode and QR printing library — 10 September 2026](barcode-qr-printing-2026-09-10.md)
+
+- [Device integration library, 10 September 2026](device-integrations-2026-09-10.md)
+
+- [Identity device library, 10 September 2026](identity-devices-2026-09-10.md)

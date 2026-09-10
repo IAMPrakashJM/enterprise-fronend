@@ -36,3 +36,7 @@ export * from "./clinical-document.ts";
 export * from "./clinical-consultation.ts";
 
 export * from "./comprehensive-consultation.ts";
+export * from "./op-registration.ts";
+export * from './label-printing.ts';
+export * from './device-integrations.ts';
+export * from './identity-devices.ts';

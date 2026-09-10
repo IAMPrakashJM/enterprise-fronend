@@ -1,0 +1,289 @@
+{
+  "baseCommit": "fead66a4b767ad5ba5561eb9e43b0dcab0297c91",
+  "capturedAt": "2026-09-10T13:09:15.679193+00:00",
+  "sourceDigest": "c990b862c5225cf05c4eaa5f886346c6ac630548deac89c1e15137c1a66d972e",
+  "scope": "Changed implementation, tests, configuration, workflow and documentation tooling. Prose/evidence excluded to avoid self-reference. Includes previously authorized uncommitted OP Registration changes.",
+  "digestAlgorithm": "SHA-256 of sorted path + NUL + file SHA-256 + newline",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "760e1286d9750ef66e3d6db45be781d1cfb80529df4df82e71abb3ca257a94a2"
+    },
+    {
+      "path": "desktop-clients/apps/desktop/vite.config.ts",
+      "sha256": "eb296202ee5e83ece1271aed57545b68fccb6f36fe0da27874436e796dc9a549"
+    },
+    {
+      "path": "desktop-clients/e2e/label-printing.mjs",
+      "sha256": "934301aed8bb319d59b50594abc12aeb2b876867953527e4b165d7d0770d1b0d"
+    },
+    {
+      "path": "desktop-clients/e2e/op-registration.mjs",
+      "sha256": "1d591d2ba8708e8d8cf6bf24b73d4b908fd94fc66115e2ec5553000d74a3c56b"
+    },
+    {
+      "path": "desktop-clients/e2e/suites.mjs",
+      "sha256": "2e650d25ba9c165800c0f94050253cbe01ce8582ee2534efa2d8ffb4753a1581"
+    },
+    {
+      "path": "desktop-clients/package.json",
+      "sha256": "ddd71c2513e840a4776f904b6fbb66499d0660ca822e777a4008f5c225a0a983"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/clinical-templates.ts",
+      "sha256": "6edbd0b9e17f4abf776dd8d61858ecc73bac659f836998710113cab222604a2e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/documentation.ts",
+      "sha256": "023207d88e17a61a0fa4fa423f3de7507e1ca93d0115ba3d276ae7877811aec8"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/index.ts",
+      "sha256": "f8242df0e611137436475d509b5622ac3162cdb8b97498be260613130abf5d76"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/label-printing.ts",
+      "sha256": "34c4f2498b521bd4d9e181d7747ad0d4e588405e66a1513ac4328b133e61672f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "6890761abc7aca40055ab9394b39b19c5d37ddac14649e027fc852fc891c909c"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "5153a4de1e3034d1df652f6d4ac5c86c5f4cbc05d9ede0b9a413bc65d6ab0941"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "048c3bed889017e25d124b98616848dd5e45aac68ae65f79eaf504a74ae0c3c5"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "b65a8d80dd9f338c51308a0de9b5ba47adf6488d2e6ddec7c2c0102633b70f75"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/navigation.ts",
+      "sha256": "d8c0c638290c0438a0449e13ce871cdeeb3ea3db3d814227c383fb389e0c21bf"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/op-registration.ts",
+      "sha256": "a838bc3d7f00e85cc802bab05b24bb5f23550c8ceedc919f1c66b62e6ee08870"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/index.ts",
+      "sha256": "fcca2ad30bfbbab957b4af11f80591732990829746f0edff094232a8c2cfe852"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/label-printing.ts",
+      "sha256": "ed82b3b6f4a2922f40bfd72246f4225ecfd0f9165f17214e5dc3ce1b0a65f090"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/op-registration.ts",
+      "sha256": "4da9c641b9a51a47425ad1ec308cbcea41cb00b435ef7e2abe4a5992e3538b4a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/index.ts",
+      "sha256": "f25da65f5fb2a4bf012c16e653e826d787ed7ee79f04f071583f2a6f46fea0d4"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/label-printing/components.tsx",
+      "sha256": "568ab913df80de2bdaf6d9109e7b7e8bc4eddea408854e4c5e14f768c7d5ea1b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/label-printing/library-page.tsx",
+      "sha256": "d0f8e19cc8db765d473278c81d25725932457262682209041d1d85511ad5bd12"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/label-printing/printing.module.css",
+      "sha256": "75cc4aabf8ecabb5f220d4a66a241b270608756557076345f6a3ad1ffb3927b0"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/label-printing/printing.module.css.d.ts",
+      "sha256": "0890ba105f89eb3184d950e5fc60d84613d66628992a7ceedd856013f456f96b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/label-printing/workspace.tsx",
+      "sha256": "bc4d39fdbb071adb0d757b627329507860f55cd9f4e9ea2f432961fe4c0936c0"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/catalog.ts",
+      "sha256": "4e7acb8f0ce8ffa36d8b898ba783ad7fda7439f24f671e75591b7e27ddf542f2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/demos.tsx",
+      "sha256": "acfb5331f88f3a7a8c621879239a3fbfbb8158063b8bb86db081aa71dc2f0c8c"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/examples.generated.json",
+      "sha256": "7c6eb32d87ab5f3f38852e683c396ff94c817e9eb4604f8664b5723b5c1b8394"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/index.tsx",
+      "sha256": "c4a342c33d54b080cce6aa99c59840c14a8608be203a4d0c80c4057f8b799582"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/action-dialog.tsx",
+      "sha256": "a0eb22e87c71f2c8ca912ab20a416c74ed12b7fc9b07a7c23d1f97c716637209"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/care.tsx",
+      "sha256": "969af43199c4c2bee0cd46434558bea8e6722fbec4d2341bbf384559f0d79440"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/components.tsx",
+      "sha256": "a86d96857a599e7a82fdd2b6890e355191a80d09b379e9ac9eb3c60cb0a51f5f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/dialogs.tsx",
+      "sha256": "2d2fd9b9a452af131ff038179bffdce0e9a24063a2f941df22cff959c6f3ba78"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/library-page.tsx",
+      "sha256": "f772a0d2632f026477d7c69f6ebe00653b7f1ff4b220b7f9805c3c6bf43ed580"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/receipt.ts",
+      "sha256": "708d5a94d5e6b7844cf52780af6e88835e6f5e7ac4256a904755add86a3251f2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/registration.module.css",
+      "sha256": "368f12b9ad9d99ba431d801bf1f6eb785fe57d1ee0f84e5b2ed09e51446d3775"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/registration.module.css.d.ts",
+      "sha256": "0890ba105f89eb3184d950e5fc60d84613d66628992a7ceedd856013f456f96b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/use-registration.ts",
+      "sha256": "68ff9c115554879ea79a18031b58862415665d0651590578abd8a0e452b35153"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/workspace.test.tsx",
+      "sha256": "3f7bb160eb4542480a5929d1f3768324b67aae6c7869a634061358877cd8443f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/workspace.tsx",
+      "sha256": "d5cc08fbd52fdc80ccfeb7456568bb390e72cdfaf79b5c397fd054d04aed1fd8"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/page-library/resources.ts",
+      "sha256": "6e44455b883168178481aa75b5b4792fbbc554b68b88c53b1773bacc5a8b36be"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/index.ts",
+      "sha256": "c3b82271789b947f746fc512bc901300b9b9acf638f359a6ef6f96e0d24edad6"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "d2a8ad7117bfc6c747b3bd68d13be74951816fa156c6359c757f8abe03b494a5"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/print-document.tsx",
+      "sha256": "b821e6b7318921d3e1a9a282f9c5a462fb49c5d8aa5c9be699add47b119a4ca3"
+    },
+    {
+      "path": "desktop-clients/scripts/localization/sync-fallbacks.mjs",
+      "sha256": "e9863babe4246d39cb985206c6a728b1d9e1866ca46fc1a1ee335fcbe3236634"
+    },
+    {
+      "path": "docs/tools/documentation-lifecycle.mjs",
+      "sha256": "e814b6963d97c0535617fc0795b025e3027d3010d718967140f84c24e39879db"
+    },
+    {
+      "path": "dummy-api/config/api-messages.json",
+      "sha256": "0ee6c7a5d3d24d0c5caa5f0483d83010c1e8550aa5a8be943c5895c1d52b9684"
+    },
+    {
+      "path": "dummy-api/config/documentation/availability.json",
+      "sha256": "c57ceed687e6266a1750653c51c34cf0a8380ba10e0dc1015870e2e03c7b6cc8"
+    },
+    {
+      "path": "dummy-api/config/documentation/releases.json",
+      "sha256": "32fe95344b6c93bfbcc13d47940c81fff667612c4c646b081433329cceb0cef4"
+    },
+    {
+      "path": "dummy-api/config/documentation/translation-revisions.json",
+      "sha256": "44d0e7cd8e88481ba2e23d06f9eb7bd00b050313c552e321fa44ba2d8b20cebd"
+    },
+    {
+      "path": "dummy-api/config/documentation/translations.json",
+      "sha256": "6669c75a80cc89ec92666b92239147aa29e1446c80c19b05c6e37695e44d05e9"
+    },
+    {
+      "path": "dummy-api/config/label-printing/records.csv",
+      "sha256": "d172d4d7cbef9ae49d632c1907b20e7efc3e47bc41fa93e7eb42c7af77e26179"
+    },
+    {
+      "path": "dummy-api/config/label-printing/templates.json",
+      "sha256": "649368f83104d2160388beefbcf70dd8ab963e69955c267a67d7fa18f396f2a5"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "66531bc511783d9fd346fc25d409d7a7dc4b895f3893aad813712a4f37b8726f"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "c60308f00f4dc20802ea3f49bec50c35cde29a9f98f721267675e10e5e27c62b"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "2f0dee9d84c27f5a74f75714f721d7af9f3230d2a95c232eb504730b3cbf21e5"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "64fd54bbcd31a7b09095cea6af2ce588bc0cfac8a5761241f4fbcec2bee1feaf"
+    },
+    {
+      "path": "dummy-api/config/navigation/nexora.json",
+      "sha256": "896f63ac3c62781edc79ae92cc79b44bbdaba70314f64598e9506119bdfd2e5f"
+    },
+    {
+      "path": "dummy-api/config/op-registration/form.json",
+      "sha256": "2201b048ab78c409795c3274d41333c76ed1341fe3cdf99277d673e9891d81a3"
+    },
+    {
+      "path": "dummy-api/config/op-registration/providers.csv",
+      "sha256": "1789adf298f53e31fafe4b7f3cbe8275cad622bb81cce225c6e3f5fdd9c5bd60"
+    },
+    {
+      "path": "dummy-api/config/op-registration/services.csv",
+      "sha256": "b2be1578906601e78e5cfd3222d44d01a4f75a0953833bbf7d3522f46696875d"
+    },
+    {
+      "path": "dummy-api/label-printing-store.mjs",
+      "sha256": "27cbdf39abb6105c4d90b85a231149239208773fb6014b9eeb7b5022a0303b09"
+    },
+    {
+      "path": "dummy-api/label-printing-store.test.mjs",
+      "sha256": "5fef43a24b12ea6062d66bae40d687579f1cabd4be25b8af6884d24c71586fad"
+    },
+    {
+      "path": "dummy-api/op-registration-store.test.ts",
+      "sha256": "aab7298adbf0345634049f38be1d9afa79f2499a60fc55d9fd2adb171d61e58e"
+    },
+    {
+      "path": "dummy-api/op-registration-store.ts",
+      "sha256": "0caa94f50e30eb50a4b548e4fb5e3320bfc68ee9631694dddb11e4230c19534a"
+    },
+    {
+      "path": "dummy-api/package-lock.json",
+      "sha256": "f9e77ae7e078106faaf9f6be1192cadc2de0e3142e0895f415df1fde3d017f17"
+    },
+    {
+      "path": "dummy-api/package.json",
+      "sha256": "086a72896bb36b6c5ed57167e764badb2aab182f703b2e19ef4ed2552f68e59d"
+    },
+    {
+      "path": "dummy-api/server.mjs",
+      "sha256": "9ada275a97dc77dec747f737f51279cc7833396d2531cd8aa4b2697e42c11534"
+    },
+    {
+      "path": "dummy-api/tsconfig.clinical.json",
+      "sha256": "1c054a1d378581da21fa4ab5f1bbee0a20a7a33de4df36e4a14e32de3743308a"
+    },
+    {
+      "path": "run.sh",
+      "sha256": "cd9c1afb1d446d9ed2cb6f32ce77b6b05f7549b768ba416465d9b2a42707067d"
+    }
+  ]
+}

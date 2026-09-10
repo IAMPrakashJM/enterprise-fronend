@@ -39,3 +39,11 @@ Never substitute a screenshot, an empty route or a passing build for functional 
 - [Page Library: List of pages](page-library-catalog.md)
 
 - [Shared help and documentation lifecycle](../documentation/README.md): API articles, new-page scaffolding, impact checks and translation-review evidence.
+
+- [OP Registration](op-registration.md): one-page outpatient registration, care and checkout template with CSV-backed demo commands.
+
+- [Barcode, QR and label printing](barcode-qr-printing.md)
+
+- [Generic device integration library](device-integrations.md): scanners, document jobs, workstation routing and typed connector contracts.
+
+- [Identity readers and patient verification](identity-devices.md): card/EID, passport and one-to-one biometric workflow demos.

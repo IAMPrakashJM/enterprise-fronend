@@ -17,3 +17,7 @@ export * from "./clinical-document.ts";
 export * from "./clinical-consultation.ts";
 
 export * from "./comprehensive-consultation";
+export * from './op-registration';
+export * from './label-printing';
+export * from './device-integrations';
+export * from './identity-devices';

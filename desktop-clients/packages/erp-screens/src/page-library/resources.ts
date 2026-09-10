@@ -4,6 +4,10 @@ export interface PageLibraryResource {
   demo: string;
 }
 export const PAGE_LIBRARY_RESOURCES: Record<string, PageLibraryResource> = {
+  "op-registration": {
+    source: "import React from 'react';\nimport { RegistrationWorkspace, type PreferenceHost } from '@pepbits/erp-screens';\nimport { createRegistrationAdapter, createClinicalTemplateAdapter } from '@pepbits/erp-data';\nexport function RegistrationPage({ request, productId, scopeKey, ...host }: PreferenceHost & { request: (path:string, init?:RequestInit)=>Promise<Response>; productId:string; scopeKey:string }) {\n const adapter=React.useMemo(()=>createRegistrationAdapter(request,productId),[request,productId]);\n const patients=React.useMemo(()=>createClinicalTemplateAdapter(request,productId),[request,productId]);\n return <RegistrationWorkspace adapter={adapter} patients={patients} scopeKey={scopeKey} {...host}/>;\n}",
+    demo: "registration.demo",
+  },
   "billing-clinic": {
     source:
       "import React from 'react';\nimport { BillingClinicWorkspace, type PreferenceHost } from '@pepbits/erp-screens';\nimport { createClinicBillingAdapter, createClinicalTemplateAdapter } from '@pepbits/erp-data';\n\nexport function BillingPage({ request, productId, scopeKey, patientId, ...host }: PreferenceHost & {\n request: (path: string, init?: RequestInit) => Promise<Response>;\n productId: string;\n patientId: string; // selected patient ID from the navigation target\n scopeKey: string; // authenticated tenant + application + user\n}) {\n const adapter = React.useMemo(() => createClinicBillingAdapter(request, productId), [request, productId]);\n const patients = React.useMemo(() => createClinicalTemplateAdapter(request, productId), [request, productId]);\n return <BillingClinicWorkspace adapter={adapter} patients={patients} scopeKey={scopeKey} patientId={patientId} patientSelection=\"external\" {...host} />;\n}",

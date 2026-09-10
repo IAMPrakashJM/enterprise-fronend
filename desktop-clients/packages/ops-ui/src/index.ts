@@ -27,3 +27,5 @@ export * from "./data-value";
 export * from './recovery-notice';
 
 export * from "./presentation";
+export * from './print-document';
+export * from './scanner-input';

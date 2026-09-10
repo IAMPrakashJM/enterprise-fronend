@@ -1,0 +1,179 @@
+{
+  "templates": [
+    {
+      "id": "item-code128",
+      "title": "labels.item-code128",
+      "category": "items",
+      "symbology": "code128",
+      "widthMm": 70,
+      "heightMm": 35,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "item-ean13",
+      "title": "labels.item-ean13",
+      "category": "items",
+      "symbology": "ean13",
+      "widthMm": 70,
+      "heightMm": 35,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "sample-code128",
+      "title": "labels.sample-code128",
+      "category": "specimen",
+      "symbology": "code128",
+      "widthMm": 70,
+      "heightMm": 35,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "sample-datamatrix",
+      "title": "labels.sample-datamatrix",
+      "category": "specimen",
+      "symbology": "datamatrix",
+      "widthMm": 70,
+      "heightMm": 35,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "patient-band",
+      "title": "labels.patient-band",
+      "category": "patient",
+      "symbology": "code128",
+      "widthMm": 100,
+      "heightMm": 30,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "document-qr",
+      "title": "labels.document-qr",
+      "category": "qr",
+      "symbology": "qrcode",
+      "widthMm": 70,
+      "heightMm": 50,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "payment-link",
+      "title": "labels.payment-link",
+      "category": "payment",
+      "symbology": "qrcode",
+      "widthMm": 80,
+      "heightMm": 80,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "payment-static",
+      "title": "labels.payment-static",
+      "category": "payment",
+      "symbology": "qrcode",
+      "widthMm": 80,
+      "heightMm": 80,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "item-gs1-128",
+      "title": "labels.item-gs1-128",
+      "category": "items",
+      "symbology": "gs1-128",
+      "widthMm": 80,
+      "heightMm": 50,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    },
+    {
+      "id": "item-gs1-datamatrix",
+      "title": "labels.item-gs1-datamatrix",
+      "category": "items",
+      "symbology": "gs1datamatrix",
+      "widthMm": 80,
+      "heightMm": 50,
+      "version": 1,
+      "fields": [
+        "name",
+        "identifier",
+        "detail"
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "sheet-a4",
+      "title": "labels.a4",
+      "widthMm": 210,
+      "heightMm": 297,
+      "columns": 2,
+      "marginMm": 10,
+      "gapMm": 4
+    },
+    {
+      "id": "label-roll",
+      "title": "labels.roll",
+      "widthMm": 80,
+      "heightMm": 50,
+      "columns": 1,
+      "marginMm": 2,
+      "gapMm": 0
+    },
+    {
+      "id": "wristband",
+      "title": "labels.band",
+      "widthMm": 110,
+      "heightMm": 40,
+      "columns": 1,
+      "marginMm": 2,
+      "gapMm": 0
+    }
+  ],
+  "policy": {
+    "version": 1,
+    "maxCopies": 10,
+    "reprintAllowed": true,
+    "lockedProfile": ""
+  }
+}

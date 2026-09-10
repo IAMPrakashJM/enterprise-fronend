@@ -1499,6 +1499,76 @@
       "id": "list-of-pages",
       "titleKey": "template.pageLibrary.title",
       "subtitleKey": "template.pageLibrary.help"
+    },
+    {
+      "id": "op-registration",
+      "titleKey": "registration.title",
+      "subtitleKey": "registration.subtitle"
+    },
+    {
+      "id": "barcode-labels",
+      "titleKey": "labels.barcode-labels",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "specimen-labels",
+      "titleKey": "labels.specimen-labels",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "patient-wristbands",
+      "titleKey": "labels.patient-wristbands",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "qr-library",
+      "titleKey": "labels.qr-library",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "payment-qr",
+      "titleKey": "labels.payment-qr",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "batch-label-printing",
+      "titleKey": "labels.batch-label-printing",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "printer-profiles",
+      "titleKey": "labels.printer-profiles",
+      "subtitleKey": "labels.demoNotice"
+    },
+    {
+      "id": "device-integrations",
+      "titleKey": "devices.device-integrations",
+      "subtitleKey": "devices.notice"
+    },
+    {
+      "id": "scanner-workbench",
+      "titleKey": "devices.scanner-workbench",
+      "subtitleKey": "devices.notice"
+    },
+    {
+      "id": "device-automation",
+      "titleKey": "devices.device-automation",
+      "subtitleKey": "devices.notice"
+    },
+    {
+      "id": "identity-card-readers",
+      "titleKey": "identity.identity-card-readers",
+      "subtitleKey": "identity.notice"
+    },
+    {
+      "id": "passport-scanner",
+      "titleKey": "identity.passport-scanner",
+      "subtitleKey": "identity.notice"
+    },
+    {
+      "id": "patient-biometric-verification",
+      "titleKey": "identity.patient-biometric-verification",
+      "subtitleKey": "identity.notice"
     }
   ],
   "nodes": [
@@ -4895,6 +4965,146 @@
       "pageId": "list-of-pages",
       "icon": "BookOpen",
       "order": 0
+    },
+    {
+      "id": "menu.library.op-registration",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "registration.title",
+      "pageId": "op-registration",
+      "icon": "BookOpen",
+      "order": 9
+    },
+    {
+      "id": "section.library.label-printing",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "labels.title",
+      "order": 30
+    },
+    {
+      "id": "menu.library.barcode-labels",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.barcode-labels",
+      "pageId": "barcode-labels",
+      "icon": "Tags",
+      "order": 0
+    },
+    {
+      "id": "menu.library.specimen-labels",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.specimen-labels",
+      "pageId": "specimen-labels",
+      "icon": "Tags",
+      "order": 1
+    },
+    {
+      "id": "menu.library.patient-wristbands",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.patient-wristbands",
+      "pageId": "patient-wristbands",
+      "icon": "Tags",
+      "order": 2
+    },
+    {
+      "id": "menu.library.qr-library",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.qr-library",
+      "pageId": "qr-library",
+      "icon": "Tags",
+      "order": 3
+    },
+    {
+      "id": "menu.library.payment-qr",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.payment-qr",
+      "pageId": "payment-qr",
+      "icon": "Tags",
+      "order": 4
+    },
+    {
+      "id": "menu.library.batch-label-printing",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.batch-label-printing",
+      "pageId": "batch-label-printing",
+      "icon": "Tags",
+      "order": 5
+    },
+    {
+      "id": "menu.library.printer-profiles",
+      "kind": "page",
+      "parentId": "section.library.label-printing",
+      "labelKey": "labels.printer-profiles",
+      "pageId": "printer-profiles",
+      "icon": "Tags",
+      "order": 6
+    },
+    {
+      "id": "section.library.device-integrations",
+      "kind": "section",
+      "parentId": "module.library",
+      "labelKey": "devices.device-integrations",
+      "order": 31
+    },
+    {
+      "id": "menu.library.device-integrations",
+      "kind": "page",
+      "parentId": "section.library.device-integrations",
+      "labelKey": "devices.device-integrations",
+      "pageId": "device-integrations",
+      "icon": "Tags",
+      "order": 0
+    },
+    {
+      "id": "menu.library.scanner-workbench",
+      "kind": "page",
+      "parentId": "section.library.device-integrations",
+      "labelKey": "devices.scanner-workbench",
+      "pageId": "scanner-workbench",
+      "icon": "Tags",
+      "order": 1
+    },
+    {
+      "id": "menu.library.device-automation",
+      "kind": "page",
+      "parentId": "section.library.device-integrations",
+      "labelKey": "devices.device-automation",
+      "pageId": "device-automation",
+      "icon": "Tags",
+      "order": 2
+    },
+    {
+      "id": "menu.library.identity-card-readers",
+      "kind": "page",
+      "parentId": "section.library.device-integrations",
+      "labelKey": "identity.identity-card-readers",
+      "pageId": "identity-card-readers",
+      "icon": "Tags",
+      "order": 3
+    },
+    {
+      "id": "menu.library.passport-scanner",
+      "kind": "page",
+      "parentId": "section.library.device-integrations",
+      "labelKey": "identity.passport-scanner",
+      "pageId": "passport-scanner",
+      "icon": "Tags",
+      "order": 4
+    },
+    {
+      "id": "menu.library.patient-biometric-verification",
+      "kind": "page",
+      "parentId": "section.library.device-integrations",
+      "labelKey": "identity.patient-biometric-verification",
+      "pageId": "patient-biometric-verification",
+      "icon": "Tags",
+      "order": 5
     }
   ]
 }

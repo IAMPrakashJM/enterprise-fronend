@@ -1,6 +1,10 @@
 "use client";
 import React, {Suspense, lazy} from "react";
 import {LocalizedText} from "@pepbits/ops-ui";
+import {IDENTITY_PAGES,DEVICE_PAGES,LABEL_PAGES} from "@pepbits/erp-config";
+const IdentityLibrary=lazy(()=>import("../identity-devices/library-page").then(m=>({default:m.IdentityLibraryPage})));
+const DeviceLibrary=lazy(()=>import("../device-integrations/library-page").then(m=>({default:m.DeviceLibraryPage})));
+const LabelLibrary=lazy(()=>import("../label-printing/library-page").then(m=>({default:m.LabelLibraryPage})));
 import type {PageDefinition} from "@pepbits/erp-config";
 import {LibraryReferencePage} from "./reference-pages";
 import { TEMPLATE_BY_ID, CLINICAL_TEMPLATE_PAGES } from "@pepbits/erp-config";
@@ -13,14 +17,19 @@ const PageList=lazy(()=>import("../page-library").then(m=>({default:m.PageLibrar
 const ClinicalTriage=lazy(()=>import('../clinical-triage/library-page').then(m=>({default:m.ClinicalTriageLibraryPage})));
 const ClinicalConsultation=lazy(()=>import('../clinical-consultation/library-page').then(m=>({default:m.ClinicalConsultationLibraryPage})));
 const ComprehensiveConsultation=lazy(()=>import('../comprehensive-consultation/library-page').then(m=>({default:m.ComprehensiveConsultationLibraryPage})));
+const OPRegistration=lazy(()=>import('../op-registration/library-page').then(m=>({default:m.OPRegistrationLibraryPage})));
 const OPConsultation=lazy(()=>import('../op-consultation/library-page').then(m=>({default:m.OPConsultationLibraryPage})));
 const BillingClinic=lazy(()=>import('../clinic-billing/library-page').then(m=>({default:m.BillingClinicLibraryPage})));
 const ClinicalLibrary=lazy(()=>import('../clinical-templates/library-page').then(m=>({default:m.ClinicalLibraryPage})));
 export function LibraryPage({page,target={pageId:page.id}}: {page:PageDefinition;target?:NavigationTarget}) {
+  if(IDENTITY_PAGES.includes(page.id as typeof IDENTITY_PAGES[number]))return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><IdentityLibrary pageId={page.id}/></Suspense>;
+  if(DEVICE_PAGES.includes(page.id as typeof DEVICE_PAGES[number]))return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><DeviceLibrary pageId={page.id}/></Suspense>;
+  if(LABEL_PAGES.some(p=>p[0]===page.id))return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><LabelLibrary pageId={page.id}/></Suspense>;
   if(page.id==='list-of-pages')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><PageList/></Suspense>;
   if(page.id==='clinical-triage')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ClinicalTriage/></Suspense>;
   if(page.id==='clinical-consultation')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ClinicalConsultation/></Suspense>;
   if(page.id==='comprehensive-consultation')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ComprehensiveConsultation/></Suspense>;
+  if(page.id==='op-registration')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><OPRegistration/></Suspense>;
   if(page.id==='op-consultation')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><OPConsultation/></Suspense>;
   if(page.id==='billing-clinic')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><BillingClinic/></Suspense>;
   if(CLINICAL_TEMPLATE_PAGES.some(p=>p.id===page.id))return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ClinicalLibrary page={page} target={target}/></Suspense>;

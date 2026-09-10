@@ -5,13 +5,13 @@ import { type DataColumn } from "@pepbits/erp-config";
 import {useERP} from "@pepbits/erp-shell";
 import { Plus } from "lucide-react";
 import {
-  Highlight, Input, SearchInput, Textarea, Select, MultiSelect, Checkbox, Radio, Toggle, FilePicker, RangeInput, FieldShell,
+  ScannerInput, Highlight, Input, SearchInput, Textarea, Select, MultiSelect, Checkbox, Radio, Toggle, FilePicker, RangeInput, FieldShell,
   SearchSelect, ReferenceField, ReferenceDataWarning, Button, IconButton,
   DateInput, TimeInput, DateTimeInput, MonthInput, WeekInput, DateRangeInput, Calendar,
   Card, CardHeader, CardTitle, CardContent, CardFooter, CardGrid, StatCard, Avatar, Badge, StatusBadge,
   Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption, TableContainer,
   DataValue, DescriptionList, Tabs, Segmented, Pagination, DropdownSelect, ActionMenu, MenuButton, NavLink,
-  Modal, Drawer, CenterRecordCard, ConfirmDialog, EmptyState, ErrorState, AccessDenied, NotFoundState,
+  PrintDocument, Modal, Drawer, CenterRecordCard, ConfirmDialog, EmptyState, ErrorState, AccessDenied, NotFoundState,
   ConflictState, SessionExpiredState, LoadingState, Skeleton, TableSkeleton, FormSkeleton, DashboardSkeleton,
   RecoveryNotice, failureFromError, InlineEdit, InlineEditNumber, InlineEditSelect, InlineEditDate, InlineEditStatus,
   LocalizedText, LocalizationProvider, useLocalization,
@@ -28,6 +28,7 @@ export function TextDemo() {
     <Input label="Amount" type="number" min={0} />
     <SearchInput aria-label="Search" value={search} onChange={setSearch} onClear={() => setSearch("")} />
     <Highlight text="Example searchable record" query={search} />
+    <ScannerInput label="devices.code" hint="devices.scanHint" onScan={async value => { setSearch(value); return true; }} />
     <Textarea label="Notes" value={notes} onChange={e => setNotes(e.target.value)} />
   </div>;
 }
@@ -199,11 +200,12 @@ export function OverlaysDemo() {
   const [open,setOpen] = useState<string|null>(null);
   const [confirmed,setConfirmed] = useState(false);
   return <div className="space-y-3"><div className="flex flex-wrap gap-2">
-    {["Modal","Drawer","CenterRecordCard","ConfirmDialog"].map(name => <Button key={name} onClick={() => setOpen(name)}>{name}</Button>)}
+    {["Modal","Drawer","CenterRecordCard","ConfirmDialog","PrintDocument"].map(name => <Button key={name} onClick={() => setOpen(name)}>{name}</Button>)}
     </div>
     <Modal open={open === "Modal"} onClose={() => setOpen(null)} title="Details" footer={<Button onClick={() => setOpen(null)}>{t("Close")}</Button>}><Input label="Name"/></Modal>
     <Drawer open={open === "Drawer"} onClose={() => setOpen(null)} title="Details"><Input label="Notes"/></Drawer>
     <CenterRecordCard open={open === "CenterRecordCard"} onClose={() => setOpen(null)} title="Summary"><DataValue value="DEMO-001"/></CenterRecordCard>
+    {open === "PrintDocument" ? <><PrintDocument><h1>{t("Summary")}</h1><DataValue value="DEMO-001"/></PrintDocument><Modal open title="Summary" onClose={()=>setOpen(null)} footer={<Button onClick={()=>window.print()}>{t("Print")}</Button>}><DataValue value="DEMO-001"/></Modal></> : null}
     <ConfirmDialog open={open === "ConfirmDialog"} title="Confirm" message="catalog.confirmDemo" onConfirm={() => {setConfirmed(true);setOpen(null);}} onCancel={() => setOpen(null)}/>
     {confirmed ? <p role="status">{t("catalog.confirmed")}</p> : null}
   </div>;

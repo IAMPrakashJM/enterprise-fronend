@@ -2,11 +2,18 @@
   "name": "nexora-dummy-api",
   "private": true,
   "version": "1.0.0",
-  "description": "Demo auth API for the Nexora shells. Zero dependencies, zero persistence.",
+  "description": "Demo API with file-backed synthetic application data and backend barcode generation",
   "type": "module",
   "main": "server.mjs",
   "scripts": {
     "start": "node server.mjs",
-    "dev": "node --watch server.mjs"
+    "dev": "node --watch server.mjs",
+    "test:labels": "node --test label-printing-store.test.mjs"
+  },
+  "dependencies": {
+    "bwip-js": "4.11.4"
+  },
+  "devDependencies": {
+    "@zxing/library": "0.23.0"
   }
 }

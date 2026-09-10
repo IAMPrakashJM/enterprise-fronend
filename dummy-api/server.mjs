@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+import {createIdentityStore} from './identity-device-store.mjs';
+import {createDeviceStore} from './device-integration-store.mjs';
+import {createLabelStore} from './label-printing-store.mjs';
+import {createRegistrationStore} from './op-registration-store.ts';
 import {createComprehensiveConsultationStore} from './comprehensive-consultation-store.ts';
 import {createClinicalConsultationStore} from "./clinical-consultation-store.ts";
 import {createClinicalTriageStore} from "./clinical-triage-store.ts";
@@ -115,6 +119,10 @@ const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(impor
 const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.csv"));
 const clinicalTriage=createClinicalTriageStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-triage.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const clinicalConsultation=createClinicalConsultationStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-consultation.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
+const identityDevices=createIdentityStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'identity-devices.csv'));
+const deviceIntegrations=createDeviceStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'device-integrations.csv'));
+const labelPrinting=createLabelStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'label-printing.csv'));
+const opRegistration=createRegistrationStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'op-registration.csv'),(user,product,id)=>clinicalTemplates.handle(user,product,{action:'overview',id},false),()=>new Date(),(user,product)=>draftPolicies.read(user,product));
 const comprehensiveConsultation=createComprehensiveConsultationStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'comprehensive-consultation.csv'),(user,product,id)=>clinicalTemplates.handle(user,product,{action:'overview',id},false));
 const clinicBilling=createClinicBillingStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinic-billing.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const monitoringStore=createMonitoringStore(join(DATA_DIR,"monitoring.sqlite"));
@@ -126,11 +134,11 @@ const perUserLimiter = createUserLimiter();
 const recordPanelsStore = createRecordPanelsStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"record-panels.json"));
 const workspaceStore = createWorkspaceStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "workspaces.json"));
 const draftPolicies=createDraftPolicyStore(join(DATA_DIR,"draft-policy.sqlite"),{
-  scrub:(...args)=>recordStore.scrub(...args),audit:(...args)=>auditStore.append(...args),
+  scrub:(...args)=>{recordStore.scrub(...args);opRegistration.scrub(...args);},audit:(...args)=>auditStore.append(...args),
 });
 const recordStore = createRecordStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR, "records.json"),{draftPolicy:(user,product)=>draftPolicies.read(user,product)});
-recordStore.prune();
-setInterval(()=>{try{recordStore.prune();}catch{console.error("Draft retention failed");}},3600000).unref();
+recordStore.prune();opRegistration.prune();
+setInterval(()=>{try{recordStore.prune();opRegistration.prune();}catch{console.error("Draft retention failed");}},3600000).unref();
 const approvalStore=createApprovalStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"approvals.json"),{
   record:(user,product,pageId,id)=>{
     if(!Object.hasOwn(PAGE_REGISTRY,pageId))return null;
@@ -928,6 +936,50 @@ const server = createServer(async (req, res) => {
     const input=await readJson(req,262144).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
     try{const result=clinicalConsultation.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
     catch{return send(res,500,{error:'template.consultation.storage'});}
+  }
+
+  if(pathname==="/identity-devices"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"identity.denied"});
+    if(req.method!=="POST")return send(res,405,{error:"identity.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='identity-card-readers'))return send(res,403,{error:'identity.denied'});
+    const input=await readJson(req,32768).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:'identity.denied'});
+    try{const result=identityDevices.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'identity.storage'});}
+  }
+
+  if(pathname==="/device-integrations"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"devices.denied"});
+    if(req.method!=="POST")return send(res,405,{error:"devices.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='device-integrations'))return send(res,403,{error:'devices.denied'});
+    const input=await readJson(req,32768).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:'devices.denied'});
+    try{const result=deviceIntegrations.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'devices.storage'});}
+  }
+
+  if(pathname==="/label-printing"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"labels.denied"});
+    if(req.method!=="POST")return send(res,405,{error:"labels.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='barcode-labels'))return send(res,403,{error:'labels.denied'});
+    const input=await readJson(req,32768).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:'labels.denied'});
+    try{const result=labelPrinting.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'labels.storage'});}
+  }
+
+  if(pathname==="/op-registration"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"registration.denied"});
+    if(req.method!=="POST")return send(res,405,{error:"registration.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='op-registration'))return send(res,403,{error:'registration.denied'});
+    const input=await readJson(req,262144).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"registration.denied"});
+    try{const result=opRegistration.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'registration.storage'});}
   }
 
   if(pathname==="/comprehensive-consultation"){

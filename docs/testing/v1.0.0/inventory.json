@@ -982,6 +982,104 @@
       "kind": "library",
       "engine": null,
       "coverage": "PL-01; PL-02; PL-03"
+    },
+    {
+      "id": "op-registration",
+      "title": "OP Registration",
+      "kind": "library",
+      "engine": null,
+      "coverage": "OPREG-01\u2013OPREG-06; op-registration.mjs and API tests"
+    },
+    {
+      "id": "barcode-labels",
+      "title": "Item barcodes",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "specimen-labels",
+      "title": "Specimen labels",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "patient-wristbands",
+      "title": "Patient wristbands",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "qr-library",
+      "title": "QR codes",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "payment-qr",
+      "title": "Payment QR",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "batch-label-printing",
+      "title": "Batch printing",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "printer-profiles",
+      "title": "Printer profiles",
+      "kind": "library",
+      "engine": null,
+      "coverage": "LABEL-01..06; label-printing.mjs"
+    },
+    {
+      "id": "device-integrations",
+      "title": "Device integrations",
+      "kind": "library",
+      "engine": null,
+      "coverage": "DEVICE-01..06; device-integrations.mjs"
+    },
+    {
+      "id": "scanner-workbench",
+      "title": "Scanner workbench",
+      "kind": "library",
+      "engine": null,
+      "coverage": "DEVICE-01..06; device-integrations.mjs"
+    },
+    {
+      "id": "device-automation",
+      "title": "Device automation",
+      "kind": "library",
+      "engine": null,
+      "coverage": "DEVICE-01..06; device-integrations.mjs"
+    },
+    {
+      "id": "identity-card-readers",
+      "title": "Card & EID readers",
+      "kind": "library",
+      "engine": null,
+      "coverage": "IDENTITY-01..05; identity-devices.mjs"
+    },
+    {
+      "id": "passport-scanner",
+      "title": "Passport scanner",
+      "kind": "library",
+      "engine": null,
+      "coverage": "IDENTITY-01..05; identity-devices.mjs"
+    },
+    {
+      "id": "patient-biometric-verification",
+      "title": "Patient biometric verification",
+      "kind": "library",
+      "engine": null,
+      "coverage": "IDENTITY-01..05; identity-devices.mjs"
     }
   ],
   "tests": [
@@ -991,7 +1089,16 @@
     "desktop-clients/e2e/library-preferences.ts",
     "desktop-clients/packages/erp-screens/src/templates/registry-template.test.tsx",
     "desktop-clients/packages/erp-screens/src/page-library/catalog.test.tsx",
-    "desktop-clients/e2e/page-library.mjs"
+    "desktop-clients/e2e/page-library.mjs",
+    "desktop-clients/packages/erp-screens/src/op-registration/workspace.test.tsx",
+    "dummy-api/op-registration-store.test.ts",
+    "desktop-clients/e2e/op-registration.mjs",
+    "dummy-api/label-printing-store.test.mjs",
+    "desktop-clients/e2e/label-printing.mjs",
+    "dummy-api/device-integration-store.test.mjs",
+    "desktop-clients/e2e/device-integrations.mjs",
+    "dummy-api/identity-device-store.test.mjs",
+    "desktop-clients/e2e/identity-devices.mjs"
   ],
   "staticGate": "desktop-clients/scripts/verify-library-preferences.mjs"
 }

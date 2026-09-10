@@ -8,6 +8,7 @@ export const CLINICAL_TEMPLATE_PAGES = [
   { id: "clinical-consultation", title: "template.consultation.title" },
   { id: "op-consultation", title: "template.op.title" },
   { id: "comprehensive-consultation", title: "template.comprehensive.title" },
+  { id: "op-registration", title: "registration.title" },
 ] as const;
 export type PatientValue = string | boolean;
 export interface PatientField {

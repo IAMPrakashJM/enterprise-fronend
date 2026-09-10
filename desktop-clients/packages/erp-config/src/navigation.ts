@@ -811,6 +811,17 @@ MODULES.library.navigation.splice(2,0,{id:'lib-page-templates',label:'template.l
 
 // Specialized clinical compositions are additive; existing presets remain unchanged.
 import {CLINICAL_TEMPLATE_PAGES} from './clinical-templates.ts';
-for(const page of CLINICAL_TEMPLATE_PAGES)PAGE_REGISTRY[page.id]={id:page.id,title:({'allyvora-patient-query':'Patient Query','allyvora-patient-record':'Patient Record','allyvora-patient-360':'360 Data','billing-clinic':'Billing Clinic','clinical-triage':'Clinical Triage','clinical-consultation':'Clinical Consultation','op-consultation':'OP Consultation','comprehensive-consultation':'Comprehensive Consultation'} as Record<string,string>)[page.id],titleKey:page.title,subtitle:'template.clinical.demoNotice',kind:'library',module:'library',icon:BookOpen};
+for(const page of CLINICAL_TEMPLATE_PAGES)PAGE_REGISTRY[page.id]={id:page.id,title:({'allyvora-patient-query':'Patient Query','allyvora-patient-record':'Patient Record','allyvora-patient-360':'360 Data','billing-clinic':'Billing Clinic','clinical-triage':'Clinical Triage','clinical-consultation':'Clinical Consultation','op-consultation':'OP Consultation','comprehensive-consultation':'Comprehensive Consultation','op-registration':'OP Registration'} as Record<string,string>)[page.id],titleKey:page.title,subtitle:'template.clinical.demoNotice',kind:'library',module:'library',icon:BookOpen};
 PAGE_REGISTRY['list-of-pages']={id:'list-of-pages',title:'List of pages',titleKey:'template.pageLibrary.title',subtitle:'template.pageLibrary.help',kind:'library',module:'library',icon:BookOpen};
 MODULES.library.navigation.splice(3,0,{id:'lib-clinical-templates',label:'template.clinical.library',items:[{id:"list-of-pages",label:"template.pageLibrary.title",pageId:"list-of-pages",icon:BookOpen},...CLINICAL_TEMPLATE_PAGES.map(page=>({id:page.id,label:page.title,pageId:page.id,icon:BookOpen}))]});
+
+import {LABEL_PAGES} from './label-printing.ts';
+for(const [id] of LABEL_PAGES)PAGE_REGISTRY[id]={id,title:id,titleKey:'labels.'+id,subtitle:'labels.demoNotice',kind:'library',module:'library',icon:Tags};
+MODULES.library.navigation.push({id:'lib-label-printing',label:'labels.title',items:LABEL_PAGES.map(([id])=>({id,label:'labels.'+id,pageId:id,icon:Tags}))});
+
+import {DEVICE_PAGES} from './device-integrations.ts';
+for(const id of DEVICE_PAGES)PAGE_REGISTRY[id]={id,title:id,titleKey:'devices.'+id,subtitle:'devices.notice',kind:'library',module:'library',icon:Tags};
+MODULES.library.navigation.push({id:'lib-device-integrations',label:'devices.device-integrations',items:DEVICE_PAGES.map(id=>({id,label:'devices.'+id,pageId:id,icon:Tags}))});
+import {IDENTITY_PAGES} from './identity-devices.ts';
+for(const id of IDENTITY_PAGES)PAGE_REGISTRY[id]={id,title:id,titleKey:'identity.'+id,subtitle:'identity.notice',kind:'library',module:'library',icon:Tags};
+MODULES.library.navigation.find(s=>s.id==='lib-device-integrations')!.items.push(...IDENTITY_PAGES.map(id=>({id,label:'identity.'+id,pageId:id,icon:Tags})));

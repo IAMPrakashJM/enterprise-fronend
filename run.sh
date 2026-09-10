@@ -112,8 +112,8 @@ svc_install_dir() { svc_dir "$1"; }
 # Shared shells in production require an explicitly deployed, self-contained release.
 svc_uses_release() { [ "$MODE" != "dev" ] && { [ "$1" = "web" ] || [ "$1" = "desktop" ]; }; }
 
-# api is plain node with no dependencies at all.
-svc_needs_install() { [ "$1" != "api" ]; }
+# Every service has package dependencies; the API includes the backend barcode encoder.
+svc_needs_install() { return 0; }
 
 svc_label() {
   case "$1" in

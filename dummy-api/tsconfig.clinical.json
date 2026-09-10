@@ -27,6 +27,8 @@
     "clinical-consultation-store.ts",
     "clinical-consultation-store.test.ts",
     "comprehensive-consultation-store.ts",
-    "comprehensive-consultation-store.test.ts"
+    "comprehensive-consultation-store.test.ts",
+    "op-registration-store.ts",
+    "op-registration-store.test.ts"
   ]
 }

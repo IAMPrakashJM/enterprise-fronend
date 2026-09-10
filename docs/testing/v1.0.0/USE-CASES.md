@@ -112,3 +112,42 @@ Billing rail follow-up: the billing browser suite asserts one active section, ra
 | DOC-06 | Run strict acceptance with pending authoring/native reviews | Strict check fails; normal checks retain the explicit inherited backlog |
 
 DOC-01 is registered in `unified-help.mjs`; contract tests exercise source fingerprints and translation invalidation. The lifecycle checker enforces registration/history/strict acceptance. These are distinct from reviewer approval and native executable tests.
+
+## OP Registration
+
+| Case | Expected result | Automated scope |
+| --- | --- | --- |
+| OPREG-01 | Five steps and six care tabs stay in one page; progress and bottom actions remain visible while content scrolls. | Chromium browser journey and screenshots |
+| OPREG-02 | Required identity/consent, minor representative, duplicate visits, authorization and stale versions are rejected server-side. | Focused API tests; representative/date rules require additional domain acceptance |
+| OPREG-03 | Nursing review, signed immutable note, service completion, charges, payment and checkout persist. | API tests and browser journey with reload |
+| OPREG-04 | Repeated operation IDs do not duplicate writes; recovery preserves input; tenant/user scope and draft exclusions apply. | API tests and injected browser network failure |
+| OPREG-05 | Appointment booking rejects a duplicate provider/date/time slot. | API test |
+| OPREG-06 | Four interface languages render without message keys; Arabic uses RTL; shared presentation consumes effective preferences. | Browser language checks; native-speaker review pending |
+
+## Barcode and QR printing
+
+- LABEL-01: Backend renders all supported code templates from file-backed records; caller-supplied payloads cannot override identifiers.
+- LABEL-02: Batch copies retain physical sheet dimensions; incompatible stock is rejected.
+- LABEL-03: Tenant/application/user isolation and idempotent mutation retries survive store reload.
+- LABEL-04: First print records requested; reprints require allowed policy and reason; no physical success is inferred.
+- LABEL-05: Payment generation/printing never marks paid; simulation requires administrator authority; expiry blocks printing.
+- LABEL-06: Printer locks and copy limits are enforced in the server and frontend; preference defaults persist through the API.
+
+LABEL-07: Save wristband stock as a personal default, then open Payment QR. A4 is selected without changing the saved default. An incompatible tenant lock remains enforced with a printer-field message and disabled generation. The API independently rejects incompatible stock with `fieldErrors.profileId`.
+
+## Generic device integrations
+
+- DEVICE-01: Focused scan → exact API lookup within application context; success selects record; failure keeps input; no global key capture.
+- DEVICE-02: Queue persists across store recreation; same operation returns the original job; changed payload conflicts.
+- DEVICE-03: Tenant/application/user/workstation isolation and administrator-only policy/rule/event changes.
+- DEVICE-04: Unsupported device capability, copy limits, stale versions and changed dispatch locks are rejected server-side.
+- DEVICE-05: Automatic simulation is opt-in; repeated event identity returns one job; changed record/event conflicts.
+- DEVICE-06: Browser dispatch records requested only; demo dispatch is simulated; native-unavailable job stays queued; cancellation prevents dispatch. Native ticket wrapper rejects expired/mismatched acknowledgements.
+
+## Identity devices
+
+- IDENTITY-01: Card/passport synthetic capture shows document fields and never authenticates or updates a patient.
+- IDENTITY-02: Tenant/application/operator/workstation scope and selected patient/reader binding cannot be overridden.
+- IDENTITY-03: Biometric opt-in, permission acknowledgement, current reader locks and policy versions are enforced by the API.
+- IDENTITY-04: Exact retries reuse requests; different payloads, expired challenges and consumed/cancelled requests are rejected.
+- IDENTITY-05: Mismatch, expired document, unavailable connector and manual fallback remain distinct; raw biometric input is rejected and never stored.

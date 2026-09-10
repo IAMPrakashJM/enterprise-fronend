@@ -1,0 +1,225 @@
+{
+  "baseCommit": "fead66a4b767ad5ba5561eb9e43b0dcab0297c91",
+  "capturedAt": "2026-09-10T12:00:37.445644+00:00",
+  "scope": "Changed implementation, tests, runtime configuration and documentation tooling; excludes prose and evidence to avoid self-referential hashes.",
+  "digestAlgorithm": "SHA-256 of sorted path + NUL + file SHA-256 + newline",
+  "sourceDigest": "cee2933bfd91dc2862ba1f1a0e5a724b9cc93a96db3ac4371d9439a92619b4cb",
+  "files": [
+    {
+      "path": "desktop-clients/apps/desktop/vite.config.ts",
+      "sha256": "eb296202ee5e83ece1271aed57545b68fccb6f36fe0da27874436e796dc9a549"
+    },
+    {
+      "path": "desktop-clients/e2e/op-registration.mjs",
+      "sha256": "1d591d2ba8708e8d8cf6bf24b73d4b908fd94fc66115e2ec5553000d74a3c56b"
+    },
+    {
+      "path": "desktop-clients/e2e/suites.mjs",
+      "sha256": "e944473dbeec81f3813c7f1b88b4d9bbf5f3b2d00227eb88168d080befc10738"
+    },
+    {
+      "path": "desktop-clients/package.json",
+      "sha256": "4f98c2095cfb52fa3782021991e7fca6e82ce870b9836d4c832047ecfc199c05"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/clinical-templates.ts",
+      "sha256": "6edbd0b9e17f4abf776dd8d61858ecc73bac659f836998710113cab222604a2e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/documentation.ts",
+      "sha256": "ac3ecdd6d7d889e344d151e6645f42aedc8eb8839716025c6728284cbe54f802"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/index.ts",
+      "sha256": "ee67c4048d02b7bdd372b0c2199973aa43fe88e37b3aa62f8b250d416899e9c1"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "5c065c2d9b3e9e83ac814ee7f9d109cdd94a5f519c863969f7d8efa759ae7627"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "864c8d3d6bdead6291ec6cd55f38f6559e8e502775b7e56d97126b8efef33d45"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "3333fe3a3e9e46f98bfb6b0113d7808f3209f8302e3e74389465d4582f1d3084"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "409db1dc0fa26a923ccdc38049a0a04b527b722595ee668dafd0e801e1733f54"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/navigation.ts",
+      "sha256": "ae052899b9ee4b14c55b958c5bcf20a5dc8e2867b722996b80cbd6325302e67a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/op-registration.ts",
+      "sha256": "a838bc3d7f00e85cc802bab05b24bb5f23550c8ceedc919f1c66b62e6ee08870"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/index.ts",
+      "sha256": "1f0d4df538465f99c598763687e5ab2d732b7e626ce6e580e682d360e3d4b6ff"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/op-registration.ts",
+      "sha256": "4da9c641b9a51a47425ad1ec308cbcea41cb00b435ef7e2abe4a5992e3538b4a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/index.ts",
+      "sha256": "556e0e0ec5e652c8ac2e436cd46c9a8dc966189ba562c984c57162fb2121890f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/catalog.ts",
+      "sha256": "4e7acb8f0ce8ffa36d8b898ba783ad7fda7439f24f671e75591b7e27ddf542f2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/demos.tsx",
+      "sha256": "acfb5331f88f3a7a8c621879239a3fbfbb8158063b8bb86db081aa71dc2f0c8c"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/examples.generated.json",
+      "sha256": "7c6eb32d87ab5f3f38852e683c396ff94c817e9eb4604f8664b5723b5c1b8394"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/index.tsx",
+      "sha256": "83e522e2637a68a5e636021f8359e838500ecd2132fe47b074b0551e4ae58ed9"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/action-dialog.tsx",
+      "sha256": "a0eb22e87c71f2c8ca912ab20a416c74ed12b7fc9b07a7c23d1f97c716637209"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/care.tsx",
+      "sha256": "969af43199c4c2bee0cd46434558bea8e6722fbec4d2341bbf384559f0d79440"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/components.tsx",
+      "sha256": "78b89392b5c1e6c2a260963f10b010f599ffc90a45040076c8f6f74a33bf3289"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/dialogs.tsx",
+      "sha256": "2d2fd9b9a452af131ff038179bffdce0e9a24063a2f941df22cff959c6f3ba78"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/library-page.tsx",
+      "sha256": "f772a0d2632f026477d7c69f6ebe00653b7f1ff4b220b7f9805c3c6bf43ed580"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/receipt.ts",
+      "sha256": "708d5a94d5e6b7844cf52780af6e88835e6f5e7ac4256a904755add86a3251f2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/registration.module.css",
+      "sha256": "af49ea115d38799a7160f11783db733d6a61c68f1414823a43ac0c8127ab80be"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/registration.module.css.d.ts",
+      "sha256": "0890ba105f89eb3184d950e5fc60d84613d66628992a7ceedd856013f456f96b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/use-registration.ts",
+      "sha256": "68ff9c115554879ea79a18031b58862415665d0651590578abd8a0e452b35153"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/workspace.test.tsx",
+      "sha256": "3f7bb160eb4542480a5929d1f3768324b67aae6c7869a634061358877cd8443f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/op-registration/workspace.tsx",
+      "sha256": "e945ecc1bb749190ecca1b1d3bee43a743554bb1a42daa038d8ac4c9efd6772e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/page-library/resources.ts",
+      "sha256": "6e44455b883168178481aa75b5b4792fbbc554b68b88c53b1773bacc5a8b36be"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/index.ts",
+      "sha256": "c3b82271789b947f746fc512bc901300b9b9acf638f359a6ef6f96e0d24edad6"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "17a5e4405a428e2b8cd5c9124c00a126932574b3386907b2fec0dda079bab787"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/print-document.tsx",
+      "sha256": "b821e6b7318921d3e1a9a282f9c5a462fb49c5d8aa5c9be699add47b119a4ca3"
+    },
+    {
+      "path": "desktop-clients/scripts/localization/sync-fallbacks.mjs",
+      "sha256": "b32f650e8881e21b47b1cd843cc40872c1261782f46c6b03046f551cc083b3b0"
+    },
+    {
+      "path": "docs/tools/documentation-lifecycle.mjs",
+      "sha256": "60c44b9c2fb29bc4349eb45364b485e8febfccefc22ad059c1718b8cf40486e5"
+    },
+    {
+      "path": "dummy-api/config/api-messages.json",
+      "sha256": "04cff834b18481edbe3889b9631b9addd535a829f880179a0b86b8d701e44fe0"
+    },
+    {
+      "path": "dummy-api/config/documentation/availability.json",
+      "sha256": "1790871507cd64960e065dacfc660ef259796e3a7067f633ff3631fddf719f1c"
+    },
+    {
+      "path": "dummy-api/config/documentation/releases.json",
+      "sha256": "d11211419519915737e1912bb8f47675fce380ca5de0b5315378afba47efe0bf"
+    },
+    {
+      "path": "dummy-api/config/documentation/translation-revisions.json",
+      "sha256": "fe8aaf145cb578e1c6303bf496befda2fb401ba107d983ffba6ecfbf0b09d5ed"
+    },
+    {
+      "path": "dummy-api/config/documentation/translations.json",
+      "sha256": "dc3a08cc0ff7fa2199504a2e569a7575302f568179a2492e9a02f6e92499cfd3"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "f249a95fe51d15bf6c276f9359db2c2d790dafd2f75145076544a533f594c34b"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "200e6e64f368c68b435ca74c5023937835d0bf0b30c7fbe3bd06e9ebbdf33d96"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "adaac3e9ef8caee1f68e328390693b5c5c4bb9c98c9bd9b5dfdaa88f06cd9da0"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "330ff21f9b265b62acbd9712e307da07e71a333854766243bc2f3a5f33953494"
+    },
+    {
+      "path": "dummy-api/config/navigation/nexora.json",
+      "sha256": "88628a444e50e658fb63fcbfc9c07cf6ecd34de28f8d8c1cbd07f9d33bb48ae2"
+    },
+    {
+      "path": "dummy-api/config/op-registration/form.json",
+      "sha256": "2201b048ab78c409795c3274d41333c76ed1341fe3cdf99277d673e9891d81a3"
+    },
+    {
+      "path": "dummy-api/config/op-registration/providers.csv",
+      "sha256": "1789adf298f53e31fafe4b7f3cbe8275cad622bb81cce225c6e3f5fdd9c5bd60"
+    },
+    {
+      "path": "dummy-api/config/op-registration/services.csv",
+      "sha256": "b2be1578906601e78e5cfd3222d44d01a4f75a0953833bbf7d3522f46696875d"
+    },
+    {
+      "path": "dummy-api/op-registration-store.test.ts",
+      "sha256": "aab7298adbf0345634049f38be1d9afa79f2499a60fc55d9fd2adb171d61e58e"
+    },
+    {
+      "path": "dummy-api/op-registration-store.ts",
+      "sha256": "0caa94f50e30eb50a4b548e4fb5e3320bfc68ee9631694dddb11e4230c19534a"
+    },
+    {
+      "path": "dummy-api/server.mjs",
+      "sha256": "db893b1eea7dad415f3cdd4886d3e7dfa7af4db9258cc1fc2176215d3ee15cf1"
+    },
+    {
+      "path": "dummy-api/tsconfig.clinical.json",
+      "sha256": "1c054a1d378581da21fa4ab5f1bbee0a20a7a33de4df36e4a14e32de3743308a"
+    }
+  ]
+}

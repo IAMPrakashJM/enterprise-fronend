@@ -1,0 +1,825 @@
+{
+  "currency": "AED",
+  "groups": [
+    {
+      "id": "identity",
+      "title": "registration.identity",
+      "fields": [
+        {
+          "id": "identityName",
+          "label": "registration.identityName",
+          "type": "checkbox"
+        },
+        {
+          "id": "identityDob",
+          "label": "registration.identityDob",
+          "type": "checkbox"
+        },
+        {
+          "id": "guardianVerified",
+          "label": "registration.guardianVerified",
+          "type": "checkbox"
+        }
+      ]
+    },
+    {
+      "id": "visit",
+      "title": "registration.visit",
+      "fields": [
+        {
+          "id": "source",
+          "label": "registration.source",
+          "type": "select",
+          "options": [
+            {
+              "value": "appointment",
+              "label": "registration.appointment"
+            },
+            {
+              "value": "walk-in",
+              "label": "registration.walk-in"
+            },
+            {
+              "value": "referral",
+              "label": "registration.referral"
+            }
+          ]
+        },
+        {
+          "id": "template",
+          "label": "registration.template",
+          "type": "select"
+        },
+        {
+          "id": "provider",
+          "label": "registration.provider",
+          "type": "select"
+        },
+        {
+          "id": "purpose",
+          "label": "registration.purpose",
+          "type": "text"
+        },
+        {
+          "id": "reason",
+          "label": "registration.reason",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "clinic",
+          "label": "registration.clinic",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "priority",
+          "label": "registration.priority",
+          "type": "select",
+          "options": [
+            {
+              "value": "routine",
+              "label": "registration.routine"
+            },
+            {
+              "value": "assistance",
+              "label": "registration.assistance"
+            },
+            {
+              "value": "urgent",
+              "label": "registration.urgent"
+            }
+          ]
+        },
+        {
+          "id": "mode",
+          "label": "registration.mode",
+          "type": "select",
+          "options": [
+            {
+              "value": "in-person",
+              "label": "registration.in-person"
+            },
+            {
+              "value": "remote",
+              "label": "registration.remote"
+            }
+          ]
+        },
+        {
+          "id": "appointmentId",
+          "label": "registration.appointmentId",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "continuity",
+      "title": "registration.continuity",
+      "fields": [
+        {
+          "id": "episode",
+          "label": "registration.episode",
+          "type": "text"
+        },
+        {
+          "id": "caseId",
+          "label": "registration.caseId",
+          "type": "text"
+        },
+        {
+          "id": "referrer",
+          "label": "registration.referrer",
+          "type": "text"
+        },
+        {
+          "id": "referralNumber",
+          "label": "registration.referralNumber",
+          "type": "text"
+        },
+        {
+          "id": "document",
+          "label": "registration.document",
+          "type": "text"
+        },
+        {
+          "id": "procedure",
+          "label": "registration.procedure",
+          "type": "text"
+        },
+        {
+          "id": "program",
+          "label": "registration.program",
+          "type": "text"
+        },
+        {
+          "id": "session",
+          "label": "registration.session",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "assistanceGroup",
+      "title": "registration.assistanceGroup",
+      "fields": [
+        {
+          "id": "interpreter",
+          "label": "registration.interpreter",
+          "type": "select",
+          "options": [
+            {
+              "value": "none",
+              "label": "registration.none"
+            },
+            {
+              "value": "Arabic",
+              "label": "registration.Arabic"
+            },
+            {
+              "value": "English",
+              "label": "registration.English"
+            },
+            {
+              "value": "Malayalam",
+              "label": "registration.Malayalam"
+            },
+            {
+              "value": "Hindi",
+              "label": "registration.Hindi"
+            }
+          ]
+        },
+        {
+          "id": "assistance",
+          "label": "registration.assistance",
+          "type": "select",
+          "options": [
+            {
+              "value": "none",
+              "label": "registration.none"
+            },
+            {
+              "value": "mobility",
+              "label": "registration.mobility"
+            },
+            {
+              "value": "hearing",
+              "label": "registration.hearing"
+            },
+            {
+              "value": "visual",
+              "label": "registration.visual"
+            },
+            {
+              "value": "private-waiting",
+              "label": "registration.private-waiting"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "title": "registration.coverage",
+      "fields": [
+        {
+          "id": "responsibility",
+          "label": "registration.responsibility",
+          "type": "select",
+          "options": [
+            {
+              "value": "insurance",
+              "label": "registration.insurance"
+            },
+            {
+              "value": "self-pay",
+              "label": "registration.self-pay"
+            },
+            {
+              "value": "sponsor",
+              "label": "registration.sponsor"
+            },
+            {
+              "value": "package",
+              "label": "registration.package"
+            }
+          ]
+        },
+        {
+          "id": "payer",
+          "label": "registration.payer",
+          "type": "text"
+        },
+        {
+          "id": "member",
+          "label": "registration.member",
+          "type": "text"
+        },
+        {
+          "id": "expiry",
+          "label": "registration.expiry",
+          "type": "date"
+        },
+        {
+          "id": "network",
+          "label": "registration.network",
+          "type": "text"
+        },
+        {
+          "id": "copay",
+          "label": "registration.copay",
+          "type": "text"
+        },
+        {
+          "id": "deductible",
+          "label": "registration.deductible",
+          "type": "text"
+        },
+        {
+          "id": "authorization",
+          "label": "registration.authorization",
+          "type": "select",
+          "options": [
+            {
+              "value": "not-required",
+              "label": "registration.not-required"
+            },
+            {
+              "value": "pending",
+              "label": "registration.pending"
+            },
+            {
+              "value": "approved",
+              "label": "registration.approved"
+            },
+            {
+              "value": "denied",
+              "label": "registration.authDenied"
+            }
+          ]
+        },
+        {
+          "id": "authorizationId",
+          "label": "registration.authorizationId",
+          "type": "text"
+        },
+        {
+          "id": "authorizationFrom",
+          "label": "registration.authorizationFrom",
+          "type": "date"
+        },
+        {
+          "id": "authorizationTo",
+          "label": "registration.authorizationTo",
+          "type": "date"
+        },
+        {
+          "id": "approvedSessions",
+          "label": "registration.approvedSessions",
+          "type": "text"
+        },
+        {
+          "id": "usedSessions",
+          "label": "registration.usedSessions",
+          "type": "text"
+        },
+        {
+          "id": "sponsor",
+          "label": "registration.sponsor",
+          "type": "text"
+        },
+        {
+          "id": "package",
+          "label": "registration.package",
+          "type": "text"
+        },
+        {
+          "id": "secondary",
+          "label": "registration.secondary",
+          "type": "text"
+        },
+        {
+          "id": "financialReason",
+          "label": "registration.financialReason",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "id": "consent",
+      "title": "registration.consent",
+      "fields": [
+        {
+          "id": "treatment",
+          "label": "registration.treatment",
+          "type": "select",
+          "options": [
+            {
+              "value": "",
+              "label": "registration."
+            },
+            {
+              "value": "accepted",
+              "label": "registration.accepted"
+            },
+            {
+              "value": "deferred",
+              "label": "registration.deferred"
+            },
+            {
+              "value": "declined",
+              "label": "registration.declined"
+            }
+          ]
+        },
+        {
+          "id": "privacy",
+          "label": "registration.privacy",
+          "type": "select",
+          "options": [
+            {
+              "value": "",
+              "label": "registration."
+            },
+            {
+              "value": "acknowledged",
+              "label": "registration.acknowledged"
+            },
+            {
+              "value": "declined",
+              "label": "registration.declined"
+            },
+            {
+              "value": "deferred",
+              "label": "registration.deferred"
+            }
+          ]
+        },
+        {
+          "id": "representative",
+          "label": "registration.representative",
+          "type": "text"
+        },
+        {
+          "id": "communication",
+          "label": "registration.communication",
+          "type": "select",
+          "options": [
+            {
+              "value": "portal",
+              "label": "registration.portal"
+            },
+            {
+              "value": "sms",
+              "label": "registration.sms"
+            },
+            {
+              "value": "email",
+              "label": "registration.email"
+            },
+            {
+              "value": "printed",
+              "label": "registration.printed"
+            },
+            {
+              "value": "no-digital",
+              "label": "registration.no-digital"
+            }
+          ]
+        },
+        {
+          "id": "consentNote",
+          "label": "registration.consentNote",
+          "type": "textarea"
+        },
+        {
+          "id": "consentForm",
+          "label": "registration.consentForm",
+          "type": "text"
+        },
+        {
+          "id": "consentReviewed",
+          "label": "registration.consentReviewed",
+          "type": "checkbox"
+        },
+        {
+          "id": "marketing",
+          "label": "registration.marketing",
+          "type": "checkbox"
+        }
+      ]
+    },
+    {
+      "id": "nursing",
+      "title": "registration.nursing",
+      "fields": [
+        {
+          "id": "bpSys",
+          "label": "registration.bpSys",
+          "type": "text"
+        },
+        {
+          "id": "bpDia",
+          "label": "registration.bpDia",
+          "type": "text"
+        },
+        {
+          "id": "pulse",
+          "label": "registration.pulse",
+          "type": "text"
+        },
+        {
+          "id": "temperature",
+          "label": "registration.temperature",
+          "type": "text"
+        },
+        {
+          "id": "spo2",
+          "label": "registration.spo2",
+          "type": "text"
+        },
+        {
+          "id": "pain",
+          "label": "registration.pain",
+          "type": "text"
+        },
+        {
+          "id": "weight",
+          "label": "registration.weight",
+          "type": "text"
+        },
+        {
+          "id": "height",
+          "label": "registration.height",
+          "type": "text"
+        },
+        {
+          "id": "allergy",
+          "label": "registration.allergy",
+          "type": "textarea"
+        },
+        {
+          "id": "medications",
+          "label": "registration.medications",
+          "type": "textarea"
+        },
+        {
+          "id": "allergyReviewed",
+          "label": "registration.allergyReviewed",
+          "type": "checkbox"
+        },
+        {
+          "id": "medicationsReviewed",
+          "label": "registration.medicationsReviewed",
+          "type": "checkbox"
+        },
+        {
+          "id": "screening",
+          "label": "registration.screening",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "id": "consultation",
+      "title": "registration.consultation",
+      "fields": [
+        {
+          "id": "history",
+          "label": "registration.history",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "id": "exam",
+          "label": "registration.exam",
+          "type": "textarea"
+        },
+        {
+          "id": "assessment",
+          "label": "registration.assessment",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "id": "diagnosis",
+          "label": "registration.diagnosis",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "diagnosisCode",
+          "label": "registration.diagnosisCode",
+          "type": "text"
+        },
+        {
+          "id": "plan",
+          "label": "registration.plan",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "id": "education",
+          "label": "registration.education",
+          "type": "textarea"
+        },
+        {
+          "id": "careIdentity",
+          "label": "registration.careIdentity",
+          "type": "checkbox"
+        }
+      ]
+    },
+    {
+      "id": "checkout",
+      "title": "registration.checkout",
+      "fields": [
+        {
+          "id": "followup",
+          "label": "registration.followup",
+          "type": "select",
+          "options": [
+            {
+              "value": "recommended",
+              "label": "registration.recommended"
+            },
+            {
+              "value": "not-required",
+              "label": "registration.not-required"
+            },
+            {
+              "value": "declined",
+              "label": "registration.declined"
+            }
+          ]
+        },
+        {
+          "id": "followupDate",
+          "label": "registration.followupDate",
+          "type": "date"
+        },
+        {
+          "id": "followupTime",
+          "label": "registration.followupTime",
+          "type": "time"
+        },
+        {
+          "id": "followupProvider",
+          "label": "registration.followupProvider",
+          "type": "select"
+        },
+        {
+          "id": "disposition",
+          "label": "registration.disposition",
+          "type": "select",
+          "options": [
+            {
+              "value": "home",
+              "label": "registration.home"
+            },
+            {
+              "value": "referred",
+              "label": "registration.referred"
+            },
+            {
+              "value": "emergency",
+              "label": "registration.emergency"
+            },
+            {
+              "value": "admission",
+              "label": "registration.admission"
+            },
+            {
+              "value": "transfer",
+              "label": "registration.transfer"
+            },
+            {
+              "value": "left",
+              "label": "registration.left"
+            }
+          ]
+        },
+        {
+          "id": "referral",
+          "label": "registration.referral",
+          "type": "text"
+        },
+        {
+          "id": "resultOwner",
+          "label": "registration.resultOwner",
+          "type": "text"
+        },
+        {
+          "id": "resultDue",
+          "label": "registration.resultDue",
+          "type": "date"
+        },
+        {
+          "id": "followupPlan",
+          "label": "registration.followupPlan",
+          "type": "textarea"
+        },
+        {
+          "id": "instructionsReviewed",
+          "label": "registration.instructionsReviewed",
+          "type": "checkbox"
+        }
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "general",
+      "label": "registration.general",
+      "provider": "P1",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "dental",
+      "label": "registration.dental",
+      "provider": "P2",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "antenatal",
+      "label": "registration.antenatal",
+      "provider": "P3",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "mental",
+      "label": "registration.mental",
+      "provider": "P5",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "physiotherapy",
+      "label": "registration.physiotherapy",
+      "provider": "P4",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "postoperative",
+      "label": "registration.postoperative",
+      "provider": "P6",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "second-opinion",
+      "label": "registration.second-opinion",
+      "provider": "P1",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "chronic",
+      "label": "registration.chronic",
+      "provider": "P1",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "screening-visit",
+      "label": "registration.screening-visit",
+      "provider": "P1",
+      "purpose": "registration.consultation",
+      "reason": ""
+    },
+    {
+      "id": "vaccination",
+      "label": "registration.vaccination",
+      "provider": "P9",
+      "purpose": "registration.consultation",
+      "reason": ""
+    }
+  ],
+  "defaults": {
+    "identityName": false,
+    "identityDob": false,
+    "guardianVerified": false,
+    "source": "walk-in",
+    "template": "general",
+    "provider": "P1",
+    "purpose": "",
+    "reason": "",
+    "clinic": "Clinic 01",
+    "priority": "routine",
+    "mode": "in-person",
+    "appointmentId": "",
+    "episode": "",
+    "caseId": "",
+    "referrer": "",
+    "referralNumber": "",
+    "document": "",
+    "procedure": "",
+    "program": "",
+    "session": "",
+    "interpreter": "none",
+    "assistance": "none",
+    "responsibility": "self-pay",
+    "payer": "",
+    "member": "",
+    "expiry": "",
+    "network": "",
+    "copay": "20",
+    "deductible": "0",
+    "authorization": "not-required",
+    "authorizationId": "",
+    "authorizationFrom": "",
+    "authorizationTo": "",
+    "approvedSessions": "0",
+    "usedSessions": "0",
+    "sponsor": "",
+    "package": "",
+    "secondary": "",
+    "financialReason": "",
+    "treatment": "",
+    "privacy": "",
+    "representative": "",
+    "communication": "portal",
+    "consentNote": "",
+    "consentForm": "DEMO-GENERAL-v1",
+    "consentReviewed": false,
+    "marketing": false,
+    "bpSys": "",
+    "bpDia": "",
+    "pulse": "",
+    "temperature": "",
+    "spo2": "",
+    "pain": "",
+    "weight": "",
+    "height": "",
+    "allergy": "",
+    "medications": "",
+    "allergyReviewed": false,
+    "medicationsReviewed": false,
+    "screening": "",
+    "history": "",
+    "exam": "",
+    "assessment": "",
+    "diagnosis": "",
+    "diagnosisCode": "",
+    "plan": "",
+    "education": "",
+    "careIdentity": false,
+    "followup": "recommended",
+    "followupDate": "",
+    "followupTime": "09:00",
+    "followupProvider": "P1",
+    "disposition": "home",
+    "referral": "",
+    "resultOwner": "",
+    "resultDue": "",
+    "followupPlan": "",
+    "instructionsReviewed": false,
+    "eligibility": "not-checked",
+    "routing": "nursing"
+  }
+}

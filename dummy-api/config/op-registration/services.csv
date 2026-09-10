@@ -1,0 +1,10 @@
+id,label,category,price
+L1,registration.service.L1,laboratory,80
+L2,registration.service.L2,laboratory,45
+L3,registration.service.L3,laboratory,55
+L4,registration.service.L4,laboratory,100
+I1,registration.service.I1,imaging,210
+I2,registration.service.I2,imaging,320
+P1,registration.service.P1,procedure-service,90
+P2,registration.service.P2,procedure-service,180
+M1,registration.service.M1,medication,25

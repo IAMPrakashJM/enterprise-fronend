@@ -13,7 +13,7 @@ export const CATALOG_GROUPS = [
   {pageId:"localization",key:"localization"},
 ] as const;
 export const CATALOG_ENTRIES = [
-  {id:"TextDemo",group:"forms",components:["Input","SearchInput","Textarea","Highlight"],source:"form-controls.tsx, option-filter.tsx"},
+  {id:"TextDemo",group:"forms",components:["Input","SearchInput","Textarea","Highlight","ScannerInput"],source:"form-controls.tsx, option-filter.tsx, scanner-input.tsx"},
   {id:"ValidationDemo",group:"forms",components:["FieldShell","Input"],source:"form-controls.tsx"},
   {id:"SelectDemo",group:"forms",components:["Select","SearchSelect","MultiSelect"],source:"form-controls.tsx, search-select.tsx"},
   {id:"ChoiceDemo",group:"forms",components:["Checkbox","Radio","Toggle","RangeInput"],source:"form-controls.tsx"},
@@ -30,7 +30,7 @@ export const CATALOG_ENTRIES = [
   {id:"TabsDemo",group:"navigation",components:["Tabs","Segmented"],source:"tabs.tsx, segmented.tsx"},
   {id:"MenusDemo",group:"navigation",components:["DropdownSelect","ActionMenu","MenuButton","NavLink"],source:"dropdown.tsx, nav-link.tsx"},
   {id:"PaginationDemo",group:"navigation",components:["Pagination"],source:"pagination.tsx"},
-  {id:"OverlaysDemo",group:"feedback",components:["Modal","Drawer","CenterRecordCard","ConfirmDialog"],source:"overlay.tsx"},
+  {id:"OverlaysDemo",group:"feedback",components:["Modal","Drawer","CenterRecordCard","ConfirmDialog","PrintDocument"],source:"overlay.tsx, print-document.tsx"},
   {id:"StatesDemo",group:"feedback",components:["EmptyState","ErrorState","AccessDenied","NotFoundState","ConflictState","SessionExpiredState","LoadingState"],source:"empty-state.tsx"},
   {id:"SkeletonsDemo",group:"feedback",components:["Skeleton","TableSkeleton","FormSkeleton","DashboardSkeleton"],source:"skeleton.tsx"},
   {id:"RecoveryDemo",group:"feedback",components:["RecoveryNotice"],source:"recovery-notice.tsx"},

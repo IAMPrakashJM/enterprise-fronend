@@ -1,0 +1,6 @@
+id,code,title,context
+ITEM-1,8901234567890,Synthetic item one,pos
+ITEM-2,DEMO-ITEM-002,Synthetic received item,purchase
+INV-1,DEMO-INV-001,Synthetic clinic invoice,billing
+REPORT-1,DEMO-REPORT-001,Synthetic report,reports
+SAMPLE-1,DEMO-SAMPLE-001,Synthetic specimen,laboratory

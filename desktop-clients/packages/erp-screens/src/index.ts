@@ -42,3 +42,11 @@ export * from "./clinical-consultation/workspace";
 export * from "./op-consultation/workspace";
 
 export * from "./comprehensive-consultation/workspace";
+export * from './op-registration/workspace';
+export * from './op-registration/components';
+export * from './label-printing/workspace';
+export * from './label-printing/components';
+export {DeviceIntegrationWorkspace} from './device-integrations/workspace';
+export {DeviceJobList,DeviceDocument} from './device-integrations/components';
+export {IdentityDeviceWorkspace} from './identity-devices/workspace';
+export {IdentityResultPanel,IdentityHistory} from './identity-devices/components';

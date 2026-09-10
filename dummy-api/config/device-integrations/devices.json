@@ -1,0 +1,16 @@
+{
+ "devices":[
+ {"id":"browser","title":"devices.browser","transport":"browser","capabilities":["receipt","report"]},
+ {"id":"demo-receipt","title":"devices.receiptDemo","transport":"demo","capabilities":["receipt","drawer"]},
+ {"id":"demo-label","title":"devices.labelDemo","transport":"demo","capabilities":["label"]},
+ {"id":"keyboard","title":"devices.keyboard","transport":"browser","capabilities":["scan"]},
+ {"id":"native","title":"devices.native","transport":"native","capabilities":["receipt","label","report","scan","drawer","scale"]}
+ ],
+ "policy":{"version":1,"lockedDevice":"","automatic":false,"maxCopies":10},
+ "rules":[
+ {"id":"sale","event":"sale.completed","capability":"receipt","deviceId":"demo-receipt","enabled":true},
+ {"id":"purchase","event":"goods.received","capability":"label","deviceId":"demo-label","enabled":true},
+ {"id":"bill","event":"bill.finalized","capability":"receipt","deviceId":"demo-receipt","enabled":true},
+ {"id":"report","event":"report.ready","capability":"report","deviceId":"browser","enabled":true}
+ ]
+}

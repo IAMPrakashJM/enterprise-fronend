@@ -1,0 +1,10 @@
+id,category,name,identifier,detail,amount,currency
+ITEM-1,items,Demo examination gloves,5901234123457,Synthetic item · box,,
+ITEM-2,items,Demo dressing pack,4006381333931,Synthetic item · pack,,
+SAMPLE-1,specimen,Demo Patient A,DEMO-SAMPLE-001,DEMO-MRN-001 · EDTA · synthetic,,
+SAMPLE-2,specimen,Demo Patient B,DEMO-SAMPLE-002,DEMO-MRN-002 · serum · synthetic,,
+PATIENT-1,patient,Demo Patient A,DEMO-MRN-001,DOB 1986-03-18 · synthetic,,
+PATIENT-2,patient,Demo Patient B,DEMO-MRN-002,DOB 1981-05-22 · synthetic,,
+DOC-1,qr,Demo document,DEMO-DOC-001,Synthetic verification reference,,
+INV-1,payment,Demo invoice,DEMO-INV-001,No funds collected,250,AED
+INV-2,payment,Demo invoice,DEMO-INV-002,No funds collected,120,AED

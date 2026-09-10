@@ -37,5 +37,12 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: ["desktop.front-design.pepbits.com"],
   },
-  build: { target: "es2021", outDir: "dist" },
+  build: {
+    target: "es2021", outDir: "dist",
+    rollupOptions: { output: { manualChunks(id) {
+      // Cache canonical locale fallbacks independently as translated page catalogs grow.
+      const locale = id.match(/\/erp-config\/src\/locales\/(en|ar|hi|ml)\.ts$/)?.[1];
+      if (locale) return `locale-fallback-${locale}`;
+    }, onlyExplicitManualChunks: true } },
+  },
 });
