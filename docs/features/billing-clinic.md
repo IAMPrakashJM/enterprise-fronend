@@ -8,7 +8,7 @@ A cashier needs patient information, doctor and visit context, prescriptions, re
 
 ## User and administrator flows
 
-1. Search by patient information and select a patient. The summary shows identity and contact details. **Patient & visit** shows the available encounter, care-team, clinical and appointment entries from the same demo patient API.
+1. Search by patient information and select a patient. The patient selector shows name and MRN. The standalone patient summary card has been removed. **Patient & visit** shows the available encounter, care-team, clinical and appointment entries from the same demo patient API.
 2. In **Prescriptions & orders**, select prescribed items and choose **Convert selected prescriptions**. Confirm the action. Already billed items cannot be selected again.
 3. Add a service from the API catalog, with a whole-number quantity and ordering doctor. New source prescriptions/orders are picked up when the ledger is loaded again. Source descriptions and IDs remain visible.
 4. Select ready orders and choose **Review selected orders**. Review item quantities, prices, discount, tax, insurer estimate and patient share. Choose self pay or an existing patient insurance policy. Insurance requires a demo authorization reference; expired policies are rejected.

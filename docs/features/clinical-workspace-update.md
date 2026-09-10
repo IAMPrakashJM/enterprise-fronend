@@ -4,7 +4,7 @@ These changes apply to Billing Clinic, Clinical Triage and Comprehensive Consult
 
 ## Billing flow
 
-Open a patient and choose Invoices & payments. **View bill** opens a full document screen containing invoice identity, patient banner, author/date, insurance and authorization, discount, notes, line quantities/prices/tax/shares, ordering doctors, receipts and prior correction summaries. Export and PDF/print retain the existing disclosure confirmation and server audit flow. **Back to billing** returns to the ledger.
+Open a patient and choose Invoices & payments. **View bill** opens a full document screen containing invoice identity, author/date, insurance and authorization, discount, notes, line quantities/prices/tax/shares, ordering doctors, receipts and prior correction summaries. Export and PDF/print retain the existing disclosure confirmation and server audit flow. **Back to billing** returns to the ledger.
 
 **Edit bill** opens a separate correction screen with values loaded from the API invoice. Adjust quantities for its existing lines, discount, insurance/authorization and notes. Review the calculated preview, enter a reason, then select **Save bill changes** and confirm. The authoritative API response opens the updated view screen. The previous full invoice snapshot, actor, correction time and reason remain in the CSV revision history. Revision summaries show the previous total and notes; the API also retains all prior lines.
 

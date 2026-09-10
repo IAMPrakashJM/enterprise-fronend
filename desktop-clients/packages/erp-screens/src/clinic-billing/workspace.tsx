@@ -30,7 +30,6 @@ import type {
 import type { PreferenceHost } from "../preference-choice";
 import { RecordSectionLayout } from "../clinical-templates/record-layout";
 import {
-  PatientBanner,
   ClinicalLoading,
   useClinicalLoad,
 } from "../clinical-templates/shared";
@@ -322,7 +321,6 @@ function ClinicEditor({
   const shared = { data, disabled, format, preferences, onCommand: request };
   return (
     <div className="space-y-4">
-      <PatientBanner patient={data.patient} format={format} />
       <CardGrid columns={4}>
         <StatCard
           label="template.clinic.orders"

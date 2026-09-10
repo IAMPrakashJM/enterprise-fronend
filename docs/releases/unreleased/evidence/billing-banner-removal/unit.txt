@@ -1,0 +1,16 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/clinic-billing/workspace.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (4 tests) 998ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  383ms
+   ✓ bill correction retains input and operation identity on failure; read-only view can return  471ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  05:28:21
+   Duration  3.84s (transform 1.98s, setup 966ms, collect 1.11s, tests 998ms, environment 484ms, prepare 89ms)
+
