@@ -77,6 +77,11 @@ export function DocumentationCenter(){
 }
 
 export function PageDocumentationNotice(){
+ const navigation=useNavigation();
+ // Keep release notices in the catalog, outside operational workspaces.
+ return navigation.current.pageId==='list-of-pages'?<CatalogDocumentationNotice />:null;
+}
+function CatalogDocumentationNotice(){
  const navigation=useNavigation();const {preferences,setDocumentationOpen}=useERP();const {data}=useDocumentationIndex();const action=useChangeAction();const [error,setError]=useState(false);
  const change=data?.changes.find(c=>c.pageId===navigation.current.pageId&&!c.readAt&&!c.dismissedAt);
  if(!change||!preferences.documentationEnabled)return null;

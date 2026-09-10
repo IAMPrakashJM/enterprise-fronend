@@ -1,0 +1,11 @@
+{
+  "baseCommit": "636055dcf8facafbbba30378f2369ee6d544f96d",
+  "scope": "Local shared-shell notice gate. No deployment or browser acceptance.",
+  "sourceSha256": {
+    "desktop-clients/packages/erp-shell/src/documentation.tsx": "2593c953cfb3af5b009e845733d52727ddfca6d158ea0c4433ceb1c3d2cd087a"
+  },
+  "artifactSha256": {
+    "tests.txt": "fc92f820e52f2561ccbd05de14268254ecfcbda37e78972428f29cf3699f48a3",
+    "typecheck.txt": "cc6d7e1a94dce15740ae72fd3759a5ba3d16cc4f92438f294a04c852e215d47a"
+  }
+}

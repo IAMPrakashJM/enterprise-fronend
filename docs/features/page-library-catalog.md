@@ -12,6 +12,8 @@ Open **Library → Page Library → List of pages**, the first item in this side
 
 The working pages no longer display the Preview/TypeScript/guide tab strip or the former clinical library demo header. Actual patient search and selection remain on the working pages. Existing domain safety notices within a clinical/billing workspace remain part of that workflow. The separate Page Template Library TEMP and its templates are unchanged.
 
+Page-level release notice cards (title, **Read explanation** and **Dismiss**) appear only on **List of pages**, subject to the existing documentation preference and read/dismiss state. Other working pages, including Billing Clinic, show no shell release notice card. Release history and explicit documentation access remain in the Documentation Center; hiding a card does not mark its change as read or dismissed.
+
 ## API, components and integration
 
 The authenticated application provider loads `/navigation`. `PageLibraryCatalog` reads its effective `product.modules.library.navigation` group with the stable `template.clinical.library` key and resolves its page IDs against `product.pages`. It preserves backend order, walks nested groups, excludes itself and deduplicates entries. It does not invent a second module/page list or add a mock API. A newly added accessible backend menu page appears automatically. Its dedicated resource must be registered separately; an absent resource shows an explicit message instead of fabricated documentation.

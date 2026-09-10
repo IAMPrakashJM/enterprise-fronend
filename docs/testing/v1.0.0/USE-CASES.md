@@ -95,4 +95,4 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | --- | --- | --- |
 | PL-01 | Open List of pages and search | All accessible Page Library entries in API order; no self/duplicate/unrelated entries |
 | PL-02 | Open code and guide for each page | Correct public-import example and localized guide; access revocation removes an open resource |
-| PL-03 | Open each working page | Functional workspace and patient controls remain; developer tabs/demo header moved to catalog |
+| PL-03 | Open each working page | Functional workspace and patient controls remain; developer tabs/demo header moved to catalog; shell release notice cards appear only on List of pages, never Billing Clinic or another working page |

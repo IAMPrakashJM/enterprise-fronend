@@ -1,0 +1,16 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run packages/erp-shell/src/chrome.test.tsx packages/erp-screens/src/page-library/catalog.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-shell/src/chrome.test.tsx (23 tests) 133ms
+ ✓ packages/erp-screens/src/page-library/catalog.test.tsx (3 tests) 307ms
+   ✓ search, resources and page opening use current access; revoked resource closes  301ms
+
+ Test Files  2 passed (2)
+      Tests  26 passed (26)
+   Start at  07:35:09
+   Duration  3.89s (transform 3.09s, setup 2.66s, collect 3.07s, tests 440ms, environment 838ms, prepare 154ms)
+
