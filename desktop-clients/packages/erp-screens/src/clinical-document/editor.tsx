@@ -24,6 +24,8 @@ import type { ClinicalDocumentAdapter } from "@pepbits/erp-data";
 import { ClinicLedgerTable } from "../clinic-billing/parts";
 export interface DocumentFieldsProps<V, C> {
   values: V;
+  format?: Formatters;
+  navigate?: (section: string) => void;
   config: C;
   disabled: boolean;
   errors: Record<string, string>;
@@ -31,6 +33,7 @@ export interface DocumentFieldsProps<V, C> {
 }
 export interface ClinicalDocumentDefinition<V, C> {
   prefix: string;
+  inlineActions?: boolean;
   sections: Array<{ id: string; label: string }>;
   validate: (values: V, config: C, complete: boolean) => Record<string, string>;
   sectionFor: (field: string) => string;
@@ -244,6 +247,8 @@ export function ClinicalDocumentEditor<V, C>({
   };
   const props = {
       values: record.values,
+      format,
+      navigate: setSection,
       config: data.config,
       change,
       disabled,
@@ -251,6 +256,60 @@ export function ClinicalDocumentEditor<V, C>({
     },
     index = sections.findIndex((s) => s.id === section),
     flat = preferences.formNavigation === "rail";
+  const actions = (
+    <div className="flex gap-2">
+      {preferences.formNavigation === "wizard" ? (
+        <>
+          <Button
+            disabled={index === 0}
+            onClick={() => setSection(sections[index - 1].id)}
+          >
+            {t("template.previous")}
+          </Button>
+          <Button
+            disabled={index === sections.length - 1}
+            onClick={() => setSection(sections[index + 1].id)}
+          >
+            {t("template.next")}
+          </Button>
+        </>
+      ) : null}
+      <Button
+        disabled={disabled || !dirty}
+        loading={busy}
+        onClick={() => void save(false)}
+      >
+        {t(prefix + "saveDraft")}
+      </Button>
+      <Button
+        variant="primary"
+        disabled={disabled}
+        onClick={() => {
+          const invalid = validateDocument(record.values, data.config, true);
+          if (Object.keys(invalid).length) {
+            focusErrors(invalid);
+            return;
+          }
+          setConfirm(true);
+        }}
+      >
+        {t(prefix + "complete")}
+      </Button>
+    </div>
+  );
+  const saveStatus = (
+    <div className="text-xs text-[var(--text-muted)]" role="status">
+      {notice
+        ? t(notice)
+        : record.updatedAt
+          ? t(prefix + "lastSaved") +
+            " " +
+            format.dateTime(record.updatedAt) +
+            " • " +
+            record.actor
+          : t(prefix + "manualPriority")}
+    </div>
+  );
   return (
     <div
       ref={root}
@@ -259,7 +318,9 @@ export function ClinicalDocumentEditor<V, C>({
       data-triage-editor={prefix === "template.triage." ? "" : undefined}
       data-layout={preferences.formNavigation}
     >
-      <Card>
+      <Card
+        className={definition.inlineActions ? "sticky top-0 z-10" : undefined}
+      >
         <CardContent
           style={{ paddingBlock: ".5rem" }}
           className="flex flex-wrap items-end justify-between gap-3"
@@ -316,8 +377,12 @@ export function ClinicalDocumentEditor<V, C>({
             >
               {t(prefix + "new")}
             </Button>
+            {definition.inlineActions ? actions : null}
           </div>
         </CardContent>
+        {definition.inlineActions && record.updatedAt ? (
+          <div className="px-4 pb-1">{saveStatus}</div>
+        ) : null}
       </Card>
       {error ? (
         <RecoveryNotice
@@ -332,70 +397,25 @@ export function ClinicalDocumentEditor<V, C>({
       ) : null}
       {errors.form ? <p role="alert">{t(errors.form)}</p> : null}
       {!flat ? (
-        <Tabs items={sections} value={section} onChange={setSection} />
+        <Tabs
+          className="flex-wrap"
+          items={sections}
+          value={section}
+          onChange={setSection}
+        />
       ) : null}
       {definition.render(props, section, flat)}
-      <Card className="sticky bottom-0 z-10">
-        <CardContent
-          style={{ paddingBlock: ".5rem" }}
-          className="flex flex-wrap items-center justify-between gap-3"
-        >
-          <div className="text-xs text-[var(--text-muted)]" role="status">
-            {notice
-              ? t(notice)
-              : record.updatedAt
-                ? t(prefix + "lastSaved") +
-                  " " +
-                  format.dateTime(record.updatedAt) +
-                  " • " +
-                  record.actor
-                : t(prefix + "manualPriority")}
-          </div>
-          <div className="flex gap-2">
-            {preferences.formNavigation === "wizard" ? (
-              <>
-                <Button
-                  disabled={index === 0}
-                  onClick={() => setSection(sections[index - 1].id)}
-                >
-                  {t("template.previous")}
-                </Button>
-                <Button
-                  disabled={index === sections.length - 1}
-                  onClick={() => setSection(sections[index + 1].id)}
-                >
-                  {t("template.next")}
-                </Button>
-              </>
-            ) : null}
-            <Button
-              disabled={disabled || !dirty}
-              loading={busy}
-              onClick={() => void save(false)}
-            >
-              {t(prefix + "saveDraft")}
-            </Button>
-            <Button
-              variant="primary"
-              disabled={disabled}
-              onClick={() => {
-                const invalid = validateDocument(
-                  record.values,
-                  data.config,
-                  true,
-                );
-                if (Object.keys(invalid).length) {
-                  focusErrors(invalid);
-                  return;
-                }
-                setConfirm(true);
-              }}
-            >
-              {t(prefix + "complete")}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      {!definition.inlineActions && (
+        <Card className="sticky bottom-0 z-10">
+          <CardContent
+            style={{ paddingBlock: ".5rem" }}
+            className="flex flex-wrap items-center justify-between gap-3"
+          >
+            {saveStatus}
+            {actions}
+          </CardContent>
+        </Card>
+      )}
       <Modal
         open={history}
         onClose={() => setHistory(false)}

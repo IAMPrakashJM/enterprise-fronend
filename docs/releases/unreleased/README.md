@@ -31,3 +31,5 @@ Previous deployment: [Clinical Triage](clinical-triage-2026-09-09.md#verified-de
 Previous deployment: [Clinical Consultation](clinical-consultation-2026-09-09.md#verified-deployment), verified on both demo sites.
 
 Latest deployment: [Expanded consultation workspace](consultation-expanded-2026-09-09.md#verified-deployment), verified on both demo sites.
+
+Latest local addition: [OP Consultation](op-consultation-2026-09-09.md), not yet deployed.

@@ -4,6 +4,7 @@ This frontend is a reusable design and application framework. “Implemented” 
 
 | Feature family | Guidance | Current boundary |
 | --- | --- | --- |
+| OP Consultation | [User and integration guide](op-consultation.md) | Focused OP workspace, shared consultation records and read-only triage context |
 | Clinical Consultation | [User and integration guide](clinical-consultation.md) | Compact API-backed notes; production clinical integration remains separate |
 | Clinical Triage | [User and integration guide](clinical-triage.md) | API drafts, manual triage and handoff; clinical acceptance remains separate |
 | Billing Clinic | [User and integration guide](billing-clinic.md) | CSV-backed demo billing; real payer, gateway and accounting integration remain separate |

@@ -16,6 +16,8 @@ import {
   effectivePreferences,
   createFormatters,
   type UserPreferences,
+  type PatientRecord,
+  type Formatters,
 } from "@pepbits/erp-config";
 import type {
   ClinicalDocumentAdapter,
@@ -34,6 +36,10 @@ export interface ClinicalDocumentWorkspaceProps<V, C> extends PreferenceHost {
   patients: ClinicalTemplateAdapter;
   scopeKey: string;
   patientId?: string;
+  renderPatient?: (
+    patient: PatientRecord,
+    format: Formatters,
+  ) => React.ReactNode;
 }
 export function ClinicalDocumentWorkspace<V, C>(
   props: ClinicalDocumentWorkspaceProps<V, C>,
@@ -73,6 +79,7 @@ function DocumentWorkspace<V, C>(props: ClinicalDocumentWorkspaceProps<V, C>) {
     options.push({ value: id, label: id });
   return (
     <div
+      data-op-consultation={props.pageId === "op-consultation" ? "" : undefined}
       data-clinical-document
       data-clinical-triage={props.pageId === "clinical-triage" ? "" : undefined}
       data-clinical-consultation={
@@ -150,6 +157,7 @@ function DocumentWorkspace<V, C>(props: ClinicalDocumentWorkspaceProps<V, C>) {
 }
 function DocumentPatient<V, C>({
   definition,
+  renderPatient,
   adapter,
   patientId,
   preferences,
@@ -179,17 +187,21 @@ function DocumentPatient<V, C>({
   const patient = loaded.value.patient;
   return (
     <>
-      <div className="flex flex-wrap items-center gap-3 px-1">
-        <strong>
-          {[patient.values.firstName, patient.values.lastName].join(" ")}
-        </strong>
-        <Badge>{patient.mrn}</Badge>
-        <span className="text-xs text-[var(--text-muted)]">
-          {format.date(String(patient.values.birthDate ?? ""))} •{" "}
-          {t("template.clinical." + patient.values.gender)} •{" "}
-          {String(patient.values.mobile ?? "")}
-        </span>
-      </div>
+      {renderPatient ? (
+        renderPatient(patient, format)
+      ) : (
+        <div className="flex flex-wrap items-center gap-3 px-1">
+          <strong>
+            {[patient.values.firstName, patient.values.lastName].join(" ")}
+          </strong>
+          <Badge>{patient.mrn}</Badge>
+          <span className="text-xs text-[var(--text-muted)]">
+            {format.date(String(patient.values.birthDate ?? ""))} •{" "}
+            {t("template.clinical." + patient.values.gender)} •{" "}
+            {String(patient.values.mobile ?? "")}
+          </span>
+        </div>
+      )}
       <ClinicalDocumentEditor
         definition={definition}
         initial={loaded.value}

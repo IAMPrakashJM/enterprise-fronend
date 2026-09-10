@@ -2013,5 +2013,18 @@ export const ENGLISH_MESSAGES: Record<string,string> = {
   "template.consultation.consentNotes": "Consent discussion (notes only)",
   "template.consultation.functionalStatus": "Function / support needs",
   "template.consultation.expanded.vitalsHint": "Enter observed readings and measurement time. No normal values are prefilled; this does not import triage or calculate a score.",
-  "template.consultation.guideExpanded": "Twelve sections are available through one-click tabs inside three columns: visit, background, vitals, allergies, assessment, systems, results, procedures, plan, medicines, referrals and education. Tab counts show entered fields. Values stay when switching sections. New optional fields save through the demo API; older notes remain readable. Vitals are manually entered, and prescriptions, procedures, referrals and consent remain documentation notes rather than dispatched or signed actions."
+  "template.consultation.guideExpanded": "Twelve sections are available through one-click tabs inside three columns: visit, background, vitals, allergies, assessment, systems, results, procedures, plan, medicines, referrals and education. Tab counts show entered fields. Values stay when switching sections. New optional fields save through the demo API; older notes remain readable. Vitals are manually entered, and prescriptions, procedures, referrals and consent remain documentation notes rather than dispatched or signed actions.",
+  "template.op.title": "OP Consultation",
+  "template.op.subtitle": "Outpatient workspace · clinical context, focused notes and review.",
+  "template.op.navigator": "Clinical sections",
+  "template.op.summary": "Consultation summary",
+  "template.op.readiness": "Required documentation fields completed; this is not a clinical score.",
+  "template.op.notRecorded": "Not recorded",
+  "template.op.review": "Review full note",
+  "template.op.reviewHint": "Read-only preview of the current note, including unsaved entries. Completion is a separate action.",
+  "template.op.triage": "Latest completed triage",
+  "template.op.noTriage": "No completed triage is available.",
+  "template.op.contextHint": "Reference only · triage is not copied into this consultation.",
+  "template.consultation.guideOP": "OP Consultation shares saved notes with Clinical Consultation. Use the section navigator, edit in the focused form, and follow the live documentation summary. Summary field buttons jump to the related section. Review full note displays all recorded sections without saving. The patient banner reads the latest completed triage from the demo API as reference only; open its details to review all measurements. Triage belongs to its original encounter and is not copied automatically.",
+  "template.op.refreshTriage": "Refresh triage"
 };

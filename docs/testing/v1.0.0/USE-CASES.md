@@ -54,3 +54,12 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | CONSULT-06 | Open the expanded sections, enter notes and vitals, save and reload | 12 tabs remain usable, fields retain values and final actions fit the tested desktop viewport | Consultation browser suite |
 | CONSULT-07 | Read an old note or update with a legacy payload | Missing optional fields render empty; load does not rewrite CSV; omitted expanded fields retain prior values | Consultation store compatibility test |
 | CONSULT-08 | Save an invalid vital while its panel is hidden | The vital panel opens and the invalid field receives focus | Consultation frontend test |
+
+## OP Consultation
+
+| ID | Trigger | Expected result | Evidence source |
+| --- | --- | --- | --- |
+| OP-01 | Open OP with a completed triage and refresh reference | Real API context appears; detail opens; no copying into note | OP managed browser suite |
+| OP-02 | Navigate 12 sections, save/reopen/complete and review | Values persist; full-note preview includes current unsaved entries; completed history locks | OP managed browser suite |
+| OP-03 | Jump from summary and apply a locked layout | Related field opens; input survives; review does not call save | OP workspace unit test |
+| OP-04 | Use four languages and default 1600 × 900 geometry | Direction/width and visible primary actions match tested scope | OP browser suite |

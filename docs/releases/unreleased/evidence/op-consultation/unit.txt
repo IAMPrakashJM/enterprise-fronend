@@ -1,0 +1,20 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/op-consultation/workspace.test.tsx packages/erp-screens/src/clinical-consultation/workspace.test.tsx packages/erp-screens/src/clinical-triage/editor.test.tsx packages/erp-screens/src/clinic-billing/workspace.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/clinical-triage/editor.test.tsx (3 tests) 606ms
+ ✓ packages/erp-screens/src/clinical-consultation/workspace.test.tsx (3 tests) 750ms
+   ✓ expanded panels retain values and validation opens a hidden invalid vital  318ms
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (3 tests) 631ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  534ms
+ ✓ packages/erp-screens/src/op-consultation/workspace.test.tsx (1 test) 336ms
+   ✓ OP summary navigates fields; locked layout and review retain unsaved values  334ms
+
+ Test Files  4 passed (4)
+      Tests  10 passed (10)
+   Start at  20:24:44
+   Duration  4.24s (transform 1.77s, setup 2.39s, collect 2.94s, tests 2.32s, environment 1.70s, prepare 309ms)
+

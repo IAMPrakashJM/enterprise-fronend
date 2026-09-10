@@ -63,12 +63,13 @@ function NoteField({
 }
 export function ConsultationSection({
   section,
+  panelId,
   ...props
-}: Props & { section: string }) {
+}: Props & { section: string; panelId?: string }) {
   const { t } = useLocalization();
   const panels = detailPanels[section] ?? detailPanels.history;
   const [active, setActive] = useState(panels[0].id);
-  const current = panels.find((p) => p.id === active) ?? panels[0];
+  const current = panels.find((p) => p.id === (panelId ?? active)) ?? panels[0];
   useEffect(() => {
     const errorField = Object.keys(props.errors)[0];
     const invalid = panels.find((panel) =>
@@ -96,24 +97,29 @@ export function ConsultationSection({
       <CardHeader style={{ minHeight: 0, paddingBlock: ".5rem" }}>
         <CardTitle
           title={
-            consultationSections.find((s) => s.id === section)?.label ?? ""
+            panelId
+              ? "template.consultation.panel." + panelId
+              : (consultationSections.find((s) => s.id === section)?.label ??
+                "")
           }
         />
       </CardHeader>
       <CardContent className="space-y-3" style={{ paddingBlock: ".5rem" }}>
-        <Tabs
-          className="flex-wrap [&>button]:px-2"
-          items={panels.map((panel) => ({
-            id: panel.id,
-            label: "template.consultation.panel." + panel.id,
-            badge:
-              panel.fields.filter((field) =>
-                Boolean(props.values[field]?.trim()),
-              ).length || undefined,
-          }))}
-          value={current.id}
-          onChange={setActive}
-        />
+        {!panelId && (
+          <Tabs
+            className="flex-wrap [&>button]:px-2"
+            items={panels.map((panel) => ({
+              id: panel.id,
+              label: "template.consultation.panel." + panel.id,
+              badge:
+                panel.fields.filter((field) =>
+                  Boolean(props.values[field]?.trim()),
+                ).length || undefined,
+            }))}
+            value={current.id}
+            onChange={setActive}
+          />
+        )}
         <div data-consultation-panel={current.id} className="space-y-3">
           {current.id === "visit" ? (
             <>

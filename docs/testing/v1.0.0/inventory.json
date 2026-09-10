@@ -961,6 +961,13 @@
       "kind": "library",
       "engine": null,
       "coverage": "TRIAGE-01; triage store, UI, preference and browser checks"
+    },
+    {
+      "id": "op-consultation",
+      "title": "Clinical Consultation",
+      "kind": "library",
+      "engine": null,
+      "coverage": "TRIAGE-01; triage store, UI, preference and browser checks"
     }
   ],
   "tests": [

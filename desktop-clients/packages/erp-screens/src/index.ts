@@ -38,3 +38,5 @@ export {BillingClinicWorkspace,type BillingClinicWorkspaceProps} from './clinic-
 export {ClinicalTriageWorkspace,type ClinicalTriageWorkspaceProps} from './clinical-triage/workspace';
 
 export * from "./clinical-consultation/workspace";
+
+export * from "./op-consultation/workspace";

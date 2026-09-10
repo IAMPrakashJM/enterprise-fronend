@@ -1484,6 +1484,11 @@
       "id": "clinical-consultation",
       "titleKey": "template.consultation.title",
       "subtitleKey": "template.consultation.subtitle"
+    },
+    {
+      "id": "op-consultation",
+      "titleKey": "template.op.title",
+      "subtitleKey": "template.op.subtitle"
     }
   ],
   "nodes": [
@@ -4853,6 +4858,15 @@
       "pageId": "clinical-consultation",
       "icon": "BookOpen",
       "order": 5
+    },
+    {
+      "id": "menu.library.op-consultation",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.op.title",
+      "pageId": "op-consultation",
+      "icon": "BookOpen",
+      "order": 6
     }
   ]
 }
