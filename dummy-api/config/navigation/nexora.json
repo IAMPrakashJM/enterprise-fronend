@@ -1489,6 +1489,11 @@
       "id": "op-consultation",
       "titleKey": "template.op.title",
       "subtitleKey": "template.op.subtitle"
+    },
+    {
+      "id": "comprehensive-consultation",
+      "titleKey": "template.comprehensive.title",
+      "subtitleKey": "template.comprehensive.subtitle"
     }
   ],
   "nodes": [
@@ -4867,6 +4872,15 @@
       "pageId": "op-consultation",
       "icon": "BookOpen",
       "order": 6
+    },
+    {
+      "id": "menu.library.comprehensive-consultation",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.comprehensive.title",
+      "pageId": "comprehensive-consultation",
+      "icon": "BookOpen",
+      "order": 7
     }
   ]
 }

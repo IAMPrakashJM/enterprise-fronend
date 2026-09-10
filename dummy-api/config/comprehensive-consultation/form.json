@@ -1,0 +1,500 @@
+{
+  "clinicians": [
+    {
+      "value": "demo-clinician-1",
+      "label": "template.consultation.clinicianOne"
+    },
+    {
+      "value": "demo-clinician-2",
+      "label": "template.consultation.clinicianTwo"
+    }
+  ],
+  "visitTypes": [
+    {
+      "value": "new",
+      "label": "template.consultation.newVisit"
+    },
+    {
+      "value": "follow-up",
+      "label": "template.consultation.followUpVisit"
+    }
+  ],
+  "vitals": [
+    {
+      "id": "systolic",
+      "label": "template.triage.systolic",
+      "unit": "mmHg",
+      "step": "1"
+    },
+    {
+      "id": "diastolic",
+      "label": "template.triage.diastolic",
+      "unit": "mmHg",
+      "step": "1"
+    },
+    {
+      "id": "pulse",
+      "label": "template.triage.pulse",
+      "unit": "/min",
+      "step": "1"
+    },
+    {
+      "id": "respiratoryRate",
+      "label": "template.triage.respiratoryRate",
+      "unit": "/min",
+      "step": "1"
+    },
+    {
+      "id": "oxygenSaturation",
+      "label": "template.triage.oxygenSaturation",
+      "unit": "%",
+      "max": 100,
+      "step": "1"
+    },
+    {
+      "id": "temperature",
+      "label": "template.triage.temperature",
+      "unit": "°C",
+      "step": "0.1"
+    },
+    {
+      "id": "pain",
+      "label": "template.triage.pain",
+      "unit": "/10",
+      "max": 10,
+      "step": "1"
+    },
+    {
+      "id": "weight",
+      "label": "template.triage.weight",
+      "unit": "kg",
+      "step": "0.1"
+    }
+  ],
+  "version": "demo-2026-09-10.1",
+  "effectiveFrom": "2026-09-10",
+  "specialties": [
+    {
+      "value": "general",
+      "label": "template.comprehensive.specialty.general",
+      "fields": [
+        {
+          "id": "functional",
+          "label": "template.comprehensive.field.functional"
+        }
+      ]
+    },
+    {
+      "value": "family",
+      "label": "template.comprehensive.specialty.family",
+      "fields": [
+        {
+          "id": "prevention",
+          "label": "template.comprehensive.field.prevention"
+        }
+      ]
+    },
+    {
+      "value": "cardiology",
+      "label": "template.comprehensive.specialty.cardiology",
+      "fields": [
+        {
+          "id": "cardiac",
+          "label": "template.comprehensive.field.cardiac"
+        }
+      ]
+    },
+    {
+      "value": "orthopedics",
+      "label": "template.comprehensive.specialty.orthopedics",
+      "fields": [
+        {
+          "id": "joint",
+          "label": "template.comprehensive.field.joint"
+        }
+      ]
+    },
+    {
+      "value": "pediatrics",
+      "label": "template.comprehensive.specialty.pediatrics",
+      "fields": [
+        {
+          "id": "growth",
+          "label": "template.comprehensive.field.growth"
+        }
+      ]
+    },
+    {
+      "value": "ent",
+      "label": "template.comprehensive.specialty.ent",
+      "fields": [
+        {
+          "id": "entFindings",
+          "label": "template.comprehensive.field.entFindings"
+        }
+      ]
+    },
+    {
+      "value": "obgyn",
+      "label": "template.comprehensive.specialty.obgyn",
+      "fields": [
+        {
+          "id": "obHistory",
+          "label": "template.comprehensive.field.obHistory"
+        }
+      ]
+    },
+    {
+      "value": "neurology",
+      "label": "template.comprehensive.specialty.neurology",
+      "fields": [
+        {
+          "id": "neuroFindings",
+          "label": "template.comprehensive.field.neuroFindings"
+        }
+      ]
+    },
+    {
+      "value": "psychiatry",
+      "label": "template.comprehensive.specialty.psychiatry",
+      "fields": [
+        {
+          "id": "mental",
+          "label": "template.comprehensive.field.mental"
+        }
+      ]
+    },
+    {
+      "value": "dermatology",
+      "label": "template.comprehensive.specialty.dermatology",
+      "fields": [
+        {
+          "id": "skin",
+          "label": "template.comprehensive.field.skin"
+        }
+      ]
+    },
+    {
+      "value": "ophthalmology",
+      "label": "template.comprehensive.specialty.ophthalmology",
+      "fields": [
+        {
+          "id": "vision",
+          "label": "template.comprehensive.field.vision"
+        }
+      ]
+    },
+    {
+      "value": "endocrinology",
+      "label": "template.comprehensive.specialty.endocrinology",
+      "fields": [
+        {
+          "id": "metabolic",
+          "label": "template.comprehensive.field.metabolic"
+        }
+      ]
+    },
+    {
+      "value": "gastro",
+      "label": "template.comprehensive.specialty.gastro",
+      "fields": [
+        {
+          "id": "digestive",
+          "label": "template.comprehensive.field.digestive"
+        }
+      ]
+    },
+    {
+      "value": "pulmonology",
+      "label": "template.comprehensive.specialty.pulmonology",
+      "fields": [
+        {
+          "id": "respiratory",
+          "label": "template.comprehensive.field.respiratory"
+        }
+      ]
+    },
+    {
+      "value": "nephrology",
+      "label": "template.comprehensive.specialty.nephrology",
+      "fields": [
+        {
+          "id": "renal",
+          "label": "template.comprehensive.field.renal"
+        }
+      ]
+    },
+    {
+      "value": "oncology",
+      "label": "template.comprehensive.specialty.oncology",
+      "fields": [
+        {
+          "id": "oncologyReview",
+          "label": "template.comprehensive.field.oncologyReview"
+        }
+      ]
+    },
+    {
+      "value": "dental",
+      "label": "template.comprehensive.specialty.dental",
+      "fields": [
+        {
+          "id": "dentition",
+          "label": "template.comprehensive.field.dentition"
+        }
+      ]
+    }
+  ],
+  "contexts": [
+    {
+      "value": "adult",
+      "label": "template.comprehensive.context.adult"
+    },
+    {
+      "value": "child",
+      "label": "template.comprehensive.context.child"
+    },
+    {
+      "value": "pregnancy",
+      "label": "template.comprehensive.context.pregnancy"
+    },
+    {
+      "value": "remote",
+      "label": "template.comprehensive.context.remote"
+    }
+  ],
+  "codeSystems": [
+    {
+      "value": "LOCAL",
+      "label": "LOCAL"
+    },
+    {
+      "value": "ICD-10-CM",
+      "label": "ICD-10-CM"
+    },
+    {
+      "value": "SNOMED CT",
+      "label": "SNOMED CT"
+    }
+  ],
+  "priorities": [
+    {
+      "value": "routine",
+      "label": "template.comprehensive.routine"
+    },
+    {
+      "value": "urgent",
+      "label": "template.comprehensive.urgent"
+    }
+  ],
+  "profiles": [
+    {
+      "value": "doh",
+      "label": "template.comprehensive.profile.doh",
+      "integrations": [
+        "Malaffi / HIE",
+        "Shafafiya",
+        "JAWDA"
+      ]
+    },
+    {
+      "value": "dha",
+      "label": "template.comprehensive.profile.dha",
+      "integrations": [
+        "DHA reporting",
+        "Claims"
+      ]
+    },
+    {
+      "value": "mohap",
+      "label": "template.comprehensive.profile.mohap",
+      "integrations": [
+        "Riayati / HIE",
+        "Public health"
+      ]
+    },
+    {
+      "value": "cms",
+      "label": "template.comprehensive.profile.cms",
+      "integrations": [
+        "Claims",
+        "Quality reporting"
+      ]
+    },
+    {
+      "value": "custom",
+      "label": "template.comprehensive.profile.custom",
+      "integrations": [
+        "Custom reporting"
+      ]
+    }
+  ],
+  "scoreInstruments": [
+    {
+      "id": "gcs",
+      "label": "GCS",
+      "mode": "sum",
+      "version": "GCS component sum",
+      "fields": [
+        {
+          "id": "eye",
+          "label": "template.comprehensive.eye",
+          "min": 1,
+          "max": 4,
+          "notTestable": true
+        },
+        {
+          "id": "verbal",
+          "label": "template.comprehensive.verbal",
+          "min": 1,
+          "max": 5,
+          "notTestable": true
+        },
+        {
+          "id": "motor",
+          "label": "template.comprehensive.motor",
+          "min": 1,
+          "max": 6,
+          "notTestable": true
+        }
+      ]
+    },
+    {
+      "id": "qsofa",
+      "label": "qSOFA",
+      "mode": "sum",
+      "version": "Sepsis-3 2016; adult suspected infection",
+      "fields": [
+        {
+          "id": "qResp",
+          "label": "template.comprehensive.qResp",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "qBp",
+          "label": "template.comprehensive.qBp",
+          "min": 0,
+          "max": 1
+        },
+        {
+          "id": "qMental",
+          "label": "template.comprehensive.qMental",
+          "min": 0,
+          "max": 1
+        }
+      ]
+    },
+    {
+      "id": "curb65",
+      "label": "CURB-65",
+      "mode": "recorded",
+      "version": "externally assessed total; source required",
+      "fields": [
+        {
+          "id": "total",
+          "label": "template.comprehensive.recordedScore",
+          "min": 0,
+          "max": 5
+        }
+      ]
+    },
+    {
+      "id": "phq9",
+      "label": "PHQ-9",
+      "mode": "recorded",
+      "version": "externally assessed total; source required",
+      "fields": [
+        {
+          "id": "total",
+          "label": "template.comprehensive.recordedScore",
+          "min": 0,
+          "max": 27
+        }
+      ]
+    },
+    {
+      "id": "gad7",
+      "label": "GAD-7",
+      "mode": "recorded",
+      "version": "externally assessed total; source required",
+      "fields": [
+        {
+          "id": "total",
+          "label": "template.comprehensive.recordedScore",
+          "min": 0,
+          "max": 21
+        }
+      ]
+    }
+  ],
+  "emRules": {
+    "version": "office-demo-2021.1",
+    "new": [
+      {
+        "code": "99202",
+        "min": 15,
+        "max": 29
+      },
+      {
+        "code": "99203",
+        "min": 30,
+        "max": 44
+      },
+      {
+        "code": "99204",
+        "min": 45,
+        "max": 59
+      },
+      {
+        "code": "99205",
+        "min": 60,
+        "max": 74
+      }
+    ],
+    "established": [
+      {
+        "code": "99212",
+        "min": 10,
+        "max": 19
+      },
+      {
+        "code": "99213",
+        "min": 20,
+        "max": 29
+      },
+      {
+        "code": "99214",
+        "min": 30,
+        "max": 39
+      },
+      {
+        "code": "99215",
+        "min": 40,
+        "max": 54
+      }
+    ]
+  },
+  "serviceCodeSystems": [
+    {
+      "value": "LOCAL",
+      "label": "LOCAL"
+    },
+    {
+      "value": "CPT",
+      "label": "CPT"
+    },
+    {
+      "value": "HCPCS",
+      "label": "HCPCS"
+    },
+    {
+      "value": "DoH Service / T-code",
+      "label": "DoH Service / T-code"
+    },
+    {
+      "value": "Dental",
+      "label": "Dental"
+    }
+  ]
+}

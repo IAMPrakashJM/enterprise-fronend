@@ -24,6 +24,8 @@ import type { ClinicalDocumentAdapter } from "@pepbits/erp-data";
 import { ClinicLedgerTable } from "../clinic-billing/parts";
 export interface DocumentFieldsProps<V, C> {
   values: V;
+  preferences?: UserPreferences;
+  record?: ClinicalDocument<V>;
   format?: Formatters;
   navigate?: (section: string) => void;
   config: C;
@@ -34,6 +36,7 @@ export interface DocumentFieldsProps<V, C> {
 export interface ClinicalDocumentDefinition<V, C> {
   prefix: string;
   inlineActions?: boolean;
+  afterChange?: (values: V, key: keyof V | "encounterId") => V;
   sections: Array<{ id: string; label: string }>;
   validate: (values: V, config: C, complete: boolean) => Record<string, string>;
   sectionFor: (field: string) => string;
@@ -95,7 +98,10 @@ export function ClinicalDocumentEditor<V, C>({
       record.status === "completed";
   const change = <K extends keyof V>(key: K, value: V[K]) => {
     if (disabled) return;
-    setRecord((r) => ({ ...r, values: { ...r.values, [key]: value } }));
+    setRecord((r) => {
+      const values = { ...r.values, [key]: value };
+      return { ...r, values: definition.afterChange?.(values, key) ?? values };
+    });
     setDirty(true);
     onDirty(true);
     setErrors({});
@@ -247,6 +253,8 @@ export function ClinicalDocumentEditor<V, C>({
   };
   const props = {
       values: record.values,
+      preferences,
+      record,
       format,
       navigate: setSection,
       config: data.config,
@@ -341,7 +349,13 @@ export function ClinicalDocumentEditor<V, C>({
               error={errors.encounterId}
               onChange={(e) => {
                 if (!disabled) {
-                  setRecord((r) => ({ ...r, encounterId: e.target.value }));
+                  setRecord((r) => ({
+                    ...r,
+                    encounterId: e.target.value,
+                    values:
+                      definition.afterChange?.(r.values, "encounterId") ??
+                      r.values,
+                  }));
                   setDirty(true);
                   onDirty(true);
                 }

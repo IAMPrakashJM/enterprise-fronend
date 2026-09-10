@@ -80,6 +80,7 @@ function DocumentWorkspace<V, C>(props: ClinicalDocumentWorkspaceProps<V, C>) {
   return (
     <div
       data-op-consultation={props.pageId === "op-consultation" ? "" : undefined}
+      data-comprehensive-consultation={props.pageId === "comprehensive-consultation" ? "" : undefined}
       data-clinical-document
       data-clinical-triage={props.pageId === "clinical-triage" ? "" : undefined}
       data-clinical-consultation={

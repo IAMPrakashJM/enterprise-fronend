@@ -63,3 +63,11 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | OP-02 | Navigate 12 sections, save/reopen/complete and review | Values persist; full-note preview includes current unsaved entries; completed history locks | OP managed browser suite |
 | OP-03 | Jump from summary and apply a locked layout | Related field opens; input survives; review does not call save | OP workspace unit test |
 | OP-04 | Use four languages and default 1600 × 900 geometry | Direction/width and visible primary actions match tested scope | OP browser suite |
+
+## Comprehensive Consultation
+
+- CC-01: Specialty changes retain entered notes; full preview includes unsaved specialty entries. Managed form navigation overrides local layout.
+- CC-02: Enter diagnoses and all four order types, edit linked details, reject duplicate diagnoses and dangling order links.
+- CC-03: Scores distinguish zero, missing and not-testable inputs; E/M uses two of three levels with separate bounded time comparison.
+- CC-04: Failed save preserves exact retry identity. Reopen CSV-backed records, attest and sign, verify immutable controls and tenant isolation. Editing invalidates prior attestation.
+- CC-05: Four-language desktop rendering, API navigation and source/version evidence remain separate from native and clinical acceptance.

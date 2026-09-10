@@ -16,6 +16,7 @@ type Bucket<V> = {
 export interface ClinicalDocumentRecipe<V, C> {
   prefix: string;
   idPrefix: string;
+  version?: string;
   config: C;
   blank: () => V;
   validate: (values: V, config: C, complete: boolean) => Record<string, string>;
@@ -186,6 +187,7 @@ export function createClinicalDocumentStore<V, C>(
         values,
         updatedAt: now,
         actor: user.name ?? user.id,
+        ...(recipe.version ? { configurationVersion: recipe.version } : {}),
         history: [
           ...(old?.history ?? []),
           {

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createComprehensiveConsultationStore} from './comprehensive-consultation-store.ts';
 import {createClinicalConsultationStore} from "./clinical-consultation-store.ts";
 import {createClinicalTriageStore} from "./clinical-triage-store.ts";
 import {createClinicBillingStore} from "./clinic-billing-store.ts";
@@ -114,6 +115,7 @@ const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(impor
 const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.csv"));
 const clinicalTriage=createClinicalTriageStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-triage.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const clinicalConsultation=createClinicalConsultationStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-consultation.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
+const comprehensiveConsultation=createComprehensiveConsultationStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'comprehensive-consultation.csv'),(user,product,id)=>clinicalTemplates.handle(user,product,{action:'overview',id},false));
 const clinicBilling=createClinicBillingStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinic-billing.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const monitoringStore=createMonitoringStore(join(DATA_DIR,"monitoring.sqlite"));
 const documentationStore=createDocumentationStore(join(DATA_DIR,"documentation.sqlite"),process.env.NEXORA_CONFIG_DIR ?? join(dirname(fileURLToPath(import.meta.url)),"config"),applicationConfig);
@@ -925,6 +927,17 @@ const server = createServer(async (req, res) => {
     const input=await readJson(req,262144).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
     try{const result=clinicalConsultation.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
     catch{return send(res,500,{error:'template.consultation.storage'});}
+  }
+
+  if(pathname==="/comprehensive-consultation"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"Not signed in."});
+    if(req.method!=="POST")return send(res,405,{error:"template.comprehensive.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    if(!nav.body.pages.some(p=>p.id==='comprehensive-consultation'))return send(res,403,{error:'template.comprehensive.denied'});
+    const input=await readJson(req,262144).catch(()=>null);if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
+    try{const result=comprehensiveConsultation.handle(user,product,input,user.role==='enterprise-admin');return send(res,result.status,result.body,{'Cache-Control':'no-store'});}
+    catch{return send(res,500,{error:'template.comprehensive.storage'});}
   }
 
   if(pathname==="/clinic-billing"){

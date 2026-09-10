@@ -25,6 +25,8 @@
     "clinical-triage-store.test.ts",
     "clinical-document-store.ts",
     "clinical-consultation-store.ts",
-    "clinical-consultation-store.test.ts"
+    "clinical-consultation-store.test.ts",
+    "comprehensive-consultation-store.ts",
+    "comprehensive-consultation-store.test.ts"
   ]
 }

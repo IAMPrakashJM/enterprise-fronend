@@ -1,5 +1,7 @@
 # Feature catalog
 
+- [Comprehensive Consultation](comprehensive-consultation.md): specialty documentation, linked orders, scoring, coding and demo signing.
+
 This frontend is a reusable design and application framework. “Implemented” below means a frontend capability and its documented demo contract exist; it does not establish production ERP, clinical or school-service acceptance.
 
 | Feature family | Guidance | Current boundary |

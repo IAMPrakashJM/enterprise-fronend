@@ -34,3 +34,5 @@ export * from './clinical-triage.ts';
 export * from "./clinical-document.ts";
 
 export * from "./clinical-consultation.ts";
+
+export * from "./comprehensive-consultation.ts";

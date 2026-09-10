@@ -968,6 +968,13 @@
       "kind": "library",
       "engine": null,
       "coverage": "TRIAGE-01; triage store, UI, preference and browser checks"
+    },
+    {
+      "id": "comprehensive-consultation",
+      "title": "Comprehensive Consultation",
+      "kind": "library",
+      "engine": "ComprehensiveConsultationWorkspace",
+      "coverage": "CC-01 through CC-05; API/unit/browser scope recorded in release evidence"
     }
   ],
   "tests": [

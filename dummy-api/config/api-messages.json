@@ -235,5 +235,11 @@
   "template.consultation.storage": "template.consultation.storage",
   "template.consultation.conflict": "template.consultation.conflict",
   "template.consultation.completedLocked": "template.consultation.completedLocked",
-  "template.consultation.notFound": "template.consultation.notFound"
+  "template.consultation.notFound": "template.consultation.notFound",
+  "template.comprehensive.invalid": "template.comprehensive.invalid",
+  "template.comprehensive.denied": "template.comprehensive.denied",
+  "template.comprehensive.storage": "template.comprehensive.storage",
+  "template.comprehensive.conflict": "template.comprehensive.conflict",
+  "template.comprehensive.completedLocked": "template.comprehensive.completedLocked",
+  "template.comprehensive.notFound": "template.comprehensive.notFound"
 }

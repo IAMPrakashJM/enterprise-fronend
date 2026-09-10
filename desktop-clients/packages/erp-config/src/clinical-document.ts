@@ -8,6 +8,7 @@ export interface ClinicalDocument<V> {
   values: V;
   updatedAt: string;
   actor: string;
+  configurationVersion?: string;
   history: Array<{ at: string; actor: string; messageKey: string }>;
 }
 export interface ClinicalDocumentView<V, C> {

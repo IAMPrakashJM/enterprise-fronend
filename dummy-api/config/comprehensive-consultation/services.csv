@@ -1,0 +1,9 @@
+id,kind,label,code,system
+med-1,medication,template.comprehensive.service.med-1,DEMO-MED-1,LOCAL
+med-2,medication,template.comprehensive.service.med-2,DEMO-MED-2,LOCAL
+lab-1,lab,template.comprehensive.service.lab-1,DEMO-LAB-1,LOCAL
+lab-2,lab,template.comprehensive.service.lab-2,DEMO-LAB-2,LOCAL
+image-1,imaging,template.comprehensive.service.image-1,DEMO-IMAGE-1,LOCAL
+image-2,imaging,template.comprehensive.service.image-2,DEMO-IMAGE-2,LOCAL
+proc-1,procedure,template.comprehensive.service.proc-1,DEMO-PROC-1,LOCAL
+proc-2,procedure,template.comprehensive.service.proc-2,DEMO-PROC-2,LOCAL
