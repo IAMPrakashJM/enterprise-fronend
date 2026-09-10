@@ -1,0 +1,18 @@
+PASS front-design.pepbits.com billing-clinic: no page release notice
+PASS front-design.pepbits.com allyvora-patient-query: no page release notice
+PASS front-design.pepbits.com allyvora-patient-record: no page release notice
+PASS front-design.pepbits.com allyvora-patient-360: no page release notice
+PASS front-design.pepbits.com clinical-triage: no page release notice
+PASS front-design.pepbits.com clinical-consultation: no page release notice
+PASS front-design.pepbits.com op-consultation: no page release notice
+PASS front-design.pepbits.com comprehensive-consultation: no page release notice
+PASS front-design.pepbits.com: release identity, catalog notice retained after navigation, eight working pages clear, no page errors; no record, preference or reading-state mutations
+PASS desktop.front-design.pepbits.com billing-clinic: no page release notice
+PASS desktop.front-design.pepbits.com allyvora-patient-query: no page release notice
+PASS desktop.front-design.pepbits.com allyvora-patient-record: no page release notice
+PASS desktop.front-design.pepbits.com allyvora-patient-360: no page release notice
+PASS desktop.front-design.pepbits.com clinical-triage: no page release notice
+PASS desktop.front-design.pepbits.com clinical-consultation: no page release notice
+PASS desktop.front-design.pepbits.com op-consultation: no page release notice
+PASS desktop.front-design.pepbits.com comprehensive-consultation: no page release notice
+PASS desktop.front-design.pepbits.com: release identity, catalog notice retained after navigation, eight working pages clear, no page errors; no record, preference or reading-state mutations

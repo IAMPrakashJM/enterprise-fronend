@@ -1,0 +1,14 @@
+{
+  "commit": "144608f4040f5c7931146a4aeb80ae013dd70215",
+  "releaseId": "20260910073724156-d1fc5041",
+  "scope": "English Chromium 1700x1050 on both live demo hosts. Catalog notice retained, eight working pages without notices. No record, preference or reading-state writes.",
+  "artifactSha256": {
+    "activate.txt": "566dbdd62a18f620bc487d64e42fd598bd91277b0e724a24f4d5899ae65ae331",
+    "desktop-billing.png": "1f770b295f7b5c0ff157faa1981ac093c42553cc47d724b70dc7342dd6754d85",
+    "desktop-catalog.png": "2f2619b952b4a68d680f7b673e7211ec2b9caa027a2024ec8316661b6cfd389a",
+    "live.txt": "cc3f0343b3fc599beb69d862c90fd201ef3e0954fcdef2f3f7b9253c7504c3b5",
+    "prepare.txt": "a41fdc0fa742bf31b605e85e4441aea62dba134e0603c70b877040aa13df21a7",
+    "web-billing.png": "a7587aff23b32cd057d231a3ebd453d81b3e23507d0134d26201a934f9646177",
+    "web-catalog.png": "47f382a9635da3cda70413d2d0ff4c1497e396ed17ef34f77a7072e91aa98871"
+  }
+}

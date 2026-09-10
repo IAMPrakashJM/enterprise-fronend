@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest deployment: [Catalog-only release notices — both demo sites](catalog-notices-deployment-2026-09-10.md).
+
 Latest local change: [Catalog-only release notice cards](catalog-notices-2026-09-10.md). Not deployed.
 
 Latest deployment: [Page Library catalog — both demo sites, 10 September 2026](page-library-catalog-deployment-2026-09-10.md).
