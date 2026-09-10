@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: expected release, renamed sidebar groups and page title, old labels absent, no page errors; no preference writes
+PASS https://desktop.front-design.pepbits.com: expected release, renamed sidebar groups and page title, old labels absent, no page errors; no preference writes

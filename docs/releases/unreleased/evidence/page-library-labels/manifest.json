@@ -1,0 +1,13 @@
+{
+  "commit": "9cd0baf639b970b1627974dc70eaa61e4ec8825f",
+  "release": "20260910065020266-69915bef",
+  "scope": "Canonical four-language catalog checks; English Chromium sidebar/page-title verification on both public demo hosts. No native executable or native-speaker acceptance.",
+  "artifactSha256": {
+    "activate.txt": "556d08688f1dd4d0c8e44fc16ed0773f27046fb94222f5945810f19dd44a46ca",
+    "checks.txt": "72e585f9ff50022ceb7b3b07660373df19be54388acf70efc9fcda9707f3572f",
+    "desktop.png": "f1589ff34e6855ff6fdcb0f1c305eafe5b1a837aeb9c4834a31e68247a23fbfb",
+    "live.txt": "44d69eec7bd1398fcc0d24b09ac826ad83cbabf00d87671f59493fbd08a6d384",
+    "prepare.txt": "732b161b674c5deee87d939922c10d369d4b3076fac1f7f8e0e892a88e7700e1",
+    "web.png": "4eac64ffb7f627e3268b673104417b19051dac49cb4fabaad1da29ac5a3fc252"
+  }
+}
