@@ -15837,6 +15837,13 @@
     "template.clinic.event.editInvoice": "बिल सुधारा गया",
     "template.clinic.confirm.editInvoice": "यह सुधार सहेजें? API बिल की फिर से गणना करेगा और कारण सहित पिछला संशोधन सुरक्षित रखेगा।",
     "template.triage.snapshot": "ट्रायेज सारांश",
-    "template.triage.remaining": "समीक्षा के लिए मदें: {count}"
+    "template.triage.remaining": "समीक्षा के लिए मदें: {count}",
+    "template.pageLibrary.title": "पृष्ठों की सूची",
+    "template.pageLibrary.help": "पृष्ठ लाइब्रेरी के उपलब्ध पृष्ठ देखें। काम करने के लिए पृष्ठ खोलें, या यहाँ उसका डेमो विवरण, TypeScript उदाहरण और एकीकरण गाइड देखें।",
+    "template.pageLibrary.search": "पृष्ठ खोजें",
+    "template.pageLibrary.count": "{total} में से {count} पृष्ठ दिखाए गए",
+    "template.pageLibrary.open": "पृष्ठ खोलें",
+    "template.pageLibrary.empty": "कोई मिलते-जुलते पृष्ठ नहीं",
+    "template.pageLibrary.noResource": "इस पृष्ठ के लिए विशेष उदाहरण और गाइड अभी नहीं जोड़े गए हैं।"
   }
 }

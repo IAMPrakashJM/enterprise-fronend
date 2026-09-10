@@ -1,6 +1,6 @@
 # Clinical Triage — user and integration guide
 
-Open **Library → Page Library → Clinical Triage**, immediately after Billing Clinic. The page provides a reusable triage form with fictional patients from the demo API. The Library also provides a copyable TypeScript example and an in-page guide.
+Open **Library → Page Library → Clinical Triage**, immediately after Billing Clinic. The page provides a reusable triage form with fictional patients from the demo API. **Page Library → List of pages** provides the copyable TypeScript example and user/integration guide.
 
 ## Using the page
 
@@ -40,7 +40,7 @@ flowchart LR
     View --> Workspace
 ```
 
-Contracts are in `@pepbits/erp-config`, the HTTP adapter is in `@pepbits/erp-data`, and the reusable workspace is exported by `@pepbits/erp-screens`. Use the public TypeScript example on the Library page. Memoize both adapters around the authenticated request function and product ID. Pass a scope key containing authenticated tenant, application and user so changing scope clears mounted patient state. The optional `patientId` starts the workspace with an existing patient selected.
+Contracts are in `@pepbits/erp-config`, the HTTP adapter is in `@pepbits/erp-data`, and the reusable workspace is exported by `@pepbits/erp-screens`. Use the public TypeScript example under **Page Library → List of pages**. Memoize both adapters around the authenticated request function and product ID. Pass a scope key containing authenticated tenant, application and user so changing scope clears mounted patient state. The optional `patientId` starts the workspace with an existing patient selected.
 
 Implement `ClinicalTriageAdapter.load(patientId)` and `save(TriageSave)` to connect another application. The demo transport sends `POST /clinical-triage` with `action: load` or `action: save` and `X-Product-Id`. Load returns patient context, encounters, assessments, a blank assessment, form configuration and server write permission. Save includes the assessment, expected version, stable operation ID and completion flag; it returns the server-owned record.
 
@@ -57,3 +57,7 @@ Visible text lives under `template.triage.*` in the canonical shared API catalog
 Implemented: reusable form, API patient/encounter context, editable saved drafts, validation, explicit completion, separate reassessment, history, retry/version handling, managed preferences, four-language catalogs and documentation.
 
 This template does not calculate clinical scores or recommend a priority. Selecting a destination records a handoff value; it does not dispatch staff, notify clinicians or create a production worklist. Clinical protocol approval, native-speaker/domain wording review, production EHR integration and native executable acceptance remain separate work. See the [release and verification record](../releases/unreleased/clinical-triage-2026-09-09.md).
+
+## Catalog location — 10 September 2026
+
+Examples, demo descriptions and user/integration guides are in **Page Library → List of pages**. Working pages open directly to their forms/workspaces. See the [catalog guide](page-library-catalog.md).

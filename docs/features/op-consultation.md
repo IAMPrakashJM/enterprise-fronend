@@ -16,7 +16,7 @@ The triage banner reads the latest completed triage for the patient, including i
 
 `OPConsultationWorkspace` composes the shared `ClinicalDocumentWorkspace`, `ClinicalDocumentEditor`, `ConsultationSection`, `OPPatientContext` and `OPConsultationBoard`. Shared cards, tabs, buttons, badges, controls and dialogs provide the UI. The shared editor has an opt-in inline action toolbar and navigation callback; existing Consultation and Triage retain their normal layouts.
 
-Use the public TypeScript example on the Library page. Provide the authenticated consultation adapter, patient adapter and triage adapter, memoized around request/product identity. The workspace accepts the existing preference host and authenticated tenant/application/user scope key. Effective policy, font/theme/radius, form navigation, history settings, date/number formatting and shortcut enablement remain managed. Summary navigation scopes focus to its own workspace.
+Use the public TypeScript example under **Page Library → List of pages**. Provide the authenticated consultation adapter, patient adapter and triage adapter, memoized around request/product identity. The workspace accepts the existing preference host and authenticated tenant/application/user scope key. Effective policy, font/theme/radius, form navigation, history settings, date/number formatting and shortcut enablement remain managed. Summary navigation scopes focus to its own workspace.
 
 The demo reads `/clinical-consultation`, `/clinical-triage` and the existing clinical patient endpoints. It saves through `/clinical-consultation` into the same CSV as the existing consultation page. Product configuration must authorize the underlying consultation and triage reads; the new sidebar item alone does not grant API permission. Triage refresh uses read operations. The current demo still permits consultation writes through the enterprise-admin role; the integrating application must supply production clinical authorization.
 
@@ -27,3 +27,7 @@ UI labels use `template.op.*` and the existing consultation catalogs in English,
 Prescription/order dispatch, structured diagnosis coding, signatures, amendment relationships, booking and billing integration remain outside this frontend note template. The full-note modal is a preview, not a clinical signed document or export. Saved drafts are durable in the single-process demo CSV; unsaved browser-close recovery is not added. Native-language clinical wording and native executable acceptance remain separate.
 
 See [Consultation's data and workflow contract](clinical-consultation.md) and the [OP implementation evidence](../releases/unreleased/op-consultation-2026-09-09.md).
+
+## Catalog location — 10 September 2026
+
+Examples, demo descriptions and user/integration guides are in **Page Library → List of pages**. Working pages open directly to their forms/workspaces. See the [catalog guide](page-library-catalog.md).

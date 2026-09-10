@@ -5345,5 +5345,12 @@ export default {
   "template.clinic.event.editInvoice": "Bill corrected",
   "template.clinic.confirm.editInvoice": "Save this correction? The API will recalculate the bill and retain its previous revision with your reason.",
   "template.triage.snapshot": "Triage snapshot",
-  "template.triage.remaining": "Items to review: {count}"
+  "template.triage.remaining": "Items to review: {count}",
+  "template.pageLibrary.title": "List of pages",
+  "template.pageLibrary.help": "Browse the pages available in Page Library. Open a page to work, or review its demo description, TypeScript example and integration guide here.",
+  "template.pageLibrary.search": "Search pages",
+  "template.pageLibrary.count": "Showing {count} of {total} pages",
+  "template.pageLibrary.open": "Open page",
+  "template.pageLibrary.empty": "No matching pages",
+  "template.pageLibrary.noResource": "A dedicated example and guide have not been added for this page yet."
 };

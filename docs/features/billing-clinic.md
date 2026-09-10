@@ -29,7 +29,7 @@ Settings remain in **My Preferences**. Tenant-locked effective values control th
 - `BillingClinicWorkspace` is exported by `@pepbits/erp-screens`. It accepts `PreferenceHost`, an explicit `scopeKey`, a `ClinicBillingAdapter` and a `ClinicalTemplateAdapter` for patient search.
 - `ClinicBillingView`, commands, ledger entities and integer-money calculation helpers live in `@pepbits/erp-config`.
 - `createClinicBillingAdapter(request, productId)` lives in `@pepbits/erp-data`. The host request function owns authentication and structured error handling; the workspace does not know tokens or URLs.
-- Shared `RecordSectionLayout`, patient banner, cards, form controls, modal, recovery notice, pagination and semantic tables compose the screen. The billing panels are separate reusable components; they contain no transport logic. The Library's **TypeScript example** tab contains a public-import integration example.
+- Shared `RecordSectionLayout`, patient banner, cards, form controls, modal, recovery notice, pagination and semantic tables compose the screen. The billing panels are separate reusable components; they contain no transport logic. **Page Library → List of pages → TypeScript example** contains a public-import integration example.
 
 ```tsx
 import React from 'react';
@@ -80,3 +80,7 @@ On a recoverable request failure, retain the screen and retry: the same operatio
 ## Bill view and corrections — 10 September 2026
 
 **View bill** now opens a dedicated document screen. **Edit bill** supports quantity, discount, insurance authorization and note corrections on issued invoices with no payment history. A correction reason is required; the API retains the previous full snapshot. See the [workspace update and integration contract](clinical-workspace-update.md). Existing payment/refund and cancellation restrictions remain.
+
+## Catalog location — 10 September 2026
+
+Examples, demo descriptions and user/integration guides are in **Page Library → List of pages**. Working pages open directly to their forms/workspaces. See the [catalog guide](page-library-catalog.md).

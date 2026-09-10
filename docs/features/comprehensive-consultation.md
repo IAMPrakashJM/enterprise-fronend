@@ -21,7 +21,7 @@ Save draft persists through the API. Network failures retain current values and 
 
 The exported `ComprehensiveConsultationWorkspace` composes the existing clinical document workspace/editor and patient context, plus dedicated `SpecialtyPanel`, `DiagnosisPanel`, `OrdersPanel`, `ScoresPanel`, `EMPanel`, `ReportingPanel` and `ConsultationReview` components. All controls, cards, tables, tabs and dialogs come from the shared UI library. The existing preference-aware ledger handles order, diagnosis and score rows. No page-local primitive library was introduced.
 
-The Library page includes a copyable public TypeScript example. Supply memoized `createComprehensiveConsultationAdapter`, `createClinicalTemplateAdapter` and `createClinicalTriageAdapter` instances, an authenticated tenant/application/user scope key and `PreferenceHost` properties. Replace the transport/adapters to integrate another application; client scope keys are not authorization.
+**Page Library → List of pages** includes the copyable public TypeScript example. Supply memoized `createComprehensiveConsultationAdapter`, `createClinicalTemplateAdapter` and `createClinicalTriageAdapter` instances, an authenticated tenant/application/user scope key and `PreferenceHost` properties. Replace the transport/adapters to integrate another application; client scope keys are not authorization.
 
 `POST /comprehensive-consultation` accepts the shared `load` and `save` commands. Save includes patient identity, assessment, expected version, operation identity and completion intent. The server derives tenant/user identity from the session, checks the configured page permission, and currently grants demo writes to `enterprise-admin`. Registration/patient access is resolved through the existing clinical template store. Production clinical role mapping remains an integration responsibility.
 
@@ -48,3 +48,7 @@ See the [implementation evidence](../releases/unreleased/comprehensive-consultat
 ## Shared rail update — 10 September 2026
 
 The master-record `RecordSectionLayout` now owns rail, tabs and wizard navigation. One selected section appears beside the consultation snapshot. The shared document engine retains unsaved values across navigation and effective policy changes. See the [clinical workspace update](clinical-workspace-update.md). Earlier screenshots above identify the previous navigator.
+
+## Catalog location — 10 September 2026
+
+Examples, demo descriptions and user/integration guides are in **Page Library → List of pages**. Working pages open directly to their forms/workspaces. See the [catalog guide](page-library-catalog.md).

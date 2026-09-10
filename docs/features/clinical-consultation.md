@@ -57,7 +57,7 @@ flowchart LR
     Store --> CSV[Separate consultation CSV]
 ```
 
-Contracts are exported by `@pepbits/erp-config`, adapters by `@pepbits/erp-data`, and `ClinicalConsultationWorkspace` by `@pepbits/erp-screens`. The Library's **TypeScript example** shows public imports and the host properties needed to embed the page.
+Contracts are exported by `@pepbits/erp-config`, adapters by `@pepbits/erp-data`, and `ClinicalConsultationWorkspace` by `@pepbits/erp-screens`. **Page Library → List of pages → TypeScript example** shows public imports and the host properties needed to embed the page.
 
 Memoize `createClinicalConsultationAdapter(request, productId)` and `createClinicalTemplateAdapter(request, productId)` around the authenticated request function. Pass both adapters, effective host preferences/policy and a scope key containing authenticated tenant, application and user. Changing that key remounts patient state. Optional `patientId` starts with a selected patient.
 
@@ -76,3 +76,7 @@ Canonical text is under `template.consultation.*` in the shared English, Arabic,
 Implemented: compact form, API patient/encounter context and options, saved drafts, validation, immutable completion, history, retry/version handling, shared components, preferences, translations, sidebar entry and integration example.
 
 This page records clinical documentation. Prescription/order dispatch, diagnosis coding, triage-vital import, appointment booking, billing linkage, amendments, electronic signing, clinical decision support and production EHR integration are separate application work. Native-speaker/clinical acceptance and native executable testing remain pending. See the [release evidence](../releases/unreleased/clinical-consultation-2026-09-09.md).
+
+## Catalog location — 10 September 2026
+
+Examples, demo descriptions and user/integration guides are in **Page Library → List of pages**. Working pages open directly to their forms/workspaces. See the [catalog guide](page-library-catalog.md).

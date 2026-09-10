@@ -1,0 +1,6 @@
+PASS ar catalog and desktop layout
+PASS hi catalog and desktop layout
+PASS ml catalog and desktop layout
+PASS en catalog and desktop layout
+PASS comprehensive real API configuration, specialty preservation, diagnosis/order links, four order types, edit, score, E/M, full preview, retry identity, CSV save/reload/sign and immutable controls
+1/1 features suites passed

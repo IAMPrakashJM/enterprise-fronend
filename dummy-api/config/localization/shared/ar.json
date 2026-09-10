@@ -15837,6 +15837,13 @@
     "template.clinic.event.editInvoice": "تم تصحيح الفاتورة",
     "template.clinic.confirm.editInvoice": "هل تريد حفظ التصحيح؟ ستعيد واجهة API حساب الفاتورة وتحفظ المراجعة السابقة مع السبب.",
     "template.triage.snapshot": "ملخص الفرز",
-    "template.triage.remaining": "عناصر للمراجعة: {count}"
+    "template.triage.remaining": "عناصر للمراجعة: {count}",
+    "template.pageLibrary.title": "قائمة الصفحات",
+    "template.pageLibrary.help": "تصفح الصفحات المتاحة في مكتبة الصفحات. افتح صفحة للعمل أو راجع وصف العرض ومثال TypeScript ودليل التكامل هنا.",
+    "template.pageLibrary.search": "البحث عن صفحات",
+    "template.pageLibrary.count": "عرض {count} من {total} صفحة",
+    "template.pageLibrary.open": "فتح الصفحة",
+    "template.pageLibrary.empty": "لا توجد صفحات مطابقة",
+    "template.pageLibrary.noResource": "لم تتم إضافة مثال ودليل مخصصين لهذه الصفحة بعد."
   }
 }

@@ -53,3 +53,5 @@ Latest local addition: [OP Consultation](op-consultation-2026-09-09.md), not yet
 - [Billing patient card removal deployment — 10 September 2026](billing-banner-deployment-2026-09-10.md)
 
 - [Page Library navigation labels — 10 September 2026](page-library-labels-2026-09-10.md)
+
+- [Page Library catalog — 10 September 2026](page-library-catalog-2026-09-10.md)

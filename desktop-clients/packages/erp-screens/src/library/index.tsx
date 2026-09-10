@@ -9,6 +9,7 @@ import { CATALOG_GROUPS } from "./catalog";
 const Catalog = lazy(() => import("./component-catalog").then(module => ({default:module.ComponentCatalog})));
 
 import type {NavigationTarget} from '@pepbits/platform-ports';
+const PageList=lazy(()=>import("../page-library").then(m=>({default:m.PageLibraryCatalog})));
 const ClinicalTriage=lazy(()=>import('../clinical-triage/library-page').then(m=>({default:m.ClinicalTriageLibraryPage})));
 const ClinicalConsultation=lazy(()=>import('../clinical-consultation/library-page').then(m=>({default:m.ClinicalConsultationLibraryPage})));
 const ComprehensiveConsultation=lazy(()=>import('../comprehensive-consultation/library-page').then(m=>({default:m.ComprehensiveConsultationLibraryPage})));
@@ -16,6 +17,7 @@ const OPConsultation=lazy(()=>import('../op-consultation/library-page').then(m=>
 const BillingClinic=lazy(()=>import('../clinic-billing/library-page').then(m=>({default:m.BillingClinicLibraryPage})));
 const ClinicalLibrary=lazy(()=>import('../clinical-templates/library-page').then(m=>({default:m.ClinicalLibraryPage})));
 export function LibraryPage({page,target={pageId:page.id}}: {page:PageDefinition;target?:NavigationTarget}) {
+  if(page.id==='list-of-pages')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><PageList/></Suspense>;
   if(page.id==='clinical-triage')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ClinicalTriage/></Suspense>;
   if(page.id==='clinical-consultation')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ClinicalConsultation/></Suspense>;
   if(page.id==='comprehensive-consultation')return <Suspense fallback={<p role="status"><LocalizedText message="Loading…"/></p>}><ComprehensiveConsultation/></Suspense>;

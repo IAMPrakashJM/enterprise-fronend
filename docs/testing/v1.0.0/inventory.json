@@ -975,6 +975,13 @@
       "kind": "library",
       "engine": "ComprehensiveConsultationWorkspace",
       "coverage": "CC-01 through CC-05; API/unit/browser scope recorded in release evidence"
+    },
+    {
+      "id": "list-of-pages",
+      "title": "List of pages",
+      "kind": "library",
+      "engine": null,
+      "coverage": "PL-01; PL-02; PL-03"
     }
   ],
   "tests": [
@@ -982,7 +989,9 @@
     "desktop-clients/packages/erp-screens/src/library/preference-compliance.test.tsx",
     "desktop-clients/packages/erp-screens/src/clinical-templates/query.test.tsx",
     "desktop-clients/e2e/library-preferences.ts",
-    "desktop-clients/packages/erp-screens/src/templates/registry-template.test.tsx"
+    "desktop-clients/packages/erp-screens/src/templates/registry-template.test.tsx",
+    "desktop-clients/packages/erp-screens/src/page-library/catalog.test.tsx",
+    "desktop-clients/e2e/page-library.mjs"
   ],
   "staticGate": "desktop-clients/scripts/verify-library-preferences.mjs"
 }

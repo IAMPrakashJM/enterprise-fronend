@@ -35,3 +35,5 @@ Never substitute a screenshot, an empty route or a passing build for functional 
 - [Page Library CSV storage](page-templates-csv.md): API-backed query, main record and 360 data with CSV persistence.
 
 - [Billing corrections and shared clinical workspaces](clinical-workspace-update.md)
+
+- [Page Library: List of pages](page-library-catalog.md)

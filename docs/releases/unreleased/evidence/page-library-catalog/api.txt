@@ -1,0 +1,17 @@
+✔ authenticated configuration HTTP contract and conditional requests (1975.142486ms)
+✔ navigation filters restricted pages, returns stable identity and handles authorization (716.842773ms)
+✔ backend file edits change menu ordering and page translations, and overrides are isolated (638.971645ms)
+✔ rejects duplicates, invalid parents, cycles, unknown pages and malformed catalogs (479.924601ms)
+✔ documentation HTTP authorizes every view and persists scoped read state (2420.589433ms)
+✔ versioned guides, role-filtered search, explicit language fallback and invalid requests (36.550291ms)
+✔ reading state is idempotent, persistent and isolated; only explicit acknowledgment acknowledges (48.551736ms)
+✔ manifest rejects broken notices, duplicate versions and invalid tour anchors (7.565251ms)
+✔ tenant rollout refuses future snapshots and product manifests stay separate (29.693995ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2547.38006

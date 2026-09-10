@@ -88,3 +88,11 @@ Prefixes can expand for future features. Keep existing IDs stable and record cha
 | CW-03 | Edit paid/refunded/void invoice or stale/unauthorized request | Rejected server-side; protected UI |
 | CW-04 | Switch triage/consultation rail sections and locked layout | Same master-record rail; one section; values retained |
 | CW-05 | Save/reopen/complete clinical document | Existing API version, retry and immutable completion behavior retained |
+
+## Page Library catalog
+
+| ID | Flow | Expected result |
+| --- | --- | --- |
+| PL-01 | Open List of pages and search | All accessible Page Library entries in API order; no self/duplicate/unrelated entries |
+| PL-02 | Open code and guide for each page | Correct public-import example and localized guide; access revocation removes an open resource |
+| PL-03 | Open each working page | Functional workspace and patient controls remain; developer tabs/demo header moved to catalog |

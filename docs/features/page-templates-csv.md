@@ -53,3 +53,7 @@ This CSV store is intended for a **single demo API process on one host**. It rew
 The CSV and existing API-store suites cover create/read/restart, Unicode and multiline values, booleans, tenant/application isolation, duplicate identity rejection, stale versions, saved searches, related entries, retry receipts, legacy migration, external CSV reads and malformed CSV rejection.
 
 An isolated browser run used the actual API without request interception: create in Master Record - Main, inspect the CSV write, search in Worklist Query, then open 360 Data. After a real API process restart, HTTP reads confirmed the same record and empty related history. No live demo data was changed during these checks.
+
+## Catalog location — 10 September 2026
+
+Examples, demo descriptions and user/integration guides are in **Page Library → List of pages**. Working pages open directly to their forms/workspaces. See the [catalog guide](page-library-catalog.md).

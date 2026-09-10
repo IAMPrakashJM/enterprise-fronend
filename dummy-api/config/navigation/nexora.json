@@ -1494,6 +1494,11 @@
       "id": "comprehensive-consultation",
       "titleKey": "template.comprehensive.title",
       "subtitleKey": "template.comprehensive.subtitle"
+    },
+    {
+      "id": "list-of-pages",
+      "titleKey": "template.pageLibrary.title",
+      "subtitleKey": "template.pageLibrary.help"
     }
   ],
   "nodes": [
@@ -4769,7 +4774,7 @@
       "labelKey": "template.clinical.query",
       "pageId": "allyvora-patient-query",
       "icon": "BookOpen",
-      "order": 0
+      "order": 1
     },
     {
       "id": "menu.library.allyvora-patient-record",
@@ -4778,7 +4783,7 @@
       "labelKey": "template.clinical.record",
       "pageId": "allyvora-patient-record",
       "icon": "BookOpen",
-      "order": 1
+      "order": 2
     },
     {
       "id": "menu.library.allyvora-patient-360",
@@ -4787,7 +4792,7 @@
       "labelKey": "template.clinical.overview",
       "pageId": "allyvora-patient-360",
       "icon": "BookOpen",
-      "order": 2
+      "order": 3
     },
     {
       "id": "menu.library.template-group-registry",
@@ -4844,7 +4849,7 @@
       "labelKey": "template.clinic.title",
       "pageId": "billing-clinic",
       "icon": "BookOpen",
-      "order": 3
+      "order": 4
     },
     {
       "id": "menu.library.clinical-triage",
@@ -4853,7 +4858,7 @@
       "labelKey": "template.triage.title",
       "pageId": "clinical-triage",
       "icon": "BookOpen",
-      "order": 4
+      "order": 5
     },
     {
       "id": "menu.library.clinical-consultation",
@@ -4862,7 +4867,7 @@
       "labelKey": "template.consultation.title",
       "pageId": "clinical-consultation",
       "icon": "BookOpen",
-      "order": 5
+      "order": 6
     },
     {
       "id": "menu.library.op-consultation",
@@ -4871,7 +4876,7 @@
       "labelKey": "template.op.title",
       "pageId": "op-consultation",
       "icon": "BookOpen",
-      "order": 6
+      "order": 7
     },
     {
       "id": "menu.library.comprehensive-consultation",
@@ -4880,7 +4885,16 @@
       "labelKey": "template.comprehensive.title",
       "pageId": "comprehensive-consultation",
       "icon": "BookOpen",
-      "order": 7
+      "order": 8
+    },
+    {
+      "id": "menu.library.list-of-pages",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "template.pageLibrary.title",
+      "pageId": "list-of-pages",
+      "icon": "BookOpen",
+      "order": 0
     }
   ]
 }

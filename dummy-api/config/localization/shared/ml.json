@@ -15837,6 +15837,13 @@
     "template.clinic.event.editInvoice": "ബിൽ തിരുത്തി",
     "template.clinic.confirm.editInvoice": "ഈ തിരുത്തൽ സംരക്ഷിക്കണോ? API ബിൽ വീണ്ടും കണക്കാക്കുകയും കാരണത്തോടൊപ്പം മുൻ പതിപ്പ് സൂക്ഷിക്കുകയും ചെയ്യും.",
     "template.triage.snapshot": "ട്രയാജ് സംഗ്രഹം",
-    "template.triage.remaining": "പരിശോധിക്കാനുള്ള ഇനങ്ങൾ: {count}"
+    "template.triage.remaining": "പരിശോധിക്കാനുള്ള ഇനങ്ങൾ: {count}",
+    "template.pageLibrary.title": "പേജുകളുടെ പട്ടിക",
+    "template.pageLibrary.help": "പേജ് ലൈബ്രറിയിലെ ലഭ്യമായ പേജുകൾ കാണുക. പ്രവർത്തിക്കാൻ പേജ് തുറക്കുക, അല്ലെങ്കിൽ അതിന്റെ ഡെമോ വിവരണം, TypeScript ഉദാഹരണം, ഇന്റഗ്രേഷൻ ഗൈഡ് എന്നിവ ഇവിടെ വായിക്കുക.",
+    "template.pageLibrary.search": "പേജുകൾ തിരയുക",
+    "template.pageLibrary.count": "{total} പേജുകളിൽ {count} കാണിക്കുന്നു",
+    "template.pageLibrary.open": "പേജ് തുറക്കുക",
+    "template.pageLibrary.empty": "പൊരുത്തപ്പെടുന്ന പേജുകളില്ല",
+    "template.pageLibrary.noResource": "ഈ പേജിന് പ്രത്യേക ഉദാഹരണവും ഗൈഡും ഇതുവരെ ചേർത്തിട്ടില്ല."
   }
 }
