@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: release identity, authenticated comprehensive API, 17 specialties, 8 catalog services, 5 score instruments, 5 service code systems, 9 sections, full preview, visible actions and no page errors; no clinical writes
+PASS https://desktop.front-design.pepbits.com: release identity, authenticated comprehensive API, 17 specialties, 8 catalog services, 5 score instruments, 5 service code systems, 9 sections, full preview, visible actions and no page errors; no clinical writes

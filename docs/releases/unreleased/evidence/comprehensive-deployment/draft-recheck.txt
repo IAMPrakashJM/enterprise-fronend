@@ -1,0 +1,16 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run --run packages/erp-screens/src/drafts/use-shared-draft.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/drafts/use-shared-draft.test.tsx (4 tests) 1806ms
+   ✓ failed draft write retains the exact payload and operation identity on retry  818ms
+   ✓ completion waits for in-flight autosave before discarding its acknowledged revision  810ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  02:39:05
+   Duration  4.49s (transform 1.88s, setup 998ms, collect 876ms, tests 1.81s, environment 452ms, prepare 91ms)
+

@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest deployment: [Comprehensive Consultation — both demo sites, 10 September 2026](comprehensive-deployment-2026-09-10.md). This supersedes the local-only implementation status below.
+
 Latest local implementation: [Comprehensive Consultation — 10 September 2026](comprehensive-consultation-2026-09-10.md), not deployed.
 
 Latest delivery: [OP Consultation deployed to both demo sites — 10 September 2026](op-consultation-deployment-2026-09-10.md).

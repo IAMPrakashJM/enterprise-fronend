@@ -1,0 +1,18 @@
+{
+  "commit": "33af6ebc88dcdb67ac23cc195dce62959bd682c1",
+  "release": "20260910023723076-286aac07",
+  "scope": "Public Chromium browser shells on both demo hosts, read-only clinical checks. Prepared runtime source equals committed runtime; draft test synchronization changed after preparation.",
+  "artifactSha256": {
+    "activation.txt": "5f32fe88bd32d1dcd0b71e7e7e06dceb278db614ffe2f54d8e491f9bec126867",
+    "api.txt": "a6ec12e045696bbc74c13f558e02de3b1628fd8aed4ce6eff1a9076ac654eead",
+    "deployment-tests.txt": "4c42037fc7619eecde19b913d40822cd2df08270d25d5d1647ec7ec395661045",
+    "draft-recheck.txt": "5f32ef893162936d8211a4c35be0bd7abbd0657fdadc5fb3389f63fca4b97058",
+    "live-desktop.png": "8115f6a92fd9bd792f228bab0e94ebb0848c404fad85bd32bf59f5bb9f5716cd",
+    "live-web.png": "74cb76392cf8c31533c4a829e8393c27b048a4841f4a37946815452b87e27140",
+    "live.txt": "21ba5d2775672e92ff7ef2e18ccdcffd7a504992be1b042803ce444c2b1c3ff4",
+    "prepare.txt": "607f51dca9edc807d1b63d3a89ab850c507f5b1d898b599fc03f2b1321d1874f",
+    "registry.txt": "c8e6693d41fa69ef9758d2533298bb62a7ed47a2642b8cf121135086cb32ff81",
+    "unit-final.txt": "47281ade6ecd559d490682f5e5d78bfdc21491362f526d2787ab053bb50eef3d",
+    "unit-first.txt": "1f9cab339d9d8de82e15dc4953f150cb49af9582e6b925c3a34fb9f2ce2196ee"
+  }
+}

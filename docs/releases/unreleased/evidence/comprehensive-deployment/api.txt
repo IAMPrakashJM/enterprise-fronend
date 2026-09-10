@@ -1,0 +1,109 @@
+
+> nexora-monorepo@1.0.0 test:api
+> node --test ../dummy-api/*.test.mjs && npm run test:clinical-api
+
+✔ authenticated configuration HTTP contract and conditional requests (1180.526291ms)
+✔ navigation filters restricted pages, returns stable identity and handles authorization (388.916898ms)
+✔ backend file edits change menu ordering and page translations, and overrides are isolated (381.005529ms)
+✔ rejects duplicates, invalid parents, cycles, unknown pages and malformed catalogs (307.206805ms)
+✔ ordered stages, config snapshot, comments, requester notifications and persistence (14.702522ms)
+✔ self approval, tenant/product isolation, stale versions and changed saved records are blocked (3.916151ms)
+✔ bulk partial results, request changes, rejection, resubmission and idempotent recovery (2.972063ms)
+✔ documentation HTTP authorizes every view and persists scoped read state (1257.976709ms)
+✔ versioned guides, role-filtered search, explicit language fallback and invalid requests (15.509777ms)
+✔ reading state is idempotent, persistent and isolated; only explicit acknowledgment acknowledges (19.019598ms)
+✔ manifest rejects broken notices, duplicate versions and invalid tour anchors (1.083239ms)
+✔ tenant rollout refuses future snapshots and product manifests stay separate (10.227123ms)
+✔ center exposes metadata only and isolates tenant, owner and application (21.543524ms)
+✔ unavailable entries conceal page/record identity and cannot be opened but remain discardable (12.068616ms)
+✔ changed source versions, approval contexts and missing files have distinct statuses (9.731543ms)
+✔ stale discard cannot erase a newer revision, expiry removes drafts and pagination is bounded (47.922004ms)
+✔ a stolen opaque reference cannot open or delete another owner draft (2.057627ms)
+✔ search matches localized page titles without searching unavailable identities (1.541137ms)
+✔ mandatory exclusions are recursive and replay responses contain no secrets (30.89931ms)
+✔ policy is tenant/application scoped and ordinary users cannot override it (37.574579ms)
+✔ tightened exclusions erase existing drafts and replay copies; old windows cannot resurrect them (11.13853ms)
+✔ retention purges on read and keeps tombstones; acknowledged business records survive (8.903938ms)
+✔ disabled storage deletes all users drafts and never blocks ordinary record saves (25.116226ms)
+✔ shared import and approval drafts survive restart and isolate owner, tenant, product and record (24.637008ms)
+✔ shared draft HTTP authorization, payload restrictions and mandatory tenant policy (1232.26265ms)
+✔ preview never writes, marks all CSV duplicates and detects existing records and invalid formats (9.489848ms)
+✔ partial failures retry only failed rows and survive lost job receipts (2.738288ms)
+✔ batch progress, race duplicates, role checks and user isolation (2.720768ms)
+✔ every registered backend message has four complete translations (63.904937ms)
+✔ the wire envelope preserves old clients, statuses and literal user data (1.000876ms)
+✔ unknown errors and old persisted activity retain readable details (0.220014ms)
+✔ monitoring HTTP permits collection but restricts management and rejects tenant spoofing (1279.997657ms)
+✔ monitoring strips sensitive payloads, deduplicates deliveries, reopens incidents and isolates tenants/products (32.191822ms)
+✔ monitoring validates page references and rate limits each authenticated user (27.029902ms)
+✔ preference HTTP rejects non-admin policy writes, locked imports and stale clients (1237.18456ms)
+✔ locks persist, reject overrides, and unlocking restores personal choices (24.505935ms)
+✔ policy and overrides isolate tenant, product and user; permission is explicit (11.907231ms)
+✔ stale policies, concurrent saves and invalid fields cannot replace current state (13.701404ms)
+✔ admin defaults apply to new users; unlocked personal choices and reset take precedence (13.433179ms)
+✔ attachments round trip and list responses omit bytes; removal and retries are atomic (4.196905ms)
+✔ comments, related records and activity are scoped; invalid or denied writes leave no event (111.620313ms)
+✔ saved records and recovery drafts survive reopening the store (4.666482ms)
+✔ record versions are shared in a tenant; drafts belong to the account (3.41149ms)
+✔ stale saves and drafts cannot overwrite another window (1.052779ms)
+✔ retrying an acknowledged operation is idempotent (1.593139ms)
+✔ discard keeps a revision tombstone so late draft writes cannot resurrect it (1.06821ms)
+✔ invalid payloads do not mutate the record (0.49642ms)
+✔ a failed disk write does not publish a saved record (3.042674ms)
+✔ create allocates an independent record and clears only the source draft (1.400465ms)
+✔ authenticated HTTP record lifecycle, isolation and conflicts (1179.007655ms)
+✔ calendar month recurrence preserves the anchor day across February (1.042809ms)
+✔ schedules persist, retry failed work, isolate owners and do not duplicate a due delivery (29.451943ms)
+✔ HTTP enforcement: origins, tenant audit authorization, schedules and AI refusals (6013.99121ms)
+✔ audit survives restart, isolates tenants, strips data and expires by retention (30.888348ms)
+✔ providers must match exact HTTPS bases; expired credentials fail closed (0.468938ms)
+✔ one user cannot exhaust another user allowance; tenant remains part of the key (2.058966ms)
+✔ modified AI clients cannot send free text, clinical data, labels or undeclared keys (0.812874ms)
+✔ encrypted credentials migrate, survive restart and reject the wrong master key (15.744299ms)
+✔ personal views persist, isolate owners, and reject stale changes (5.69902ms)
+✔ view layouts reject malformed values (0.429168ms)
+✔ archive reports partial failures, is idempotent and persists in tenant/product/page scope (2.483574ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 61
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9586.550531
+
+> nexora-monorepo@1.0.0 test:clinical-api
+> tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts ../dummy-api/clinical-template-csv.test.ts ../dummy-api/clinic-billing-store.test.ts ../dummy-api/clinical-triage-store.test.ts ../dummy-api/clinical-consultation-store.test.ts ../dummy-api/comprehensive-consultation-store.test.ts
+
+✔ prescription → order → invoice → partial payments → refund survives restart and duplicate retries (21.202124ms)
+✔ permissions, conflicts, duplicate billing, input validation and tenant isolation (12.759625ms)
+✔ void returns unpaid orders for rebilling and blocks paid invoice cancellation (11.047224ms)
+✔ consultation drafts persist, retry once, validate explicit entries, finalize immutably and isolate scope (15.138666ms)
+✔ expanded notes persist and legacy updates preserve new fields (8.839866ms)
+✔ CSV create round-trips commas quotes Unicode newlines and booleans; query and 360 read the saved record after restart (54.489618ms)
+✔ CSV changes are read on the next API operation; legacy JSON migration preserves records and leaves source intact (47.664268ms)
+✔ corrupt CSV fails closed instead of replacing saved records with seed data (5.057848ms)
+✔ CSV parser enforces quoting, row width and duplicate entity identities (0.357766ms)
+✔ new related entries and their retry receipts survive restart and appear in 360 from CSV (33.231824ms)
+✔ patient search applies combined filters, sorting and pagination (39.193509ms)
+✔ complete registration is atomic, persisted and retried idempotently (46.760432ms)
+✔ validation, duplicate identity and stale versions cannot alter records (28.255946ms)
+✔ patient mutations are tenant/application scoped and permissions are enforced (43.736939ms)
+✔ saved searches are user scoped; appointment writes are patient scoped and retry safe (50.04208ms)
+✔ eligibility reads the saved policy and rejects unknown policy identities (11.176116ms)
+✔ patient record keeps identifiers server managed and projects contact edits into search values (17.830253ms)
+✔ registry search uses whole words, phrases, exclusions and child-record values (55.677638ms)
+✔ draft persists and retries keep one identity; complete locks history and new assessments are blank (14.83133ms)
+✔ completion requires explicit safety/priority and measurements or a reason; malformed input is rejected (3.740197ms)
+✔ server roles, tenant scope, optimistic versions and corrupt CSV are enforced (3.012932ms)
+✔ comprehensive CSV persists linked records, retries once, rejects stale and signed edits, isolates tenants (16.183934ms)
+✔ reject malformed nested data, duplicate diagnoses, dangling orders and unsigned medication review (1.266532ms)
+✔ score totals distinguish zero, incomplete, NT and invalid; E/M uses median and separate bounded time (0.973516ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 654.602967
