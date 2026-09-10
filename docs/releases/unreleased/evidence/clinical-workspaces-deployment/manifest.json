@@ -1,0 +1,16 @@
+{
+  "commit": "10b1f54bf198af7a3f8e5cddcf8fd2e51144be89",
+  "release": "20260910044334283-53f49c0a",
+  "scope": "Public Chromium checks on both demo hosts: authenticated API loads, clinical rails and section switching. Live billing ledger empty; no billing or clinical mutations. View/edit saves covered by isolated implementation tests.",
+  "artifactSha256": {
+    "activate.txt": "39d7ad38c611289202d3b30ab1bdbf5ac5a7b2ed987abe842f7453cb1fc7f522",
+    "desktop-billing-clinic.png": "2ee57697290f4ec546c1fe1865a52edbf8dc2b0019581ffdabd87d4d8d013d2e",
+    "desktop-clinical-triage.png": "0587b6b6372569a03a3cc93ce1f05b3cf768bf78935e0f2c9ddfb3314e79612c",
+    "desktop-comprehensive-consultation.png": "ae6070d96eba47e9310834f252996b1de4bb92cf07dee85d18003baf87b7b51e",
+    "live.txt": "a86a05ae9ea6d3f5659e61b2b941be2427f79036cdcf6308f0eb7344bc16c181",
+    "prepare.txt": "24f3a1e12bc0b27d25bc591f18d67e410b9d0a84a0f469ad00d45142ae05a9a2",
+    "web-billing-clinic.png": "dfb369ce2aabae587f3b663c5d373044c5d8ebd2d8f27d891c59f7eece0576a9",
+    "web-clinical-triage.png": "9a0f3d594469355eab7b4604c490000f39e4c33d362b514f81c6a547d86f13ef",
+    "web-comprehensive-consultation.png": "1a19aa0637a8e4fb1cc32c2b98883fbbe4d92eb50027117ce309db1a51b49b0d"
+  }
+}

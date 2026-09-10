@@ -45,3 +45,5 @@ Latest deployment: [Expanded consultation workspace](consultation-expanded-2026-
 Latest local addition: [OP Consultation](op-consultation-2026-09-09.md), not yet deployed.
 
 - [Billing and clinical workspace update — 10 September 2026](clinical-workspaces-2026-09-10.md)
+
+- [Billing and clinical workspace deployment — 10 September 2026](clinical-workspaces-deployment-2026-09-10.md)

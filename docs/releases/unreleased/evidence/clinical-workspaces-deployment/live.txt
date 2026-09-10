@@ -1,0 +1,8 @@
+PASS https://front-design.pepbits.com billing: authenticated ledger/catalog load; 0 existing invoices; no billing mutation. Full view/edit save flow tested with isolated fixtures.
+PASS https://front-design.pepbits.com clinical-triage: authenticated API, master-record rail, 3 focused sections and shared snapshot.
+PASS https://front-design.pepbits.com comprehensive-consultation: authenticated API, master-record rail, 9 focused sections and shared snapshot.
+PASS https://front-design.pepbits.com: release identity and no page errors; no billing or clinical mutations
+PASS https://desktop.front-design.pepbits.com billing: authenticated ledger/catalog load; 0 existing invoices; no billing mutation. Full view/edit save flow tested with isolated fixtures.
+PASS https://desktop.front-design.pepbits.com clinical-triage: authenticated API, master-record rail, 3 focused sections and shared snapshot.
+PASS https://desktop.front-design.pepbits.com comprehensive-consultation: authenticated API, master-record rail, 9 focused sections and shared snapshot.
+PASS https://desktop.front-design.pepbits.com: release identity and no page errors; no billing or clinical mutations
