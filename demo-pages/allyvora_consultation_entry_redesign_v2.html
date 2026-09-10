@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AllyVORA Cura - Consultation Entry</title>
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --surface:#ffffff;
+    --surface-2:#f9fbfd;
+    --text:#152033;
+    --muted:#6b778c;
+    --line:#e5eaf1;
+    --primary:#4f46e5;
+    --primary-2:#eef2ff;
+    --success:#15803d;
+    --warning:#b45309;
+    --danger:#b91c1c;
+    --shadow:0 8px 30px rgba(31,42,68,.08);
+    --radius:16px;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+
+  button,input,select,textarea{font:inherit}
+  button{cursor:pointer}
+
+  .app{min-height:100vh;display:grid;grid-template-columns:76px 1fr}
+  .sidebar{
+    position:sticky;top:0;height:100vh;background:#111827;color:#fff;
+    padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:10px
+  }
+  .brand{
+    width:46px;height:46px;border-radius:14px;background:#fff;color:#111827;
+    display:grid;place-items:center;font-weight:800;margin-bottom:8px
+  }
+  .navbtn{
+    width:46px;height:46px;border:0;border-radius:12px;background:transparent;color:#d1d5db;
+    display:grid;place-items:center;font-size:20px
+  }
+  .navbtn.active,.navbtn:hover{background:#ffffff18;color:#fff}
+
+  .main{min-width:0}
+  .topbar{
+    height:66px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;position:sticky;top:0;z-index:20
+  }
+  .title-wrap{display:flex;align-items:center;gap:16px}
+  .module-pill{
+    border:1px solid var(--line);background:var(--surface);padding:9px 12px;border-radius:10px;
+    color:#344054
+  }
+  .page-title{font-size:19px;font-weight:750}
+  .top-actions{display:flex;gap:10px;align-items:center}
+  .top-actions select,.search{
+    border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 11px;color:#344054
+  }
+
+  .patient-banner{
+    margin:18px 20px 0;background:linear-gradient(120deg,#ffffff,#f3f6ff);
+    border:1px solid #dde3f0;border-radius:18px;padding:16px 18px;box-shadow:var(--shadow);
+    display:grid;grid-template-columns:minmax(260px,1.4fr) repeat(4,minmax(110px,.5fr)) auto;gap:14px;align-items:center
+  }
+  .patient-main{display:flex;align-items:center;gap:12px}
+  .avatar{
+    width:48px;height:48px;border-radius:14px;background:var(--primary-2);color:var(--primary);
+    display:grid;place-items:center;font-weight:800;font-size:18px
+  }
+  .patient-name{font-weight:800;font-size:17px}
+  .small{font-size:12px;color:var(--muted);margin-top:3px}
+  .metric .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .metric .value{font-weight:700;margin-top:4px;font-size:13px}
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:700
+  }
+  .badge.red{background:#fef2f2;color:var(--danger)}
+  .badge.green{background:#f0fdf4;color:var(--success)}
+  .badge.amber{background:#fffbeb;color:var(--warning)}
+
+  .toolbar{
+    margin:14px 20px 0;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:12px;display:flex;gap:10px;align-items:end;flex-wrap:wrap
+  }
+  .field.compact{min-width:170px;flex:1}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:650}
+  .control{
+    width:100%;border:1px solid #d8dee9;background:#fff;border-radius:10px;padding:10px 11px;outline:none
+  }
+  .control:focus{border-color:#a5b4fc;box-shadow:0 0 0 3px #eef2ff}
+  textarea.control{min-height:92px;resize:vertical}
+
+  .layout{
+    margin:14px 20px 80px;
+    display:grid;grid-template-columns:215px minmax(0,1fr) 292px;gap:14px;align-items:start
+  }
+
+  .section-nav,.side-card,.form-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 4px 18px rgba(31,42,68,.04)
+  }
+  .section-nav{position:sticky;top:84px;padding:10px}
+  .section-nav .nav-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:8px 10px}
+  .section-link{
+    width:100%;border:0;background:transparent;text-align:left;padding:10px 11px;border-radius:10px;
+    color:#475467;font-weight:650;font-size:13px;display:flex;justify-content:space-between;align-items:center
+  }
+  .section-link:hover,.section-link.active{background:var(--primary-2);color:var(--primary)}
+  .dot{width:7px;height:7px;border-radius:50%;background:#cbd5e1}
+  .section-link.done .dot{background:#22c55e}
+
+  .form-card{padding:18px;margin-bottom:14px;scroll-margin-top:88px}
+  .card-head{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:14px}
+  .card-title{font-size:15px;font-weight:800}
+  .card-sub{font-size:12px;color:var(--muted);margin-top:4px}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+  .span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-6{grid-column:span 6}
+  .span-4{grid-column:span 4}.span-3{grid-column:span 3}
+
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{
+    border:1px solid var(--line);background:#fff;color:#475467;border-radius:999px;padding:7px 10px;font-size:12px
+  }
+  .chip.selected{background:var(--primary-2);border-color:#c7d2fe;color:var(--primary);font-weight:700}
+
+  .inline-note{
+    background:#f8fafc;border:1px dashed #cbd5e1;padding:10px 11px;border-radius:10px;font-size:12px;color:#475467
+  }
+
+  .right{position:sticky;top:84px;display:flex;flex-direction:column;gap:12px}
+  .side-card{padding:14px}
+  .side-title{font-weight:800;font-size:13px;margin-bottom:10px}
+  .kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #f0f2f5;font-size:12px}
+  .kv:last-child{border-bottom:0}
+  .kv span:first-child{color:var(--muted)}
+  .alert{padding:10px;border-radius:10px;font-size:12px;margin-top:8px}
+  .alert.red{background:#fef2f2;color:#991b1b}
+  .alert.amber{background:#fffbeb;color:#92400e}
+
+  .order-row{
+    display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f2f5;font-size:12px
+  }
+  .order-row:last-child{border-bottom:0}
+
+  .btn{
+    border:0;border-radius:10px;padding:10px 13px;font-weight:750
+  }
+  .btn.primary{background:var(--primary);color:#fff}
+  .btn.soft{background:var(--primary-2);color:var(--primary)}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:#344054}
+  .btn.danger{background:#fef2f2;color:#b91c1c}
+
+  .savebar{
+    position:fixed;bottom:0;left:76px;right:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);padding:11px 20px;display:flex;justify-content:space-between;align-items:center;z-index:30
+  }
+  .save-status{font-size:12px;color:var(--muted)}
+  .save-actions{display:flex;gap:8px}
+
+  .score{
+    font-size:28px;font-weight:850;color:var(--primary)
+  }
+  .progress{height:8px;background:#eef2f6;border-radius:999px;overflow:hidden;margin:8px 0}
+  .progress > span{display:block;height:100%;width:72%;background:var(--primary)}
+
+  .hide{display:none !important}
+
+
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(15,23,42,.46);backdrop-filter:blur(3px);
+    display:none;align-items:center;justify-content:center;z-index:100;padding:18px
+  }
+  .modal-backdrop.show{display:flex}
+  .modal{
+    width:min(720px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;
+    border:1px solid var(--line);box-shadow:0 28px 90px rgba(15,23,42,.24)
+  }
+  .modal-head{
+    padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center
+  }
+  .modal-title{font-size:17px;font-weight:850}
+  .modal-body{padding:18px 20px}
+  .modal-footer{
+    padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px
+  }
+  .icon-close{
+    border:0;background:#f8fafc;width:34px;height:34px;border-radius:9px;font-size:18px
+  }
+  .order-summary{
+    margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fbfcfe
+  }
+
+  @media (max-width:1200px){
+    .layout{grid-template-columns:190px minmax(0,1fr)}
+    .right{display:none}
+    .patient-banner{grid-template-columns:1.6fr repeat(3,.7fr)}
+    .patient-banner .metric:nth-of-type(4){display:none}
+  }
+  @media (max-width:850px){
+    .app{grid-template-columns:1fr}
+    .sidebar{display:none}
+    .topbar{padding:0 12px}
+    .patient-banner,.toolbar,.layout{margin-left:10px;margin-right:10px}
+    .patient-banner{grid-template-columns:1fr 1fr}
+    .layout{grid-template-columns:1fr}
+    .section-nav{position:static;display:flex;overflow:auto;gap:6px}
+    .section-nav .nav-title{display:none}
+    .section-link{white-space:nowrap;width:auto}
+    .section-link .dot{display:none}
+    .savebar{left:0}
+    .span-8,.span-6,.span-4,.span-3{grid-column:span 12}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" aria-label="Primary navigation">
+    <div class="brand">AV</div>
+    <button class="navbtn">⌂</button>
+    <button class="navbtn active">✚</button>
+    <button class="navbtn">◫</button>
+    <button class="navbtn">⌕</button>
+    <button class="navbtn">☷</button>
+    <div style="flex:1"></div>
+    <button class="navbtn">⚙</button>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="title-wrap">
+        <button class="module-pill">Clinical ▾</button>
+        <div>
+          <div class="page-title">Consultation Entry</div>
+          <div class="small">Encounter #OP-2026-0910-00418</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <input class="search" placeholder="Search patient / encounter" />
+        <select><option>AllyVORA Medical Center</option></select>
+        <select><option>Consultant</option></select>
+        <button class="btn ghost">Dr. Mathew ▾</button>
+      </div>
+    </header>
+
+    <section class="patient-banner">
+      <div class="patient-main">
+        <div class="avatar">AM</div>
+        <div>
+          <div class="patient-name">Amina Mohammed <span class="badge green">OPD</span></div>
+          <div class="small">MRN AV-100245 · Female · 36 years · DOB 12 Feb 1990</div>
+          <div class="small">Encounter started 05:28 AM · General Medicine · Room 05</div>
+        </div>
+      </div>
+      <div class="metric"><div class="label">Allergies</div><div class="value"><span class="badge red">Penicillin</span></div></div>
+      <div class="metric"><div class="label">Last BP</div><div class="value">128/82 mmHg</div></div>
+      <div class="metric"><div class="label">Temperature</div><div class="value">37.2 °C</div></div>
+      <div class="metric"><div class="label">Pain</div><div class="value">3 / 10</div></div>
+      <button class="btn soft" onclick="togglePatientSummary()">Patient Summary</button>
+    </section>
+
+    <section class="toolbar">
+      <div class="field compact">
+        <label>Consultation Type</label>
+        <select class="control" id="consultationType">
+          <option>General Consultation</option>
+          <option>Specialty Consultation</option>
+          <option>Initial Assessment</option>
+          <option>Follow-up Consultation</option>
+          <option>Teleconsultation</option>
+          <option>Second Opinion</option>
+          <option>Chronic Disease Review</option>
+        </select>
+      </div>
+      <div class="field compact">
+        <label>Specialty Template</label>
+        <select class="control" id="specialty">
+          <option>General Medicine</option>
+          <option>Cardiology</option>
+          <option>Orthopedics</option>
+          <option>Pediatrics</option>
+          <option>ENT</option>
+        </select>
+      </div>
+      <div class="field compact">
+        <label>Complaint / Condition Template</label>
+        <select class="control" id="complaintTemplate">
+          <option>General / Free Entry</option>
+          <option>Fever</option>
+          <option>Chest Pain</option>
+          <option>Abdominal Pain</option>
+          <option>Headache</option>
+        </select>
+      </div>
+      <div class="field compact">
+        <label>Patient Context</label>
+        <select class="control">
+          <option>Standard Adult</option>
+          <option>Pediatric</option>
+          <option>Geriatric</option>
+          <option>Pregnancy</option>
+          <option>Chronic / High Risk</option>
+        </select>
+      </div>
+      <button class="btn primary" onclick="applyTemplate()">Apply</button>
+    </section>
+
+    <div class="layout">
+      <nav class="section-nav" id="sectionNav">
+        <div class="nav-title">Consultation</div>
+        <button class="section-link active" data-target="complaint">Chief Complaint <span class="dot"></span></button>
+        <button class="section-link" data-target="hpi">History of Present Illness <span class="dot"></span></button>
+        <button class="section-link" data-target="ros">Review of Systems <span class="dot"></span></button>
+        <button class="section-link" data-target="exam">Examination <span class="dot"></span></button>
+        <button class="section-link" data-target="diagnosis">Diagnosis <span class="dot"></span></button>
+        <button class="section-link" data-target="plan">Treatment Plan <span class="dot"></span></button>
+        <button class="section-link" data-target="followup">Education & Follow-up <span class="dot"></span></button>
+      </nav>
+
+      <section>
+        <article class="form-card" id="complaint">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Chief Complaint</div>
+              <div class="card-sub">Capture the patient's primary reason for today's consultation.</div>
+            </div>
+            <button class="btn ghost">🎙 Dictate</button>
+          </div>
+          <div class="grid">
+            <div class="field span-8">
+              <label>Chief Complaint</label>
+              <input class="control completion" value="Fever and generalized body ache" />
+            </div>
+            <div class="field span-4">
+              <label>Duration</label>
+              <div style="display:flex;gap:8px">
+                <input class="control" value="2" style="width:38%" />
+                <select class="control"><option>Days</option><option>Hours</option><option>Weeks</option></select>
+              </div>
+            </div>
+            <div class="field span-12">
+              <label>Associated complaints</label>
+              <div class="chips">
+                <button class="chip selected">Fatigue</button>
+                <button class="chip selected">Myalgia</button>
+                <button class="chip">Cough</button>
+                <button class="chip">Sore throat</button>
+                <button class="chip">Headache</button>
+                <button class="chip">+ Add</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="form-card" id="hpi">
+          <div class="card-head">
+            <div>
+              <div class="card-title">History of Present Illness</div>
+              <div class="card-sub">Structured HPI with optional narrative. Show only fields relevant to the selected condition.</div>
+            </div>
+            <button class="btn soft">✨ Assist</button>
+          </div>
+          <div class="grid">
+            <div class="field span-3"><label>Onset</label><select class="control"><option>Acute</option><option>Gradual</option></select></div>
+            <div class="field span-3"><label>Course</label><select class="control"><option>Intermittent</option><option>Continuous</option><option>Progressive</option></select></div>
+            <div class="field span-3"><label>Severity</label><select class="control"><option>Mild</option><option>Moderate</option><option>Severe</option></select></div>
+            <div class="field span-3"><label>Prior Episodes</label><select class="control"><option>No</option><option>Yes</option></select></div>
+            <div class="field span-6"><label>Aggravating Factors</label><input class="control" placeholder="e.g., activity, meals, movement" /></div>
+            <div class="field span-6"><label>Relieving Factors</label><input class="control" placeholder="e.g., rest, medication" /></div>
+            <div class="field span-12">
+              <label>Clinical Narrative</label>
+              <textarea class="control completion" placeholder="Patient reports fever for 2 days...">Patient reports intermittent fever with generalized body ache and fatigue for two days. No shortness of breath, chest pain, vomiting or altered sensorium.</textarea>
+            </div>
+          </div>
+        </article>
+
+        <article class="form-card" id="ros">
+          <div class="card-head">
+            <div><div class="card-title">Review of Systems</div><div class="card-sub">Use quick negatives; expand only abnormal systems.</div></div>
+            <button class="btn ghost" onclick="markAllNormal()">Mark reviewed / normal</button>
+          </div>
+          <div class="grid" id="rosGrid">
+            <div class="field span-4"><label>Constitutional</label><select class="control"><option>Fever, fatigue</option><option>Normal / Negative</option></select></div>
+            <div class="field span-4"><label>Cardiovascular</label><select class="control"><option>Normal / Negative</option><option>Abnormal</option></select></div>
+            <div class="field span-4"><label>Respiratory</label><select class="control"><option>Normal / Negative</option><option>Abnormal</option></select></div>
+            <div class="field span-4"><label>Gastrointestinal</label><select class="control"><option>Normal / Negative</option><option>Abnormal</option></select></div>
+            <div class="field span-4"><label>Neurologic</label><select class="control"><option>Normal / Negative</option><option>Abnormal</option></select></div>
+            <div class="field span-4"><label>Musculoskeletal</label><select class="control"><option>Myalgia</option><option>Normal / Negative</option></select></div>
+          </div>
+        </article>
+
+        <article class="form-card" id="exam">
+          <div class="card-head">
+            <div><div class="card-title">Physical Examination</div><div class="card-sub">Vitals are pulled from triage; record exam findings without duplicating data.</div></div>
+            <span class="badge green">Vitals synced</span>
+          </div>
+          <div class="grid">
+            <div class="field span-4"><label>General Appearance</label><select class="control"><option>Comfortable, alert</option><option>Ill-looking</option><option>Distressed</option></select></div>
+            <div class="field span-4"><label>Hydration</label><select class="control"><option>Adequate</option><option>Mild dehydration</option><option>Dehydrated</option></select></div>
+            <div class="field span-4"><label>Consciousness</label><select class="control"><option>Alert & oriented</option><option>Altered</option></select></div>
+            <div class="field span-6"><label>Cardiovascular</label><input class="control" value="S1 S2 normal, no murmur" /></div>
+            <div class="field span-6"><label>Respiratory</label><input class="control" value="Bilateral air entry equal, no added sounds" /></div>
+            <div class="field span-6"><label>Abdomen</label><input class="control" value="Soft, non-tender" /></div>
+            <div class="field span-6"><label>CNS</label><input class="control" value="No focal neurological deficit" /></div>
+            <div class="field span-12"><label>Additional Findings</label><textarea class="control"></textarea></div>
+          </div>
+        </article>
+
+        <article class="form-card" id="diagnosis">
+          <div class="card-head">
+            <div><div class="card-title">Assessment, Diagnosis & Clinical Impression</div><div class="card-sub">Separate confirmed diagnoses from differential diagnoses.</div></div>
+            <button class="btn soft">+ Add Diagnosis</button>
+          </div>
+          <div class="grid">
+            <div class="field span-6"><label>Primary Diagnosis</label><input class="control completion" value="Acute febrile illness" /></div>
+            <div class="field span-3"><label>Code System</label><select class="control"><option>ICD-10</option><option>SNOMED CT</option></select></div>
+            <div class="field span-3"><label>Code</label><input class="control" value="R50.9" /></div>
+            <div class="field span-12"><label>Clinical Impression</label><textarea class="control completion">Likely uncomplicated viral febrile illness. No current red-flag features.</textarea></div>
+            <div class="field span-12"><label>Differential Diagnoses</label><div class="chips"><span class="chip selected">Viral URI</span><span class="chip">Influenza</span><span class="chip">COVID-19</span><span class="chip">+ Add differential</span></div></div>
+          </div>
+        </article>
+
+        <article class="form-card" id="plan">
+          <div class="card-head">
+            <div><div class="card-title">Treatment Plan</div><div class="card-sub">Keep orders and clinical reasoning together, while prescriptions remain structured.</div></div>
+          </div>
+          <div class="grid">
+            <div class="field span-12">
+              <label>Plan Summary</label>
+              <textarea class="control completion">Supportive treatment, hydration, symptomatic medication, and review if persistent fever or any red-flag symptoms develop.</textarea>
+            </div>
+            <div class="field span-4"><button class="btn soft" style="width:100%" onclick="openOrderModal('medication')">💊 Add Medication</button></div>
+            <div class="field span-4"><button class="btn soft" style="width:100%" onclick="openOrderModal('lab')">🧪 Add Lab Order</button></div>
+            <div class="field span-4"><button class="btn soft" style="width:100%" onclick="openOrderModal('imaging')">◉ Add Imaging / Procedure</button></div>
+            <div class="field span-12">
+              <div class="inline-note"><strong>Safety check:</strong> Penicillin allergy is active. Medication ordering should trigger allergy and interaction checking before signing.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="form-card" id="followup">
+          <div class="card-head">
+            <div><div class="card-title">Patient Education, Follow-up & Return Precautions</div><div class="card-sub">One clear section for advice, planned review, and urgent return instructions.</div></div>
+          </div>
+          <div class="grid">
+            <div class="field span-8"><label>Patient Education / Advice</label><textarea class="control completion">Maintain hydration, rest, monitor temperature, and take medications as prescribed.</textarea></div>
+            <div class="field span-4">
+              <label>Follow-up</label>
+              <select class="control"><option>As needed</option><option>24 hours</option><option>48 hours</option><option>3 days</option><option>1 week</option></select>
+              <label style="margin-top:10px">Follow-up Mode</label>
+              <select class="control"><option>Clinic</option><option>Teleconsultation</option><option>Phone</option></select>
+            </div>
+            <div class="field span-12"><label>Return Precautions / Red Flags</label><textarea class="control">Seek urgent care for breathing difficulty, chest pain, persistent vomiting, confusion, severe weakness, dehydration, or worsening symptoms.</textarea></div>
+          </div>
+        </article>
+      </section>
+
+      <aside class="right" id="patientSummary">
+        <div class="side-card">
+          <div class="side-title">Clinical Snapshot</div>
+          <div class="kv"><span>Encounter</span><strong>OPD</strong></div>
+          <div class="kv"><span>Last visit</span><strong>18 Aug 2026</strong></div>
+          <div class="kv"><span>Active problems</span><strong>2</strong></div>
+          <div class="kv"><span>Current medications</span><strong>1</strong></div>
+          <div class="alert red"><strong>Allergy:</strong> Penicillin — rash</div>
+          <div class="alert amber"><strong>Clinical flag:</strong> Review if fever persists beyond 72 hours.</div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title">Today’s Orders</div>
+          <div id="orderBasket">
+            <div class="order-row">
+              <div><strong>Paracetamol 500 mg</strong><div class="small">Medication · PO · PRN</div></div>
+              <span class="badge green">Draft</span>
+            </div>
+            <div class="order-row">
+              <div><strong>CBC</strong><div class="small">Laboratory</div></div>
+              <span class="badge green">Draft</span>
+            </div>
+          </div>
+          <button class="btn ghost" style="width:100%;margin-top:10px" onclick="scrollToPlan()">Open Order Basket</button>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title">Documentation Completeness</div>
+          <div class="score" id="score">72%</div>
+          <div class="progress"><span id="progressBar"></span></div>
+          <div class="small">Complete the clinically relevant sections before signing. Avoid forcing irrelevant fields.</div>
+        </div>
+      </aside>
+    </div>
+
+
+    <div class="modal-backdrop" id="orderModal" onclick="backdropClose(event)">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+        <div class="modal-head">
+          <div>
+            <div class="modal-title" id="orderModalTitle">Add Order</div>
+            <div class="small" id="orderModalSub">Create a consultation order</div>
+          </div>
+          <button class="icon-close" onclick="closeOrderModal()" aria-label="Close">×</button>
+        </div>
+
+        <div class="modal-body">
+          <div id="medicationForm" class="order-form hide">
+            <div class="grid">
+              <div class="field span-8">
+                <label>Medication</label>
+                <input class="control" id="medName" list="medications" placeholder="Search medication" />
+                <datalist id="medications">
+                  <option value="Paracetamol 500 mg">
+                  <option value="Ibuprofen 400 mg">
+                  <option value="Cetirizine 10 mg">
+                  <option value="Omeprazole 20 mg">
+                  <option value="Azithromycin 500 mg">
+                </datalist>
+              </div>
+              <div class="field span-4"><label>Route</label><select class="control" id="medRoute"><option>PO</option><option>IV</option><option>IM</option><option>SC</option><option>Topical</option><option>Inhalation</option></select></div>
+              <div class="field span-3"><label>Dose</label><input class="control" id="medDose" placeholder="1 tablet" /></div>
+              <div class="field span-3"><label>Frequency</label><select class="control" id="medFreq"><option>Once</option><option>OD</option><option>BD</option><option>TDS</option><option>QID</option><option>PRN</option></select></div>
+              <div class="field span-3"><label>Duration</label><input class="control" id="medDuration" placeholder="3 days" /></div>
+              <div class="field span-3"><label>Timing</label><select class="control" id="medTiming"><option>After food</option><option>Before food</option><option>With food</option><option>Any time</option></select></div>
+              <div class="field span-12"><label>Instructions</label><textarea class="control" id="medInstructions" placeholder="Additional prescription instructions"></textarea></div>
+            </div>
+            <div class="alert red"><strong>Allergy check:</strong> Penicillin allergy is active. Final prescribing should validate allergy and drug interactions.</div>
+          </div>
+
+          <div id="labForm" class="order-form hide">
+            <div class="grid">
+              <div class="field span-8">
+                <label>Laboratory Test</label>
+                <input class="control" id="labName" list="labs" placeholder="Search lab test" />
+                <datalist id="labs">
+                  <option value="Complete Blood Count (CBC)">
+                  <option value="C-Reactive Protein (CRP)">
+                  <option value="Renal Function Test">
+                  <option value="Liver Function Test">
+                  <option value="HbA1c">
+                  <option value="Urine Routine">
+                </datalist>
+              </div>
+              <div class="field span-4"><label>Priority</label><select class="control" id="labPriority"><option>Routine</option><option>Urgent</option><option>STAT</option></select></div>
+              <div class="field span-6"><label>Specimen</label><select class="control" id="labSpecimen"><option>Auto / Test default</option><option>Blood</option><option>Urine</option><option>Swab</option><option>Stool</option><option>Other</option></select></div>
+              <div class="field span-6"><label>Collection</label><select class="control" id="labCollection"><option>Collect now</option><option>Patient to visit lab</option><option>Future date</option></select></div>
+              <div class="field span-12"><label>Clinical Notes / Indication</label><textarea class="control" id="labNotes" placeholder="Reason for ordering"></textarea></div>
+            </div>
+          </div>
+
+          <div id="imagingForm" class="order-form hide">
+            <div class="grid">
+              <div class="field span-4"><label>Order Type</label><select class="control" id="imgType"><option>Imaging</option><option>Procedure</option></select></div>
+              <div class="field span-8">
+                <label>Study / Procedure</label>
+                <input class="control" id="imgName" list="imagingList" placeholder="Search imaging or procedure" />
+                <datalist id="imagingList">
+                  <option value="Chest X-Ray PA">
+                  <option value="Ultrasound Abdomen">
+                  <option value="CT Brain">
+                  <option value="MRI Knee">
+                  <option value="ECG">
+                  <option value="Nebulization">
+                </datalist>
+              </div>
+              <div class="field span-4"><label>Priority</label><select class="control" id="imgPriority"><option>Routine</option><option>Urgent</option><option>STAT</option></select></div>
+              <div class="field span-4"><label>Laterality</label><select class="control" id="imgLaterality"><option>Not applicable</option><option>Right</option><option>Left</option><option>Bilateral</option></select></div>
+              <div class="field span-4"><label>Contrast</label><select class="control" id="imgContrast"><option>Not applicable</option><option>No contrast</option><option>With contrast</option><option>With & without contrast</option></select></div>
+              <div class="field span-12"><label>Clinical Indication / Notes</label><textarea class="control" id="imgNotes" placeholder="Reason for study or procedure"></textarea></div>
+            </div>
+          </div>
+
+          <div class="order-summary">
+            <strong>Draft order</strong>
+            <div class="small">The item will be added to Today’s Orders. In production, this can call Pharmacy/LIS/RIS/Procedure APIs after validation and signing.</div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn ghost" onclick="closeOrderModal()">Cancel</button>
+          <button class="btn primary" onclick="addOrder()">Add to Orders</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="savebar">
+      <div>
+        <div class="save-status">✓ Draft saved locally · Last save just now</div>
+        <div class="small">Template: General Medicine · Version 3.4</div>
+      </div>
+      <div class="save-actions">
+        <button class="btn ghost">Save Draft</button>
+        <button class="btn ghost">Preview Note</button>
+        <button class="btn primary">Sign & Complete</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  document.querySelectorAll('.section-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.section-link').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  document.querySelectorAll('.chip').forEach(chip => {
+    if (chip.tagName === 'BUTTON') {
+      chip.addEventListener('click', () => chip.classList.toggle('selected'));
+    }
+  });
+
+  function applyTemplate(){
+    const type = document.getElementById('consultationType').value;
+    const specialty = document.getElementById('specialty').value;
+    const complaint = document.getElementById('complaintTemplate').value;
+    alert(`Applied: ${type} / ${specialty} / ${complaint}\n\nIn production this resolves the configured section/field rules for the tenant, branch, specialty, role, patient context and encounter.`);
+  }
+
+  function markAllNormal(){
+    document.querySelectorAll('#rosGrid select').forEach(s => {
+      const normal = Array.from(s.options).find(o => o.text.includes('Normal'));
+      if(normal) s.value = normal.value;
+    });
+  }
+
+  function togglePatientSummary(){
+    document.getElementById('patientSummary').classList.toggle('hide');
+  }
+
+  function calculateCompletion(){
+    const fields = Array.from(document.querySelectorAll('.completion'));
+    const done = fields.filter(x => String(x.value || '').trim().length > 0).length;
+    const pct = Math.round((done / Math.max(fields.length,1))*100);
+    document.getElementById('score').textContent = pct + '%';
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+  document.querySelectorAll('.completion').forEach(x => x.addEventListener('input', calculateCompletion));
+  calculateCompletion();
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        document.querySelectorAll('.section-link').forEach(x => x.classList.remove('active'));
+        const btn = document.querySelector(`.section-link[data-target="${entry.target.id}"]`);
+        if(btn) btn.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-20% 0px -65% 0px'});
+  document.querySelectorAll('.form-card').forEach(c => observer.observe(c));
+
+  let currentOrderType = null;
+
+  function openOrderModal(type){
+    currentOrderType = type;
+    document.querySelectorAll('.order-form').forEach(x => x.classList.add('hide'));
+
+    const title = document.getElementById('orderModalTitle');
+    const sub = document.getElementById('orderModalSub');
+
+    if(type === 'medication'){
+      title.textContent = '💊 Add Medication';
+      sub.textContent = 'Create a medication prescription order';
+      document.getElementById('medicationForm').classList.remove('hide');
+      setTimeout(() => document.getElementById('medName').focus(), 50);
+    } else if(type === 'lab'){
+      title.textContent = '🧪 Add Lab Order';
+      sub.textContent = 'Create a laboratory investigation order';
+      document.getElementById('labForm').classList.remove('hide');
+      setTimeout(() => document.getElementById('labName').focus(), 50);
+    } else {
+      title.textContent = '◉ Add Imaging / Procedure';
+      sub.textContent = 'Create a radiology, diagnostic, or procedure order';
+      document.getElementById('imagingForm').classList.remove('hide');
+      setTimeout(() => document.getElementById('imgName').focus(), 50);
+    }
+
+    document.getElementById('orderModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOrderModal(){
+    document.getElementById('orderModal').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  function backdropClose(event){
+    if(event.target.id === 'orderModal') closeOrderModal();
+  }
+
+  function escapeHtml(value){
+    return String(value || '').replace(/[&<>"']/g, ch => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+    })[ch]);
+  }
+
+  function addOrder(){
+    let name = '';
+    let details = '';
+    let kind = '';
+
+    if(currentOrderType === 'medication'){
+      name = document.getElementById('medName').value.trim();
+      if(!name){ alert('Please enter a medication.'); return; }
+      const dose = document.getElementById('medDose').value.trim();
+      const route = document.getElementById('medRoute').value;
+      const freq = document.getElementById('medFreq').value;
+      const duration = document.getElementById('medDuration').value.trim();
+      details = ['Medication', dose, route, freq, duration].filter(Boolean).join(' · ');
+      kind = 'medication';
+    }
+
+    if(currentOrderType === 'lab'){
+      name = document.getElementById('labName').value.trim();
+      if(!name){ alert('Please enter a laboratory test.'); return; }
+      const priority = document.getElementById('labPriority').value;
+      const specimen = document.getElementById('labSpecimen').value;
+      details = ['Laboratory', priority, specimen !== 'Auto / Test default' ? specimen : ''].filter(Boolean).join(' · ');
+      kind = 'lab';
+    }
+
+    if(currentOrderType === 'imaging'){
+      name = document.getElementById('imgName').value.trim();
+      if(!name){ alert('Please enter an imaging study or procedure.'); return; }
+      const type = document.getElementById('imgType').value;
+      const priority = document.getElementById('imgPriority').value;
+      const laterality = document.getElementById('imgLaterality').value;
+      details = [type, priority, laterality !== 'Not applicable' ? laterality : ''].filter(Boolean).join(' · ');
+      kind = 'imaging';
+    }
+
+    const basket = document.getElementById('orderBasket');
+    const row = document.createElement('div');
+    row.className = 'order-row';
+    row.dataset.orderType = kind;
+    row.innerHTML = `
+      <div>
+        <strong>${escapeHtml(name)}</strong>
+        <div class="small">${escapeHtml(details)}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="badge green">Draft</span>
+        <button class="icon-close" style="width:28px;height:28px;font-size:14px" title="Remove" onclick="this.closest('.order-row').remove()">×</button>
+      </div>`;
+    basket.appendChild(row);
+
+    clearOrderForm(currentOrderType);
+    closeOrderModal();
+  }
+
+  function clearOrderForm(type){
+    if(type === 'medication'){
+      ['medName','medDose','medDuration','medInstructions'].forEach(id => document.getElementById(id).value = '');
+    } else if(type === 'lab'){
+      ['labName','labNotes'].forEach(id => document.getElementById(id).value = '');
+    } else if(type === 'imaging'){
+      ['imgName','imgNotes'].forEach(id => document.getElementById(id).value = '');
+    }
+  }
+
+  function scrollToPlan(){
+    document.getElementById('plan').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') closeOrderModal();
+  });
+
+</script>
+</body>
+</html>
