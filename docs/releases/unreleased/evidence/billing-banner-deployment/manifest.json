@@ -1,0 +1,12 @@
+{
+  "commit": "50c72cdf792e162f4f522f5ef3498a8f7aabb307",
+  "release": "20260910055109901-4206ac61",
+  "scope": "Both public demo hosts, Chromium, API-loaded Billing Clinic patient, summary card absence and retained selector; no billing writes.",
+  "artifactSha256": {
+    "activate.txt": "56177ddd60bb99e36eb9c810da6454108118b884ce6821b6bc6b056b529ac568",
+    "desktop.png": "22635cf78f3fa4c8cc9297b1e5a45d050618d9faa3c1bf705aca10737439a880",
+    "live.txt": "178d497225d6fb196c8d1db790ca349c182e1ab3976449fc084514b259d79256",
+    "prepare.txt": "eb7d2fad8c2483a71f793d8f6ac05e1dbebf9adf1d8fe2cd755c027c382bb7e7",
+    "web.png": "8386f22c1e78f3a47a23b11ba80bad8597986605769044c66e792fbd582f9ea6"
+  }
+}

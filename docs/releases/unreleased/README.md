@@ -49,3 +49,5 @@ Latest local addition: [OP Consultation](op-consultation-2026-09-09.md), not yet
 - [Billing and clinical workspace deployment — 10 September 2026](clinical-workspaces-deployment-2026-09-10.md)
 
 - [Billing Clinic patient card removal — 10 September 2026](billing-banner-removal-2026-09-10.md)
+
+- [Billing patient card removal deployment — 10 September 2026](billing-banner-deployment-2026-09-10.md)

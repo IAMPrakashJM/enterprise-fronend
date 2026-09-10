@@ -1,0 +1,4 @@
+PASS https://front-design.pepbits.com: API-loaded billing workspace, patient selector retained, entire patient summary card absent
+PASS https://front-design.pepbits.com: release identity and no page errors; no billing or clinical mutations
+PASS https://desktop.front-design.pepbits.com: API-loaded billing workspace, patient selector retained, entire patient summary card absent
+PASS https://desktop.front-design.pepbits.com: release identity and no page errors; no billing or clinical mutations
