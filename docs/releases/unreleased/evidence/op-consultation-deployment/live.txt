@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: release identity, OP Consultation navigation, authenticated patient/config/assessment API, 12 sections, 44 API fields, blank assessment, default desktop action visibility, no page errors
+PASS https://desktop.front-design.pepbits.com: release identity, OP Consultation navigation, authenticated patient/config/assessment API, 12 sections, 44 API fields, blank assessment, default desktop action visibility, no page errors

@@ -1,0 +1,18 @@
+
+> nexora-monorepo@1.0.0 deploy
+> node scripts/deploy.mjs --activate 20260910010741034-8948cc53
+
+▲ Next.js 16.3.3
+- Local:         http://127.0.0.1:36877
+- Network:       http://127.0.0.1:36877
+✓ Ready in 0ms
+✓ Running next.config took 1.1ms
+  web: packaged HTML and assets passed on an isolated port.
+  desktop: packaged HTML and assets passed on an isolated port.
+✓ desktop  stopped
+✓ web      stopped
+✓ web      up on :3100  (web shell (Next))
+✓ desktop  up on :3101  (desktop shell)
+Deployed: /home/pepadmin/enterprice/.deploy/releases/20260910010741034-8948cc53
+Both shells answer with their application assets.
+Previous release retained: /home/pepadmin/enterprice/.deploy/releases/20260909195817845-9b653707

@@ -1,0 +1,16 @@
+{
+  "commit": "81033b6b7fd5c9f90fe945b7f4c3ae129c30e538",
+  "release": "20260910010741034-8948cc53",
+  "scope": "Both public demo browser shells; read-only OP checks. No native executable acceptance.",
+  "artifactSha256": {
+    "activation.txt": "1a817e64e47498d2412aec821551ece1e638928c38076825132af63a82e3e4b6",
+    "api.txt": "a5517828d8595cd2086bb94be31a3ffb4ad8995082ec82d81e42de5938a8fc3b",
+    "deployment-tests.txt": "d651fd55942a304bb4476c9fd962fbc17e3d3e7f4d462b8415856302232f7ed1",
+    "live-desktop.png": "2ff8faf18bfd45043bf38c37cc477c57c4076978d14fa2477629069596b16e28",
+    "live-web.png": "7cb64c4007da2128ac8624b31527e4a6df26a26791eb5a519b7dca749b1663fc",
+    "live.txt": "f4a6c1e5ca2ab588cfd3d9f0ddc7fda5507aa614e2c4e917c82a097d237cd39a",
+    "prepare.txt": "3f01a3f4e28da0f35ef36ad10c10471af60d84dc1c403efd6185958f5ba40335",
+    "registry.txt": "11a2401c379a43c9bcd30ff5a4e738de1326178e5750cf851896cc162c32c580",
+    "unit.txt": "eaf49e047f91edd8b7b719fc54125f9cf92bfd37e8967f8770136bd02637e089"
+  }
+}

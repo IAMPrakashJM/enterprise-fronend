@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest delivery: [OP Consultation deployed to both demo sites — 10 September 2026](op-consultation-deployment-2026-09-10.md).
+
 Record: `library-preferences-2026-09-09`. **Deployed to both demo sites.** Latest: [Patient Query deployment](query-preferences-2026-09-09.md#verified-deployment). Earlier: [Patient Record deployment](deployment-2026-09-09.md). Earlier records below retain their status at the time they were written.
 
 | Item | Record |
