@@ -1,0 +1,2 @@
+PASS https://front-design.pepbits.com: release identity, authenticated API module list equals Own Settings options, Default module control, desktop layout and no page errors; no preference or policy writes
+PASS https://desktop.front-design.pepbits.com: release identity, authenticated API module list equals Own Settings options, Default module control, desktop layout and no page errors; no preference or policy writes

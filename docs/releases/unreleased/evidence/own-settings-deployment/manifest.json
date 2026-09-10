@@ -1,0 +1,12 @@
+{
+  "commit": "536b4be24646700c7bb8d182f081e17b30ca1121",
+  "release": "20260910041820340-ad612fb7",
+  "scope": "Public Chromium read-only checks on both demo sites; API options and release identity. No live preference/policy writes or native executable test.",
+  "artifactSha256": {
+    "activate.txt": "f08afe7d87572081710d937c2a8f02ff96c31e072efa115d16776b9e96c91077",
+    "desktop.png": "bd169d623054f75ddb1aab001c30ff8bde236168ae5066f6c1d1117b7b253776",
+    "live.txt": "f5332b03c3c0b8d74fdf8eee534a20f7d54d4fefeabf603cf32b72d9f52cf550",
+    "prepare.txt": "34a04168d233bafa3dce7b5706b4a8dc1079cae1769cf15edd02492e3ce0f204",
+    "web.png": "a41eea8c50baae0a73ab7256c32fbeea0f77b1a235ed2d215447b468a5198472"
+  }
+}

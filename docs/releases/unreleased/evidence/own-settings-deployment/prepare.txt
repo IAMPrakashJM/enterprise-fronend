@@ -1,0 +1,124 @@
+
+> nexora-monorepo@1.0.0 deploy:prepare
+> node scripts/deploy.mjs --prepare-only
+
+Preparing release 20260910041820340-ad612fb7 in isolation.
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 507 packages in 11s
+npm warn install-scripts 2 packages have install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+npm warn install-scripts   unrs-resolver@1.12.2 (postinstall: node postinstall.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+
+> web@1.0.0 build
+> rm -rf .next/static && next build && node ../../scripts/stamp-api.mjs NEXT_PUBLIC_API_URL .next
+
+▲ Next.js 16.3.3 (Turbopack)
+✓ Running next.config.ts took 28ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.3s
+  Running TypeScript ...
+  Finished TypeScript in 9.0s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+✓ Generating static pages using 3 workers (3/3) in 299ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /[module]/[page]
+├ ƒ /[module]/[page]/[recordId]
+├ ƒ /[module]/[page]/[recordId]/edit
+├ ƒ /[module]/[page]/new
+└ ƒ /view/[viewId]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> desktop@1.0.0 build
+> rm -rf dist && tsc --noEmit && vite build && node ../../scripts/stamp-api.mjs VITE_API_URL dist
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1842 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/core.js is dynamically imported by /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/packages/erp-shell/src/sentinel.tsx, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/packages/erp-shell/src/sentinel.tsx but also statically imported by /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/dpi.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/event.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/image.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/webview.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/webviewWindow.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/window.js, dynamic import will not move module into another chunk.
+
+[plugin vite:reporter] 
+(!) /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/event.js is dynamically imported by /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/packages/erp-shell/src/sentinel.tsx but also statically imported by /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/webview.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/webviewWindow.js, /home/pepadmin/enterprice/.deploy/build-4mH5su/desktop-clients/node_modules/@tauri-apps/api/window.js, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/index.html                                       0.96 kB │ gzip:   0.49 kB
+dist/assets/page-template-DHkRpzaa.css                2.17 kB │ gzip:   0.74 kB
+dist/assets/library-page-Bnk30RYg.css                 5.02 kB │ gzip:   1.41 kB
+dist/assets/index-CakA35bc.css                       90.16 kB │ gzip:  16.69 kB
+dist/assets/clinical-triage-DHLgwzOt.js               0.12 kB │ gzip:   0.12 kB
+dist/assets/clinical-consultation-CY0XKaxC.js         0.12 kB │ gzip:   0.12 kB
+dist/assets/preference-choice-DTsdU4y4.js             0.40 kB │ gzip:   0.27 kB
+dist/assets/clinical-document-CRPU8npr.js             0.42 kB │ gzip:   0.33 kB
+dist/assets/clinical-templates-C6qMOJcp.js            0.92 kB │ gzip:   0.52 kB
+dist/assets/configured-template-page-DmyqAzI8.js      1.76 kB │ gzip:   0.88 kB
+dist/assets/library-page-CFJGwXcN.js                  2.37 kB │ gzip:   1.08 kB
+dist/assets/library-page-D5utxKqH.js                  2.61 kB │ gzip:   1.14 kB
+dist/assets/calendar-Bg_5Rjgu.js                      3.49 kB │ gzip:   1.61 kB
+dist/assets/record-layout-C6FjfAEF.js                 3.53 kB │ gzip:   1.56 kB
+dist/assets/library-page-KfYKJhU_.js                  8.09 kB │ gzip:   2.84 kB
+dist/assets/template-library-BHh2piS0.js              9.79 kB │ gzip:   3.30 kB
+dist/assets/library-page-FAhXEUB-.js                 21.26 kB │ gzip:   6.56 kB
+dist/assets/library-page-DZfbHbwM.js                 27.37 kB │ gzip:   7.79 kB
+dist/assets/page-template-D0sAHWSB.js                38.22 kB │ gzip:  11.10 kB
+dist/assets/library-page-DoyOmvML.js                 48.10 kB │ gzip:  14.74 kB
+dist/assets/component-catalog-CmcqzUpr.js            49.19 kB │ gzip:  12.52 kB
+dist/assets/ar-fUC6Yx-U.js                          393.62 kB │ gzip: 114.10 kB
+dist/assets/hi-BiBFDxr0.js                          513.88 kB │ gzip: 121.32 kB
+dist/assets/ml-C1I_oW4B.js                          607.04 kB │ gzip: 129.55 kB
+dist/assets/index-DWy3AjI2.js                     1,832.02 kB │ gzip: 543.53 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.17s
+Both release builds match the explicit deployment API URLs.
+
+  4 packages use utility classes
+
+  every styled package is @source'd by both apps
+  ok    web: ai-ui                                          
+  ok    web: erp-screens                                    
+  ok    web: erp-shell                                      
+  ok    web: ops-ui                                         
+  ok    desktop: ai-ui                                      
+  ok    desktop: erp-screens                                
+  ok    desktop: erp-shell                                  
+  ok    desktop: ops-ui                                     
+
+  utilities unique to a package survive into the built CSS
+  ok    web: ai-ui                                          6 canaries present
+  ok    web: erp-screens                                    6 canaries present
+  ok    web: erp-shell                                      6 canaries present
+  ok    web: ops-ui                                         6 canaries present
+  ok    desktop: ai-ui                                      6 canaries present
+  ok    desktop: erp-screens                                6 canaries present
+  ok    desktop: erp-shell                                  6 canaries present
+  ok    desktop: ops-ui                                     6 canaries present
+
+  Every styled package is visible to both apps, and its classes survive the build.
+
+▲ Next.js 16.3.3
+- Local:         http://127.0.0.1:39367
+- Network:       http://127.0.0.1:39367
+✓ Ready in 0ms
+✓ Running next.config took 1.0ms
+  web: packaged HTML and assets passed on an isolated port.
+  desktop: packaged HTML and assets passed on an isolated port.
+Prepared and verified: /home/pepadmin/enterprice/.deploy/releases/20260910041820340-ad612fb7
+Running services were not changed.
