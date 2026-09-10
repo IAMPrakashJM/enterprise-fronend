@@ -1,0 +1,2 @@
+PASS front-design.pepbits.com: release identity, shared catalog/contextual API guide, translated API content ar/hi/ml with honest review status, PT-0003 focused rail alignment and footer; no business/preference/reading-state writes or page errors
+PASS desktop.front-design.pepbits.com: release identity, shared catalog/contextual API guide, translated API content ar/hi/ml with honest review status, PT-0003 focused rail alignment and footer; no business/preference/reading-state writes or page errors

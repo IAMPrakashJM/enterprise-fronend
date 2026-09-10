@@ -1,0 +1,32 @@
+check	Typecheck	﻿2026-09-10T10:22:52.5474675Z ##[group]Run npm run typecheck
+check	Typecheck	2026-09-10T10:22:52.5475003Z ^[[36;1mnpm run typecheck^[[0m
+check	Typecheck	2026-09-10T10:22:52.5514938Z shell: /usr/bin/bash -e {0}
+check	Typecheck	2026-09-10T10:22:52.5515225Z ##[endgroup]
+check	Typecheck	2026-09-10T10:22:52.6587389Z 
+check	Typecheck	2026-09-10T10:22:52.6588187Z > nexora-monorepo@1.0.0 typecheck
+check	Typecheck	2026-09-10T10:22:52.6588653Z > node scripts/typecheck.mjs
+check	Typecheck	2026-09-10T10:22:52.6588850Z 
+check	Typecheck	2026-09-10T10:22:52.6924265Z 
+check	Typecheck	2026-09-10T10:22:52.6924716Z   typecheck
+check	Typecheck	2026-09-10T10:22:52.6924941Z 
+check	Typecheck	2026-09-10T10:22:55.4475630Z     ok    packages/ai-client
+check	Typecheck	2026-09-10T10:22:56.8777731Z     ok    packages/ai-config
+check	Typecheck	2026-09-10T10:23:01.2073079Z     ok    packages/ai-ui
+check	Typecheck	2026-09-10T10:23:02.9184632Z     ok    packages/auth
+check	Typecheck	2026-09-10T10:23:05.2775998Z     ok    packages/erp-config
+check	Typecheck	2026-09-10T10:23:07.8012712Z     ok    packages/erp-data
+check	Typecheck	2026-09-10T10:23:15.2710967Z     FAIL  packages/erp-screens
+check	Typecheck	2026-09-10T10:23:15.2712091Z           packages/erp-screens/src/page-library/catalog.test.tsx(98,92): error TS2769: No overload matches this call.
+check	Typecheck	2026-09-10T10:23:15.2722102Z             Overload 1 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+check	Typecheck	2026-09-10T10:23:15.2723195Z               Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+check	Typecheck	2026-09-10T10:23:15.2724653Z             Overload 2 of 2, '(role: ByRoleMatcher, options?: ByRoleOptions | undefined): HTMLElement', gave the following error.
+check	Typecheck	2026-09-10T10:23:15.2726374Z               Object literal may only specify known properties, and 'exact' does not exist in type 'ByRoleOptions'.
+check	Typecheck	2026-09-10T10:23:19.4501757Z     ok    packages/erp-shell
+check	Typecheck	2026-09-10T10:23:23.1015757Z     ok    packages/ops-ui
+check	Typecheck	2026-09-10T10:23:24.5734040Z     ok    packages/platform-ports
+check	Typecheck	2026-09-10T10:23:26.3727364Z     ok    packages/workspace-core
+check	Typecheck	2026-09-10T10:23:33.4627986Z     ok    apps/desktop
+check	Typecheck	2026-09-10T10:23:33.4628391Z 
+check	Typecheck	2026-09-10T10:23:33.4628652Z   1 package(s) failed to typecheck.
+check	Typecheck	2026-09-10T10:23:33.4628865Z 
+check	Typecheck	2026-09-10T10:23:33.4747223Z ##[error]Process completed with exit code 1.

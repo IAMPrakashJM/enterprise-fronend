@@ -95,7 +95,7 @@ test("a page without bundled code still opens its API guide", () => {
   try {
     const ui = render(<PageLibraryCatalog />);
     const card = ui.container.querySelector('[data-page-library-entry="billing-clinic"]') as HTMLElement;
-    fireEvent.click(within(card).getByRole("button", { name: "User and integration guide", exact: true }));
+    fireEvent.click(within(card).getByRole("button", { name: "User and integration guide" }));
     expect(screen.getByText("API guide")).toBeTruthy();
   } finally { PAGE_LIBRARY_RESOURCES["billing-clinic"] = saved; }
 });

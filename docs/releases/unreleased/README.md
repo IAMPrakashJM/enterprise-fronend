@@ -1,5 +1,7 @@
 # Unreleased frontend delivery
 
+Latest deployment: [Shared documentation and billing rail — both demo sites](unified-documentation-deployment-2026-09-10.md).
+
 Latest local implementation: [Shared help and documentation lifecycle](unified-documentation-2026-09-10.md), not deployed.
 
 Latest local correction: [Billing rail alignment](billing-rail-alignment-2026-09-10.md), not deployed.

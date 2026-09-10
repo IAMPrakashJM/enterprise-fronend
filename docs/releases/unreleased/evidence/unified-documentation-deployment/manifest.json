@@ -1,0 +1,20 @@
+{
+  "runtimeCommit": "bdc45fe357cb9691f2d80fb0377838e70750aeb1",
+  "releaseId": "20260910102230415-e7419c6c",
+  "scope": "Both public hosts, English Chromium UI and authenticated ar/hi/ml API guide checks. PT-0003 rail alignment. No live mutations. CI test-only type error corrected after activation; no runtime change.",
+  "testCorrectionSha256": {
+    "desktop-clients/packages/erp-screens/src/page-library/catalog.test.tsx": "af51278e451c0e5a3203cf8746ed70edec6bf4a001f46f6c71df38ae8158f443"
+  },
+  "artifactSha256": {
+    "activate.txt": "13bc92706d1c4e00bfcd82764538a124fe2f6000f9a4a632996be60c6c72b3b3",
+    "ci.txt": "dfe9211e70d2b0c9218f73c9785522be0a31a661b99c807175582d9af6e2a54a",
+    "desktop-billing.png": "6e44ac1cb4bdc8faecce7a91ef012e1913371d5ceb18e928a83af4e27cc49355",
+    "desktop-guide.png": "768073a65619da381e94ea9b2a61db2003525eeedc85737ba6cfe620049a3711",
+    "live.txt": "5d0431419b960e6670230b36e42fbbf3c90bcb8a85226412204f91a95bdf312a",
+    "prepare.txt": "e0cf0767db85490046d625547e80f05402a5558ad40cda0b0473f3d673a6488e",
+    "testfix.txt": "901b48ca701cb6d801e6060f068db08745d561a825440bd8d41ae9d8c5a9b10d",
+    "typecheck.txt": "cc6d7e1a94dce15740ae72fd3759a5ba3d16cc4f92438f294a04c852e215d47a",
+    "web-billing.png": "e22b98421ac1c49b97df380bc02c44e52b15173665a5c046d08390ef00a05f50",
+    "web-guide.png": "c5b6dc031ee9c4085a6aa4d3b7de1d641c41752fb22743405545e0efc7b1f503"
+  }
+}

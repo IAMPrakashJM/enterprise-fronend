@@ -1,0 +1,14 @@
+
+> nexora-monorepo@1.0.0 test
+> vitest run packages/erp-screens/src/page-library/catalog.test.tsx
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/page-library/catalog.test.tsx (4 tests) 231ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  10:24:28
+   Duration  2.30s (transform 1.42s, setup 768ms, collect 650ms, tests 231ms, environment 335ms, prepare 80ms)
+
