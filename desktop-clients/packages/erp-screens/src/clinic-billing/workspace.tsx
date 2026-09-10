@@ -9,7 +9,6 @@ import {
   DescriptionList,
   Input,
   Select,
-  StatCard,
   Modal,
   PresentationProvider,
   RecoveryNotice,
@@ -45,6 +44,9 @@ export interface BillingClinicWorkspaceProps extends PreferenceHost {
   patients: ClinicalTemplateAdapter;
   scopeKey: string;
   patientId?: string;
+  /** Hosted catalog navigation selects the patient before opening this workspace. */
+  patientSelection?: "inline" | "external";
+  onChoosePatient?: () => void;
 }
 export function BillingClinicWorkspace(props: BillingClinicWorkspaceProps) {
   const preferences = props.preferencePolicy
@@ -52,13 +54,22 @@ export function BillingClinicWorkspace(props: BillingClinicWorkspaceProps) {
     : props.preferences;
   return (
     <PresentationProvider value={preferences}>
-      <ClinicSelector
+      {props.patientSelection === "external" ? (
+        <div data-billing-clinic data-tour="billing-clinic" style={{ "--fs-scale": "var(--fs-form)" } as React.CSSProperties}>
+          {props.patientId ? <ClinicEditor key={JSON.stringify([props.scopeKey, props.patientId])} {...props} preferences={preferences} patientId={props.patientId} onDirty={() => {}} onBusy={() => {}} /> : <ClinicPatientRequired onChoose={props.onChoosePatient} />}
+        </div>
+      ) : <ClinicSelector
         key={props.scopeKey}
         {...props}
         preferences={preferences}
       />
+      }
     </PresentationProvider>
   );
+}
+function ClinicPatientRequired({ onChoose }: { onChoose?: () => void }) {
+  const { t } = useLocalization();
+  return <div className="space-y-3"><p>{t("template.clinic.choosePatient")}</p>{onChoose ? <Button onClick={onChoose}>{t("template.pageLibrary.title")}</Button> : null}</div>;
 }
 function ClinicSelector(props: BillingClinicWorkspaceProps) {
   const { t } = useLocalization(),
@@ -321,39 +332,6 @@ function ClinicEditor({
   const shared = { data, disabled, format, preferences, onCommand: request };
   return (
     <div className="space-y-4">
-      <CardGrid columns={4}>
-        <StatCard
-          label="template.clinic.orders"
-          value={format.number(
-            data.state.orders.filter((o) => o.status !== "billed").length,
-          )}
-        />
-        <StatCard
-          label="template.clinic.total"
-          value={money(
-            data.state.invoices
-              .filter((i) => i.status === "issued")
-              .reduce((s, i) => s + i.total, 0),
-          )}
-        />
-        <StatCard
-          label="template.clinic.insurer"
-          value={money(
-            data.state.invoices
-              .filter((i) => i.status === "issued")
-              .reduce((s, i) => s + i.insurance, 0),
-          )}
-        />
-        <StatCard
-          label="template.clinic.balance"
-          value={money(
-            data.state.invoices.reduce(
-              (s, i) => s + clinicBalance(data.state, i),
-              0,
-            ),
-          )}
-        />
-      </CardGrid>
       {error ? (
         <div className="space-y-2">
           <RecoveryNotice
@@ -398,24 +376,6 @@ function ClinicEditor({
                     : data.state.history.length > 0
           }
           railHeader={<strong>{t("template.clinic.title")}</strong>}
-          identity={
-            <div className="flex flex-wrap items-center justify-between gap-3 p-4">
-              <Badge tone="brand">{t("template.clinic.flow")}</Badge>
-              <Button disabled={busy} onClick={() => void refreshLedger()}>
-                {t("template.clinical.refresh")}
-              </Button>
-              <span>
-                {t("template.clinic.currency")}: {data.currency}
-              </span>
-              <Badge>
-                {t(
-                  data.canWrite
-                    ? "template.clinic.cashier"
-                    : "template.clinic.readOnly",
-                )}
-              </Badge>
-            </div>
-          }
           footer={
             <div className="flex flex-wrap items-center justify-between gap-3 p-3">
               <span className="text-sm text-[var(--text-muted)]">

@@ -17,6 +17,7 @@ import {
   Textarea,
   useLocalization,
 } from "@pepbits/ops-ui";
+import { BillingPatientLauncher } from "./billing-patient-launcher";
 import { pageLibraryEntries } from "./catalog";
 import { PAGE_LIBRARY_RESOURCES } from "./resources";
 
@@ -156,6 +157,7 @@ export function PageLibraryCatalog() {
                 <p className="text-sm text-[var(--text-muted)]">
                   {t(page.subtitleKey ?? page.subtitle ?? "")}
                 </p>
+                {page.id === "billing-clinic" ? <BillingPatientLauncher /> : null}
                 <div className="flex flex-wrap gap-2">
                   <Button
                     variant="primary"

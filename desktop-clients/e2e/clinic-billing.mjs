@@ -27,17 +27,18 @@ fs.mkdirSync(artifacts, { recursive: true });
     await page.locator("header").first().waitFor();
     await page.keyboard.press("Control+k");
     const d = page.getByRole("dialog");
-    await d.locator("input").first().fill("billing-clinic");
+    await d.locator("input").first().fill("list-of-pages");
     await d.locator("button.group").first().click();
-    const root = page.locator("[data-billing-clinic]");
-    await root.waitFor();
-    const select = root.getByRole("combobox", { name: "Select patient" });
+    const root = page.locator("[data-billing-clinic]:visible");
+    const select = page.locator('[data-billing-patient-picker]').getByRole("combobox", { name: "Select patient" });
     await select.locator("option").filter({hasText:"DEMO-000001"}).waitFor({state:"attached"});
     await select.selectOption(
       await select
         .locator("option")
         .evaluateAll((opts) => opts.find((o) => o.value)?.value),
     );
+    await root.waitFor();
+    assert.equal(await root.getByRole("combobox", { name: "Select patient" }).count(), 0);
     await root
       .getByRole("checkbox", { name: "Demonstration pharmacy request" })
       .waitFor();
@@ -162,10 +163,7 @@ fs.mkdirSync(artifacts, { recursive: true });
     await page
       .getByRole("combobox", { name: "Export format", exact: true })
       .selectOption("xlsx");
-    await page.keyboard.press("Control+k");
-    picker = page.getByRole("dialog");
-    await picker.locator("input").first().fill("billing-clinic");
-    await picker.locator("button.group").first().click();
+    await page.getByRole("tab").filter({ hasText: "Billing Clinic" }).first().click();
     await root
       .getByRole("button", { name: "View bill", exact: true })
       .click();

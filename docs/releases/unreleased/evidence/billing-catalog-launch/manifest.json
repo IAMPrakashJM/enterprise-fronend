@@ -1,0 +1,28 @@
+{
+  "baseCommit": "af091358865df1a0806b9bc9c823ed6bfe052501",
+  "scope": "Local implementation. Eight component tests, isolated API billing browser regression, project gates. Source finalized before release build.",
+  "sourceSha256": {
+    "desktop-clients/e2e/clinic-billing.mjs": "4f235fccb51d145d868104e4374bdea344ca38e421fd5b63a1442769c18b37a5",
+    "desktop-clients/packages/erp-config/src/locales/ar.ts": "fa7b70823fcc5baff76a27a73d5f58ef3f014b6fa4d5fd5a67014f9dee67e361",
+    "desktop-clients/packages/erp-config/src/locales/en.ts": "dad46b362f80b29266d1c341762af178670b454f6a285ebb695e6e958a4e562e",
+    "desktop-clients/packages/erp-config/src/locales/hi.ts": "bcc3063a14a3b351a375f2daeef030e44a7b92df22d9eb6e2f8aeb8a751c0974",
+    "desktop-clients/packages/erp-config/src/locales/ml.ts": "52ae56115f564bbecc386fd2a83380bcb74c5409dfd7ef2c7b3002e8b07ae2f2",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/library-page.tsx": "7f69a1e25249ee3fed8540d4ea2418fe97cef62b066e111d0106a9f8fcf17806",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/workspace.test.tsx": "b48ab2bf9a1e03ac4e472fca0e140113073207811e083aa89441f5d63884b167",
+    "desktop-clients/packages/erp-screens/src/clinic-billing/workspace.tsx": "8ed4fd852bd931b35123b0455f4a40d20ea9c1ee674e43d42f662f6796a844b6",
+    "desktop-clients/packages/erp-screens/src/page-library/catalog.test.tsx": "613ed3369f77db5ee945c46427bf3c25c3d0bd8120e34a0023f6872d9169dd17",
+    "desktop-clients/packages/erp-screens/src/page-library/index.tsx": "9dc8b99560efe4aa1f2aeba119bfd207363653e42e27a18f7b4e234f913fddd6",
+    "desktop-clients/packages/erp-screens/src/page-library/resources.ts": "f34288fc16fb97676ca228f815a217dedb3afdd968bc937bccfe7030af7f6914",
+    "desktop-clients/packages/ops-ui/src/messages.en.ts": "92dee8d8a66fd8413b1bd8abef30f1315214f145cc66be0f30a4137d1683ec0c",
+    "dummy-api/config/localization/shared/ar.json": "aaed50c4c7fe816513710f9eac3557a5005b8be6e849d3fb7c49a30cf983e0a7",
+    "dummy-api/config/localization/shared/en.json": "dbd87f48f4e326915f6437cd681e1af293604c22f0fd737b8cfd717b3389edee",
+    "dummy-api/config/localization/shared/hi.json": "56d324c5865ee63791b7304969f571350cf2c7a2df48476c4fe1719e2d9f2736",
+    "dummy-api/config/localization/shared/ml.json": "a3b2fdd7d4779144e6450e824282666703459b762d45b5dbac50050633648c10",
+    "desktop-clients/packages/erp-screens/src/page-library/billing-patient-launcher.tsx": "f0cce822077d5e21ce60dfd5789f9829ae1e21492a61036b00728074dc1386c9"
+  },
+  "artifactSha256": {
+    "tests.txt": "e54dcac4dc5d8914b41a5ad2db66f80e9ae5ce430e60d489c85b2073df1101bc",
+    "browser.txt": "912d19d3866751d33e048a4cb3ede34b42dc5760953a2ce8b3ac46c011c0a74f",
+    "verify.txt": "5ed2f8765b4157ab7cd8798fc88af729b19ba04988479f533e23c3046ff8cdbd"
+  }
+}

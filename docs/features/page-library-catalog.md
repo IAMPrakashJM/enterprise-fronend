@@ -5,7 +5,8 @@ Open **Library → Page Library → List of pages**, the first item in this side
 ## User flow
 
 1. Search by page name or route ID. Clear the search to show the complete accessible list.
-2. Select **Open page** to open the working workspace. The workspace keeps its patient search, selection, forms, API data and save behavior.
+2. For **Billing Clinic**, use the card’s API-backed Search and Select patient controls. Selecting a patient opens a new browser tab (web) or workspace tab (desktop) with that patient’s billing data. A billing page opened without a patient provides a link back to List of pages.
+3. Select **Open page** to open the working workspace. The workspace keeps its patient search, selection, forms, API data and save behavior.
 3. Select **TypeScript example** on a card to open that page's public integration code. Copy uses the clipboard and reports success/failure.
 4. Select **User and integration guide** to read the page's workflow, adapter contract, preference behavior, recovery and limitations. Switch between code and guide inside the resource dialog.
 5. Demo descriptions, including **Demo patient search**, are shown on the catalog cards/resources. They are descriptions; no patient fixture is rendered by the catalog.
@@ -31,3 +32,9 @@ Only accessible navigation entries are shown. If access changes while a resource
 ## Completion boundary
 
 The navigation list, resource relocation, eight examples/guides and direct workspace opening are implemented. Canonical English, Arabic, Hindi and Malayalam labels, versioned help, change alerts and testing inventory are updated. Native-speaker review, other browser/native executable acceptance and live deployment are separate checks. See the [verification record](../releases/unreleased/page-library-catalog-2026-09-10.md).
+
+## Billing patient navigation
+
+The Billing Clinic launcher searches through `ClinicalTemplateAdapter` and sends the selected ID as `NavigationTarget.recordId`. The billing host passes it to `BillingClinicWorkspace` with `patientSelection="external"`. This preserves reload/deep-link identity without copying patient payloads into browser storage. The server validates access and loads ledger data; invalid or unavailable IDs use the existing retry/error display. Tenant/application/user and patient identity remount the editor. The standalone workspace retains its optional inline selector for existing integrations.
+
+The hosted billing page removes the search/select/demo card, four summary statistics and workflow/currency/cashier banner. Orders, review, payments, history, financial formatting and server write permissions remain. Canonical four-language guide text and the public TypeScript example describe the new entry flow.

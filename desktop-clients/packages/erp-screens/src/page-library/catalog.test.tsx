@@ -16,6 +16,7 @@ import {
 import { pageLibraryEntries } from "./catalog";
 import { PAGE_LIBRARY_RESOURCES } from "./resources";
 import { PageLibraryCatalog } from "./index";
+vi.mock("./billing-patient-launcher", () => ({ BillingPatientLauncher: () => null }));
 const fresh = () =>
   defineProduct({
     id: "test",

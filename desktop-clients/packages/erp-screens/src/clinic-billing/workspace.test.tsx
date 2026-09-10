@@ -249,3 +249,17 @@ test("bill correction retains input and operation identity on failure; read-only
     await screen.findByRole("button", { name: "View bill" }),
   ).toBeInTheDocument();
 });
+
+test("external patient navigation loads only its patient and resets when the target changes", async () => {
+  const load = vi.fn(async (id: string) => ({ ...view, patient: { ...view.patient, id }, state: { ...view.state, patientId: id } }));
+  const search = vi.fn();
+  const props = { adapter: { load, mutate: vi.fn() } as ClinicBillingAdapter, patients: { search } as unknown as ClinicalTemplateAdapter, scopeKey: "tenant/app/user", preferences: DEFAULT_PREFERENCES, patientSelection: "external" as const };
+  const ui = render(<BillingClinicWorkspace {...props} patientId="first" />);
+  await waitFor(() => expect(load).toHaveBeenCalledWith("first"));
+  expect(screen.queryByRole("combobox", { name: "Select patient" })).toBeNull();
+  expect(search).not.toHaveBeenCalled();
+  ui.rerender(<BillingClinicWorkspace {...props} patientId="second" />);
+  await waitFor(() => expect(load).toHaveBeenCalledWith("second"));
+  ui.rerender(<BillingClinicWorkspace {...props} />);
+  expect(screen.getByText("Search and select a patient to begin billing.")).toBeTruthy();
+});
