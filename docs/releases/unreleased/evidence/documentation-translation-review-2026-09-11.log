@@ -1,0 +1,28 @@
+
+> nexora-monorepo@1.0.0 verify:localization
+> node scripts/localization/check-copy.mjs && node scripts/localization/check-api-copy.mjs && node scripts/localization/sync-fallbacks.mjs --check
+
+PASS 17067 catalog keys in four languages; 1244 static presentation references; explicit data/code exceptions.
+PASS 220 static API errors registered with catalog message keys.
+
+> nexora-monorepo@1.0.0 verify:documentation
+> node scripts/verify-documentation.mjs && node ../docs/tools/documentation-lifecycle.mjs check
+
+PASS 315 page references; 147 authored workflows in four languages; 168 references await detailed workflow authoring. Native/domain reviews remain pending.
+PASS documentation impact receipts, 315 page registrations and translation revisions; 1113 authoring/review items remain explicitly pending
+✔ documentation HTTP authorizes every view and persists scoped read state (1417.465888ms)
+✔ versioned guides, role-filtered search, explicit language fallback and invalid requests (35.138777ms)
+✔ reading state is idempotent, persistent and isolated; only explicit acknowledgment acknowledges (30.435669ms)
+✔ manifest rejects broken notices, duplicate versions and invalid tour anchors (1.889569ms)
+✔ tenant rollout refuses future snapshots and product manifests stay separate (11.66101ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1514.949312
+PASS all 147 authored guides have complete ar/hi/ml catalog coverage; native review remains pending
+PASS 82 documentation files: local links/headings, current testing guide, Library inventory, release identity/status and retained evidence hashes
+PASS documentation impact receipts, 315 page registrations and translation revisions; 1113 authoring/review items remain explicitly pending

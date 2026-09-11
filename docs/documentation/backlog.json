@@ -9,7 +9,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ba1ef5558d2710f5eb004c3308b2e30fdab7fc8f503c4f1dc8aa3c31e3bd9b40",
-    "translationHash": "37a8289b1ab6daeae4f32e322331d8a8d0be7dfdf780af8238faa7535f08588c"
+    "translationHash": "4c7fc81e8d63d8c73612d7ae31c55c0401988d726bfb2562bf7600f5f1bec28e"
   },
   {
     "pageId": "hr-dashboard",
@@ -17,7 +17,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ba1ef5558d2710f5eb004c3308b2e30fdab7fc8f503c4f1dc8aa3c31e3bd9b40",
-    "translationHash": "b144b95cae353654f40fd51567ebb2243dbcd72e43e314260ddfbef423b26de9"
+    "translationHash": "df7a7222da2c53c75a34cf13110c320dacf31d3c1dec112ed1aedf26f87c7b9c"
   },
   {
     "pageId": "hr-dashboard",
@@ -25,7 +25,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ba1ef5558d2710f5eb004c3308b2e30fdab7fc8f503c4f1dc8aa3c31e3bd9b40",
-    "translationHash": "9baf16f2930cd32fbbb385e68403adc9ac748f89f2b0ba905706ef79e4606796"
+    "translationHash": "7d61f4a64fa5f62ff1d70d734b7e5f5860838497359bf61fa5a5061b781f6f3e"
   },
   {
     "pageId": "user-master",
@@ -65,7 +65,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "edd13bee47338cb1a13ad0d83c5ec9cff957734aaae1f49cbf554ed4d698ea51",
-    "translationHash": "354c74d1c6d4cc512c497b889370dcf8743cccd12e89c5f58dc57edab9f47ead"
+    "translationHash": "00beb71937d5f6e6c039b87d19df2b1f612b5947d2926892704b2d323a413d5c"
   },
   {
     "pageId": "role-master",
@@ -73,7 +73,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "edd13bee47338cb1a13ad0d83c5ec9cff957734aaae1f49cbf554ed4d698ea51",
-    "translationHash": "c9e9e193f257b24e08509748ec86102f6fad564cf249c3254fdeff0e833381ac"
+    "translationHash": "3544a8674abc8793d25e03170a1c976cfbbb38cbd743c6508b881eb3de6d83d5"
   },
   {
     "pageId": "role-master",
@@ -81,7 +81,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "edd13bee47338cb1a13ad0d83c5ec9cff957734aaae1f49cbf554ed4d698ea51",
-    "translationHash": "bf4f970f44324f9e2884094a944bf3ef3b7d411a39ea2bb4df2b8f53cf01f6c7"
+    "translationHash": "38d3b5f38a4d1b4a3d87b89bf936dab7fcb3399d31e1baa4b8cf78ff2d72d046"
   },
   {
     "pageId": "delegation-master",
@@ -93,7 +93,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a3537d4131c3bc6d8890ab5719ae344017fb41a9eae3524a513d3a4ff5f46168",
-    "translationHash": "80ac070e7af3fe87ced47a75c5706575034c37522b39f106d1582769a86cb027"
+    "translationHash": "b950c6125986840dcc2bf325f7abf17b4d3171063533806b6c1d2b9f3c271bb9"
   },
   {
     "pageId": "delegation-master",
@@ -101,7 +101,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a3537d4131c3bc6d8890ab5719ae344017fb41a9eae3524a513d3a4ff5f46168",
-    "translationHash": "ed237e0dd368101592fab34b07a15cdd3892f892b66e3fa6a2eaa9f9493e8103"
+    "translationHash": "0d6feb16e8c4cbcbaaa486021b3cda339b698c4fbfafeba1147711c32bae8cf5"
   },
   {
     "pageId": "delegation-master",
@@ -109,7 +109,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a3537d4131c3bc6d8890ab5719ae344017fb41a9eae3524a513d3a4ff5f46168",
-    "translationHash": "d068a06ba7f25cf6b70ecbca04bd5f9dd32b6db09009c8a5b9fa66ed058faff4"
+    "translationHash": "36ac719c7ce9cc048b8ceebeb702e44b60013458f48d4ade4e908ce736bdd70c"
   },
   {
     "pageId": "employee-master",
@@ -121,7 +121,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a0a93736b29acc17581fc435e708b3c2dbb4c97acae868930196879be93ca784",
-    "translationHash": "7ee19b1ed8662fc65f8a2666f22918a0aac9cf983433ac59d51c2b5dcebd7e9c"
+    "translationHash": "357a5a48f97c5ece743dc62dbc9a421662b3c9588e806d609725c17f83691aec"
   },
   {
     "pageId": "employee-master",
@@ -129,7 +129,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a0a93736b29acc17581fc435e708b3c2dbb4c97acae868930196879be93ca784",
-    "translationHash": "d15add9bb491309d8ead78436d66d41e082d8229c437542b0d829f608ea59ba2"
+    "translationHash": "91e295187378dabbaae7d3d0504e99b8c19004d0c1765701bd31dc72b562afa7"
   },
   {
     "pageId": "employee-master",
@@ -137,7 +137,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a0a93736b29acc17581fc435e708b3c2dbb4c97acae868930196879be93ca784",
-    "translationHash": "40cfebf268e36f4a4a84423cf5682de5c7254352c5734a644d56a4f952c82aed"
+    "translationHash": "9b372513408fdcb271962a98d6728c13213df1ad3e71bf3306d0d544ffd2a988"
   },
   {
     "pageId": "contractor-master",
@@ -149,7 +149,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e3508c6bb6a8cb8d511b45d7f570a72a7b4c4ae5508742e23cbd133e63b4bedd",
-    "translationHash": "198966444380979a94d03f836540df972320a64448729cfa5da928c093d6ff08"
+    "translationHash": "90e6bad083401c90250f4eed939c11722409e4d736a8c7c631e2c99419ec0cab"
   },
   {
     "pageId": "contractor-master",
@@ -157,7 +157,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e3508c6bb6a8cb8d511b45d7f570a72a7b4c4ae5508742e23cbd133e63b4bedd",
-    "translationHash": "d32914897273d59f564b01a30680f7043bbba5e1c50bd67ad833a436c73adf67"
+    "translationHash": "e67f8aa51a44b15d28c3b7b14d5683d191f13079336c0b7ff9803787d9fe86de"
   },
   {
     "pageId": "contractor-master",
@@ -165,7 +165,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e3508c6bb6a8cb8d511b45d7f570a72a7b4c4ae5508742e23cbd133e63b4bedd",
-    "translationHash": "bb63ffcd13c231dabf676e89902cad699a50d45097ec48af098c4ac471576cd2"
+    "translationHash": "1c19f1086ca7bd1f2b60a87e2f435a6084123fd7b620c54b182b844c3a13ab45"
   },
   {
     "pageId": "position-master",
@@ -177,7 +177,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6e4ed05be0ec1f68f6406d451368865f5399ab78a76163288513c09af93fdee4",
-    "translationHash": "5158f0a979b1ad0d0a628aea6dd9ef2d4fa661a9c1b16a54681f81c87a1b9572"
+    "translationHash": "b53a7968d184348fedf9a51a03975f0e631bc2f46e7d282704cccf7855d49b02"
   },
   {
     "pageId": "position-master",
@@ -185,7 +185,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6e4ed05be0ec1f68f6406d451368865f5399ab78a76163288513c09af93fdee4",
-    "translationHash": "48b815d3e3cc8106fe3652f9b3ae0fab634ed4096e336b36c7c68cc585c7d74c"
+    "translationHash": "1f04eec4a777b20d74ede8a931fea44e870dddde0da678d3d0730c674ea5003c"
   },
   {
     "pageId": "position-master",
@@ -193,7 +193,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6e4ed05be0ec1f68f6406d451368865f5399ab78a76163288513c09af93fdee4",
-    "translationHash": "3334f099c2d3c0dce528077bcaa45eb171ddef0e2a6c3744e31b9870747809f6"
+    "translationHash": "968c9e44a17c5374dec1112b1cb0f58bc1a7459e52c780a10b8df2f39060fda0"
   },
   {
     "pageId": "department-master",
@@ -205,7 +205,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c4486f03fa9228eb69f83940f47348199d071db8d882f6f138b81676d5c91261",
-    "translationHash": "291667a95da3425bf4c9699ab299740dacb55f3cdd322032ba04eb0f01d19fe7"
+    "translationHash": "caf117b344e55d40a022210ff6d54999194006c749f69b439318ec4a6c58fd29"
   },
   {
     "pageId": "department-master",
@@ -213,7 +213,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c4486f03fa9228eb69f83940f47348199d071db8d882f6f138b81676d5c91261",
-    "translationHash": "607beb300b180672c3cb25246da0b31e4e1dd3e01c3412f8e747f1d5a941c77b"
+    "translationHash": "2424ae0c7ee623dd36a2ce93a65b03438dfe945bd2631e8997947fd086d60635"
   },
   {
     "pageId": "department-master",
@@ -221,7 +221,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c4486f03fa9228eb69f83940f47348199d071db8d882f6f138b81676d5c91261",
-    "translationHash": "b704c3fd3ceebdb78139c588b39199e5e32cfb39c4e9942885790ebc30e9bdca"
+    "translationHash": "98e400e30af47a100b4ab2078244f3b621690b9ebdb4ac36daa0ba35a243e0f5"
   },
   {
     "pageId": "grade-master",
@@ -233,7 +233,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "86ed1d17c38f5cb52065883497b6b69307c2bfa572c31329e31a2702901969d6",
-    "translationHash": "a2efae6abb636b2ec87565f5f1c68df6627d35affb82a8675811043fc1071cff"
+    "translationHash": "ea6e68b45eb6feda96fd25593c6be28ee98bb4c3b0564f8586477f01cfc7dffe"
   },
   {
     "pageId": "grade-master",
@@ -241,7 +241,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "86ed1d17c38f5cb52065883497b6b69307c2bfa572c31329e31a2702901969d6",
-    "translationHash": "de38046b7906dd958376ea6df919336bf2c1883dda9eebf69d616650616c006e"
+    "translationHash": "6ae26f732a80f1788bef14895d0b8d5a33eec1e1794338a01c0f48194aa0ee73"
   },
   {
     "pageId": "grade-master",
@@ -249,7 +249,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "86ed1d17c38f5cb52065883497b6b69307c2bfa572c31329e31a2702901969d6",
-    "translationHash": "94fe96e4a0343f000ae7c2fb91acf0698fcf015cda8fcf017f49c9bd3ade6ee2"
+    "translationHash": "de7e556fc6c2f6c01319939b735e0712f64a6ceb3c556b7d2d6f75d4509eead9"
   },
   {
     "pageId": "location-master",
@@ -261,7 +261,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ce789cda4cfbc71d9c6fd2323f2262be8fb517e0d776f4f4d0392904c0aff83a",
-    "translationHash": "a91392d995e9c97fa7e97c77edcde995f6bc8b9b8a1d8123151ff82d8a6fc44e"
+    "translationHash": "50a7b5345771b9fec8c41ddf11acc1e1d50b79ffa01fc498ddc6683ef17aa6bb"
   },
   {
     "pageId": "location-master",
@@ -269,7 +269,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ce789cda4cfbc71d9c6fd2323f2262be8fb517e0d776f4f4d0392904c0aff83a",
-    "translationHash": "11eefaaef959965163d325c7f9229929a2840e04af2c92f2aabf670c79f3960e"
+    "translationHash": "09d4ae0cb1fbfed55d6a08b8cb1a495cbc26174222641385046f25358d8a4afb"
   },
   {
     "pageId": "location-master",
@@ -277,7 +277,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ce789cda4cfbc71d9c6fd2323f2262be8fb517e0d776f4f4d0392904c0aff83a",
-    "translationHash": "e9068b197bb3b28503412e19f082034da1c8c90c918f0ff992b4eee4f5e26faa"
+    "translationHash": "d891c8f65fc3ba2412b1bec5c06d81eea8b4842e0fb3e831e92d3504675faa68"
   },
   {
     "pageId": "employee-onboarding",
@@ -289,7 +289,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "13d0882fb3633c7c6ae6cce1500ab6c419f322cdd99cc8fa972b7b2e3db167ad",
-    "translationHash": "5eccd00233e1a2c1f12b24f638fce5d5db323187f01277f056b590a944b4300a"
+    "translationHash": "39beaa8eedfaa342ad170a0c3f6bda3b368f37f224436414ebfcba1be55b9138"
   },
   {
     "pageId": "employee-onboarding",
@@ -297,7 +297,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "13d0882fb3633c7c6ae6cce1500ab6c419f322cdd99cc8fa972b7b2e3db167ad",
-    "translationHash": "696b7e7c949f0f099a864eeeb9a1bf60c63d4d3f5dcec786e37615a24c073327"
+    "translationHash": "310c03ea98907b433d8e5f6a11e4fc30f958a370370511968d8be07406617978"
   },
   {
     "pageId": "employee-onboarding",
@@ -305,7 +305,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "13d0882fb3633c7c6ae6cce1500ab6c419f322cdd99cc8fa972b7b2e3db167ad",
-    "translationHash": "89d3f7b4dc32fc81d58b760dfa7885b2ca744587db8dad5b1c45e94f0e9fff90"
+    "translationHash": "4f434ecb3b443c0aec458ef1918dc72ec561e00a46d729be9d746bcf78b7cb94"
   },
   {
     "pageId": "employee-transfer",
@@ -317,7 +317,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c3a397a8433eb86fcacf965c7cb02ad7e3979c3908f40a2eb0376af80e15f64a",
-    "translationHash": "5cf37d69af1ead0b61092b222180570d56da699ae08b713c017f083ec9d1b118"
+    "translationHash": "91ee9138a552375e2d1ddbb127ad50663adf5604ea74dae0de9c41c7072255ea"
   },
   {
     "pageId": "employee-transfer",
@@ -325,7 +325,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c3a397a8433eb86fcacf965c7cb02ad7e3979c3908f40a2eb0376af80e15f64a",
-    "translationHash": "f134602beb97cb07a4f93694a23a089f3574feaf22ca7d5201933a11b2982cca"
+    "translationHash": "8858ebcdfc6c1095d52d04323b2215b8881a14a20be42b43b2e36d1cdd28429f"
   },
   {
     "pageId": "employee-transfer",
@@ -333,7 +333,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c3a397a8433eb86fcacf965c7cb02ad7e3979c3908f40a2eb0376af80e15f64a",
-    "translationHash": "52fdfe76753c365e506fdf084160ce65c6a5a75d805e6b30eeb83ee7f2e5dcf8"
+    "translationHash": "151d6f502ca463f7c69fc50fe2391a763414a9474c734ebdb90aae65b3d7caca"
   },
   {
     "pageId": "employee-separation",
@@ -345,7 +345,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "54b11fc43ca108c9838bd9b176737ddabd4f45f862297ffa5d9a2b2cf4c8dd6c",
-    "translationHash": "a748c4fc2111ee332e4266e628f37f834ce972f637d0fd664c61558b7670ed45"
+    "translationHash": "994695949994772c54fa178bf066d2f83b632f15366ce54ea8df1cc20c4f110c"
   },
   {
     "pageId": "employee-separation",
@@ -353,7 +353,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "54b11fc43ca108c9838bd9b176737ddabd4f45f862297ffa5d9a2b2cf4c8dd6c",
-    "translationHash": "9ad84f8cd202827d520cd1296205474f3a20711ef5b5576a0c8865e7c1b54f6b"
+    "translationHash": "d241d23c238455e4de3d27f4b96612213aab992b2ff871a65d9c264cd0b6cda0"
   },
   {
     "pageId": "employee-separation",
@@ -361,7 +361,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "54b11fc43ca108c9838bd9b176737ddabd4f45f862297ffa5d9a2b2cf4c8dd6c",
-    "translationHash": "71272a839ba388bc5ff3f59e5110340889dd48d1ddff774e75f1f0583dacabfb"
+    "translationHash": "6b5123761e74f81fd4a9a185c1d8e4f7c85bbbca0f84d33cd32ba8818e88c49a"
   },
   {
     "pageId": "leave-request",
@@ -373,7 +373,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "67d3733f80d24b5ea3aea5960b0aa4961dd607f3003b6f9763707a7c3d0a6ffa",
-    "translationHash": "71fbfaf99b9483d87214ffe4da923322e7911713ad7c97d38bba693694f3c897"
+    "translationHash": "6660b8507928a148f39c0dfb495f65b63fd32d2f7c34fbeae3104f9df2a71151"
   },
   {
     "pageId": "leave-request",
@@ -381,7 +381,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "67d3733f80d24b5ea3aea5960b0aa4961dd607f3003b6f9763707a7c3d0a6ffa",
-    "translationHash": "20aa93b28f303ad5a0d65eb7d7cff3bccc9cd4dba16d33e4a790b66727aac4ea"
+    "translationHash": "a8436fec08bcf74e4f2f9f253a715533eb3747569248cd90abbf340e9cceb103"
   },
   {
     "pageId": "leave-request",
@@ -389,7 +389,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "67d3733f80d24b5ea3aea5960b0aa4961dd607f3003b6f9763707a7c3d0a6ffa",
-    "translationHash": "251ee5af405b5180b501245ff4036626dce7c5ba98fc601cd21d581c6b029502"
+    "translationHash": "87b073edf0329518a3b1934bfab0b9a272c5b73b3ccea44d7e6dd66015991af9"
   },
   {
     "pageId": "attendance-adjustment",
@@ -401,7 +401,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9b02f1b9772be525ad790be81d0c6f08325f42b94978752dccf9aac8df0ae6ba",
-    "translationHash": "912c2e86824bf6cc8276c65edb3e5669c0582c0912c8f6ad5b48c7a78db700a8"
+    "translationHash": "112408decbf49299ddfd304bb56f48a2a138301182e3c42eebd010dbccbcbb1f"
   },
   {
     "pageId": "attendance-adjustment",
@@ -409,7 +409,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9b02f1b9772be525ad790be81d0c6f08325f42b94978752dccf9aac8df0ae6ba",
-    "translationHash": "fa7c2868d992530da9ea9b99983046070d8a2c12e7c87c2245fec96120cb7d2c"
+    "translationHash": "ca21431bc55fdd50a42f15324d0a5614e35739be17730f2cd10e4fa1352dc00c"
   },
   {
     "pageId": "attendance-adjustment",
@@ -417,7 +417,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9b02f1b9772be525ad790be81d0c6f08325f42b94978752dccf9aac8df0ae6ba",
-    "translationHash": "e9f9ca918911bd0a1a26c58795107c14ac1ed7ac8feaf5bea76410c028e62c76"
+    "translationHash": "2130515562cb6c74fa902faeaec3bc537a639b8aa2d75a8dd123edd19c6a2b68"
   },
   {
     "pageId": "shift-roster",
@@ -429,7 +429,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ffcec5d18c85c76fd067053bd5ec33c425f8d268f4b08f247c8ae5071d230963",
-    "translationHash": "5236dbf1e805ab5a748e0c672c75896d33a4e3bec90b664c493177c0932698ed"
+    "translationHash": "7db110b5a326ab7a6bc84abc46fd40ec22d3633dc4fa47aac4586100edeeb45b"
   },
   {
     "pageId": "shift-roster",
@@ -437,7 +437,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ffcec5d18c85c76fd067053bd5ec33c425f8d268f4b08f247c8ae5071d230963",
-    "translationHash": "5edfec29153ef87e6fefd735728dbf296c1a32cc07383fc6efcf812c88cfa7b2"
+    "translationHash": "b0ac110c57485b5d24ba1ea57f026fcb98e600a37914415938a77e21ad9becb9"
   },
   {
     "pageId": "shift-roster",
@@ -445,7 +445,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ffcec5d18c85c76fd067053bd5ec33c425f8d268f4b08f247c8ae5071d230963",
-    "translationHash": "d83907bdcf5b87975617056fd04a874e36bb563102d32d302ea354031598ffd1"
+    "translationHash": "ff73da9489c3ecb550af13a872059f2a15a9e236a9f58a1f650811ab8ef719ed"
   },
   {
     "pageId": "employee-worklist",
@@ -457,7 +457,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5e0c9436c5d7580fed4e91ab8dd0b06ea71e9a29dd1646d624d800a11bc8da61",
-    "translationHash": "7f230cc3453d6c91f35d48cd4e2aa5b784c0b2f9df6719cd1a2b2c9734fd53d7"
+    "translationHash": "0ef2ff29b04626bfdce64eab7614fef69c088d5bd2a5c287e0ba84d06c213c45"
   },
   {
     "pageId": "employee-worklist",
@@ -465,7 +465,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5e0c9436c5d7580fed4e91ab8dd0b06ea71e9a29dd1646d624d800a11bc8da61",
-    "translationHash": "86eee4ced31c2ef767c64e8348490e74c3df5756e52dc6b70414b7f76bffb4a4"
+    "translationHash": "f1b8d8175a356c6a38a13b52a19ef61b2c64bf23e1ea9f654cb99d2095ac980b"
   },
   {
     "pageId": "employee-worklist",
@@ -473,7 +473,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5e0c9436c5d7580fed4e91ab8dd0b06ea71e9a29dd1646d624d800a11bc8da61",
-    "translationHash": "3d7ea983cf93ff44f60d0f44ebd48f6a39495411237ee4d81b8bac462950041e"
+    "translationHash": "3caf362c188db8d881e9c4fb0bff18434f5bdf771ded8e28b8743ced30336659"
   },
   {
     "pageId": "approval-worklist",
@@ -485,7 +485,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8c3f4f4f62ec8a4514adcac8eec3098937b0b7097f002db0ddb5b1235f43f462",
-    "translationHash": "fc517b14f7edcfc410e7ee017efa3faee85b5c003374889178731b4a9daf8ba8"
+    "translationHash": "9f73a7c561d9d0347f738ddfbc8d69d576a7fc7ba6befaa54d2aab71a7e08257"
   },
   {
     "pageId": "approval-worklist",
@@ -493,7 +493,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8c3f4f4f62ec8a4514adcac8eec3098937b0b7097f002db0ddb5b1235f43f462",
-    "translationHash": "3977fbf255e713afef0ac81714648da8b723493d08d60782084b8aeb20f261d3"
+    "translationHash": "e89c4da9c9481d564ab275a8ccaecccd819470d8d45ea8725f76a6be05f470c9"
   },
   {
     "pageId": "approval-worklist",
@@ -501,7 +501,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8c3f4f4f62ec8a4514adcac8eec3098937b0b7097f002db0ddb5b1235f43f462",
-    "translationHash": "fbd5ac42b5b0cd9a549860dd1c498211d533d3f58b9ffeb1b6a4fe09be259120"
+    "translationHash": "f449835f908734e332e6cbc19dd114dff34252517f9e4f77c64d37b94a3cdaea"
   },
   {
     "pageId": "attendance-anomalies",
@@ -513,7 +513,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0b2c627a9d5cc3cf30a06ae5ef8a1a966abc85cfc651f0a71ce28807cf48f16a",
-    "translationHash": "017289ab9c88836c61d5378ad35347ebdfe7e9ddc36368667c997c3560984749"
+    "translationHash": "27848cc1851fac9823b55de7249da43adfce23fbee975b98ffb0276c50c76bc8"
   },
   {
     "pageId": "attendance-anomalies",
@@ -521,7 +521,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0b2c627a9d5cc3cf30a06ae5ef8a1a966abc85cfc651f0a71ce28807cf48f16a",
-    "translationHash": "190af7648061b1521e5fa7c9524157c9eae4369102030faf87c5e59554c0158b"
+    "translationHash": "f413ac776a5980bc58660f4cc5272140c1e6854ba60dede731c1a58d89d4770d"
   },
   {
     "pageId": "attendance-anomalies",
@@ -529,7 +529,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0b2c627a9d5cc3cf30a06ae5ef8a1a966abc85cfc651f0a71ce28807cf48f16a",
-    "translationHash": "62d3c74081f8f9fbf10cde99360ff8a069f6972ec4ecf101e1fe22be6d3b3cfc"
+    "translationHash": "5e4f055bf00cc3636accf6d346433d4c07a855897dec94337067014472d6c827"
   },
   {
     "pageId": "workforce-report",
@@ -541,7 +541,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "02bddad1350b6687d18022b4f1c99838607ea88a2948a1650b142940b7aa4a01",
-    "translationHash": "aeaf44591b826d2b5995cdf81866c23b3b381f72861ed61f1f7da49a6e30be67"
+    "translationHash": "9ade2b73a416168fb6c65b7b887b5b75c265448ae3acfd1def5f4681372686ec"
   },
   {
     "pageId": "workforce-report",
@@ -549,7 +549,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "02bddad1350b6687d18022b4f1c99838607ea88a2948a1650b142940b7aa4a01",
-    "translationHash": "c4a8c12f915bd93482e276c0c215b1d67e155e399719975c0b111bf63c6d4199"
+    "translationHash": "e482e7dbde464fcd16e0b3f1ee509766f292e06cd3bfbe591bdb2d5d3d1d3492"
   },
   {
     "pageId": "workforce-report",
@@ -557,7 +557,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "02bddad1350b6687d18022b4f1c99838607ea88a2948a1650b142940b7aa4a01",
-    "translationHash": "42b06c2029fd9e63649cbe8dc075e715531e37579cf3b63369b60ec06781e023"
+    "translationHash": "8cadda0b990ad5f101b919a78da22c25b0d5fc9486c00566227b1ab79b1d5349"
   },
   {
     "pageId": "attendance-report",
@@ -569,7 +569,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f9e59c1e27735817f438008095337b5bd1f5271b0b06e32385ed22ceb87c01e9",
-    "translationHash": "7da1d6ae90ea02a643e764be8b06212b873cb774fcdc6b5670a6d5dbbb668669"
+    "translationHash": "0d9c0b41106e915e529338c8da2c731c4ffd582eff21c009c157f7793a1c363f"
   },
   {
     "pageId": "attendance-report",
@@ -577,7 +577,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f9e59c1e27735817f438008095337b5bd1f5271b0b06e32385ed22ceb87c01e9",
-    "translationHash": "6ff428ff3ff4a7a83c6180c1bd4bb06973b47d5115376c205fc8382e02dd1dba"
+    "translationHash": "41344d4e8ef2c318b6412f626351310f85f802164a6c17f6c4291b43375ccfbf"
   },
   {
     "pageId": "attendance-report",
@@ -585,7 +585,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f9e59c1e27735817f438008095337b5bd1f5271b0b06e32385ed22ceb87c01e9",
-    "translationHash": "f0d641709d49e4e3563fc4f72a1aad4a6707fffc57a13681706980a2c7239c28"
+    "translationHash": "d52543f8aa2393e698c073efa3aa7220cc57b79613cf00b75b2bc0187af0a558"
   },
   {
     "pageId": "compliance-report",
@@ -597,7 +597,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9712b8a17f2afb95fa7f2eee17403c5011e5d5c584fc4c529d8c28c50a0a4765",
-    "translationHash": "9f6348ab48a57a9cd542fe9b8e8eba939d595b46199a15256ccbc229b3e3f43c"
+    "translationHash": "036b92add417a4a46a1281379a0711154613028ff0fff47c2aad17641f5f2a02"
   },
   {
     "pageId": "compliance-report",
@@ -605,7 +605,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9712b8a17f2afb95fa7f2eee17403c5011e5d5c584fc4c529d8c28c50a0a4765",
-    "translationHash": "419798f5f2da0eac0d922dbb9a3d9d627495af7968d7432ce3196c88048ed991"
+    "translationHash": "53e3e82f15d3cd4d9f4cadb8defc9457de268743280bbdc0905b0b571d4428f0"
   },
   {
     "pageId": "compliance-report",
@@ -613,7 +613,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9712b8a17f2afb95fa7f2eee17403c5011e5d5c584fc4c529d8c28c50a0a4765",
-    "translationHash": "c24ba379e7532a9f22606eb4d7568460f2faaec15cbc20578545ce50495a818b"
+    "translationHash": "7bf786169a6f3c1c6fff9b4bda6037622ecab05f142dfd30a287c0943d2e5767"
   },
   {
     "pageId": "hr-policy",
@@ -625,7 +625,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "83b53c018d80d19f1f6301cfc9ed1f5a21b6ef08387d6df480be68e2b7893d7b",
-    "translationHash": "b0910a8204d7e5760c2198f65e7380a640fd3bcf338de61a67475316ded30e02"
+    "translationHash": "7c26c9d5e9721e13277dd4529d3d37d7ee60442c2beff8b31a0a3ec3e60c38b4"
   },
   {
     "pageId": "hr-policy",
@@ -633,7 +633,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "83b53c018d80d19f1f6301cfc9ed1f5a21b6ef08387d6df480be68e2b7893d7b",
-    "translationHash": "da3e39627c2e930629e3c990ff1dfd465daeaef9d94de3f37774c22922d303f4"
+    "translationHash": "2269d35edc3951438cf36f007e5b14fe4da0bb70c96f630ff6855bd784d4c41f"
   },
   {
     "pageId": "hr-policy",
@@ -641,7 +641,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "83b53c018d80d19f1f6301cfc9ed1f5a21b6ef08387d6df480be68e2b7893d7b",
-    "translationHash": "0fedd6ed417cc1b480c326099e9b16237dee37d4576d12c463e697feb9904e3b"
+    "translationHash": "cef20ec8d61913b678de7ff773792ba3d2ab088ac38c65539b27f4820edfccdb"
   },
   {
     "pageId": "hr-numbering",
@@ -653,7 +653,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d142efc24ea1cbea8a9cf9fc93d6186626fa03c878b77506cbf64f84d6cf8d96",
-    "translationHash": "fefca792829520904fb7f3b50317feecdd97c11b3ee6e9907508bff1b864b0e2"
+    "translationHash": "c72cec543adfe5cc2b43be1998bcafbaedbaf97ba178d9a4ac2a10c0f07256fc"
   },
   {
     "pageId": "hr-numbering",
@@ -661,7 +661,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d142efc24ea1cbea8a9cf9fc93d6186626fa03c878b77506cbf64f84d6cf8d96",
-    "translationHash": "08ea3acba46625f4fb5ec932248b060d6c07b15145097bfac609fcfe85191096"
+    "translationHash": "1f8ff5d0741c35cfe37123a97c0ec24aad418bc6ec4c1708332c5cbda4201b04"
   },
   {
     "pageId": "hr-numbering",
@@ -669,7 +669,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d142efc24ea1cbea8a9cf9fc93d6186626fa03c878b77506cbf64f84d6cf8d96",
-    "translationHash": "e17a9e030aeb078b3a9216d15c711f9e3b663ab0a5801e50d67b0216af9a5da8"
+    "translationHash": "595bf4ddaf08e87fdd7d695e711dc79862cabcfd3ed84b0b5a4f9db3ff96a4dd"
   },
   {
     "pageId": "hr-workflow",
@@ -681,7 +681,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7895a52aa601c3cbdfe9b7be7803f12bd1eaba37edc6f4ce3fab940c4d9d4485",
-    "translationHash": "385fcb56af47d06547b79864b3f510deb59d22e2a54d0d7eba0ed7189bda885c"
+    "translationHash": "3738519684ce050b0b82b97d0e1303b557a3f6f292a4fd57ef82bbab9dc28609"
   },
   {
     "pageId": "hr-workflow",
@@ -689,7 +689,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7895a52aa601c3cbdfe9b7be7803f12bd1eaba37edc6f4ce3fab940c4d9d4485",
-    "translationHash": "54616ee565cc140e377b0847fd39dfec8cabe7d9c72c4bbea25abf7c4a2669a8"
+    "translationHash": "4196f13e4e676d84281d6c633723619023220fd2da62bb5e21e06d0eca1062a6"
   },
   {
     "pageId": "hr-workflow",
@@ -697,7 +697,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7895a52aa601c3cbdfe9b7be7803f12bd1eaba37edc6f4ce3fab940c4d9d4485",
-    "translationHash": "100b145a4930d6029608a03f573eada0a1a069a6cb41a63529a42e3e54dfc831"
+    "translationHash": "c39c24ace6456d7061a369451d9bd0b69ce6cb38f13bde6282428737efaf9988"
   },
   {
     "pageId": "finance-dashboard",
@@ -709,7 +709,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d3c58d5177877633e4ddce90e5f090b7ba38173547d3fa0037ed9adea85dd0f5",
-    "translationHash": "996a01299adc6070c2ca0182c44a74f0c877b65b1b888e8c7e97a3a48e78e385"
+    "translationHash": "f60a84788282b67fa7a052d5850bbf44991472f48342d9988c1ac50c27325fe8"
   },
   {
     "pageId": "finance-dashboard",
@@ -717,7 +717,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d3c58d5177877633e4ddce90e5f090b7ba38173547d3fa0037ed9adea85dd0f5",
-    "translationHash": "f565aa2c380b415fc7f0c3f5622bd21dfb8800154ea267501ac358a28322a0ac"
+    "translationHash": "17c9ec6581e3a4f39e1b7005752b53d8f70f4a68b9f3925b5d5045b8d6aa96bb"
   },
   {
     "pageId": "finance-dashboard",
@@ -725,31 +725,31 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d3c58d5177877633e4ddce90e5f090b7ba38173547d3fa0037ed9adea85dd0f5",
-    "translationHash": "9657abe0120eaa6a0b5f0669b98233f64e7981455f98a1b5aba93a4f5eb99bcd"
+    "translationHash": "29d1a5cd4a38fe1cb618c98be9959c4b3133691451c539fd64c4eb5b18035ba6"
   },
   {
     "pageId": "customer-master",
     "language": "ar",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "8015545e7d2e0b468e42656759922e0f9884c368fd17b5be3899de50f501b21e",
-    "translationHash": "86433508cc6e8377b0c183fba16b281ae532635f4ed8a480d7c1e1ce22671058"
+    "translationHash": "e7ea4f049b1b82af2a51369dbca3bd21f281f5d51584ff64192e6b3dd6411b0e"
   },
   {
     "pageId": "customer-master",
     "language": "hi",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "8015545e7d2e0b468e42656759922e0f9884c368fd17b5be3899de50f501b21e",
-    "translationHash": "0ed2a11e2e32b2a2664617f04ce5ebd2d0b9bd1ae0806e002ca43bdee332fe1d"
+    "translationHash": "0693ee2a3d74ebd07108620629c4d41645287afb3e1c91d40ba454c3f7aa9e90"
   },
   {
     "pageId": "customer-master",
     "language": "ml",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "8015545e7d2e0b468e42656759922e0f9884c368fd17b5be3899de50f501b21e",
-    "translationHash": "4b3b0acd3606db1ffba813b803f72c6ee58a1b07c766eacb77c089eb3b8ecd5d"
+    "translationHash": "9cabdbe0a8d067113b2ca13c7cad86faf8a61714545a38b9fdec6a74ce533194"
   },
   {
     "pageId": "supplier-fin-master",
@@ -761,7 +761,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "05983f85c770b1e061e9526b0656320624bb9b40cad1d0fec48edf276003b426",
-    "translationHash": "ce488e54e18c6f08f7c5b92e392656242a0f6e37e7d831938b0d6132abbfb2eb"
+    "translationHash": "4b0891cd22a50e161e8333352e691167b6ecdac101946e82430c6397ac152b9a"
   },
   {
     "pageId": "supplier-fin-master",
@@ -769,7 +769,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "05983f85c770b1e061e9526b0656320624bb9b40cad1d0fec48edf276003b426",
-    "translationHash": "34086d58d175633acb4f9e4d4aee4911f24cf161f628b2dfa01c3971aa2f31fb"
+    "translationHash": "d506048cdaa155a12a2786c7b7440e3a4d63eb17ea3644b3868ebde1e62ff4d5"
   },
   {
     "pageId": "supplier-fin-master",
@@ -777,7 +777,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "05983f85c770b1e061e9526b0656320624bb9b40cad1d0fec48edf276003b426",
-    "translationHash": "469a62c9aff91988d6d53459ac6e5e8ac79931fb6667666aa6037a925d0f87d2"
+    "translationHash": "f5142fbed1847c7e106e216ed33cfcbb3c7fa15c5f21217cc843cfd4a2e8b15d"
   },
   {
     "pageId": "credit-profile",
@@ -789,7 +789,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a55afc10019f8340282f74299eca92e986dee3835d75079f6eb46ada696d0505",
-    "translationHash": "24a8bfc9b185149b0ca37e2693cb4bc66608b62735fe5bf970517a14bf34a9d4"
+    "translationHash": "c3a1bcc6902aa494e5c1e3bb3ecbc67e447d5b6c3d5b17a9e6250de8f9f76632"
   },
   {
     "pageId": "credit-profile",
@@ -797,7 +797,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a55afc10019f8340282f74299eca92e986dee3835d75079f6eb46ada696d0505",
-    "translationHash": "cb96a983b211050b5a5506c1869a8cb4635ca7b05856ffb0a75d762e3b13166e"
+    "translationHash": "c63443966a9a2e1b677f57924689a653a0beadc7ca17286b3f6365a189433fe5"
   },
   {
     "pageId": "credit-profile",
@@ -805,7 +805,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a55afc10019f8340282f74299eca92e986dee3835d75079f6eb46ada696d0505",
-    "translationHash": "c11974b0a499a52644660b3ef29e685d423de09fb92848cf3321c40481ffa780"
+    "translationHash": "1bf8676d84aa0a69b078ef101a238c94cd965d3edfbe696535265e2ab7db1319"
   },
   {
     "pageId": "chart-account",
@@ -817,7 +817,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ed3b9e5af17fa5b23a89dd4484ec91d9496ce33c739782dba1f10e2fa09aa74d",
-    "translationHash": "52ccb80de74ddcdd05e1430cad90d2d598ce254e48f5b4188de5a54710a6a106"
+    "translationHash": "805839243a440fa95348d9e136828bed7aa8847ae51edbaf4d5ade9d341684fc"
   },
   {
     "pageId": "chart-account",
@@ -825,7 +825,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ed3b9e5af17fa5b23a89dd4484ec91d9496ce33c739782dba1f10e2fa09aa74d",
-    "translationHash": "51e38fd95cfd2d3560e6a28c3a2dfd04b88d70b9273d25d6d0261defc6380bd2"
+    "translationHash": "16a4bf7fda7916b1db57f47f75cda8635898e7f516809445a13912bdba1f395c"
   },
   {
     "pageId": "chart-account",
@@ -833,7 +833,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ed3b9e5af17fa5b23a89dd4484ec91d9496ce33c739782dba1f10e2fa09aa74d",
-    "translationHash": "44cb03b656da0acca683eaad35d51203341e3100ec1ac555ce0d9076498bd3b4"
+    "translationHash": "3dfc11cf9fec6cd0ae5b78dd02a3523780c5d374d2b394573fbcdedf9aa02493"
   },
   {
     "pageId": "cost-center",
@@ -845,7 +845,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "84d3956e808ba1dc469771d5e7b134c1405abe8538454717f8acc47f91ec4515",
-    "translationHash": "dfd9e6fcbf9ae67c3c57a9d7a21fcd8fa6cbd67527cf2a0b9ec7eee2c88f2996"
+    "translationHash": "2661d95fdb4dfae5473a727aa0a08a086fce089e28b2536385e2d2896191b554"
   },
   {
     "pageId": "cost-center",
@@ -853,7 +853,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "84d3956e808ba1dc469771d5e7b134c1405abe8538454717f8acc47f91ec4515",
-    "translationHash": "d93a2c48b776d088e87f9e94a6a4d0f24c3c23f7d90b212fc9df14d98d53ca26"
+    "translationHash": "4ed37a0f9398820bebfdcff8c5f88c7108d01db585a065f1125b1924cfa2e2d2"
   },
   {
     "pageId": "cost-center",
@@ -861,7 +861,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "84d3956e808ba1dc469771d5e7b134c1405abe8538454717f8acc47f91ec4515",
-    "translationHash": "684b594e2bff89850ece2efa01e5d7bda33f38289eb3caf9286b05a81e6b6f7a"
+    "translationHash": "7cb0b1aa9c182dddaae1b3046e41c9d584615ed91c2f3591f52f4587a3fa1f49"
   },
   {
     "pageId": "bank-master",
@@ -873,7 +873,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "489431e8232c1629bdc16186543fba038224176dcec5a3a6b5e8733b304ad36b",
-    "translationHash": "43df88daaf021865ba541ce32591dabb816e1d06621c077d931cb685fa2c4909"
+    "translationHash": "0a1edde585c858f8c409db094f17e546031097c6e182e0c92f759f02ec92255f"
   },
   {
     "pageId": "bank-master",
@@ -881,7 +881,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "489431e8232c1629bdc16186543fba038224176dcec5a3a6b5e8733b304ad36b",
-    "translationHash": "c9c6def155c1fe4e3e5735cee6ea9495a5b8635e5894a5c19115e4f16fa126de"
+    "translationHash": "77bfec97855f169c4a6bf94b633a3b2acb92c5606d06a9d15c1b7baf3715dc47"
   },
   {
     "pageId": "bank-master",
@@ -889,7 +889,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "489431e8232c1629bdc16186543fba038224176dcec5a3a6b5e8733b304ad36b",
-    "translationHash": "8572fd696530f83989646c1815dbac91f52260dad3091d4452ab44f35318e780"
+    "translationHash": "60801719f45d7268f1787c98490a041b13777a9270d0be171026315c6f08e54f"
   },
   {
     "pageId": "tax-master",
@@ -901,7 +901,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b3519e648ebccaeedeae2a33ce42162009b379634e4167fee63ade5f23664b0b",
-    "translationHash": "68634bfa9739794169abb9377c92af70c76a9c9f1c87e3a2fc41c81857fe22c2"
+    "translationHash": "59327ae317dabac8c61ee2a78de98cdaa8e3e6ea23d43093e0bddc0fba6aeb91"
   },
   {
     "pageId": "tax-master",
@@ -909,7 +909,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b3519e648ebccaeedeae2a33ce42162009b379634e4167fee63ade5f23664b0b",
-    "translationHash": "94ad84c3fa59347573211fe5056a94c1c93c61e9efc49e2d7e9982456f4a8d1e"
+    "translationHash": "3224c4d6846c09e35fd0cccc071d6b30de10e8fe938eadbed7055bc21b9953e0"
   },
   {
     "pageId": "tax-master",
@@ -917,7 +917,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b3519e648ebccaeedeae2a33ce42162009b379634e4167fee63ade5f23664b0b",
-    "translationHash": "398ff6abdfa17e9bf042686fffd2e64d15c1f95dddaff590bd7610c732b6016d"
+    "translationHash": "b06ba5d0c6caa4334076f74a0e593d70c01bd1e90d4509c23852c8ef63eb5880"
   },
   {
     "pageId": "jurisdiction-master",
@@ -929,7 +929,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9755cdca818df1e485a5da3af25147b8503debc64d595adc43150cffb581f975",
-    "translationHash": "2035e5e55198b88b8b3ef36c96f0f2fca083c1ec38bae2baa805fa576a4e279a"
+    "translationHash": "e7862ef864a36bc82673d3f3c8d6755d41bead1f92613a637a07b58e9440fd87"
   },
   {
     "pageId": "jurisdiction-master",
@@ -937,7 +937,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9755cdca818df1e485a5da3af25147b8503debc64d595adc43150cffb581f975",
-    "translationHash": "585a6f33d454233c3dca7be8bba6c3a44d38e2b249f03ad86152f15034c3b823"
+    "translationHash": "4a5f54393b3874e3ab6845424a9383b4ad33295e029895f0d3e5e0fb926cfb6a"
   },
   {
     "pageId": "jurisdiction-master",
@@ -945,7 +945,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9755cdca818df1e485a5da3af25147b8503debc64d595adc43150cffb581f975",
-    "translationHash": "abe375974d4d6850773f5756e2ff7f9295beaaacdd3e65a3cb8bbea2626306a3"
+    "translationHash": "17274a1438fe03efc51a0b71cbc66058e05368c8b35967ae9b4b110f0b89dfbb"
   },
   {
     "pageId": "fiscal-period",
@@ -957,7 +957,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "667c7472d2ef5ce1da6037d6230026932da6c09980c0faef5f1dc88f6237cd16",
-    "translationHash": "80de062f0e8123d6395812751b4bdd6051e3a3c46c0f737a2a402dcc6f47b87a"
+    "translationHash": "4c49dbc6b3329eb4856be9bb968eed1b03b565b2dd263d69f65d766890e919d1"
   },
   {
     "pageId": "fiscal-period",
@@ -965,7 +965,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "667c7472d2ef5ce1da6037d6230026932da6c09980c0faef5f1dc88f6237cd16",
-    "translationHash": "c3464932a7ab4966c92efa8171bd8d6b76d48bc9f0a516f57d8eb445fa51d87d"
+    "translationHash": "18043de5c2a22b2de0756ecc70036ede92cbf7e5b77e4bab467fe7f696ad2ae4"
   },
   {
     "pageId": "fiscal-period",
@@ -973,7 +973,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "667c7472d2ef5ce1da6037d6230026932da6c09980c0faef5f1dc88f6237cd16",
-    "translationHash": "bd775b96582008b2d6ae51a5762146903445dd68ed13b26486809efef9497dab"
+    "translationHash": "1f399aa84a2f208abb35138a9302c954468d330580f205f81cd5c00b15828fe7"
   },
   {
     "pageId": "billing-entry",
@@ -985,7 +985,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "66b64e6afc0739bc66a52ea6726799cd64cda0ae31d8e653963ab425d63834d1",
-    "translationHash": "3dd9ac4a8ec1ab2f3e5d80f90fe283813d860fd41bebbe46c45cd3cce44b94bd"
+    "translationHash": "28640c78f42a5f4a28ddaaa6a9ed5342193b902b6c6f286ec777c55ad5dc5939"
   },
   {
     "pageId": "billing-entry",
@@ -993,7 +993,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "66b64e6afc0739bc66a52ea6726799cd64cda0ae31d8e653963ab425d63834d1",
-    "translationHash": "44d2c90fc74c04fb6979c3cce609da1dac1a52438d9bf9ba07790cdb9bf0356e"
+    "translationHash": "e04b7337a3ff8f6a172d501713329243ec105fbeb92ad88c4be7dfc3d87af047"
   },
   {
     "pageId": "billing-entry",
@@ -1001,7 +1001,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "66b64e6afc0739bc66a52ea6726799cd64cda0ae31d8e653963ab425d63834d1",
-    "translationHash": "6c2fadab0ac80fd9a6905e69292a3b3b72c280a8e43b0fe97fed88fb22b4f79f"
+    "translationHash": "bce536efc8a56b9726c332081c8476537af82b06c8993e8e12c856f716c9d2b9"
   },
   {
     "pageId": "credit-note",
@@ -1013,7 +1013,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9bc097d3be62f96ea19da23c37a30876d694f9b0efd96c1244973c99478950ad",
-    "translationHash": "638834723651380a2c0a648001057166e20fc2564c6fe8f801c44968ec78bd1a"
+    "translationHash": "55f9eab12ce07fc5d6d817501bed926fd93154231fdbd56ed573769b35b8b858"
   },
   {
     "pageId": "credit-note",
@@ -1021,7 +1021,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9bc097d3be62f96ea19da23c37a30876d694f9b0efd96c1244973c99478950ad",
-    "translationHash": "ea1e25bd40efdf688dd9cb2d9d32029a7af8a6ddcc5496d4141a7a92abccf597"
+    "translationHash": "29eb02b66f2fbe6df351e66242b4d3b2a431538457f9b9fe8f7e2738dd88b301"
   },
   {
     "pageId": "credit-note",
@@ -1029,7 +1029,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9bc097d3be62f96ea19da23c37a30876d694f9b0efd96c1244973c99478950ad",
-    "translationHash": "a8bb08b4614201c0f8b3a7bd25ee81579ae4e0e2fc86e6d8061368806a35916d"
+    "translationHash": "3e70adad788742068a4922f5bd3efeb4363e8d0b86db6a4668b1ad1d6ef3e2bf"
   },
   {
     "pageId": "receipt-entry",
@@ -1041,7 +1041,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "29ef36daf0aef580067373eb9e915773eae5b4b73de5fe5d5e48fa217fe0e202",
-    "translationHash": "d2c0ebeccf34aabbb1b90f2e08f19fab00ccdd5d06da80cae5781424882d78a4"
+    "translationHash": "eb6b6535d0b275a17741c0bc4f41a0c1f1b8476d6edfe1d2ccb4e84f4c2cb5e7"
   },
   {
     "pageId": "receipt-entry",
@@ -1049,7 +1049,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "29ef36daf0aef580067373eb9e915773eae5b4b73de5fe5d5e48fa217fe0e202",
-    "translationHash": "26b15173d474b872d2667b4bf731cc305ba75422b0240f0ed0944b60478b90d5"
+    "translationHash": "ac95d443548b42f863a9e36d93b8fdeff3e63f23fb1d36588e6c87e3f12f76e4"
   },
   {
     "pageId": "receipt-entry",
@@ -1057,7 +1057,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "29ef36daf0aef580067373eb9e915773eae5b4b73de5fe5d5e48fa217fe0e202",
-    "translationHash": "a37140757484e094be8bc558ab941c4c7ed772f775d2ad22b6fc3181bb08f719"
+    "translationHash": "9d6a3be20651a32ab608c652252ee6be43e3870694b5e9973a483f24bc53855a"
   },
   {
     "pageId": "journal-entry",
@@ -1069,7 +1069,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d169228acd7618cc9c8d93b7b399450630fa616dada095a84c5427057703c806",
-    "translationHash": "610204575e2c458fc66cff0de9a54d04d5ffbf6898844a173059a73d2c462b2d"
+    "translationHash": "a6c0517c472bf1990224c52f1036cc5abe7dfdf5ec861028190b73ee95d76f63"
   },
   {
     "pageId": "journal-entry",
@@ -1077,7 +1077,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d169228acd7618cc9c8d93b7b399450630fa616dada095a84c5427057703c806",
-    "translationHash": "2e3f7043a8adb986bc63fa7030a9751f4964f0e079473982dc72586bcfb02aa2"
+    "translationHash": "3655d264d12d226910b15cb5b1dfb328bfe43b6e4e5e35ca5f1501a672ff1083"
   },
   {
     "pageId": "journal-entry",
@@ -1085,7 +1085,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d169228acd7618cc9c8d93b7b399450630fa616dada095a84c5427057703c806",
-    "translationHash": "dde510fad6c88d3a0b4b665993145f5ed1ab71dc42120cd1a8efecbfd5abad6b"
+    "translationHash": "73931c2a64bb47528b5e3ea93137b1c8eb5594ac784c2dd3d7cd265dfe2232f4"
   },
   {
     "pageId": "expense-entry",
@@ -1097,7 +1097,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6c5add489be8a1132bb0f00f827e781be5d067b094561b608e75d15b6dcba69d",
-    "translationHash": "1362b6e0ee444881b67e1f7b70cdff595b733e43e6627d8d42ec8e3653e53997"
+    "translationHash": "9e0317076910f4ce2c3fbc236abc2b6feceefaf9e38c240b8baaad62734321b1"
   },
   {
     "pageId": "expense-entry",
@@ -1105,7 +1105,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6c5add489be8a1132bb0f00f827e781be5d067b094561b608e75d15b6dcba69d",
-    "translationHash": "f54883ea33bc4dbe18a44d90da079d3563e10dd24648442ac77af377dc4a852e"
+    "translationHash": "cc10d4ac829b9ac78570443be18678c56f1b48b1a51de68444bcdbc4af19839d"
   },
   {
     "pageId": "expense-entry",
@@ -1113,7 +1113,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6c5add489be8a1132bb0f00f827e781be5d067b094561b608e75d15b6dcba69d",
-    "translationHash": "7b65d991797822f01798e5844edb87763d80a191c06ca81d2f26e20c83cd4e02"
+    "translationHash": "55e528cb48eb5fb9736dc7fe4d0c62d4d03212bc40b4cf967620fe62107dc144"
   },
   {
     "pageId": "bank-reconciliation",
@@ -1125,7 +1125,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e3b6fec7fd70b3506faaf8cf8ad5bddb92689f8568c2a1fc140962d7562e3370",
-    "translationHash": "8a0b4c6f006602e9edd03cfa5237d65c35765b1f70706d7adfb764ac4577222f"
+    "translationHash": "fb1c9f63560cfa80c7b99800523e845b8824b0776fba9dad1dbc17a9a2e2c8cf"
   },
   {
     "pageId": "bank-reconciliation",
@@ -1133,7 +1133,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e3b6fec7fd70b3506faaf8cf8ad5bddb92689f8568c2a1fc140962d7562e3370",
-    "translationHash": "124698d80533bea148df256b503b8d97a6ae2a590ea35917bfb847803a2d1d80"
+    "translationHash": "888fed575f52df721bdb521db4fb1ed490f2e6e7655492873ef4a009483e67ba"
   },
   {
     "pageId": "bank-reconciliation",
@@ -1141,7 +1141,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e3b6fec7fd70b3506faaf8cf8ad5bddb92689f8568c2a1fc140962d7562e3370",
-    "translationHash": "811dab5df4ac922292680a5b04d7a83bbf95751edf5234918e58381d86e49e64"
+    "translationHash": "3237c6a958ac82d73e887e414839628f5e2263b0a7dcd5c2b63af20f5e9e15b6"
   },
   {
     "pageId": "billing-worklist",
@@ -1153,7 +1153,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2f96876baf15abecb63cc0be6fd3946f18c69e27b1d91b2c439ba8bad74c7e36",
-    "translationHash": "842bc9a459fa977e7a9c6c8e16cecf625ce0f930206ab3068343f974a89bd35b"
+    "translationHash": "56e2ef4d481c3cd674077d841e28c9673ab8da9274f896a1d214ffc783b43e77"
   },
   {
     "pageId": "billing-worklist",
@@ -1161,7 +1161,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2f96876baf15abecb63cc0be6fd3946f18c69e27b1d91b2c439ba8bad74c7e36",
-    "translationHash": "59e6e9d5e7ff9f1cbaad874e241533a09cb942fa18513f0f132a9b90814b73a3"
+    "translationHash": "df22752c54ddf6e68d3d4eb826f4ef7a4a92a4ee97fbbbd43948e32c92b71537"
   },
   {
     "pageId": "billing-worklist",
@@ -1169,7 +1169,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2f96876baf15abecb63cc0be6fd3946f18c69e27b1d91b2c439ba8bad74c7e36",
-    "translationHash": "941fb84cad120f6982f7047d2b479a956a66daa319b529ff0de82272d29a7a83"
+    "translationHash": "ade0d0a9a856fd49da7bcd5b54b3dca442348c315adc3aca09bcb751014f5b8d"
   },
   {
     "pageId": "receivables-worklist",
@@ -1181,7 +1181,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b0a684447b171df5dc219f62b8af2efc6a6f0f3b188a29a6efa7fb156dac428e",
-    "translationHash": "ff82c898308cce750bf26b67e9c50bd99895b078abdb74aa01ef5fd390bb7591"
+    "translationHash": "30be4d649c9581717c6de754aab3e1a879caec79896ff4d66b727bc23bed316b"
   },
   {
     "pageId": "receivables-worklist",
@@ -1189,7 +1189,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b0a684447b171df5dc219f62b8af2efc6a6f0f3b188a29a6efa7fb156dac428e",
-    "translationHash": "38b3d7eaccb699d123517bc4d152cbdc1f5fb92aaaecba538b3ff36b94518dfc"
+    "translationHash": "9a4bf1708be172520a69e8ceeffe8bc34392e08435e016f8cbc774e4b8fa8a1b"
   },
   {
     "pageId": "receivables-worklist",
@@ -1197,7 +1197,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b0a684447b171df5dc219f62b8af2efc6a6f0f3b188a29a6efa7fb156dac428e",
-    "translationHash": "0940922f9eb3e98a990071fac7995ce19cd7b8edc2493b7ca9867fa170ad0622"
+    "translationHash": "7d58e87b2bf35316e6cd27f948def7ec9395448867e485e4087032452921e9a4"
   },
   {
     "pageId": "journal-review",
@@ -1209,7 +1209,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "702dcacf7f8ff83cd4a191b44e8f70098263001f48044cb6caf37911e6a8dde9",
-    "translationHash": "82d0985b1ff5c9e926f7f03fffa9ebf61481604e188930fcbc258c03975f5019"
+    "translationHash": "5264490be761280891f613a5a2f445eb3d1a8015d03222806c0fa351d66c19b5"
   },
   {
     "pageId": "journal-review",
@@ -1217,7 +1217,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "702dcacf7f8ff83cd4a191b44e8f70098263001f48044cb6caf37911e6a8dde9",
-    "translationHash": "74eca30a20906b2d928dc2f74549d3a7f1192cb5729c9543c83034603c72cb85"
+    "translationHash": "5b6439055f328efae8c76c2a626455b82f6385565599df62418faba8ae57aceb"
   },
   {
     "pageId": "journal-review",
@@ -1225,7 +1225,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "702dcacf7f8ff83cd4a191b44e8f70098263001f48044cb6caf37911e6a8dde9",
-    "translationHash": "747f401627a50f85c3c018d739d5bfe1c6038371875091eb85481273ebb8296d"
+    "translationHash": "1cee1bf749cf82fe8f94e04ce757c68142f8d23ed7a80834999264033a665b45"
   },
   {
     "pageId": "profit-loss-report",
@@ -1237,7 +1237,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0a04061e691d86dba4bff532ed1e04ff4580ff77aa08391ed4b0dacaae5f7685",
-    "translationHash": "f3f68b7488d5ecbaadce7f3b1348ed2feb37a1b88e0c2fca2a640486cef9ff49"
+    "translationHash": "f81dee187f6331acf6b711a5ad2a34362449523d54577171040a559e574cedfc"
   },
   {
     "pageId": "profit-loss-report",
@@ -1245,7 +1245,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0a04061e691d86dba4bff532ed1e04ff4580ff77aa08391ed4b0dacaae5f7685",
-    "translationHash": "c483639c8ff29a3d9ab9ceaedd554b02c8961567f33b9c267a2353f06d38f1c3"
+    "translationHash": "412574204fbae3def1ecca71e531c346b75bb29b397efeddfd7db03c83802575"
   },
   {
     "pageId": "profit-loss-report",
@@ -1253,7 +1253,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0a04061e691d86dba4bff532ed1e04ff4580ff77aa08391ed4b0dacaae5f7685",
-    "translationHash": "6d6bd94f311ff5b9b075f5442b0db16eb2b9bd1a1c9000b7005d5737022ac582"
+    "translationHash": "b84896c50a93188f5740fd957a82b24426b8fc9ea9344797db9bbe5d640e5c7c"
   },
   {
     "pageId": "balance-sheet-report",
@@ -1265,7 +1265,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "64c2f6e3df364406c3c48ef695d144e194912e7bc9cc9bee780186b72f73063b",
-    "translationHash": "e9fb1b855f1652dd68e851b36068d3dae7d77d6e50f3727a12030ba492d68a08"
+    "translationHash": "345f5ae60433dde7fdd3007fbf16a9f5b68baa007e058f2827842f59bc4df2a7"
   },
   {
     "pageId": "balance-sheet-report",
@@ -1273,7 +1273,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "64c2f6e3df364406c3c48ef695d144e194912e7bc9cc9bee780186b72f73063b",
-    "translationHash": "dd1f64938307e40e3060e85eda7c4dae5f321392a903bf2b776fd04ee846d7a8"
+    "translationHash": "9583f24c8dbcb3ab7383daea01fcf98e209aed513a5a7fa0d6eae3f5c6566e55"
   },
   {
     "pageId": "balance-sheet-report",
@@ -1281,7 +1281,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "64c2f6e3df364406c3c48ef695d144e194912e7bc9cc9bee780186b72f73063b",
-    "translationHash": "9706db450f64e2e3204cb28d73298e4a540e7667a67dd879b20bb8712b076e62"
+    "translationHash": "51cd0632fac6248335de114a54d075b5a42a3a0142f75ee2bf88111ef8a2a87f"
   },
   {
     "pageId": "ar-aging-report",
@@ -1293,7 +1293,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "70fda3d1b4032c854f04c67656b6d82bf973df457f536a3e731290f3ed8dcdbb",
-    "translationHash": "095f121f97bbed8fd9d6dabef05aae909d8e5120a6c8d870ea86b43991f976f6"
+    "translationHash": "a0ccd211f4e9dd54d8e440bc3d876355d31f16f3181651c5667155d8052248ba"
   },
   {
     "pageId": "ar-aging-report",
@@ -1301,7 +1301,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "70fda3d1b4032c854f04c67656b6d82bf973df457f536a3e731290f3ed8dcdbb",
-    "translationHash": "88a15a186803a8e74dd53138adb3482a326cdecf0198a4e84ff9aa13c79c1ba0"
+    "translationHash": "32a633706c77d5c891496c32887f11a8125546a9ccc6b7ffd2debbb2ca75b226"
   },
   {
     "pageId": "ar-aging-report",
@@ -1309,7 +1309,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "70fda3d1b4032c854f04c67656b6d82bf973df457f536a3e731290f3ed8dcdbb",
-    "translationHash": "a3727c429d449b2afb0fc35b67660f3a8b31fd256d88b8a2e70bf0254c580557"
+    "translationHash": "929247fdea88482a254a00d79b1a367383fd6ea244177ed6126c9c43f27ce50e"
   },
   {
     "pageId": "tax-return-report",
@@ -1321,7 +1321,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "432f97212f745f3e83ff2778648938f0e89ca7fbdf6ff8299339d0c32a1392ee",
-    "translationHash": "ab6619f33be427f7f271c6f15a6829f39a06bc20c42adbc16747a782f5454d0c"
+    "translationHash": "66d7699f8309bf8c2c991467a4fd72e819d76ab57cd20c5c6ee999e62223d849"
   },
   {
     "pageId": "tax-return-report",
@@ -1329,7 +1329,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "432f97212f745f3e83ff2778648938f0e89ca7fbdf6ff8299339d0c32a1392ee",
-    "translationHash": "58a644a94475f8a615d9da0eccd4bae6f8751a6edcb14b2be45a92112a5805bc"
+    "translationHash": "9386fce4396171e76a3495f0815d87099da90d7024b9974d4d9869bfb3d24eec"
   },
   {
     "pageId": "tax-return-report",
@@ -1337,7 +1337,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "432f97212f745f3e83ff2778648938f0e89ca7fbdf6ff8299339d0c32a1392ee",
-    "translationHash": "abf676a99a14733df903e0279a43827e7b2cf795644ed557cec9bbfdb9e27058"
+    "translationHash": "cf40580e6e4d1c7c591746403c643f68775b2d026d3fabfb08ec81d0c346e624"
   },
   {
     "pageId": "currency-config",
@@ -1349,7 +1349,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1862c1c8efb2a01c895b50c2fab5925a4fc0a8068102e533203a515ac6344f8a",
-    "translationHash": "55e07cdd67c437fafedffee4a828fc3495c09c20dc9fb986bca6268fed4d7e8c"
+    "translationHash": "8c98f11df6752ab51228d201c749ed95b19e639b93506739ffafd10b4f96d8e1"
   },
   {
     "pageId": "currency-config",
@@ -1357,7 +1357,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1862c1c8efb2a01c895b50c2fab5925a4fc0a8068102e533203a515ac6344f8a",
-    "translationHash": "6b58bcbfe74ce10ab527eb10a330d6fad142b82ce303bafdbbb60a0fb936b417"
+    "translationHash": "4491e31a4bf1b0eeff5c5ef4292eb686c693d8b9029955c4ecbf44b42e59ec8e"
   },
   {
     "pageId": "currency-config",
@@ -1365,7 +1365,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1862c1c8efb2a01c895b50c2fab5925a4fc0a8068102e533203a515ac6344f8a",
-    "translationHash": "dc56c83ed16253e4f5c5c07db7235fb1fee42c1d83909892642ddadb97476bbd"
+    "translationHash": "ac9150c7840f7bf1b04ca20735df005bbfbd67edbff14044424b83c2110a7b12"
   },
   {
     "pageId": "posting-rules",
@@ -1377,7 +1377,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0b8b53141804cf0b61777ffb35276821cae6c94e62672a7433f64e43da57904f",
-    "translationHash": "eb8885a5097d4221debe6e8c2beb34fbb597f074fddadb7900274b7ec88ed011"
+    "translationHash": "ac752b740642d772f74ffeb541cde40cd626fc17a4922b07d233d7b1884ca970"
   },
   {
     "pageId": "posting-rules",
@@ -1385,7 +1385,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0b8b53141804cf0b61777ffb35276821cae6c94e62672a7433f64e43da57904f",
-    "translationHash": "ca1229f8a22ceeb1d50024cc66fb1f21389ffb6b10afa4c41caf33bd244755f2"
+    "translationHash": "3e172996c2f5844d867f6414ba2a0b89e913d97e5c63b1811ce7bd3ff7009fd9"
   },
   {
     "pageId": "posting-rules",
@@ -1393,7 +1393,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0b8b53141804cf0b61777ffb35276821cae6c94e62672a7433f64e43da57904f",
-    "translationHash": "c0ff8338549acab308dae7a770ce8007f565e7ebe5059fe4a314389a28f1f0b8"
+    "translationHash": "6317a3d443276967aba15ac69063705a65d9f60e7a8d8945e47fa8af614dd68b"
   },
   {
     "pageId": "fin-approvals",
@@ -1405,7 +1405,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a475e7c931673aaebfbe7bb489056d97abb5d2318b44fc234e5743c52d791d39",
-    "translationHash": "6f7cd55922c985cf5db65195099db5727ecffd2cd5afc3fa51352daa3821fa47"
+    "translationHash": "cd9cc7c8c3a850005f4a48db73fea3b79d9796b4289dadb6df908ba84d3f34a8"
   },
   {
     "pageId": "fin-approvals",
@@ -1413,7 +1413,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a475e7c931673aaebfbe7bb489056d97abb5d2318b44fc234e5743c52d791d39",
-    "translationHash": "7b28b76787bd08c489112e78bccb9ed72db4310a89c705abb91c4b334e8da07c"
+    "translationHash": "c1a1e77322579b0834514b28581149dee934801e50a15b8069949d321515ad54"
   },
   {
     "pageId": "fin-approvals",
@@ -1421,7 +1421,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a475e7c931673aaebfbe7bb489056d97abb5d2318b44fc234e5743c52d791d39",
-    "translationHash": "f65f2f84ee3d29f57a2f8c6e68be38473c393e267b371413ba0c88a8ee39e311"
+    "translationHash": "efb3176f58d2b760802ccdcef0c7f6ecd01d88052f530df05424cfbc9fe4ada2"
   },
   {
     "pageId": "payroll-dashboard",
@@ -1433,7 +1433,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ef8ebe8c2e0b0a024269a4988b1870a3c1f95037ba5c9bbc865f1b23518b469c",
-    "translationHash": "ea7d818fb80711057cb6e390807eb327e01c5d466bf15aa0083b192a924a47db"
+    "translationHash": "a925111d23855bd874aecbf4024871b61bfe271283f43ff94f81e88c332b9560"
   },
   {
     "pageId": "payroll-dashboard",
@@ -1441,7 +1441,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ef8ebe8c2e0b0a024269a4988b1870a3c1f95037ba5c9bbc865f1b23518b469c",
-    "translationHash": "87c0b88b0f3c3ec480dba8df741a846d4af3684025ca36c5dc93d63cae3a3215"
+    "translationHash": "d804d85c604b194dee91f00baa8213cbf94643cd4ba8ad110e5dc324ef9072ac"
   },
   {
     "pageId": "payroll-dashboard",
@@ -1449,7 +1449,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ef8ebe8c2e0b0a024269a4988b1870a3c1f95037ba5c9bbc865f1b23518b469c",
-    "translationHash": "4c6744260f873df7817de1a7ff05096d957c7e3f035842c501b5cdf959a89bd4"
+    "translationHash": "50c93098e27e802b4103f048ae8e895bdab6a9b6eda18255374437f0bc503ba6"
   },
   {
     "pageId": "earning-master",
@@ -1461,7 +1461,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c9c609e8db97d94cb37bbff506b708aa624c85c68e99483eeebb4ec66254d0c7",
-    "translationHash": "8827b1b275eba0fc55ef864dfeafea78cf36d23d787d8973a1356c852f653069"
+    "translationHash": "88895a6d41b0d7052fb5b9e8c0158f5e980fe5bfb44a7cc80faf8e38ca4e60ca"
   },
   {
     "pageId": "earning-master",
@@ -1469,7 +1469,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c9c609e8db97d94cb37bbff506b708aa624c85c68e99483eeebb4ec66254d0c7",
-    "translationHash": "22d8259b6e451e5a03b7d84bf1ce0a50c7764870b87126b828ec3d6fa48b97f1"
+    "translationHash": "eb3dff19b159613a6121218a43ae8cced9ba3a650b1fc1a7deb57bdc1055e427"
   },
   {
     "pageId": "earning-master",
@@ -1477,7 +1477,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c9c609e8db97d94cb37bbff506b708aa624c85c68e99483eeebb4ec66254d0c7",
-    "translationHash": "5ad7697c0eb70d447ddf507f5953ef42b9673dd398892bf564709b1fee2b131a"
+    "translationHash": "2afb82d5b674b858fa4cd8ce78827e46f51e1be4356e9a0c9efe139e16c356db"
   },
   {
     "pageId": "deduction-master",
@@ -1489,7 +1489,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f5031615605f894ff81f6ffd0672da4344c8b6bdc02d3f963d6b6f4578bc7009",
-    "translationHash": "7fb84f9d0e8e3cc686cb25700a268eab20ed2ba224e36585911e8b076dff4046"
+    "translationHash": "796a4229d08900cb586d1f21a19f6460aeea4c9cb68ca0a1d78e17e54cccbd69"
   },
   {
     "pageId": "deduction-master",
@@ -1497,7 +1497,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f5031615605f894ff81f6ffd0672da4344c8b6bdc02d3f963d6b6f4578bc7009",
-    "translationHash": "eaa2fdd5e7e9c8d2fa87e93bb253db4ac35019e9baf47bf2a6df3c3f1fd8b954"
+    "translationHash": "70c30b586cb8806c4dba8d1bcabde602bbe440986022e081a6f63bb84985329a"
   },
   {
     "pageId": "deduction-master",
@@ -1505,7 +1505,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f5031615605f894ff81f6ffd0672da4344c8b6bdc02d3f963d6b6f4578bc7009",
-    "translationHash": "00d2c629ea64945ebf1cac205fa0fc15d97b84d68a27410479ba5270f0b85746"
+    "translationHash": "834df175f20d3ec00bfeb368656e28ada471e04b28f8fe325883d9ed296a6e05"
   },
   {
     "pageId": "pay-group",
@@ -1517,7 +1517,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "88657a4056e2a627e340cd0388165fa6e7ae5db48ef2d589dd25c6101cfb39da",
-    "translationHash": "5fc6b6ac51f557d9c718f572b07a9296d188fbc05811f98c1baaa5d679667d61"
+    "translationHash": "7b8efd7c9b2c561f374d71dab3ad9fbf954689a4bfec89400addda901c865e30"
   },
   {
     "pageId": "pay-group",
@@ -1525,7 +1525,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "88657a4056e2a627e340cd0388165fa6e7ae5db48ef2d589dd25c6101cfb39da",
-    "translationHash": "500bde2db578cba3e9279b3962c7ec5048c78358ebc788ec454fbeac2f2ec7b8"
+    "translationHash": "92cab0cc92bf7b1d2b4d1b8ecc3ef6a168e2a97218020bb76f2633ec0f6e467c"
   },
   {
     "pageId": "pay-group",
@@ -1533,7 +1533,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "88657a4056e2a627e340cd0388165fa6e7ae5db48ef2d589dd25c6101cfb39da",
-    "translationHash": "b5ac96c3586feadab03d4afe983ced8c312d4f37d6164643048e4687715b9eba"
+    "translationHash": "820e6806d781e43f35766d7a1ef9369ab079915c4b24c837a2c80752a695cd9b"
   },
   {
     "pageId": "statutory-master",
@@ -1545,7 +1545,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "50251bcefafa808d842014d94d0e53075ebe50659acae7d2cc1bcdd65ac11ee9",
-    "translationHash": "6c701572d1a60bdb60bae93e02e7ff685af39734f0825cd47acc64188df3dd93"
+    "translationHash": "1cf0e6fb43aca996c8c6f766fc6ac2f5509e160968d677490aaf88ec5c375317"
   },
   {
     "pageId": "statutory-master",
@@ -1553,7 +1553,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "50251bcefafa808d842014d94d0e53075ebe50659acae7d2cc1bcdd65ac11ee9",
-    "translationHash": "3940d5019d2bb68c23ec1be2b52a8900c53706826929181911131cce83e56ff6"
+    "translationHash": "c4772ab7e1c70c22599d234009b0d8de0b05b3ea7c1565460a22fbb30a389109"
   },
   {
     "pageId": "statutory-master",
@@ -1561,7 +1561,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "50251bcefafa808d842014d94d0e53075ebe50659acae7d2cc1bcdd65ac11ee9",
-    "translationHash": "8f9bbce7f2870e511fa5cc54400964977e36553b4e52fa3f51822128e7696867"
+    "translationHash": "37fa6acd90a344c8ceaa11fbee54642a790ec8d68d84c053a32ef641ec53ddd3"
   },
   {
     "pageId": "bank-format",
@@ -1573,7 +1573,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8665485dcb2c9f94d937daa7846a325f80b29be326d2ea7c8ef261f029988b7a",
-    "translationHash": "ff5fdfc4209d6f3acb9bd7c9a85d315c60db56ca8e78a8cb6711c05f9337ec45"
+    "translationHash": "2f661e713541ad1605611dde594c99b81e2fc3911f61a683de6880fb4393c24a"
   },
   {
     "pageId": "bank-format",
@@ -1581,7 +1581,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8665485dcb2c9f94d937daa7846a325f80b29be326d2ea7c8ef261f029988b7a",
-    "translationHash": "c7644a549127d4b453e8ba63ad86f8274b553bfeacd401e4061d46c11af8945f"
+    "translationHash": "5de60fef301d8f7510a30aed16e359e246dc06e09cbda444a8ffa9c0f6ba4fd0"
   },
   {
     "pageId": "bank-format",
@@ -1589,7 +1589,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8665485dcb2c9f94d937daa7846a325f80b29be326d2ea7c8ef261f029988b7a",
-    "translationHash": "4ad0f43563a941db6dc061582c34dde7ac258ddf881cbff797fb158f1b623bab"
+    "translationHash": "2c03d97ce3a0df23dedc913da4af2dffd85e502cd6dc3bd8e0c48511aa7c77f8"
   },
   {
     "pageId": "benefit-plan",
@@ -1601,7 +1601,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "4eb9d4fe7f30496cc9ce3c2cb1bed1853e2bb3e5be2db6589b352f0689caac03",
-    "translationHash": "09834ee51a1ec9aec2f48a8954845852b8a34154221669dd9f144ec557b8a4ae"
+    "translationHash": "51c5d025815c746c34bef6318f37485c008545d4bd48a3bd7b32a7db6aefc817"
   },
   {
     "pageId": "benefit-plan",
@@ -1609,7 +1609,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "4eb9d4fe7f30496cc9ce3c2cb1bed1853e2bb3e5be2db6589b352f0689caac03",
-    "translationHash": "f91568f173381b6a47be450fe828ba102176873e9ad1e8edd0c6c6f6bb385e8f"
+    "translationHash": "d06b5138a510a1f95eb1fdf8642ad9c76839fce31d2c2649d17abfbe3bc56a5b"
   },
   {
     "pageId": "benefit-plan",
@@ -1617,7 +1617,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "4eb9d4fe7f30496cc9ce3c2cb1bed1853e2bb3e5be2db6589b352f0689caac03",
-    "translationHash": "07c0f29ca1b51de83eca64b2581c51235d049c52589a7a2ef99320a1927e2778"
+    "translationHash": "4cdf502f11bf686b9f48a554ed09352813b89ff283cd8e191c82f4ee7ec428d3"
   },
   {
     "pageId": "payroll-run",
@@ -1629,7 +1629,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "91c07882d0d353478fb42df75f652f477dafff9f8c7d8e25863a3900a86dbfde",
-    "translationHash": "10847f2377b1ade7a7bd3da6b1fa71055a14099a47c8a4715a3869f7bc219836"
+    "translationHash": "ab5874509d13fc77babba452fa55b8d7a6d7feee1dfb39a3a532d6fed3f06dca"
   },
   {
     "pageId": "payroll-run",
@@ -1637,7 +1637,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "91c07882d0d353478fb42df75f652f477dafff9f8c7d8e25863a3900a86dbfde",
-    "translationHash": "592c83cb77996598d234de69d131c5201f18ab3fba0b22f731aca5a5ed5d4274"
+    "translationHash": "1c723673c7287964d8e21ac111383b26296b378b411a685793b5bb26cd4eed77"
   },
   {
     "pageId": "payroll-run",
@@ -1645,7 +1645,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "91c07882d0d353478fb42df75f652f477dafff9f8c7d8e25863a3900a86dbfde",
-    "translationHash": "9b2cd69a2f632bcc3798775f24c97a3ac80a490703d857e786544bd30e0ef9cf"
+    "translationHash": "127758d51acf57122b8905313d9861479f9805c7e57601ffd2b9cf705730c577"
   },
   {
     "pageId": "payroll-adjustment",
@@ -1657,7 +1657,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "08835e23a65559ed5e0ef8e083a4fb6080b0f25e8fe10240d65c53b0641318e6",
-    "translationHash": "0eb11287b43fc787815cc122a3c73e7c8911574bc6a9e5c36d97dc7fdd2172a0"
+    "translationHash": "305095bde5114f19580c53e11e142aa1e1f553e3339481cabfd7ca102bef7949"
   },
   {
     "pageId": "payroll-adjustment",
@@ -1665,7 +1665,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "08835e23a65559ed5e0ef8e083a4fb6080b0f25e8fe10240d65c53b0641318e6",
-    "translationHash": "2252919e41e95fba96a19110ee0b687d190348f8e5b8898d101ce3d29c248bdf"
+    "translationHash": "a09d0ca8a6fc2ec80b9ae72e2c62bc8a26c8bb0c5686657ffa76642ad11170a4"
   },
   {
     "pageId": "payroll-adjustment",
@@ -1673,7 +1673,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "08835e23a65559ed5e0ef8e083a4fb6080b0f25e8fe10240d65c53b0641318e6",
-    "translationHash": "7289cb9c5c9888873d6405a033b56e67d247fb59dd22ce2cf04e705b04570382"
+    "translationHash": "344f00251d9a4e30e0ef2bba428fa8a3184ce267237975bab9c93563eb689792"
   },
   {
     "pageId": "final-settlement",
@@ -1685,7 +1685,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "51a490886071c9a50809813d17217ea601f140fef7f51709aaf5be0697826078",
-    "translationHash": "89b0336493d4591c54d9761fc5366cbbde50d679ff1a5054e5293de460c5b57c"
+    "translationHash": "4d521f5cde318f024b2cffbe976b722834cf2acf3fb86a1961e8be46ff9f1042"
   },
   {
     "pageId": "final-settlement",
@@ -1693,7 +1693,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "51a490886071c9a50809813d17217ea601f140fef7f51709aaf5be0697826078",
-    "translationHash": "6099f36d115c715765ab5f2eb9870413273be75abf5211c47830e8a3172849c1"
+    "translationHash": "4b9e6c04ec8a192bb14ad7e5eb23a7e6344674b92c0210f258518e055a1c613c"
   },
   {
     "pageId": "final-settlement",
@@ -1701,7 +1701,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "51a490886071c9a50809813d17217ea601f140fef7f51709aaf5be0697826078",
-    "translationHash": "dd5e68eb8cdb18e95b4a78a63df095357a2fc3d00ea69628533bd380f9679488"
+    "translationHash": "b1346f0b9305fe35b9723494d7b1e1a483e965ae0cfa7426ae289a159fd48576"
   },
   {
     "pageId": "payroll-worklist",
@@ -1713,7 +1713,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7c32998014f555d31e700f57c6f7612f102e8e7ac5e84db6feb59a5da73b53d5",
-    "translationHash": "721b79e43d01c85dbaff08be4d8248c5f87c7c00221c098ccd6298f397e55445"
+    "translationHash": "df8d45e427ba9e33fff94a4bee3b22687870f9a811e82324ae44f60217bc83b0"
   },
   {
     "pageId": "payroll-worklist",
@@ -1721,7 +1721,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7c32998014f555d31e700f57c6f7612f102e8e7ac5e84db6feb59a5da73b53d5",
-    "translationHash": "4e2691bb105b3b63eb9f8b5222f8e68caee26f3cbcb32da1453969daf8bc3bbf"
+    "translationHash": "a2abeda84da8a83c60181f21019232e4fb8af9d30191a83382fe0cfaf082e3a8"
   },
   {
     "pageId": "payroll-worklist",
@@ -1729,7 +1729,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7c32998014f555d31e700f57c6f7612f102e8e7ac5e84db6feb59a5da73b53d5",
-    "translationHash": "b3cee45bf98e3149a110b5708b4cb5261de8be041e94e426af5cafa25aa39a4f"
+    "translationHash": "1daa0d007b98be2be34a2cd761056e71716af64aa3e9b30910cf607e4adb4cec"
   },
   {
     "pageId": "exception-worklist",
@@ -1741,7 +1741,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7558b9545388afda0c8443e5b0c1ac631ba5b7875db7e40faeeb6666ca9dbfd1",
-    "translationHash": "e85c6868908115a53a5ee5ecc46cf99fee88256fdaf4e590ff5b930a6dd1314e"
+    "translationHash": "f702d5fe59c85472cd58a77f8cce0f78ce5cf88e4ae99a9495cadfcfd63f5345"
   },
   {
     "pageId": "exception-worklist",
@@ -1749,7 +1749,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7558b9545388afda0c8443e5b0c1ac631ba5b7875db7e40faeeb6666ca9dbfd1",
-    "translationHash": "9a93319c3ee69e9bb89b9fd441816f23aacc0f711e02b364e3a9381f23871e67"
+    "translationHash": "c3fe98aef84f0c36d3169090983a891791604d3d7dce4187ea2b62893c29d81f"
   },
   {
     "pageId": "exception-worklist",
@@ -1757,7 +1757,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7558b9545388afda0c8443e5b0c1ac631ba5b7875db7e40faeeb6666ca9dbfd1",
-    "translationHash": "5df32d2db431b5d9fefe9875713806e997e77e8b9c7d6d78077e328bc26084e5"
+    "translationHash": "169320cf3a11be031e7fc65003d2e29b1d45b270f35b89c6dca9c93575db1c48"
   },
   {
     "pageId": "settlement-review",
@@ -1769,7 +1769,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "17c4fe207c261a0bdb015939e93b2fdf2f60bd62ad0842b3fa1a79b533e59d10",
-    "translationHash": "2c202c045142c4c17a38525c490ddab6b0d7996d3a704403354cc52a851bcf36"
+    "translationHash": "78520ffcc88ab700752189cbc0d3a29e92cbd43c3d8d43bbf8bdc227a931c8f2"
   },
   {
     "pageId": "settlement-review",
@@ -1777,7 +1777,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "17c4fe207c261a0bdb015939e93b2fdf2f60bd62ad0842b3fa1a79b533e59d10",
-    "translationHash": "1bd0116ce145ecd636b27aaa0ea4f2cea3154ff6134266008a968b7b58321f26"
+    "translationHash": "26fdc094957a7c3194f6e6de16e8fed329c1202cb6a94b5c10cba245a75a4e07"
   },
   {
     "pageId": "settlement-review",
@@ -1785,7 +1785,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "17c4fe207c261a0bdb015939e93b2fdf2f60bd62ad0842b3fa1a79b533e59d10",
-    "translationHash": "b9e534fbdda9f3d59f4718f1ddfd021b220f464eab01cfda0d5a68ec70d73b58"
+    "translationHash": "3ca67a71c9efacd9817d4a9fd7a782f01962054584cd6d7c878d0c01782ace79"
   },
   {
     "pageId": "pay-register-report",
@@ -1797,7 +1797,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bfb0b77a3baf8cd8365bb2b80c361938aca6bb3f45579b1ea0e9769d8b370970",
-    "translationHash": "d084ead20c329c399ed01e8658969336d6e79fc6617f0c1a9d86188f6c27f40f"
+    "translationHash": "81c948334a87220621f59eb55b3dca8153c994d63cc8837cbbdeb4d7150fbf6b"
   },
   {
     "pageId": "pay-register-report",
@@ -1805,7 +1805,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bfb0b77a3baf8cd8365bb2b80c361938aca6bb3f45579b1ea0e9769d8b370970",
-    "translationHash": "e01069f9f1d11037122b557d44d6b4a8949999f4b62259fa9198d4208560dd7b"
+    "translationHash": "1dabc84a9ce407a1d4a3e15a8b8a10f82ea024dcd8a732fd5095200509c99bc2"
   },
   {
     "pageId": "pay-register-report",
@@ -1813,7 +1813,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bfb0b77a3baf8cd8365bb2b80c361938aca6bb3f45579b1ea0e9769d8b370970",
-    "translationHash": "85f0a5962a24139e803dc8f09f993ebec625b21ac04d4757fcbb5aa6f62140e3"
+    "translationHash": "d09fdfab1c4cae94b5396f27df67500f51d7d793996c0fa81502eeec74339aa7"
   },
   {
     "pageId": "payslip-report",
@@ -1825,7 +1825,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "71b345f9a8f6b1067ff7279df33d1c636e45e5827a5d0e8201ace3967940736e",
-    "translationHash": "de8718d5c83aaea338c3a9f8d13294e3bad14b518df98e8bfe7ede70f14b98bd"
+    "translationHash": "79860429a88a4aee5cc9bbc2d8ec51de4e1f8a811738366ff2a8dae70fc57333"
   },
   {
     "pageId": "payslip-report",
@@ -1833,7 +1833,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "71b345f9a8f6b1067ff7279df33d1c636e45e5827a5d0e8201ace3967940736e",
-    "translationHash": "c063ef88ffe272d04525d39212325d3ecd0474ba3779fc9a186995e07afeb3a3"
+    "translationHash": "835ebd63a06904ad660c50bbc299f32c804703fed00dbd77bd4502c36c9498d3"
   },
   {
     "pageId": "payslip-report",
@@ -1841,7 +1841,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "71b345f9a8f6b1067ff7279df33d1c636e45e5827a5d0e8201ace3967940736e",
-    "translationHash": "facffee5e6dec4708c9bd924825ad063f61f762ba3fc20b056a085481fd17e4e"
+    "translationHash": "a9dcfbbd2e1bf71285ff05dbb3756226b14450caf50bdcd0581b40ce375f10df"
   },
   {
     "pageId": "statutory-report",
@@ -1853,7 +1853,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "89cb7e2b55e330c714ce761b4c1398830457fcf785d761bd4d87abad57031de5",
-    "translationHash": "d9736407aee6e4d9f4490b138bf2f37e7a7d3df94515797de39bc882f29b95cc"
+    "translationHash": "442125977e8a47450e4afa4af3a821d7ea51ab7d1b10bd7bcf640408d9fd95c7"
   },
   {
     "pageId": "statutory-report",
@@ -1861,7 +1861,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "89cb7e2b55e330c714ce761b4c1398830457fcf785d761bd4d87abad57031de5",
-    "translationHash": "080635629ccb4219e1e083ee7d81f4b06a7e5176a6e23f07c222d663fc2f5928"
+    "translationHash": "1b658901f874bd79c1b04d89dc715f16842d88e4f5848e2c78e6bad750c59aa5"
   },
   {
     "pageId": "statutory-report",
@@ -1869,7 +1869,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "89cb7e2b55e330c714ce761b4c1398830457fcf785d761bd4d87abad57031de5",
-    "translationHash": "d7d2696d0bdc145f517e7112c9eb0e5413047c68ff0240a9fb2e740ef0338c29"
+    "translationHash": "5c8c54b3b76156e828dc4c683541719442b03917e642f7038ea2dcc62909ae80"
   },
   {
     "pageId": "pay-calendar",
@@ -1881,7 +1881,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d40973509e750cb57f3a0abda05b7b3a6eb86a01a7b014911f4bb4a1b52b25e8",
-    "translationHash": "468571c56521d7c3ad2415fde916c686f62bbb98bfae679eb417ce01d7321791"
+    "translationHash": "5c35ae0125b5477421769bec8ea3d5c4c7ea27226947bac6e5da3f783cced953"
   },
   {
     "pageId": "pay-calendar",
@@ -1889,7 +1889,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d40973509e750cb57f3a0abda05b7b3a6eb86a01a7b014911f4bb4a1b52b25e8",
-    "translationHash": "f1e5faa476a4f820c07de3da04d49067fc8f29710038ec15af6043f202e72fe9"
+    "translationHash": "bc835d3b5a419d8460935ec6e3634ec19efb9d184ce807dc5a879c56eccda51a"
   },
   {
     "pageId": "pay-calendar",
@@ -1897,7 +1897,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d40973509e750cb57f3a0abda05b7b3a6eb86a01a7b014911f4bb4a1b52b25e8",
-    "translationHash": "87fd4a0fc866a90e20770cccc26712024a2aa66853a34c357a3645b25e3a12ad"
+    "translationHash": "06fa376fe041bce2a73a0a5d39ba2c57e80879d88b33e5723055a98961c7f549"
   },
   {
     "pageId": "pay-formula",
@@ -1909,7 +1909,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "409888f142ee7c3c107dafbc1b78200856badaef8628938a89785a6badffdd7e",
-    "translationHash": "d2aea61906b482a4cd601c32ec58fc183d50cf1a099c1ef749070d9626423698"
+    "translationHash": "81d746690d2e91058c2e041b4fa93d29e95f468c8d7a0d3977f697cd39b07df7"
   },
   {
     "pageId": "pay-formula",
@@ -1917,7 +1917,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "409888f142ee7c3c107dafbc1b78200856badaef8628938a89785a6badffdd7e",
-    "translationHash": "c4308dc7ac90495c437f64f5fe015dcc1608f8cf23e5e11756c99755ccb54367"
+    "translationHash": "b2691f21bf4dd9d85be5bd20ae42585ed8e2520286b0a6a4fc7f7b5c2e8844ca"
   },
   {
     "pageId": "pay-formula",
@@ -1925,7 +1925,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "409888f142ee7c3c107dafbc1b78200856badaef8628938a89785a6badffdd7e",
-    "translationHash": "ec16b4290b6866f12684720f5e07159e1201107e2e5e0c5928f1213e14a0a573"
+    "translationHash": "8852e75b2a92b7ba1f4282d6905d225011088444a0af3876d87380f95b00ba22"
   },
   {
     "pageId": "pay-approval",
@@ -1937,7 +1937,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9dd3cb646c4ae9256ee5c8bc4802606970fd6fec739692fcac5911f928351211",
-    "translationHash": "385fcb56af47d06547b79864b3f510deb59d22e2a54d0d7eba0ed7189bda885c"
+    "translationHash": "3738519684ce050b0b82b97d0e1303b557a3f6f292a4fd57ef82bbab9dc28609"
   },
   {
     "pageId": "pay-approval",
@@ -1945,7 +1945,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9dd3cb646c4ae9256ee5c8bc4802606970fd6fec739692fcac5911f928351211",
-    "translationHash": "54616ee565cc140e377b0847fd39dfec8cabe7d9c72c4bbea25abf7c4a2669a8"
+    "translationHash": "4196f13e4e676d84281d6c633723619023220fd2da62bb5e21e06d0eca1062a6"
   },
   {
     "pageId": "pay-approval",
@@ -1953,7 +1953,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9dd3cb646c4ae9256ee5c8bc4802606970fd6fec739692fcac5911f928351211",
-    "translationHash": "100b145a4930d6029608a03f573eada0a1a069a6cb41a63529a42e3e54dfc831"
+    "translationHash": "c39c24ace6456d7061a369451d9bd0b69ce6cb38f13bde6282428737efaf9988"
   },
   {
     "pageId": "sales-dashboard",
@@ -1965,7 +1965,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c110fcf918872772dd75c0139b23a61f19be61ee55fdde3a23120515ebbd6b64",
-    "translationHash": "f183e8cf38d9b5eba44afdf7a3859f3820cd47e382441ae144ea96247c750591"
+    "translationHash": "d6a71c4b024de8a98c4450a234f1e69c128d92ed5e6ea69e2acc0ad8ab6e2e97"
   },
   {
     "pageId": "sales-dashboard",
@@ -1973,7 +1973,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c110fcf918872772dd75c0139b23a61f19be61ee55fdde3a23120515ebbd6b64",
-    "translationHash": "36069e9ce716331fc2dfd948c87b3756e988acb94b315016a0d35c97e8c72e62"
+    "translationHash": "4698f7985656ec11fcd5443a87ce67a476b2d999927e7b9b56428b1f45fc83ae"
   },
   {
     "pageId": "sales-dashboard",
@@ -1981,7 +1981,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c110fcf918872772dd75c0139b23a61f19be61ee55fdde3a23120515ebbd6b64",
-    "translationHash": "41453bc79e5188c6164ab787397d75c8dae90c757d5037b0098d8ad99c252fd8"
+    "translationHash": "27c95ac4e04f15a7b04914b78a38a4ecfb864f427fd5d848104c7c5190b19f4c"
   },
   {
     "pageId": "sales-customer",
@@ -1993,7 +1993,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a1c50b4e3aaf7d901f738a515c9fe2858c7106624c5bdf6a7b6fbe0e2181ab33",
-    "translationHash": "8d2f14d64b776a9daddcd42329990c6a08bee1c1f975d3d7b4ada6461c276a79"
+    "translationHash": "752b04e79eca35f9f65b6b77ea84650a50cc9968b8b2c1f1f6b8a824c99e59d8"
   },
   {
     "pageId": "sales-customer",
@@ -2001,7 +2001,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a1c50b4e3aaf7d901f738a515c9fe2858c7106624c5bdf6a7b6fbe0e2181ab33",
-    "translationHash": "e0af5899431517cc1054629751458edfe0c27bbad5eaf18785af7d46db13e30c"
+    "translationHash": "e4611aafa8783f15f08d6507eb39c4b7f5c7b8bc6626c9f7efbe073834e46f1f"
   },
   {
     "pageId": "sales-customer",
@@ -2009,7 +2009,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a1c50b4e3aaf7d901f738a515c9fe2858c7106624c5bdf6a7b6fbe0e2181ab33",
-    "translationHash": "7782a7a184ad5b0f85eb49abf44fbd9f55172f223bf81a26d4a71d5388bf6bc3"
+    "translationHash": "f6f588bc94951c5c8cc6b4b1084def93010c1ce5a2bd8b1ba7b36af36d06b390"
   },
   {
     "pageId": "territory-master",
@@ -2021,7 +2021,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c2b92c9ba77fc32058b7fcf84baa6139d365eb90d65b7be00b25f216ec8224b5",
-    "translationHash": "c349929f747358f80b19528233e845b7dccc502b19834c048879f1cde65ca2ac"
+    "translationHash": "1e0830be2d9e012910b8b3d0f6a7d4084f7257059225229fd07bd817f8fae378"
   },
   {
     "pageId": "territory-master",
@@ -2029,7 +2029,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c2b92c9ba77fc32058b7fcf84baa6139d365eb90d65b7be00b25f216ec8224b5",
-    "translationHash": "fa9f8db982e690742f050ef6f852d275909e6337365d5c2fbdd41cf729183f2b"
+    "translationHash": "2fbdc6fc21423fe6290da601557659e499b01c8712a9f81a5dcc1bde04a9452a"
   },
   {
     "pageId": "territory-master",
@@ -2037,7 +2037,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c2b92c9ba77fc32058b7fcf84baa6139d365eb90d65b7be00b25f216ec8224b5",
-    "translationHash": "97e7cad54b4964e592c42895a04e43d55d82fa8daa16d0264f02a87e44bc19b3"
+    "translationHash": "d0b8ad276343bb01e02bbee7317f917c8c55866f83115d1eecacb00c8eea728f"
   },
   {
     "pageId": "sales-channel",
@@ -2049,7 +2049,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "67a40c7cb3218f607f718bef5e75b4a6f09d1d65da37053e08323ff779a2f091",
-    "translationHash": "c2bafcd3f856ad934b3ea73dc0aaae5ae33f38a92fd0e578adc4396e714dddc9"
+    "translationHash": "b9a59a345050c277f0f7d5adf2be6455bd3ca228444bb09b7239831a999ffc3f"
   },
   {
     "pageId": "sales-channel",
@@ -2057,7 +2057,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "67a40c7cb3218f607f718bef5e75b4a6f09d1d65da37053e08323ff779a2f091",
-    "translationHash": "811520290048e0f890bfaedfa11a3e982d81149b2dcb164e0274246b115f8382"
+    "translationHash": "504282d49ac71a8f63b7eb9245604d3762341df4df3c8f0672740846aad90f1f"
   },
   {
     "pageId": "sales-channel",
@@ -2065,7 +2065,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "67a40c7cb3218f607f718bef5e75b4a6f09d1d65da37053e08323ff779a2f091",
-    "translationHash": "a5c3df16609ca1dea050a65d3476d1cca2f621f0618c5b5f2a95627e650c760d"
+    "translationHash": "1fcc8109f0330b7398f1fb732edf3ec9c9d450dd6b997a81a6b64738b424d2a8"
   },
   {
     "pageId": "product-master",
@@ -2077,7 +2077,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "72be4c4f2e1b611f0c25040fda1fd4dd6c9c415f0986a45802f476612b8daaa0",
-    "translationHash": "f8431112668ba198b53fedfc78494d750dbeef3a563d5e842fda4f17e90b799f"
+    "translationHash": "79474fa3b119b99780391245645b5612cc579c9fc0f8e7020122d94ad00b43e7"
   },
   {
     "pageId": "product-master",
@@ -2085,7 +2085,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "72be4c4f2e1b611f0c25040fda1fd4dd6c9c415f0986a45802f476612b8daaa0",
-    "translationHash": "6e179a34b166fd929dc341243f5a31dcc8b0d8685025d22f489439aaf6fe4344"
+    "translationHash": "d9f255890eff6b1cd126dc7cee6afb52a3a9fde222490aba42f7436654b30bb9"
   },
   {
     "pageId": "product-master",
@@ -2093,7 +2093,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "72be4c4f2e1b611f0c25040fda1fd4dd6c9c415f0986a45802f476612b8daaa0",
-    "translationHash": "7a5ec37970812f0d5d90c965e8e61f820de9beaaaa241d6eafe8aa1a951a45e1"
+    "translationHash": "123b32b89d23d0eb1c278157ac47b689c37edf7833c494564a52651b173108f1"
   },
   {
     "pageId": "price-list",
@@ -2105,7 +2105,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "44064cdfab7aba88674623abd538e3e334725a725b559776f06ea996225f9f41",
-    "translationHash": "b999959f9d77dc3cd085655ed58db8e1e3babffa7cef022c8c11d2b6f2a028b6"
+    "translationHash": "86e9d6d9618c665632ef492baaf60d2fe4d3848bb0cf2dac9ca93dc41991e349"
   },
   {
     "pageId": "price-list",
@@ -2113,7 +2113,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "44064cdfab7aba88674623abd538e3e334725a725b559776f06ea996225f9f41",
-    "translationHash": "89a1e4f03e7dbe8f10a0ce4fbe08803401255e96ec3b3fb8c22c21f2f2750f6d"
+    "translationHash": "8da61b3f6399b426782a0f483b2535e73f2d2f2fd97fe8254f332e69864eb440"
   },
   {
     "pageId": "price-list",
@@ -2121,7 +2121,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "44064cdfab7aba88674623abd538e3e334725a725b559776f06ea996225f9f41",
-    "translationHash": "a639c1efa2dd1c530703f445c7856b3c727d663fab8e301ad02a52f62d889636"
+    "translationHash": "4ff51a3e8e19e7ca51708bce7b23bb6445e9b88d72ef730ed5a364cbab231cb0"
   },
   {
     "pageId": "discount-rule",
@@ -2133,7 +2133,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "42eff1c4f8edf2c7f6859ad581c9e4cfad6d2edebd879842e8713f6d810ab434",
-    "translationHash": "09626cd4244c73115b975ded2f0c3293841de5503586e0f124d32793eeafa028"
+    "translationHash": "aa141b9dd8d558277170059ed7f0675583711ea484511bb4ecfe356cb1c210cd"
   },
   {
     "pageId": "discount-rule",
@@ -2141,7 +2141,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "42eff1c4f8edf2c7f6859ad581c9e4cfad6d2edebd879842e8713f6d810ab434",
-    "translationHash": "15d260c828c597be201633f888937a2eca3fef42ee7e6b5656c4c56d3b193bf3"
+    "translationHash": "f27e289d316d16bbf49e149c2e84b25e17603d21a71e5d87697d7ec3a0d73f80"
   },
   {
     "pageId": "discount-rule",
@@ -2149,7 +2149,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "42eff1c4f8edf2c7f6859ad581c9e4cfad6d2edebd879842e8713f6d810ab434",
-    "translationHash": "3b366f7c7b153632cbf857ec1da5fb61a40137121e90f1c69a1b02b2acf4246d"
+    "translationHash": "a189b2ac27b402057428f4d18876000010b897f872b39f6a877be08c09c481e0"
   },
   {
     "pageId": "quotation",
@@ -2161,7 +2161,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8dc623067ade1a5a8465897e49eb4ed1b196ed8e8c17bbfdb4fe76d732244e5e",
-    "translationHash": "79837cab2c969da1ecad90d8f4a83640ac8eb135c3867aee8dab622514a308f8"
+    "translationHash": "4f611f7f366715bb58f2945f7e9b384b1f1e766187b4af7ea8e086ed1fd80397"
   },
   {
     "pageId": "quotation",
@@ -2169,7 +2169,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8dc623067ade1a5a8465897e49eb4ed1b196ed8e8c17bbfdb4fe76d732244e5e",
-    "translationHash": "dd0af062bd9fce8307ba131b28525b77eed9a9b1587135c4d06cd59714058cb0"
+    "translationHash": "06b67c041ec13f3f97d478433b05a9cb9c192348d78ce73eb3a400a589084859"
   },
   {
     "pageId": "quotation",
@@ -2177,7 +2177,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8dc623067ade1a5a8465897e49eb4ed1b196ed8e8c17bbfdb4fe76d732244e5e",
-    "translationHash": "96f5f9e2d4f4ccf1abbb211926e155d38a054eb9b112475596bbe62b4ed56ba5"
+    "translationHash": "849e242ccd5f621b2a05bd163532982dfc8143731a0a29609d15c8dc4631a853"
   },
   {
     "pageId": "sales-order",
@@ -2189,7 +2189,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "34832c3c76aae057eeab08f5ff51ae187b4d74f2cdd3047a2a92e14fd8e29930",
-    "translationHash": "bdaeb07e26d6de3cd9cad16f1c7b41945fc42d8689b6c370ddf37654dc3b0dcf"
+    "translationHash": "974237fbc67668439db8aef30d03e6e06eed11e09ebe265764af4adead575728"
   },
   {
     "pageId": "sales-order",
@@ -2197,7 +2197,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "34832c3c76aae057eeab08f5ff51ae187b4d74f2cdd3047a2a92e14fd8e29930",
-    "translationHash": "92ca004e43d98316a56ebd0596e4d2cc29736a19d1c6458e99b7c55d6b3e3608"
+    "translationHash": "86e6ea43b6f2edaddd3f74f3ce49e3eb928b740726467db1818a063c028af621"
   },
   {
     "pageId": "sales-order",
@@ -2205,7 +2205,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "34832c3c76aae057eeab08f5ff51ae187b4d74f2cdd3047a2a92e14fd8e29930",
-    "translationHash": "bcf6c3d0ae698b9681fc7edecfef63e59177ad8595f0a8e6608dadfd708c235d"
+    "translationHash": "9dc7fafb317380063ca73cf36617c303693416b1cc0adb8265be211b53437280"
   },
   {
     "pageId": "sales-invoice",
@@ -2217,7 +2217,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "10650f26fe615f12c22cdb105e14a425026d2d777cf6410713ee94e22ca755b5",
-    "translationHash": "b04b8bf8ddc8b4b4726fb2f611f785ef1331422ba6c9ae78f92e4270199d9b36"
+    "translationHash": "ac7456f33fafd6404cab2c1e51f9bc489016d0e165c7b611269131caa3a26014"
   },
   {
     "pageId": "sales-invoice",
@@ -2225,7 +2225,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "10650f26fe615f12c22cdb105e14a425026d2d777cf6410713ee94e22ca755b5",
-    "translationHash": "5362ff3a8f9cbe4df872bd5f1a83004588134d64caf989234b2a969a5a2492b3"
+    "translationHash": "e970fe08258e798ac91e02d9c0569b483d86aea6e9cb4ad1531fd3c08146fc69"
   },
   {
     "pageId": "sales-invoice",
@@ -2233,7 +2233,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "10650f26fe615f12c22cdb105e14a425026d2d777cf6410713ee94e22ca755b5",
-    "translationHash": "7bd0608a70faad7fedb8e80155e271c7a03b8125be3ede94494e8b10b4dcc66b"
+    "translationHash": "5de4e51b1f866758a07581f05986a7d43da36c7332bfa8bc56e9b13d16eb14a0"
   },
   {
     "pageId": "sales-return",
@@ -2245,7 +2245,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "74618058f8b9acbd79609365c141112f844fd452cd9f8cc2e718728a9f46050e",
-    "translationHash": "0f7250b920399be52b861d037bfcf1e77bc190b69ce5ea2ac25eb4ac7b670e46"
+    "translationHash": "1a3f156b7406ceaea423dd72a12205deb46df177c8c236d573e64c03a0597c06"
   },
   {
     "pageId": "sales-return",
@@ -2253,7 +2253,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "74618058f8b9acbd79609365c141112f844fd452cd9f8cc2e718728a9f46050e",
-    "translationHash": "bdaddec0dc360149c1f1035414bbd3fca18ed82eaeb8a20ad53d38a0440b9f37"
+    "translationHash": "bcfffa6baad0bd68234642ccdd056654e6862176e001cebb7780aaf2726ed55a"
   },
   {
     "pageId": "sales-return",
@@ -2261,7 +2261,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "74618058f8b9acbd79609365c141112f844fd452cd9f8cc2e718728a9f46050e",
-    "translationHash": "e735e0f411cc463f0d5864ea74485b43837d2b54bc7a15c98ea7dbe4a386203a"
+    "translationHash": "2ca34d800b87b15cb4efbaec807b39352706dcf501a5d53ec1e71dce96ce97d9"
   },
   {
     "pageId": "customer-worklist",
@@ -2273,7 +2273,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c84fa360e3a88c7a62e8e95d7224b34035af787d4118c9584e5fbe65da51221e",
-    "translationHash": "de69c9b5d28599984debf8856de2f8fb92fbe8c4b4feded8b96c66c52c2d82f5"
+    "translationHash": "4eb2a05e2408171fbb3a7d03cd703f2acb4538904a242147e92c61d4fe9f2e0d"
   },
   {
     "pageId": "customer-worklist",
@@ -2281,7 +2281,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c84fa360e3a88c7a62e8e95d7224b34035af787d4118c9584e5fbe65da51221e",
-    "translationHash": "c0900f281a17a81de3e3d579fe0a03f77ee6176ea24a409e4672f9a85e53dd46"
+    "translationHash": "5e2838c0b96be1e6ed6bf962041813f0948e1f5648ec9993b8c67e3d030bd36f"
   },
   {
     "pageId": "customer-worklist",
@@ -2289,7 +2289,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c84fa360e3a88c7a62e8e95d7224b34035af787d4118c9584e5fbe65da51221e",
-    "translationHash": "8fa62e973e26fab7e64dc313e8c7ae677b72ddc8faf649cee1071e9ec3159341"
+    "translationHash": "c6a6416397f845123b2784ba8751b2c89c7e31e2bb7f2e72fd8301dc0ea28aa5"
   },
   {
     "pageId": "order-worklist",
@@ -2301,7 +2301,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "64b6720a7a2aa68f11ec5ce893127ca098c39814496541632a93a1b891c4dfd1",
-    "translationHash": "eaf3ad434a13665954c96e44d4d4addb8507988e3297fd66627bbf92bfcfa092"
+    "translationHash": "c13061858e635c9af11a70acfb6ee45600dc3b446b8d0cb172fdcd74b7e5e542"
   },
   {
     "pageId": "order-worklist",
@@ -2309,7 +2309,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "64b6720a7a2aa68f11ec5ce893127ca098c39814496541632a93a1b891c4dfd1",
-    "translationHash": "2f47c709b08011f0d57879ea92beb1c3fb4c410a3ea1ca22c85ec65ba80d9b5f"
+    "translationHash": "65066acb24f6c1ddcb8a924115cbe08476a8a3ad78154ff40631ca95ad605721"
   },
   {
     "pageId": "order-worklist",
@@ -2317,7 +2317,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "64b6720a7a2aa68f11ec5ce893127ca098c39814496541632a93a1b891c4dfd1",
-    "translationHash": "59f99954a4007710292ba050875db8cef37caa12b1b31712ff9de05219f978ff"
+    "translationHash": "8f5a4a3c8d4b3bf380a973b55cf3a1e7f642ea74e97a9af6e1184e629350106a"
   },
   {
     "pageId": "fulfillment-worklist",
@@ -2329,7 +2329,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7b24e9b188c189818c659faf7f95bbe3bee1ce6f33280e749126314926a9ca93",
-    "translationHash": "4206a9dcfd2226d68249b0c7fddfe691dd8aa7c85c71a293970d03471372874f"
+    "translationHash": "f95e7f9def9c94972480e1476c0ffe4e1769e61346850dcd4c0ef5b5a2017432"
   },
   {
     "pageId": "fulfillment-worklist",
@@ -2337,7 +2337,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7b24e9b188c189818c659faf7f95bbe3bee1ce6f33280e749126314926a9ca93",
-    "translationHash": "25e2ddaf1d0c630b055249b7c2b70a3b3f48629158dec2c059c4c68070604e2d"
+    "translationHash": "2bf0a12c51d861c7cb3ce286fb8f649fbbf3885ccb7b27fefd09f7f330b7fb6a"
   },
   {
     "pageId": "fulfillment-worklist",
@@ -2345,7 +2345,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7b24e9b188c189818c659faf7f95bbe3bee1ce6f33280e749126314926a9ca93",
-    "translationHash": "79afdbac2984b59e4dc75b624538473b1f7e915bfa5193c67e7e1ef11ffff325"
+    "translationHash": "4fb86ed9385bb60d66cca1661e7cb915e9292b619c08ea0b5ee4c7323d29d785"
   },
   {
     "pageId": "pipeline-report",
@@ -2357,7 +2357,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0f00b68a78e6aea51caaecdbbd82c25f2b2ba9a9b2dc5760be077bc655a92316",
-    "translationHash": "248aa8662e99249445235b820b5e61147be8ca12c15750f245d2b0f6f8382a6e"
+    "translationHash": "e597ee43061827ab07144b040ae7e82d9ae6c93861fa13a3685407955ca62559"
   },
   {
     "pageId": "pipeline-report",
@@ -2365,7 +2365,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0f00b68a78e6aea51caaecdbbd82c25f2b2ba9a9b2dc5760be077bc655a92316",
-    "translationHash": "34b967fb979820632a69a17fc14ee48625cd13d63d9b10fa9a4e1cdae942065f"
+    "translationHash": "10ca9abf64150c43d94d665666434ca7434771a9836488d6473f530607d7940e"
   },
   {
     "pageId": "pipeline-report",
@@ -2373,7 +2373,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0f00b68a78e6aea51caaecdbbd82c25f2b2ba9a9b2dc5760be077bc655a92316",
-    "translationHash": "fa463103373268e36ae992aa1ebce3abb4fbcdb68a3463d123de2cce7a6a98a4"
+    "translationHash": "df91dd17efa597bf6543b467934b43f6c3bcc424f0faaff82725ca154aff9add"
   },
   {
     "pageId": "revenue-report",
@@ -2385,7 +2385,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9c7ef346c8aacb7a770af9ffd4a42a1a6c36070b8135b53db6997ec7d0d81e5f",
-    "translationHash": "de9b65318718c63bf0d6aa968191909a7e4e1c8e2ae2e57f7e23cf90de386cd4"
+    "translationHash": "1d649d33518a279cb924deb664075b9c93aa38cb17bc817292acd6f179d0051d"
   },
   {
     "pageId": "revenue-report",
@@ -2393,7 +2393,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9c7ef346c8aacb7a770af9ffd4a42a1a6c36070b8135b53db6997ec7d0d81e5f",
-    "translationHash": "3258d8cd1de96af3a911303b4454b6962ea479e796eda58c83811cc8f78baef7"
+    "translationHash": "781af1e4d4c99433be4fba553dcb7916ec55f5b1411577c5ed1b8c33ade5e16b"
   },
   {
     "pageId": "revenue-report",
@@ -2401,7 +2401,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9c7ef346c8aacb7a770af9ffd4a42a1a6c36070b8135b53db6997ec7d0d81e5f",
-    "translationHash": "fa62cdabc1943c5ee989a568d31aef9eaa8739dc0f29c1ea25707b490e66f9e7"
+    "translationHash": "48d4264d5c2ad88b8f4716545af7c44bbd27df85394b3b4ab0bee1a7b220296e"
   },
   {
     "pageId": "margin-report",
@@ -2413,7 +2413,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1122813410c4bff78dc5e364c3451a08cded0f92845408c7a9cc328a534115c8",
-    "translationHash": "36561f1574f90d778c3e6a5a32856a0ece0929755db8bbad21e957325d4656a9"
+    "translationHash": "1dbbafd8802032e1eaf9d156eaf138f21ec320b796c636406afb633ff4616f7e"
   },
   {
     "pageId": "margin-report",
@@ -2421,7 +2421,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1122813410c4bff78dc5e364c3451a08cded0f92845408c7a9cc328a534115c8",
-    "translationHash": "3c120cdf07359c5217b740bab1b78e12a28e0f2ddc9fbf3b2c7c0b6bff3da803"
+    "translationHash": "234288e26db0a8166d150700f6d2d960717bccdc1775bf60000eeb746a502762"
   },
   {
     "pageId": "margin-report",
@@ -2429,7 +2429,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1122813410c4bff78dc5e364c3451a08cded0f92845408c7a9cc328a534115c8",
-    "translationHash": "67adffa87df3d3262ecc95413c2a2f92bfb71be3ce62b6b155ecd16c79501d6a"
+    "translationHash": "cb0212c3e5e8cee21d3ecc243156e0c0c0482d9a49ab64e59bcd1b596f0b8321"
   },
   {
     "pageId": "sales-numbering",
@@ -2441,7 +2441,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "33565c7b820625a072463066e77d1a355a36a8f55aa8aad8c673dbdc7f5d63a7",
-    "translationHash": "742d594d8a837431ada9837c38f489e5715681ef0f052b9955fadba102224bf6"
+    "translationHash": "9be8b90bcd899d43d5dab100026accec601a8bae98ee82890b2175ff07f4334f"
   },
   {
     "pageId": "sales-numbering",
@@ -2449,7 +2449,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "33565c7b820625a072463066e77d1a355a36a8f55aa8aad8c673dbdc7f5d63a7",
-    "translationHash": "c6aa0fe6400b3f8ccc19ca98d22e2020819f0360c76c87201a4c36add4ceed32"
+    "translationHash": "e7c7a26e1091c8bfd41cd9b3cab3c6ef48414dc3f695cb05292dca9bac39f954"
   },
   {
     "pageId": "sales-numbering",
@@ -2457,7 +2457,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "33565c7b820625a072463066e77d1a355a36a8f55aa8aad8c673dbdc7f5d63a7",
-    "translationHash": "4117dbbd91b80d7b77d49d64f090d1df8d7dc44824dc3492d1abbc94b71f5d77"
+    "translationHash": "ea8470362c373feb3faffbcbc83f54784c49ee5d39ff499d3c3916c7d3900311"
   },
   {
     "pageId": "sales-approval",
@@ -2469,7 +2469,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a8b3371ef29f85a1ddac1a35f75d7b514e29573c3bffd3b95f6d51bd000451c0",
-    "translationHash": "bc9555c6c36657b10d86b5ce86d7cbc82d0702be075e5a2f1f3f22f22ada9d33"
+    "translationHash": "421368b100b3f0bddb30fd2474825200c72a2cfed494c9eb9f90ffa00748d95f"
   },
   {
     "pageId": "sales-approval",
@@ -2477,7 +2477,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a8b3371ef29f85a1ddac1a35f75d7b514e29573c3bffd3b95f6d51bd000451c0",
-    "translationHash": "2942e6045427218afa314cd784ba164ede377a6ffb1359b0a81e47d80828df1e"
+    "translationHash": "3c49534e1d2b93d00248b32a10cf10f53f20e95849530c8414ca76024790b698"
   },
   {
     "pageId": "sales-approval",
@@ -2485,7 +2485,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a8b3371ef29f85a1ddac1a35f75d7b514e29573c3bffd3b95f6d51bd000451c0",
-    "translationHash": "80caa7c1a75f68045a86d62a5b865eadfd5256cbbf74670e82d728b04eba5e4f"
+    "translationHash": "f2061dcdd7e70a88d4651a8204867211f946998790b8e0acdabb35f152a49ee1"
   },
   {
     "pageId": "sales-targets",
@@ -2497,7 +2497,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2710a5bc616fc2d6393cbf71eb3244d159bc7f7dded3dca19ac174a2f578c885",
-    "translationHash": "c7989481393eacb51cfd86e8733e4d13bbde327235e0436f829144f6b2ff4699"
+    "translationHash": "33d21663ee643423f8631809ed05f4da16a622472fe0f37efdcfede40eb22f59"
   },
   {
     "pageId": "sales-targets",
@@ -2505,7 +2505,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2710a5bc616fc2d6393cbf71eb3244d159bc7f7dded3dca19ac174a2f578c885",
-    "translationHash": "2676404053ad385c5e79776b718c25ec0efd7d1f3c58a22cb9c166448511be37"
+    "translationHash": "cefc2ca5550619bfea4478d1f11b2d4dd435777867bbbe30cfa4e50ae9c44fd2"
   },
   {
     "pageId": "sales-targets",
@@ -2513,7 +2513,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2710a5bc616fc2d6393cbf71eb3244d159bc7f7dded3dca19ac174a2f578c885",
-    "translationHash": "33b30b42f872693ed7c5adfc80f1776a37f28fb20049552a02d8fa688cbe5a76"
+    "translationHash": "c55dc944ed1b72413f759d52e2891660765d792dca0e53a7d8b0179d3f4a3ae0"
   },
   {
     "pageId": "supply-dashboard",
@@ -2525,7 +2525,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e2d5b30da40a6037c033fd85c75875d9dabd3d8bf53bf01f7081c5cb0c38d5b",
-    "translationHash": "5ea55bd0b7932428d65cdb810e506102b5cdf5aedb4dd80796251da61e88ee1b"
+    "translationHash": "7b9a8368c03f807135a6d75bc98b542d514d5607779373d8844de9501aaa7b61"
   },
   {
     "pageId": "supply-dashboard",
@@ -2533,7 +2533,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e2d5b30da40a6037c033fd85c75875d9dabd3d8bf53bf01f7081c5cb0c38d5b",
-    "translationHash": "63646e7742115774fff40279ef680318ec64185319ef4f0892622b20d3f49773"
+    "translationHash": "df096e8975c574537b4dc22c4767bc00c3d2965c7e9a59dc0be1ce480b382576"
   },
   {
     "pageId": "supply-dashboard",
@@ -2541,7 +2541,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e2d5b30da40a6037c033fd85c75875d9dabd3d8bf53bf01f7081c5cb0c38d5b",
-    "translationHash": "ed00b5381e5ed415a6dff9761e469c5bb07554a343ada6a0a04d3963aa886fe7"
+    "translationHash": "191f04f524fe9da5b5528d19994c2bd8f6b3e519ce40c0251fb94ec561d23f2c"
   },
   {
     "pageId": "supplier-master",
@@ -2553,7 +2553,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "55c8d098329ffb541b62470c88398a382694cd488d4818d4507d51c8880d8e93",
-    "translationHash": "ce488e54e18c6f08f7c5b92e392656242a0f6e37e7d831938b0d6132abbfb2eb"
+    "translationHash": "4b0891cd22a50e161e8333352e691167b6ecdac101946e82430c6397ac152b9a"
   },
   {
     "pageId": "supplier-master",
@@ -2561,7 +2561,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "55c8d098329ffb541b62470c88398a382694cd488d4818d4507d51c8880d8e93",
-    "translationHash": "34086d58d175633acb4f9e4d4aee4911f24cf161f628b2dfa01c3971aa2f31fb"
+    "translationHash": "d506048cdaa155a12a2786c7b7440e3a4d63eb17ea3644b3868ebde1e62ff4d5"
   },
   {
     "pageId": "supplier-master",
@@ -2569,7 +2569,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "55c8d098329ffb541b62470c88398a382694cd488d4818d4507d51c8880d8e93",
-    "translationHash": "469a62c9aff91988d6d53459ac6e5e8ac79931fb6667666aa6037a925d0f87d2"
+    "translationHash": "f5142fbed1847c7e106e216ed33cfcbb3c7fa15c5f21217cc843cfd4a2e8b15d"
   },
   {
     "pageId": "carrier-master",
@@ -2581,7 +2581,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a962ff70456543d2997bff94403e2a74447d3e3d7e223c5f355a32957bdc3a6c",
-    "translationHash": "9d67748f6cb9f2d67173a94465a7fffe2cc148db6a9a8728ea5c232ece4d6a99"
+    "translationHash": "848c19b8297e73d96984682ad492c44fc3ba99e39b03bf2dff6b57c0bcc46fc0"
   },
   {
     "pageId": "carrier-master",
@@ -2589,7 +2589,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a962ff70456543d2997bff94403e2a74447d3e3d7e223c5f355a32957bdc3a6c",
-    "translationHash": "2841f71b7eed61baf094db00c8de92da6bed11e9970e3ad5309a274cf14af29e"
+    "translationHash": "cc944a7d21d3994f3760092c6fe80e230ed86afd8940b7322b2b2b4b7b6a2166"
   },
   {
     "pageId": "carrier-master",
@@ -2597,7 +2597,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a962ff70456543d2997bff94403e2a74447d3e3d7e223c5f355a32957bdc3a6c",
-    "translationHash": "2c41bfff4592a41939428650e90ee6d50d8c9bc1ca431e1c73f56909143605a3"
+    "translationHash": "3c734b16debfe2ef81fc6fb8f1de0e759b61792fa9935871e705c1f9a1f11f2c"
   },
   {
     "pageId": "supplier-contract",
@@ -2609,7 +2609,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c0d9d4fcd56e10c269768e44465c5f70cb0b64bcd74d361db97b65fe7ea7db3b",
-    "translationHash": "15167954a16179163320e5d4920a3f35c21a0c3ced0dc57dffaafa48461c78e9"
+    "translationHash": "505ed94c228862e8e9f6c9b2210d0aaf4143a898c30e028ecf346de364f63ba3"
   },
   {
     "pageId": "supplier-contract",
@@ -2617,7 +2617,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c0d9d4fcd56e10c269768e44465c5f70cb0b64bcd74d361db97b65fe7ea7db3b",
-    "translationHash": "419df3437b7747670b43358871d4f7d21a15cdef21c4ef7df53ee897388eeb04"
+    "translationHash": "6adc3e8ad897be78e284fd798c1b116dab3f94e69c266998ac479655ca21b8a9"
   },
   {
     "pageId": "supplier-contract",
@@ -2625,7 +2625,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c0d9d4fcd56e10c269768e44465c5f70cb0b64bcd74d361db97b65fe7ea7db3b",
-    "translationHash": "6cc815a7b561aa13796045e943518aa319f6cad7110b31e0b35e44d2d9593220"
+    "translationHash": "b463b1e31dfab5ffc2530609bfd83539b90dff40b3351e3eeed947ae8a32ad2b"
   },
   {
     "pageId": "item-master",
@@ -2637,7 +2637,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ee7b336069422b1d5d1b588243336ae31257dfb1bd64327b5402e1447ac07e9e",
-    "translationHash": "f9a63f520e851907f194774aa92f252a9ae65613d2cfb9c6ee09dafc136c757a"
+    "translationHash": "37a38fe806ed1a43c4c87916080d07b04287890627a669b30c62ed613868b875"
   },
   {
     "pageId": "item-master",
@@ -2645,7 +2645,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ee7b336069422b1d5d1b588243336ae31257dfb1bd64327b5402e1447ac07e9e",
-    "translationHash": "ded8b9fe4fa14bb0550359a2b38b88f500ebc7c1de964f4cbaa23b2d559feaf0"
+    "translationHash": "2d7481fe6a0b24869e26823de3c7dd98d2ca2f483cf739de8931666b0353b607"
   },
   {
     "pageId": "item-master",
@@ -2653,7 +2653,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ee7b336069422b1d5d1b588243336ae31257dfb1bd64327b5402e1447ac07e9e",
-    "translationHash": "196731c976e0e1a4ab7a9589ddd82ec73645b2f9a94976e9cb3dc3caabd37311"
+    "translationHash": "f4df136fb019baed33d963620b616bd15546bce0d47e9b90e2ef14aa687b2db2"
   },
   {
     "pageId": "warehouse-master",
@@ -2665,7 +2665,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "caa77a251d3e99bd55af4462c61db643ee09c96fb776c265fe032d90bfedc598",
-    "translationHash": "a9233313972abd01f0f95efea4f038b97ee1a2bcf1ef89a61e15504c23acdf96"
+    "translationHash": "ee3d2a455ffde2b179dad94cb0f04e41b7708926a55e4e7383bc9ddde0409661"
   },
   {
     "pageId": "warehouse-master",
@@ -2673,7 +2673,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "caa77a251d3e99bd55af4462c61db643ee09c96fb776c265fe032d90bfedc598",
-    "translationHash": "cacdb9c15a13da03b071ad90ded8f9af7fe91d0d5b6cca917342d72835c2ec53"
+    "translationHash": "4696766a449ec66b4bc07872a73cd985bc22318c6b28c821b6516770dca08a73"
   },
   {
     "pageId": "warehouse-master",
@@ -2681,7 +2681,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "caa77a251d3e99bd55af4462c61db643ee09c96fb776c265fe032d90bfedc598",
-    "translationHash": "d531cf695eeedc5aa6f1565fffdb21576dff49da52485bb8f8a21e686595bd8f"
+    "translationHash": "ce10dbd5aebf5d4bd630ecc25507a447c234c3998594d5767e4cb58c5819aeaa"
   },
   {
     "pageId": "uom-master",
@@ -2693,7 +2693,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "57489651b5ac2c5d0bf7b463bc3a4735600a9b4519acbd332c427ef7a1b4647b",
-    "translationHash": "76093c27239918724c685db90b880ec29bf2200130381540d7da1781c576aef5"
+    "translationHash": "77e89cb1786aa91967f3ebc387073dd365c73920e8770e336e6ae3c17442afa3"
   },
   {
     "pageId": "uom-master",
@@ -2701,7 +2701,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "57489651b5ac2c5d0bf7b463bc3a4735600a9b4519acbd332c427ef7a1b4647b",
-    "translationHash": "de9f7aca305b2469d668ea0aed3018ba3949bd4c49d9ed063cad36e8087b4bef"
+    "translationHash": "3e18be113d061b104627edbab5ab50c324baedcbddd4eab7f1b23947ab8a3e6f"
   },
   {
     "pageId": "uom-master",
@@ -2709,7 +2709,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "57489651b5ac2c5d0bf7b463bc3a4735600a9b4519acbd332c427ef7a1b4647b",
-    "translationHash": "eade8a1e4e029a08a653950b37fe8270b5231d70b4e5337f749bae23ec9895d9"
+    "translationHash": "43a52d87dccd11fdf211803435ca7bd095922229b4563901ad9789e0b74c3843"
   },
   {
     "pageId": "purchase-requisition",
@@ -2721,7 +2721,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9ed07e5aa53b8d6ceb1e7752785769375d8884f71994e9067071fda98e13168d",
-    "translationHash": "324c24962a02763c95a35ba746c1d7b75a280330492c418ccbb774ed2f8c75d1"
+    "translationHash": "7bb93738a475d354b10d83c6667ff600a03e0ec1f068dbdc8571d37436354b81"
   },
   {
     "pageId": "purchase-requisition",
@@ -2729,7 +2729,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9ed07e5aa53b8d6ceb1e7752785769375d8884f71994e9067071fda98e13168d",
-    "translationHash": "a4e597099622a574463bc192064b7c629fa21cbd9f7ea7d0939a7a4f2c4ee1e2"
+    "translationHash": "50f6987a53cddbe6c202685547c6cd1101cf5a90a5d58496ba116927b2a4c43f"
   },
   {
     "pageId": "purchase-requisition",
@@ -2737,7 +2737,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9ed07e5aa53b8d6ceb1e7752785769375d8884f71994e9067071fda98e13168d",
-    "translationHash": "a2e214eebd0b5887db185d146eeba9a5caafbc89f838b4de51b6517193bc9423"
+    "translationHash": "d83e5aa42eda062e41da20df2505247ab86dcdab8ca557527514a5a6ddba3e6f"
   },
   {
     "pageId": "purchase-order",
@@ -2749,7 +2749,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9c687b64f91efc0ab54eed8f2f8051ba1ed0900ab0d258d62281d9fd816220ee",
-    "translationHash": "2408051ca567923489c915f6e2b8df1bfcb7e77581cc9cd5cf361c2c5287a367"
+    "translationHash": "a7672d83ccbbbc9316b8453b7c61d918f007c656b81c9ad68be695f784c22c22"
   },
   {
     "pageId": "purchase-order",
@@ -2757,7 +2757,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9c687b64f91efc0ab54eed8f2f8051ba1ed0900ab0d258d62281d9fd816220ee",
-    "translationHash": "8c8ae3790dc0bff8030c7b50f750c6c07a9de5ed0b20dee08daa97120ede09fa"
+    "translationHash": "4ba4c4af60423cda264bfdaaa78c2989ba3d9155dd0da93983ed188777fc20fc"
   },
   {
     "pageId": "purchase-order",
@@ -2765,7 +2765,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9c687b64f91efc0ab54eed8f2f8051ba1ed0900ab0d258d62281d9fd816220ee",
-    "translationHash": "0450275eac0bd2e777985393371d0db5bcf5823394aaa38567a7b9ab3142683f"
+    "translationHash": "90eb4dceaf7b3efbfb63ebd7902d372d99702a70b60a74daba91d861b8a6d5a7"
   },
   {
     "pageId": "goods-receipt",
@@ -2777,7 +2777,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "881e705c23dfd238ff992710b072d5e3fda5648b84890bd796395d026286e849",
-    "translationHash": "20d9dff54441a158ff75b5f12162f799b34f10d445d632e127696ab47365dc07"
+    "translationHash": "d4b9c83473acfe6ca193537f6b14b84131f33a9797c1347716afec73ce7d7b15"
   },
   {
     "pageId": "goods-receipt",
@@ -2785,7 +2785,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "881e705c23dfd238ff992710b072d5e3fda5648b84890bd796395d026286e849",
-    "translationHash": "b1d0831cf1c7c36274ffe5fa38fce6e65a28cdbcee6b9e06b8ad5ec4fe8495a5"
+    "translationHash": "f3e183115d2adc4c036c94bf7d4029f97e7f2ca77ae9058c88f3fbd4cfb48155"
   },
   {
     "pageId": "goods-receipt",
@@ -2793,7 +2793,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "881e705c23dfd238ff992710b072d5e3fda5648b84890bd796395d026286e849",
-    "translationHash": "30b0206d8e6352911aafb2b104d1df933befa8c03bd98017acd77463f687126c"
+    "translationHash": "7e06346df0206c01aabf2ebb446a065f827cf5237e9edea73f251f9daec3b71d"
   },
   {
     "pageId": "stock-transfer",
@@ -2805,7 +2805,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a878ccc452860041acdc4a15eb86ae42ad505f16412e7a6f887f51e1cb9510e8",
-    "translationHash": "eb4a55e68534e93b4b47cdfe27818ab5e1808aa125d3257a7ab1e456b8e75e84"
+    "translationHash": "838f00e3740a5db550458e20fcdc2058c358a35ae31d57b1f88b3221c8b65318"
   },
   {
     "pageId": "stock-transfer",
@@ -2813,7 +2813,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a878ccc452860041acdc4a15eb86ae42ad505f16412e7a6f887f51e1cb9510e8",
-    "translationHash": "58fda3891effcb37fb8f0e5aa931b2b9ce7e6bf7b80214a76cebf1d43db18d69"
+    "translationHash": "2dacf6a8e399bc946438ac3f24ceb4456054ca051f13fefa59f93fdd441eb1c4"
   },
   {
     "pageId": "stock-transfer",
@@ -2821,7 +2821,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "a878ccc452860041acdc4a15eb86ae42ad505f16412e7a6f887f51e1cb9510e8",
-    "translationHash": "edf29a4743c2db97d4963825b96b32d5166029d0f85fe4eda096a5f262fcd4a4"
+    "translationHash": "812ab4546099e7c897d2167d85cc1d9f7216eb99be42cb628c4b5b7b4ab773c0"
   },
   {
     "pageId": "inventory-count",
@@ -2833,7 +2833,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5597def0ceadc410ad94bc6181edfbc4272c2b9a5e17b83aaf70db401474a2ad",
-    "translationHash": "276692077e6f5c19703e1794a9302c0ab404e23dac219cfa3b42e0a70bc87a34"
+    "translationHash": "5546ade7adf7b4eb2e43ab5ce7e3fdac8f9097efcc29222afc4279fd9bbafc93"
   },
   {
     "pageId": "inventory-count",
@@ -2841,7 +2841,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5597def0ceadc410ad94bc6181edfbc4272c2b9a5e17b83aaf70db401474a2ad",
-    "translationHash": "4d059490af93bb133582c16c846b85467a679d4713ac3421edc2196eb7632824"
+    "translationHash": "19450b1326c1bf95416bd8090f9a9462cce9d815cce4d93db078fd5141b0cb97"
   },
   {
     "pageId": "inventory-count",
@@ -2849,7 +2849,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5597def0ceadc410ad94bc6181edfbc4272c2b9a5e17b83aaf70db401474a2ad",
-    "translationHash": "c9d9a3ff7e67acaf8bb223de9e0fe32e967c3f89a7c2c3e721b9d650eebb35c0"
+    "translationHash": "e2c7872335891d8c86e94196957f7ccd8f63ef8a9aa9fff2c59b8cc27c953aab"
   },
   {
     "pageId": "stock-adjustment",
@@ -2861,7 +2861,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bdb859b6e475d75fd4f037b9ac5e0974ad85ca7789e2ae8669d93e98bb3dd772",
-    "translationHash": "f77de7fa11e9ac6f902409b0e8aa5acd06e9daad00f7b9ae07733224999e2090"
+    "translationHash": "9ce482b08561a52665b9b6c6646bac624886e2aa4dec1400260aa260e6831fac"
   },
   {
     "pageId": "stock-adjustment",
@@ -2869,7 +2869,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bdb859b6e475d75fd4f037b9ac5e0974ad85ca7789e2ae8669d93e98bb3dd772",
-    "translationHash": "fddd61bf548060cfe7dd8994c3e566bf71193d714912c1103644404e2da1f200"
+    "translationHash": "0360bfcf26a33adcc3aa83657ad79c841baef3c3eb53fb36f40be39a2f9e91f7"
   },
   {
     "pageId": "stock-adjustment",
@@ -2877,7 +2877,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bdb859b6e475d75fd4f037b9ac5e0974ad85ca7789e2ae8669d93e98bb3dd772",
-    "translationHash": "8f0d15478ba499888b390883eb936cc8cff85c4aac0d52be2984ac974333d723"
+    "translationHash": "ff06e8b03e80ed4ce616101471b5d29a071b7707796e1c83a899af2686613eb1"
   },
   {
     "pageId": "procurement-worklist",
@@ -2889,7 +2889,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9cc8d3394bf4ad6899a9b5bf0928b2ae80941d907a59365ba35d1141419f9daa",
-    "translationHash": "2b18a43499f1504975200c85c37544392531ef0f386ea5e833bc81d8068e8284"
+    "translationHash": "794e8b93ee7ddc1bfeb7b4f2227a8a516fcf1f3fb75bb997f6991094caa47669"
   },
   {
     "pageId": "procurement-worklist",
@@ -2897,7 +2897,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9cc8d3394bf4ad6899a9b5bf0928b2ae80941d907a59365ba35d1141419f9daa",
-    "translationHash": "e6e969077405712bb2765f4f4ecf34149c4736c73effbdc8ea318cedad0f5915"
+    "translationHash": "431729d10908ab5ed56cbaead12eb7c69a3eb9b5d866864539877725003e073a"
   },
   {
     "pageId": "procurement-worklist",
@@ -2905,7 +2905,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9cc8d3394bf4ad6899a9b5bf0928b2ae80941d907a59365ba35d1141419f9daa",
-    "translationHash": "9d46cdce5ba77ad6933c80aa3f6c59e4c2cf500f42c7d5cb72b5e0348d36ec1d"
+    "translationHash": "c7bb01ac7dfea505f466cfc6cab0c1ba592f57c07977f88d2372a9a6a7d764e7"
   },
   {
     "pageId": "receiving-worklist",
@@ -2917,7 +2917,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "92d5a6eba268498d74d231bf1ab8953ef4f21a4fd036eb72b009635680819006",
-    "translationHash": "0cfef3078061526b0c52cb723e3c983ca6a14bf288efc53d027bbfaa74c48058"
+    "translationHash": "8056c4c0139030ad6172381abe2031f584494532db3993fcb55f8f8b94cbd8bc"
   },
   {
     "pageId": "receiving-worklist",
@@ -2925,7 +2925,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "92d5a6eba268498d74d231bf1ab8953ef4f21a4fd036eb72b009635680819006",
-    "translationHash": "9e59ec043df79758d54efb821bffa2a1a0ceeefa03a7a6d49c2359ad2dfd88b9"
+    "translationHash": "8449933934336340430d51016b1102dc7ac60511d7e7b7887345fce1bba22205"
   },
   {
     "pageId": "receiving-worklist",
@@ -2933,7 +2933,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "92d5a6eba268498d74d231bf1ab8953ef4f21a4fd036eb72b009635680819006",
-    "translationHash": "c232baea73b4d45c3bcd35559ed237717400712a3bba76baec521fdb5c6f1db1"
+    "translationHash": "f4ed1e917d1c526ba0a1699cc381b2b0d868961856c9cadea4fde01f3d63ca5b"
   },
   {
     "pageId": "reorder-worklist",
@@ -2945,7 +2945,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9039c449d97a5b30dadc11d58a396c825b8826a4f19ea55a86893ebf97099718",
-    "translationHash": "f58c79ea444621f0d6edfc4d8a34c60673ffeeb02734ab616f3c488a53f7ac71"
+    "translationHash": "82225a54d66502eeb1836440a1e0dad4ecd51c8e81758664082f688840d64feb"
   },
   {
     "pageId": "reorder-worklist",
@@ -2953,7 +2953,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9039c449d97a5b30dadc11d58a396c825b8826a4f19ea55a86893ebf97099718",
-    "translationHash": "9a89f47bb0b050b67756a7d17caeed5a7459d91a32257cb238ba6edec5022caf"
+    "translationHash": "7cb529d5b72c8c8349287ef0e95a1081625f8c1b4a83785d71d93002c9d00e2b"
   },
   {
     "pageId": "reorder-worklist",
@@ -2961,7 +2961,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9039c449d97a5b30dadc11d58a396c825b8826a4f19ea55a86893ebf97099718",
-    "translationHash": "be52789cc48d1dce97de201cf6582af0dbcea85d7a389130a47c43565284326c"
+    "translationHash": "19c66ca7faf00dd61520fa382977795eaeb7b24c9dca630476c2aad3a5531dd6"
   },
   {
     "pageId": "inventory-valuation-report",
@@ -2973,7 +2973,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1a4fcf100ae22cb4dd18d28cacc09131329c869d8de4a572727bf42c48adc2e9",
-    "translationHash": "baf688a0ffa28d666fda2a4601e0a79c778444eb275e5d3c86203efaab9e6662"
+    "translationHash": "082a9dea26258f4f2b16d4878e040706d63d9394fdafdfc015702029f4673bee"
   },
   {
     "pageId": "inventory-valuation-report",
@@ -2981,7 +2981,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1a4fcf100ae22cb4dd18d28cacc09131329c869d8de4a572727bf42c48adc2e9",
-    "translationHash": "88d812b49b4ae8e8e164c81c4aa64fba5f88fbd5b652a3fafac320251cf009f9"
+    "translationHash": "5bf9583e4315d3843b9d28d52d826283c82da5e65cb518a57dafec1e43fc6a2b"
   },
   {
     "pageId": "inventory-valuation-report",
@@ -2989,7 +2989,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1a4fcf100ae22cb4dd18d28cacc09131329c869d8de4a572727bf42c48adc2e9",
-    "translationHash": "ebb96ded10fcc1d56879c92c954835532350f14b289e7640766e2a72cb77bf7d"
+    "translationHash": "ceb6234d2705ff108ecb530a4b7ce59c471cd0cebd7d6179839fc49df7002ef9"
   },
   {
     "pageId": "supplier-performance-report",
@@ -3001,7 +3001,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "57fd2b9dae38dd7f13ab084c2f5628ca4aaa86a26b8f23ba6f0ecf388d60437a",
-    "translationHash": "1d46b5ed5ea7c6c9ccbf38f9f59825fecb036cc9525d4af6b900addf5a2fc0d4"
+    "translationHash": "14a7be4042a6ea24183b0d8a571549a8e488cceb665e109247780c98ea369074"
   },
   {
     "pageId": "supplier-performance-report",
@@ -3009,7 +3009,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "57fd2b9dae38dd7f13ab084c2f5628ca4aaa86a26b8f23ba6f0ecf388d60437a",
-    "translationHash": "2e3d800a9e2c999692127bf463ff97ca9915c46b9e8ede829d2b0fc6155e5945"
+    "translationHash": "37a410d8eb10694428483a869066f27eeb27f0b11e6e72b1232253f00d7dbbfc"
   },
   {
     "pageId": "supplier-performance-report",
@@ -3017,7 +3017,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "57fd2b9dae38dd7f13ab084c2f5628ca4aaa86a26b8f23ba6f0ecf388d60437a",
-    "translationHash": "cc9a3e8491789c2ab80ce571889e1cad1efd28a03535c0c2f6c7a191e65c8af2"
+    "translationHash": "b976e815cdae3cc23813ab9b9f74ea3d2bbb686e130ac2a9664aad8261647d0b"
   },
   {
     "pageId": "stock-aging-report",
@@ -3029,7 +3029,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "922c18114524f86fd237e662f422f1eea5d1b09eee03082f6aef3710a8b48d1e",
-    "translationHash": "aea77dfbe8c9ab047a5532a983806df5815b949e218bd41ca438618275733318"
+    "translationHash": "621dbbf3e8650769d8d2ea24894687bae3d73a1b09138ed9b53f22870ab3318b"
   },
   {
     "pageId": "stock-aging-report",
@@ -3037,7 +3037,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "922c18114524f86fd237e662f422f1eea5d1b09eee03082f6aef3710a8b48d1e",
-    "translationHash": "5437853aa1008afc17ce4f238ac95d529a1149b3c9152c43a449faa502a47a70"
+    "translationHash": "76beaa218e361ac6164f60396f5fdd0b14688d0edb9689d04b79174a94f30b72"
   },
   {
     "pageId": "stock-aging-report",
@@ -3045,7 +3045,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "922c18114524f86fd237e662f422f1eea5d1b09eee03082f6aef3710a8b48d1e",
-    "translationHash": "1505a4709aa2ad610569a35e95467a5c312b493c91a04a292b95e6b97fe0bb96"
+    "translationHash": "56f57e05daf3a3ac027b7e0480a34d165ab3e10f48885af50cd50270c61df372"
   },
   {
     "pageId": "reorder-rules",
@@ -3057,7 +3057,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bd9e5d9f03d1e76d0dbfbf7539dcea0fbcd6ca06dd6a8cbb319b5c3c0c8ede39",
-    "translationHash": "e332caa1ebdc791c54ed346e73c6b2c4915d31a1cdbcec1090dc10f9f24f3874"
+    "translationHash": "044d7cd8f6eadae5d1740af90648987d4aee8f8a6cec32ba5added117387d963"
   },
   {
     "pageId": "reorder-rules",
@@ -3065,7 +3065,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bd9e5d9f03d1e76d0dbfbf7539dcea0fbcd6ca06dd6a8cbb319b5c3c0c8ede39",
-    "translationHash": "85436471eae0456186917eadad6da795fbca31baeb230154c2ae7532ff9e554e"
+    "translationHash": "3472f6a43ff9780f078f6c880d4d6c79e825cf9243f80da8719b1022ac80a4ea"
   },
   {
     "pageId": "reorder-rules",
@@ -3073,7 +3073,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bd9e5d9f03d1e76d0dbfbf7539dcea0fbcd6ca06dd6a8cbb319b5c3c0c8ede39",
-    "translationHash": "9f957a12f3f15181a5ce0e7d08fe1b342aa6f8ae86d0d975da42c5d419f92fae"
+    "translationHash": "3549d22fdf51a7ef84db13411367e844799ac004448f679066891a1680aec09d"
   },
   {
     "pageId": "procurement-approval",
@@ -3085,7 +3085,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "4f6b4a5871df8f13b8a03723a10450c6f1acbb7269849278cb46b451c4c0e3bf",
-    "translationHash": "6f7cd55922c985cf5db65195099db5727ecffd2cd5afc3fa51352daa3821fa47"
+    "translationHash": "cd9cc7c8c3a850005f4a48db73fea3b79d9796b4289dadb6df908ba84d3f34a8"
   },
   {
     "pageId": "procurement-approval",
@@ -3093,7 +3093,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "4f6b4a5871df8f13b8a03723a10450c6f1acbb7269849278cb46b451c4c0e3bf",
-    "translationHash": "7b28b76787bd08c489112e78bccb9ed72db4310a89c705abb91c4b334e8da07c"
+    "translationHash": "c1a1e77322579b0834514b28581149dee934801e50a15b8069949d321515ad54"
   },
   {
     "pageId": "procurement-approval",
@@ -3101,7 +3101,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "4f6b4a5871df8f13b8a03723a10450c6f1acbb7269849278cb46b451c4c0e3bf",
-    "translationHash": "f65f2f84ee3d29f57a2f8c6e68be38473c393e267b371413ba0c88a8ee39e311"
+    "translationHash": "efb3176f58d2b760802ccdcef0c7f6ecd01d88052f530df05424cfbc9fe4ada2"
   },
   {
     "pageId": "valuation-method",
@@ -3113,7 +3113,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c98f369fa3ca1ec14b95dee493a9b0f43ab8c14f6bc531909af9ddaea8825b7a",
-    "translationHash": "e6a928e4abda7a2b3bc6e61bbcc327e6e3df42d8c33c6522d0a6b24859b68d68"
+    "translationHash": "d8f622f8b922a433a2bbd75e797723b98365ace1ce12c89a545dd2c13e560476"
   },
   {
     "pageId": "valuation-method",
@@ -3121,7 +3121,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c98f369fa3ca1ec14b95dee493a9b0f43ab8c14f6bc531909af9ddaea8825b7a",
-    "translationHash": "fa929cdf420690cdbb4d059afffbde32b9a887fde4d7fbfad206927f234a60e8"
+    "translationHash": "dbb5723db8ab89167c414ed4c1773ff4b98d1cb0d0f576a19ebf18fa8f117739"
   },
   {
     "pageId": "valuation-method",
@@ -3129,7 +3129,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c98f369fa3ca1ec14b95dee493a9b0f43ab8c14f6bc531909af9ddaea8825b7a",
-    "translationHash": "397936d06cbd524a811d4d1675e63d7c22b9251e7dd76c16ca38575ff9eb6b8a"
+    "translationHash": "96d2512755ae6b4e996f83d8e2edfe76f831e0d1533e07e7e54eb0c6e9fff0aa"
   },
   {
     "pageId": "healthcare-dashboard",
@@ -3141,7 +3141,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "21fa27854578ec000941d7affdd790dc7ea56615c2c624a72a5cfcf4e915e39f",
-    "translationHash": "87661780f4d96c94a1ad3e7e390a6882674443b5e22b9a504dc049ed701c8b03"
+    "translationHash": "1ace065645bac1ca2bfe02a9861dde1e33c476cc327178815ba5df1bb6ddca22"
   },
   {
     "pageId": "healthcare-dashboard",
@@ -3149,7 +3149,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "21fa27854578ec000941d7affdd790dc7ea56615c2c624a72a5cfcf4e915e39f",
-    "translationHash": "519d1073f021e0c8461c3dad153fa917ba46270491b0451993065aefa3e9310b"
+    "translationHash": "9e1c08bf3cde3f5674832271b814096c1c8a5694f245fded5890e39a4bd34573"
   },
   {
     "pageId": "healthcare-dashboard",
@@ -3157,31 +3157,31 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "21fa27854578ec000941d7affdd790dc7ea56615c2c624a72a5cfcf4e915e39f",
-    "translationHash": "315ce449ba099af48c6cf54c9a874414956718c7cdbee528cde9a47df35cab3e"
+    "translationHash": "4b669f942efad86ca01317bbe51963c8251964751315e4b6c27795a7bce770a0"
   },
   {
     "pageId": "patient-master",
     "language": "ar",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "801a1602de2785768ff33c73e06620c7d19f7b9e67806d9adf4ecccc876f0be2",
-    "translationHash": "83e58d827980b6a1717ce6255e882265ce19ad22a5afba84551940fecee68551"
+    "translationHash": "64aea17a929a64afcdb41cbe4d755c6ba07784a93a8f33cc2d6904a4723585f0"
   },
   {
     "pageId": "patient-master",
     "language": "hi",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "801a1602de2785768ff33c73e06620c7d19f7b9e67806d9adf4ecccc876f0be2",
-    "translationHash": "c27a82fce3a92dfb0d663a1bed305ad42e49c944e6767e033fb380825fd65ed1"
+    "translationHash": "5364cd503e9185584b1548b3ce5131b39b3af89a969a2dfe6783cb6672951bbd"
   },
   {
     "pageId": "patient-master",
     "language": "ml",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "801a1602de2785768ff33c73e06620c7d19f7b9e67806d9adf4ecccc876f0be2",
-    "translationHash": "9f2962aa185e48b33fdd12adf81b511d1a0812ddd9a704ca092e54867dfd88f4"
+    "translationHash": "e8c575ac59a47ef26fbb979e87ad1be3c3a302cb4105d6d658df5dd7d0aaea3f"
   },
   {
     "pageId": "patient-merge",
@@ -3193,7 +3193,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1cf555ebca3ebe953a29ff8d7e4aadbe1db979e0da22a6d8aecb67382f61f5f6",
-    "translationHash": "aa6d2303cdf171cb4136e094caa8aca9e131920b76babf13733cbac698f27f7b"
+    "translationHash": "3d328ef8131d352369dfcb3b07afe7c87747b9eba10748d2729c98e940d22542"
   },
   {
     "pageId": "patient-merge",
@@ -3201,7 +3201,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1cf555ebca3ebe953a29ff8d7e4aadbe1db979e0da22a6d8aecb67382f61f5f6",
-    "translationHash": "44fc79e5611566264a654779f0eca60e3617ab58978880150dd2fbbd1029299d"
+    "translationHash": "ceb92f4c715d1ea4bb8ed393745a86fc73c79d3b83420802ba30d74b7fbd2cc3"
   },
   {
     "pageId": "patient-merge",
@@ -3209,7 +3209,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1cf555ebca3ebe953a29ff8d7e4aadbe1db979e0da22a6d8aecb67382f61f5f6",
-    "translationHash": "7d940107cb7d2343a6aecfdfe5631d88bdb27ba47dd97dd0d263b00487776118"
+    "translationHash": "5f344cf464915185b7ed6fa91fd382e34a35b4805a679b26d98afe4dbd33fb00"
   },
   {
     "pageId": "next-of-kin",
@@ -3221,7 +3221,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1c5847e3efdcf3a84d8ac15b850d4a50c58e7ac98f0d13e0144a627ebc60a292",
-    "translationHash": "c6a0e04a1a0a4cc2cd49e3a3a726611c64732661d508f620cc0ee29e964e950f"
+    "translationHash": "12dcba663c657a5205b8fdb7f04a5eb3649d1d96eeb2db6e6b82fe326291ea77"
   },
   {
     "pageId": "next-of-kin",
@@ -3229,7 +3229,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1c5847e3efdcf3a84d8ac15b850d4a50c58e7ac98f0d13e0144a627ebc60a292",
-    "translationHash": "47edf2ba59d48438300cd3eb9711d30975084a28ea3d8dc8a4b191ffa440e9dc"
+    "translationHash": "cab519d0c011457788a871329594b846ce26c4f2eab3640e4bfb4e246f1028f6"
   },
   {
     "pageId": "next-of-kin",
@@ -3237,7 +3237,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1c5847e3efdcf3a84d8ac15b850d4a50c58e7ac98f0d13e0144a627ebc60a292",
-    "translationHash": "e4c35f33d10d023a90563e26f160eadbfed558d7bf0663d814e24654c4002ae9"
+    "translationHash": "02a48165731c8b01895c0f71844f669f275b8e62c6f72feb9dae0d2614348f76"
   },
   {
     "pageId": "appointment-worklist",
@@ -3249,7 +3249,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f12b2471b07967a1989ae2670e2af9861bffe6266e386de4f93d19003c3cd976",
-    "translationHash": "04cc9bfa0900217e6462c39a579b09ee95954c9183f8c51c510054e2d5c9ba9b"
+    "translationHash": "b65a4849150e45ad8be9a7ced1a00ee61d1665746f5a326d0ef1fc998eddc834"
   },
   {
     "pageId": "appointment-worklist",
@@ -3257,7 +3257,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f12b2471b07967a1989ae2670e2af9861bffe6266e386de4f93d19003c3cd976",
-    "translationHash": "d42621a7a7db7464fe2880f281c067aa1752c4223e6c50a59250532386b003e8"
+    "translationHash": "0d94d91cb0815df0655ac0349ee3d5be4b4ba06a2361661b461501b6b5a29eee"
   },
   {
     "pageId": "appointment-worklist",
@@ -3265,7 +3265,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f12b2471b07967a1989ae2670e2af9861bffe6266e386de4f93d19003c3cd976",
-    "translationHash": "12c9fa2ccd247c4175d5011bda7adbf575177db6a63765564ad9391c9fe7f127"
+    "translationHash": "610081583c4d841dd75f352647b9b0ede7f62613341d6833fc1e6fe0740ef83a"
   },
   {
     "pageId": "admission-worklist",
@@ -3277,7 +3277,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "47d78e694217958cf97f30b857881fb218d5811cfb8002e869fbdf7752dc5192",
-    "translationHash": "57c5d171aa34dc51ad1dc193af235f76dd52432e97641495f15b30d81096db0b"
+    "translationHash": "e0c6490c43e6b4460992587a12db908bd46be42eb2b6446a769b0dcca5ba4d2b"
   },
   {
     "pageId": "admission-worklist",
@@ -3285,7 +3285,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "47d78e694217958cf97f30b857881fb218d5811cfb8002e869fbdf7752dc5192",
-    "translationHash": "9729a9f9d111f212e2c739de1de94ea1c90035593f00680ec62c5a8afa3a8b0e"
+    "translationHash": "39a029cd1bb016d6d3c69bcec83a11e90bb44ad8e00290af82d8534ce1bf9c94"
   },
   {
     "pageId": "admission-worklist",
@@ -3293,7 +3293,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "47d78e694217958cf97f30b857881fb218d5811cfb8002e869fbdf7752dc5192",
-    "translationHash": "284f0b9a9fd6b6e60d678b4ccae5542138516bcb517185a0eab598df32d1d9d2"
+    "translationHash": "fe5127e949d5fdc782fe8f5c9fc843769742424b59a69dd14bf1adb12b8bd10f"
   },
   {
     "pageId": "bed-management",
@@ -3305,7 +3305,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2288412ba3b0acc1d3e967fccc0c2672aaf2431527480f12606b5db8e31f9f0a",
-    "translationHash": "edc49de050fd8096dc03b54367752b36b7dbf4ee9399e8b76570730289d26f29"
+    "translationHash": "4eb32e30ff3f95ced1fe4a2cf0a48b4341d4bef3a435991ba664e4143d6e749c"
   },
   {
     "pageId": "bed-management",
@@ -3313,7 +3313,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2288412ba3b0acc1d3e967fccc0c2672aaf2431527480f12606b5db8e31f9f0a",
-    "translationHash": "3f40d394c53dbc12f4837c1757381792161a97dc49ac49997a0cd1576cb1e23f"
+    "translationHash": "27bfb3aae062e80eb6eed09acb74d271ed084242a518669057bc73043a9c9566"
   },
   {
     "pageId": "bed-management",
@@ -3321,7 +3321,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2288412ba3b0acc1d3e967fccc0c2672aaf2431527480f12606b5db8e31f9f0a",
-    "translationHash": "14c9431547a1b35d91d2801dbf75707e058df43aa6fb0b4dc61829f87e00af45"
+    "translationHash": "a98ea94bd1936ed4faa81dda41111971b7f0f9d78b2700f6a6bf2bbcf2d6cac4"
   },
   {
     "pageId": "discharge-worklist",
@@ -3333,7 +3333,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bd479edef891457b943a699b3e28bef6feedcf5bc45f8bd6b9adf93df50aa920",
-    "translationHash": "25b5df0e0e65a291916c3d71c1899e0a192e5067be4f123708a7f1ac5db68dc8"
+    "translationHash": "b7eac4486800fc16e9da80c35809d0b1debb88ef8ade06419c25e86bd1f5c22b"
   },
   {
     "pageId": "discharge-worklist",
@@ -3341,7 +3341,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bd479edef891457b943a699b3e28bef6feedcf5bc45f8bd6b9adf93df50aa920",
-    "translationHash": "c2282fdf6b60c3c040ac3f2c833be9605e2440819bd72eaec87347a0d8de5710"
+    "translationHash": "e3ea9f6675b081d919385bb426b7520fe34b9568a1ff889732b42d1c0f30f3ee"
   },
   {
     "pageId": "discharge-worklist",
@@ -3349,7 +3349,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bd479edef891457b943a699b3e28bef6feedcf5bc45f8bd6b9adf93df50aa920",
-    "translationHash": "48e647f73f57cc105564150b35be0bceaa69ec2ffb816bd27be7e230ab5e1944"
+    "translationHash": "af2879aeef76672571cad04e2b9d4bd9df6b011c282c6b958de9aeda3d679aca"
   },
   {
     "pageId": "encounter-worklist",
@@ -3361,7 +3361,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "338f1edcd1ceb0864b416018069afb8edb5cb879b8c116954cc514ba424c3bcf",
-    "translationHash": "7f8149c982f78588d03c6a6b12abc973cae079261180867084702bf62ee36f5d"
+    "translationHash": "478d15445582cfc709fe59080ad0fdedc3b7286656465382b080154d2805a2ae"
   },
   {
     "pageId": "encounter-worklist",
@@ -3369,7 +3369,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "338f1edcd1ceb0864b416018069afb8edb5cb879b8c116954cc514ba424c3bcf",
-    "translationHash": "33596e2fb451e6ff651c1777a1103ea52dc7a5e2571f8c75216617721a69478e"
+    "translationHash": "54ea9a5b8b936a5d1521113781dbd1c8941eeca940554a42c1dd356878f87a17"
   },
   {
     "pageId": "encounter-worklist",
@@ -3377,7 +3377,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "338f1edcd1ceb0864b416018069afb8edb5cb879b8c116954cc514ba424c3bcf",
-    "translationHash": "c909ca06ecc10c1c011af528655d9c8adbac9d3d41e1fd5caf326ccad40a14c2"
+    "translationHash": "e254d0464f72d37b4294664eb79265a0654879b38121eb78df9f2701b335e2d3"
   },
   {
     "pageId": "consultation-worklist",
@@ -3389,7 +3389,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "dca3a29e2bd83555cda32397ad48f5ff78f21fe9a11252a98270c5d8a30e66df",
-    "translationHash": "1958df76b30b91eeb4b29214728e7c9508584c5cf16de8dfc3d0433a9e66cc62"
+    "translationHash": "3cb758891ac321d56f4f9565bb71ab94a0fee99f30fad5ddda3f38088ae6bdfc"
   },
   {
     "pageId": "consultation-worklist",
@@ -3397,7 +3397,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "dca3a29e2bd83555cda32397ad48f5ff78f21fe9a11252a98270c5d8a30e66df",
-    "translationHash": "89be212227809142bd2e6084226e34ac2eac74aa946c43239a578e56fcf5a344"
+    "translationHash": "80fc1e239571e095eeadc945ca86aed85eb4b5613ff681993decd40aa645430e"
   },
   {
     "pageId": "consultation-worklist",
@@ -3405,7 +3405,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "dca3a29e2bd83555cda32397ad48f5ff78f21fe9a11252a98270c5d8a30e66df",
-    "translationHash": "14ef8bbe61f4f634c96747cd9bb92a68eb2c1634e247ea729cdd35c8bbb34cb9"
+    "translationHash": "98489005e7bc80dbbdcc5d4bda94763ac5341c7462e33070dfa02c52347b8607"
   },
   {
     "pageId": "consultation-entry",
@@ -3445,7 +3445,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "08e618e06a537276414100287796aaf1382b47610c6c49a67671d0c7b1b302a8",
-    "translationHash": "97b634c5e9de0c58b7568e3c3365189d127e1258887b78fa6bdaa0e32ab11a96"
+    "translationHash": "7af00913c6d5386df9d0a1e7fca05cdeda5ce952964937d6ec1f3c9641cf5298"
   },
   {
     "pageId": "clinical-notes",
@@ -3453,7 +3453,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "08e618e06a537276414100287796aaf1382b47610c6c49a67671d0c7b1b302a8",
-    "translationHash": "fbf7ca27c19c6e6b737b5e5e4497ede77f425e7de76f3eb2a901e5e19c8f92e4"
+    "translationHash": "9e7c7e0c14f517210f25473605f81a0b595412f23d452b63bd4a396d3545e502"
   },
   {
     "pageId": "clinical-notes",
@@ -3461,7 +3461,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "08e618e06a537276414100287796aaf1382b47610c6c49a67671d0c7b1b302a8",
-    "translationHash": "34661ff5811c66957ee67bcacc09463e4d19294e3bcf4f934611f0a4e51447a1"
+    "translationHash": "5fbc4eb46e4cf032d9af87ff2e0710dbc762d88c875fd54b09d1bc664935f095"
   },
   {
     "pageId": "vitals-worklist",
@@ -3473,7 +3473,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8fdf3c594090658ae80ad2d254c368aa2558131c30d4ca25883b27fcd5f1cd4d",
-    "translationHash": "31a02f38cbf9033bb3b2df37064acbcbbb91679d1e429e9b25da9918b3f821e7"
+    "translationHash": "743dacbfbd92fc97923a9a79f2fd603c3d7dceafc4544143082d7d94ce4621dc"
   },
   {
     "pageId": "vitals-worklist",
@@ -3481,7 +3481,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8fdf3c594090658ae80ad2d254c368aa2558131c30d4ca25883b27fcd5f1cd4d",
-    "translationHash": "a2162ce9cecaf572dcb431066934d6343ad9129376902c5345a3c04213f0bba4"
+    "translationHash": "e5645ed2af63492af7957a9d98ccd0d64868afc7ff440c899856a829d6179cf0"
   },
   {
     "pageId": "vitals-worklist",
@@ -3489,7 +3489,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8fdf3c594090658ae80ad2d254c368aa2558131c30d4ca25883b27fcd5f1cd4d",
-    "translationHash": "43dcd64f7661d0319c6fe7728685f47d95911759245754c994dec255c4c73c38"
+    "translationHash": "3c46ce7f25040293be6985e9499141a1dc720b214f015b8f05c012b03f0c7be4"
   },
   {
     "pageId": "lab-results",
@@ -3501,7 +3501,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3edd9c96976ddcfd7364bb247d19b9c8c0912d615abb2f821ed4f00edc7c063e",
-    "translationHash": "1029f95d2d3a008a68e8fa59d9940f1785839a5eedb514727905d45d4900b63d"
+    "translationHash": "5f650c7d40417abdb069424faa13b93106a2746d58dcf0f35d83479135d6040e"
   },
   {
     "pageId": "lab-results",
@@ -3509,7 +3509,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3edd9c96976ddcfd7364bb247d19b9c8c0912d615abb2f821ed4f00edc7c063e",
-    "translationHash": "72fbaeb9742afe1bb62226365e2d2fad3febd88fd19d73afcd12d24c32e170cb"
+    "translationHash": "ac63bc7296f65f2252636d6ea7b4f475682cccd7911fb8a70a09690ab9609f29"
   },
   {
     "pageId": "lab-results",
@@ -3517,7 +3517,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3edd9c96976ddcfd7364bb247d19b9c8c0912d615abb2f821ed4f00edc7c063e",
-    "translationHash": "2d65b128b9db55fabf0d78f2c03f7e8508ef6f2f0daaf8c512ff2ced04c1bf65"
+    "translationHash": "1304ec7621abb1b5d789362490ad420c6aad3290a02b485822a68a9dfd6c139a"
   },
   {
     "pageId": "imaging-worklist",
@@ -3529,7 +3529,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6833900cd1b5b109b3e1d9437aebf868d33315072d8866fdfa6c8d5343e1c7bb",
-    "translationHash": "2ef53547baba530ec41791298124213fdf8d2cb15388129b41dcd323e5f4a134"
+    "translationHash": "1ac8d551aeebc5c5f0eba8a784eaecb7d4e06aaaf3ed27d3cfc8a64dba152ec5"
   },
   {
     "pageId": "imaging-worklist",
@@ -3537,7 +3537,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6833900cd1b5b109b3e1d9437aebf868d33315072d8866fdfa6c8d5343e1c7bb",
-    "translationHash": "4b2dbb5f6d964d3d0445afc1f125a8ad00a22b180c75037886844537ab2d78e9"
+    "translationHash": "68d450b525840986bc8cab5d99acee54f4ef58c5437f77e7a6b7970370fa0dc6"
   },
   {
     "pageId": "imaging-worklist",
@@ -3545,7 +3545,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "6833900cd1b5b109b3e1d9437aebf868d33315072d8866fdfa6c8d5343e1c7bb",
-    "translationHash": "07e7dc4d38f09cdb395f9e42512369af98fbbea67c517754f3e16f5ee608a4ac"
+    "translationHash": "8408c504ca697d8bded09c57a87dd1e1bc70382cb2686e06f5bbe8d0027b3ff6"
   },
   {
     "pageId": "medication-orders",
@@ -3557,7 +3557,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8be22cb8d64f6f68bc9e5f33b4ea864460e51a77fbab14705ab9933a48887fe8",
-    "translationHash": "35f51dfd059afaa75393727d7738d129e032804b28aa16b8accf5632b5ebf8c9"
+    "translationHash": "2cb62d9031312405339a04acca7e83f2125011ea471df673c53d5586af9b5a33"
   },
   {
     "pageId": "medication-orders",
@@ -3565,7 +3565,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8be22cb8d64f6f68bc9e5f33b4ea864460e51a77fbab14705ab9933a48887fe8",
-    "translationHash": "35e42e4f10abfc5b94eed1f89d7735eda8174a1132e07ff2dd206b6b910501c0"
+    "translationHash": "fe81c2d08b0d56bcd1a87d47c8dafb9632b4385a48f178a50c134d9e5cd06aee"
   },
   {
     "pageId": "medication-orders",
@@ -3573,7 +3573,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8be22cb8d64f6f68bc9e5f33b4ea864460e51a77fbab14705ab9933a48887fe8",
-    "translationHash": "5cbd47be79f97fe9678ac2ff5ba5adb2155bea7ea04f0849a0462b00fab5a44c"
+    "translationHash": "fc0a2a80c805cc56847e7b341ee385ed8f774ce084785f40cc6019497965c203"
   },
   {
     "pageId": "preauthorization",
@@ -3585,7 +3585,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2009c96a1da5a05ce85c1058eac8815d0f5559c5cdec4a4475b09b0f897d58f6",
-    "translationHash": "8928ec998695dd0adfeab6ca04ef5145562497a1c5bc9fc27c3aaad2292c0051"
+    "translationHash": "2f5cfc78539b3ce6d0049ae3ef3f3d596178b60ba71d5e4be86c839853aae668"
   },
   {
     "pageId": "preauthorization",
@@ -3593,7 +3593,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2009c96a1da5a05ce85c1058eac8815d0f5559c5cdec4a4475b09b0f897d58f6",
-    "translationHash": "0e5acf96017a9f48dc7cd23345e70e0a5a3b282d30be0b57a524f08c72f37d00"
+    "translationHash": "012c6422873d3755e6fb03a31bf3c943d32a77f404f3137539b235bb4d1cd03c"
   },
   {
     "pageId": "preauthorization",
@@ -3601,7 +3601,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "2009c96a1da5a05ce85c1058eac8815d0f5559c5cdec4a4475b09b0f897d58f6",
-    "translationHash": "3bd02678c86ab4b209bff7ff0775191e48e79064cdda2f15aa72d8bb91519dd7"
+    "translationHash": "d58937de53b4240aced92d2602d4fa9431e838154c5913850593a90f855f1e61"
   },
   {
     "pageId": "claim-worklist",
@@ -3613,7 +3613,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "05a2b510019943130da7af567948f1f8a1a0155be897b78effa77c252468658d",
-    "translationHash": "6ab6633468dde2625e36d580aa875f53207d51a1160ce9344a2659849416fcd6"
+    "translationHash": "79e963ebdd9bb52a693f4a41f66b782ac6c45a1d8b285f16f242fa02e0584756"
   },
   {
     "pageId": "claim-worklist",
@@ -3621,7 +3621,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "05a2b510019943130da7af567948f1f8a1a0155be897b78effa77c252468658d",
-    "translationHash": "af34e4cda629033e8f32dfebff98ae25406cf13cad7e7674268883127792c092"
+    "translationHash": "ada21341da760ee6fd45f9e7c09e4631168d707ba616e7fcfd0a99f431e6afdc"
   },
   {
     "pageId": "claim-worklist",
@@ -3629,7 +3629,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "05a2b510019943130da7af567948f1f8a1a0155be897b78effa77c252468658d",
-    "translationHash": "6e3aff614c1f86bcb6ff111b4e95bea46522210658e80904e9ead235f33069d1"
+    "translationHash": "20c618c605eb659366481c4a394f8ea415710fd87f43668d5feb009c950e0cfd"
   },
   {
     "pageId": "denial-worklist",
@@ -3641,7 +3641,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0bd989d362dbb47c95a5bad9528178c8a09c222ef104df6351081ca5cd59c37d",
-    "translationHash": "e1dd524225f2cccc1fee64707f13d654092c3c6311c561ffcd81e9302dd3d8ef"
+    "translationHash": "ccdeeddb0ee0d2c7162e3d5895736674a71128a74cc0a1aa34bd0bfbff24b606"
   },
   {
     "pageId": "denial-worklist",
@@ -3649,7 +3649,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0bd989d362dbb47c95a5bad9528178c8a09c222ef104df6351081ca5cd59c37d",
-    "translationHash": "fdb2efcd8b77b29d4b87ccdbb1afe59f16846496fd334352748ec1690d3ce70e"
+    "translationHash": "8dcece071ffb694ccdd1bba19955eefc04537fd40d044fc96c694ee5f034d1a4"
   },
   {
     "pageId": "denial-worklist",
@@ -3657,7 +3657,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0bd989d362dbb47c95a5bad9528178c8a09c222ef104df6351081ca5cd59c37d",
-    "translationHash": "ae6307b4c5a3637b82ff21232932035a28d149cd5d6bdee93aea0f9270f7a318"
+    "translationHash": "c2e6ee7da1e6e894efa01d4f779a1eb6ccbc69048a6cb24346796dc24efb4fde"
   },
   {
     "pageId": "occupancy-report",
@@ -3669,7 +3669,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e2a7e4f3f3d316c32c4648d3964ea8fcfec32565a20f35fc59ebe35867b4f54",
-    "translationHash": "27acdbbc1ae255717343f1461d970dd0bf096e1f7bb09f43cfac894211d0d129"
+    "translationHash": "0e99b9ca0d330dc755682f15dbb0e8f8033594a77cfee23a347e96f22b1a492b"
   },
   {
     "pageId": "occupancy-report",
@@ -3677,7 +3677,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e2a7e4f3f3d316c32c4648d3964ea8fcfec32565a20f35fc59ebe35867b4f54",
-    "translationHash": "495b27bd5fde81f91cfff60870441a03b4c4c13b7e27e4129212e31637131261"
+    "translationHash": "a60429f3f136d8394bc044ac87800dddd560ffbb19232e0e23d367be6b2da51b"
   },
   {
     "pageId": "occupancy-report",
@@ -3685,7 +3685,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e2a7e4f3f3d316c32c4648d3964ea8fcfec32565a20f35fc59ebe35867b4f54",
-    "translationHash": "0197fdb6a7a21097aa43b4c6356c9b9adce254cdc89725e0d640173f3cc3fc9e"
+    "translationHash": "a6845546d32c473bf0f7230e48df5398b1e9586eba85575211395312239ae351"
   },
   {
     "pageId": "los-report",
@@ -3697,7 +3697,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8b5364d29c8cce4ef030dc496e61d5158034be3d39f6351954ce9a6ca8fa9f6a",
-    "translationHash": "c3ec5de0ad89d52a0f0cb615b474f3168c75530385baf2c394fe26d404158c7d"
+    "translationHash": "f2808d04535d07cf86c76187c9f19e129c360f8fe4c278153140cfff70e20cec"
   },
   {
     "pageId": "los-report",
@@ -3705,7 +3705,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8b5364d29c8cce4ef030dc496e61d5158034be3d39f6351954ce9a6ca8fa9f6a",
-    "translationHash": "258d4176e50a098f042023e71d66ab56f4b841688edf3550567139155faa78c4"
+    "translationHash": "69fa294343e72fd1a5ca7db84e0f67d6639ba9e7173027679b5dd540b273f438"
   },
   {
     "pageId": "los-report",
@@ -3713,7 +3713,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8b5364d29c8cce4ef030dc496e61d5158034be3d39f6351954ce9a6ca8fa9f6a",
-    "translationHash": "abeaeb9dfba181bd2ccac9090f1d9480da13dc9d5c7b9cd17d0e19161ecd84c6"
+    "translationHash": "ba0571cc44204c8ac24b16e20f315f1d264e5b9ec4e720727c2035946f326c48"
   },
   {
     "pageId": "denial-rate-report",
@@ -3725,7 +3725,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ec2c7d4b793cd8404ffcebd59205019776edbd8eefb4837e3fcdd914ab5c9616",
-    "translationHash": "c235fe5a22cd7b6454eb55054def6edaa115f3ec151437b6564aaa9d10d2e935"
+    "translationHash": "6bea93f92b9ebd7f2852f4d16c33d7ec4fe4fb1cd8132132cc3c7bf9a2ed2772"
   },
   {
     "pageId": "denial-rate-report",
@@ -3733,7 +3733,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ec2c7d4b793cd8404ffcebd59205019776edbd8eefb4837e3fcdd914ab5c9616",
-    "translationHash": "17d9cc0c793d5f433c774d88d4f720ed9dee4d9d7c1a49c7725540fe68de47b1"
+    "translationHash": "e980cb7106e319f06eac7799b447954298f0e559c10a5f1ee78a60e591e954d3"
   },
   {
     "pageId": "denial-rate-report",
@@ -3741,7 +3741,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ec2c7d4b793cd8404ffcebd59205019776edbd8eefb4837e3fcdd914ab5c9616",
-    "translationHash": "42869a8fa856cecb38b56a250aa25c59b5a9ab1363ad7f69b00877fb301d5d3b"
+    "translationHash": "199f86fef156f717e9d4bad631da0526eb659f692ef17aa3341aacfe9855887a"
   },
   {
     "pageId": "service-catalog",
@@ -3753,7 +3753,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f8e8ea7295ebf950b72f1190517b1f7c3f98c4914e8249dd3913c784a0f4db87",
-    "translationHash": "fcfe3486f4b564136109d48540317f160ae8a0072634266c10bf0edad7f750e5"
+    "translationHash": "79ef5e3d6410a059d2e91c6fb285b86a52051d2181d87f85d077c54197846367"
   },
   {
     "pageId": "service-catalog",
@@ -3761,7 +3761,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f8e8ea7295ebf950b72f1190517b1f7c3f98c4914e8249dd3913c784a0f4db87",
-    "translationHash": "ff1f4d8599cfa30bb514d04adc01d1af8b55ced0a6b9814e42c300f23736d325"
+    "translationHash": "d17aa575af4b1848daf31e2626648469ed61ac81d25a391fba237f1225b24297"
   },
   {
     "pageId": "service-catalog",
@@ -3769,7 +3769,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "f8e8ea7295ebf950b72f1190517b1f7c3f98c4914e8249dd3913c784a0f4db87",
-    "translationHash": "6b135822015a90a8f46176dc475e5fc336c84f59062178e75d350ce271cace4a"
+    "translationHash": "c6e33ca5082feb266d02f7c83b49eab7c3459b453cd78cf6566e8e2bfdc06887"
   },
   {
     "pageId": "payer-master",
@@ -3781,7 +3781,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1060038bb573174e4fd547be2ad786aa13a40d0ae752f23d8f5767c94d2fbd0d",
-    "translationHash": "53d3f3cd63281e057d265729432dc80868537ffc7caf819cba3091493322205e"
+    "translationHash": "b7d5b7fb658e12bc56c38cc2b773aaee9771c06ef4d9064759bcfea3f3779784"
   },
   {
     "pageId": "payer-master",
@@ -3789,7 +3789,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1060038bb573174e4fd547be2ad786aa13a40d0ae752f23d8f5767c94d2fbd0d",
-    "translationHash": "04b0decc169affe291dac611dc8980e9926212317e05785258699dca76710629"
+    "translationHash": "bfcbafc25b520909bdad5cc12facdfab6dd3f5f5d233bad9ffedb9e6d77d163e"
   },
   {
     "pageId": "payer-master",
@@ -3797,7 +3797,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "1060038bb573174e4fd547be2ad786aa13a40d0ae752f23d8f5767c94d2fbd0d",
-    "translationHash": "fa1e56f926c5512b3c31d2d0ecdff2c2a419325c17c234335f1ce34fc1e0ca39"
+    "translationHash": "f263091db3cec68dd20d368e14d3a0e710b663952a0f899fc86d9d47314712c4"
   },
   {
     "pageId": "clinician-master",
@@ -3809,7 +3809,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3d876d2142eb42014f7a601359b6d7bcf13128abf0a3965a4505b3d6f71e8752",
-    "translationHash": "6d33636ca4b0c94ee17fecf9d4ca9641b1bee2db3d63e3c4e122dab682f66b25"
+    "translationHash": "f03dd726dd1c274dce659688eb3990129a527b0603ce68b4beca2478bf4cf659"
   },
   {
     "pageId": "clinician-master",
@@ -3817,7 +3817,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3d876d2142eb42014f7a601359b6d7bcf13128abf0a3965a4505b3d6f71e8752",
-    "translationHash": "3bf4d22bc3c6e76a7efee9fa70c23ed053673a77a351632fb008540d0f6b42ff"
+    "translationHash": "81be4b9d5e52339a396ecd73a2be3b0e88460f5486cd59b3ab864ea2ed4e8d6f"
   },
   {
     "pageId": "clinician-master",
@@ -3825,7 +3825,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3d876d2142eb42014f7a601359b6d7bcf13128abf0a3965a4505b3d6f71e8752",
-    "translationHash": "44732efaa8d967495b5ac1f5ce24b88585968df8f197b5cdd2e123c12c6b01c8"
+    "translationHash": "6d33bf83881da12a4dc26d971b6ac7f9d1e4b1e7cf68c5a890708213739ab5d1"
   },
   {
     "pageId": "pharmacy-dashboard",
@@ -3837,7 +3837,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "38790b97ab2ead2c2af399ef8c7d8cbdfdf93decb6aa27df00e0f0849dd6ee73",
-    "translationHash": "adf9339928fc80de9b0271932a4900913994c7ac7d4e6681aa14c27cb58dc0ce"
+    "translationHash": "1b9b48f999f5432213a63abdc3e2d1bd9796661f51efc8c52874b4e2567649d1"
   },
   {
     "pageId": "pharmacy-dashboard",
@@ -3845,7 +3845,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "38790b97ab2ead2c2af399ef8c7d8cbdfdf93decb6aa27df00e0f0849dd6ee73",
-    "translationHash": "2b49ad85447998af08862ca7a4c983696d633c30fea3b6355a9df854e121a176"
+    "translationHash": "c8164492e536ab54c1415b619d9b4078cb95070af956fe6719a499c1e76a78d7"
   },
   {
     "pageId": "pharmacy-dashboard",
@@ -3853,7 +3853,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "38790b97ab2ead2c2af399ef8c7d8cbdfdf93decb6aa27df00e0f0849dd6ee73",
-    "translationHash": "99f547c3006f2a3ec57c75d9d978e7512884666895190483c7774a0fc630cfc4"
+    "translationHash": "b02dbefd101ff2edeba7c34b8e0f25ea8bf72af67172fe564187406bdded4b9b"
   },
   {
     "pageId": "prescription-queue",
@@ -3865,7 +3865,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c2eb55c984d278954d32981cb5b23ab4bda134b135c70cd0a30e4102b67e95b5",
-    "translationHash": "36636fb11516f6038624b3f0537131c94789e4e70dfd4e348b78945f62c31aa6"
+    "translationHash": "429f4897dc2178369f6c1ba3eb0c3b06c3abf76a723abe18c476c57fb7c108b2"
   },
   {
     "pageId": "prescription-queue",
@@ -3873,7 +3873,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c2eb55c984d278954d32981cb5b23ab4bda134b135c70cd0a30e4102b67e95b5",
-    "translationHash": "96983434bae94b1ffa3044f90a91accbcf436accbde9a6fc1e7833d5e61e4233"
+    "translationHash": "be1cba6fc8f3289975041bec228fa75d5ff953193cc76504d346a2b96fbf6928"
   },
   {
     "pageId": "prescription-queue",
@@ -3881,7 +3881,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c2eb55c984d278954d32981cb5b23ab4bda134b135c70cd0a30e4102b67e95b5",
-    "translationHash": "52bfa3f62b1d1ad5ca92bb81d0652dd79e384a0a73cd09ff4e66643914b8592d"
+    "translationHash": "119f1ec78be7f812b203c8bf7b696a3759207de50aa493c31759ec03d3bda170"
   },
   {
     "pageId": "dispense-history",
@@ -3893,7 +3893,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8975cdc7cfc56e15f7a610b2a9aa56b70999009c8f5d6ca06c59aaa1c2184d77",
-    "translationHash": "15e5884a7e460e2f9217d587b14b03f9c40d09d7ae4ddbc7d6bc777cd391a834"
+    "translationHash": "7eec8239ddd73db4c2545db80ee08d0f10581f6fe2dc30de500361b37794c45a"
   },
   {
     "pageId": "dispense-history",
@@ -3901,7 +3901,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8975cdc7cfc56e15f7a610b2a9aa56b70999009c8f5d6ca06c59aaa1c2184d77",
-    "translationHash": "7f1375659e793b2db14324bb22674f5e740822ef560d93d9e92ed2e5804ae221"
+    "translationHash": "7801139072f0d4512daa88fafebd4455a3c826e6051234582d88c57dbb7d4a26"
   },
   {
     "pageId": "dispense-history",
@@ -3909,7 +3909,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8975cdc7cfc56e15f7a610b2a9aa56b70999009c8f5d6ca06c59aaa1c2184d77",
-    "translationHash": "714ba80117acb030d97abe2c4646f1a86dbe1ffadbcc4bc48544cbd6c4d9db9c"
+    "translationHash": "e6643e8ea9a405080e0e8305c209b29364df8b00aae667d9f2c8775ed8901b38"
   },
   {
     "pageId": "medication-review",
@@ -3921,7 +3921,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "fbe670c4697ab24bae05162b0e3a0917a94c53104fd39fa603ff6448ec9cc84a",
-    "translationHash": "76d3ee39a91bc7a8210e643cf1589bb7e066b61cc1d8a4f0c7ca350cd495fd8e"
+    "translationHash": "c214191c4308487c090ab9e1c0675a8da24319ed11306efdb4e0189ab646d4a4"
   },
   {
     "pageId": "medication-review",
@@ -3929,7 +3929,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "fbe670c4697ab24bae05162b0e3a0917a94c53104fd39fa603ff6448ec9cc84a",
-    "translationHash": "bc4d3e1db6b0d37dc227896cb4bce9513a744506e761c43152ecf764e760d356"
+    "translationHash": "59de7d57c64c40e843e51aa878dada7d47b38406b0837ef04dc0d45ef1399189"
   },
   {
     "pageId": "medication-review",
@@ -3937,7 +3937,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "fbe670c4697ab24bae05162b0e3a0917a94c53104fd39fa603ff6448ec9cc84a",
-    "translationHash": "7e3a635849b231ebc1c8c7073d8581334e0609eba5e0030f90fc1239a6fe7cee"
+    "translationHash": "a7951a3b953d1098a789b6eaa68867f4b0e6e71e66978a4c35bffef68047ba59"
   },
   {
     "pageId": "drug-master",
@@ -3949,7 +3949,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "eda0cc0d837728106c702a3c917a12bd1095c9f5715ee7d333be83bf84a173db",
-    "translationHash": "785769d68bb921fd9bcc43a850ff0b747ed8ae72b244a47840a0c72ac15b705d"
+    "translationHash": "755622dfe750bd65d16b05429c06f4da62e45017a93a697a11f40f8f673558fa"
   },
   {
     "pageId": "drug-master",
@@ -3957,7 +3957,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "eda0cc0d837728106c702a3c917a12bd1095c9f5715ee7d333be83bf84a173db",
-    "translationHash": "f3afbc27653cdcadea464991d844aa59de1d5732b12ad3f2cf4576811ce3e063"
+    "translationHash": "371fd77691ced66ded1e56005616eaf8ae4a359756f0e6dad92ccae4f588c53d"
   },
   {
     "pageId": "drug-master",
@@ -3965,7 +3965,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "eda0cc0d837728106c702a3c917a12bd1095c9f5715ee7d333be83bf84a173db",
-    "translationHash": "d02cbbde2134e80380fc4876b63329442d708ade6b5df79139f4f66f27d03c33"
+    "translationHash": "394dbc8e2bb38380504b0a28cd44c5501fa85917a4ec8dbdeaf92f850e2481ec"
   },
   {
     "pageId": "stock-on-hand",
@@ -3977,7 +3977,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9a076308a12e39d18dc9b733dfedcff76888f372578819ad43fd1dd70f9ec9d0",
-    "translationHash": "6787c2760e0ed45bfe33aa40c07513257f4f2598a01cd2f5d268bbf7d3f71bc8"
+    "translationHash": "54b00546c14e1e05e6cca861a56fdbfe5a75f1dd332e359ea2c15c04e88026cf"
   },
   {
     "pageId": "stock-on-hand",
@@ -3985,7 +3985,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9a076308a12e39d18dc9b733dfedcff76888f372578819ad43fd1dd70f9ec9d0",
-    "translationHash": "51ef98fb4422f9b871f4c888d922363f45536f439af39905ee2038c05642c8f0"
+    "translationHash": "1d2791bb97e51e8708db008b68745ccd864a2d3b543b8f0ea903cec05650c2dc"
   },
   {
     "pageId": "stock-on-hand",
@@ -3993,7 +3993,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9a076308a12e39d18dc9b733dfedcff76888f372578819ad43fd1dd70f9ec9d0",
-    "translationHash": "c85af789acf9fd4330770f28f9867f12dd75f008bff45cac28511ee673a42008"
+    "translationHash": "ebc5420cdb23ffce7f46e5d0cb5ea47db25a4a3c518b450f3f0f8e4247a7d9c4"
   },
   {
     "pageId": "batch-expiry",
@@ -4005,7 +4005,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9bf18fafb2a77d4ad61fd705ee00e8fea35c2eb2a4b59a574f10b97633cb3850",
-    "translationHash": "5c3be0ea8d5e5a044afdc9c4ec7859b7215d75defa907b4beeed2d80012d326a"
+    "translationHash": "c68b786cc5ed89efc8ad28e7c92512104c2c331b43775a40abcd47ff1cfa43e2"
   },
   {
     "pageId": "batch-expiry",
@@ -4013,7 +4013,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9bf18fafb2a77d4ad61fd705ee00e8fea35c2eb2a4b59a574f10b97633cb3850",
-    "translationHash": "3d91e89467fc3301a96733f1667129c82cc8bc09e13814e88c0c973d2678e3ef"
+    "translationHash": "493fb5196e3d0138d3ddbf50d3daac833c80eb261dedfcf8d63b7f35a379e681"
   },
   {
     "pageId": "batch-expiry",
@@ -4021,7 +4021,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "9bf18fafb2a77d4ad61fd705ee00e8fea35c2eb2a4b59a574f10b97633cb3850",
-    "translationHash": "a21023a3f168026fb3c2a771bfea65fcbc258768199697ddd5e874d632004c44"
+    "translationHash": "f4b5a2fa5606a3be2c1078844a9c3859b8a4c1e3ad635e608bc78116415bb928"
   },
   {
     "pageId": "controlled-register",
@@ -4033,7 +4033,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "db87e5dce4518819f5ba8656ae81f20da3361ef78396fc91330780a7e32164e0",
-    "translationHash": "2663d77ae5b83d2570c09df36589ba4ba13138f3013ae3437188c82f0ca8c281"
+    "translationHash": "43701253606f9938d13b8937f605ed4292a0628a475be933430a5126e7cfae6f"
   },
   {
     "pageId": "controlled-register",
@@ -4041,7 +4041,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "db87e5dce4518819f5ba8656ae81f20da3361ef78396fc91330780a7e32164e0",
-    "translationHash": "1e91ccefa0aff844152a6be0cf7f2d77f90a202d78ae61bfa000e950d7994b36"
+    "translationHash": "eef3f6f72db5e2b8d4a33eac37c9e80699a2dc366c9207f03fd2d7deecfdc818"
   },
   {
     "pageId": "controlled-register",
@@ -4049,7 +4049,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "db87e5dce4518819f5ba8656ae81f20da3361ef78396fc91330780a7e32164e0",
-    "translationHash": "eeb0285ecfa5e8f77f65724bd24b60a63a73a7843d7aeb7b67ae7aca1d01eab9"
+    "translationHash": "ea34dc240d6b82e596b23c072bbd806687b8e887cb3a89ea707b2ef068139c04"
   },
   {
     "pageId": "controlled-reconciliation",
@@ -4061,7 +4061,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8d56727aee43f3763a588ee20df97b6b258c841010507db95e3ea496cb248ea7",
-    "translationHash": "6ec36522045792d0928d445dc2ad8f0c6855bc39424387076b89c38c601bac24"
+    "translationHash": "81f9e7221627f27c852cfa325efc7841b126b3b635ca7999c4e6be849416b673"
   },
   {
     "pageId": "controlled-reconciliation",
@@ -4069,7 +4069,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8d56727aee43f3763a588ee20df97b6b258c841010507db95e3ea496cb248ea7",
-    "translationHash": "447de8a27bfa0999004508865c9d59723e275e0a77de308efd1edcee7c15ed98"
+    "translationHash": "3cbf9167102466263ce9ef6a26c62c39cb90771c456d88573562e5221b6ba9f3"
   },
   {
     "pageId": "controlled-reconciliation",
@@ -4077,7 +4077,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "8d56727aee43f3763a588ee20df97b6b258c841010507db95e3ea496cb248ea7",
-    "translationHash": "a0350adfad9b5959cd82823f2368269181f103dc326367ac5101912be2fb1ba9"
+    "translationHash": "e54aced5868dcfe8c156bc0b911430b1f2788ac8870ca4a2245f763c09719dca"
   },
   {
     "pageId": "pharmacy-requisition",
@@ -4089,7 +4089,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bc5a815e28d46d4c8e35d00359db2c2fa5a8ff3b99d125ebff4609d3dc2643d6",
-    "translationHash": "43e14f844c4213231126d0c15b731de60f90cfec3afa5058a5dc0a7eee236f40"
+    "translationHash": "4c29324e515c744e1277c68e1914fe942f085ea53d214321ad7737cf0e11a114"
   },
   {
     "pageId": "pharmacy-requisition",
@@ -4097,7 +4097,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bc5a815e28d46d4c8e35d00359db2c2fa5a8ff3b99d125ebff4609d3dc2643d6",
-    "translationHash": "a4e597099622a574463bc192064b7c629fa21cbd9f7ea7d0939a7a4f2c4ee1e2"
+    "translationHash": "50f6987a53cddbe6c202685547c6cd1101cf5a90a5d58496ba116927b2a4c43f"
   },
   {
     "pageId": "pharmacy-requisition",
@@ -4105,7 +4105,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bc5a815e28d46d4c8e35d00359db2c2fa5a8ff3b99d125ebff4609d3dc2643d6",
-    "translationHash": "21bad23d95bb98f5e51a7a662ddd322f0a968b2bc1f5c70c59fdde5fb89e4356"
+    "translationHash": "3916a259e104a70e73b9797e32357c7e10beffe9dc50474ba408bdb6355b9b45"
   },
   {
     "pageId": "pharmacy-goods-receipt",
@@ -4117,7 +4117,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bf6d4a63f670edb3b23d926d3117d597e8f91ead89295af8d71f073d664faa91",
-    "translationHash": "20d9dff54441a158ff75b5f12162f799b34f10d445d632e127696ab47365dc07"
+    "translationHash": "d4b9c83473acfe6ca193537f6b14b84131f33a9797c1347716afec73ce7d7b15"
   },
   {
     "pageId": "pharmacy-goods-receipt",
@@ -4125,7 +4125,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bf6d4a63f670edb3b23d926d3117d597e8f91ead89295af8d71f073d664faa91",
-    "translationHash": "b1d0831cf1c7c36274ffe5fa38fce6e65a28cdbcee6b9e06b8ad5ec4fe8495a5"
+    "translationHash": "f3e183115d2adc4c036c94bf7d4029f97e7f2ca77ae9058c88f3fbd4cfb48155"
   },
   {
     "pageId": "pharmacy-goods-receipt",
@@ -4133,7 +4133,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bf6d4a63f670edb3b23d926d3117d597e8f91ead89295af8d71f073d664faa91",
-    "translationHash": "30b0206d8e6352911aafb2b104d1df933befa8c03bd98017acd77463f687126c"
+    "translationHash": "7e06346df0206c01aabf2ebb446a065f827cf5237e9edea73f251f9daec3b71d"
   },
   {
     "pageId": "pharmacy-supplier",
@@ -4145,7 +4145,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "80d296e8d18152a23d47e88d228865007c0efd0df99460b8a885c6c730cc9e76",
-    "translationHash": "ce488e54e18c6f08f7c5b92e392656242a0f6e37e7d831938b0d6132abbfb2eb"
+    "translationHash": "4b0891cd22a50e161e8333352e691167b6ecdac101946e82430c6397ac152b9a"
   },
   {
     "pageId": "pharmacy-supplier",
@@ -4153,7 +4153,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "80d296e8d18152a23d47e88d228865007c0efd0df99460b8a885c6c730cc9e76",
-    "translationHash": "34086d58d175633acb4f9e4d4aee4911f24cf161f628b2dfa01c3971aa2f31fb"
+    "translationHash": "d506048cdaa155a12a2786c7b7440e3a4d63eb17ea3644b3868ebde1e62ff4d5"
   },
   {
     "pageId": "pharmacy-supplier",
@@ -4161,7 +4161,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "80d296e8d18152a23d47e88d228865007c0efd0df99460b8a885c6c730cc9e76",
-    "translationHash": "469a62c9aff91988d6d53459ac6e5e8ac79931fb6667666aa6037a925d0f87d2"
+    "translationHash": "f5142fbed1847c7e106e216ed33cfcbb3c7fa15c5f21217cc843cfd4a2e8b15d"
   },
   {
     "pageId": "consumption-report",
@@ -4173,7 +4173,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b5836e2e1b4312f8867f8d06c0fa98854643d24fd53a2073b795b8046ba4e2a9",
-    "translationHash": "925f7f0b4b7468f9e49f16770e476981ef108660adb885fb701e142921305594"
+    "translationHash": "724f9a4232ad35330e2ac28f1abf8f2e39b40695ac302e16ed03126ca27b23be"
   },
   {
     "pageId": "consumption-report",
@@ -4181,7 +4181,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b5836e2e1b4312f8867f8d06c0fa98854643d24fd53a2073b795b8046ba4e2a9",
-    "translationHash": "c392595aa1e3ba029d2fe3b106b7d708f95287b5623fccdc943a5ea157d99e47"
+    "translationHash": "40e9c7644b2ab6f38e08571f1bd5bd79bc066a4cf25cfef1bb28dc985545c36e"
   },
   {
     "pageId": "consumption-report",
@@ -4189,7 +4189,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "b5836e2e1b4312f8867f8d06c0fa98854643d24fd53a2073b795b8046ba4e2a9",
-    "translationHash": "0c9122f736381ca7be52fff5dff36f19655720121339555a6b418358dc4980cf"
+    "translationHash": "dd1df213633d55ca488079b3961f271279fdcd4a27b4ad6c18efd76dfbb1a7db"
   },
   {
     "pageId": "expiry-risk-report",
@@ -4201,7 +4201,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e4f2a00120c18cb39a982fc4f0e11146ac9828dd6110d0835b15ce94c571a369",
-    "translationHash": "4186b5d34afd09b5caad582d1884ca4283522a2bffb53d0c7550ddb083e09227"
+    "translationHash": "9678081944aaea383fe42f3f1aa4e94001c06a3b408d407050a6e0e097d03df6"
   },
   {
     "pageId": "expiry-risk-report",
@@ -4209,7 +4209,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e4f2a00120c18cb39a982fc4f0e11146ac9828dd6110d0835b15ce94c571a369",
-    "translationHash": "f84969203d3753f61cfe27469bee6bae805ab68b0a24869a9ec647e2bb0a056c"
+    "translationHash": "936d9ca3a41c60d3c24ccf4937ed1456521e54763c176ac428401299d1067575"
   },
   {
     "pageId": "expiry-risk-report",
@@ -4217,7 +4217,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "e4f2a00120c18cb39a982fc4f0e11146ac9828dd6110d0835b15ce94c571a369",
-    "translationHash": "3609ebd020f896a3f9b5eca53225effa958e6fd6a2de2805314351748bc3270e"
+    "translationHash": "388d5eb514c73b943bd7fdf1e675fd3b74e7071f82be39610db574b392d7cc89"
   },
   {
     "pageId": "stock-turn-report",
@@ -4229,7 +4229,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c9f1fc60a809acf6f35e756288928da3feceb88f56ece04140b552d5422c6f4f",
-    "translationHash": "b387d7b63b456ce49e64f5ad9ba7b660785085e6cc21e4c6987a7742608a4be4"
+    "translationHash": "973912d260ab1007482e27a26b07ab4e3a69f69bc10a670d230781876ea27d43"
   },
   {
     "pageId": "stock-turn-report",
@@ -4237,7 +4237,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c9f1fc60a809acf6f35e756288928da3feceb88f56ece04140b552d5422c6f4f",
-    "translationHash": "87fed689e762cd820963951ddeb9f8b5cf749ea65d92e93840d4d55d62e9f8a0"
+    "translationHash": "720322c602a857a7f98b6c3048161118488fd9ecb9e082818f228ee09f2db5bd"
   },
   {
     "pageId": "stock-turn-report",
@@ -4245,7 +4245,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "c9f1fc60a809acf6f35e756288928da3feceb88f56ece04140b552d5422c6f4f",
-    "translationHash": "de574ee8f7e77f28a7f68b7a2bcefb92a23f1df6bbd1bb4e2c65cd816103ab1a"
+    "translationHash": "918ba31af396725b9c0e0763b9bbf34d8c15c9c6d6a405c033a7af2facb2d78f"
   },
   {
     "pageId": "formulary-setup",
@@ -4257,7 +4257,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e12034b7529074241ea2ecd52571c59a5f9b56890c5861478dff8f98dabeb24",
-    "translationHash": "d4bca68d780cd308369beca2f5691ee3c7a064c177e4660d51bb8c9d5d8249a0"
+    "translationHash": "b8d28d30840e20d224b455044e4eb98b59101bcef83969fecf34946133340cb0"
   },
   {
     "pageId": "formulary-setup",
@@ -4265,7 +4265,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e12034b7529074241ea2ecd52571c59a5f9b56890c5861478dff8f98dabeb24",
-    "translationHash": "bcbf90d933da0c3647cd99ac1a06a8ed5a0a4f3fffaacbc3d1e6868faeff6932"
+    "translationHash": "2fac0d87517aa129eb74f8e183299d9d73865b85f84b754d276e4704f011e1d7"
   },
   {
     "pageId": "formulary-setup",
@@ -4273,7 +4273,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "7e12034b7529074241ea2ecd52571c59a5f9b56890c5861478dff8f98dabeb24",
-    "translationHash": "1af389435a29ac4567e9c58147bbb153a1682902805fa4b287f86ea5a9b3bd2d"
+    "translationHash": "c97700c11615b207495c5c9622901728ec298907a9793efbe5a344f827de98e3"
   },
   {
     "pageId": "dispensing-rules",
@@ -4285,7 +4285,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ca8b8671f72029e5595afdb26e4088d69c26cfcce05e25c3f754cb7779ac28d6",
-    "translationHash": "f3b25bd49ea269d909215b4b664fe1da0c9e773993b647973a8c14a4b877192f"
+    "translationHash": "f7614c202a05b8b8bd361f76f4aa89f1f88c2304a0af6f02789808ac519b0997"
   },
   {
     "pageId": "dispensing-rules",
@@ -4293,7 +4293,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ca8b8671f72029e5595afdb26e4088d69c26cfcce05e25c3f754cb7779ac28d6",
-    "translationHash": "6b0deaa37a8da26b5c07286ae2e2744539a8cff5f1cab6479d751f930144b31b"
+    "translationHash": "b5c3801a7a1b4326c759b4d3137e5062fc000c2c5ea4e730c68f3b28b6ad4025"
   },
   {
     "pageId": "dispensing-rules",
@@ -4301,7 +4301,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ca8b8671f72029e5595afdb26e4088d69c26cfcce05e25c3f754cb7779ac28d6",
-    "translationHash": "857542423d267c54a50ebebd54cd4932da9f666bcb9942b151828ef45f32421b"
+    "translationHash": "c468a9bfc870181455639c7172c943036642dc0e19fe73865b0d4b7e71ee4e77"
   },
   {
     "pageId": "library-dashboard",
@@ -4313,7 +4313,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ff454acd464eff2b99c3c12ab04446465475940c23f58bb273691c5d2f30d10b",
-    "translationHash": "de6d0ba721067753401c2c11716d17746a22d42c30d9d51059ed63d4e5ed7635"
+    "translationHash": "7a388bb154917060caf37f94a5e9d68b387b3bdb7a8a5633894a867e0e2169bb"
   },
   {
     "pageId": "library-dashboard",
@@ -4321,7 +4321,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ff454acd464eff2b99c3c12ab04446465475940c23f58bb273691c5d2f30d10b",
-    "translationHash": "c8688581e77c490f9997db8e9024668724f22f8bbbf179cba4950f4f9a8ecc85"
+    "translationHash": "68caad6ea629da2063b57dab45423f25a0f9c289cf603e21413d84034e6b8008"
   },
   {
     "pageId": "library-dashboard",
@@ -4329,7 +4329,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ff454acd464eff2b99c3c12ab04446465475940c23f58bb273691c5d2f30d10b",
-    "translationHash": "7b89274aa139091a273a1ebbdb12d3427d1343328255060f2b10e391b47a1824"
+    "translationHash": "74fa17931fd455e6546667fc95ff2490ac82a34a481ff9dae84e3a88ea75139f"
   },
   {
     "pageId": "component-library",
@@ -4485,7 +4485,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "73d04dbdaf43e0704389207a433c6ab41af53a1e9b221131ac1060d44afa51d2",
-    "translationHash": "78e4f97313a2a5fe759316621917fb472c9a5fb3eb1eed92483e456abbcbaa0e"
+    "translationHash": "e851d9c29e55082622711e176102d625faa6c78555bb7aaeac99bbea2a051dbc"
   },
   {
     "pageId": "spreadsheet-studio",
@@ -4493,7 +4493,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "73d04dbdaf43e0704389207a433c6ab41af53a1e9b221131ac1060d44afa51d2",
-    "translationHash": "b04f1a6be7ccd685005508c7b985686b9a4607259ef0986af267f945428cee74"
+    "translationHash": "bca728cbf2c8f9b1fe1f747af29e4df5d66b640a8c38b1bd408e6558393a4c68"
   },
   {
     "pageId": "spreadsheet-studio",
@@ -4501,7 +4501,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "73d04dbdaf43e0704389207a433c6ab41af53a1e9b221131ac1060d44afa51d2",
-    "translationHash": "8ba9cc18010fa2f25c57f7d2d33a65feaa9549ca420fc56f32cf5ebbcef94ac0"
+    "translationHash": "dc59311075915dc7db20d751d389456217619cab9307252015671621ff1e7dd3"
   },
   {
     "pageId": "import-export",
@@ -4513,7 +4513,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d8b0b5198b27d92adaa9acb723f4b04fc7f9b0a8dfe75521762c119c39ec579a",
-    "translationHash": "e84baf9774e55f86b4f5b449d7156bff4eba56e5fb75164a792aa0c5ad4384d7"
+    "translationHash": "a8651a5f6e4dd492c2747448fc9e4b0c97635a189975551cc9fcb8c2319a54cd"
   },
   {
     "pageId": "import-export",
@@ -4521,7 +4521,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d8b0b5198b27d92adaa9acb723f4b04fc7f9b0a8dfe75521762c119c39ec579a",
-    "translationHash": "5c1624343a299f2ec6509b29353996b4eb26d2e475f196ecaa9134ccc5378c18"
+    "translationHash": "86b6ea84ba9ab4e9ebd1f8b8d0f3cf92864cbed00a278ed071c5caa0ce88c993"
   },
   {
     "pageId": "import-export",
@@ -4529,7 +4529,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d8b0b5198b27d92adaa9acb723f4b04fc7f9b0a8dfe75521762c119c39ec579a",
-    "translationHash": "36572717eeb662007004fa5dfc29f1da4d9bf03c666586a4396e5dfb0fe294f7"
+    "translationHash": "20957e75b71cbfdc8c874e27eb19feecbd6628da9333e95b35e0e82f7ad4ab13"
   },
   {
     "pageId": "bulk-operations",
@@ -4541,7 +4541,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0716bc05a7c867ea5a104a91ccc549fc003306b369fa72bc1543872d4389be4a",
-    "translationHash": "8197ec5139e2874dcfaa328350c3c467d6fe3e5ce01d4c25b057c41a170afc91"
+    "translationHash": "4f39a4f38202af135df8d70e35cfd5623902e740f18d36ac5d0a0874d7e4c6c8"
   },
   {
     "pageId": "bulk-operations",
@@ -4549,7 +4549,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0716bc05a7c867ea5a104a91ccc549fc003306b369fa72bc1543872d4389be4a",
-    "translationHash": "3c197f0f6758c49e263a15545dda725c623696fcea14926553fef1df8ed036ee"
+    "translationHash": "8c716cb6b2ff530c27c40f372ed2458c11c8fff06e25d891030018a7594137a5"
   },
   {
     "pageId": "bulk-operations",
@@ -4557,7 +4557,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "0716bc05a7c867ea5a104a91ccc549fc003306b369fa72bc1543872d4389be4a",
-    "translationHash": "074df89a324f36f7f032d682ae6307bd8b1014cb64c4ec7cd25a3d12ee1cf300"
+    "translationHash": "155cc56249bd46d3abc32e28eda23aab9ac914b65cd8593ef0f134291c78c7de"
   },
   {
     "pageId": "theme-studio",
@@ -4569,7 +4569,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "436b8015d1d372ee1e5938330b1d9838e0c3196628317329b7e1232d2a42d081",
-    "translationHash": "df6a4b1cc2aed57ebf4a45ce211c691e8a1aabcb10694b36342d3d4968e488db"
+    "translationHash": "6323b0e2e9a7c2f7fc3cb2aa46d05b69dc52f944e21b9768419fe19b99d1e56f"
   },
   {
     "pageId": "theme-studio",
@@ -4577,7 +4577,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "436b8015d1d372ee1e5938330b1d9838e0c3196628317329b7e1232d2a42d081",
-    "translationHash": "678b8dd67cdbeaf951831885388fbf6068b7661835bfa162210a5c0042a0ebd3"
+    "translationHash": "78a1648a31347ff8724f20b66dede000ecb2bd7f5d659e763d0804e4fc7b2810"
   },
   {
     "pageId": "theme-studio",
@@ -4585,7 +4585,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "436b8015d1d372ee1e5938330b1d9838e0c3196628317329b7e1232d2a42d081",
-    "translationHash": "7311db8e234729ae08d074a989f682fc02a5f909c9a31d5956f7d4abfc698b7f"
+    "translationHash": "7b34f293d70a5182be73fd9e7002b5efcff80658060f9761aa231acf675000b4"
   },
   {
     "pageId": "localization",
@@ -4621,7 +4621,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "22ecf8f242fb3a5957a03df3e3f4975ffb09df576a42f3ab48e8641ab9781bbe",
-    "translationHash": "4940d9e722e26afb53eff1239fbd5942671559f28960da9e3da88791f3cb6823"
+    "translationHash": "39925883a22160d9b63e3b5cc32b353ce933340a4b9e8598116d70420eb8378d"
   },
   {
     "pageId": "accessibility",
@@ -4629,7 +4629,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "22ecf8f242fb3a5957a03df3e3f4975ffb09df576a42f3ab48e8641ab9781bbe",
-    "translationHash": "74c90232652fcea8c1f047d9ba711eaf0a395f140f8ec1687b132c4c2300d7c1"
+    "translationHash": "55ff2ad5d22fc0d54f6aea5d4d0961cf0b585523cc5d2847dd7480edd302e877"
   },
   {
     "pageId": "accessibility",
@@ -4637,7 +4637,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "22ecf8f242fb3a5957a03df3e3f4975ffb09df576a42f3ab48e8641ab9781bbe",
-    "translationHash": "e93c18348200ff44939ce32169236a6191d07303c91c726e6961869996a13cfd"
+    "translationHash": "518108928ae93615552eee95b95cb1bf35a1f3ab0305bb10f6739568615f738d"
   },
   {
     "pageId": "page-catalog",
@@ -4649,7 +4649,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5fd795215e685ee89442f9933bd9787d52fe95c9a026ed019ab6157429b6e66c",
-    "translationHash": "8c0da301d55b71c98f9f0d5adbb8053fc1ac33bc4e5fd2ed1460e36727b73f63"
+    "translationHash": "20b343255c10e47c7d4f6f52d397bff23fa0600fcce1e44b854a1c02bd0d5cf4"
   },
   {
     "pageId": "page-catalog",
@@ -4657,7 +4657,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5fd795215e685ee89442f9933bd9787d52fe95c9a026ed019ab6157429b6e66c",
-    "translationHash": "2cabe19dd4a282bdfbe85e279800e2afdfde9579ee5adc52bd04bcf73d725155"
+    "translationHash": "941efebd9dbe8a2a8339ceba42e14b57fee7de51dd164aceff254fe8e42fb7be"
   },
   {
     "pageId": "page-catalog",
@@ -4665,7 +4665,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "5fd795215e685ee89442f9933bd9787d52fe95c9a026ed019ab6157429b6e66c",
-    "translationHash": "8d5ed03eca1bdfca81eb400dc772c96c7b391dc100bb84fde419674e41481312"
+    "translationHash": "22c6ffdb6998033e34f1ebd6b8c1165388a33591c45f6960ca9ce856e5ea7e71"
   },
   {
     "pageId": "component-contracts",
@@ -4677,7 +4677,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d73f6e4bd91b56704b9b8126e770322769726df03602d7f1fa90b4b4d6a34f38",
-    "translationHash": "d7ac6335fc8e746f6f91aa93f270e4410f9b437f6388a1b3043c9c3e4b522642"
+    "translationHash": "63a11c23a9157fbe9a46c2ff1d3ac1e7d7fa9592aa5543a17d84955ba7d33d74"
   },
   {
     "pageId": "component-contracts",
@@ -4685,7 +4685,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d73f6e4bd91b56704b9b8126e770322769726df03602d7f1fa90b4b4d6a34f38",
-    "translationHash": "58a1e6080082e60516096382b934ae532f48dd74b202b9ce3b43cc7912a9562f"
+    "translationHash": "a98e66583d91c0deaad57477ebbe6bda0204ed2f76b4f26c699ea7039d41edf9"
   },
   {
     "pageId": "component-contracts",
@@ -4693,7 +4693,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d73f6e4bd91b56704b9b8126e770322769726df03602d7f1fa90b4b4d6a34f38",
-    "translationHash": "c604ee0f89ccee575a87aa183eca864f0fe8d9de29b9bb252cedae24957080d7"
+    "translationHash": "23b5d4afeebce1037d92bfaa7ce7a644ea9408a7cf31a2e2e2260bd8ee40dcb4"
   },
   {
     "pageId": "keyboard-shortcuts",
@@ -4705,7 +4705,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "45e295dbb5553f93bd76cf47e55a7f6f7a53d337f5fc1147db3c0790b43240b3",
-    "translationHash": "f9ca61eb5a8c1a6e0331e8f357e78139c863a812c957adb36aa02357317c3a66"
+    "translationHash": "98dffc35feeae4102fb5b36a3e09e703ca9abb79fc5c1f1630c0c4d2d0127231"
   },
   {
     "pageId": "keyboard-shortcuts",
@@ -4713,7 +4713,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "45e295dbb5553f93bd76cf47e55a7f6f7a53d337f5fc1147db3c0790b43240b3",
-    "translationHash": "fcc7d941528c31f2efebf6d88be8d6a61c1f2700b5ee89f9fb8d8a0585ab20b2"
+    "translationHash": "5bab0dda661d36aa6720bf52b510a5b6a52ccac4705422deb5fb19fe38075b65"
   },
   {
     "pageId": "keyboard-shortcuts",
@@ -4721,7 +4721,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "45e295dbb5553f93bd76cf47e55a7f6f7a53d337f5fc1147db3c0790b43240b3",
-    "translationHash": "0a4dc7dc7c35394310289b499859790b8c2cb21f617ca06b4e358c018f3265aa"
+    "translationHash": "3a76b914929d1566843bfa6446d7ecf7d6ec046eae567d65a6f02bd14177d337"
   },
   {
     "pageId": "integration-guide",
@@ -4733,7 +4733,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ed33c951c24025d393bab84566b41a51fe813f7290968cace64468abee3e8b5b",
-    "translationHash": "871f205e84358b2147261f3a284c56fc1d60165dc303a25eb7edb937d433fee6"
+    "translationHash": "b1678bae81aa8b1ea7c91424179a55f782d62cbf218c5bb2b23d16bdf50559b3"
   },
   {
     "pageId": "integration-guide",
@@ -4741,7 +4741,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ed33c951c24025d393bab84566b41a51fe813f7290968cace64468abee3e8b5b",
-    "translationHash": "78f04b1b2b2c2f9aeb66e0ea40e07d66cf620a1e81028db316fa611a2f1cc74e"
+    "translationHash": "ebc29804a20fcc22880266fe65f2ae5a02c87460491aacaf12d08ca893a60391"
   },
   {
     "pageId": "integration-guide",
@@ -4749,31 +4749,31 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "ed33c951c24025d393bab84566b41a51fe813f7290968cace64468abee3e8b5b",
-    "translationHash": "35bcfe638409cd9e24311a6651a16eedd61ab04638d4e906bd278e830bb2e3df"
+    "translationHash": "4b8bdc8c48cc2ebecee5e6d41b1601fa04edc6d8441f972239c8daf338c60f25"
   },
   {
     "pageId": "preferences",
     "language": "ar",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "04259cd2de893c6e87b3bddfe04d8b9df4a48b4383a2011f2d6dedbb552c1eb6",
-    "translationHash": "85bcb28f927a4ab1918b739f56c46294f90999bc8ebff7a6f52c9325061c80f9"
+    "translationHash": "5086f8dff8d2425cc4211e2f61d648fdd79a016ee52220f24692a885408c8ccf"
   },
   {
     "pageId": "preferences",
     "language": "hi",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "04259cd2de893c6e87b3bddfe04d8b9df4a48b4383a2011f2d6dedbb552c1eb6",
-    "translationHash": "49468d1418593c4da245208fe559612d2bdb17701c83c9f60bb7dff0371a4b0b"
+    "translationHash": "65cbaf7b40d4001adddd80140e5b856fbce9298fecba20bc2a0e6d5d644241b8"
   },
   {
     "pageId": "preferences",
     "language": "ml",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "04259cd2de893c6e87b3bddfe04d8b9df4a48b4383a2011f2d6dedbb552c1eb6",
-    "translationHash": "80b8fdaae48f0250c9e6ec18c4afc7654ac50c997486a9420e3d6051984e2a1a"
+    "translationHash": "120b8d035910c1770ce10f98f0b5371bdb37cd3cdeb373f66c4801e5282330d5"
   },
   {
     "pageId": "saved-views",
@@ -4785,7 +4785,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "982677b381d3c8929eab3314ba40828c8c8cfaf88a8f59b366f274fd768a63f2",
-    "translationHash": "e42b770a3b8ca06f501f7c85ed53dccffa1c366881c0d9161195232271415c4a"
+    "translationHash": "4245b5e3133607ebd47a8c3be2157d59b4842371c0aecdc088d063a2e2a19c3b"
   },
   {
     "pageId": "saved-views",
@@ -4793,7 +4793,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "982677b381d3c8929eab3314ba40828c8c8cfaf88a8f59b366f274fd768a63f2",
-    "translationHash": "59b0538103ecc7d9941ebf202e60edbfd12d9230f898065104a2561f922bd33e"
+    "translationHash": "d289badbc9478e814c036df32c6feb8be0693087fc5c6a1b6bb411345165125f"
   },
   {
     "pageId": "saved-views",
@@ -4801,7 +4801,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "982677b381d3c8929eab3314ba40828c8c8cfaf88a8f59b366f274fd768a63f2",
-    "translationHash": "00f565cf8eb67d5bd0d357b129ee223d5c21fc28251d8036d2b0bdfcf6b0dc38"
+    "translationHash": "ce7327d55caada00a1a6521c3c3c451be34f42ed43977bf7eb6140983d2751fb"
   },
   {
     "pageId": "shortcut-manager",
@@ -4813,7 +4813,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "62d966d957dbcf6fbf5dbb9ad6b97b8a617eda4752610ebaa66c01330863134a",
-    "translationHash": "f6d5c21b842e8562f141ba6c2caf2104300a9b0ad59d70aed70a5e5234c3d00f"
+    "translationHash": "f9ca0c5f034ee9d02e3a4bb3281b195899cd3b78e2c79be493b1c709fea796c3"
   },
   {
     "pageId": "shortcut-manager",
@@ -4821,7 +4821,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "62d966d957dbcf6fbf5dbb9ad6b97b8a617eda4752610ebaa66c01330863134a",
-    "translationHash": "07eb17f8ebf1e6b02a655b46ae663cbfcf5d8f215af554f43da4dbac683af9ba"
+    "translationHash": "45df98d1764836243b1fc7b1ffa59ae09fc215eea6cbb83a01446fce21ad12b0"
   },
   {
     "pageId": "shortcut-manager",
@@ -4829,7 +4829,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "62d966d957dbcf6fbf5dbb9ad6b97b8a617eda4752610ebaa66c01330863134a",
-    "translationHash": "14b4f9a0c185cddd2301a26f4093090276c7d6dc58654ffe38dca1a0aa17fc2c"
+    "translationHash": "55a6ebbdc69aa51a5205d8f853e6fe71e4d1acb65b6a3b34d98982186b8f8eb2"
   },
   {
     "pageId": "notifications",
@@ -4841,7 +4841,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d3fe08d7311abbf72640b035a3d273b9e8c91249a93ea08ff22d40898485dbeb",
-    "translationHash": "4e1c1930f36f8fd08a7e1ef2e7e3bc2293b418b3efff2f4de2bb05f3ed147d9b"
+    "translationHash": "1452233ea48052295ff6fb58756d34b4e5320e370250003c32dc5ec6fbc483b6"
   },
   {
     "pageId": "notifications",
@@ -4849,7 +4849,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d3fe08d7311abbf72640b035a3d273b9e8c91249a93ea08ff22d40898485dbeb",
-    "translationHash": "fe3899dcb9c54fab0b39269a286cecc9e184b34610ba978edd5adf05fc828b14"
+    "translationHash": "3df9ca835084dc826964e84224919e5fdb0cf73148fdaf5a53f2642f6f7b4b9d"
   },
   {
     "pageId": "notifications",
@@ -4857,7 +4857,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "d3fe08d7311abbf72640b035a3d273b9e8c91249a93ea08ff22d40898485dbeb",
-    "translationHash": "ba21d36e8c9bbdf6b8ec2d4dca69c29f774157d005a1c11dcf64636f5e8d1d2f"
+    "translationHash": "151eedc100aac8480825c2875f5d8c2f5b0cf3fd571db5ddca02c63c72cffe7a"
   },
   {
     "pageId": "messages",
@@ -4869,7 +4869,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3196619aad5a41442fd3707cb857d083f524edbfb8dd8b1d047078ed2e2c1f1d",
-    "translationHash": "d24a821a452abf9d22e1389aa9bb25d497bdbdc3bac703f58369f932d2301c6f"
+    "translationHash": "7bbc34dfb29d0ebc3caacd770ca46702e7fc354a8cd031a6984bf1995d59aeef"
   },
   {
     "pageId": "messages",
@@ -4877,7 +4877,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3196619aad5a41442fd3707cb857d083f524edbfb8dd8b1d047078ed2e2c1f1d",
-    "translationHash": "febb29511f7534ec71a88047e56138bbb794f14009112fe46fb70dbf4e670825"
+    "translationHash": "0c624e55ceb2c7d4d932f9f78fa9eff6a2d423f862ceeb8855b53d87661c09c5"
   },
   {
     "pageId": "messages",
@@ -4885,7 +4885,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "3196619aad5a41442fd3707cb857d083f524edbfb8dd8b1d047078ed2e2c1f1d",
-    "translationHash": "16f343e6e509c2cd42cba7efffec54bce807155fe8f340433d3051b8c685ca9f"
+    "translationHash": "c844bfe8b3e6c3e799aaf582e933b250890344aa24c60f0e2fa28070d77fc88b"
   },
   {
     "pageId": "ai-administration",
@@ -4897,7 +4897,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bf7bd00fa8bba1cc53c32991e1af48d47d3754490720505b377a78d5d32de84f",
-    "translationHash": "0e3603575b2101d1584f47061cc1d14900afd8b13216cf43f83897e468d6b42d"
+    "translationHash": "984e08d056bac56d5926128e49f0601eb7192c859cd13eb8a507b8c40c1597cf"
   },
   {
     "pageId": "ai-administration",
@@ -4905,7 +4905,7 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bf7bd00fa8bba1cc53c32991e1af48d47d3754490720505b377a78d5d32de84f",
-    "translationHash": "cf882c09b57cc74d614502fee57a5df9de385ce637284ed52776022822d238b2"
+    "translationHash": "3126faa5ae99c399c96537a195880afebcbd03321e351d33d72e5e49beef06c6"
   },
   {
     "pageId": "ai-administration",
@@ -4913,31 +4913,31 @@
     "issue": "incomplete",
     "review": "pending",
     "sourceHash": "bf7bd00fa8bba1cc53c32991e1af48d47d3754490720505b377a78d5d32de84f",
-    "translationHash": "c454e72a85fcd9480f1588a2fe2f1268c889ad12f22592b7cac51c6e8a8ff520"
+    "translationHash": "e6652cb5606add27b1693f85879fd82cfba76df2b42488f8359c745cb349b528"
   },
   {
     "pageId": "documentation-center",
     "language": "ar",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "db24ea2dccd846793cf0db4227d0629b7129bd152343cbe23a222da2f4c77932",
-    "translationHash": "54422bdd9b59210fafc789c164b5ea410e442cf732836e70aa507944ea41f623"
+    "translationHash": "fc9470c835106ec8780d0016e7ac0e4a2baf265b621295910964ad540b243b75"
   },
   {
     "pageId": "documentation-center",
     "language": "hi",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "db24ea2dccd846793cf0db4227d0629b7129bd152343cbe23a222da2f4c77932",
-    "translationHash": "82e9d7f6ffb3a6a994571013243e492741b4d949eff4b3bf8c80170a4e001205"
+    "translationHash": "1c0e1f9226b29b847ab20064ea52b6aecdfed06fa902a19a7bde5265464654d9"
   },
   {
     "pageId": "documentation-center",
     "language": "ml",
-    "issue": "incomplete",
+    "issue": "current",
     "review": "pending",
     "sourceHash": "db24ea2dccd846793cf0db4227d0629b7129bd152343cbe23a222da2f4c77932",
-    "translationHash": "0b43db97cfac300dc3db80978e44064ec49c5c499224b0a4f22d224b6cfe74fb"
+    "translationHash": "219e93e4a3160617e9f0669062e2ec91e3f106fc084a0401284eaf41bb3be8be"
   },
   {
     "pageId": "error-monitor",

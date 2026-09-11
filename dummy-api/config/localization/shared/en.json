@@ -17027,6 +17027,23 @@
     "care.dynamic61": "Arrival instructions",
     "care.dynamic62": "Referring organization",
     "care.dynamic63": "Placement assessment",
-    "care.dynamic64": "Care plan received"
+    "care.dynamic64": "Care plan received",
+    "documentation.reviewMetadata0": "Minimum: 0",
+    "documentation.reviewMetadata1": "Required when creditHold is true.",
+    "documentation.reviewMetadata2": "Visible when creditHold is true.",
+    "documentation.reviewMetadata3": "Start typing to search every visible column. How it matches — smart, contains or starts-with — is a preference.",
+    "documentation.reviewMetadata4": "Basic filters are always visible. Open Advanced filters for dates and less common fields.",
+    "documentation.reviewMetadata5": "Switch between a dense table and a card grid. Your choice is saved to your account.",
+    "documentation.reviewMetadata6": "Show or hide columns per worklist. Click a header to sort. Saved per browser or per account, your choice.",
+    "documentation.reviewMetadata7": "New opens a blank form — in a new tab or in place, per your preference.",
+    "documentation.reviewMetadata8": "Cannot be before effectiveFrom.",
+    "documentation.reviewMetadata9": "Sidebar side, form style, result view, quick view and page size. Honoured by every module and page.",
+    "documentation.reviewMetadata10": "Placement, hover or click to open, pinning, and the rail's own palette — which can be a different theme from the page.",
+    "documentation.reviewMetadata11": "14 themes; every component picks up tokens instantly. Each card is drawn with that theme's real colours.",
+    "documentation.reviewMetadata12": "Font family and three independent sizes — shell, forms and result tables — plus density and corner radius.",
+    "documentation.reviewMetadata13": "Position, duration and style of notifications. Try one with the preview buttons.",
+    "documentation.reviewMetadata14": "Language and direction, the help assistant, documentation and animations.",
+    "documentation.reviewMetadata15": "Component documentation and the page registry that every screen is rendered from.",
+    "documentation.reviewMetadata16": "Architecture, components, patterns and configuration are grouped in the sidebar."
   }
 }
