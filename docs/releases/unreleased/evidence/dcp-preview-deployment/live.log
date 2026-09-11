@@ -1,0 +1,2 @@
+PASS front-design.pepbits.com/dcp-designer: release identity, authenticated API load, unsaved form preview, hidden authoring controls, validation, return-to-design preservation, test answer reset and desktop layout. No designs or business records mutated.
+PASS desktop.front-design.pepbits.com/dcp-designer: release identity, authenticated API load, unsaved form preview, hidden authoring controls, validation, return-to-design preservation, test answer reset and desktop layout. No designs or business records mutated.

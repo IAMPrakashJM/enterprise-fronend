@@ -1,8 +1,8 @@
 # Current delivery and release records
 
-Local follow-up: [clean DCP form preview](dcp-preview-2026-09-11.md), not deployed.
+Latest activation: [DCP form preview](dcp-preview-deployment-2026-09-11.md), deployed and verified on both demo sites.
 
-Latest activation: [DCP visual designer — 11 September 2026](dcp-designer-deployment-2026-09-11.md), verified on both demo sites. Remote CI has a documented historical evidence-link failure.
+Earlier activation: [DCP visual designer — 11 September 2026](dcp-designer-deployment-2026-09-11.md), verified on both demo sites. Remote CI has a documented historical evidence-link failure.
 
 Status reviewed **11 September 2026**. The latest recorded frontend demo release is `20260910173632033-48931d24`, deployed to both public sites. Its [healthcare page deployment record](care-page-deployment-2026-09-10.md) contains source identity, API restart, live checks and rollback instructions.
 
