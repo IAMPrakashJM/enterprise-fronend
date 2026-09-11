@@ -1589,6 +1589,11 @@
       "id": "consultation-entry-v2",
       "titleKey": "care.text450",
       "subtitleKey": "care.apiHint"
+    },
+    {
+      "id": "dcp-designer",
+      "titleKey": "designer.title",
+      "subtitleKey": "designer.boundary"
     }
   ],
   "nodes": [
@@ -5161,6 +5166,15 @@
       "pageId": "consultation-entry-v2",
       "icon": "BookOpen",
       "order": 13
+    },
+    {
+      "id": "menu.library.dcp-designer",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "designer.title",
+      "pageId": "dcp-designer",
+      "icon": "BookOpen",
+      "order": 14
     }
   ]
 }

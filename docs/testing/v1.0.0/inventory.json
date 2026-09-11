@@ -988,7 +988,7 @@
       "title": "OP Registration",
       "kind": "library",
       "engine": null,
-      "coverage": "OPREG-01\u2013OPREG-06; op-registration.mjs and API tests"
+      "coverage": "OPREG-01–OPREG-06; op-registration.mjs and API tests"
     },
     {
       "id": "barcode-labels",
@@ -1108,6 +1108,13 @@
       "kind": "library",
       "engine": "CareWorkspace",
       "coverage": "CARE-01; API persistence, recovery, component presentation and browser journey"
+    },
+    {
+      "id": "dcp-designer",
+      "title": "DCP Visual Designer",
+      "kind": "library",
+      "engine": null,
+      "coverage": "DCP-01; designer UI/API/browser checks"
     }
   ],
   "tests": [

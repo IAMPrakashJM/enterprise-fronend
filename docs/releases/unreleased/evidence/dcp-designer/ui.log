@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/dcp-designer/workspace.test.tsx (2 tests) 302ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  09:40:07
+   Duration  6.07s (transform 5.86s, setup 2.55s, collect 1.05s, tests 302ms, environment 1.37s, prepare 341ms)
+

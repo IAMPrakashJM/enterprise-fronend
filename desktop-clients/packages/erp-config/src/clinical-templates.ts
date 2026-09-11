@@ -1,5 +1,6 @@
 /** Clinical Library contracts: serializable, independent of any shell or HTTP transport. */
 export const CLINICAL_TEMPLATE_PAGES = [
+  {id:"dcp-designer",title:"designer.title"},
   {id:"emergency-registration", title:"care.text202"},
   {id:"inpatient-admission", title:"care.text385"},
   {id:"consultation-entry-design", title:"care.text449"},

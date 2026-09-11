@@ -1,0 +1,202 @@
+{
+  "baseCommit": "d9e51db536cd9ff4abc9d8aab70886391c647d77",
+  "scope": "Uncommitted DCP designer source; delivery prose/evidence excluded to avoid self-reference. Backend framework is unchanged.",
+  "files": [
+    {
+      "path": "desktop-clients/e2e/dcp-designer.mjs",
+      "sha256": "601c8494bdc5fe8a499aa35da17d02dea4b39f7c6147f8d6c78afa12e58b6bf6"
+    },
+    {
+      "path": "desktop-clients/e2e/suites.mjs",
+      "sha256": "b966981868ac02b08e15c65b7905edcf2ae343430907918943d81d719875e563"
+    },
+    {
+      "path": "desktop-clients/package-lock.json",
+      "sha256": "c034c8a8eb78551ea3bc830585439fdaec1bb86463068cafbed8c30f9a5fa6bd"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/clinical-templates.ts",
+      "sha256": "0e25a19b8589080a852d453a95ce341bddc1492d84fe9933465ae438a765913f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-designer.ts",
+      "sha256": "aa9e6d62ff557b8215f3ae717ceced30f24ec6ef3d19ecfda22e24b63af33213"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/documentation.ts",
+      "sha256": "dce9daa8f0e7f99271b7076b513c3fc69e060bc6be83c70b7b2813be97236ed2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/index.ts",
+      "sha256": "c17305b81036052f333f29fb2a72692fcf66d7f32ec875211e96ceed6b7223b2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "a615a7b4721e1f1bf46e4961b700f87a12b503c0dc53e50be20c68c9a69cdd8e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "f6cb0c02516c78797971c7af3579401af62a000b45175344321c18e725182da2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "c457b506651b167087b457c7a2bd839e9d91916f34f68212c922c2a67c8eb3d6"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "1e1a6c756c1770c828a8fa148f18edbd2c24dc2625622064556a6899b1ca64fe"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/navigation.ts",
+      "sha256": "714f766a5b1ce239a90d81d7818fcb7addcb10b1f77cb07109d7f21669b190ef"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/dcp-designer.ts",
+      "sha256": "2ae193fc1974fce55a3eaa91cbec007ead3cedb0dd3a7839ff32d7a48bbf526b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/index.ts",
+      "sha256": "968cac9c4f9d103b0b1dc7c4cfa5f6a01e40e3fc38c9f128060f9843d4a84c88"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/package.json",
+      "sha256": "d6f0fd7852096e47bc2bafe1ee4a5861cad15c242f966015d4bc1c2870db7a97"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/components.tsx",
+      "sha256": "4e3634adda26470b801518999ae2accee57178ba3ac824bc3d3838d8c620a367"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css",
+      "sha256": "7272793d818d3ce689f34090efe46036c145ff84c872aa990961c9c733c563f7"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css.d.ts",
+      "sha256": "d29f747a0b837be9c4e733886004c861b2b63e54de5f4dc5839f7e460ad642ac"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/library-page.tsx",
+      "sha256": "2dd8101d949d3b37c6a00d7f4d8f3d9f6cc50f179d3b8bd2e13e7f721bb7c899"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.test.tsx",
+      "sha256": "59f81f0e9af20e25007de51bdb04ebd2e5af257efc682ff3997ed3d92635c2ca"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx",
+      "sha256": "e7469fb75b227d7615b01ef6c8bbe19462932bfe9dcb4b6478f940394cde1598"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/index.ts",
+      "sha256": "fd21ef6fbedb2f4da88e57b4ed4230c18146d891367d4d25d2a97b2ed828f39a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/index.tsx",
+      "sha256": "a1eb08ea989c92621789a4a283746b78d2855fc353cd4e1237953a5c43a3da5f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/page-library/resources.ts",
+      "sha256": "4d0ed048d6d52ff44432b9cb7f513cbea9c7a5015dfdcfae146abdb10bf131af"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/button.tsx",
+      "sha256": "36acabe7f56fd693fef64a4efd488890c6404a3262923720206749b16a0a0d76"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "b44acbe8c74691ade65cdbebc14f954fc37765dd58cca37d4e7bc93fe932d6be"
+    },
+    {
+      "path": "desktop-clients/scripts/localization/sync-fallbacks.mjs",
+      "sha256": "06f5819f4319b9570d693106d4f54024677b1983fe25f6cad26b206f9c3b5f2b"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "e83fe6f474ca5f1adea19c74ba026b087a11e8efd2d67fbd7d525c7ecfc3642d"
+    },
+    {
+      "path": "docs/architecture/library-preferences.md",
+      "sha256": "5799166d3abe24cb08ccc3d28f3a4a5c3fea9e407529ff18d66593b41cb6f933"
+    },
+    {
+      "path": "docs/documentation/backlog.json",
+      "sha256": "68be63ada5ff042f0f18758c113478efef6c0fe83244a9ab0871d95a3b4a6557"
+    },
+    {
+      "path": "docs/documentation/impact.json",
+      "sha256": "b3528b07e133e2b1f5b8d4c66ddadf9301fc70a39286d5ce7dada8e9728c70cd"
+    },
+    {
+      "path": "docs/testing/README.md",
+      "sha256": "7d41e6dbe45d209209b299480350b53173c850d3e89de2762f47d51a8ee57775"
+    },
+    {
+      "path": "docs/testing/v1.0.0/USE-CASES.md",
+      "sha256": "2cbf306dd14e48838e823f239c359394de1edc83dce7a11d7234e37a73486653"
+    },
+    {
+      "path": "docs/testing/v1.0.0/inventory.json",
+      "sha256": "8c60e922483d3f136cb8f61d4c274c45b8205e437806f9560579f830721300bc"
+    },
+    {
+      "path": "docs/tools/documentation-lifecycle.mjs",
+      "sha256": "828b4a05e7108da802d49aa7a25a326289f21e833479b7c2a82380329ecd166a"
+    },
+    {
+      "path": "dummy-api/config/api-messages.json",
+      "sha256": "5a1e8756c503ec8b4a343fa2eb8268c3f3c297b3ff0e3f49682b1b61813b697f"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/initial.json",
+      "sha256": "8e787885f7011dc47b05f322ef79f772b422d158d97cdb7cd17c144ab83ad70a"
+    },
+    {
+      "path": "dummy-api/config/documentation/availability.json",
+      "sha256": "42b73a495645e25c974e98c61d97279f5c16b776370fe5f92d029b24cdea5e6c"
+    },
+    {
+      "path": "dummy-api/config/documentation/releases.json",
+      "sha256": "fd6a6d7a7abe6419c4fa4b9a9dead54f6eca02dee7f87b2fcabedaa87e3ddd99"
+    },
+    {
+      "path": "dummy-api/config/documentation/translation-revisions.json",
+      "sha256": "7af6458c05df1b98f79ea9152eb5905656a807fd01fc93d1cc99d1541fc2f0de"
+    },
+    {
+      "path": "dummy-api/config/documentation/translations.json",
+      "sha256": "05d97b2a07dd70973db73d4f80462109abb630eca08d5b58dc110fada46cc484"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "d4c7427b3b3eb3af4c57df147ea43f4ce686ac945a4e9762705d5e4fbd622e5c"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "18e214e49ca43b209018a53fed41008e38e5172c87d08c5e860fc071d95cfa9d"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "59e8ee586f8eb2214d5b5b4fdf8cd162b30362fa879db5e7729045b0b40f11d1"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "b3e4032021e1023f995eeb6a0cc238231594ce05598cf122d6b4748472b7fcc9"
+    },
+    {
+      "path": "dummy-api/config/navigation/nexora.json",
+      "sha256": "00dd7e4767d8ab697f61279f5bd0f247f5e1a2581032b13cb9e4e5489c479dff"
+    },
+    {
+      "path": "dummy-api/dcp-designer-store.mjs",
+      "sha256": "0fb9ede8b3a583527045bdeaaf1d484f7b94b7bc409d58090a9b6a871fa278a2"
+    },
+    {
+      "path": "dummy-api/dcp-designer-store.test.mjs",
+      "sha256": "f1eaabfc4977a651fd59be053da98dc8dbbac2c82cdbf719202a97ac262af7c2"
+    },
+    {
+      "path": "dummy-api/server.mjs",
+      "sha256": "152d95d81c1289847bc1e4518287ba708046be0cc541ae86ad5024bc625cbe1a"
+    }
+  ]
+}

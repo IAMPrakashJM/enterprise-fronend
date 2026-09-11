@@ -24,3 +24,5 @@ For public type changes, identify affected consumers. For backend or storage cha
 Update links, version pointers, templates, rules and evidence without rewriting application history. Validate the documentation gate. Reuse earlier runtime evidence only with its original scope/source labels; do not change its date or status to imply it was rerun.
 
 If the documentation gate or CI configuration changes, test the gate and check workflow wiring. A new CI step is configured locally until the branch is pushed and the hosted run actually executes.
+
+- [DCP enterprise form scope and reuse assessment](README-DCP-ENTERPRISE-FORM-SCOPE.md).

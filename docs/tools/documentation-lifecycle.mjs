@@ -28,6 +28,7 @@ const families={
 };
 const all=Object.keys(PAGE_REGISTRY).sort();
 function affected(path){
+ if(path.includes('dcp-designer'))return ['dcp-designer'];
  if(path.includes('identity-devices')||path.includes('identity-device-store'))return ['identity-card-readers', 'passport-scanner', 'patient-biometric-verification'];
 
  if(path.includes('device-integrations')||path.includes('device-integration-store')||path.includes('scanner-input'))return ['device-integrations', 'scanner-workbench', 'device-automation'];
@@ -38,7 +39,7 @@ function affected(path){
  // Shared UI, adapters, configuration and unmapped renderers conservatively affect every page.
  return ["*"];
 }
-function sources(){return [...walk(resolve(root,'dummy-api/config/identity-devices')).map(p=>relative(root,p)),...walk(resolve(root,'dummy-api/config/device-integrations')).map(p=>relative(root,p)),...walk(resolve(root,'dummy-api/config/label-printing')).map(p=>relative(root,p)),'dummy-api/op-registration-store.ts',...walk(resolve(root,'dummy-api/config/op-registration')).map(p=>relative(root,p)),...['erp-screens','erp-shell','erp-config','erp-data','ops-ui','platform-ports'].flatMap(pkg=>walk(resolve(root,`desktop-clients/packages/${pkg}/src`))).filter(p=>/\.(tsx?|css)$/.test(p)&&!/(\.test\.|\/locales\/|messages.en.ts)/.test(p)).map(p=>relative(root,p)), ...['web','desktop'].flatMap(app=>walk(resolve(root,`desktop-clients/apps/${app}/src`))).filter(p=>/\.(tsx?|css)$/.test(p)&&!p.includes('.test.')).map(p=>relative(root,p)), ...readdirSync(resolve(root,'dummy-api')).filter(p=>p.endsWith('.mjs')&&!p.includes('.test.')).map(p=>'dummy-api/'+p), ...['en','ar','hi','ml'].map(l=>`dummy-api/config/localization/shared/${l}.json`), ...walk(resolve(root,'dummy-api/config/navigation')).map(p=>relative(root,p))];}
+function sources(){return [...walk(resolve(root,'dummy-api/config/dcp-designer')).map(p=>relative(root,p)),...walk(resolve(root,'dummy-api/config/identity-devices')).map(p=>relative(root,p)),...walk(resolve(root,'dummy-api/config/device-integrations')).map(p=>relative(root,p)),...walk(resolve(root,'dummy-api/config/label-printing')).map(p=>relative(root,p)),'dummy-api/op-registration-store.ts',...walk(resolve(root,'dummy-api/config/op-registration')).map(p=>relative(root,p)),...['erp-screens','erp-shell','erp-config','erp-data','ops-ui','platform-ports'].flatMap(pkg=>walk(resolve(root,`desktop-clients/packages/${pkg}/src`))).filter(p=>/\.(tsx?|css)$/.test(p)&&!/(\.test\.|\/locales\/|messages.en.ts)/.test(p)).map(p=>relative(root,p)), ...['web','desktop'].flatMap(app=>walk(resolve(root,`desktop-clients/apps/${app}/src`))).filter(p=>/\.(tsx?|css)$/.test(p)&&!p.includes('.test.')).map(p=>relative(root,p)), ...readdirSync(resolve(root,'dummy-api')).filter(p=>p.endsWith('.mjs')&&!p.includes('.test.')).map(p=>'dummy-api/'+p), ...['en','ar','hi','ml'].map(l=>`dummy-api/config/localization/shared/${l}.json`), ...walk(resolve(root,'dummy-api/config/navigation')).map(p=>relative(root,p))];}
 const hashFile=p=>createHash('sha256').update(readFileSync(resolve(root,p))).digest('hex');
 const command=process.argv[2]??'check';
 if(command==='snapshot'){

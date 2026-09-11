@@ -1,0 +1,1 @@
+{"title":"designer.sample","sections":[{"id":"details","title":"designer.section","fields":[{"id":"reference","type":"text","label":"designer.reference","required":true},{"id":"notes","type":"textarea","label":"designer.notes"}]}]}

@@ -32,7 +32,7 @@ flowchart TD
 
 The backend chooses which registered menu items are available. It does not send executable React components. An unknown page ID cannot become an arbitrary frontend component. `LIBRARY_PAGE_IDS` is derived from Library navigation and includes shared destinations such as Preferences; the canonical module assigned to a shared page must not accidentally exclude it from Library presentation rules.
 
-The current inventory has **158 Library destinations**, including shared routes, component examples, template demonstrations and API-backed workspaces. Page Library contains List of pages and 13 working page destinations. This is a navigation inventory, not a claim that 158 production workflows have passed domain acceptance. See the [machine-readable inventory](../testing/v1.0.0/inventory.json) and [Page Library catalog](../features/page-library-catalog.md).
+The current inventory has **159 Library destinations**, including shared routes, component examples, template demonstrations and API-backed workspaces. Page Library contains List of pages and 14 working page destinations. This is a navigation inventory, not a claim that 159 production workflows have passed domain acceptance. See the [machine-readable inventory](../testing/v1.0.0/inventory.json) and [Page Library catalog](../features/page-library-catalog.md).
 
 ## Preference resolution
 

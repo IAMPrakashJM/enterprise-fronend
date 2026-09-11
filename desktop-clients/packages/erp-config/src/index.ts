@@ -41,3 +41,4 @@ export * from './label-printing.ts';
 export * from './device-integrations.ts';
 export * from './identity-devices.ts';
 export * from './care-pages.ts';
+export * from './dcp-designer.ts';

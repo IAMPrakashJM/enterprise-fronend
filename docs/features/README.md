@@ -51,3 +51,5 @@ Never substitute a screenshot, an empty route or a passing build for functional 
 - [Identity readers and patient verification](identity-devices.md): card/EID, passport and one-to-one biometric workflow demos.
 
 - [Healthcare reference page templates](care-page-templates.md): emergency, inpatient and consultation reference designs with shared components and CSV-backed API records.
+
+- [DCP Visual Designer](dcp-designer.md): shared visual authoring, preview and demo draft persistence; production DCP integration pending.

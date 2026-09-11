@@ -68,3 +68,5 @@ Object.assign(PAGE_LIBRARY_RESOURCES, {
     "demo": "care.synthetic"
   }
 });
+
+PAGE_LIBRARY_RESOURCES['dcp-designer']={demo:'designer.boundary',source:"import React from 'react';\nimport {DcpDesignerWorkspace,type PreferenceHost} from '@pepbits/erp-screens';\nimport {createDesignerAdapter} from '@pepbits/erp-data';\nexport function Designer({request,productId,scopeKey,...host}:PreferenceHost & {request:(path:string,init?:RequestInit)=>Promise<Response>;productId:string;scopeKey:string}) {\n const adapter=React.useMemo(()=>createDesignerAdapter(request,productId),[request,productId]);\n return <DcpDesignerWorkspace adapter={adapter} scopeKey={scopeKey} {...host}/>;\n}"};

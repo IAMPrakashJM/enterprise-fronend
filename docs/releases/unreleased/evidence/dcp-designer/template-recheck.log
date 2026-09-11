@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/templates/page-template.test.tsx (8 tests) 2187ms
+   ✓ every configured template renders real shared content and starts with valid sample data  1858ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  09:49:15
+   Duration  5.44s (transform 2.54s, setup 1.22s, collect 1.32s, tests 2.19s, environment 403ms, prepare 79ms)
+

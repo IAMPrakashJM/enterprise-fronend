@@ -1,0 +1,10 @@
+✔ designer persists drafts, deduplicates retries, isolates scope and rejects stale saves (17.096544ms)
+✔ designer rejects duplicate IDs, unsupported components and ambiguous options (0.500981ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 238.619247

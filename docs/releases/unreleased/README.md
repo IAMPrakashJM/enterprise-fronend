@@ -67,3 +67,5 @@ The following records retain their original dates and test scopes. They are not 
 - [Device integration library, 10 September 2026](device-integrations-2026-09-10.md)
 - [Identity device library, 10 September 2026](identity-devices-2026-09-10.md)
 - [Healthcare reference page templates](care-page-templates-2026-09-10.md)
+
+Latest local implementation: [DCP visual designer](dcp-designer-2026-09-11.md), not deployed.
