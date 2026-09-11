@@ -1,0 +1,15 @@
+✔ all four definitions and every form section are supplied by API (2.690841ms)
+✔ create/save/replay survive CSV reload and reject stale writes and cross-scope reads (34.312727ms)
+✔ temporary identity permitted for ED only; final verification is explicit (15.587908ms)
+✔ bed reservation enforces requirements and concurrency across users (31.843849ms)
+✔ order retains all instructions and cancellation preserves original record (15.746158ms)
+✔ admission records occupancy; completion does not release the bed (36.132415ms)
+✔ signed notes reject edits; addenda cannot rewrite the original values (10.134098ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 280.148991

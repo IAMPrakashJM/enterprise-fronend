@@ -1,0 +1,8 @@
+PASS front-design.pepbits.com/emergency-registration: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS front-design.pepbits.com/inpatient-admission: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS front-design.pepbits.com/consultation-entry-design: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS front-design.pepbits.com/consultation-entry-v2: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS desktop.front-design.pepbits.com/emergency-registration: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS desktop.front-design.pepbits.com/inpatient-admission: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS desktop.front-design.pepbits.com/consultation-entry-design: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.
+PASS desktop.front-design.pepbits.com/consultation-entry-v2: release identity, authenticated API load, patient choices, localized labels and desktop layout. No care records mutated.

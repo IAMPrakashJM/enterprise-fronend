@@ -1,0 +1,3 @@
+Request failed: http://127.0.0.1:3330/documentation?releaseId=2026-09-10-care-pages&language=en&q=&offset=0 net::ERR_ABORTED
+PASS four care pages, API record creation, ED transition, full order-detail persistence and four-language desktop layout; Chromium with isolated demo API.
+1/1 features suites passed

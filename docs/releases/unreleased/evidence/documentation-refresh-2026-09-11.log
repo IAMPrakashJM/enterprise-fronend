@@ -1,0 +1,13 @@
+PASS documentation impact receipts, 315 page registrations and translation revisions; 1113 authoring/review items remain explicitly pending
+✔ source edits and mapping changes require fresh impact review; explanations are mandatory (1.237856ms)
+✔ source edits invalidate reviewed translations even when their text is unchanged (0.625392ms)
+✔ required-field metadata invalidates a translation review even if visible strings do not change (0.26144ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.298165
+PASS 79 documentation files: local links/headings, current testing guide, Library inventory, release identity/status and retained evidence hashes
