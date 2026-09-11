@@ -8134,5 +8134,101 @@
     "review": "pending",
     "sourceHash": "429a7885b390ca147beb4117b13bcf6095cd7f7173e016184c8e2b56e6c52cdc",
     "translationHash": "58b3e332a102b56825a6b29831138e797ac051d935b7f7ae1b312be0d235298a"
+  },
+  {
+    "pageId": "emergency-registration",
+    "language": "ar",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "0af51950961d31c337030de3aa4d45694279971eb3278fdd1eb5e22a04d111a7",
+    "translationHash": "3ea02fe942e3b72965e547f3bff0ec369ffff46ea8183c007bf69b5c2d4ab340"
+  },
+  {
+    "pageId": "emergency-registration",
+    "language": "hi",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "0af51950961d31c337030de3aa4d45694279971eb3278fdd1eb5e22a04d111a7",
+    "translationHash": "a545188e59a8bb5164dd2713a49fd9171980ae97781482693c68dce4c89047fc"
+  },
+  {
+    "pageId": "emergency-registration",
+    "language": "ml",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "0af51950961d31c337030de3aa4d45694279971eb3278fdd1eb5e22a04d111a7",
+    "translationHash": "4d0f96a50849891c37fe57b1be5d8c70103ac04f50e2cb3c0f67622af74630f1"
+  },
+  {
+    "pageId": "inpatient-admission",
+    "language": "ar",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "6fa82d69b91f3cb3f25141b257a006fff2cb04221790020a052f64cdba37434d",
+    "translationHash": "1d0ce344f2100efbfe6cd4eb26ba6054cfb64f8bd605f10885e5f02b634a0ec6"
+  },
+  {
+    "pageId": "inpatient-admission",
+    "language": "hi",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "6fa82d69b91f3cb3f25141b257a006fff2cb04221790020a052f64cdba37434d",
+    "translationHash": "f95cf7b967c90420afbc69638c1dfc1fc31e3a29be4e1e3c7a26a7e41080e68d"
+  },
+  {
+    "pageId": "inpatient-admission",
+    "language": "ml",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "6fa82d69b91f3cb3f25141b257a006fff2cb04221790020a052f64cdba37434d",
+    "translationHash": "b8146c33a43918ffa1f826087e365eb6e70165669b89a16bc7290a0b4f0399ef"
+  },
+  {
+    "pageId": "consultation-entry-v2",
+    "language": "ar",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "dfe99756f5574f46f0e6263883e5303cbff6b431a4836a064694ee1953f9d0f9",
+    "translationHash": "48a41b88a269e3ede01b2a0ac430cc69401046295ea2c1f59119f363c4d238da"
+  },
+  {
+    "pageId": "consultation-entry-v2",
+    "language": "hi",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "dfe99756f5574f46f0e6263883e5303cbff6b431a4836a064694ee1953f9d0f9",
+    "translationHash": "f7f60db51c2b3a436eed8646b0fbf7a20fe96666b57d0d0d9c9fab7608d4cd8a"
+  },
+  {
+    "pageId": "consultation-entry-v2",
+    "language": "ml",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "dfe99756f5574f46f0e6263883e5303cbff6b431a4836a064694ee1953f9d0f9",
+    "translationHash": "981eadd600398125296697404d994d5e2f6ee42de8a76ba67070f98ea719a1e1"
+  },
+  {
+    "pageId": "consultation-entry-design",
+    "language": "ar",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "9a6a0c5d265753340c45727cc48b5fefe46170e57df7e8621aa0ccec29bb5d06",
+    "translationHash": "f7bd5b0d27de5958e7ec5ba117dcd2d97ef701af3883f650d67841f69aa730b0"
+  },
+  {
+    "pageId": "consultation-entry-design",
+    "language": "hi",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "9a6a0c5d265753340c45727cc48b5fefe46170e57df7e8621aa0ccec29bb5d06",
+    "translationHash": "23cb2f857d2e58df770efae2a6bf8d0da3de5cc6de4608cd327ebb83509faaa4"
+  },
+  {
+    "pageId": "consultation-entry-design",
+    "language": "ml",
+    "issue": "current",
+    "review": "pending",
+    "sourceHash": "9a6a0c5d265753340c45727cc48b5fefe46170e57df7e8621aa0ccec29bb5d06",
+    "translationHash": "e88c4d2a1be9d57a7e3273f0e400dcb22324240b51484dccb6dd87023f9151f6"
   }
 ]

@@ -43,6 +43,8 @@ Existing guides remain at `desktop-clients/docs/`; their paths and screenshots a
 
 ## Current status
 
-The Library preference audit corrections are implemented locally. The delivery record distinguishes automated tests, browser checks, production builds, pending native/platform acceptance and deployment. It does not claim a commit, push, tag or deployment for these changes.
+As of 11 September 2026, the latest demo release is `20260910173632033-48931d24`. The [healthcare reference pages](features/care-page-templates.md) are deployed on both public demo sites; see the [deployment evidence](releases/unreleased/care-page-deployment-2026-09-10.md). The [current delivery index](releases/unreleased/README.md) separates current status from historical implementation notes.
+
+The Library inventory contains 158 destinations. Runtime documentation covers 315 page registrations: 147 authored workflow guides and 168 inherited reference-only guides. The [generated backlog](documentation/backlog.json) records 1,113 authoring/translation-review items. These are individual issues, not 1,113 missing pages. Native/domain review, physical-device integration and production-service acceptance remain explicitly pending where documented. Automated validation does not certify those reviews.
 
 Run `node docs/tools/check-docs.mjs` from the repository root to check documentation navigation, the active guide, inventory and release evidence. See [development rules](development/RULES.md) for when documentation must change.

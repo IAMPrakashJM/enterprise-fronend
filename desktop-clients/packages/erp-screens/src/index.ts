@@ -50,3 +50,4 @@ export {DeviceIntegrationWorkspace} from './device-integrations/workspace';
 export {DeviceJobList,DeviceDocument} from './device-integrations/components';
 export {IdentityDeviceWorkspace} from './identity-devices/workspace';
 export {IdentityResultPanel,IdentityHistory} from './identity-devices/components';
+export {CareWorkspace,type CareWorkspaceProps} from './care-pages/workspace';

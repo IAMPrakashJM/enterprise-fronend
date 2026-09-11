@@ -1080,6 +1080,34 @@
       "kind": "library",
       "engine": null,
       "coverage": "IDENTITY-01..05; identity-devices.mjs"
+    },
+    {
+      "id": "emergency-registration",
+      "title": "Emergency Registration",
+      "kind": "library",
+      "engine": "CareWorkspace",
+      "coverage": "CARE-01; API persistence, recovery, component presentation and browser journey"
+    },
+    {
+      "id": "inpatient-admission",
+      "title": "Inpatient Admission",
+      "kind": "library",
+      "engine": "CareWorkspace",
+      "coverage": "CARE-01; API persistence, recovery, component presentation and browser journey"
+    },
+    {
+      "id": "consultation-entry-design",
+      "title": "Consultation Entry",
+      "kind": "library",
+      "engine": "CareWorkspace",
+      "coverage": "CARE-01; API persistence, recovery, component presentation and browser journey"
+    },
+    {
+      "id": "consultation-entry-v2",
+      "title": "Consultation Entry v2",
+      "kind": "library",
+      "engine": "CareWorkspace",
+      "coverage": "CARE-01; API persistence, recovery, component presentation and browser journey"
     }
   ],
   "tests": [

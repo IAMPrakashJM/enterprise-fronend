@@ -1,0 +1,7 @@
+id,ward,room,care,status,isolation,telemetry
+MA-201-A,Medical Ward A,201-A,General Ward,Available,false,false
+CW-310-A,Cardiac Ward,310-A,General Ward,Available,false,true
+IU-05,Isolation Unit,ISO-05,Isolation,Available,true,true
+ICU-07,Adult ICU,ICU-07,ICU,Available,false,true
+MW-108-A,Maternity Ward,108-A,Maternity,Available,false,false
+LTC-22,Long-term Care,22,Long-term Care,Available,false,false

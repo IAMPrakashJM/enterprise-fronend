@@ -1,5 +1,7 @@
 # Feature catalog
 
+Reviewed 11 September 2026. See the [current delivery index](../releases/unreleased/README.md) for deployment status and the [documentation coverage](../README.md#current-status) for remaining authoring/review work.
+
 - [Own Settings and default module](own-settings.md): API-backed personal startup module with tenant controls.
 
 - [Comprehensive Consultation](comprehensive-consultation.md): specialty documentation, linked orders, scoring, coding and demo signing.
@@ -12,7 +14,7 @@ This frontend is a reusable design and application framework. “Implemented” 
 | Clinical Consultation | [User and integration guide](clinical-consultation.md) | Compact API-backed notes; production clinical integration remains separate |
 | Clinical Triage | [User and integration guide](clinical-triage.md) | API drafts, manual triage and handoff; clinical acceptance remains separate |
 | Billing Clinic | [User and integration guide](billing-clinic.md) | CSV-backed demo billing; real payer, gateway and accounting integration remain separate |
-| Library preferences and component compliance | [Current detailed guide](library-preferences.md) | Local corrections implemented; publication and platform limits in the release record |
+| Library preferences and component compliance | [Current detailed guide](library-preferences.md) | Implemented and deployed; historical checks and platform limits remain in the delivery records |
 | Component examples and copyable code | [Component Library](../../desktop-clients/docs/component-library.md) | Shared demos; new preference behavior is described in the current guide |
 | 97 configurable page templates | [Page Template Library](../../desktop-clients/docs/page-template-library.md) | Reusable engines and sample adapters; real domain services belong to applications |
 | Patient Query, Record and 360 | [Clinical templates](../../desktop-clients/docs/clinical-page-templates.md) | Fictional demo data; not clinical validation or insurer integration |
@@ -22,7 +24,7 @@ This frontend is a reusable design and application framework. “Implemented” 
 | Shared drafts | [Draft service](../../desktop-clients/docs/shared-draft-recovery.md), [recovery center](../../desktop-clients/docs/draft-recovery-center.md) | Tenant storage, retention and sensitive-field rules apply |
 | Sentinel and user-facing errors | [Sentinel](../../desktop-clients/docs/sentinel-monitoring.md) | Demo collection contract; production monitoring integration remains explicit |
 | Imports, approvals and related record panels | [Illustrated platform guide](../../desktop-clients/docs/handbook/frontend-platform-guide.md) | See the guide's feature-specific scope and API boundaries |
-| Page help, releases and documentation alerts | [Documentation center plan](../../desktop-clients/docs/documentation-release-center-plan.md) | Plan and runtime authoring coverage must be checked separately; repository Markdown is not automatically an in-app article |
+| Page help, releases and documentation alerts | [Implemented documentation lifecycle](../documentation/README.md) | Shared API articles, impact checks and review metadata; inherited authoring/native-review backlog remains explicit |
 
 ## For future features
 
@@ -47,3 +49,5 @@ Never substitute a screenshot, an empty route or a passing build for functional 
 - [Generic device integration library](device-integrations.md): scanners, document jobs, workstation routing and typed connector contracts.
 
 - [Identity readers and patient verification](identity-devices.md): card/EID, passport and one-to-one biometric workflow demos.
+
+- [Healthcare reference page templates](care-page-templates.md): emergency, inpatient and consultation reference designs with shared components and CSV-backed API records.

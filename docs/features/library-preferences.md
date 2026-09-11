@@ -1,6 +1,6 @@
 # Library user and integration guide
 
-Feature ID: `LIB`. Status: implemented in the local working tree; see the [delivery record](../releases/unreleased/README.md) for exact evidence and outstanding acceptance. Desktop use is the primary design target.
+Feature ID: `LIB`. Status: implemented and deployed to the demo sites; see the [delivery record](../releases/unreleased/README.md) for exact evidence and outstanding acceptance. Desktop use is the primary design target.
 
 ## What the Library is for
 

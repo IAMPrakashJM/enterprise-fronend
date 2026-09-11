@@ -1,0 +1,6874 @@
+[
+  {
+    "id": "emergency-registration",
+    "kind": "emergency",
+    "title": "care.text202",
+    "steps": [
+      "care.text203",
+      "care.text204",
+      "template.clinical.registration",
+      "care.text205",
+      "registration.disposition"
+    ],
+    "groups": [
+      {
+        "id": "g0",
+        "title": "care.text18",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "prearrival",
+            "label": "care.text5",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "No pre-arrival alert",
+                "label": "care.text1"
+              },
+              {
+                "value": "Ambulance pre-alert",
+                "label": "care.text2"
+              },
+              {
+                "value": "Referring facility pre-alert",
+                "label": "care.text3"
+              },
+              {
+                "value": "Internal clinical referral",
+                "label": "care.text4"
+              }
+            ]
+          },
+          {
+            "id": "arrivalTime",
+            "label": "care.text6",
+            "type": "text",
+            "span": 4,
+            "required": true
+          },
+          {
+            "id": "handoverTime",
+            "label": "care.text7",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "source",
+            "label": "care.text14",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Self / family",
+                "label": "care.text8"
+              },
+              {
+                "value": "Ambulance service",
+                "label": "care.text9"
+              },
+              {
+                "value": "Another hospital",
+                "label": "care.text10"
+              },
+              {
+                "value": "Primary care / clinic",
+                "label": "care.text11"
+              },
+              {
+                "value": "Internal OP clinic",
+                "label": "care.text12"
+              },
+              {
+                "value": "Police / authority",
+                "label": "care.text13"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          },
+          {
+            "id": "accompanied",
+            "label": "care.text15",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f0_5_0",
+            "label": "template.clinical.preferredLanguage",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not captured yet",
+                "label": "care.text16"
+              },
+              {
+                "value": "English",
+                "label": "registration.English"
+              },
+              {
+                "value": "Arabic",
+                "label": "registration.Arabic"
+              },
+              {
+                "value": "Malayalam",
+                "label": "registration.Malayalam"
+              },
+              {
+                "value": "Hindi",
+                "label": "registration.Hindi"
+              },
+              {
+                "value": "Other — interpreter needed",
+                "label": "care.text17"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1",
+        "title": "care.text30",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "complaint",
+            "label": "Presenting complaint",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f1_1_0",
+            "label": "care.text23",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Patient",
+                "label": "registration.patientStep"
+              },
+              {
+                "value": "Family / caregiver",
+                "label": "care.text19"
+              },
+              {
+                "value": "Ambulance / EMS",
+                "label": "care.text20"
+              },
+              {
+                "value": "Referring facility",
+                "label": "care.text21"
+              },
+              {
+                "value": "Unable to obtain",
+                "label": "care.text22"
+              }
+            ]
+          },
+          {
+            "id": "f1_2_0",
+            "label": "care.text29",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "None noted",
+                "label": "care.text24"
+              },
+              {
+                "value": "Mobility assistance",
+                "label": "care.text25"
+              },
+              {
+                "value": "Interpreter",
+                "label": "care.text26"
+              },
+              {
+                "value": "Visual / hearing assistance",
+                "label": "care.text27"
+              },
+              {
+                "value": "Other support",
+                "label": "care.text28"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g2",
+        "title": "care.text47",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f2_0_0",
+            "label": "care.text31",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f2_1_0",
+            "label": "care.text34",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Central Hospital",
+                "label": "care.text32"
+              },
+              {
+                "value": "Women & Children Hospital",
+                "label": "care.text33"
+              }
+            ]
+          },
+          {
+            "id": "f2_2_0",
+            "label": "care.text38",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "ED Core Team A",
+                "label": "care.text35"
+              },
+              {
+                "value": "ED Core Team B",
+                "label": "care.text36"
+              },
+              {
+                "value": "Pediatric ED Team",
+                "label": "care.text37"
+              }
+            ]
+          },
+          {
+            "id": "initialArea",
+            "label": "care.text46",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Unassigned",
+                "label": "care.text39"
+              },
+              {
+                "value": "Resuscitation",
+                "label": "care.text40"
+              },
+              {
+                "value": "Rapid assessment",
+                "label": "care.text41"
+              },
+              {
+                "value": "Major treatment",
+                "label": "care.text42"
+              },
+              {
+                "value": "Minor treatment",
+                "label": "care.text43"
+              },
+              {
+                "value": "Pediatric ED",
+                "label": "care.text44"
+              },
+              {
+                "value": "Isolation-capable area",
+                "label": "care.text45"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3",
+        "title": "care.text62",
+        "step": 2,
+        "tab": "",
+        "fields": [
+          {
+            "id": "triageSystem",
+            "label": "care.text52",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "ESI — organization configured",
+                "label": "care.text48"
+              },
+              {
+                "value": "CTAS — organization configured",
+                "label": "care.text49"
+              },
+              {
+                "value": "MTS — organization configured",
+                "label": "care.text50"
+              },
+              {
+                "value": "Local approved scale",
+                "label": "care.text51"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "f3_1_0",
+            "label": "care.text53",
+            "type": "text",
+            "span": 4,
+            "required": true
+          },
+          {
+            "id": "triageTime",
+            "label": "care.text54",
+            "type": "text",
+            "span": 4,
+            "required": true
+          },
+          {
+            "id": "f3_3_0",
+            "label": "care.text55",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "f3_4_0",
+            "label": "care.text56",
+            "type": "text",
+            "span": 2
+          },
+          {
+            "id": "f3_5_0",
+            "label": "template.triage.oxygenSaturation",
+            "type": "text",
+            "span": 2
+          },
+          {
+            "id": "f3_6_0",
+            "label": "template.triage.temperature",
+            "type": "text",
+            "span": 2
+          },
+          {
+            "id": "f3_7_0",
+            "label": "template.triage.pain",
+            "type": "text",
+            "span": 2
+          },
+          {
+            "id": "f3_8_0",
+            "label": "template.triage.respiratoryRate",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f3_9_0",
+            "label": "Blood pressure",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f3_10_0",
+            "label": "care.text57",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f3_11_0",
+            "label": "Pregnancy status",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not assessed / not applicable",
+                "label": "care.text58"
+              },
+              {
+                "value": "Pregnant",
+                "label": "care.text59"
+              },
+              {
+                "value": "Postpartum",
+                "label": "care.text60"
+              },
+              {
+                "value": "Not pregnant",
+                "label": "care.text61"
+              },
+              {
+                "value": "Unknown",
+                "label": "template.triage.unknown"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4",
+        "title": "care.text88",
+        "step": 2,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f4_0_0",
+            "label": "care.text67",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not recorded",
+                "label": "registration."
+              },
+              {
+                "value": "Road traffic incident",
+                "label": "care.text63"
+              },
+              {
+                "value": "Fall",
+                "label": "care.text64"
+              },
+              {
+                "value": "Work-related injury",
+                "label": "care.text65"
+              },
+              {
+                "value": "Sports injury",
+                "label": "care.text66"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ],
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Trauma"
+            }
+          },
+          {
+            "id": "f4_1_0",
+            "label": "care.text68",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Trauma"
+            }
+          },
+          {
+            "id": "f4_2_0",
+            "label": "care.text69",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Trauma"
+            }
+          },
+          {
+            "id": "f4_3_0",
+            "label": "care.text73",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not activated",
+                "label": "care.text70"
+              },
+              {
+                "value": "Activated per policy",
+                "label": "care.text71"
+              },
+              {
+                "value": "Deactivated",
+                "label": "care.text72"
+              }
+            ],
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Trauma"
+            }
+          },
+          {
+            "id": "f4_4_0",
+            "label": "care.text74",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Pediatric"
+            }
+          },
+          {
+            "id": "f4_5_0",
+            "label": "template.clinical.relationship",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Pediatric"
+            }
+          },
+          {
+            "id": "f4_6_0",
+            "label": "care.text75",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Pediatric"
+            }
+          },
+          {
+            "id": "f4_7_0",
+            "label": "care.text78",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not verified yet",
+                "label": "care.text76"
+              },
+              {
+                "value": "Verified",
+                "label": "template.clinical.verified"
+              },
+              {
+                "value": "Not applicable / emergency basis",
+                "label": "care.text77"
+              }
+            ],
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Pediatric"
+            }
+          },
+          {
+            "id": "f4_8_0",
+            "label": "care.text79",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pregnant",
+                "label": "care.text59"
+              },
+              {
+                "value": "Postpartum",
+                "label": "care.text60"
+              },
+              {
+                "value": "Unknown",
+                "label": "template.triage.unknown"
+              }
+            ],
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Obstetric"
+            }
+          },
+          {
+            "id": "f4_9_0",
+            "label": "Gestational age",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Obstetric"
+            }
+          },
+          {
+            "id": "f4_10_0",
+            "label": "care.text80",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Obstetric"
+            }
+          },
+          {
+            "id": "f4_11_0",
+            "label": "care.text81",
+            "type": "text",
+            "span": 3,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Obstetric"
+            }
+          },
+          {
+            "id": "f4_12_0",
+            "label": "registration.procedure-service",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Procedure"
+            }
+          },
+          {
+            "id": "f4_13_0",
+            "label": "Indication",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Procedure"
+            }
+          },
+          {
+            "id": "f4_14_0",
+            "label": "Responsible clinician",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Procedure"
+            }
+          },
+          {
+            "id": "f4_15_0",
+            "label": "care.text85",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Assessment pending",
+                "label": "care.text82"
+              },
+              {
+                "value": "Precautions activated per policy",
+                "label": "care.text83"
+              },
+              {
+                "value": "No additional precautions documented",
+                "label": "care.text84"
+              }
+            ],
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Infection"
+            }
+          },
+          {
+            "id": "f4_16_0",
+            "label": "care.text45",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Infection"
+            }
+          },
+          {
+            "id": "f4_17_0",
+            "label": "care.text87",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not required / not yet determined",
+                "label": "care.text86"
+              },
+              {
+                "value": "Requested",
+                "label": "template.status.requested"
+              },
+              {
+                "value": "Acknowledged",
+                "label": "registration.acknowledged"
+              }
+            ],
+            "visibleWhen": {
+              "field": "pathway",
+              "value": "Infection"
+            }
+          }
+        ]
+      },
+      {
+        "id": "g5",
+        "title": "care.text92",
+        "step": 2,
+        "tab": "",
+        "fields": [
+          {
+            "id": "areaSearch",
+            "label": "care.text89",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f5_1_0",
+            "label": "care.text90",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f5_2_0",
+            "label": "care.text91",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      {
+        "id": "g6",
+        "title": "care.text105",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "verifyIdentity",
+            "label": "care.text96",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Two identifiers verified",
+                "label": "care.text93"
+              },
+              {
+                "value": "Temporary / unidentified identity",
+                "label": "care.text94"
+              },
+              {
+                "value": "Unable to verify",
+                "label": "care.text95"
+              }
+            ]
+          },
+          {
+            "id": "f6_1_0",
+            "label": "care.text102",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not captured",
+                "label": "care.text97"
+              },
+              {
+                "value": "Patient confirmation",
+                "label": "care.text98"
+              },
+              {
+                "value": "Government document",
+                "label": "care.text99"
+              },
+              {
+                "value": "Family / caregiver",
+                "label": "care.text19"
+              },
+              {
+                "value": "Previous record",
+                "label": "care.text100"
+              },
+              {
+                "value": "External facility / EMS",
+                "label": "care.text101"
+              }
+            ]
+          },
+          {
+            "id": "mobileField",
+            "label": "template.clinical.mobile",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f6_3_0",
+            "label": "registration.email",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f6_4_0",
+            "label": "template.clinical.address",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f6_5_0",
+            "label": "template.clinical.preferredLanguage",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "English",
+                "label": "registration.English"
+              },
+              {
+                "value": "Arabic",
+                "label": "registration.Arabic"
+              },
+              {
+                "value": "Malayalam",
+                "label": "registration.Malayalam"
+              },
+              {
+                "value": "Hindi",
+                "label": "registration.Hindi"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          },
+          {
+            "id": "f6_6_0",
+            "label": "care.text26",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not required",
+                "label": "registration.not-required"
+              },
+              {
+                "value": "Requested",
+                "label": "template.status.requested"
+              },
+              {
+                "value": "Assigned",
+                "label": "care.text103"
+              },
+              {
+                "value": "Declined",
+                "label": "registration.declined"
+              }
+            ]
+          },
+          {
+            "id": "f6_7_0",
+            "label": "care.text104",
+            "type": "text",
+            "span": 3
+          }
+        ]
+      },
+      {
+        "id": "g7",
+        "title": "care.text121",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f7_0_0",
+            "label": "care.text106",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f7_1_0",
+            "label": "template.clinical.relationship",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f7_2_0",
+            "label": "care.text107",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f7_3_0",
+            "label": "care.text112",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not attempted",
+                "label": "care.text108"
+              },
+              {
+                "value": "Contacted",
+                "label": "care.text109"
+              },
+              {
+                "value": "No answer",
+                "label": "care.text110"
+              },
+              {
+                "value": "Patient declined contact",
+                "label": "care.text111"
+              }
+            ]
+          },
+          {
+            "id": "f7_4_0",
+            "label": "care.text113",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f7_5_0",
+            "label": "care.text116",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable / pending",
+                "label": "care.text114"
+              },
+              {
+                "value": "Verified per policy",
+                "label": "care.text115"
+              },
+              {
+                "value": "Unable to verify",
+                "label": "care.text95"
+              }
+            ]
+          },
+          {
+            "id": "f7_6_0",
+            "label": "care.text120",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Standard privacy controls",
+                "label": "care.text117"
+              },
+              {
+                "value": "Restricted directory / disclosure",
+                "label": "care.text118"
+              },
+              {
+                "value": "Additional restriction documented",
+                "label": "care.text119"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g8",
+        "title": "care.text132",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f8_0_0",
+            "label": "care.text127",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Pending / clinical care continuing",
+                "label": "care.text122"
+              },
+              {
+                "value": "Patient consent documented",
+                "label": "care.text123"
+              },
+              {
+                "value": "Representative consent documented",
+                "label": "care.text124"
+              },
+              {
+                "value": "Emergency-treatment basis documented",
+                "label": "care.text125"
+              },
+              {
+                "value": "Declined — clinician follow-up required",
+                "label": "care.text126"
+              }
+            ]
+          },
+          {
+            "id": "f8_1_0",
+            "label": "care.text128",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f8_2_0",
+            "label": "care.text131",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Provided / documented",
+                "label": "care.text129"
+              },
+              {
+                "value": "Unable at this time",
+                "label": "care.text130"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g9",
+        "title": "care.text140",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "payerType",
+            "label": "template.clinical.payerType",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Unknown / pending",
+                "label": "care.text133"
+              },
+              {
+                "value": "Insurance",
+                "label": "registration.insurance"
+              },
+              {
+                "value": "Self-pay",
+                "label": "Self-pay"
+              },
+              {
+                "value": "Government",
+                "label": "field.customer.customerType.option.Government"
+              },
+              {
+                "value": "Corporate",
+                "label": "template.clinical.corporate"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          },
+          {
+            "id": "f9_1_0",
+            "label": "care.text134",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f9_2_0",
+            "label": "registration.member",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f9_3_0",
+            "label": "care.text136",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not checked",
+                "label": "registration.not-checked"
+              },
+              {
+                "value": "Eligible",
+                "label": "template.clinical.eligible"
+              },
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Unable to verify",
+                "label": "care.text95"
+              },
+              {
+                "value": "Not eligible / finance follow-up",
+                "label": "care.text135"
+              }
+            ]
+          },
+          {
+            "id": "f9_4_0",
+            "label": "registration.authorization",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not yet assessed",
+                "label": "care.text137"
+              },
+              {
+                "value": "Not required",
+                "label": "registration.not-required"
+              },
+              {
+                "value": "Requested",
+                "label": "template.status.requested"
+              },
+              {
+                "value": "Approved",
+                "label": "registration.approved"
+              },
+              {
+                "value": "Denied / follow-up",
+                "label": "care.text138"
+              }
+            ]
+          },
+          {
+            "id": "f9_5_0",
+            "label": "care.text139",
+            "type": "text",
+            "span": 3
+          }
+        ]
+      },
+      {
+        "id": "g10",
+        "title": "care.text143",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f10_0_0",
+            "label": "care.text141",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f10_1_0",
+            "label": "care.text142",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f10_2_0",
+            "label": "template.clinical.referral",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      {
+        "id": "g11",
+        "title": "registration.nursing",
+        "step": 4,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f11_0_0",
+            "label": "care.text146",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not yet assessed",
+                "label": "care.text137"
+              },
+              {
+                "value": "No known allergies documented",
+                "label": "care.text144"
+              },
+              {
+                "value": "Allergy / intolerance documented",
+                "label": "care.text145"
+              },
+              {
+                "value": "Unable to obtain",
+                "label": "care.text22"
+              }
+            ]
+          },
+          {
+            "id": "f11_1_0",
+            "label": "Medication reconciliation",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Completed",
+                "label": "registration.completed"
+              },
+              {
+                "value": "Partial / unable to complete",
+                "label": "care.text147"
+              }
+            ]
+          },
+          {
+            "id": "f11_2_0",
+            "label": "care.text148",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f11_3_0",
+            "label": "care.text149",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      {
+        "id": "g12",
+        "title": "care.text152",
+        "step": 4,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f12_0_0",
+            "label": "Clinician",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f12_1_0",
+            "label": "care.text150",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f12_2_0",
+            "label": "care.text151",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f12_3_0",
+            "label": "template.comprehensive.panel.assessment",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "f12_4_0",
+            "label": "template.comprehensive.panel.plan",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      {
+        "id": "g13",
+        "title": "care.text159",
+        "step": 4,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f13_0_0",
+            "label": "care.text153",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f13_1_0",
+            "label": "care.text156",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Routine ED review",
+                "label": "care.text154"
+              },
+              {
+                "value": "Urgent",
+                "label": "registration.urgent"
+              },
+              {
+                "value": "Immediate per clinician",
+                "label": "care.text155"
+              }
+            ]
+          },
+          {
+            "id": "f13_2_0",
+            "label": "care.text157",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f13_3_0",
+            "label": "devices.status",
+            "type": "select",
+            "span": 2,
+            "options": [
+              {
+                "value": "Not requested",
+                "label": "care.text158"
+              },
+              {
+                "value": "Requested",
+                "label": "template.status.requested"
+              },
+              {
+                "value": "Acknowledged",
+                "label": "registration.acknowledged"
+              },
+              {
+                "value": "Completed",
+                "label": "registration.completed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g14",
+        "title": "care.text160",
+        "step": 4,
+        "tab": "",
+        "fields": []
+      },
+      {
+        "id": "g15",
+        "title": "care.text168",
+        "step": 5,
+        "tab": "",
+        "fields": [
+          {
+            "id": "dispoTime",
+            "label": "care.text161",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f15_1_0",
+            "label": "care.text162",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f15_2_0",
+            "label": "care.text166",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Decision pending",
+                "label": "care.text163"
+              },
+              {
+                "value": "Decision made — handover pending",
+                "label": "care.text164"
+              },
+              {
+                "value": "Ready for departure / transfer",
+                "label": "care.text165"
+              }
+            ]
+          },
+          {
+            "id": "f15_3_0",
+            "label": "care.text167",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      {
+        "id": "g16",
+        "title": "care.text185",
+        "step": 5,
+        "tab": "",
+        "fields": [
+          {
+            "id": "destination",
+            "label": "care.text169",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f16_1_0",
+            "label": "care.text170",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f16_2_0",
+            "label": "care.text175",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not required / self",
+                "label": "care.text171"
+              },
+              {
+                "value": "Hospital transport",
+                "label": "care.text172"
+              },
+              {
+                "value": "Ambulance",
+                "label": "care.text173"
+              },
+              {
+                "value": "Other approved transport",
+                "label": "care.text174"
+              }
+            ]
+          },
+          {
+            "id": "f16_3_0",
+            "label": "care.text177",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "Completed",
+                "label": "registration.completed"
+              },
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              }
+            ]
+          },
+          {
+            "id": "f16_4_0",
+            "label": "care.text180",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Provided and documented",
+                "label": "care.text178"
+              },
+              {
+                "value": "Unable / alternate recipient",
+                "label": "care.text179"
+              }
+            ]
+          },
+          {
+            "id": "f16_5_0",
+            "label": "care.text181",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f16_6_0",
+            "label": "Follow-up",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Not yet decided",
+                "label": "care.text182"
+              },
+              {
+                "value": "Not required",
+                "label": "registration.not-required"
+              },
+              {
+                "value": "Appointment requested",
+                "label": "care.text183"
+              },
+              {
+                "value": "Referral created",
+                "label": "care.text184"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g17",
+        "title": "care.text201",
+        "step": 5,
+        "tab": "",
+        "fields": [
+          {
+            "id": "departureTime",
+            "label": "care.text186",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f17_1_0",
+            "label": "care.text189",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Active",
+                "label": "template.clinical.active"
+              },
+              {
+                "value": "Handover in progress",
+                "label": "care.text187"
+              },
+              {
+                "value": "Clinically complete",
+                "label": "care.text188"
+              }
+            ]
+          },
+          {
+            "id": "f17_2_0",
+            "label": "care.text193",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Occupied",
+                "label": "care.text190"
+              },
+              {
+                "value": "Ready to release after departure",
+                "label": "care.text191"
+              },
+              {
+                "value": "Released",
+                "label": "care.text192"
+              }
+            ]
+          },
+          {
+            "id": "f17_3_0",
+            "label": "care.text194",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Completed",
+                "label": "registration.completed"
+              }
+            ]
+          },
+          {
+            "id": "f17_4_0",
+            "label": "care.text195",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Completed",
+                "label": "registration.completed"
+              }
+            ]
+          },
+          {
+            "id": "f17_5_0",
+            "label": "care.text197",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Ready",
+                "label": "labels.ready"
+              },
+              {
+                "value": "Submitted externally",
+                "label": "care.text196"
+              }
+            ]
+          },
+          {
+            "id": "f17_6_0",
+            "label": "care.text200",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Complete",
+                "label": "care.text198"
+              },
+              {
+                "value": "Deficiency assigned",
+                "label": "care.text199"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "defaults": {
+      "prearrival": "No pre-arrival alert",
+      "arrivalTime": "",
+      "handoverTime": "",
+      "source": "Self / family",
+      "accompanied": "",
+      "f0_5_0": "Not captured yet",
+      "complaint": "",
+      "f1_1_0": "Patient",
+      "f1_2_0": "None noted",
+      "f2_0_0": "",
+      "f2_1_0": "Central Hospital",
+      "f2_2_0": "ED Core Team A",
+      "initialArea": "Unassigned",
+      "triageSystem": "ESI — organization configured",
+      "f3_1_0": "",
+      "triageTime": "",
+      "f3_3_0": "",
+      "f3_4_0": "",
+      "f3_5_0": "",
+      "f3_6_0": "",
+      "f3_7_0": "",
+      "f3_8_0": "",
+      "f3_9_0": "",
+      "f3_10_0": "",
+      "f3_11_0": "Not assessed / not applicable",
+      "f4_0_0": "Not recorded",
+      "f4_1_0": "",
+      "f4_2_0": "",
+      "f4_3_0": "Not activated",
+      "f4_4_0": "",
+      "f4_5_0": "",
+      "f4_6_0": "",
+      "f4_7_0": "Not verified yet",
+      "f4_8_0": "Pregnant",
+      "f4_9_0": "",
+      "f4_10_0": "",
+      "f4_11_0": "",
+      "f4_12_0": "",
+      "f4_13_0": "",
+      "f4_14_0": "",
+      "f4_15_0": "Assessment pending",
+      "f4_16_0": "",
+      "f4_17_0": "Not required / not yet determined",
+      "areaSearch": "",
+      "f5_1_0": "",
+      "f5_2_0": "",
+      "verifyIdentity": "Pending",
+      "f6_1_0": "Not captured",
+      "mobileField": "",
+      "f6_3_0": "",
+      "f6_4_0": "",
+      "f6_5_0": "English",
+      "f6_6_0": "Not required",
+      "f6_7_0": "",
+      "f7_0_0": "",
+      "f7_1_0": "",
+      "f7_2_0": "",
+      "f7_3_0": "Not attempted",
+      "f7_4_0": "",
+      "f7_5_0": "Not applicable / pending",
+      "f7_6_0": "Standard privacy controls",
+      "f8_0_0": "Pending / clinical care continuing",
+      "f8_1_0": "",
+      "f8_2_0": "Pending",
+      "payerType": "Unknown / pending",
+      "f9_1_0": "",
+      "f9_2_0": "",
+      "f9_3_0": "Not checked",
+      "f9_4_0": "Not yet assessed",
+      "f9_5_0": "",
+      "f10_0_0": "",
+      "f10_1_0": "",
+      "f10_2_0": "",
+      "f11_0_0": "Not yet assessed",
+      "f11_1_0": "Pending",
+      "f11_2_0": "",
+      "f11_3_0": "",
+      "f12_0_0": "",
+      "f12_1_0": "",
+      "f12_2_0": "",
+      "f12_3_0": "",
+      "f12_4_0": "",
+      "f13_0_0": "",
+      "f13_1_0": "Routine ED review",
+      "f13_2_0": "",
+      "f13_3_0": "Not requested",
+      "dispoTime": "",
+      "f15_1_0": "",
+      "f15_2_0": "Decision pending",
+      "f15_3_0": "",
+      "destination": "",
+      "f16_1_0": "",
+      "f16_2_0": "Not required / self",
+      "f16_3_0": "Not applicable",
+      "f16_4_0": "Pending",
+      "f16_5_0": "",
+      "f16_6_0": "Not yet decided",
+      "departureTime": "",
+      "f17_1_0": "Active",
+      "f17_2_0": "Occupied",
+      "f17_3_0": "Pending",
+      "f17_4_0": "Pending",
+      "f17_5_0": "Pending",
+      "f17_6_0": "Pending"
+    },
+    "tools": {
+      "choices": [
+        {
+          "group": "g0",
+          "field": "arrival",
+          "label": "care.extra78",
+          "options": [
+            {
+              "value": "Walk-in",
+              "label": "registration.walkIn"
+            },
+            {
+              "value": "Ambulance",
+              "label": "care.text173"
+            },
+            {
+              "value": "Private vehicle",
+              "label": "care.extra79"
+            },
+            {
+              "value": "Facility transfer",
+              "label": "care.extra80"
+            },
+            {
+              "value": "Other",
+              "label": "template.clinical.other"
+            }
+          ]
+        },
+        {
+          "group": "g3",
+          "field": "triage",
+          "label": "care.extra81",
+          "options": [
+            {
+              "value": "1",
+              "label": "care.extra82"
+            },
+            {
+              "value": "2",
+              "label": "care.extra83"
+            },
+            {
+              "value": "3",
+              "label": "preference.option.maxVisibleToasts.3"
+            },
+            {
+              "value": "4",
+              "label": "care.extra84"
+            },
+            {
+              "value": "5",
+              "label": "preference.option.maxVisibleToasts.5"
+            }
+          ]
+        },
+        {
+          "group": "g4",
+          "field": "pathway",
+          "label": "care.extra85",
+          "options": [
+            {
+              "value": "General ED",
+              "label": "care.extra86"
+            },
+            {
+              "value": "Trauma",
+              "label": "care.extra87"
+            },
+            {
+              "value": "Pediatric",
+              "label": "care.text256"
+            },
+            {
+              "value": "Obstetric",
+              "label": "Obstetric"
+            },
+            {
+              "value": "Obstetric",
+              "label": "Obstetric"
+            },
+            {
+              "value": "Procedure",
+              "label": "registration.procedure-service"
+            },
+            {
+              "value": "Infection",
+              "label": "care.extra88"
+            }
+          ],
+          "multiple": true
+        },
+        {
+          "group": "g15",
+          "field": "disposition",
+          "label": "registration.disposition",
+          "options": [
+            {
+              "value": "Home",
+              "label": "registration.home"
+            },
+            {
+              "value": "Admission",
+              "label": "registration.admission"
+            },
+            {
+              "value": "Transfer",
+              "label": "registration.transfer"
+            },
+            {
+              "value": "Observation",
+              "label": "care.extra89"
+            },
+            {
+              "value": "Left before completion",
+              "label": "care.extra90"
+            }
+          ]
+        }
+      ],
+      "tabs": [
+        {
+          "id": "overview",
+          "label": "registration.overview"
+        },
+        {
+          "id": "nursing",
+          "label": "care.extra91"
+        },
+        {
+          "id": "medical",
+          "label": "care.extra92"
+        },
+        {
+          "id": "orders",
+          "label": "care.extra93"
+        },
+        {
+          "id": "transfer",
+          "label": "care.extra94"
+        },
+        {
+          "id": "discharge",
+          "label": "care.extra95"
+        }
+      ],
+      "dispositions": [
+        {
+          "value": "",
+          "label": "Select…"
+        },
+        {
+          "value": "Home",
+          "label": "registration.home"
+        },
+        {
+          "value": "Admission",
+          "label": "registration.admission"
+        },
+        {
+          "value": "Transfer",
+          "label": "registration.transfer"
+        },
+        {
+          "value": "Observation",
+          "label": "care.extra89"
+        },
+        {
+          "value": "Left before completion",
+          "label": "care.extra90"
+        }
+      ],
+      "orderTypes": [
+        {
+          "id": "medication",
+          "label": "care.order.medication"
+        },
+        {
+          "id": "laboratory",
+          "label": "care.order.laboratory"
+        },
+        {
+          "id": "imaging",
+          "label": "care.order.imaging"
+        },
+        {
+          "id": "procedure",
+          "label": "care.order.procedure"
+        }
+      ],
+      "patient": {
+        "id": "patient",
+        "title": "registration.patientStep",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra96",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dob",
+            "label": "template.clinical.birthDate",
+            "type": "date",
+            "span": 4
+          },
+          {
+            "id": "sex",
+            "label": "template.clinical.gender",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Female",
+                "label": "template.clinical.female"
+              },
+              {
+                "value": "Male",
+                "label": "template.clinical.male"
+              },
+              {
+                "value": "Unknown",
+                "label": "template.triage.unknown"
+              }
+            ]
+          },
+          {
+            "id": "mobile",
+            "label": "template.clinical.mobile",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      "order": {
+        "id": "order",
+        "title": "template.clinical.order",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra97",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dose",
+            "label": "template.comprehensive.dose",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "route",
+            "label": "template.comprehensive.route",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "PO",
+                "label": "care.extra98"
+              },
+              {
+                "value": "IV",
+                "label": "care.extra99"
+              },
+              {
+                "value": "IM",
+                "label": "care.extra100"
+              },
+              {
+                "value": "SC",
+                "label": "care.extra101"
+              },
+              {
+                "value": "Topical",
+                "label": "care.extra102"
+              },
+              {
+                "value": "Inhalation",
+                "label": "care.extra103"
+              }
+            ]
+          },
+          {
+            "id": "frequency",
+            "label": "template.comprehensive.frequency",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "duration",
+            "label": "template.comprehensive.duration",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "priority",
+            "label": "template.comprehensive.priority",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Routine",
+                "label": "registration.routine"
+              },
+              {
+                "value": "Urgent",
+                "label": "registration.urgent"
+              },
+              {
+                "value": "STAT",
+                "label": "care.extra104"
+              }
+            ]
+          },
+          {
+            "id": "specimen",
+            "label": "template.comprehensive.specimen",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "collection",
+            "label": "care.extra105",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "laterality",
+            "label": "template.comprehensive.laterality",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "Right",
+                "label": "preference.option.docsPosition.right"
+              },
+              {
+                "value": "Left",
+                "label": "registration.left"
+              },
+              {
+                "value": "Bilateral",
+                "label": "care.extra106"
+              }
+            ]
+          },
+          {
+            "id": "contrast",
+            "label": "care.extra107",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "No contrast",
+                "label": "care.extra108"
+              },
+              {
+                "value": "With contrast",
+                "label": "care.extra109"
+              }
+            ]
+          },
+          {
+            "id": "instructions",
+            "label": "template.comprehensive.instructions",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "indication",
+            "label": "template.comprehensive.indication",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      "configuration": {
+        "id": "configuration",
+        "title": "care.extra127",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "consultationType",
+            "label": "care.extra110",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Consultation",
+                "label": "care.extra111"
+              },
+              {
+                "value": "Specialty Consultation",
+                "label": "care.extra112"
+              },
+              {
+                "value": "Initial Assessment",
+                "label": "care.extra113"
+              },
+              {
+                "value": "Follow-up Consultation",
+                "label": "care.extra114"
+              },
+              {
+                "value": "Teleconsultation",
+                "label": "care.text446"
+              },
+              {
+                "value": "Second Opinion",
+                "label": "Second Opinion"
+              },
+              {
+                "value": "Chronic Disease Review",
+                "label": "care.extra115"
+              }
+            ]
+          },
+          {
+            "id": "specialtyTemplate",
+            "label": "care.extra116",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Medicine",
+                "label": "template.comprehensive.specialty.general"
+              },
+              {
+                "value": "Cardiology",
+                "label": "template.comprehensive.specialty.cardiology"
+              },
+              {
+                "value": "Orthopedics",
+                "label": "template.comprehensive.specialty.orthopedics"
+              },
+              {
+                "value": "Pediatrics",
+                "label": "template.comprehensive.specialty.pediatrics"
+              },
+              {
+                "value": "ENT",
+                "label": "template.comprehensive.specialty.ent"
+              }
+            ]
+          },
+          {
+            "id": "conditionTemplate",
+            "label": "care.extra117",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General / Free Entry",
+                "label": "care.extra118"
+              },
+              {
+                "value": "Fever",
+                "label": "care.extra119"
+              },
+              {
+                "value": "Chest Pain",
+                "label": "care.extra120"
+              },
+              {
+                "value": "Abdominal Pain",
+                "label": "care.extra121"
+              },
+              {
+                "value": "Headache",
+                "label": "care.extra122"
+              }
+            ]
+          },
+          {
+            "id": "patientContext",
+            "label": "care.extra123",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Standard Adult",
+                "label": "care.extra124"
+              },
+              {
+                "value": "Pediatric",
+                "label": "care.text256"
+              },
+              {
+                "value": "Geriatric",
+                "label": "care.extra125"
+              },
+              {
+                "value": "Pregnancy",
+                "label": "template.comprehensive.context.pregnancy"
+              },
+              {
+                "value": "Chronic / High Risk",
+                "label": "care.extra126"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "inpatient-admission",
+    "kind": "inpatient",
+    "title": "care.text385",
+    "steps": [
+      "care.text386",
+      "care.text387",
+      "registration.coverageStep",
+      "care.text388",
+      "care.text389"
+    ],
+    "groups": [
+      {
+        "id": "g0",
+        "title": "care.text206",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "source_ED_0",
+            "label": "care.dynamic39",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "ED"
+            }
+          },
+          {
+            "id": "source_ED_1",
+            "label": "care.dynamic40",
+            "type": "time",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "ED"
+            }
+          },
+          {
+            "id": "source_ED_2",
+            "label": "care.dynamic41",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "ED"
+            }
+          },
+          {
+            "id": "source_OP_0",
+            "label": "care.dynamic42",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "OP"
+            }
+          },
+          {
+            "id": "source_OP_1",
+            "label": "care.dynamic43",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "OP"
+            }
+          },
+          {
+            "id": "source_OP_2",
+            "label": "care.dynamic44",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "OP"
+            }
+          },
+          {
+            "id": "source_Planned_0",
+            "label": "care.dynamic45",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Planned"
+            }
+          },
+          {
+            "id": "source_Planned_1",
+            "label": "care.dynamic46",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Planned"
+            }
+          },
+          {
+            "id": "source_Planned_2",
+            "label": "care.dynamic47",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Planned"
+            },
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Complete",
+                "label": "care.text198"
+              },
+              {
+                "value": "Not required",
+                "label": "registration.not-required"
+              }
+            ]
+          },
+          {
+            "id": "source_Transfer_0",
+            "label": "care.dynamic48",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Transfer"
+            }
+          },
+          {
+            "id": "source_Transfer_1",
+            "label": "care.dynamic49",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Transfer"
+            }
+          },
+          {
+            "id": "source_Transfer_2",
+            "label": "care.text175",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Transfer"
+            },
+            "options": [
+              {
+                "value": "Ambulance",
+                "label": "care.text173"
+              },
+              {
+                "value": "Critical care transport",
+                "label": "care.dynamic50"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          },
+          {
+            "id": "source_Surgery_0",
+            "label": "care.dynamic51",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Surgery"
+            }
+          },
+          {
+            "id": "source_Surgery_1",
+            "label": "care.dynamic52",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Surgery"
+            }
+          },
+          {
+            "id": "source_Surgery_2",
+            "label": "care.dynamic53",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Surgery"
+            },
+            "options": [
+              {
+                "value": "Ward",
+                "label": "Ward"
+              },
+              {
+                "value": "HDU",
+                "label": "care.text252"
+              },
+              {
+                "value": "ICU",
+                "label": "care.text253"
+              }
+            ]
+          },
+          {
+            "id": "source_Maternity_0",
+            "label": "care.text80",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Maternity"
+            }
+          },
+          {
+            "id": "source_Maternity_1",
+            "label": "Presentation",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Maternity"
+            },
+            "options": [
+              {
+                "value": "Labor",
+                "label": "care.dynamic54"
+              },
+              {
+                "value": "Planned delivery",
+                "label": "care.dynamic55"
+              },
+              {
+                "value": "Antenatal complication",
+                "label": "care.dynamic56"
+              },
+              {
+                "value": "Postpartum",
+                "label": "care.text60"
+              }
+            ]
+          },
+          {
+            "id": "source_Maternity_2",
+            "label": "care.dynamic57",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Maternity"
+            },
+            "options": [
+              {
+                "value": "Labor & Delivery",
+                "label": "care.dynamic23"
+              },
+              {
+                "value": "Maternity Ward",
+                "label": "care.text330"
+              },
+              {
+                "value": "Obstetric assessment",
+                "label": "care.dynamic58"
+              }
+            ]
+          },
+          {
+            "id": "source_Direct_0",
+            "label": "care.dynamic59",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Direct"
+            }
+          },
+          {
+            "id": "source_Direct_1",
+            "label": "care.dynamic60",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Direct"
+            }
+          },
+          {
+            "id": "source_Direct_2",
+            "label": "care.dynamic61",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Direct"
+            }
+          },
+          {
+            "id": "source_Long-term_0",
+            "label": "care.dynamic62",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Long-term"
+            }
+          },
+          {
+            "id": "source_Long-term_1",
+            "label": "care.dynamic63",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Long-term"
+            },
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Complete",
+                "label": "care.text198"
+              }
+            ]
+          },
+          {
+            "id": "source_Long-term_2",
+            "label": "care.dynamic64",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "source",
+              "value": "Long-term"
+            },
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Yes",
+                "label": "template.clinical.yes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g1",
+        "title": "care.text215",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "id1",
+            "label": "care.text208",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "MRN",
+                "label": "template.clinical.mrn"
+              },
+              {
+                "value": "National ID",
+                "label": "care.text207"
+              },
+              {
+                "value": "Passport",
+                "label": "template.clinical.passport"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "id2",
+            "label": "care.text209",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Date of birth",
+                "label": "template.clinical.birthDate"
+              },
+              {
+                "value": "Mobile",
+                "label": "template.clinical.mobile"
+              },
+              {
+                "value": "National ID",
+                "label": "care.text207"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "verifySource",
+            "label": "care.text102",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Patient stated",
+                "label": "care.text210"
+              },
+              {
+                "value": "Government ID",
+                "label": "care.text211"
+              },
+              {
+                "value": "Existing wristband",
+                "label": "care.text212"
+              },
+              {
+                "value": "Authorized representative",
+                "label": "care.text213"
+              },
+              {
+                "value": "Sending facility documents",
+                "label": "care.text214"
+              }
+            ],
+            "required": true
+          }
+        ]
+      },
+      {
+        "id": "g2",
+        "title": "care.text230",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "admissionPriority",
+            "label": "care.text216",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Routine",
+                "label": "registration.routine"
+              },
+              {
+                "value": "Urgent",
+                "label": "registration.urgent"
+              },
+              {
+                "value": "Emergency",
+                "label": "registration.emergency"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "admissionDate",
+            "label": "care.text217",
+            "type": "date",
+            "span": 3,
+            "required": true
+          },
+          {
+            "id": "admissionTime",
+            "label": "care.text218",
+            "type": "time",
+            "span": 3
+          },
+          {
+            "id": "requestNo",
+            "label": "care.text219",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "admissionReason",
+            "label": "care.text220",
+            "type": "text",
+            "span": 6,
+            "required": true
+          },
+          {
+            "id": "provisionalDx",
+            "label": "care.text221",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "requestingClinician",
+            "label": "care.text222",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "sourceEncounter",
+            "label": "care.text223",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "expectedLos",
+            "label": "care.text229",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "template.triage.unknown"
+              },
+              {
+                "value": "< 24 hours",
+                "label": "care.text224"
+              },
+              {
+                "value": "1–2 days",
+                "label": "care.text225"
+              },
+              {
+                "value": "3–5 days",
+                "label": "care.text226"
+              },
+              {
+                "value": "6–10 days",
+                "label": "care.text227"
+              },
+              {
+                "value": "> 10 days",
+                "label": "care.text228"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g3",
+        "title": "care.text231",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "type_Medical_0",
+            "label": "care.dynamic0",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Medical"
+            },
+            "options": [
+              {
+                "value": "General Medicine",
+                "label": "template.comprehensive.specialty.general"
+              },
+              {
+                "value": "Cardiology",
+                "label": "template.comprehensive.specialty.cardiology"
+              },
+              {
+                "value": "Pulmonology",
+                "label": "template.comprehensive.specialty.pulmonology"
+              },
+              {
+                "value": "Neurology",
+                "label": "template.comprehensive.specialty.neurology"
+              },
+              {
+                "value": "Oncology",
+                "label": "template.comprehensive.specialty.oncology"
+              }
+            ]
+          },
+          {
+            "id": "type_Medical_1",
+            "label": "care.dynamic1",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Medical"
+            }
+          },
+          {
+            "id": "type_Medical_2",
+            "label": "care.dynamic2",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Medical"
+            },
+            "options": [
+              {
+                "value": "No",
+                "label": "template.clinical.no"
+              },
+              {
+                "value": "Yes",
+                "label": "template.clinical.yes"
+              },
+              {
+                "value": "To be assessed",
+                "label": "care.dynamic3"
+              }
+            ]
+          },
+          {
+            "id": "type_Surgical_0",
+            "label": "care.dynamic4",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            },
+            "options": [
+              {
+                "value": "Planned",
+                "label": "care.extra130"
+              },
+              {
+                "value": "Emergency",
+                "label": "registration.emergency"
+              }
+            ]
+          },
+          {
+            "id": "type_Surgical_1",
+            "label": "care.dynamic5",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            }
+          },
+          {
+            "id": "type_Surgical_2",
+            "label": "care.dynamic6",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            }
+          },
+          {
+            "id": "type_Surgical_3",
+            "label": "care.dynamic7",
+            "type": "date",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            }
+          },
+          {
+            "id": "type_Surgical_4",
+            "label": "care.dynamic8",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            },
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Booked",
+                "label": "registration.booked"
+              },
+              {
+                "value": "Not yet required",
+                "label": "care.dynamic9"
+              }
+            ]
+          },
+          {
+            "id": "type_Surgical_5",
+            "label": "care.dynamic10",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            },
+            "options": [
+              {
+                "value": "Ward",
+                "label": "Ward"
+              },
+              {
+                "value": "HDU",
+                "label": "care.text252"
+              },
+              {
+                "value": "ICU",
+                "label": "care.text253"
+              },
+              {
+                "value": "To be assessed",
+                "label": "care.dynamic3"
+              }
+            ]
+          },
+          {
+            "id": "type_Surgical_6",
+            "label": "care.dynamic11",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Surgical"
+            },
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Complete",
+                "label": "care.text198"
+              },
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              }
+            ]
+          },
+          {
+            "id": "type_Maternity_0",
+            "label": "care.text80",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            }
+          },
+          {
+            "id": "type_Maternity_1",
+            "label": "Gestational age",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            }
+          },
+          {
+            "id": "type_Maternity_2",
+            "label": "care.dynamic12",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            }
+          },
+          {
+            "id": "type_Maternity_3",
+            "label": "care.dynamic13",
+            "type": "date",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            }
+          },
+          {
+            "id": "type_Maternity_4",
+            "label": "care.dynamic14",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            },
+            "options": [
+              {
+                "value": "Not in labor",
+                "label": "care.dynamic15"
+              },
+              {
+                "value": "Suspected labor",
+                "label": "care.dynamic16"
+              },
+              {
+                "value": "Active labor",
+                "label": "care.dynamic17"
+              },
+              {
+                "value": "Planned induction / CS",
+                "label": "care.dynamic18"
+              }
+            ]
+          },
+          {
+            "id": "type_Maternity_5",
+            "label": "care.dynamic19",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            },
+            "options": [
+              {
+                "value": "No flag recorded",
+                "label": "care.dynamic20"
+              },
+              {
+                "value": "High risk – see obstetric record",
+                "label": "care.dynamic21"
+              }
+            ]
+          },
+          {
+            "id": "type_Maternity_6",
+            "label": "care.dynamic22",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Maternity"
+            },
+            "options": [
+              {
+                "value": "Maternity ward",
+                "label": "care.text330"
+              },
+              {
+                "value": "Labor & delivery",
+                "label": "care.dynamic23"
+              },
+              {
+                "value": "Obstetric HDU",
+                "label": "care.dynamic24"
+              }
+            ]
+          },
+          {
+            "id": "type_Long_term_Care_0",
+            "label": "care.dynamic25",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Long-term Care"
+            }
+          },
+          {
+            "id": "type_Long_term_Care_1",
+            "label": "care.dynamic26",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Long-term Care"
+            },
+            "options": [
+              {
+                "value": "Independent",
+                "label": "care.dynamic27"
+              },
+              {
+                "value": "Partially dependent",
+                "label": "care.dynamic28"
+              },
+              {
+                "value": "Dependent",
+                "label": "care.dynamic29"
+              },
+              {
+                "value": "Assess on admission",
+                "label": "care.dynamic30"
+              }
+            ]
+          },
+          {
+            "id": "type_Long_term_Care_2",
+            "label": "care.dynamic31",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Long-term Care"
+            },
+            "options": [
+              {
+                "value": "To be assessed",
+                "label": "care.dynamic3"
+              },
+              {
+                "value": "Weeks",
+                "label": "care.text392"
+              },
+              {
+                "value": "Months",
+                "label": "template.clinical.months"
+              },
+              {
+                "value": "Long-term",
+                "label": "care.extra133"
+              }
+            ]
+          },
+          {
+            "id": "type_Long_term_Care_3",
+            "label": "registration.mobility",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Long-term Care"
+            },
+            "options": [
+              {
+                "value": "Assess",
+                "label": "care.text352"
+              },
+              {
+                "value": "Ambulatory",
+                "label": "care.dynamic32"
+              },
+              {
+                "value": "Wheelchair",
+                "label": "care.text280"
+              },
+              {
+                "value": "Bedbound",
+                "label": "care.text281"
+              }
+            ]
+          },
+          {
+            "id": "type_Long_term_Care_4",
+            "label": "care.dynamic33",
+            "type": "text",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Long-term Care"
+            }
+          },
+          {
+            "id": "type_Long_term_Care_5",
+            "label": "care.dynamic34",
+            "type": "select",
+            "span": 4,
+            "visibleWhen": {
+              "field": "admissionType",
+              "value": "Long-term Care"
+            },
+            "options": [
+              {
+                "value": "Assess",
+                "label": "care.text352"
+              },
+              {
+                "value": "None identified",
+                "label": "care.dynamic35"
+              },
+              {
+                "value": "PT",
+                "label": "care.dynamic36"
+              },
+              {
+                "value": "OT",
+                "label": "care.dynamic37"
+              },
+              {
+                "value": "Multidisciplinary",
+                "label": "care.dynamic38"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g4",
+        "title": "care.text249",
+        "step": 2,
+        "tab": "",
+        "fields": [
+          {
+            "id": "specialty",
+            "label": "care.text236",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "care.text232"
+              },
+              {
+                "value": "General Medicine",
+                "label": "template.comprehensive.specialty.general"
+              },
+              {
+                "value": "Cardiology",
+                "label": "template.comprehensive.specialty.cardiology"
+              },
+              {
+                "value": "Neurology",
+                "label": "template.comprehensive.specialty.neurology"
+              },
+              {
+                "value": "Pulmonology",
+                "label": "template.comprehensive.specialty.pulmonology"
+              },
+              {
+                "value": "General Surgery",
+                "label": "care.text233"
+              },
+              {
+                "value": "Orthopedics",
+                "label": "template.comprehensive.specialty.orthopedics"
+              },
+              {
+                "value": "Obstetrics & Gynecology",
+                "label": "care.text234"
+              },
+              {
+                "value": "Pediatrics",
+                "label": "template.comprehensive.specialty.pediatrics"
+              },
+              {
+                "value": "Oncology",
+                "label": "template.comprehensive.specialty.oncology"
+              },
+              {
+                "value": "Long-term Care",
+                "label": "care.text235"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "admittingDoctor",
+            "label": "care.text237",
+            "type": "text",
+            "span": 4,
+            "required": true
+          },
+          {
+            "id": "attendingDoctor",
+            "label": "care.text238",
+            "type": "text",
+            "span": 4,
+            "required": true
+          },
+          {
+            "id": "careTeam",
+            "label": "template.clinical.careTeam",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Auto-assign from specialty",
+                "label": "care.text239"
+              },
+              {
+                "value": "Medical Team A",
+                "label": "care.text240"
+              },
+              {
+                "value": "Medical Team B",
+                "label": "care.text241"
+              },
+              {
+                "value": "Surgical Team A",
+                "label": "care.text242"
+              },
+              {
+                "value": "Obstetric Team",
+                "label": "care.text243"
+              }
+            ]
+          },
+          {
+            "id": "oncallDoctor",
+            "label": "care.text244",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "orderStatus",
+            "label": "care.text248",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Confirmed",
+                "label": "care.text245"
+              },
+              {
+                "value": "Pending co-sign",
+                "label": "care.text246"
+              },
+              {
+                "value": "Verbal / emergency order – follow-up required",
+                "label": "care.text247"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g5",
+        "title": "care.text250",
+        "step": 2,
+        "tab": "",
+        "fields": [
+          {
+            "id": "episode",
+            "label": "registration.episode",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "case",
+            "label": "care.extra136",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "referral",
+            "label": "registration.referralNumber",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      {
+        "id": "g6",
+        "title": "care.text287",
+        "step": 2,
+        "tab": "",
+        "fields": [
+          {
+            "id": "careLevel",
+            "label": "care.text257",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Ward",
+                "label": "care.text251"
+              },
+              {
+                "value": "HDU",
+                "label": "care.text252"
+              },
+              {
+                "value": "ICU",
+                "label": "care.text253"
+              },
+              {
+                "value": "Isolation",
+                "label": "care.text254"
+              },
+              {
+                "value": "Maternity",
+                "label": "care.text255"
+              },
+              {
+                "value": "Pediatric",
+                "label": "care.text256"
+              },
+              {
+                "value": "Long-term Care",
+                "label": "care.text235"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "bedClass",
+            "label": "care.text263",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Any entitled class",
+                "label": "care.text258"
+              },
+              {
+                "value": "General / shared",
+                "label": "care.text259"
+              },
+              {
+                "value": "Semi-private",
+                "label": "care.text260"
+              },
+              {
+                "value": "Private",
+                "label": "care.text261"
+              },
+              {
+                "value": "Suite",
+                "label": "care.text262"
+              }
+            ]
+          },
+          {
+            "id": "genderReq",
+            "label": "care.text266",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Auto from patient",
+                "label": "care.text264"
+              },
+              {
+                "value": "Female",
+                "label": "template.clinical.female"
+              },
+              {
+                "value": "Male",
+                "label": "template.clinical.male"
+              },
+              {
+                "value": "No gender restriction",
+                "label": "care.text265"
+              }
+            ]
+          },
+          {
+            "id": "isolationReq",
+            "label": "care.text270",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "None",
+                "label": "registration.none"
+              },
+              {
+                "value": "Contact",
+                "label": "template.clinical.contact"
+              },
+              {
+                "value": "Droplet",
+                "label": "care.text267"
+              },
+              {
+                "value": "Airborne",
+                "label": "care.text268"
+              },
+              {
+                "value": "Protective",
+                "label": "care.text269"
+              }
+            ]
+          },
+          {
+            "id": "monitorReq",
+            "label": "care.text273",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Standard",
+                "label": "template.triage.standard"
+              },
+              {
+                "value": "Telemetry",
+                "label": "care.text271"
+              },
+              {
+                "value": "Continuous monitoring",
+                "label": "care.text272"
+              }
+            ]
+          },
+          {
+            "id": "oxygenReq",
+            "label": "care.text277",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "No special requirement",
+                "label": "care.text274"
+              },
+              {
+                "value": "Wall oxygen required",
+                "label": "care.text275"
+              },
+              {
+                "value": "High-flow capable",
+                "label": "care.text276"
+              }
+            ]
+          },
+          {
+            "id": "mobilityReq",
+            "label": "registration.mobility",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Independent / standard",
+                "label": "care.text278"
+              },
+              {
+                "value": "Assistance required",
+                "label": "care.text279"
+              },
+              {
+                "value": "Wheelchair",
+                "label": "care.text280"
+              },
+              {
+                "value": "Bedbound",
+                "label": "care.text281"
+              },
+              {
+                "value": "Bariatric equipment",
+                "label": "care.text282"
+              }
+            ]
+          },
+          {
+            "id": "languageReq",
+            "label": "care.text286",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "None recorded",
+                "label": "template.clinical.noneRecorded"
+              },
+              {
+                "value": "Arabic interpreter",
+                "label": "care.text283"
+              },
+              {
+                "value": "English interpreter",
+                "label": "care.text284"
+              },
+              {
+                "value": "Sign-language support",
+                "label": "care.text285"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g7",
+        "title": "care.text293",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "payerName",
+            "label": "care.text292",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Daman",
+                "label": "field.consultation.payer.option.Daman"
+              },
+              {
+                "value": "ADNIC",
+                "label": "care.text288"
+              },
+              {
+                "value": "NextCare",
+                "label": "care.text289"
+              },
+              {
+                "value": "NAS",
+                "label": "care.text290"
+              },
+              {
+                "value": "Other payer",
+                "label": "care.text291"
+              }
+            ]
+          },
+          {
+            "id": "payerPlan",
+            "label": "template.comprehensive.panel.plan",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "memberId",
+            "label": "registration.member",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "policyExpiry",
+            "label": "registration.expiry",
+            "type": "date",
+            "span": 3
+          }
+        ]
+      },
+      {
+        "id": "g8",
+        "title": "care.text303",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "authRequired",
+            "label": "care.text295",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Yes",
+                "label": "template.clinical.yes"
+              },
+              {
+                "value": "No",
+                "label": "template.clinical.no"
+              },
+              {
+                "value": "Unknown / verify",
+                "label": "care.text294"
+              }
+            ]
+          },
+          {
+            "id": "authNo",
+            "label": "care.text296",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "approvedDays",
+            "label": "care.text297",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "authValid",
+            "label": "registration.authorizationTo",
+            "type": "date",
+            "span": 3
+          },
+          {
+            "id": "authServices",
+            "label": "care.text298",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "requestedClass",
+            "label": "care.text300",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "As per entitlement",
+                "label": "care.text299"
+              },
+              {
+                "value": "General",
+                "label": "template.clinical.general"
+              },
+              {
+                "value": "Semi-private",
+                "label": "care.text260"
+              },
+              {
+                "value": "Private",
+                "label": "care.text261"
+              }
+            ]
+          },
+          {
+            "id": "authStatus",
+            "label": "care.text302",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Approved",
+                "label": "registration.approved"
+              },
+              {
+                "value": "Partially Approved",
+                "label": "care.text301"
+              },
+              {
+                "value": "Rejected",
+                "label": "api.approval.rejected"
+              },
+              {
+                "value": "Not Required",
+                "label": "template.clinical.notRequired"
+              },
+              {
+                "value": "Expired",
+                "label": "template.clinical.expired"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g9",
+        "title": "care.text324",
+        "step": 3,
+        "tab": "",
+        "fields": [
+          {
+            "id": "patientEstimate",
+            "label": "care.text304",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "deposit",
+            "label": "care.text305",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "financialStatus",
+            "label": "care.text308",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending",
+                "label": "labels.pending"
+              },
+              {
+                "value": "Cleared",
+                "label": "Cleared"
+              },
+              {
+                "value": "Emergency / approved exception",
+                "label": "care.text306"
+              },
+              {
+                "value": "Follow-up required",
+                "label": "care.text307"
+              }
+            ]
+          },
+          {
+            "id": "guarantor",
+            "label": "care.text309",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "treatmentConsent",
+            "label": "care.text315",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Signed",
+                "label": "care.text310"
+              },
+              {
+                "value": "Valid prior consent per policy",
+                "label": "care.text311"
+              },
+              {
+                "value": "Representative signed",
+                "label": "care.text312"
+              },
+              {
+                "value": "Emergency basis documented",
+                "label": "care.text313"
+              },
+              {
+                "value": "Pending – follow-up required",
+                "label": "care.text314"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "privacyAck",
+            "label": "care.text131",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Acknowledged",
+                "label": "registration.acknowledged"
+              },
+              {
+                "value": "Previously acknowledged",
+                "label": "care.text316"
+              },
+              {
+                "value": "Provided – acknowledgement unavailable",
+                "label": "care.text317"
+              },
+              {
+                "value": "Deferred per policy",
+                "label": "care.text318"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "representative",
+            "label": "registration.representative",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f9_7_0",
+            "label": "care.text322",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Use configured default",
+                "label": "care.text319"
+              },
+              {
+                "value": "Include",
+                "label": "care.text320"
+              },
+              {
+                "value": "Do not disclose",
+                "label": "care.text321"
+              }
+            ]
+          },
+          {
+            "id": "f9_8_0",
+            "label": "template.clinical.preferredLanguage",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "English",
+                "label": "registration.English"
+              },
+              {
+                "value": "Arabic",
+                "label": "registration.Arabic"
+              },
+              {
+                "value": "Malayalam",
+                "label": "registration.Malayalam"
+              },
+              {
+                "value": "Hindi",
+                "label": "registration.Hindi"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          },
+          {
+            "id": "f9_9_0",
+            "label": "care.text323",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      {
+        "id": "g10",
+        "title": "care.text333",
+        "step": 4,
+        "tab": "",
+        "fields": [
+          {
+            "id": "bedFacility",
+            "label": "care.text34",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Abu Dhabi Hospital",
+                "label": "care.text325"
+              }
+            ]
+          },
+          {
+            "id": "wardFilter",
+            "label": "Ward",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "care.text326"
+              },
+              {
+                "value": "Medical Ward A",
+                "label": "care.text327"
+              },
+              {
+                "value": "Cardiac Ward",
+                "label": "care.text328"
+              },
+              {
+                "value": "Surgical Ward B",
+                "label": "care.text329"
+              },
+              {
+                "value": "Maternity Ward",
+                "label": "care.text330"
+              },
+              {
+                "value": "Isolation Unit",
+                "label": "care.text331"
+              },
+              {
+                "value": "Long-term Care",
+                "label": "care.text235"
+              }
+            ]
+          },
+          {
+            "id": "bedClassFilter",
+            "label": "care.text332",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "care.text258"
+              },
+              {
+                "value": "General",
+                "label": "template.clinical.general"
+              },
+              {
+                "value": "Semi-private",
+                "label": "care.text260"
+              },
+              {
+                "value": "Private",
+                "label": "care.text261"
+              }
+            ]
+          },
+          {
+            "id": "bedStatusFilter",
+            "label": "devices.status",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Available",
+                "label": "template.available"
+              },
+              {
+                "value": "All",
+                "label": "template.all"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g11",
+        "title": "care.text340",
+        "step": 4,
+        "tab": "",
+        "fields": [
+          {
+            "id": "finalWard",
+            "label": "Ward",
+            "type": "text",
+            "span": 3,
+            "required": true,
+            "readOnly": true
+          },
+          {
+            "id": "finalRoom",
+            "label": "care.text334",
+            "type": "text",
+            "span": 3,
+            "required": true,
+            "readOnly": true
+          },
+          {
+            "id": "finalBed",
+            "label": "care.text335",
+            "type": "text",
+            "span": 3,
+            "required": true,
+            "readOnly": true
+          },
+          {
+            "id": "finalBedStatus",
+            "label": "care.text336",
+            "type": "text",
+            "span": 3,
+            "readOnly": true
+          },
+          {
+            "id": "supportNote",
+            "label": "care.text337",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "receivingNurse",
+            "label": "care.text338",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "handoverTime",
+            "label": "care.text339",
+            "type": "time",
+            "span": 3
+          }
+        ]
+      },
+      {
+        "id": "g12",
+        "title": "care.text347",
+        "step": 5,
+        "tab": "",
+        "fields": [
+          {
+            "id": "finalIdentity",
+            "label": "care.text96",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Two identifiers verified",
+                "label": "care.text93"
+              },
+              {
+                "value": "Unidentified patient workflow",
+                "label": "care.text341"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "finalBedConfirm",
+            "label": "care.text344",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Reserved and accepted",
+                "label": "care.text342"
+              },
+              {
+                "value": "Approved clinical exception documented",
+                "label": "care.text343"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "instructionAck",
+            "label": "care.text345",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "",
+                "label": "registration.select"
+              },
+              {
+                "value": "Yes",
+                "label": "template.clinical.yes"
+              }
+            ],
+            "required": true
+          },
+          {
+            "id": "overrideReason",
+            "label": "care.text346",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      {
+        "id": "g13",
+        "title": "care.text348",
+        "step": 1,
+        "tab": "overview",
+        "fields": []
+      },
+      {
+        "id": "g14",
+        "title": "care.text358",
+        "step": 1,
+        "tab": "nursing",
+        "fields": [
+          {
+            "id": "f14_0_0",
+            "label": "care.text146",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Unknown – assess",
+                "label": "care.text349"
+              },
+              {
+                "value": "No known allergies",
+                "label": "care.text350"
+              },
+              {
+                "value": "Known allergies",
+                "label": "care.text351"
+              }
+            ]
+          },
+          {
+            "id": "f14_1_0",
+            "label": "template.triage.pain",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f14_2_0",
+            "label": "care.text353",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Assess",
+                "label": "care.text352"
+              },
+              {
+                "value": "Low",
+                "label": "template.comprehensive.level1"
+              },
+              {
+                "value": "Moderate",
+                "label": "template.comprehensive.level2"
+              },
+              {
+                "value": "High",
+                "label": "template.comprehensive.level3"
+              }
+            ]
+          },
+          {
+            "id": "f14_3_0",
+            "label": "care.text355",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Assess",
+                "label": "care.text352"
+              },
+              {
+                "value": "Low",
+                "label": "template.comprehensive.level1"
+              },
+              {
+                "value": "At risk",
+                "label": "care.text354"
+              }
+            ]
+          },
+          {
+            "id": "f14_4_0",
+            "label": "care.text356",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "f14_5_0",
+            "label": "care.text357",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      {
+        "id": "g15",
+        "title": "care.text367",
+        "step": 1,
+        "tab": "medical",
+        "fields": [
+          {
+            "id": "f15_0_0",
+            "label": "care.text359",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "f15_1_0",
+            "label": "care.text360",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "postConsultant",
+            "label": "care.text361",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "edd",
+            "label": "care.text362",
+            "type": "date",
+            "span": 4
+          },
+          {
+            "id": "f15_4_0",
+            "label": "care.text366",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Current level appropriate",
+                "label": "care.text363"
+              },
+              {
+                "value": "Escalate to HDU/ICU",
+                "label": "care.text364"
+              },
+              {
+                "value": "Step-down when criteria met",
+                "label": "care.text365"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "g16",
+        "title": "care.text368",
+        "step": 1,
+        "tab": "orders",
+        "fields": []
+      },
+      {
+        "id": "g17",
+        "title": "care.text375",
+        "step": 1,
+        "tab": "transfer",
+        "fields": [
+          {
+            "id": "f17_0_0",
+            "label": "care.text373",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Bed to bed",
+                "label": "care.text369"
+              },
+              {
+                "value": "Ward transfer",
+                "label": "care.text370"
+              },
+              {
+                "value": "ICU/HDU escalation",
+                "label": "care.text371"
+              },
+              {
+                "value": "Specialty transfer",
+                "label": "care.text372"
+              }
+            ]
+          },
+          {
+            "id": "f17_1_0",
+            "label": "template.field.destination",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f17_2_0",
+            "label": "registration.reasonText",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f17_3_0",
+            "label": "care.text374",
+            "type": "text",
+            "span": 3
+          }
+        ]
+      },
+      {
+        "id": "g18",
+        "title": "care.text384",
+        "step": 1,
+        "tab": "discharge",
+        "fields": [
+          {
+            "id": "f18_0_0",
+            "label": "care.text362",
+            "type": "date",
+            "span": 3
+          },
+          {
+            "id": "f18_1_0",
+            "label": "care.text379",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Home",
+                "label": "registration.home"
+              },
+              {
+                "value": "Home with services",
+                "label": "care.text376"
+              },
+              {
+                "value": "Another facility",
+                "label": "care.text377"
+              },
+              {
+                "value": "Long-term care",
+                "label": "care.text378"
+              },
+              {
+                "value": "Other",
+                "label": "template.clinical.other"
+              }
+            ]
+          },
+          {
+            "id": "f18_2_0",
+            "label": "care.text381",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Pending reconciliation",
+                "label": "care.text380"
+              },
+              {
+                "value": "Ready",
+                "label": "labels.ready"
+              }
+            ]
+          },
+          {
+            "id": "f18_3_0",
+            "label": "care.text308",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "In progress",
+                "label": "registration.active"
+              },
+              {
+                "value": "Ready",
+                "label": "labels.ready"
+              }
+            ]
+          },
+          {
+            "id": "f18_4_0",
+            "label": "care.text382",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "f18_5_0",
+            "label": "care.text383",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      }
+    ],
+    "defaults": {
+      "id1": "",
+      "id2": "",
+      "verifySource": "",
+      "admissionPriority": "Routine",
+      "admissionDate": "",
+      "admissionTime": "",
+      "requestNo": "",
+      "admissionReason": "",
+      "provisionalDx": "",
+      "requestingClinician": "",
+      "sourceEncounter": "",
+      "expectedLos": "",
+      "specialty": "",
+      "admittingDoctor": "",
+      "attendingDoctor": "",
+      "careTeam": "Auto-assign from specialty",
+      "oncallDoctor": "",
+      "orderStatus": "Confirmed",
+      "careLevel": "General Ward",
+      "bedClass": "Any entitled class",
+      "genderReq": "Auto from patient",
+      "isolationReq": "None",
+      "monitorReq": "Standard",
+      "oxygenReq": "No special requirement",
+      "mobilityReq": "Independent / standard",
+      "languageReq": "None recorded",
+      "payerName": "Daman",
+      "payerPlan": "",
+      "memberId": "",
+      "policyExpiry": "",
+      "authRequired": "Yes",
+      "authNo": "",
+      "approvedDays": "",
+      "authValid": "",
+      "authServices": "",
+      "requestedClass": "As per entitlement",
+      "authStatus": "Pending",
+      "patientEstimate": "",
+      "deposit": "",
+      "financialStatus": "Pending",
+      "guarantor": "",
+      "treatmentConsent": "",
+      "privacyAck": "",
+      "representative": "",
+      "f9_7_0": "Use configured default",
+      "f9_8_0": "English",
+      "f9_9_0": "",
+      "bedFacility": "Abu Dhabi Hospital",
+      "wardFilter": "",
+      "bedClassFilter": "",
+      "bedStatusFilter": "Available",
+      "finalWard": "",
+      "finalRoom": "",
+      "finalBed": "",
+      "finalBedStatus": "",
+      "supportNote": "",
+      "receivingNurse": "",
+      "handoverTime": "",
+      "finalIdentity": "",
+      "finalBedConfirm": "",
+      "instructionAck": "",
+      "overrideReason": "",
+      "f14_0_0": "Unknown – assess",
+      "f14_1_0": "",
+      "f14_2_0": "Assess",
+      "f14_3_0": "Assess",
+      "f14_4_0": "",
+      "f14_5_0": "",
+      "f15_0_0": "",
+      "f15_1_0": "",
+      "postConsultant": "",
+      "edd": "",
+      "f15_4_0": "Current level appropriate",
+      "f17_0_0": "Bed to bed",
+      "f17_1_0": "",
+      "f17_2_0": "",
+      "f17_3_0": "",
+      "f18_0_0": "",
+      "f18_1_0": "Home",
+      "f18_2_0": "Pending reconciliation",
+      "f18_3_0": "In progress",
+      "f18_4_0": "",
+      "f18_5_0": ""
+    },
+    "tools": {
+      "choices": [
+        {
+          "group": "g0",
+          "field": "source",
+          "label": "care.text206",
+          "options": [
+            {
+              "value": "ED",
+              "label": "care.extra128"
+            },
+            {
+              "value": "OP",
+              "label": "care.extra129"
+            },
+            {
+              "value": "Planned",
+              "label": "care.extra130"
+            },
+            {
+              "value": "Transfer",
+              "label": "registration.transfer"
+            },
+            {
+              "value": "Surgery",
+              "label": "care.extra131"
+            },
+            {
+              "value": "Maternity",
+              "label": "care.text255"
+            },
+            {
+              "value": "Direct",
+              "label": "care.extra132"
+            },
+            {
+              "value": "Long-term",
+              "label": "care.extra133"
+            }
+          ]
+        },
+        {
+          "group": "g3",
+          "field": "admissionType",
+          "label": "care.text231",
+          "options": [
+            {
+              "value": "Medical",
+              "label": "care.extra134"
+            },
+            {
+              "value": "Surgical",
+              "label": "care.extra135"
+            },
+            {
+              "value": "Maternity",
+              "label": "care.text255"
+            },
+            {
+              "value": "Long-term Care",
+              "label": "care.text235"
+            }
+          ]
+        }
+      ],
+      "tabs": [
+        {
+          "id": "overview",
+          "label": "registration.overview"
+        },
+        {
+          "id": "nursing",
+          "label": "care.extra91"
+        },
+        {
+          "id": "medical",
+          "label": "care.extra92"
+        },
+        {
+          "id": "orders",
+          "label": "care.extra93"
+        },
+        {
+          "id": "transfer",
+          "label": "care.extra94"
+        },
+        {
+          "id": "discharge",
+          "label": "care.extra95"
+        }
+      ],
+      "dispositions": [
+        {
+          "value": "",
+          "label": "Select…"
+        },
+        {
+          "value": "Home",
+          "label": "registration.home"
+        },
+        {
+          "value": "Admission",
+          "label": "registration.admission"
+        },
+        {
+          "value": "Transfer",
+          "label": "registration.transfer"
+        },
+        {
+          "value": "Observation",
+          "label": "care.extra89"
+        },
+        {
+          "value": "Left before completion",
+          "label": "care.extra90"
+        }
+      ],
+      "orderTypes": [
+        {
+          "id": "medication",
+          "label": "care.order.medication"
+        },
+        {
+          "id": "laboratory",
+          "label": "care.order.laboratory"
+        },
+        {
+          "id": "imaging",
+          "label": "care.order.imaging"
+        },
+        {
+          "id": "procedure",
+          "label": "care.order.procedure"
+        }
+      ],
+      "patient": {
+        "id": "patient",
+        "title": "registration.patientStep",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra96",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dob",
+            "label": "template.clinical.birthDate",
+            "type": "date",
+            "span": 4
+          },
+          {
+            "id": "sex",
+            "label": "template.clinical.gender",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Female",
+                "label": "template.clinical.female"
+              },
+              {
+                "value": "Male",
+                "label": "template.clinical.male"
+              },
+              {
+                "value": "Unknown",
+                "label": "template.triage.unknown"
+              }
+            ]
+          },
+          {
+            "id": "mobile",
+            "label": "template.clinical.mobile",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      "order": {
+        "id": "order",
+        "title": "template.clinical.order",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra97",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dose",
+            "label": "template.comprehensive.dose",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "route",
+            "label": "template.comprehensive.route",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "PO",
+                "label": "care.extra98"
+              },
+              {
+                "value": "IV",
+                "label": "care.extra99"
+              },
+              {
+                "value": "IM",
+                "label": "care.extra100"
+              },
+              {
+                "value": "SC",
+                "label": "care.extra101"
+              },
+              {
+                "value": "Topical",
+                "label": "care.extra102"
+              },
+              {
+                "value": "Inhalation",
+                "label": "care.extra103"
+              }
+            ]
+          },
+          {
+            "id": "frequency",
+            "label": "template.comprehensive.frequency",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "duration",
+            "label": "template.comprehensive.duration",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "priority",
+            "label": "template.comprehensive.priority",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Routine",
+                "label": "registration.routine"
+              },
+              {
+                "value": "Urgent",
+                "label": "registration.urgent"
+              },
+              {
+                "value": "STAT",
+                "label": "care.extra104"
+              }
+            ]
+          },
+          {
+            "id": "specimen",
+            "label": "template.comprehensive.specimen",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "collection",
+            "label": "care.extra105",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "laterality",
+            "label": "template.comprehensive.laterality",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "Right",
+                "label": "preference.option.docsPosition.right"
+              },
+              {
+                "value": "Left",
+                "label": "registration.left"
+              },
+              {
+                "value": "Bilateral",
+                "label": "care.extra106"
+              }
+            ]
+          },
+          {
+            "id": "contrast",
+            "label": "care.extra107",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "No contrast",
+                "label": "care.extra108"
+              },
+              {
+                "value": "With contrast",
+                "label": "care.extra109"
+              }
+            ]
+          },
+          {
+            "id": "instructions",
+            "label": "template.comprehensive.instructions",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "indication",
+            "label": "template.comprehensive.indication",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      "configuration": {
+        "id": "configuration",
+        "title": "care.extra127",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "consultationType",
+            "label": "care.extra110",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Consultation",
+                "label": "care.extra111"
+              },
+              {
+                "value": "Specialty Consultation",
+                "label": "care.extra112"
+              },
+              {
+                "value": "Initial Assessment",
+                "label": "care.extra113"
+              },
+              {
+                "value": "Follow-up Consultation",
+                "label": "care.extra114"
+              },
+              {
+                "value": "Teleconsultation",
+                "label": "care.text446"
+              },
+              {
+                "value": "Second Opinion",
+                "label": "Second Opinion"
+              },
+              {
+                "value": "Chronic Disease Review",
+                "label": "care.extra115"
+              }
+            ]
+          },
+          {
+            "id": "specialtyTemplate",
+            "label": "care.extra116",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Medicine",
+                "label": "template.comprehensive.specialty.general"
+              },
+              {
+                "value": "Cardiology",
+                "label": "template.comprehensive.specialty.cardiology"
+              },
+              {
+                "value": "Orthopedics",
+                "label": "template.comprehensive.specialty.orthopedics"
+              },
+              {
+                "value": "Pediatrics",
+                "label": "template.comprehensive.specialty.pediatrics"
+              },
+              {
+                "value": "ENT",
+                "label": "template.comprehensive.specialty.ent"
+              }
+            ]
+          },
+          {
+            "id": "conditionTemplate",
+            "label": "care.extra117",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General / Free Entry",
+                "label": "care.extra118"
+              },
+              {
+                "value": "Fever",
+                "label": "care.extra119"
+              },
+              {
+                "value": "Chest Pain",
+                "label": "care.extra120"
+              },
+              {
+                "value": "Abdominal Pain",
+                "label": "care.extra121"
+              },
+              {
+                "value": "Headache",
+                "label": "care.extra122"
+              }
+            ]
+          },
+          {
+            "id": "patientContext",
+            "label": "care.extra123",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Standard Adult",
+                "label": "care.extra124"
+              },
+              {
+                "value": "Pediatric",
+                "label": "care.text256"
+              },
+              {
+                "value": "Geriatric",
+                "label": "care.extra125"
+              },
+              {
+                "value": "Pregnancy",
+                "label": "template.comprehensive.context.pregnancy"
+              },
+              {
+                "value": "Chronic / High Risk",
+                "label": "care.extra126"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "consultation-entry-design",
+    "kind": "consultation",
+    "title": "care.text449",
+    "steps": [],
+    "groups": [
+      {
+        "id": "complaint",
+        "title": "care.text390",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f0_0_0",
+            "label": "care.text390",
+            "type": "text",
+            "span": 8,
+            "required": true
+          },
+          {
+            "id": "f0_1_0",
+            "label": "template.comprehensive.duration",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f0_1_1",
+            "label": "template.comprehensive.duration",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Days",
+                "label": "template.clinical.days"
+              },
+              {
+                "value": "Hours",
+                "label": "care.text391"
+              },
+              {
+                "value": "Weeks",
+                "label": "care.text392"
+              }
+            ]
+          },
+          {
+            "id": "associated",
+            "label": "care.extra137",
+            "type": "text",
+            "span": 4
+          }
+        ],
+        "navigationLabel": "care.text390"
+      },
+      {
+        "id": "hpi",
+        "title": "care.text407",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f1_0_0",
+            "label": "care.text395",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Acute",
+                "label": "care.text393"
+              },
+              {
+                "value": "Gradual",
+                "label": "care.text394"
+              }
+            ]
+          },
+          {
+            "id": "f1_1_0",
+            "label": "care.text399",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Intermittent",
+                "label": "care.text396"
+              },
+              {
+                "value": "Continuous",
+                "label": "care.text397"
+              },
+              {
+                "value": "Progressive",
+                "label": "care.text398"
+              }
+            ]
+          },
+          {
+            "id": "f1_2_0",
+            "label": "care.text402",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Mild",
+                "label": "care.text400"
+              },
+              {
+                "value": "Moderate",
+                "label": "template.comprehensive.level2"
+              },
+              {
+                "value": "Severe",
+                "label": "care.text401"
+              }
+            ]
+          },
+          {
+            "id": "f1_3_0",
+            "label": "care.text403",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "No",
+                "label": "template.clinical.no"
+              },
+              {
+                "value": "Yes",
+                "label": "template.clinical.yes"
+              }
+            ]
+          },
+          {
+            "id": "f1_4_0",
+            "label": "care.text404",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f1_5_0",
+            "label": "care.text405",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f1_6_0",
+            "label": "care.text406",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          }
+        ],
+        "navigationLabel": "care.text407"
+      },
+      {
+        "id": "ros",
+        "title": "care.text416",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f2_0_0",
+            "label": "care.text410",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Fever, fatigue",
+                "label": "care.text408"
+              },
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              }
+            ]
+          },
+          {
+            "id": "f2_1_0",
+            "label": "Cardiovascular",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_2_0",
+            "label": "Respiratory",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_3_0",
+            "label": "care.text412",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_4_0",
+            "label": "care.text413",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_5_0",
+            "label": "care.text415",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Myalgia",
+                "label": "care.text414"
+              },
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              }
+            ]
+          }
+        ],
+        "navigationLabel": "care.text416"
+      },
+      {
+        "id": "exam",
+        "title": "care.text430",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f3_0_0",
+            "label": "care.text420",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Comfortable, alert",
+                "label": "care.text417"
+              },
+              {
+                "value": "Ill-looking",
+                "label": "care.text418"
+              },
+              {
+                "value": "Distressed",
+                "label": "care.text419"
+              }
+            ]
+          },
+          {
+            "id": "f3_1_0",
+            "label": "Hydration",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Adequate",
+                "label": "care.text421"
+              },
+              {
+                "value": "Mild dehydration",
+                "label": "care.text422"
+              },
+              {
+                "value": "Dehydrated",
+                "label": "care.text423"
+              }
+            ]
+          },
+          {
+            "id": "f3_2_0",
+            "label": "care.text426",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Alert & oriented",
+                "label": "care.text424"
+              },
+              {
+                "value": "Altered",
+                "label": "care.text425"
+              }
+            ]
+          },
+          {
+            "id": "f3_3_0",
+            "label": "Cardiovascular",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_4_0",
+            "label": "Respiratory",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_5_0",
+            "label": "care.text427",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_6_0",
+            "label": "care.text428",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_7_0",
+            "label": "care.text429",
+            "type": "textarea",
+            "span": 12
+          }
+        ],
+        "navigationLabel": "Examination"
+      },
+      {
+        "id": "diagnosis",
+        "title": "care.text436",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f4_0_0",
+            "label": "care.text431",
+            "type": "text",
+            "span": 6,
+            "required": true
+          },
+          {
+            "id": "f4_1_0",
+            "label": "care.text434",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "ICD-10",
+                "label": "care.text432"
+              },
+              {
+                "value": "SNOMED CT",
+                "label": "care.text433"
+              }
+            ]
+          },
+          {
+            "id": "f4_2_0",
+            "label": "template.comprehensive.code",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f4_3_0",
+            "label": "care.text435",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          },
+          {
+            "id": "differential",
+            "label": "care.extra138",
+            "type": "text",
+            "span": 4
+          }
+        ],
+        "navigationLabel": "Diagnosis"
+      },
+      {
+        "id": "plan",
+        "title": "care.text438",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f5_0_0",
+            "label": "care.text437",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          }
+        ],
+        "navigationLabel": "care.text438"
+      },
+      {
+        "id": "followup",
+        "title": "care.text448",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f6_0_0",
+            "label": "care.text439",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          },
+          {
+            "id": "f6_1_0",
+            "label": "Follow-up",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "As needed",
+                "label": "care.text440"
+              },
+              {
+                "value": "24 hours",
+                "label": "care.text441"
+              },
+              {
+                "value": "48 hours",
+                "label": "care.text442"
+              },
+              {
+                "value": "3 days",
+                "label": "care.text443"
+              },
+              {
+                "value": "1 week",
+                "label": "care.text444"
+              }
+            ]
+          },
+          {
+            "id": "f6_1_1",
+            "label": "Follow-up",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Clinic",
+                "label": "care.text445"
+              },
+              {
+                "value": "Teleconsultation",
+                "label": "care.text446"
+              },
+              {
+                "value": "Phone",
+                "label": "template.clinical.phone"
+              }
+            ]
+          },
+          {
+            "id": "f6_2_0",
+            "label": "care.text447",
+            "type": "textarea",
+            "span": 12
+          }
+        ],
+        "navigationLabel": "Follow-up"
+      }
+    ],
+    "defaults": {
+      "f0_0_0": "",
+      "f0_1_0": "",
+      "f0_1_1": "Days",
+      "f1_0_0": "Acute",
+      "f1_1_0": "Intermittent",
+      "f1_2_0": "Mild",
+      "f1_3_0": "No",
+      "f1_4_0": "",
+      "f1_5_0": "",
+      "f1_6_0": "",
+      "f2_0_0": "Fever, fatigue",
+      "f2_1_0": "Normal / Negative",
+      "f2_2_0": "Normal / Negative",
+      "f2_3_0": "Normal / Negative",
+      "f2_4_0": "Normal / Negative",
+      "f2_5_0": "Myalgia",
+      "f3_0_0": "Comfortable, alert",
+      "f3_1_0": "Adequate",
+      "f3_2_0": "Alert & oriented",
+      "f3_3_0": "",
+      "f3_4_0": "",
+      "f3_5_0": "",
+      "f3_6_0": "",
+      "f3_7_0": "",
+      "f4_0_0": "",
+      "f4_1_0": "ICD-10",
+      "f4_2_0": "",
+      "f4_3_0": "",
+      "f5_0_0": "",
+      "f6_0_0": "",
+      "f6_1_0": "As needed",
+      "f6_1_1": "Clinic",
+      "f6_2_0": ""
+    },
+    "tools": {
+      "choices": [],
+      "tabs": [
+        {
+          "id": "overview",
+          "label": "registration.overview"
+        },
+        {
+          "id": "nursing",
+          "label": "care.extra91"
+        },
+        {
+          "id": "medical",
+          "label": "care.extra92"
+        },
+        {
+          "id": "orders",
+          "label": "care.extra93"
+        },
+        {
+          "id": "transfer",
+          "label": "care.extra94"
+        },
+        {
+          "id": "discharge",
+          "label": "care.extra95"
+        }
+      ],
+      "dispositions": [
+        {
+          "value": "",
+          "label": "Select…"
+        },
+        {
+          "value": "Home",
+          "label": "registration.home"
+        },
+        {
+          "value": "Admission",
+          "label": "registration.admission"
+        },
+        {
+          "value": "Transfer",
+          "label": "registration.transfer"
+        },
+        {
+          "value": "Observation",
+          "label": "care.extra89"
+        },
+        {
+          "value": "Left before completion",
+          "label": "care.extra90"
+        }
+      ],
+      "orderTypes": [
+        {
+          "id": "medication",
+          "label": "care.order.medication"
+        },
+        {
+          "id": "laboratory",
+          "label": "care.order.laboratory"
+        },
+        {
+          "id": "imaging",
+          "label": "care.order.imaging"
+        },
+        {
+          "id": "procedure",
+          "label": "care.order.procedure"
+        }
+      ],
+      "patient": {
+        "id": "patient",
+        "title": "registration.patientStep",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra96",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dob",
+            "label": "template.clinical.birthDate",
+            "type": "date",
+            "span": 4
+          },
+          {
+            "id": "sex",
+            "label": "template.clinical.gender",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Female",
+                "label": "template.clinical.female"
+              },
+              {
+                "value": "Male",
+                "label": "template.clinical.male"
+              },
+              {
+                "value": "Unknown",
+                "label": "template.triage.unknown"
+              }
+            ]
+          },
+          {
+            "id": "mobile",
+            "label": "template.clinical.mobile",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      "order": {
+        "id": "order",
+        "title": "template.clinical.order",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra97",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dose",
+            "label": "template.comprehensive.dose",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "route",
+            "label": "template.comprehensive.route",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "PO",
+                "label": "care.extra98"
+              },
+              {
+                "value": "IV",
+                "label": "care.extra99"
+              },
+              {
+                "value": "IM",
+                "label": "care.extra100"
+              },
+              {
+                "value": "SC",
+                "label": "care.extra101"
+              },
+              {
+                "value": "Topical",
+                "label": "care.extra102"
+              },
+              {
+                "value": "Inhalation",
+                "label": "care.extra103"
+              }
+            ]
+          },
+          {
+            "id": "frequency",
+            "label": "template.comprehensive.frequency",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "duration",
+            "label": "template.comprehensive.duration",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "priority",
+            "label": "template.comprehensive.priority",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Routine",
+                "label": "registration.routine"
+              },
+              {
+                "value": "Urgent",
+                "label": "registration.urgent"
+              },
+              {
+                "value": "STAT",
+                "label": "care.extra104"
+              }
+            ]
+          },
+          {
+            "id": "specimen",
+            "label": "template.comprehensive.specimen",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "collection",
+            "label": "care.extra105",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "laterality",
+            "label": "template.comprehensive.laterality",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "Right",
+                "label": "preference.option.docsPosition.right"
+              },
+              {
+                "value": "Left",
+                "label": "registration.left"
+              },
+              {
+                "value": "Bilateral",
+                "label": "care.extra106"
+              }
+            ]
+          },
+          {
+            "id": "contrast",
+            "label": "care.extra107",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "No contrast",
+                "label": "care.extra108"
+              },
+              {
+                "value": "With contrast",
+                "label": "care.extra109"
+              }
+            ]
+          },
+          {
+            "id": "instructions",
+            "label": "template.comprehensive.instructions",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "indication",
+            "label": "template.comprehensive.indication",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      "configuration": {
+        "id": "configuration",
+        "title": "care.configuration",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "consultationType",
+            "label": "care.extra110",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Consultation",
+                "label": "care.extra111"
+              },
+              {
+                "value": "Specialty Consultation",
+                "label": "care.extra112"
+              },
+              {
+                "value": "Initial Assessment",
+                "label": "care.extra113"
+              },
+              {
+                "value": "Follow-up Consultation",
+                "label": "care.extra114"
+              },
+              {
+                "value": "Teleconsultation",
+                "label": "care.text446"
+              },
+              {
+                "value": "Second Opinion",
+                "label": "Second Opinion"
+              },
+              {
+                "value": "Chronic Disease Review",
+                "label": "care.extra115"
+              }
+            ]
+          },
+          {
+            "id": "specialtyTemplate",
+            "label": "care.extra116",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Medicine",
+                "label": "template.comprehensive.specialty.general"
+              },
+              {
+                "value": "Cardiology",
+                "label": "template.comprehensive.specialty.cardiology"
+              },
+              {
+                "value": "Orthopedics",
+                "label": "template.comprehensive.specialty.orthopedics"
+              },
+              {
+                "value": "Pediatrics",
+                "label": "template.comprehensive.specialty.pediatrics"
+              },
+              {
+                "value": "ENT",
+                "label": "template.comprehensive.specialty.ent"
+              }
+            ]
+          },
+          {
+            "id": "conditionTemplate",
+            "label": "care.extra117",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General / Free Entry",
+                "label": "care.extra118"
+              },
+              {
+                "value": "Fever",
+                "label": "care.extra119"
+              },
+              {
+                "value": "Chest Pain",
+                "label": "care.extra120"
+              },
+              {
+                "value": "Abdominal Pain",
+                "label": "care.extra121"
+              },
+              {
+                "value": "Headache",
+                "label": "care.extra122"
+              }
+            ]
+          },
+          {
+            "id": "patientContext",
+            "label": "care.extra123",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Standard Adult",
+                "label": "care.extra124"
+              },
+              {
+                "value": "Pediatric",
+                "label": "care.text256"
+              },
+              {
+                "value": "Geriatric",
+                "label": "care.extra125"
+              },
+              {
+                "value": "Pregnancy",
+                "label": "template.comprehensive.context.pregnancy"
+              },
+              {
+                "value": "Chronic / High Risk",
+                "label": "care.extra126"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "consultation-entry-v2",
+    "kind": "consultation",
+    "title": "care.text450",
+    "steps": [],
+    "groups": [
+      {
+        "id": "complaint",
+        "title": "care.text390",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f0_0_0",
+            "label": "care.text390",
+            "type": "text",
+            "span": 8,
+            "required": true
+          },
+          {
+            "id": "f0_1_0",
+            "label": "template.comprehensive.duration",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "f0_1_1",
+            "label": "template.comprehensive.duration",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Days",
+                "label": "template.clinical.days"
+              },
+              {
+                "value": "Hours",
+                "label": "care.text391"
+              },
+              {
+                "value": "Weeks",
+                "label": "care.text392"
+              }
+            ]
+          },
+          {
+            "id": "associated",
+            "label": "care.extra137",
+            "type": "text",
+            "span": 4
+          }
+        ],
+        "navigationLabel": "care.text390"
+      },
+      {
+        "id": "hpi",
+        "title": "care.text407",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f1_0_0",
+            "label": "care.text395",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Acute",
+                "label": "care.text393"
+              },
+              {
+                "value": "Gradual",
+                "label": "care.text394"
+              }
+            ]
+          },
+          {
+            "id": "f1_1_0",
+            "label": "care.text399",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Intermittent",
+                "label": "care.text396"
+              },
+              {
+                "value": "Continuous",
+                "label": "care.text397"
+              },
+              {
+                "value": "Progressive",
+                "label": "care.text398"
+              }
+            ]
+          },
+          {
+            "id": "f1_2_0",
+            "label": "care.text402",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Mild",
+                "label": "care.text400"
+              },
+              {
+                "value": "Moderate",
+                "label": "template.comprehensive.level2"
+              },
+              {
+                "value": "Severe",
+                "label": "care.text401"
+              }
+            ]
+          },
+          {
+            "id": "f1_3_0",
+            "label": "care.text403",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "No",
+                "label": "template.clinical.no"
+              },
+              {
+                "value": "Yes",
+                "label": "template.clinical.yes"
+              }
+            ]
+          },
+          {
+            "id": "f1_4_0",
+            "label": "care.text404",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f1_5_0",
+            "label": "care.text405",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f1_6_0",
+            "label": "care.text406",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          }
+        ],
+        "navigationLabel": "care.text407"
+      },
+      {
+        "id": "ros",
+        "title": "care.text416",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f2_0_0",
+            "label": "care.text410",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Fever, fatigue",
+                "label": "care.text408"
+              },
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              }
+            ]
+          },
+          {
+            "id": "f2_1_0",
+            "label": "Cardiovascular",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_2_0",
+            "label": "Respiratory",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_3_0",
+            "label": "care.text412",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_4_0",
+            "label": "care.text413",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              },
+              {
+                "value": "Abnormal",
+                "label": "care.text411"
+              }
+            ]
+          },
+          {
+            "id": "f2_5_0",
+            "label": "care.text415",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Myalgia",
+                "label": "care.text414"
+              },
+              {
+                "value": "Normal / Negative",
+                "label": "care.text409"
+              }
+            ]
+          }
+        ],
+        "navigationLabel": "care.text416"
+      },
+      {
+        "id": "exam",
+        "title": "care.text430",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f3_0_0",
+            "label": "care.text420",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Comfortable, alert",
+                "label": "care.text417"
+              },
+              {
+                "value": "Ill-looking",
+                "label": "care.text418"
+              },
+              {
+                "value": "Distressed",
+                "label": "care.text419"
+              }
+            ]
+          },
+          {
+            "id": "f3_1_0",
+            "label": "Hydration",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Adequate",
+                "label": "care.text421"
+              },
+              {
+                "value": "Mild dehydration",
+                "label": "care.text422"
+              },
+              {
+                "value": "Dehydrated",
+                "label": "care.text423"
+              }
+            ]
+          },
+          {
+            "id": "f3_2_0",
+            "label": "care.text426",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Alert & oriented",
+                "label": "care.text424"
+              },
+              {
+                "value": "Altered",
+                "label": "care.text425"
+              }
+            ]
+          },
+          {
+            "id": "f3_3_0",
+            "label": "Cardiovascular",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_4_0",
+            "label": "Respiratory",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_5_0",
+            "label": "care.text427",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_6_0",
+            "label": "care.text428",
+            "type": "text",
+            "span": 6
+          },
+          {
+            "id": "f3_7_0",
+            "label": "care.text429",
+            "type": "textarea",
+            "span": 12
+          }
+        ],
+        "navigationLabel": "Examination"
+      },
+      {
+        "id": "diagnosis",
+        "title": "care.text436",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f4_0_0",
+            "label": "care.text431",
+            "type": "text",
+            "span": 6,
+            "required": true
+          },
+          {
+            "id": "f4_1_0",
+            "label": "care.text434",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "ICD-10",
+                "label": "care.text432"
+              },
+              {
+                "value": "SNOMED CT",
+                "label": "care.text433"
+              }
+            ]
+          },
+          {
+            "id": "f4_2_0",
+            "label": "template.comprehensive.code",
+            "type": "text",
+            "span": 3
+          },
+          {
+            "id": "f4_3_0",
+            "label": "care.text435",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          },
+          {
+            "id": "differential",
+            "label": "care.extra138",
+            "type": "text",
+            "span": 4
+          }
+        ],
+        "navigationLabel": "Diagnosis"
+      },
+      {
+        "id": "plan",
+        "title": "care.text438",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f5_0_0",
+            "label": "care.text437",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          }
+        ],
+        "navigationLabel": "care.text438"
+      },
+      {
+        "id": "followup",
+        "title": "care.text448",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "f6_0_0",
+            "label": "care.text439",
+            "type": "textarea",
+            "span": 12,
+            "required": true
+          },
+          {
+            "id": "f6_1_0",
+            "label": "Follow-up",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "As needed",
+                "label": "care.text440"
+              },
+              {
+                "value": "24 hours",
+                "label": "care.text441"
+              },
+              {
+                "value": "48 hours",
+                "label": "care.text442"
+              },
+              {
+                "value": "3 days",
+                "label": "care.text443"
+              },
+              {
+                "value": "1 week",
+                "label": "care.text444"
+              }
+            ]
+          },
+          {
+            "id": "f6_1_1",
+            "label": "Follow-up",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Clinic",
+                "label": "care.text445"
+              },
+              {
+                "value": "Teleconsultation",
+                "label": "care.text446"
+              },
+              {
+                "value": "Phone",
+                "label": "template.clinical.phone"
+              }
+            ]
+          },
+          {
+            "id": "f6_2_0",
+            "label": "care.text447",
+            "type": "textarea",
+            "span": 12
+          }
+        ],
+        "navigationLabel": "Follow-up"
+      }
+    ],
+    "defaults": {
+      "f0_0_0": "",
+      "f0_1_0": "",
+      "f0_1_1": "Days",
+      "f1_0_0": "Acute",
+      "f1_1_0": "Intermittent",
+      "f1_2_0": "Mild",
+      "f1_3_0": "No",
+      "f1_4_0": "",
+      "f1_5_0": "",
+      "f1_6_0": "",
+      "f2_0_0": "Fever, fatigue",
+      "f2_1_0": "Normal / Negative",
+      "f2_2_0": "Normal / Negative",
+      "f2_3_0": "Normal / Negative",
+      "f2_4_0": "Normal / Negative",
+      "f2_5_0": "Myalgia",
+      "f3_0_0": "Comfortable, alert",
+      "f3_1_0": "Adequate",
+      "f3_2_0": "Alert & oriented",
+      "f3_3_0": "",
+      "f3_4_0": "",
+      "f3_5_0": "",
+      "f3_6_0": "",
+      "f3_7_0": "",
+      "f4_0_0": "",
+      "f4_1_0": "ICD-10",
+      "f4_2_0": "",
+      "f4_3_0": "",
+      "f5_0_0": "",
+      "f6_0_0": "",
+      "f6_1_0": "As needed",
+      "f6_1_1": "Clinic",
+      "f6_2_0": ""
+    },
+    "ordersEnabled": true,
+    "tools": {
+      "choices": [],
+      "tabs": [
+        {
+          "id": "overview",
+          "label": "registration.overview"
+        },
+        {
+          "id": "nursing",
+          "label": "care.extra91"
+        },
+        {
+          "id": "medical",
+          "label": "care.extra92"
+        },
+        {
+          "id": "orders",
+          "label": "care.extra93"
+        },
+        {
+          "id": "transfer",
+          "label": "care.extra94"
+        },
+        {
+          "id": "discharge",
+          "label": "care.extra95"
+        }
+      ],
+      "dispositions": [
+        {
+          "value": "",
+          "label": "Select…"
+        },
+        {
+          "value": "Home",
+          "label": "registration.home"
+        },
+        {
+          "value": "Admission",
+          "label": "registration.admission"
+        },
+        {
+          "value": "Transfer",
+          "label": "registration.transfer"
+        },
+        {
+          "value": "Observation",
+          "label": "care.extra89"
+        },
+        {
+          "value": "Left before completion",
+          "label": "care.extra90"
+        }
+      ],
+      "orderTypes": [
+        {
+          "id": "medication",
+          "label": "care.order.medication"
+        },
+        {
+          "id": "laboratory",
+          "label": "care.order.laboratory"
+        },
+        {
+          "id": "imaging",
+          "label": "care.order.imaging"
+        },
+        {
+          "id": "procedure",
+          "label": "care.order.procedure"
+        }
+      ],
+      "patient": {
+        "id": "patient",
+        "title": "registration.patientStep",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra96",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dob",
+            "label": "template.clinical.birthDate",
+            "type": "date",
+            "span": 4
+          },
+          {
+            "id": "sex",
+            "label": "template.clinical.gender",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Female",
+                "label": "template.clinical.female"
+              },
+              {
+                "value": "Male",
+                "label": "template.clinical.male"
+              },
+              {
+                "value": "Unknown",
+                "label": "template.triage.unknown"
+              }
+            ]
+          },
+          {
+            "id": "mobile",
+            "label": "template.clinical.mobile",
+            "type": "text",
+            "span": 4
+          }
+        ]
+      },
+      "order": {
+        "id": "order",
+        "title": "template.clinical.order",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "name",
+            "label": "care.extra97",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "dose",
+            "label": "template.comprehensive.dose",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "route",
+            "label": "template.comprehensive.route",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "PO",
+                "label": "care.extra98"
+              },
+              {
+                "value": "IV",
+                "label": "care.extra99"
+              },
+              {
+                "value": "IM",
+                "label": "care.extra100"
+              },
+              {
+                "value": "SC",
+                "label": "care.extra101"
+              },
+              {
+                "value": "Topical",
+                "label": "care.extra102"
+              },
+              {
+                "value": "Inhalation",
+                "label": "care.extra103"
+              }
+            ]
+          },
+          {
+            "id": "frequency",
+            "label": "template.comprehensive.frequency",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "duration",
+            "label": "template.comprehensive.duration",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "priority",
+            "label": "template.comprehensive.priority",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Routine",
+                "label": "registration.routine"
+              },
+              {
+                "value": "Urgent",
+                "label": "registration.urgent"
+              },
+              {
+                "value": "STAT",
+                "label": "care.extra104"
+              }
+            ]
+          },
+          {
+            "id": "specimen",
+            "label": "template.comprehensive.specimen",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "collection",
+            "label": "care.extra105",
+            "type": "text",
+            "span": 4
+          },
+          {
+            "id": "laterality",
+            "label": "template.comprehensive.laterality",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "Right",
+                "label": "preference.option.docsPosition.right"
+              },
+              {
+                "value": "Left",
+                "label": "registration.left"
+              },
+              {
+                "value": "Bilateral",
+                "label": "care.extra106"
+              }
+            ]
+          },
+          {
+            "id": "contrast",
+            "label": "care.extra107",
+            "type": "select",
+            "span": 4,
+            "options": [
+              {
+                "value": "Not applicable",
+                "label": "care.text176"
+              },
+              {
+                "value": "No contrast",
+                "label": "care.extra108"
+              },
+              {
+                "value": "With contrast",
+                "label": "care.extra109"
+              }
+            ]
+          },
+          {
+            "id": "instructions",
+            "label": "template.comprehensive.instructions",
+            "type": "textarea",
+            "span": 12
+          },
+          {
+            "id": "indication",
+            "label": "template.comprehensive.indication",
+            "type": "textarea",
+            "span": 12
+          }
+        ]
+      },
+      "configuration": {
+        "id": "configuration",
+        "title": "care.configuration",
+        "step": 1,
+        "tab": "",
+        "fields": [
+          {
+            "id": "consultationType",
+            "label": "care.extra110",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Consultation",
+                "label": "care.extra111"
+              },
+              {
+                "value": "Specialty Consultation",
+                "label": "care.extra112"
+              },
+              {
+                "value": "Initial Assessment",
+                "label": "care.extra113"
+              },
+              {
+                "value": "Follow-up Consultation",
+                "label": "care.extra114"
+              },
+              {
+                "value": "Teleconsultation",
+                "label": "care.text446"
+              },
+              {
+                "value": "Second Opinion",
+                "label": "Second Opinion"
+              },
+              {
+                "value": "Chronic Disease Review",
+                "label": "care.extra115"
+              }
+            ]
+          },
+          {
+            "id": "specialtyTemplate",
+            "label": "care.extra116",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General Medicine",
+                "label": "template.comprehensive.specialty.general"
+              },
+              {
+                "value": "Cardiology",
+                "label": "template.comprehensive.specialty.cardiology"
+              },
+              {
+                "value": "Orthopedics",
+                "label": "template.comprehensive.specialty.orthopedics"
+              },
+              {
+                "value": "Pediatrics",
+                "label": "template.comprehensive.specialty.pediatrics"
+              },
+              {
+                "value": "ENT",
+                "label": "template.comprehensive.specialty.ent"
+              }
+            ]
+          },
+          {
+            "id": "conditionTemplate",
+            "label": "care.extra117",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "General / Free Entry",
+                "label": "care.extra118"
+              },
+              {
+                "value": "Fever",
+                "label": "care.extra119"
+              },
+              {
+                "value": "Chest Pain",
+                "label": "care.extra120"
+              },
+              {
+                "value": "Abdominal Pain",
+                "label": "care.extra121"
+              },
+              {
+                "value": "Headache",
+                "label": "care.extra122"
+              }
+            ]
+          },
+          {
+            "id": "patientContext",
+            "label": "care.extra123",
+            "type": "select",
+            "span": 3,
+            "options": [
+              {
+                "value": "Standard Adult",
+                "label": "care.extra124"
+              },
+              {
+                "value": "Pediatric",
+                "label": "care.text256"
+              },
+              {
+                "value": "Geriatric",
+                "label": "care.extra125"
+              },
+              {
+                "value": "Pregnancy",
+                "label": "template.comprehensive.context.pregnancy"
+              },
+              {
+                "value": "Chronic / High Risk",
+                "label": "care.extra126"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

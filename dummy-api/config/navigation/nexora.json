@@ -1569,6 +1569,26 @@
       "id": "patient-biometric-verification",
       "titleKey": "identity.patient-biometric-verification",
       "subtitleKey": "identity.notice"
+    },
+    {
+      "id": "emergency-registration",
+      "titleKey": "care.text202",
+      "subtitleKey": "care.apiHint"
+    },
+    {
+      "id": "inpatient-admission",
+      "titleKey": "care.text385",
+      "subtitleKey": "care.apiHint"
+    },
+    {
+      "id": "consultation-entry-design",
+      "titleKey": "care.text449",
+      "subtitleKey": "care.apiHint"
+    },
+    {
+      "id": "consultation-entry-v2",
+      "titleKey": "care.text450",
+      "subtitleKey": "care.apiHint"
     }
   ],
   "nodes": [
@@ -5105,6 +5125,42 @@
       "pageId": "patient-biometric-verification",
       "icon": "Tags",
       "order": 5
+    },
+    {
+      "id": "menu.library.emergency-registration",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "care.text202",
+      "pageId": "emergency-registration",
+      "icon": "BookOpen",
+      "order": 10
+    },
+    {
+      "id": "menu.library.inpatient-admission",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "care.text385",
+      "pageId": "inpatient-admission",
+      "icon": "BookOpen",
+      "order": 11
+    },
+    {
+      "id": "menu.library.consultation-entry-design",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "care.text449",
+      "pageId": "consultation-entry-design",
+      "icon": "BookOpen",
+      "order": 12
+    },
+    {
+      "id": "menu.library.consultation-entry-v2",
+      "kind": "page",
+      "parentId": "section.library.clinical-templates",
+      "labelKey": "care.text450",
+      "pageId": "consultation-entry-v2",
+      "icon": "BookOpen",
+      "order": 13
     }
   ]
 }

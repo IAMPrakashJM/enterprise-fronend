@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {createCarePageStore} from './care-page-store.mjs';
 import {createIdentityStore} from './identity-device-store.mjs';
 import {createDeviceStore} from './device-integration-store.mjs';
 import {createLabelStore} from './label-printing-store.mjs';
@@ -119,6 +120,7 @@ const DATA_DIR = process.env.NEXORA_DATA_DIR ?? join(dirname(fileURLToPath(impor
 const clinicalTemplates=createClinicalTemplateStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-templates.csv"));
 const clinicalTriage=createClinicalTriageStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-triage.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
 const clinicalConsultation=createClinicalConsultationStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,"clinical-consultation.csv"),(user,product,id)=>clinicalTemplates.handle(user,product,{action:"overview",id},false));
+const carePages=createCarePageStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'care-pages.csv'));
 const identityDevices=createIdentityStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'identity-devices.csv'));
 const deviceIntegrations=createDeviceStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'device-integrations.csv'));
 const labelPrinting=createLabelStore(join(process.env.RECORD_DATA_DIR ?? DATA_DIR,'label-printing.csv'));
@@ -938,6 +940,16 @@ const server = createServer(async (req, res) => {
     catch{return send(res,500,{error:'template.consultation.storage'});}
   }
 
+  if(pathname==="/care-pages"){
+    const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"care.denied"});
+    if(req.method!=="POST")return send(res,405,{error:"care.invalid"});
+    const product=req.headers['x-product-id']??'nexora',nav=applicationConfig.navigation(user,product);
+    if(nav.status!==200)return send(res,nav.status,{error:nav.error});
+    const input=await readJson(req,262144).catch(()=>null);
+    if(sessions.get(token)!==user)return send(res,401,{error:"care.denied"});
+    if(!nav.body.pages.some(p=>p.id===input?.pageId))return send(res,403,{error:'care.denied'});
+    try{const result=carePages.handle(user,product,input);return send(res,result.status,result.body,{'Cache-Control':'no-store'});}catch{return send(res,500,{error:'care.storage'});}
+  }
   if(pathname==="/identity-devices"){
     const token=bearer(req),user=sessions.get(token);if(!user)return send(res,401,{error:"identity.denied"});
     if(req.method!=="POST")return send(res,405,{error:"identity.invalid"});

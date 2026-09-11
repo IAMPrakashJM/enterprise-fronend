@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseId": "2026-09-10-identity-devices",
+  "releaseId": "2026-09-10-care-pages",
   "registeredPages": [
     "accessibility",
     "admission-worklist",
@@ -1153,12 +1153,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-screens/src/index.ts": {
-      "sha256": "c583aabed6ca563650904ffd6bedb348ee421d4b200efb1cff92b1deb6dac3c6",
+      "sha256": "335615924e436a6bff3b29f37f568b8d942296267b327682cfb44aef4c499ec3",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Added four API-backed healthcare reference pages with authored guides, shared field/step/rail components and new language catalogs; existing OP registration remains available."
     },
     "desktop-clients/packages/erp-screens/src/library/catalog.ts": {
       "sha256": "099fbed06b72ad61e8b042dc4bc9c6533d66ec6d525b196193cb13e62da29543",
@@ -1185,12 +1185,12 @@
       "reason": "Pre-commit review: normalize CSV line endings without changing values; index ScannerInput in the existing form-controls TextDemo and show a focused Enter scan updating the local search example. Existing form help and device scan instructions remain applicable; no API or device behavior changes."
     },
     "desktop-clients/packages/erp-screens/src/library/index.tsx": {
-      "sha256": "61cefe1fdb1d9ff850befd3d2f5fc3d9676f8fca3e6664bb0abaf9e793e03d34",
+      "sha256": "3d64d604eac9f2ca151719527e56e80d3d5a85e3d018cb94108b6501589013da",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Reviewed fixed-height desktop workspace so patient context and bottom actions remain visible; catalog examples use the public API and preference host."
     },
     "desktop-clients/packages/erp-screens/src/library/reference-pages.tsx": {
       "sha256": "49c92c24ff64c5d66c65c973105a466477545c82021491d80a58fe0320a56976",
@@ -1268,15 +1268,12 @@
       "reason": "Catalog guides use the API even when a newly registered page has no bundled TypeScript example; source-missing message still applies to code."
     },
     "desktop-clients/packages/erp-screens/src/page-library/resources.ts": {
-      "sha256": "6e44455b883168178481aa75b5b4792fbbc554b68b88c53b1773bacc5a8b36be",
+      "sha256": "bc023e2d70b1e119d4463bae0357dc6b7afbc8147329f797ec56ee2645c5252c",
       "pages": [
         "list-of-pages"
       ],
-      "disposition": "updated",
-      "reason": "OP Registration and the catalog/print guides describe this implementation. These receipts record source impact, not human approval.",
-      "guideHashes": {
-        "list-of-pages": "b36ce4156fb57fd0a4536e2917d86e2cd2dce8ab411f3cbfdab78c7e8e8255ab"
-      }
+      "disposition": "no-content-impact",
+      "reason": "Reviewed four healthcare reference page implementations, error recovery, navigation collision avoidance, language catalogs and related authored help."
     },
     "desktop-clients/packages/erp-screens/src/page-renderer.tsx": {
       "sha256": "d2556e9918e961ee5ad3144912c9db94494b12ffd7909b149104aadcb3568d58",
@@ -1839,12 +1836,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-config/src/clinical-templates.ts": {
-      "sha256": "6edbd0b9e17f4abf776dd8d61858ecc73bac659f836998710113cab222604a2e",
+      "sha256": "07d7b060325c9b099998f951868e678a38c2b04052bf5e061f5f7d54fdbc7fbd",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Add OP Registration with an authored API guide; existing page behavior remains unchanged except the catalog entry and shared draft-policy scrubbing."
+      "reason": "Reviewed four healthcare reference page implementations, error recovery, navigation collision avoidance, language catalogs and related authored help."
     },
     "desktop-clients/packages/erp-config/src/clinical-triage.ts": {
       "sha256": "99f1dbd59f5191028507504a633788ef18c46b9cf59b77eaf1026c85aaaf34f0",
@@ -1879,12 +1876,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-config/src/documentation.ts": {
-      "sha256": "e5a2410486fd7d23e8fac3edf424922581a8bf466c6ea82f9266b80345e4c80e",
+      "sha256": "f35a056e19aeebf4c660d66d451d2be3d39239dff1f16d0262fad709669320a4",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Added four API-backed healthcare reference pages with authored guides, shared field/step/rail components and new language catalogs; existing OP registration remains available."
     },
     "desktop-clients/packages/erp-config/src/draft-policy.ts": {
       "sha256": "168ead6d7a776b03cff9c2d280261a3f13d59a284ac80203c4df73fad797511e",
@@ -1967,12 +1964,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-config/src/index.ts": {
-      "sha256": "17a930e521e28821c9c53c52eeb448d57b84d8d27f81471153f98397fc5b71cd",
+      "sha256": "3603b389b90bbb277f0f3aaa6ebfc03ae3d9c0c4282d162d7652ef8ec18725aa",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Added four API-backed healthcare reference pages with authored guides, shared field/step/rail components and new language catalogs; existing OP registration remains available."
     },
     "desktop-clients/packages/erp-config/src/library-pages.ts": {
       "sha256": "da62bda428b1736e6cbcb01d0b10f8e78944a12f0798896027e9e85f5e77d5e3",
@@ -1991,12 +1988,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-config/src/navigation.ts": {
-      "sha256": "2ec54ad9bc84dc41f3859e7daa291b549c561381d577393ea49a16f75a03064f",
+      "sha256": "aa06da594da18c801f1258e30476dc99f0486da28fdc53f7b12945a3cfb27826",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Reviewed four healthcare reference page implementations, error recovery, navigation collision avoidance, language catalogs and related authored help."
     },
     "desktop-clients/packages/erp-config/src/page-templates.ts": {
       "sha256": "1ab6ec44bf8cd4f7bdecc73084ea6c50bab4a5f115e04009ade85a60a7a2485f",
@@ -2135,12 +2132,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-data/src/index.ts": {
-      "sha256": "176a5d1fb4c40afd7623b4147444e10d93a86916b8dae9fc7eff8654929cc436",
+      "sha256": "78b8a9409a830b0650a74087770815858d69a1d7a39878b50ce115e35647ee0d",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Added four API-backed healthcare reference pages with authored guides, shared field/step/rail components and new language catalogs; existing OP registration remains available."
     },
     "desktop-clients/packages/erp-data/src/mock.ts": {
       "sha256": "a3593ead408944273f7d72db41c40727301ec47e606eebf2ea1c639e5b214690",
@@ -2671,12 +2668,12 @@
       "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
     },
     "dummy-api/server.mjs": {
-      "sha256": "6fd534ca561c2049eb35f55489548224cd05db3c572d883dc1a93c040b4afc48",
+      "sha256": "28f988c10c9ef3c0093400c749820a5ea0e730e102540598e8dd438016bb77a7",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Reviewed four healthcare reference page implementations, error recovery, navigation collision avoidance, language catalogs and related authored help."
     },
     "dummy-api/speech-gateway.mjs": {
       "sha256": "12b5c8b3d677bc5c4084f06811db90e8beae36380abc6e7bfc65cb2daad36a9f",
@@ -2695,36 +2692,36 @@
       "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
     },
     "dummy-api/config/localization/shared/en.json": {
-      "sha256": "ee04c27f4960f0a3e9e19d0b0a0575e00795a349112bd2fa97ec1585dac8dda9",
+      "sha256": "cb430228e378c3dba508600b33d539c7851117d8a61a9a6322a5aecca4c99f4f",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
     },
     "dummy-api/config/localization/shared/ar.json": {
-      "sha256": "dddccf85466fac675282f1dc24aa98a4d3c9c004eab537bb5027e7a9d47d9cdf",
+      "sha256": "6151b6a8387eee6f62174d1c166ddf5a683939be7ac3ab77a592de8d8c6e7110",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
     },
     "dummy-api/config/localization/shared/hi.json": {
-      "sha256": "f68d60c092a46fd580df24dc021e2e061c448d5d50e7cb5980cc07943c8e1a6e",
+      "sha256": "2e515564cbcb3d9fd8cba35ab0d683cdf4531f384e51da2a8db54ea86990e452",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
     },
     "dummy-api/config/localization/shared/ml.json": {
-      "sha256": "558e49478b389a71e160684252d74fdc6398083f46d76654a7193694b94d82f0",
+      "sha256": "07693bbdd9c84218de95571c949fec34d72bd5d26bad886046052443d25e1fb4",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
     },
     "dummy-api/config/navigation/ledger.json": {
       "sha256": "189589dfe58cfef879089e8d19e466e31cfa66e2d9b813c8c167314fe1ef38b5",
@@ -2735,12 +2732,12 @@
       "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
     },
     "dummy-api/config/navigation/nexora.json": {
-      "sha256": "201708099bcc996987e5a1068751f44c110f36d32ddd1717e893c92d6d1dab6c",
+      "sha256": "41c5b725f332590de45c94709157bc6a3350de33df4044cdf8abb205fc2158b3",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "Identity device guides cover selected-patient binding, synthetic-only outcomes, policy and SDK boundaries"
+      "reason": "Reviewed four healthcare reference page implementations, error recovery, navigation collision avoidance, language catalogs and related authored help."
     },
     "desktop-clients/packages/erp-screens/src/op-registration/action-dialog.tsx": {
       "sha256": "a0eb22e87c71f2c8ca912ab20a416c74ed12b7fc9b07a7c23d1f97c716637209",
@@ -3183,7 +3180,11 @@
         "device-automation": "66a85aab967661634b581b0d060f988338d5a9027b8854d07a37a2cf2b3912ef",
         "identity-card-readers": "df02d1a7aa551fe6e453289870fc315eb91f6c04324944eacc28787e12ec46b6",
         "passport-scanner": "4683ffd81bbcd5880bb79041a56fd5f6562570a4965f706f267bb2087a0e5941",
-        "patient-biometric-verification": "ca733a57d5ae15379861075288c32ac5f5df35929aa72970210c1d9ed3bc86bd"
+        "patient-biometric-verification": "ca733a57d5ae15379861075288c32ac5f5df35929aa72970210c1d9ed3bc86bd",
+        "emergency-registration": "1ba888520dcc1237dd267c6f2f782e04686bb9a9d06c471f60387aa9c8481412",
+        "inpatient-admission": "aca8b12c3128853446567ad0ef7135ab5e88684b0b7b3c7d35a44d96c9457dfc",
+        "consultation-entry-v2": "788ec16cfd76c2175ad9be32b072f3517ada1478f94c526a92259fe71e2a70dc",
+        "consultation-entry-design": "f2572162ead6a0ed5a48ce5d1f68089b88c9c4e03f19838f3c5140fe8a52c555"
       }
     },
     "dummy-api/op-registration-store.ts": {
@@ -3650,6 +3651,70 @@
         "passport-scanner": "4683ffd81bbcd5880bb79041a56fd5f6562570a4965f706f267bb2087a0e5941",
         "patient-biometric-verification": "ca733a57d5ae15379861075288c32ac5f5df35929aa72970210c1d9ed3bc86bd"
       }
+    },
+    "desktop-clients/packages/erp-screens/src/care-pages/care.module.css": {
+      "sha256": "98897bf87fd31408ebb7b08725f15e8d91f659e0cbc8157891cad6feee382be8",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Reviewed fixed-height desktop workspace so patient context and bottom actions remain visible; catalog examples use the public API and preference host."
+    },
+    "desktop-clients/packages/erp-screens/src/care-pages/care.module.css.d.ts": {
+      "sha256": "0890ba105f89eb3184d950e5fc60d84613d66628992a7ceedd856013f456f96b",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Reviewed fixed-height desktop workspace so patient context and bottom actions remain visible; catalog examples use the public API and preference host."
+    },
+    "desktop-clients/packages/erp-screens/src/care-pages/components.tsx": {
+      "sha256": "95fbca80eec61384d0a271aafc6fb17a35351188912bd870b10e8c1616140e67",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
+    },
+    "desktop-clients/packages/erp-screens/src/care-pages/library-page.tsx": {
+      "sha256": "b45802738b8143477c2b22713a35c6adecc26bdfdbe16a00fff5f939bf6158b4",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Reviewed fixed-height desktop workspace so patient context and bottom actions remain visible; catalog examples use the public API and preference host."
+    },
+    "desktop-clients/packages/erp-screens/src/care-pages/workspace.tsx": {
+      "sha256": "dd25054a68480d01db4151228be1f5f6ef31ef181f3c87edb34adea233e8940a",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
+    },
+    "desktop-clients/packages/erp-config/src/care-pages.ts": {
+      "sha256": "d7899dfbf10e06703e9f36c13c5ceb289edf8c3cb6377069fbe006531eb9c725",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Completed conditional emergency pathways and source/type-specific inpatient fields from the reference HTML using shared field controls; all labels translated in canonical catalogs."
+    },
+    "desktop-clients/packages/erp-data/src/care-pages.ts": {
+      "sha256": "36dc277efe215d39376154eee05311b311a5d54e491425b7045441d4c2c25605",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Reviewed fixed-height desktop workspace so patient context and bottom actions remain visible; catalog examples use the public API and preference host."
+    },
+    "dummy-api/care-page-store.mjs": {
+      "sha256": "6583b94be42f1405657747c3f7b5e6d00bc992a637aaa4bb15669dfa8db032d1",
+      "pages": [
+        "*"
+      ],
+      "disposition": "no-content-impact",
+      "reason": "Reviewed conditional source/type and multi-pathway forms; final server checks preserve signed originals, require distinct inpatient identifiers and keep beds occupied after clinical completion."
     }
   }
 }

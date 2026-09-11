@@ -21,3 +21,4 @@ export * from './op-registration';
 export * from './label-printing';
 export * from './device-integrations';
 export * from './identity-devices';
+export * from './care-pages';

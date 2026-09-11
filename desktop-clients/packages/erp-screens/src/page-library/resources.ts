@@ -49,3 +49,22 @@ export const PAGE_LIBRARY_RESOURCES: Record<string, PageLibraryResource> = {
     demo: "template.clinical.demoNotice",
   },
 };
+
+Object.assign(PAGE_LIBRARY_RESOURCES, {
+  "emergency-registration": {
+    "source": "import React from 'react';\nimport {CareWorkspace,type PreferenceHost} from '@pepbits/erp-screens';\nimport {createCareAdapter} from '@pepbits/erp-data';\nexport function Page({request,productId,scopeKey,...host}:PreferenceHost & {request:(path:string,init?:RequestInit)=>Promise<Response>;productId:string;scopeKey:string}) {\n const adapter=React.useMemo(()=>createCareAdapter(request,productId),[request,productId]);\n return <CareWorkspace pageId=\"emergency-registration\" adapter={adapter} scopeKey={scopeKey} {...host}/>;\n}\n",
+    "demo": "care.synthetic"
+  },
+  "inpatient-admission": {
+    "source": "import React from 'react';\nimport {CareWorkspace,type PreferenceHost} from '@pepbits/erp-screens';\nimport {createCareAdapter} from '@pepbits/erp-data';\nexport function Page({request,productId,scopeKey,...host}:PreferenceHost & {request:(path:string,init?:RequestInit)=>Promise<Response>;productId:string;scopeKey:string}) {\n const adapter=React.useMemo(()=>createCareAdapter(request,productId),[request,productId]);\n return <CareWorkspace pageId=\"inpatient-admission\" adapter={adapter} scopeKey={scopeKey} {...host}/>;\n}\n",
+    "demo": "care.synthetic"
+  },
+  "consultation-entry-design": {
+    "source": "import React from 'react';\nimport {CareWorkspace,type PreferenceHost} from '@pepbits/erp-screens';\nimport {createCareAdapter} from '@pepbits/erp-data';\nexport function Page({request,productId,scopeKey,...host}:PreferenceHost & {request:(path:string,init?:RequestInit)=>Promise<Response>;productId:string;scopeKey:string}) {\n const adapter=React.useMemo(()=>createCareAdapter(request,productId),[request,productId]);\n return <CareWorkspace pageId=\"consultation-entry-design\" adapter={adapter} scopeKey={scopeKey} {...host}/>;\n}\n",
+    "demo": "care.synthetic"
+  },
+  "consultation-entry-v2": {
+    "source": "import React from 'react';\nimport {CareWorkspace,type PreferenceHost} from '@pepbits/erp-screens';\nimport {createCareAdapter} from '@pepbits/erp-data';\nexport function Page({request,productId,scopeKey,...host}:PreferenceHost & {request:(path:string,init?:RequestInit)=>Promise<Response>;productId:string;scopeKey:string}) {\n const adapter=React.useMemo(()=>createCareAdapter(request,productId),[request,productId]);\n return <CareWorkspace pageId=\"consultation-entry-v2\" adapter={adapter} scopeKey={scopeKey} {...host}/>;\n}\n",
+    "demo": "care.synthetic"
+  }
+});
