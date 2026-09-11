@@ -1,5 +1,7 @@
 # Current delivery and release records
 
+Latest activation: [DCP visual designer — 11 September 2026](dcp-designer-deployment-2026-09-11.md), verified on both demo sites. Remote CI has a documented historical evidence-link failure.
+
 Status reviewed **11 September 2026**. The latest recorded frontend demo release is `20260910173632033-48931d24`, deployed to both public sites. Its [healthcare page deployment record](care-page-deployment-2026-09-10.md) contains source identity, API restart, live checks and rollback instructions.
 
 Latest documentation follow-up: [Authored-guide translations and Jira connection review](documentation-translation-review-2026-09-11.md). Catalog changes are not yet deployed.
