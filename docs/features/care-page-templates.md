@@ -40,4 +40,4 @@ These are reusable frontend pages with working demo API records. No actual payer
 
 ## Verification
 
-See the [delivery record](../releases/unreleased/care-page-templates-2026-09-10.md), [testing guide](../testing/README.md) and `CARE-01` in [acceptance cases](../testing/v1.0.0/USE-CASES.md). Recorded checks distinguish local source tests, isolated API browser tests and deployment. No deployment is included in this change request.
+See the [delivery record](../releases/unreleased/care-page-templates-2026-09-10.md), [testing guide](../testing/README.md) and `CARE-01` in [acceptance cases](../testing/v1.0.0/USE-CASES.md). Recorded checks distinguish local source tests, isolated API browser tests and deployment. The subsequent [10 September deployment record](../releases/unreleased/care-page-deployment-2026-09-10.md) records release `20260910173632033-48931d24` on both demo sites. Its live checks cover authenticated loading and layout; write workflows were checked against the isolated API, not by creating records on the public sites.

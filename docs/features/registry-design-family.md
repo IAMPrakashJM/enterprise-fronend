@@ -1,6 +1,6 @@
 # Registry design family
 
-The approved Patient Registry and Patient Master designs are the reference for this additional reusable desktop template set. The new templates are available in **Library → Page Template Library → Registry design family**. The original pages and existing template routes remain available.
+The approved Patient Registry and Patient Master designs are the reference for this additional reusable desktop template set. The new templates are available in **Library → Page Template Library TEMP → Registry design family**. The original pages and existing template routes remain available.
 
 | Page | Route | Working demonstration |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Current delivery and release records
 
-Status reviewed **11 September 2026**. The latest frontend demo release is `20260910173632033-48931d24`, deployed to both public sites. Its [healthcare page deployment record](care-page-deployment-2026-09-10.md) contains source identity, API restart, live checks and rollback instructions.
+Status reviewed **11 September 2026**. The latest recorded frontend demo release is `20260910173632033-48931d24`, deployed to both public sites. Its [healthcare page deployment record](care-page-deployment-2026-09-10.md) contains source identity, API restart, live checks and rollback instructions.
 
 ## Current state
 
@@ -8,6 +8,7 @@ Status reviewed **11 September 2026**. The latest frontend demo release is `2026
 | --- | --- |
 | Latest implementation | [Healthcare reference pages](care-page-templates-2026-09-10.md): four additive pages, shared components, API persistence and local validation |
 | Latest deployment | [Healthcare reference pages on both demo sites](care-page-deployment-2026-09-10.md) |
+| Release evidence review | [11 September release documentation review](documentation-review-2026-09-11.md) |
 | Documentation reconciliation | [11 September documentation update](documentation-refresh-2026-09-11.md) |
 | Feature inventory | [Current feature catalog](../../features/README.md) |
 | Testing contract | [Current testing guide](../../testing/README.md) |

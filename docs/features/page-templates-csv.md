@@ -1,6 +1,6 @@
 # Page Library: demo API and CSV storage
 
-Applies to the three pages in **Library → Page Library**:
+Applies to these three pages within **Library → Page Library** (other pages have their own adapters and stores):
 
 - **Worklist Query** (`allyvora-patient-query`)
 - **Master Record - Main** (`allyvora-patient-record`)

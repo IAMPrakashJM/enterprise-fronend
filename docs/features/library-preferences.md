@@ -6,23 +6,25 @@ Feature ID: `LIB`. Status: implemented and deployed to the demo sites; see the [
 
 The Library lets application developers inspect reusable components and page designs, try their behavior and read copyable TypeScript examples. An ERP customer form and a healthcare patient form may have different fields, but they should share input controls, tables, overlays, preference handling and recovery patterns.
 
-The latest changes correct seven audit findings. They make managed settings consistent through shared renderers, replace fixed demo formatting, improve clinical font/radius behavior, and replace six generic reference pages with dedicated content. The [original audit](../../desktop-clients/docs/library-preference-audit.md) is retained as historical evidence.
+The original Library preference correction addressed seven audit findings. They make managed settings consistent through shared renderers, replace fixed demo formatting, improve clinical font/radius behavior, and replace six generic reference pages with dedicated content. The [original audit](../../desktop-clients/docs/library-preference-audit.md) is retained as historical evidence.
 
 ## Find the right page
 
 | Destination | Use it to |
 | --- | --- |
 | Component Gallery and 11 groups | Try shared controls, cards, tables, dates, navigation, overlays, inline editing and composition examples |
-| Page Template Library and 97 templates | Choose a master, list, order, booking, case, result, finance, reconciliation, report, dashboard, entity or administration pattern |
-| Patient Query | Search fictional patients, switch result views, preview records, paginate and export |
-| Patient Record | Try a structured multi-section record and supported save/conflict flows |
-| Patient 360 | Review related care information and available demo actions |
+| Page Template Library TEMP and its templates | Choose a master, list, order, booking, case, result, finance, reconciliation, report, dashboard, entity or administration pattern |
+| Worklist Query (formerly Patient Query) | Search fictional patients, switch result views, preview records, paginate and export |
+| Master Record – Main (formerly Patient Record) | Try a structured multi-section record and supported save/conflict flows |
+| 360 Data (formerly Patient 360) | Review related care information and available demo actions |
 | Theme Studio | Change actual theme/radius preferences and see shared components respond |
 | Accessibility | Change motion/hint/form-font settings and inspect a keyboard-accessible example |
 | Page Catalog | Search the current product's available pages and navigate to them |
 | Component Contracts | Find component names, actual source locations and generated examples |
 | Keyboard Shortcuts | Read the application's shortcut registry and change the shortcut setting |
 | Integration Guide | Understand required providers, scope, adapters and policy connections |
+
+For the API-backed clinical and registration screens, open **Page Library → List of pages**. The catalog contains their TypeScript examples and dedicated help, including the [four healthcare reference templates](care-page-templates.md). The older names used in the sections below identify the same stable clinical route IDs; sidebar labels now read Worklist Query, Master Record – Main and 360 Data.
 
 Some shared pages are linked from several modules. They remain included in the Library's compliance inventory even when their canonical route belongs to another module.
 
@@ -64,7 +66,7 @@ See the [policy API/storage guide](../../desktop-clients/docs/tenant-preference-
 
 ## User flow: try and reuse a template
 
-1. Open Page Template Library and search by application or pattern.
+1. Open Page Template Library TEMP and search by application or pattern.
 2. Open a template and use Preview to inspect its fields and actions.
 3. Change the supported scenario to inspect loading, empty, denied, read-only or failure behavior.
 4. Use the layout preference where offered. A managed layout cannot be overridden through the preview control.
@@ -84,9 +86,9 @@ Inline displays patient details below the selected row/card. Other shared previe
 
 ## User flow: Patient Query
 
-Enter criteria and retrieve results from the demo API. Use column visibility, sort and pagination where available. When editable, the result preference changes table/cards. The preview preference selects left/right drawers, a centered card or a modal; inline preview is available only while the preview setting permits changes.
+Enter criteria and retrieve results from the demo API. Use column visibility, sort and pagination where available. When editable, the result preference changes table/cards. The effective preview preference selects Inline, left/right drawers, a centered card or a modal. A tenant can lock any supported placement, including Inline; locking prevents changing the setting, not using the selected preview.
 
-The export dialog uses the selected CSV or Excel preference. If shortcuts are disabled, the page's custom search/view/help and detail-navigation listeners do not remain active. Normal keyboard navigation is still available.
+The export dialog uses the selected CSV or Excel preference. If shortcuts are disabled, the page's custom search/help and detail-navigation listeners do not remain active. Normal keyboard navigation is still available.
 
 Recoverable request errors retain supported in-memory criteria or edits. Do not assume this guarantees recovery after closing the application. The clinical guide explains which flows need the separate durable draft service.
 

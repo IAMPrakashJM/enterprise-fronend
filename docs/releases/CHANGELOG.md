@@ -1,5 +1,9 @@
 # Frontend delivery changelog
 
+## Release evidence review — 11 September 2026
+
+Reconciled the current release pointers with retained deployment evidence and Git publication. Clarified that the latest release is the latest recorded deployment, without implying a fresh live check. Historical evidence remains unchanged. See the [review record](unreleased/documentation-review-2026-09-11.md).
+
 ## Current documentation reconciliation — 11 September 2026
 
 Updated the project overview, documentation index, feature status, testing evidence pointers and delivery index to reflect the deployed framework. Regenerated the page-help backlog without marking missing authoring or native review complete. See the [refresh record](unreleased/documentation-refresh-2026-09-11.md).
@@ -12,7 +16,7 @@ Updated the project overview, documentation index, feature status, testing evide
 - API-backed personal default module and shared page-help/documentation lifecycle.
 - Shared components, preference policies, canonical translations, examples and feature-specific recovery/validation supporting these additions.
 
-The current demo release is `20260910173632033-48931d24`; [deployment evidence](unreleased/care-page-deployment-2026-09-10.md) identifies its exact scope. Native-speaker review and production connectors remain pending. No new package version or tag is implied. Earlier delivery entries below preserve their original state.
+The latest recorded demo release is `20260910173632033-48931d24`; [deployment evidence](unreleased/care-page-deployment-2026-09-10.md) identifies its exact scope. Native-speaker review and production connectors remain pending. No new package version or tag is implied. Earlier delivery entries below preserve their original state.
 
 ## Historical baseline — 9 September 2026
 
