@@ -1,0 +1,22 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'designer.notes'
+- 'Sample score'
+
+    at file:///home/pepadmin/enterprice/desktop-clients/e2e/dcp-designer.mjs:3:3431 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'designer.notes',
+  expected: 'Sample score',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.20.0
+FAIL features/dcp-designer.mjs: Command failed: /home/pepadmin/.local/node24/bin/node /home/pepadmin/enterprice/desktop-clients/e2e/dcp-designer.mjs
+0/1 features suites passed

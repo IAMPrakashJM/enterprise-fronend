@@ -8,7 +8,7 @@ Feature: DCP-01. This first frontend increment is a usable visual designer at **
 2. Add sections. Select a field or section to edit properties. Stable IDs are generated once and remain read-only when labels change.
 3. Drag handles reorder fields/sections. Keyboard drag uses Space, arrow keys and Escape; explicit Move up/down buttons provide another keyboard path. Field settings can move a field to another section.
 4. Edit labels and required state, set a number minimum, or enter dropdown options as one `value|label` per line. Values remain strings, including leading zeros. Duplicate field creates a new ID. A section must be empty before removal.
-5. Open Live preview to fill the same shared TemplateFields controls used by the existing page engines. Validate preview checks required fields, email, number minimum and selected-option membership. Preview answers are temporary and are never sent as business records.
+5. Select the prominent **Live preview** button after designing, even before saving. Preview shows the form title and hides authoring controls. **Design** returns to editing without losing the form or test answers; **Reset preview** clears only test answers. Use preview to fill the same shared TemplateFields controls used by the existing page engines. Validate preview checks required fields, email, number minimum and selected-option membership. Preview answers are temporary and are never sent as business records.
 6. Save design draft persists through the demo API. Open saved design restores it. Unsaved changes require explicit discard before switching; closing the tab uses the browser's unsaved-change prompt.
 
 ## Preferences, authorization and recovery

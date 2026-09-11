@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "releaseId": "2026-09-11-dcp-designer",
+  "releaseId": "2026-09-11-dcp-preview",
   "registeredPages": [
     "accessibility",
     "admission-worklist",
@@ -1876,12 +1876,12 @@
       "reason": "Initial impact baseline: existing domain workflows preserved. This delivery unifies API guide rendering and adds documentation governance; billing rail behavior is documented separately."
     },
     "desktop-clients/packages/erp-config/src/documentation.ts": {
-      "sha256": "dce9daa8f0e7f99271b7076b513c3fc69e060bc6be83c70b7b2813be97236ed2",
+      "sha256": "6549c8774e5bcd7c51064defca51ca6c9364e19320530fb879aafcdffbd53135",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "DCP designer adds a shared TemplateField-based visual authoring workspace, bounded demo draft API, keyboard drag handles and translated help. Existing page behavior unchanged; new route and generated catalogs reviewed."
+      "reason": "Preview discoverability and clean form view; dedicated designer help updated in a new snapshot"
     },
     "desktop-clients/packages/erp-config/src/draft-policy.ts": {
       "sha256": "168ead6d7a776b03cff9c2d280261a3f13d59a284ac80203c4df73fad797511e",
@@ -2692,36 +2692,36 @@
       "reason": "Initial source coverage extended to application hosts and backend adapters; existing page workflows unchanged except separately documented billing rail and shared documentation presentation."
     },
     "dummy-api/config/localization/shared/en.json": {
-      "sha256": "18e214e49ca43b209018a53fed41008e38e5172c87d08c5e860fc071d95cfa9d",
+      "sha256": "a251ec32d49672a833db545e7be15d2d87ed3eabaa1bbab043b4c3bd211c0737",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "DCP designer adds a shared TemplateField-based visual authoring workspace, bounded demo draft API, keyboard drag handles and translated help. Existing page behavior unchanged; new route and generated catalogs reviewed."
+      "reason": "Preview discoverability and clean form view; dedicated designer help updated in a new snapshot"
     },
     "dummy-api/config/localization/shared/ar.json": {
-      "sha256": "d4c7427b3b3eb3af4c57df147ea43f4ce686ac945a4e9762705d5e4fbd622e5c",
+      "sha256": "fe109d878feaf9257d60f586d89ca0612f9b0bb9551fc4318c62a7d7f82ee576",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "DCP designer adds a shared TemplateField-based visual authoring workspace, bounded demo draft API, keyboard drag handles and translated help. Existing page behavior unchanged; new route and generated catalogs reviewed."
+      "reason": "Preview discoverability and clean form view; dedicated designer help updated in a new snapshot"
     },
     "dummy-api/config/localization/shared/hi.json": {
-      "sha256": "59e8ee586f8eb2214d5b5b4fdf8cd162b30362fa879db5e7729045b0b40f11d1",
+      "sha256": "2614c47e6a756f387afc223819e95cb76bb4ddf441676852b19d1e9edd93d22b",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "DCP designer adds a shared TemplateField-based visual authoring workspace, bounded demo draft API, keyboard drag handles and translated help. Existing page behavior unchanged; new route and generated catalogs reviewed."
+      "reason": "Preview discoverability and clean form view; dedicated designer help updated in a new snapshot"
     },
     "dummy-api/config/localization/shared/ml.json": {
-      "sha256": "b3e4032021e1023f995eeb6a0cc238231594ce05598cf122d6b4748472b7fcc9",
+      "sha256": "30b73eb41e6c67dfcb04ad8783a1a1bdce712f4c18b2a15442288cb97e6adca8",
       "pages": [
         "*"
       ],
       "disposition": "no-content-impact",
-      "reason": "DCP designer adds a shared TemplateField-based visual authoring workspace, bounded demo draft API, keyboard drag handles and translated help. Existing page behavior unchanged; new route and generated catalogs reviewed."
+      "reason": "Preview discoverability and clean form view; dedicated designer help updated in a new snapshot"
     },
     "dummy-api/config/navigation/ledger.json": {
       "sha256": "189589dfe58cfef879089e8d19e466e31cfa66e2d9b813c8c167314fe1ef38b5",
@@ -3185,7 +3185,7 @@
         "inpatient-admission": "aca8b12c3128853446567ad0ef7135ab5e88684b0b7b3c7d35a44d96c9457dfc",
         "consultation-entry-v2": "788ec16cfd76c2175ad9be32b072f3517ada1478f94c526a92259fe71e2a70dc",
         "consultation-entry-design": "f2572162ead6a0ed5a48ce5d1f68089b88c9c4e03f19838f3c5140fe8a52c555",
-        "dcp-designer": "110b7d8af07ff501b76de41b5c8e28db581c70899d4773a6b704aef412c5e84e"
+        "dcp-designer": "be6bc2d6eb06faff513de6a01473e7c4ae7ee81136e36e027c76e3bcdbb3918d"
       }
     },
     "dummy-api/op-registration-store.ts": {
@@ -3726,12 +3726,12 @@
       "reason": "Register DCP designer source/configuration impact with its dedicated help page. The initial field schema, approved component metadata, adapter and renderer are covered; historical page guides remain unchanged."
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css": {
-      "sha256": "7272793d818d3ce689f34090efe46036c145ff84c872aa990961c9c733c563f7",
+      "sha256": "1f11b3f72aa5ee99e08227f1af2d0dad7998efd12113fbeb1e7b4d4dccb7bec9",
       "pages": [
         "dcp-designer"
       ],
       "disposition": "no-content-impact",
-      "reason": "Register DCP designer source/configuration impact with its dedicated help page. The initial field schema, approved component metadata, adapter and renderer are covered; historical page guides remain unchanged."
+      "reason": "Preview discoverability and clean form view; dedicated designer help updated in a new snapshot"
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css.d.ts": {
       "sha256": "d29f747a0b837be9c4e733886004c861b2b63e54de5f4dc5839f7e460ad642ac",
@@ -3750,14 +3750,14 @@
       "reason": "Register DCP designer source/configuration impact with its dedicated help page. The initial field schema, approved component metadata, adapter and renderer are covered; historical page guides remain unchanged."
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx": {
-      "sha256": "e7469fb75b227d7615b01ef6c8bbe19462932bfe9dcb4b6478f940394cde1598",
+      "sha256": "4054d826e9e6e9e545bfb3373853a1fedce0e251ef8724b98b9534c34130621b",
       "pages": [
         "dcp-designer"
       ],
       "disposition": "updated",
-      "reason": "Authored dedicated DCP designer help for palette, reordering, property editing, preview, draft save/recovery and integration limits.",
+      "reason": "Explain unsaved live preview, return to design and temporary answer reset",
       "guideHashes": {
-        "dcp-designer": "110b7d8af07ff501b76de41b5c8e28db581c70899d4773a6b704aef412c5e84e"
+        "dcp-designer": "be6bc2d6eb06faff513de6a01473e7c4ae7ee81136e36e027c76e3bcdbb3918d"
       }
     },
     "desktop-clients/packages/erp-config/src/dcp-designer.ts": {
@@ -3791,6 +3791,17 @@
       ],
       "disposition": "no-content-impact",
       "reason": "Register DCP designer source/configuration impact with its dedicated help page. The initial field schema, approved component metadata, adapter and renderer are covered; historical page guides remain unchanged."
+    },
+    "desktop-clients/packages/erp-screens/src/dcp-designer/preview.tsx": {
+      "sha256": "00713a858fc8fddc33b8f0d860d9cadc1724c2c0ea2164721534f8e25f6863fb",
+      "pages": [
+        "dcp-designer"
+      ],
+      "disposition": "updated",
+      "reason": "Document shared form preview and temporary answer reset",
+      "guideHashes": {
+        "dcp-designer": "be6bc2d6eb06faff513de6a01473e7c4ae7ee81136e36e027c76e3bcdbb3918d"
+      }
     }
   }
 }

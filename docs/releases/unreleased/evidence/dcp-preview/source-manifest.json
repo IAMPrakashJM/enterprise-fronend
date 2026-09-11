@@ -1,0 +1,77 @@
+{
+  "baseCommit": "614bd2e7959edd911071eae7a92beaea68c40daf",
+  "files": [
+    {
+      "path": "desktop-clients/packages/erp-config/src/documentation.ts",
+      "sha256": "6549c8774e5bcd7c51064defca51ca6c9364e19320530fb879aafcdffbd53135"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "0f29a582c80ecad2c39073b5aaca6f7233d6b3f34e1838fa6ec1cf636ed33cda"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "a2026c31a7c2f9a4fbd1cbb17d610419c28bedf75254356b98d5aab2bd63f551"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "e2d49bb907a72971b7ad3d34bbe0ad88787729acc49c03f2f535465a4c367a76"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "dbd531029c5a48f60e2bc39000453cb4331c124e7c6c972ac469f3110753a256"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css",
+      "sha256": "1f11b3f72aa5ee99e08227f1af2d0dad7998efd12113fbeb1e7b4d4dccb7bec9"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/preview.tsx",
+      "sha256": "00713a858fc8fddc33b8f0d860d9cadc1724c2c0ea2164721534f8e25f6863fb"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.test.tsx",
+      "sha256": "22ce8ebc0f817936582549cdf66959905f14edbbb2c3244c7ad9ec0d805ff634"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx",
+      "sha256": "4054d826e9e6e9e545bfb3373853a1fedce0e251ef8724b98b9534c34130621b"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "75b787418a0da28ed09769a42b4ef46f9986d3b997b4a0159cf87d8a29fe4bd0"
+    },
+    {
+      "path": "dummy-api/config/documentation/availability.json",
+      "sha256": "10cf796dd6586a49af671b99c926c8dc6a050716d2ccec59b86142ff98811099"
+    },
+    {
+      "path": "dummy-api/config/documentation/releases.json",
+      "sha256": "f7d311eb1c18feaa27f3745b1bd16d9d174086a8e22c3ef71740f50c1a608701"
+    },
+    {
+      "path": "dummy-api/config/documentation/translation-revisions.json",
+      "sha256": "7f58a79d3747a3b38b1dea811d413fa76f6c6ee1f12159c62a9b721c6ea9b044"
+    },
+    {
+      "path": "dummy-api/config/documentation/translations.json",
+      "sha256": "4de70bd05f6c81e0b06dd141799f0a01bd877fb4f8cf2f69dccdae2441b30fbb"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "fe109d878feaf9257d60f586d89ca0612f9b0bb9551fc4318c62a7d7f82ee576"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "a251ec32d49672a833db545e7be15d2d87ed3eabaa1bbab043b4c3bd211c0737"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "2614c47e6a756f387afc223819e95cb76bb4ddf441676852b19d1e9edd93d22b"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "30b73eb41e6c67dfcb04ad8783a1a1bdce712f4c18b2a15442288cb97e6adca8"
+    }
+  ]
+}

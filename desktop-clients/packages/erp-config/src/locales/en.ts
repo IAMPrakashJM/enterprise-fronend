@@ -6608,5 +6608,6 @@ export default {
   "designer.help.access": "Only demo administrators can save designs. Drafts are isolated by tenant, application and user. Shared controls follow effective theme, density, typography and tenant locks. Preview does not save business answers or grant record access.",
   "designer.helpTitle.access": "Access and preferences",
   "designer.help.integration": "Inject DesignerAdapter and PreferenceHost into DcpDesignerWorkspace. The demo endpoint stores frontend template drafts in CSV snapshots. Backend DCP conversion, publication, datasets, rules and entity binding require the separate host adapter; no PostgreSQL or Java service is provisioned here.",
-  "designer.helpTitle.integration": "Integration"
+  "designer.helpTitle.integration": "Integration",
+  "designer.help.preview": "After designing, select Live preview to try the current form without saving it. The preview shows the form title and hides editing controls. Validate preview checks your test answers. Reset preview clears only test answers; Design returns to editing and preserves the form. Preview answers never create business records."
 };

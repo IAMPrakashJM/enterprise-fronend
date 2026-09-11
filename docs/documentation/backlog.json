@@ -8236,23 +8236,23 @@
     "language": "ar",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "578f929d5226d9039cc92f470a69474cc7c4ca74247d12919027b0d118599620",
-    "translationHash": "ab5811206b5547da87b5527bd65af79324e4eeb949a931d9dbaf105b8da19823"
+    "sourceHash": "2f79eb4663c7b4ea8653e818d05147bb0e233f197f057f0fc7aa0f658fb533ac",
+    "translationHash": "3b830c0e63d9c2b32fbc4db5032615c5df9a4e8e7b4cd46dd64d21cb7e606136"
   },
   {
     "pageId": "dcp-designer",
     "language": "hi",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "578f929d5226d9039cc92f470a69474cc7c4ca74247d12919027b0d118599620",
-    "translationHash": "8cee15000e21f04407cd9a50560bd6138660a7789ee30607ab67ce01e6ee4134"
+    "sourceHash": "2f79eb4663c7b4ea8653e818d05147bb0e233f197f057f0fc7aa0f658fb533ac",
+    "translationHash": "16e8ffd46ae0c3a644cf3017b0e081545597cc9e55242a5f18c428c9f7c1923e"
   },
   {
     "pageId": "dcp-designer",
     "language": "ml",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "578f929d5226d9039cc92f470a69474cc7c4ca74247d12919027b0d118599620",
-    "translationHash": "53ddcaf3054cca126b088e56691a005a19c6eebbfefe677c2b9c6c5141585451"
+    "sourceHash": "2f79eb4663c7b4ea8653e818d05147bb0e233f197f057f0fc7aa0f658fb533ac",
+    "translationHash": "3e66944dbbc8375f067c87187b74f31d22e5f4bf57cb9ecb282005914b47df4d"
   }
 ]
