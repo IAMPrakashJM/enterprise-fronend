@@ -1,0 +1,424 @@
+{
+  "baseCommit": "2f66cb5c2090d667cf7ff3dad349c003f9f8cbae",
+  "state": "Uncommitted working tree including preceding DCP increments. Full CI tested runtime source; sections.test.tsx received one additional passing test after its main CI test stage. Separate retained targeted logs cover that final test source. No deployment.",
+  "files": [
+    {
+      "path": "desktop-clients/apps/desktop/package.json",
+      "sha256": "189fe29b7ab8178a19cda1ffe523299f7693f57535bbc757f0dfdb5ec61e9a88"
+    },
+    {
+      "path": "desktop-clients/apps/web/package.json",
+      "sha256": "6c3b1d55f83a63a55c5171090421da8f54d6f5be9d3371bc4a5bf5eb5b88464f"
+    },
+    {
+      "path": "desktop-clients/e2e/dcp-csv-options.mjs",
+      "sha256": "e65488bc45bab2188bc6765b916b16e61986f67853b154e65006fbaa23ef3b87"
+    },
+    {
+      "path": "desktop-clients/e2e/dcp-dependent-dropdowns.mjs",
+      "sha256": "6d985e27bc573e3b0bbe5ff94c1af603e5220f0bd8e9fe3f8a50af3b3c8fecf6"
+    },
+    {
+      "path": "desktop-clients/e2e/dcp-enterprise.mjs",
+      "sha256": "7c987729778e674bc2bd9f2d5e6f9bb073ac8aa0780bb66e2f0d5f31ac222fbc"
+    },
+    {
+      "path": "desktop-clients/e2e/dcp-host-runtime.mjs",
+      "sha256": "7a147c87746ee1773e4eb3294b541ac6c628231702b9ae84b37421393ba7900b"
+    },
+    {
+      "path": "desktop-clients/e2e/dcp-value-sets.mjs",
+      "sha256": "907af8eccf482d98f599cfbbcecdce0773eb017419a2f221f5cea917783f8797"
+    },
+    {
+      "path": "desktop-clients/e2e/suites.mjs",
+      "sha256": "cc4925315c2b65123b7e64bee18d89a33517896fa2297a1b89b12c6afa38dcdf"
+    },
+    {
+      "path": "desktop-clients/package-lock.json",
+      "sha256": "25cad9d97f94cb9bb9ea4cfce470cc58e3ba6942e57d291836d7b8a9c41e85ac"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-catalog.ts",
+      "sha256": "1733e2b6dbf6edaedef36c12009cb87a0c6ac1fcbce268b596cf1b76a33f49a2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-designer-metadata.test.ts",
+      "sha256": "0a9b77152d2d1f3583c767d4c51abda2f13c9b6148e97725eee66d88996db8c7"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-designer.ts",
+      "sha256": "56ef6e7838fc2e33b2e2db9f26fb50bf149a0409fb0f399693b2a7740248a03d"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-lifecycle.ts",
+      "sha256": "9c213eb4031f7d737d3724bc7b8dedad5ad23b7a74757baa73e75bc4a434093a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-repeating.test.ts",
+      "sha256": "5b8131b7ad8e7078a6b418b969d6c000ec7c2d6fe401fd2c18bd592f435db25f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-rules.ts",
+      "sha256": "f156a0a7057692ef9d1eaa935ad891c65430213996b840c73f0483f51712c17d"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-runtime.ts",
+      "sha256": "943a5528be24ee0f926406c9a513e7b90d097910113a1c4ceda1b12f51275b91"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/documentation.ts",
+      "sha256": "d577e7a5229f36107a1bd70ad0441cd7a8b7e6f4bd8ffb2a7ee9ec73ecb91841"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/index.ts",
+      "sha256": "ce90d0f63747b062451fc74bf1d22e64a6999fdc37de349467fdc430b847d384"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "dc9b32e280d86de6a457ed978d3ada3d14a4d1127d81ff9d05aac3326a6d0843"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "9c5b18f59dacd2eab9aa2fc72e3f018452794b14e738ec0187c2e3f55825733a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "a6b361ef3299a48ea42fc94a3e0299f62674e5af48572016f442f893160452f1"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "196aed0dd1e2afb82db22b29b5625e106a64e7c14e5d6d05c12f5ec8603eeae1"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/csv-import.ts",
+      "sha256": "6fa4e9b0fecc2165e1bb9f78b71606f9b932ecc8f4bf18852ff2bd33ff960724"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/dcp-host.test.ts",
+      "sha256": "12062d944c5b226efe3056cbdf5ea41fcd2bbb67544ed5abfba11521b6b8df29"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/dcp-host.ts",
+      "sha256": "aa0715bdcc1ee1da86d56ccd8135019e2cbb35dbfd5efe5ab8f4db25fe625219"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/dcp-runtime.test.ts",
+      "sha256": "5df9ce3c366843fe0d56a9306f337a2ce7a4cd4eeb3fd48f4e01bfcd2d30c77a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/dcp-runtime.ts",
+      "sha256": "b430e68a3362554e99856035417ce0990e54833afad51503a401cddee3ac786b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/drafts.ts",
+      "sha256": "d546d421ecdab8b2661cd57e1d965d596e36ca4b76aedad8bf836dea5e3a6901"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/fixtures/dcp-v1/loaded.json",
+      "sha256": "e6bdf9272f6e64581a4457432d25bf811ed4dfd3436a75562318c1a36f6d2e25"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/fixtures/dcp-v1/new-form.json",
+      "sha256": "54111744ad9d077f82a2dc46113eff011c4c759f22904467b579e02ea731b232"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/fixtures/dcp-v1/save-command.json",
+      "sha256": "d3b9cd45fad84cb46eda45dfed482dd612e296c5e1b3f30b2d856e5ee4e20faa"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/fixtures/dcp-v1/saved.json",
+      "sha256": "1720dc5d40d76ae2ecf093859ecb57cd2be3510a8f8831691ac5e465ce21d2da"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/fixtures/dcp-v1/validation.json",
+      "sha256": "65a4647dc3029d105bab03c32b45fd7225b8865b9bf681a28753f0835eb0bfb9"
+    },
+    {
+      "path": "desktop-clients/packages/erp-data/src/index.ts",
+      "sha256": "b4f6fee8ae47a564476b712a88918e7b4053b9803bb9b8e75ee09b3a3c600535"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/package.json",
+      "sha256": "ba58f7727440fa07ff8f15b45835c435756bc433d981314ccbf2672e2fe4901a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/catalog-field.tsx",
+      "sha256": "8673e60e6ffbae6e4756e847ec2cbb4b5d7518a2bce6f9fcfd6dbec1a32c9f52"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/catalog-manager.test.tsx",
+      "sha256": "79b5365c93422e14b3c6b5ed1ef889470b508717655fe142d21db19e5454746c"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/catalog-manager.tsx",
+      "sha256": "6eb47fa4490c34b87bd6822a1e9fad455d4e03c488561b1a5f9e21ac3c0b66ce"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/components.tsx",
+      "sha256": "bed7e5a25e61834edaa77d4764864c1a12ad333c3442732545f05e8645828cb6"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/dependencies.test.tsx",
+      "sha256": "fad08385ebc0eca1976a6b38ce6364ab956b9044fabfd434fb4f109b5a706ab7"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/host-runtime.test.tsx",
+      "sha256": "16d7028e0d6f3ec2e01de234506930c1c21a4ab2f00cb6a211f9745e98126878"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/host-runtime.tsx",
+      "sha256": "852fb62962e72c291b3e2504ebf8799ebc3710efcd6d47d18cfd3d9f6b8024d3"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/label-properties.tsx",
+      "sha256": "544c7fcca2fa7ec17ffd7eada300a07fd0179386663c66988ac0e3853b301ad6"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/library-page.tsx",
+      "sha256": "a972001bcd426751323bd81a917fea236d02a6150b2590165c9617c03b0eafb5"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/lifecycle-panel.tsx",
+      "sha256": "7a8e577798be890396a3ecdef5e172deb461fc108c72482de615169ca1a05f75"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/multi-parent-properties.tsx",
+      "sha256": "37aec4a030893ab1421725a4c5514c330515214213384cdeb458e2e3be620887"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/presentation-fields.tsx",
+      "sha256": "6d9db84af7e664a6d479c2f74178bdfafbae74c9935feedbfe308af30e594c48"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/preview-lookups.ts",
+      "sha256": "cb0587f3aba9e2597186dcc252840de061d8fe5f36874f739f436dac8b41bbba"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/preview.tsx",
+      "sha256": "758948d02945b49eb14a5e8a65cb51a6e01eb22cff266f1a44d4f4ab2298c09c"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/release-comparison.tsx",
+      "sha256": "e4e628eff6894082f5f25d4fcc44065f4a7f34ece24c00c26208fd12e3ee425f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/repeating-section.tsx",
+      "sha256": "a836ebffa561ecf8cf1fe0ff4e5ad568044281fd778dfdcd53dc41811931db6e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/rule-properties.tsx",
+      "sha256": "b69b4ca8ce75bb864893ef50fd3349611333adacd8931031658c67f048874512"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/runtime-draft.tsx",
+      "sha256": "94e3b12d5fc664f7b0d91db00079ee09852f3f4db200e659a037307f4cf4a357"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/runtime-fields.tsx",
+      "sha256": "5831417d42b7b669c5876b002c69192e476bb5655b75fbae9791c95e0c3b5cbc"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/runtime-panel.tsx",
+      "sha256": "df8bac4ca329baae0cd7b3e421018d8c3b220ba3fa0ec6c549dcd536d40bb388"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/sections.test.tsx",
+      "sha256": "765e05c4462e4e0e47becdfbeaf9509bbe932a3dd24912ef29055b4dd43cb46f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/sections.tsx",
+      "sha256": "6b6f48316562f3dc8bc1d98786053fc81f655a7704c12d6381e844a904c9c93f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx",
+      "sha256": "769b319c6a83337b9a9bbf894b48165a7c3fa87963b35960761554e2d866b514"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/drafts/draft-center.tsx",
+      "sha256": "07a4f45a21387346dd3653ac73a73108d3fef19cebadc20d3273bcd920b524a1"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/imports/csv-options-editor.tsx",
+      "sha256": "b15a925ecbc117a5cf4fbdb90e9aa9a658fc67062e69f23743b259b539dcbe45"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/imports/csv-options.test.ts",
+      "sha256": "cb38eaac0485ea3b0b7548272706cb32b368327dd75aa470fc1fb727943bc369"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/imports/csv-options.ts",
+      "sha256": "e714044698beb5dd1feb41e90691c7163284cd86a9fafca228fa9581c7fdec97"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/imports/workbook-options.test.ts",
+      "sha256": "62832423bedb107357d110b793f399adf9332422ef9540ace7b20200eed8566b"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/imports/workbook-options.ts",
+      "sha256": "48ad60e2a4c2222af83465c90f7fcb6546cb874a07609fd2eaff98cd0b559b61"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/imports/workbook-options.worker.ts",
+      "sha256": "c99bed3d83fe653e0ece80c3814da25020cac683e15efc0ebd6fd7219832980f"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/index.ts",
+      "sha256": "cdee056b3ef470e13824f90e782259b07e1dc9b578cebd692cfb1262f2bc4671"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/catalog.ts",
+      "sha256": "782b0058b3eb6ca9fead3b51c9d8cbd107c6e973663f2e020be1ffbbc5b9de1e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/demos.tsx",
+      "sha256": "abad26d84846373520a6648bb80e4f0003c07e60a2f0007bc4d8121abf3f2c02"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/library/examples.generated.json",
+      "sha256": "4ea50338fc2b2db3c8a1d4c9a026c853f30d6883ddfe745508b44774d92c2950"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/template-parts.tsx",
+      "sha256": "0784c231c82a5a89c502cfae8faa83a809cbc8499579e3ea0042fa50cf4e4f32"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/choice-fields.tsx",
+      "sha256": "ef87f70f56e2725e67e41113275edb01eae010d8c9f7d63bbd3720040a570922"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/form-controls.tsx",
+      "sha256": "715bba3443aba838b6d1828f1030adcbefefdca104760d7635af693d708464a4"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/form-error-summary.tsx",
+      "sha256": "c794c421b5ee829aa083cd10a1a520c6ce0057f211f96ffc1a5595823e686bab"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/index.ts",
+      "sha256": "f265e8c8faa0c07117a1be3fdc5b9ac40bc32329ff25304fa7f5964d72402864"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "dbed6805973e9242d0c8caa9503db0674686c9ee912ca152404aa3aab7a831d8"
+    },
+    {
+      "path": "dummy-api/config/api-messages.json",
+      "sha256": "bd034067a71d7e2462b5539ff68285148d9a4d57d1ff10204caa1e38b0527de8"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/catalog.json",
+      "sha256": "ff2c64d7a5d116fe35742c1b882c1fd3c0bedd8a92299477ade6f0ae269fde14"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/entities.json",
+      "sha256": "f403ef01e5ab9c92b53f0b8a4d12868f57a540ba8f1fea93669c137acd2fdcbc"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/examples.json",
+      "sha256": "39d840380bbb826de584e0775434f171791347b5dc5c0d90c26aa5e93f0ea9df"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/runtime-v1.json",
+      "sha256": "e6bdf9272f6e64581a4457432d25bf811ed4dfd3436a75562318c1a36f6d2e25"
+    },
+    {
+      "path": "dummy-api/config/documentation/availability.json",
+      "sha256": "3219d94973c50e188d557c9ab6e0d2b110818c42172f96bbcfffe36c68608b47"
+    },
+    {
+      "path": "dummy-api/config/documentation/releases.json",
+      "sha256": "23eb3e0e5638abd2b20dabd176425e84f6b1f17405e5aa4037ada39190065135"
+    },
+    {
+      "path": "dummy-api/config/documentation/translation-revisions.json",
+      "sha256": "0a81419f9e193588d2f1c285abbb62c0f98dec144762c94406aa5ef376f9080e"
+    },
+    {
+      "path": "dummy-api/config/documentation/translations.json",
+      "sha256": "7d3a5cff28ce64a52d0258aa9f7814629b7ab5e65debc1d6c952630d787731ad"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "74802c9f939f1e3642fff164d6c4d940e98cf0c61aaf859347ce9a53d697f680"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "9726e0e5947c85512112888d42b485c735192acc898445410bf27d7f89ae47d2"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "10cafdab8c9c234eda0ab8b4d6d00b81fd074d95f7276ca05efef9304daa1705"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "65761b0052dc933fd683b8b95104daa07b61c846b4e0b9c7aa942d42cb663566"
+    },
+    {
+      "path": "dummy-api/dcp-catalog-store.mjs",
+      "sha256": "789de695b7779e050a2213f2daa3827c3f8e9e13ff9ccea10f70d4798875a9a0"
+    },
+    {
+      "path": "dummy-api/dcp-designer-store.mjs",
+      "sha256": "3bfac935084b3932ab90a348424d1072933ab2676479df475de779ed362a5c86"
+    },
+    {
+      "path": "dummy-api/dcp-designer-store.test.mjs",
+      "sha256": "9b08fddbdc8d18d9806167dbdb2cf55095c0f626a04bb2bc78052a53020c171c"
+    },
+    {
+      "path": "dummy-api/dcp-lifecycle-store.mjs",
+      "sha256": "6b10fac85f81b94ea2db06baff82b78cf9a4f2765f887cb803df3390c84028f5"
+    },
+    {
+      "path": "dummy-api/dcp-runtime-store.mjs",
+      "sha256": "0007b24c180788e25472cd53a5f38bc583278df5cc230068d585ed96db5b51d5"
+    },
+    {
+      "path": "dummy-api/draft-center.mjs",
+      "sha256": "30bf3c894f4acd35a48a4fff9a34d2fff97495b1a35233dd4bcdfcbfdbecd86f"
+    },
+    {
+      "path": "dummy-api/drafts-http.test.mjs",
+      "sha256": "b3db5d23c49ce3c1f7b2321197ccfbb1a1bd089368ab3c7f50b91380bada5e2f"
+    },
+    {
+      "path": "dummy-api/server.mjs",
+      "sha256": "c2d8cbf2ef1229f2b413712d31286b0d09dec5c1652eebb793bdf2c0da47baac"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "ci.txt",
+      "sha256": "7b787bf51217327d8bc513b926ded4f1a94e5be5d8e62a137b239f5f03a4feb6"
+    },
+    {
+      "path": "runtime-browser.txt",
+      "sha256": "5c9f138b23ec8ec5c77878dc7507929e320e34fdd233a37c1f897fbe3fd098ef"
+    },
+    {
+      "path": "repeatable-api.txt",
+      "sha256": "3a5975b6626345de6dbe97d5d401610f53db4eb01dec3f8dfe698718a73b037d"
+    },
+    {
+      "path": "repeatable-ui.txt",
+      "sha256": "7a51c84821ab90e4377ad8d074c377afbaa459d9d788bb128e92b95d292f9343"
+    },
+    {
+      "path": "runtime-focused.txt",
+      "sha256": "2c1c3bdb47ddde18637e1b52969aabc508bbfbbef82dd8268f4223133cd77ec4"
+    },
+    {
+      "path": "documentation.txt",
+      "sha256": "8827599fda98cea3ac670d4310c28542fec7edee573e86566a278e4275f62e23"
+    },
+    {
+      "path": "documentation-lifecycle.txt",
+      "sha256": "0104df71818f02f4af134252671f5b6e24f79641c698c9416f78103c66180bc7"
+    },
+    {
+      "path": "runtime.png",
+      "sha256": "8be8687b2f21d526e60c1d45e1f464e6b6adc42625820764112e0cd905b73947"
+    }
+  ]
+}

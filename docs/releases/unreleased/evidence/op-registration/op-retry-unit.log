@@ -1,0 +1,19 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/templates/preference-compliance.test.tsx (4 tests) 3167ms
+   ✓ all registered templates inherit managed table preferences in both density profiles  2981ms
+ ✓ packages/erp-screens/src/templates/page-template.test.tsx (8 tests) 2285ms
+   ✓ every configured template renders real shared content and starts with valid sample data  1969ms
+ ✓ packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx (7 tests) 2279ms
+   ✓ patient form preserves edits through section changes and retries with the same operation  903ms
+   ✓ scope remounts cannot retain another user patient edits  317ms
+   ✓ New patient resets a saved record in a reused new-record tab  355ms
+   ✓ empty contact editors do not create rows until edited and retain focus while typing  442ms
+ ✓ packages/erp-screens/src/library/component-catalog.test.tsx (5 tests) 441ms
+
+ Test Files  4 passed (4)
+      Tests  24 passed (24)
+   Start at  11:43:35
+   Duration  14.30s (transform 2.12s, setup 1.54s, collect 2.09s, tests 8.17s, environment 1.49s, prepare 254ms)
+

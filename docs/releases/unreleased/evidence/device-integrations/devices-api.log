@@ -1,0 +1,16 @@
+✔ queue is persisted with exact idempotency and changed payload conflicts (4.834443ms)
+✔ scope isolates tenant, product, user and workstation jobs (2.839303ms)
+✔ lookup preserves contexts and returns only exact backend records (0.512758ms)
+✔ tenant policies require admin, version checks and enforce user locks (2.469938ms)
+✔ browser dispatch means requested, demo means simulated, native stays queued (11.411615ms)
+✔ dispatch applies policy changed after enqueue and cancelled jobs stay cancelled (5.309932ms)
+✔ automatic event simulation is admin-only, opt-in and deduplicated by event ID (3.746818ms)
+✔ routing validates device capability and rejects stale policy versions (1.823858ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 162.77366

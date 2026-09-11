@@ -1,0 +1,20 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/dcp-designer/catalog-manager.test.tsx (4 tests) 696ms
+   ✓ catalog save failure preserves edits and retries the identical revision command  361ms
+ ✓ packages/erp-screens/src/dcp-designer/workspace.test.tsx (3 tests) 1110ms
+   ✓ visual edits reuse stable IDs; failed save retains edits and reuses operation on retry  594ms
+   ✓ preview uses unsaved design, hides authoring, validates and resets test answers without saving  393ms
+ ✓ packages/erp-screens/src/dcp-designer/dependencies.test.tsx (3 tests) 1314ms
+   ✓ parent change clears all descendants and late API responses cannot restore old options  610ms
+   ✓ lookup failure retains the parent and retry reloads the options  425ms
+ ✓ packages/erp-data/src/dcp-host.test.ts (2 tests) 14ms
+ ✓ packages/erp-screens/src/imports/csv-options.test.ts (3 tests) 8ms
+ ✓ packages/erp-screens/src/dcp-designer/sections.test.tsx (2 tests) 166ms
+
+ Test Files  6 passed (6)
+      Tests  17 passed (17)
+   Start at  13:29:57
+   Duration  7.49s (transform 4.04s, setup 4.81s, collect 8.21s, tests 3.31s, environment 3.17s, prepare 643ms)
+

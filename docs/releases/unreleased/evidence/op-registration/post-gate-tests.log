@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/library/component-catalog.test.tsx (5 tests) 537ms
+ ✓ packages/erp-screens/src/op-registration/workspace.test.tsx (3 tests) 411ms
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  11:58:04
+   Duration  5.59s (transform 2.72s, setup 1.36s, collect 1.85s, tests 948ms, environment 866ms, prepare 172ms)
+

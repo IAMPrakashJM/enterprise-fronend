@@ -1,0 +1,1404 @@
+
+> nexora-monorepo@1.0.0 ci
+> npm run typecheck && npm test && npm run test:api && npm run test:e2e-registry && npm run test:deployment && npm run build && npm run verify
+
+
+> nexora-monorepo@1.0.0 typecheck
+> node scripts/typecheck.mjs
+
+
+  typecheck
+
+    ok    packages/ai-client
+    ok    packages/ai-config
+    ok    packages/ai-ui
+    ok    packages/auth
+    ok    packages/erp-config
+    ok    packages/erp-data
+    ok    packages/erp-screens
+    ok    packages/erp-shell
+    ok    packages/ops-ui
+    ok    packages/platform-ports
+    ok    packages/workspace-core
+    ok    apps/desktop
+
+  Every package typechecks.
+
+
+> nexora-monorepo@1.0.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/templates/page-template.test.tsx (8 tests) 3518ms
+   ✓ every configured template renders real shared content and starts with valid sample data  2888ms
+ ✓ packages/erp-screens/src/clinical-templates/clinical-templates.test.tsx (7 tests) 3472ms
+   ✓ patient form preserves edits through section changes and retries with the same operation  1502ms
+   ✓ scope remounts cannot retain another user patient edits  362ms
+   ✓ New patient resets a saved record in a reused new-record tab  585ms
+   ✓ empty contact editors do not create rows until edited and retain focus while typing  555ms
+ ✓ packages/erp-screens/src/templates/preference-compliance.test.tsx (4 tests) 4578ms
+   ✓ all registered templates inherit managed table preferences in both density profiles  4378ms
+stderr | packages/erp-screens/src/clinical-templates/query.test.tsx > query waits for criteria and preserves filters after a failed search
+An update to PatientQueryTemplate inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ✓ packages/erp-screens/src/preferences/preferences.test.tsx (3 tests) 1249ms
+   ✓ record layout and all three density options use the central preference update  659ms
+   ✓ Own Settings uses accessible module options and honors locks  340ms
+stderr | packages/erp-screens/src/clinical-templates/query.test.tsx > disabled query shortcuts do not focus search or open help
+An update to PatientQueryTemplate inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to PatientQueryTemplate inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ✓ packages/erp-screens/src/drafts/use-shared-draft.test.tsx (4 tests) 1842ms
+   ✓ failed draft write retains the exact payload and operation identity on retry  832ms
+   ✓ completion waits for in-flight autosave before discarding its acknowledged revision  817ms
+ ✓ packages/erp-screens/src/clinical-templates/query.test.tsx (7 tests) 1286ms
+   ✓ query waits for criteria and preserves filters after a failed search  486ms
+ ✓ packages/erp-screens/src/forms/dynamic-record-form.test.tsx (7 tests) 1222ms
+   ✓ StrictMode loads safely and reports only acknowledged saves  318ms
+ ✓ packages/erp-shell/src/workspace/use-workspace-navigation.test.tsx (17 tests) 1024ms
+ ✓ packages/erp-screens/src/drafts/draft-center.test.tsx (3 tests) 1322ms
+   ✓ metadata and policy appear, search/filter use the API and open rechecks access  685ms
+   ✓ discard retry retains its operation id and does not remove a row until confirmed  351ms
+ ✓ packages/ai-ui/src/administration.test.tsx (20 tests) 1530ms
+   ✓ the credential > the entry field starts empty and is a password field  304ms
+ ✓ packages/erp-screens/src/clinic-billing/workspace.test.tsx (5 tests) 989ms
+   ✓ managed layouts update without losing input; failed requests retry the exact operation  438ms
+   ✓ bill correction retains input and operation identity on failure; read-only view can return  441ms
+ ✓ packages/ai-client/src/transport.test.ts (22 tests) 1435ms
+   ✓ the echo transport > no credential configured falls back to the mock  352ms
+   ✓ the echo transport > an unreachable service falls back to the mock  355ms
+   ✓ the echo transport > the mock says nothing left the browser, and lists what would have  352ms
+   ✓ the echo transport > the mock shows the redacted value, not the original  351ms
+stderr | packages/erp-screens/src/care-pages/workspace.test.tsx > multiple emergency pathways reveal independent fields and preserve values when hidden
+Encountered two children with the same key, `Obstetric`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+stderr | packages/erp-screens/src/care-pages/workspace.test.tsx > multiple emergency pathways reveal independent fields and preserve values when hidden
+Encountered two children with the same key, `Obstetric`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `Obstetric`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `Obstetric`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `Obstetric`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+Encountered two children with the same key, `Obstetric`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
+
+ ✓ packages/erp-screens/src/care-pages/workspace.test.tsx (3 tests) 901ms
+   ✓ failed saves keep notes and retry the identical operation; selectors cannot discard dirty inputs  573ms
+ ✓ packages/ai-ui/src/modes.test.tsx (34 tests) 724ms
+ ✓ packages/ops-ui/src/inline-edit-typed.test.tsx (19 tests) 883ms
+ ✓ packages/ops-ui/src/overlay.test.tsx (23 tests) 751ms
+ ✓ packages/erp-screens/src/library/preference-compliance.test.tsx (4 tests) 872ms
+   ✓ all 12 component catalog routes render their actual examples under non-default preferences  549ms
+ ✓ packages/erp-screens/src/records/specialized-editors.test.tsx (2 tests) 884ms
+   ✓ billing fields survive tab changes and are included with line items in a real save  583ms
+ ✓ packages/erp-config/src/i18n.test.ts (4 tests) 753ms
+   ✓ localization contracts > provides every catalog message and preserves interpolation names in each language  724ms
+ ✓ packages/ops-ui/src/inline-edit.test.tsx (15 tests) 780ms
+ ✓ packages/erp-shell/src/workspace/workspace-canvas.test.tsx (29 tests) 875ms
+ ✓ packages/erp-screens/src/templates/registry-template.test.tsx (3 tests) 661ms
+   ✓ all five registry templates render through shared engines with preference-owned layouts  403ms
+ ✓ packages/erp-screens/src/worklist/filter-bar.test.tsx (24 tests) 818ms
+ ✓ packages/erp-screens/src/clinical-consultation/workspace.test.tsx (3 tests) 772ms
+   ✓ expanded panels retain values and validation opens a hidden invalid vital  350ms
+ ✓ packages/ai-ui/src/transparency.test.tsx (28 tests) 701ms
+ ✓ packages/erp-screens/src/approvals/approval-workspace.test.tsx (7 tests) 686ms
+ ✓ packages/ops-ui/src/search-select.test.tsx (14 tests) 787ms
+ ✓ packages/erp-config/src/application-config.test.ts (3 tests) 773ms
+ ✓ packages/erp-screens/src/library/component-catalog.test.tsx (5 tests) 645ms
+   ✓ form search finds component names and reset clears only the demo  335ms
+ ✓ packages/erp-data/src/records.test.ts (11 tests) 739ms
+ ✓ packages/ops-ui/src/shared-components.test.tsx (11 tests) 795ms
+ ✓ packages/erp-screens/src/imports/csv-import-dialog.test.tsx (6 tests) 694ms
+ ✓ packages/erp-screens/src/identity-devices/workspace.test.tsx (3 tests) 404ms
+   ✓ biometrics disabled still allows separate manual review and never implies authentication  316ms
+ ✓ packages/ops-ui/src/recovery-notice.test.tsx (5 tests) 335ms
+ ✓ packages/erp-screens/src/device-integrations/workspace.test.tsx (2 tests) 421ms
+ ✓ packages/erp-screens/src/op-registration/workspace.test.tsx (3 tests) 798ms
+   ✓ patient verification cannot be skipped and scope change clears the selected patient  337ms
+ ✓ packages/erp-screens/src/op-consultation/workspace.test.tsx (1 test) 641ms
+   ✓ OP summary navigates fields; locked layout and review retain unsaved values  639ms
+ ✓ packages/erp-screens/src/clinical-triage/editor.test.tsx (3 tests) 1095ms
+   ✓ blank readings and unanswered safety choices; completion focuses required complaint  677ms
+ ✓ packages/ops-ui/src/form-controls.test.tsx (30 tests) 474ms
+ ✓ packages/ops-ui/src/pagination.test.tsx (9 tests) 333ms
+ ✓ packages/erp-screens/src/worklist/use-column-layout.test.tsx (22 tests) 576ms
+ ✓ packages/ops-ui/src/dropdown.test.tsx (10 tests) 581ms
+ ✓ packages/erp-screens/src/comprehensive-consultation/workspace.test.tsx (1 test) 714ms
+   ✓ specialty edits survive context and tenant-locked layout changes; preview never saves  712ms
+ ✓ packages/erp-screens/src/dcp-designer/workspace.test.tsx (3 tests) 696ms
+   ✓ visual edits reuse stable IDs; failed save retains edits and reuses operation on retry  392ms
+ ✓ packages/erp-shell/src/workspace/workspace-tabs.test.tsx (15 tests) 809ms
+ ✓ packages/erp-shell/src/workspace/mdi-taskbar.test.tsx (7 tests) 162ms
+ ✓ packages/erp-shell/src/erp-context.test.tsx (36 tests) 726ms
+ ✓ packages/erp-screens/src/templates/configured-template-page.test.tsx (3 tests) 273ms
+ ✓ packages/erp-screens/src/dcp-designer/dependencies.test.tsx (2 tests) 714ms
+   ✓ parent change clears all descendants and late API responses cannot restore old options  550ms
+ ✓ packages/erp-screens/src/records/record-panels.test.tsx (4 tests) 387ms
+ ✓ packages/ops-ui/src/page-copy-localization.test.tsx (9 tests) 484ms
+ ✓ packages/erp-screens/src/worklist/saved-view.test.tsx (11 tests) 316ms
+ ✓ packages/ops-ui/src/states.test.tsx (24 tests) 379ms
+ ✓ packages/erp-screens/src/worklist/use-filter-sync.test.tsx (9 tests) 429ms
+ ✓ packages/workspace-core/src/use-workspace.test.tsx (19 tests) 267ms
+stderr | packages/ai-ui/src/use-assistant.test.tsx > the administration config > arrives once asked for
+An update to Probe inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+stderr | packages/ai-ui/src/use-assistant.test.tsx > the administration config > a refused config leaves it null rather than half-built
+An update to Probe inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ✓ packages/ai-ui/src/use-assistant.test.tsx (24 tests) 244ms
+ ✓ packages/erp-screens/src/page-library/catalog.test.tsx (4 tests) 399ms
+ ✓ packages/erp-screens/src/login/recovery.test.tsx (1 test) 258ms
+ ✓ packages/erp-screens/src/label-printing/workspace.test.tsx (2 tests) 252ms
+ ✓ packages/ops-ui/src/segmented.test.tsx (9 tests) 352ms
+ ✓ packages/ops-ui/src/skeleton.test.tsx (4 tests) 105ms
+ ✓ packages/auth/src/session.test.tsx (31 tests) 270ms
+ ✓ packages/ops-ui/src/reference-data.test.tsx (17 tests) 330ms
+ ✓ packages/erp-shell/src/product-context.test.tsx (3 tests) 355ms
+ ✓ packages/ops-ui/src/avatar.test.tsx (10 tests) 210ms
+ ✓ packages/erp-shell/src/workspace/use-mdi-workspace.test.tsx (7 tests) 275ms
+ ✓ packages/ops-ui/src/button.test.tsx (5 tests) 234ms
+ ✓ packages/erp-data/src/mock.test.ts (148 tests) 100ms
+ ✓ packages/ops-ui/src/tabs.test.tsx (3 tests) 235ms
+ ✓ packages/ops-ui/src/stat-card.test.tsx (6 tests) 276ms
+ ✓ packages/ops-ui/src/badge.test.tsx (12 tests) 119ms
+ ✓ packages/ops-ui/src/localization.test.tsx (1 test) 220ms
+ ✓ packages/erp-screens/src/product-services.test.tsx (2 tests) 213ms
+ ✓ packages/ops-ui/src/card.test.tsx (6 tests) 318ms
+ ✓ packages/erp-shell/src/sentinel.test.tsx (1 test) 156ms
+ ✓ packages/erp-screens/src/worklist/export-rows.test.ts (26 tests) 152ms
+ ✓ packages/erp-screens/src/product-access.test.tsx (2 tests) 109ms
+ ✓ packages/erp-screens/src/preference-preview.test.tsx (1 test) 149ms
+ ✓ packages/erp-shell/src/workspace/use-detached-windows.test.tsx (13 tests) 285ms
+ ✓ packages/ops-ui/src/scanner-input.test.tsx (2 tests) 86ms
+ ✓ packages/platform-ports/src/ports.test.tsx (17 tests) 70ms
+ ✓ packages/ai-client/src/sources.test.tsx (10 tests) 104ms
+ ✓ packages/erp-shell/src/chrome.test.tsx (23 tests) 87ms
+ ✓ packages/ops-ui/src/option-filter.test.tsx (13 tests) 75ms
+ ✓ packages/ai-client/src/redact.test.ts (157 tests) 29ms
+ ✓ packages/workspace-core/src/document-manager.test.ts (47 tests) 20ms
+ ✓ packages/erp-config/src/localization-formatting.test.ts (13 tests) 46ms
+ ✓ packages/erp-config/src/filter-policy.test.ts (15 tests) 15ms
+ ✓ packages/erp-config/src/data-classification.test.ts (22 tests) 14ms
+ ✓ packages/ops-ui/src/cn.test.ts (9 tests) 19ms
+ ✓ packages/auth/src/recovery.test.ts (9 tests) 19ms
+ ✓ packages/erp-data/src/csv-import.test.ts (5 tests) 14ms
+ ✓ packages/ai-client/src/policy.test.ts (9 tests) 11ms
+ ✓ packages/erp-shell/src/workspace/mdi-frames.test.ts (20 tests) 12ms
+ ✓ packages/workspace-core/src/detach.test.ts (14 tests) 11ms
+ ✓ packages/ai-client/src/assemble.test.ts (19 tests) 11ms
+ ✓ packages/erp-screens/src/clinical-templates/overview-data.test.ts (1 test) 16ms
+ ✓ packages/erp-screens/src/worklist/search-request.test.ts (10 tests) 12ms
+ ✓ packages/workspace-core/src/split.test.ts (26 tests) 13ms
+ ✓ packages/erp-config/src/product.test.ts (6 tests) 23ms
+ ✓ packages/ai-client/src/admin.test.ts (11 tests) 28ms
+ ✓ packages/workspace-core/src/policy.test.ts (15 tests) 9ms
+ ✓ packages/ops-ui/src/error-mapper.test.ts (32 tests) 11ms
+ ✓ packages/workspace-core/src/lifecycle.test.ts (11 tests) 10ms
+ ✓ packages/platform-ports/src/identity-devices.test.ts (2 tests) 7ms
+ ✓ packages/erp-config/src/draft-policy.test.ts (2 tests) 8ms
+ ✓ packages/ai-client/src/guard.test.ts (9 tests) 5ms
+ ✓ packages/ai-config/src/gates.test.ts (22 tests) 10ms
+ ✓ packages/erp-screens/src/spreadsheet/model.test.ts (4 tests) 9ms
+ ✓ packages/erp-shell/src/workspace/target-document.test.ts (9 tests) 9ms
+ ✓ packages/erp-data/src/draft-center.test.ts (2 tests) 12ms
+ ✓ packages/erp-config/src/export-policy.test.ts (13 tests) 9ms
+ ✓ packages/workspace-core/src/document-key.test.ts (9 tests) 6ms
+ ✓ packages/erp-config/src/form-rules.test.ts (3 tests) 5ms
+ ✓ apps/desktop/src/platform/tauri-windows.test.ts (3 tests) 8ms
+ ✓ packages/ai-config/src/policy.test.ts (13 tests) 4ms
+ ✓ packages/auth/src/sentinel.test.ts (5 tests) 6ms
+ ✓ packages/platform-ports/src/devices.test.ts (1 test) 6ms
+ ✓ packages/erp-config/src/preference-defaults.test.ts (3 tests) 4ms
+ ✓ packages/erp-screens/src/clinical-templates/record-age.test.ts (1 test) 4ms
+
+ Test Files  120 passed (120)
+      Tests  1541 passed (1541)
+   Start at  12:03:21
+   Duration  73.19s (transform 7.12s, setup 38.85s, collect 28.26s, tests 57.47s, environment 57.87s, prepare 10.03s)
+
+
+> nexora-monorepo@1.0.0 test:api
+> node --test ../dummy-api/*.test.mjs && npm run test:clinical-api
+
+✔ authenticated configuration HTTP contract and conditional requests (1625.269041ms)
+✔ navigation filters restricted pages, returns stable identity and handles authorization (553.43003ms)
+✔ backend file edits change menu ordering and page translations, and overrides are isolated (464.432125ms)
+✔ rejects duplicates, invalid parents, cycles, unknown pages and malformed catalogs (331.509987ms)
+✔ ordered stages, config snapshot, comments, requester notifications and persistence (8.042121ms)
+✔ self approval, tenant/product isolation, stale versions and changed saved records are blocked (2.502956ms)
+✔ bulk partial results, request changes, rejection, resubmission and idempotent recovery (3.242832ms)
+✔ all four definitions and every form section are supplied by API (2.840028ms)
+✔ create/save/replay survive CSV reload and reject stale writes and cross-scope reads (47.125974ms)
+✔ temporary identity permitted for ED only; final verification is explicit (16.97582ms)
+✔ bed reservation enforces requirements and concurrency across users (35.156017ms)
+✔ order retains all instructions and cancellation preserves original record (15.350739ms)
+✔ admission records occupancy; completion does not release the bed (45.221611ms)
+✔ signed notes reject edits; addenda cannot rewrite the original values (15.53373ms)
+✔ designer persists drafts, deduplicates retries, isolates scope and rejects stale saves (13.085885ms)
+✔ designer rejects duplicate IDs, unsupported components and ambiguous options (0.405963ms)
+✔ dependent API options persist leading-zero mappings and reject forged relationships and cross-scope access (8.847627ms)
+✔ dependency validation rejects cycles, dangling parents, invalid option mappings and excessive depth (1.273368ms)
+✔ queue is persisted with exact idempotency and changed payload conflicts (6.734253ms)
+✔ scope isolates tenant, product, user and workstation jobs (3.234491ms)
+✔ lookup preserves contexts and returns only exact backend records (0.651175ms)
+✔ tenant policies require admin, version checks and enforce user locks (2.182444ms)
+✔ browser dispatch means requested, demo means simulated, native stays queued (13.251286ms)
+✔ dispatch applies policy changed after enqueue and cancelled jobs stay cancelled (6.903124ms)
+✔ automatic event simulation is admin-only, opt-in and deduplicated by event ID (5.630276ms)
+✔ routing validates device capability and rejects stale policy versions (3.915585ms)
+✔ documentation HTTP authorizes every view and persists scoped read state (1864.40539ms)
+✔ versioned guides, role-filtered search, explicit language fallback and invalid requests (10.322396ms)
+✔ reading state is idempotent, persistent and isolated; only explicit acknowledgment acknowledges (12.604942ms)
+✔ manifest rejects broken notices, duplicate versions and invalid tour anchors (0.940915ms)
+✔ tenant rollout refuses future snapshots and product manifests stay separate (8.923507ms)
+✔ center exposes metadata only and isolates tenant, owner and application (17.232332ms)
+✔ unavailable entries conceal page/record identity and cannot be opened but remain discardable (2.463085ms)
+✔ changed source versions, approval contexts and missing files have distinct statuses (3.14764ms)
+✔ stale discard cannot erase a newer revision, expiry removes drafts and pagination is bounded (25.842786ms)
+✔ a stolen opaque reference cannot open or delete another owner draft (2.296404ms)
+✔ search matches localized page titles without searching unavailable identities (1.217808ms)
+✔ mandatory exclusions are recursive and replay responses contain no secrets (30.873049ms)
+✔ policy is tenant/application scoped and ordinary users cannot override it (16.97577ms)
+✔ tightened exclusions erase existing drafts and replay copies; old windows cannot resurrect them (37.310271ms)
+✔ retention purges on read and keeps tombstones; acknowledged business records survive (15.724602ms)
+✔ disabled storage deletes all users drafts and never blocks ordinary record saves (15.849032ms)
+✔ shared import and approval drafts survive restart and isolate owner, tenant, product and record (11.307143ms)
+✔ shared draft HTTP authorization, payload restrictions and mandatory tenant policy (1602.49242ms)
+✔ document read persists synthetic fields but never authenticates or changes patient (17.314652ms)
+✔ request scope isolates tenant, application, patient binding, owner and station (4.793571ms)
+✔ retries are idempotent, changed requests conflict and a fresh completion cannot replay (5.996898ms)
+✔ expired challenges are rejected including result replay (7.472358ms)
+✔ biometrics default off, admin policy and current lock apply to pending capture (18.526169ms)
+✔ no capture without consent; native transport unavailable and raw biometric data rejected (7.737499ms)
+✔ manual review works when biometrics are disabled and never sets authenticated (7.416368ms)
+✔ cancel stops capture, only one active request allowed, expired document is distinct (23.220199ms)
+✔ preview never writes, marks all CSV duplicates and detects existing records and invalid formats (5.934188ms)
+✔ partial failures retry only failed rows and survive lost job receipts (2.084163ms)
+✔ batch progress, race duplicates, role checks and user isolation (2.432606ms)
+✔ backend generates real SVG symbols and persists exact retry identity (19.241154ms)
+✔ rejects over-copies, incompatible stock, missing IDs and cross-category records (0.769005ms)
+✔ tenant, application and user isolation with server-only admin authority (11.238643ms)
+✔ print attempts are not completion; reprint reason and policy are enforced (17.102111ms)
+✔ payment QR never marks paid on creation or print and expires server-side (52.799731ms)
+✔ all advertised symbologies render; administrator simulation is explicit (123.325316ms)
+✔ stock fit failure identifies the printer field (1.277839ms)
+✔ every registered backend message has four complete translations (63.115827ms)
+✔ the wire envelope preserves old clients, statuses and literal user data (1.243399ms)
+✔ unknown errors and old persisted activity retain readable details (0.298022ms)
+✔ monitoring HTTP permits collection but restricts management and rejects tenant spoofing (1452.645732ms)
+✔ monitoring strips sensitive payloads, deduplicates deliveries, reopens incidents and isolates tenants/products (44.755009ms)
+✔ monitoring validates page references and rate limits each authenticated user (42.803436ms)
+✔ preference HTTP rejects non-admin policy writes, locked imports and stale clients (1348.678901ms)
+✔ API module preference changes startup navigation only for its account and application (1615.900471ms)
+✔ locks persist, reject overrides, and unlocking restores personal choices (23.202369ms)
+✔ policy and overrides isolate tenant, product and user; permission is explicit (12.699593ms)
+✔ stale policies, concurrent saves and invalid fields cannot replace current state (13.427256ms)
+✔ admin defaults apply to new users; unlocked personal choices and reset take precedence (10.95875ms)
+✔ default module persists per account and respects access revocation and tenant locks (19.383335ms)
+✔ attachments round trip and list responses omit bytes; removal and retries are atomic (5.076413ms)
+✔ comments, related records and activity are scoped; invalid or denied writes leave no event (125.62737ms)
+✔ saved records and recovery drafts survive reopening the store (4.832931ms)
+✔ record versions are shared in a tenant; drafts belong to the account (1.852343ms)
+✔ stale saves and drafts cannot overwrite another window (1.197008ms)
+✔ retrying an acknowledged operation is idempotent (1.250638ms)
+✔ discard keeps a revision tombstone so late draft writes cannot resurrect it (1.869472ms)
+✔ invalid payloads do not mutate the record (0.567364ms)
+✔ a failed disk write does not publish a saved record (1.236968ms)
+✔ create allocates an independent record and clears only the source draft (0.950426ms)
+✔ authenticated HTTP record lifecycle, isolation and conflicts (1462.06398ms)
+✔ calendar month recurrence preserves the anchor day across February (1.253318ms)
+✔ schedules persist, retry failed work, isolate owners and do not duplicate a due delivery (22.210303ms)
+✔ HTTP enforcement: origins, tenant audit authorization, schedules and AI refusals (6372.769696ms)
+✔ audit survives restart, isolates tenants, strips data and expires by retention (38.318387ms)
+✔ providers must match exact HTTPS bases; expired credentials fail closed (0.422373ms)
+✔ one user cannot exhaust another user allowance; tenant remains part of the key (2.636537ms)
+✔ modified AI clients cannot send free text, clinical data, labels or undeclared keys (0.691385ms)
+✔ encrypted credentials migrate, survive restart and reject the wrong master key (9.41432ms)
+✔ personal views persist, isolate owners, and reject stale changes (4.115346ms)
+✔ view layouts reject malformed values (0.266991ms)
+✔ archive reports partial failures, is idempotent and persists in tenant/product/page scope (3.420872ms)
+ℹ tests 97
+ℹ suites 0
+ℹ pass 97
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11044.997376
+
+> nexora-monorepo@1.0.0 test:clinical-api
+> tsc -p ../dummy-api/tsconfig.clinical.json && node --test ../dummy-api/clinical-template-store.test.ts ../dummy-api/clinical-template-csv.test.ts ../dummy-api/clinic-billing-store.test.ts ../dummy-api/clinical-triage-store.test.ts ../dummy-api/clinical-consultation-store.test.ts ../dummy-api/comprehensive-consultation-store.test.ts ../dummy-api/op-registration-store.test.ts
+
+✔ prescription → order → invoice → partial payments → refund survives restart and duplicate retries (33.207923ms)
+✔ permissions, conflicts, duplicate billing, input validation and tenant isolation (10.100965ms)
+✔ void returns unpaid orders for rebilling and blocks paid invoice cancellation (21.96388ms)
+✔ unpaid bill corrections preserve revisions and survive retries; paid, stale and unauthorized edits fail (24.207366ms)
+✔ consultation drafts persist, retry once, validate explicit entries, finalize immutably and isolate scope (13.480877ms)
+✔ expanded notes persist and legacy updates preserve new fields (14.832795ms)
+✔ CSV create round-trips commas quotes Unicode newlines and booleans; query and 360 read the saved record after restart (69.99987ms)
+✔ CSV changes are read on the next API operation; legacy JSON migration preserves records and leaves source intact (58.870288ms)
+✔ corrupt CSV fails closed instead of replacing saved records with seed data (13.559878ms)
+✔ CSV parser enforces quoting, row width and duplicate entity identities (0.489463ms)
+✔ new related entries and their retry receipts survive restart and appear in 360 from CSV (34.082669ms)
+✔ patient search applies combined filters, sorting and pagination (48.430972ms)
+✔ complete registration is atomic, persisted and retried idempotently (52.152675ms)
+✔ validation, duplicate identity and stale versions cannot alter records (32.165797ms)
+✔ patient mutations are tenant/application scoped and permissions are enforced (44.760599ms)
+✔ saved searches are user scoped; appointment writes are patient scoped and retry safe (47.102283ms)
+✔ eligibility reads the saved policy and rejects unknown policy identities (11.00086ms)
+✔ patient record keeps identifiers server managed and projects contact edits into search values (21.765179ms)
+✔ registry search uses whole words, phrases, exclusions and child-record values (58.199824ms)
+✔ draft persists and retries keep one identity; complete locks history and new assessments are blank (13.853319ms)
+✔ completion requires explicit safety/priority and measurements or a reason; malformed input is rejected (5.050952ms)
+✔ server roles, tenant scope, optimistic versions and corrupt CSV are enforced (3.649003ms)
+✔ comprehensive CSV persists linked records, retries once, rejects stale and signed edits, isolates tenants (13.512497ms)
+✔ reject malformed nested data, duplicate diagnoses, dangling orders and unsigned medication review (1.249707ms)
+✔ score totals distinguish zero, incomplete, NT and invalid; E/M uses median and separate bounded time (1.069887ms)
+✔ required validation, persistent check-in and idempotent retries (9.709102ms)
+✔ write permission, optimistic conflict, server-owned eligibility and duplicate encounters (9.26401ms)
+✔ clinical lifecycle: signed note immutable, service charges, payments, completion and addenda (38.313757ms)
+✔ pending results require ownership, draft policy excludes sensitive fields and expires drafts (7.265766ms)
+✔ appointment slot conflict and patient association validation (11.900947ms)
+✔ pending results require an owner, date and plan; clinical closure is independent of payment (10.129144ms)
+✔ discount cannot create overpayment and reversals preserve the original payment (14.464303ms)
+✔ disabled drafts do not prevent check-in or ephemeral eligibility checks (4.840382ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 707.591302
+
+> nexora-monorepo@1.0.0 test:e2e-registry
+> node --test e2e/tests/*.test.mjs
+
+✔ every suite declares a runtime; native suites never join the browser group (2.854759ms)
+✔ authentication refuses a different backend before submitting credentials (0.280242ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68.651171
+
+> nexora-monorepo@1.0.0 test:deployment
+> node --test scripts/deployment/*.test.mjs
+
+✔ health requires the selected release, not merely any process answering 200 (61.954368ms)
+✔ healthy HTML with a missing script is not a healthy deployment (27.647938ms)
+✔ an SPA fallback returning HTML for a script cannot pass health (22.506145ms)
+✔ deployment requires explicit API URLs and rejects accidental loopback builds (2.728498ms)
+✔ build verification refuses missing stamps, mismatches, and incomplete artifacts (18.808892ms)
+✔ source snapshots exclude secrets, build output, dependency trees, and references (28.874247ms)
+✔ packaging survives deletion of its build tree and includes static/public assets (33.959148ms)
+✔ activation selects a release only after stop and checks it after start (17.886435ms)
+✔ failed start restores and checks the previous release (15.763262ms)
+✔ failed health restores and checks the previous release (29.912234ms)
+✔ failed first deployment removes its pointer and does not pretend to roll back (9.125117ms)
+✔ desktop server serves SPA routes and assets without leaking files or hiding missing chunks (60.313707ms)
+✔ an interruption after start rolls back before reporting success (25.113341ms)
+✔ a partial stop failure attempts to restart the previous release (18.045736ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 385.864731
+
+> nexora-monorepo@1.0.0 build
+> turbo run build
+
+• turbo 2.10.12
+
+   • Packages in scope: @pepbits/ai-client, @pepbits/ai-config, @pepbits/ai-ui, @pepbits/auth, @pepbits/erp-config, @pepbits/erp-data, @pepbits/erp-screens, @pepbits/erp-shell, @pepbits/ops-ui, @pepbits/platform-ports, @pepbits/tokens, @pepbits/workspace-core, desktop, web
+   • Running build in 14 packages
+   • Remote caching disabled
+
+web:build: cache miss, executing 905b45e0a368a5a0
+desktop:build: cache miss, executing dcfcc460a0352e01
+desktop:build: 
+desktop:build: > desktop@1.0.0 build
+desktop:build: > rm -rf dist && tsc --noEmit && vite build && node ../../scripts/stamp-api.mjs VITE_API_URL dist
+desktop:build: 
+web:build: 
+web:build: > web@1.0.0 build
+web:build: > rm -rf .next/static && next build && node ../../scripts/stamp-api.mjs NEXT_PUBLIC_API_URL .next
+web:build: 
+web:build: ▲ Next.js 16.3.3 (Turbopack)
+web:build: - Environments: .env.local
+web:build: ✓ Running next.config.ts took 49ms
+web:build: 
+web:build:   Creating an optimized production build ...
+web:build: ✓ Compiled successfully in 5.0s
+web:build:   Running TypeScript ...
+desktop:build: vite v7.3.6 building client environment for production...
+desktop:build: transforming...
+desktop:build: ✓ 1897 modules transformed.
+web:build:   Finished TypeScript in 12.6s ...
+web:build:   Collecting page data using 3 workers ...
+desktop:build: rendering chunks...
+desktop:build: [plugin vite:reporter] 
+desktop:build: (!) /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/core.js is dynamically imported by /home/pepadmin/enterprice/desktop-clients/packages/erp-shell/src/sentinel.tsx, /home/pepadmin/enterprice/desktop-clients/packages/erp-shell/src/sentinel.tsx but also statically imported by /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/dpi.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/event.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/image.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webview.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webviewWindow.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/window.js, dynamic import will not move module into another chunk.
+desktop:build: 
+desktop:build: [plugin vite:reporter] 
+desktop:build: (!) /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/event.js is dynamically imported by /home/pepadmin/enterprice/desktop-clients/packages/erp-shell/src/sentinel.tsx but also statically imported by /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webview.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/webviewWindow.js, /home/pepadmin/enterprice/desktop-clients/node_modules/@tauri-apps/api/window.js, dynamic import will not move module into another chunk.
+desktop:build: 
+desktop:build: computing gzip size...
+web:build:   Generating static pages using 3 workers (0/3) ...
+desktop:build: dist/index.html                                       1.05 kB │ gzip:   0.52 kB
+desktop:build: dist/assets/library-page-BZ8DFha9.css                 1.27 kB │ gzip:   0.59 kB
+desktop:build: dist/assets/library-page-CEKWtzpF.css                 1.30 kB │ gzip:   0.50 kB
+desktop:build: dist/assets/page-template-DHkRpzaa.css                2.17 kB │ gzip:   0.74 kB
+desktop:build: dist/assets/library-page-B5FBY-Fy.css                 4.55 kB │ gzip:   1.28 kB
+desktop:build: dist/assets/workspace-Bnk30RYg.css                    5.02 kB │ gzip:   1.41 kB
+desktop:build: dist/assets/library-page-B8oeBtES.css                 9.14 kB │ gzip:   2.17 kB
+desktop:build: dist/assets/index-BHGzopo0.css                       90.63 kB │ gzip:  16.75 kB
+desktop:build: dist/assets/clinical-triage-DHLgwzOt.js               0.12 kB │ gzip:   0.12 kB
+desktop:build: dist/assets/clinical-consultation-CY0XKaxC.js         0.12 kB │ gzip:   0.12 kB
+desktop:build: dist/assets/preference-choice-DfcY3p6u.js             0.40 kB │ gzip:   0.26 kB
+desktop:build: dist/assets/clinical-document-CRPU8npr.js             0.42 kB │ gzip:   0.33 kB
+desktop:build: dist/assets/scanner-input-zNav5uQ1.js                 0.44 kB │ gzip:   0.34 kB
+desktop:build: dist/assets/print-document-C9Ee977y.js                0.60 kB │ gzip:   0.36 kB
+desktop:build: dist/assets/library-page-DjvwrlP_.js                  0.67 kB │ gzip:   0.40 kB
+desktop:build: dist/assets/library-page-eNiwyTwZ.js                  0.76 kB │ gzip:   0.43 kB
+desktop:build: dist/assets/clinical-templates-C6qMOJcp.js            0.92 kB │ gzip:   0.52 kB
+desktop:build: dist/assets/library-page-hE4PkLMi.js                  0.93 kB │ gzip:   0.56 kB
+desktop:build: dist/assets/configured-template-page-CHBudc1M.js      1.80 kB │ gzip:   0.90 kB
+desktop:build: dist/assets/calendar-TTiwFpfb.js                      3.50 kB │ gzip:   1.61 kB
+desktop:build: dist/assets/template-parts-D_-HQL8P.js                3.74 kB │ gzip:   1.36 kB
+desktop:build: dist/assets/library-page-2HNBSPSI.js                  7.45 kB │ gzip:   2.57 kB
+desktop:build: dist/assets/library-page-D6lIi-9_.js                  8.95 kB │ gzip:   3.13 kB
+desktop:build: dist/assets/template-library-CmohUIUD.js              9.84 kB │ gzip:   3.32 kB
+desktop:build: dist/assets/library-page-DXvYNNAS.js                  9.94 kB │ gzip:   3.42 kB
+desktop:build: dist/assets/library-page-sDMh5KV3.js                 11.92 kB │ gzip:   4.38 kB
+desktop:build: dist/assets/library-page-t7IR7VX0.js                 13.95 kB │ gzip:   4.96 kB
+desktop:build: dist/assets/index-DE_KHHoV.js                        15.12 kB │ gzip:   2.90 kB
+desktop:build: dist/assets/library-page-DeIZEWO6.js                 20.27 kB │ gzip:   6.86 kB
+desktop:build: dist/assets/library-page-Bmvnot7L.js                 23.93 kB │ gzip:   7.17 kB
+desktop:build: dist/assets/library-page-BYtwajfN.js                 25.52 kB │ gzip:   7.19 kB
+desktop:build: dist/assets/library-page-CJvp-OfL.js                 34.31 kB │ gzip:  10.64 kB
+desktop:build: dist/assets/page-template-Da8KbtDA.js                34.80 kB │ gzip:  10.38 kB
+desktop:build: dist/assets/workspace-D1v7f9JL.js                    44.62 kB │ gzip:  13.73 kB
+desktop:build: dist/assets/component-catalog-DoCnin59.js            50.20 kB │ gzip:  12.84 kB
+desktop:build: dist/assets/locale-fallback-en-DwE619QZ.js          374.21 kB │ gzip: 102.46 kB
+desktop:build: dist/assets/locale-fallback-ar-Ysv7-2Fw.js          475.14 kB │ gzip: 134.13 kB
+desktop:build: dist/assets/locale-fallback-hi-CZB5ZSSi.js          628.76 kB │ gzip: 142.82 kB
+desktop:build: dist/assets/locale-fallback-ml-vdIlKChf.js          742.32 kB │ gzip: 152.58 kB
+desktop:build: dist/assets/index-cpmrNmA9.js                     1,631.73 kB │ gzip: 492.06 kB
+desktop:build: 
+desktop:build: (!) Some chunks are larger than 500 kB after minification. Consider:
+desktop:build: - Using dynamic import() to code-split the application
+desktop:build: - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+desktop:build: - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+desktop:build: ✓ built in 9.84s
+web:build: ✓ Generating static pages using 3 workers (3/3) in 396ms
+web:build:   Finalizing page optimization ...
+web:build: 
+web:build: Route (app)
+web:build: ┌ ○ /
+web:build: ├ ○ /_not-found
+web:build: ├ ƒ /[module]/[page]
+web:build: ├ ƒ /[module]/[page]/[recordId]
+web:build: ├ ƒ /[module]/[page]/[recordId]/edit
+web:build: ├ ƒ /[module]/[page]/new
+web:build: └ ƒ /view/[viewId]
+web:build: 
+web:build: 
+web:build: ○  (Static)   prerendered as static content
+web:build: ƒ  (Dynamic)  server-rendered on demand
+web:build: 
+
+ Tasks:    2 successful, 2 total
+Cached:    0 cached, 2 total
+  Time:    21.457s 
+
+
+> nexora-monorepo@1.0.0 verify
+> npm run -s verify:parity && npm run -s verify:ai-gates && npm run -s verify:ai-modes && npm run -s verify:ai-context && npm run -s verify:ai-limits && npm run -s verify:em-levels && npm run -s verify:filter-safety && npm run -s verify:ai-egress && npm run -s verify:export-safety && npm run -s verify:contrast && npm run -s verify:form-controls && npm run -s verify:shared-components && npm run -s verify:deployable && npm run -s verify:ai-hardening && npm run -s verify:localization && npm run -s verify:e2e-registry && npm run -s verify:bundle && npm run -s verify:documentation && npm run -s verify:library && npm run -s verify:templates && npm run -s verify:library-preferences
+
+
+  4 packages use utility classes
+
+  every styled package is @source'd by both apps
+  ok    web: ai-ui                                          
+  ok    web: erp-screens                                    
+  ok    web: erp-shell                                      
+  ok    web: ops-ui                                         
+  ok    desktop: ai-ui                                      
+  ok    desktop: erp-screens                                
+  ok    desktop: erp-shell                                  
+  ok    desktop: ops-ui                                     
+
+  utilities unique to a package survive into the built CSS
+  ok    web: ai-ui                                          6 canaries present
+  ok    web: erp-screens                                    6 canaries present
+  ok    web: erp-shell                                      6 canaries present
+  ok    web: ops-ui                                         6 canaries present
+  ok    desktop: ai-ui                                      6 canaries present
+  ok    desktop: erp-screens                                6 canaries present
+  ok    desktop: erp-shell                                  6 canaries present
+  ok    desktop: ops-ui                                     6 canaries present
+
+  Every styled package is visible to both apps, and its classes survive the build.
+
+
+        case                                         result                 use cases
+  -------------------------------------------------- ---------------------- ---------
+  ok    no gate speaks                               denied / useCase       []
+  ok    build gate off                               denied / build         []
+  ok    tenant off beats page on and user on         denied / tenant        []
+  ok    user gate off                                denied / user          []
+  ok    everything allows                            allowed / user         [a]
+  ok    page [a,b] narrowed by user [a]              allowed / user         [a]
+  ok    useCase gate narrows the page's set          allowed / user         [b]
+  ok    requested id outside the set                 denied / useCase       [a]
+  ok    ESCALATION: user names b, page did not       allowed / user         [a]
+  ok    ESCALATION: user is the ONLY gate to name a set denied / useCase       []
+  ok    ESCALATION: user re-adds what useCase removed allowed / user         [a]
+  ok    role is no longer a gate: an unknown key is ignored allowed / user         [a]
+  ok    page names an empty set                      denied / useCase       []
+
+  13 resolver cases passed.
+
+        gatesForPage case                            result                 use cases
+  -------------------------------------------------- ---------------------- ---------
+  ok    pilot page, module allowed                   allowed / user         [a]
+  ok    module gate denies a page that HAS a build block denied / module        []
+  ok    page gate denies                             denied / page          []
+  ok    explicit { enabled: false } denies at gate 1, even with use cases named denied / build         []
+  ok    no build block: gate 1 denies before any policy is consulted denied / build         []
+  ok    user preference off                          denied / user          []
+  ok    policy not fetched: renders build set, server still enforces allowed / user         [a,b]
+
+  20 cases passed in total.
+
+
+  removing a use case at the use-case gate
+
+  ok    both use cases resolve to begin with                    worklist.summarise-selection, record.explain
+  ok    the disabled one is gone from the set                   worklist.summarise-selection
+  ok    the other survives                                      
+  ok    a set emptied by the gate denies outright               
+
+  every surface reads the same engine
+
+  ok    assistant-panel.tsx does not resolve access itself      
+  ok    terminal.tsx does not resolve access itself             
+  ok    inline-action.tsx does not resolve access itself        
+  ok    assistant-panel.tsx reads the shared assistant          
+  ok    terminal.tsx reads the shared assistant                 
+  ok    inline-action.tsx reads the shared assistant            
+  ok    the engine is the only place that resolves              
+  ok    terminal builds its command list from the resolved set  
+  ok    inline checks membership rather than re-resolving       
+  ok    inline refuses to surface a clinical use case           
+  ok    the inline surface is mounted somewhere                 6 call site(s)
+  ok    worklist.summarise-selection has an inline affordance   
+  ok    record.explain has an inline affordance                 
+  ok    form.draft-note has an inline affordance                
+  ok    dashboard.explain-metrics has an inline affordance      
+  ok    report.summarise has an inline affordance               
+  ok    inbox.summarise-unread has an inline affordance         
+  ok    encounter.summarise has NO inline affordance            clinical, correctly absent
+  ok    documentation.gaps has NO inline affordance             clinical, correctly absent
+  ok    cohort.summarise-selection has NO inline affordance     clinical, correctly absent
+  ok    coding.suggest-icd has NO inline affordance             clinical, correctly absent
+  ok    orders.suggest has NO inline affordance                 clinical, correctly absent
+
+  panel, terminal and inline share one engine.
+
+
+  assembly
+
+  ok    only named fields appear                            5 fields
+  ok    a field the page has but reads omits is absent      
+  ok    the internal note never reaches the payload         
+  ok    credit limit was not read                           
+  ok    an absent named field is omitted, not sent empty    
+
+  redaction runs during assembly, so the panel shows what is sent
+
+  ok    email is masked in the payload                      m••••••••••@northgate.example
+  ok    email is flagged redacted                           
+  ok    the raw email is nowhere in the context             
+  ok    iban is masked                                      ••••••••3456
+  ok    the raw iban is nowhere in the context              
+  ok    a non-sensitive field is untouched                  
+  ok    redactField leaves ordinary keys alone              
+
+  removing a field from the use case removes it from the payload
+
+  ok    field count drops                                   5 -> 2
+  ok    the removed field is gone                           
+  ok    its value is gone from the payload too              
+
+  worklist selection
+
+  ok    one entry per row per named field                   4 fields
+  ok    rows are labelled so a user can match them          
+  ok    unnamed row keys never appear                       
+
+  all context checks passed.
+
+
+  a missing or zero limit must mean the DEFAULT, never unlimited
+    ok     requestsPerMinute 0 resolves to 20, got 20
+    ok     tokensPerDay -5 resolves to 200000, got 200000
+
+  the per-minute limit is enforced
+      window held 0, cap 3, sent 6: 400 400 400 429 429 429
+    ok     3 admitted (400, refused at prompt — no provider call), got 3
+    ok     the rest refused 429, got 3
+    ok     429 carries a usable Retry-After, got 60
+
+  the admin's own provider call is not a way round it
+    ok     verify is refused while the window is full, got 429
+
+  restored: 20/min, 200000 tokens/day
+  spent today: 0 tokens (unchanged by this script)
+
+  Limits are enforced, defaults cover a missing or invalid value, and the
+  admin verify path spends from the same budget.
+
+  The per-minute window clears 60s after the last request.
+
+
+  the level is the median of three, over all 64 combinations
+
+  ok    64 combinations all resolve to the median                 
+  ok    the test can distinguish median from maximum              42 cases differ
+  ok    the test can distinguish median from minimum              42 cases differ
+
+  a single high element does not carry a visit
+  ok    minimal/minimal/high stays straightforward                got straightforward (99202)
+  ok    the derivation names which elements carried it            Problems + Data + Risk
+
+  codes, and the one that should not exist
+  ok    new + high = 99205                                        
+  ok    established + low = 99213                                 
+  ok    99201 is absent — deleted in the 2021 revision            
+
+  time bands, at their boundaries
+  ok    new: 15–29 → straightforward                              99202 / 99202
+  ok    new: 30–44 → low                                          99203 / 99203
+  ok    new: 45–59 → moderate                                     99204 / 99204
+  ok    new: 60–74 → high                                         99205 / 99205
+  ok    established: 10–19 → straightforward                      99212 / 99212
+  ok    established: 20–29 → low                                  99213 / 99213
+  ok    established: 30–39 → moderate                             99214 / 99214
+  ok    established: 40–54 → high                                 99215 / 99215
+  ok    under the lowest band supports no level                   14 min → null
+  ok    a non-number supports no level                            
+
+  Two of three is the median, a single element cannot carry a visit,
+  and the time bands hold at their boundaries.
+
+
+  the registry agrees with the written policy
+
+    ok    status is operational                                   operational
+    ok    branch is operational                                   operational
+    ok    department is operational                               operational
+    ok    from is operational                                     operational
+    ok    to is operational                                       operational
+    ok    sort is operational                                     operational
+    ok    page is operational                                     operational
+    ok    pageSize is operational                                 operational
+    ok    patientName never reaches a URL                         phi
+    ok    mrn never reaches a URL                                 phi
+    ok    emiratesId never reaches a URL                          pii
+    ok    dob never reaches a URL                                 phi
+    ok    phone never reaches a URL                               pii
+    ok    diagnosis never reaches a URL                           clinical
+    ok    medication never reaches a URL                          clinical
+    ok    insuranceId never reaches a URL                         pii
+    ok    memberId never reaches a URL                            pii
+    ok    email never reaches a URL                               pii
+    ok    query never reaches a URL                               phi
+    ok    tags never reaches a URL                                phi
+    ok    recordRef never reaches a URL                           phi
+
+  every filter key carries a classification
+
+    ok    the registry is not empty                               140 keys
+    ok    acuity                                                  clinical
+    ok    admitted                                                phi
+    ok    aggregation                                             operational
+    ok    apiKey                                                  credential
+    ok    atc                                                     clinical
+    ok    balance                                                 operational
+    ok    branch                                                  operational
+    ok    budget                                                  operational
+    ok    candidateCodes                                          clinical
+    ok    candidateOrders                                         clinical
+    ok    category                                                operational
+    ok    chiefComplaint                                          clinical
+    ok    city                                                    pii
+    ok    clinicInsuranceShare                                    operational
+    ok    clinicInvoiceRef                                        phi
+    ok    clinicNet                                               operational
+    ok    clinicPatientShare                                      operational
+    ok    clinicQuantity                                          operational
+    ok    clinicServiceDescription                                clinical
+    ok    clinicTax                                               operational
+    ok    clinician                                               pii
+    ok    comparison                                              operational
+    ok    complaint                                               clinical
+    ok    consultedOn                                             phi
+    ok    contact                                                 pii
+    ok    contribution                                            operational
+    ok    controlled                                              clinical
+    ok    cost                                                    operational
+    ok    country                                                 operational
+    ok    createdBy                                               pii
+    ok    creditLimit                                             operational
+    ok    currency                                                operational
+    ok    current                                                 operational
+    ok    customer                                                operational
+    ok    delta                                                   operational
+    ok    department                                              operational
+    ok    diagnosis                                               clinical
+    ok    dimension                                               operational
+    ok    dob                                                     phi
+    ok    dose                                                    clinical
+    ok    drug                                                    clinical
+    ok    dueDate                                                 operational
+    ok    duration                                                clinical
+    ok    email                                                   pii
+    ok    emiratesId                                              pii
+    ok    exposure                                                operational
+    ok    findings                                                clinical
+    ok    followUp                                                clinical
+    ok    form                                                    clinical
+    ok    formulary                                               operational
+    ok    from                                                    operational
+    ok    gender                                                  phi
+    ok    id                                                      operational
+    ok    insuranceId                                             pii
+    ok    invoiceDate                                             operational
+    ok    joinDate                                                pii
+    ok    jurisdiction                                            operational
+    ok    kind                                                    operational
+    ok    label                                                   operational
+    ok    lastInvoice                                             operational
+    ok    leadTime                                                operational
+    ok    leaveBalance                                            pii
+    ok    lengthOfStay                                            clinical
+    ok    manager                                                 pii
+    ok    margin                                                  operational
+    ok    medication                                              clinical
+    ok    memberId                                                pii
+    ok    minimum                                                 operational
+    ok    mrn                                                     phi
+    ok    name                                                    operational
+    ok    nextExpiry                                              operational
+    ok    note                                                    operational
+    ok    onHand                                                  operational
+    ok    onTime                                                  operational
+    ok    openPO                                                  operational
+    ok    orderDate                                               operational
+    ok    outcome                                                 clinical
+    ok    outstanding                                             operational
+    ok    owner                                                   operational
+    ok    page                                                    operational
+    ok    pageSize                                                operational
+    ok    paid                                                    operational
+    ok    password                                                credential
+    ok    patient                                                 phi
+    ok    patientName                                             phi
+    ok    payer                                                   operational
+    ok    performance                                             pii
+    ok    phone                                                   pii
+    ok    position                                                operational
+    ok    prescribedOn                                            phi
+    ok    prescriber                                              pii
+    ok    preset                                                  operational
+    ok    preview                                                 operational
+    ok    previous                                                operational
+    ok    price                                                   operational
+    ok    primaryDiagnosis                                        clinical
+    ok    priority                                                operational
+    ok    problem                                                 clinical
+    ok    procedure                                               clinical
+    ok    quality                                                 operational
+    ok    query                                                   phi
+    ok    recordRef                                               phi
+    ok    reference                                               operational
+    ok    reorder                                                 operational
+    ok    reorderLevel                                            operational
+    ok    requestedDate                                           operational
+    ok    risk                                                    operational
+    ok    role                                                    operational
+    ok    route                                                   clinical
+    ok    secret                                                  credential
+    ok    segment                                                 operational
+    ok    sheetDescription                                        operational
+    ok    sheetDiscount                                           operational
+    ok    sheetItemCode                                           operational
+    ok    sheetNetCost                                            operational
+    ok    sheetQuantity                                           operational
+    ok    sheetSupplier                                           operational
+    ok    sheetTax                                                operational
+    ok    sheetUnitCost                                           operational
+    ok    sort                                                    operational
+    ok    specialty                                               clinical
+    ok    status                                                  operational
+    ok    stock                                                   operational
+    ok    supplier                                                operational
+    ok    tags                                                    phi
+    ok    terms                                                   operational
+    ok    time                                                    operational
+    ok    title                                                   operational
+    ok    to                                                      operational
+    ok    token                                                   credential
+    ok    total                                                   operational
+    ok    type                                                    operational
+    ok    unit                                                    operational
+    ok    unitCost                                                operational
+    ok    updated                                                 operational
+    ok    value                                                   operational
+    ok    variance                                                operational
+    ok    view                                                    operational
+    ok    ward                                                    clinical
+    ok    warehouse                                               operational
+
+  the sensitive ones cannot be serialised
+
+    ok    no phi value is serialised                              
+    ok    no pii value is serialised                              
+    ok    no clinical value is serialised                         
+    ok    no credential value is serialised                       
+    ok    no unclassified value is serialised                     
+    ok    no acuity key appears in the query string               
+    ok    no admitted key appears in the query string             
+    ok    no apiKey key appears in the query string               
+    ok    no atc key appears in the query string                  
+    ok    no candidateCodes key appears in the query string       
+    ok    no candidateOrders key appears in the query string      
+    ok    no chiefComplaint key appears in the query string       
+    ok    no city key appears in the query string                 
+    ok    no clinicInvoiceRef key appears in the query string     
+    ok    no clinicServiceDescription key appears in the query string
+    ok    no clinician key appears in the query string            
+    ok    no complaint key appears in the query string            
+    ok    no consultedOn key appears in the query string          
+    ok    no contact key appears in the query string              
+    ok    no controlled key appears in the query string           
+    ok    no createdBy key appears in the query string            
+    ok    no diagnosis key appears in the query string            
+    ok    no dob key appears in the query string                  
+    ok    no dose key appears in the query string                 
+    ok    no drug key appears in the query string                 
+    ok    no duration key appears in the query string             
+    ok    no email key appears in the query string                
+    ok    no emiratesId key appears in the query string           
+    ok    no findings key appears in the query string             
+    ok    no followUp key appears in the query string             
+    ok    no form key appears in the query string                 
+    ok    no gender key appears in the query string               
+    ok    no insuranceId key appears in the query string          
+    ok    no joinDate key appears in the query string             
+    ok    no leaveBalance key appears in the query string         
+    ok    no lengthOfStay key appears in the query string         
+    ok    no manager key appears in the query string              
+    ok    no medication key appears in the query string           
+    ok    no memberId key appears in the query string             
+    ok    no mrn key appears in the query string                  
+    ok    no outcome key appears in the query string              
+    ok    no password key appears in the query string             
+    ok    no patient key appears in the query string              
+    ok    no patientName key appears in the query string          
+    ok    no performance key appears in the query string          
+    ok    no phone key appears in the query string                
+    ok    no prescribedOn key appears in the query string         
+    ok    no prescriber key appears in the query string           
+    ok    no primaryDiagnosis key appears in the query string     
+    ok    no problem key appears in the query string              
+    ok    no procedure key appears in the query string            
+    ok    no query key appears in the query string                
+    ok    no recordRef key appears in the query string            
+    ok    no route key appears in the query string                
+    ok    no secret key appears in the query string               
+    ok    no specialty key appears in the query string            
+    ok    no tags key appears in the query string                 
+    ok    no token key appears in the query string                
+    ok    no ward key appears in the query string                 
+    ok    operational filters ARE carried                         86 of 140
+
+  Every filter is classified, and only operational ones reach a URL.
+
+
+  redaction agrees with the written policy
+
+    ok    patientName is masked                                   phi
+    ok    mrn is masked                                           phi
+    ok    dob is masked                                           phi
+    ok    emiratesId is masked                                    pii
+    ok    phone is masked                                         pii
+    ok    email is masked                                         pii
+    ok    memberId is masked                                      pii
+    ok    insuranceId is masked                                   pii
+    ok    clinician is masked                                     pii
+    ok    admitted is masked                                      phi
+    ok    createdBy is masked                                     pii
+    ok    primaryDiagnosis stays legible                          clinical
+    ok    problem stays legible                                   clinical
+    ok    complaint stays legible                                 clinical
+    ok    findings stays legible                                  clinical
+    ok    ward stays legible                                      clinical
+    ok    acuity stays legible                                    clinical
+    ok    diagnosis stays legible                                 clinical
+    ok    medication stays legible                                clinical
+    ok    procedure stays legible                                 clinical
+    ok    status stays legible                                    operational
+    ok    id stays legible                                        operational
+    ok    owner stays legible                                     operational
+    ok    outstanding stays legible                               operational
+    ok    branch stays legible                                    operational
+
+  every field a use case reads is classified
+
+    ok    the catalogue names some fields                         43 keys across 11 use cases
+    ok    acuity                                                  clinical
+    ok    admitted                                                phi
+    ok    budget                                                  operational
+    ok    candidateCodes                                          clinical
+    ok    candidateOrders                                         clinical
+    ok    clinician                                               pii
+    ok    complaint                                               clinical
+    ok    contribution                                            operational
+    ok    creditLimit                                             operational
+    ok    current                                                 operational
+    ok    customer                                                operational
+    ok    delta                                                   operational
+    ok    dimension                                               operational
+    ok    dob                                                     phi
+    ok    findings                                                clinical
+    ok    id                                                      operational
+    ok    jurisdiction                                            operational
+    ok    kind                                                    operational
+    ok    label                                                   operational
+    ok    lastInvoice                                             operational
+    ok    lengthOfStay                                            clinical
+    ok    name                                                    operational
+    ok    note                                                    operational
+    ok    outstanding                                             operational
+    ok    owner                                                   operational
+    ok    payer                                                   operational
+    ok    preview                                                 operational
+    ok    previous                                                operational
+    ok    primaryDiagnosis                                        clinical
+    ok    problem                                                 clinical
+    ok    reference                                               operational
+    ok    risk                                                    operational
+    ok    role                                                    operational
+    ok    segment                                                 operational
+    ok    specialty                                               clinical
+    ok    status                                                  operational
+    ok    terms                                                   operational
+    ok    time                                                    operational
+    ok    title                                                   operational
+    ok    type                                                    operational
+    ok    value                                                   operational
+    ok    variance                                                operational
+    ok    ward                                                    clinical
+
+  a general use case reads nothing clinical or identifying
+
+    ok    worklist.summarise-selection                            
+    ok    record.explain                                          
+    ok    form.draft-note                                         
+    ok    dashboard.explain-metrics                               
+    ok    report.summarise                                        
+    ok    inbox.summarise-unread                                  
+
+  no probe value survives assembly
+
+    ok    worklist.summarise-selection sends no phi value         
+    ok    worklist.summarise-selection sends no pii value         
+    ok    worklist.summarise-selection sends no credential value  
+    ok    worklist.summarise-selection passes the dispatch guard  
+    ok    record.explain sends no phi value                       
+    ok    record.explain sends no pii value                       
+    ok    record.explain sends no credential value                
+    ok    record.explain passes the dispatch guard                
+    ok    form.draft-note sends no phi value                      
+    ok    form.draft-note sends no pii value                      
+    ok    form.draft-note sends no credential value               
+    ok    form.draft-note passes the dispatch guard               
+    ok    dashboard.explain-metrics sends no phi value            
+    ok    dashboard.explain-metrics sends no pii value            
+    ok    dashboard.explain-metrics sends no credential value     
+    ok    dashboard.explain-metrics passes the dispatch guard     
+    ok    report.summarise sends no phi value                     
+    ok    report.summarise sends no pii value                     
+    ok    report.summarise sends no credential value              
+    ok    report.summarise passes the dispatch guard              
+    ok    inbox.summarise-unread sends no phi value               
+    ok    inbox.summarise-unread sends no pii value               
+    ok    inbox.summarise-unread sends no credential value        
+    ok    inbox.summarise-unread passes the dispatch guard        
+    ok    encounter.summarise sends no phi value                  
+    ok    encounter.summarise sends no pii value                  
+    ok    encounter.summarise sends no credential value           
+    ok    encounter.summarise passes the dispatch guard           
+    ok    documentation.gaps sends no phi value                   
+    ok    documentation.gaps sends no pii value                   
+    ok    documentation.gaps sends no credential value            
+    ok    documentation.gaps passes the dispatch guard            
+    ok    cohort.summarise-selection sends no phi value           
+    ok    cohort.summarise-selection sends no pii value           
+    ok    cohort.summarise-selection sends no credential value    
+    ok    cohort.summarise-selection passes the dispatch guard    
+    ok    coding.suggest-icd sends no phi value                   
+    ok    coding.suggest-icd sends no pii value                   
+    ok    coding.suggest-icd sends no credential value            
+    ok    coding.suggest-icd passes the dispatch guard            
+    ok    orders.suggest sends no phi value                       
+    ok    orders.suggest sends no pii value                       
+    ok    orders.suggest sends no credential value                
+    ok    orders.suggest passes the dispatch guard                
+
+  the guard refuses what assembly never produced
+
+    ok    a hand-built context is refused                         patientName
+    ok    and an operational field is not                         
+
+  Every field a use case reads is classified, and nothing identifying leaves unmasked.
+
+
+  the writer agrees with the written policy
+
+    ok    token never reaches a file                              credential
+    ok    apiKey never reaches a file                             credential
+    ok    secret never reaches a file                             credential
+    ok    password never reaches a file                           credential
+    ok    patient is exported, but declared first                 phi
+    ok    dob is exported, but declared first                     phi
+    ok    gender is exported, but declared first                  phi
+    ok    prescriber is exported, but declared first              pii
+    ok    clinician is exported, but declared first               pii
+    ok    primaryDiagnosis is exported, but declared first        clinical
+    ok    drug is exported, but declared first                    clinical
+    ok    ward is exported, but declared first                    clinical
+    ok    id needs no announcement                                operational
+    ok    status needs no announcement                            operational
+    ok    branch needs no announcement                            operational
+    ok    priority needs no announcement                          operational
+    ok    total needs no announcement                             operational
+    ok    supplier needs no announcement                          operational
+
+  every column a worklist shows is classified
+
+    ok    the registry offers some worklists                      74 distinct columns
+    ok    acuity                                                  clinical · 2 list(s)
+    ok    admitted                                                phi · 1 list(s)
+    ok    atc                                                     clinical · 4 list(s)
+    ok    balance                                                 operational · 1 list(s)
+    ok    branch                                                  operational · 103 list(s)
+    ok    category                                                operational · 89 list(s)
+    ok    chiefComplaint                                          clinical · 1 list(s)
+    ok    city                                                    pii · 3 list(s)
+    ok    clinician                                               pii · 2 list(s)
+    ok    consultedOn                                             phi · 1 list(s)
+    ok    contact                                                 pii · 8 list(s)
+    ok    controlled                                              clinical · 4 list(s)
+    ok    cost                                                    operational · 5 list(s)
+    ok    country                                                 operational · 5 list(s)
+    ok    creditLimit                                             operational · 3 list(s)
+    ok    customer                                                operational · 12 list(s)
+    ok    department                                              operational · 12 list(s)
+    ok    dob                                                     phi · 1 list(s)
+    ok    dose                                                    clinical · 3 list(s)
+    ok    drug                                                    clinical · 3 list(s)
+    ok    dueDate                                                 operational · 1 list(s)
+    ok    duration                                                clinical · 3 list(s)
+    ok    exposure                                                operational · 5 list(s)
+    ok    followUp                                                clinical · 1 list(s)
+    ok    form                                                    clinical · 4 list(s)
+    ok    formulary                                               operational · 4 list(s)
+    ok    gender                                                  phi · 1 list(s)
+    ok    id                                                      operational · 125 list(s)
+    ok    invoiceDate                                             operational · 1 list(s)
+    ok    joinDate                                                pii · 12 list(s)
+    ok    lastInvoice                                             operational · 3 list(s)
+    ok    leadTime                                                operational · 5 list(s)
+    ok    leaveBalance                                            pii · 12 list(s)
+    ok    lengthOfStay                                            clinical · 1 list(s)
+    ok    manager                                                 pii · 12 list(s)
+    ok    margin                                                  operational · 11 list(s)
+    ok    name                                                    operational · 109 list(s)
+    ok    nextExpiry                                              operational · 4 list(s)
+    ok    onHand                                                  operational · 4 list(s)
+    ok    onTime                                                  operational · 5 list(s)
+    ok    openPO                                                  operational · 5 list(s)
+    ok    orderDate                                               operational · 11 list(s)
+    ok    outcome                                                 clinical · 1 list(s)
+    ok    outstanding                                             operational · 3 list(s)
+    ok    owner                                                   operational · 94 list(s)
+    ok    paid                                                    operational · 1 list(s)
+    ok    patient                                                 phi · 4 list(s)
+    ok    payer                                                   operational · 2 list(s)
+    ok    performance                                             pii · 12 list(s)
+    ok    position                                                operational · 12 list(s)
+    ok    prescribedOn                                            phi · 3 list(s)
+    ok    prescriber                                              pii · 3 list(s)
+    ok    price                                                   operational · 5 list(s)
+    ok    primaryDiagnosis                                        clinical · 2 list(s)
+    ok    priority                                                operational · 94 list(s)
+    ok    quality                                                 operational · 5 list(s)
+    ok    reorder                                                 operational · 5 list(s)
+    ok    reorderLevel                                            operational · 4 list(s)
+    ok    requestedDate                                           operational · 11 list(s)
+    ok    risk                                                    operational · 3 list(s)
+    ok    route                                                   clinical · 3 list(s)
+    ok    segment                                                 operational · 3 list(s)
+    ok    specialty                                               clinical · 1 list(s)
+    ok    status                                                  operational · 125 list(s)
+    ok    stock                                                   operational · 5 list(s)
+    ok    supplier                                                operational · 4 list(s)
+    ok    total                                                   operational · 1 list(s)
+    ok    type                                                    operational · 3 list(s)
+    ok    unit                                                    operational · 5 list(s)
+    ok    unitCost                                                operational · 4 list(s)
+    ok    updated                                                 operational · 79 list(s)
+    ok    value                                                   operational · 11 list(s)
+    ok    ward                                                    clinical · 4 list(s)
+    ok    warehouse                                               operational · 5 list(s)
+
+  no probe value survives into the audit
+
+    ok    no phi value is recorded                                
+    ok    no pii value is recorded                                
+    ok    no clinical value is recorded                           
+    ok    no credential value is recorded                         
+    ok    no operational value is recorded                        
+    ok    but what was exported is                                136 columns, 50 sensitive
+    ok    and so is what was held back                            token,apiKey,secret,password
+
+  a sensitive export is never silent
+
+    ok    a list with an MRN column asks first                    
+    ok    so does one with a column nobody classified             
+    ok    an ordinary list does not                               
+
+  a printed sheet is governed by the document, not by script
+
+    ok    there is a print stylesheet                             
+    ok    the stylesheet refuses credential                       
+    ok    the stylesheet refuses unclassified                     
+    ok    and refuses it by removing it, not by hiding it visually
+    ok    every header and cell is stamped with its class         
+    ok    the sheet carries a banner that is always in the document
+    ok    and an unannounced print is still recorded              
+    ok    as a print rather than as a file                        
+    ok    and nothing pretends it can cancel one                  
+    ok    costing export uses schema review and metadata audit    
+    ok    costing import validates and maps its fixed headers     
+    ok    costing headers and cells carry print classification    
+
+  Every worklist column is classified, and nothing sensitive leaves as a document unannounced.
+
+
+  every theme's text is readable on its own surfaces
+
+    ok    the stylesheet declares some themes                     14 blocks
+    ok    nexora                                                  
+    ok    midnight                                                
+    ok    emerald                                                 
+    ok    sand                                                    
+    ok    rose                                                    
+    ok    slate                                                   
+    ok    solarized                                               
+    ok    indigo                                                  
+    ok    lagoon                                                  
+    ok    sunset                                                  
+    ok    graphite                                                
+    ok    plum                                                    
+    ok    nord                                                    
+    ok    contrast                                                
+
+  and the hierarchy still descends
+
+    ok    nexora                                                  16.0 > 6.5 > 5.2
+    ok    midnight                                                15.5 > 8.2 > 5.4
+    ok    emerald                                                 13.6 > 6.7 > 5.4
+    ok    sand                                                    12.7 > 7.2 > 5.8
+    ok    rose                                                    14.3 > 6.9 > 5.5
+    ok    slate                                                   14.6 > 7.1 > 5.6
+    ok    solarized                                               12.6 > 6.9 > 5.6
+    ok    indigo                                                  16.5 > 6.8 > 5.4
+    ok    lagoon                                                  13.8 > 6.8 > 5.4
+    ok    sunset                                                  13.9 > 6.9 > 5.6
+    ok    graphite                                                15.6 > 7.2 > 5.5
+    ok    plum                                                    15.3 > 8.2 > 5.4
+    ok    nord                                                    8.7 > 7.9 > 6.3
+    ok    contrast                                                21.0 > 15.9 > 9.7
+
+  and white reads on every accent that carries it
+
+    ok    nexora declares a fill for every accent it redefines    
+    ok    nexora · white on a filled accent                       
+    ok    midnight declares a fill for every accent it redefines  
+    ok    midnight · white on a filled accent                     
+    ok    emerald declares a fill for every accent it redefines   
+    ok    emerald · white on a filled accent                      
+    ok    sand declares a fill for every accent it redefines      
+    ok    sand · white on a filled accent                         
+    ok    rose declares a fill for every accent it redefines      
+    ok    rose · white on a filled accent                         
+    ok    slate declares a fill for every accent it redefines     
+    ok    slate · white on a filled accent                        
+    ok    solarized declares a fill for every accent it redefines 
+    ok    solarized · white on a filled accent                    
+    ok    indigo declares a fill for every accent it redefines    
+    ok    indigo · white on a filled accent                       
+    ok    lagoon declares a fill for every accent it redefines    
+    ok    lagoon · white on a filled accent                       
+    ok    sunset declares a fill for every accent it redefines    
+    ok    sunset · white on a filled accent                       
+    ok    graphite declares a fill for every accent it redefines  
+    ok    graphite · white on a filled accent                     
+    ok    plum declares a fill for every accent it redefines      
+    ok    plum · white on a filled accent                         
+    ok    nord declares a fill for every accent it redefines      
+    ok    nord · white on a filled accent                         
+    ok    contrast declares a fill for every accent it redefines  
+    ok    contrast · white on a filled accent                     
+
+  and on every module mark
+
+    ok    the registry gives each module a mark                   8 modules
+    ok    white on #6d5ce7                                        4.84
+    ok    white on #0f8468                                        4.65
+    ok    white on #b65a29                                        4.68
+    ok    white on #2563eb                                        5.17
+    ok    white on #9d6a1f                                        4.65
+    ok    white on #0d8379                                        4.63
+    ok    white on #7a5cd6                                        4.85
+    ok    white on #7c3aed                                        5.70
+
+  Every theme's text meets AA on every surface it paints, white reads on every filled accent, and the three steps still descend.
+
+
+  every form control comes from ops-ui
+
+    ok    there are files to check                                158 components
+    ok    no <table> outside ops-ui                               
+    ok    no <input type="checkbox"> outside ops-ui               
+    ok    no <input type="radio"> outside ops-ui                  
+    ok    no <input type="file"> outside ops-ui                   
+    ok    no <select> outside ops-ui                              
+    ok    no <textarea> outside ops-ui                            
+    ok    no a copy of the field styling outside ops-ui           
+    ok    ops-ui exports its form controls                        
+    ok    Checkbox exists to be used instead                      
+    ok    Radio exists to be used instead                         
+    ok    FilePicker exists to be used instead                    
+    ok    Select exists to be used instead                        
+    ok    Textarea exists to be used instead                      
+    ok    Input exists to be used instead                         
+    ok    SearchInput exists to be used instead                   
+
+  Every form control on every screen comes from the one library.
+
+PASS shared component adoption: 119 page/AI source files checked, 405 shared component uses. Alerts, charts, editor layouts and interactive choice controls retain specialized markup.
+
+  the built shells call the API their env file declares
+
+    ok    apps/web recorded what it was built for                 
+    ok    apps/web calls https://front-design.pepbits.com/api     
+    ok    apps/desktop recorded what it was built for             
+    ok    apps/desktop calls https://desktop.front-design.pepbits.com/api
+
+  Available local builds match their declared API settings.
+
+
+  the ledger and the contract are present
+
+    ok    the hardening ledger exists                               docs/ai-hardening-ledger.md
+    ok    the service contract exists                               docs/ai-service-contract.md
+
+  properties the ledger calls discharged
+
+    ok    D5 prompts live on the server                             PROMPT_TEXT
+    ok    D5 the client holds prompt ids, not text                  
+    ok    D7 the credential file is 0600                            0600
+    ok    D7 the credential file is gitignored                      
+    ok    D9 the tenant is never read from a request body           
+    ok    N2 encrypted credential store is wired                    
+    ok    N3 credential expiry is enforced                          
+    ok    N4 durable audit store is wired                           
+    ok    N5 server validates context and refuses clinical egress   
+    ok    N6 provider allowlist and redirect refusal are wired      
+    ok    N8 explicit origins replace wildcard CORS                 
+    ok    N10 per-user limiter is wired                             
+    ok    N1 external dependency stays open                         
+    ok    N7 external dependency stays open                         
+    ok    N9 external dependency stays open                         
+    ok    ledger retains production boundaries                      
+Hardening controls and outstanding external dependencies match the ledger.
+PASS 17163 catalog keys in four languages; 1249 static presentation references; explicit data/code exceptions.
+PASS 226 static API errors registered with catalog message keys.
+PASS 53 suites registered in 5 runtime groups
+PASS desktop: largest client chunk 492064 gzip bytes; budget 550000
+PASS web: largest client chunk 235475 gzip bytes; budget 550000
+PASS 316 page references; 148 authored workflows in four languages; 168 references await detailed workflow authoring. Native/domain reviews remain pending.
+PASS documentation impact receipts, 316 page registrations and translation revisions; 1116 authoring/review items remain explicitly pending
+PASS 26 examples match their compiled demo functions
+(node:131298) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/pepadmin/enterprice/desktop-clients/scripts/templates/generate-example.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/pepadmin/enterprice/desktop-clients/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS TypeScript template example matches the rendered demo adapter
+PASS 159 Library routes match API navigation; formatter, clinical token, dedicated-page and public example contracts checked. Runtime policy behavior is covered by preference-compliance tests and e2e/library-preferences.ts.

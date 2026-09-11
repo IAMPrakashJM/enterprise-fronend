@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-data/src/csv-import.test.ts (5 tests) 20ms
+ ✓ packages/erp-screens/src/imports/csv-options.test.ts (3 tests) 12ms
+ ✓ packages/erp-screens/src/dcp-designer/catalog-manager.test.tsx (4 tests) 438ms
+
+ Test Files  3 passed (3)
+      Tests  12 passed (12)
+   Start at  13:01:26
+   Duration  4.68s (transform 3.25s, setup 4.16s, collect 3.51s, tests 470ms, environment 2.53s, prepare 554ms)
+

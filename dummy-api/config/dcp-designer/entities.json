@@ -1,0 +1,7 @@
+[
+ {"id":"DEMO-PATIENT-1","entityType":"patient","label":"designer.entity.patient","triggers":["extension"]},
+ {"id":"DEMO-ENCOUNTER-1","entityType":"encounter","label":"designer.entity.encounter","triggers":["assessment"]},
+ {"id":"DEMO-LAB-ITEM-1","entityType":"order-item","label":"designer.entity.order-item","triggers":["questionnaire"]},
+ {"id":"DEMO-EMPLOYEE-1","entityType":"employee","label":"designer.entity.employee","triggers":["extension"]},
+ {"id":"DEMO-ITEM-1","entityType":"item","label":"designer.entity.item","triggers":["extension"]}
+]

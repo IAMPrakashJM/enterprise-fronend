@@ -159,3 +159,28 @@ Verify four additive Library pages and retained OP registration. Test API-backed
 ## DCP-01 — Visual template designer
 
 Add and reorder fields/sections, edit properties, preserve stable IDs, preview validation, save and restore API drafts. Verify admin denial, tenant/application/user isolation, stale revisions, same-operation retry, effective locks, and unsupported schema rejection. Preview answers are temporary; backend DCP publication and native acceptance remain separate.
+
+### DCP-02 — dependent dropdowns
+
+Author Country/State mappings, preview India and UAE, preserve string IDs, clear descendants, reject forged membership/cycles/dangling parents/depth overflow, isolate draft scope and reject stale revisions. Verify late-response suppression and lookup retry. Run `dcp-dependent-dropdowns.mjs` against an isolated demo API; native and production-backend acceptance remain separate.
+
+### DCP-03 — reusable value sets
+
+Create shared sets and relationships, retain leading-zero IDs, reference revisions from two forms, revise catalogs without changing existing forms, adopt revisions explicitly, retry idempotently, reject stale writers/forged option copies, and isolate tenant/application catalogs. Verify refresh and catalog administration preserve unsaved form edits. Browser suite: `dcp-value-sets.mjs` with isolated synthetic API.
+
+## DCP-04 — CSV option staging
+
+In Manage value sets, upload UTF-8 CSV, map distinct ID/label columns, review rows and apply them before saving the complete revision. Preserve leading-zero IDs and quoted commas. Duplicate IDs, blank values, editor delimiters, malformed headers and more than 50 rows must block import without changing the catalog. File selection must block saving previous options until staging is applied/canceled. Unsaved host form values remain intact. Check read-only disabling, discard prompts and retry behavior through the shared catalog tests. Browser coverage: `dcp-csv-options.mjs`; mapping/parser and catalog manager unit coverage supplement it. Native executable and native-speaker acceptance are separate.
+
+## DCP-05 — Rules, releases and entity runtime
+
+Verify integer 0–10 endpoints and rejection of fractions/out-of-range values, uppercase normalization versus uppercase-only validation, cyclic conditions/calculations, pinned published schemas and server-recomputed derived values. Check review/reject/approve/publish/retire transitions, required reasons, draft edit locks, new drafts preserving old releases, tenant/application and owner-type isolation, shared owner answers, expected revisions, idempotent submit and submitted read-only state. Exercise tab/step error navigation and conditional fields through the shared renderer. Import XLSX including leading-zero IDs, more than fifty rows, paged preview and formula rejection. Browser suite: `dcp-enterprise.mjs`. Host codec tests verify request mapping, response validation and structured errors; they do not establish a production connection. Native execution, actual backend/database/device and large-workload acceptance remain separate.
+
+
+## DCP-06 — Backend v1 runtime and shared recovery
+
+Load the backend-supplied v1 fixture through the public authenticated adapter. Preserve exact string revisions (including values above JavaScript's safe integer range); reject unsupported runtime metadata and unsafe numbers. Verify required Boolean false is present, omitted values retain stored data, explicit null clears, and row-specific permissions filter patches. New collection rows must omit local UI identity in requests. Preview and a 422 save response display validation without confirming persistence or losing permitted edits. Save increments the authoritative revision; a 409/uncertain failure requires an explicit reload decision and is never automatically retried. StrictMode/remount cancellation must not leave loading stuck or expose a previous scope. Shared recovery retains only writable values, verifies schema checksum/revision before restoration, and surfaces only authorized metadata in Draft Center. Evidence uses synthetic demo fixtures and Chromium; production HTTP/PostgreSQL/native acceptance is separate.
+
+## DCP-07 — Multi-parent, presentation and repeatable authoring
+
+Configure country plus entity type parents and verify conjunctive option filtering and descendant clearing. Translate field/section labels without changing stable IDs. Preview searchable, radio, segmented, toggle, range/rating and read-only presentation through shared controls. Add a repeatable section with minimum one/maximum two rows: rows retain independent inputs, add/remove limits hold, validation identifies the occurrence, calculations do not leak group values into the root, and CSV demo save/reload preserves normalized rows. Reject duplicate occurrence IDs, foreign field keys and dependencies from outside into a repeated occurrence. Changing a global parent clears affected values in every row. Copy a sample with rules and dependencies and verify all internal field references point to the copied fields.

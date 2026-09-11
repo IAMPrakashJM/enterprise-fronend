@@ -8236,23 +8236,23 @@
     "language": "ar",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "2f79eb4663c7b4ea8653e818d05147bb0e233f197f057f0fc7aa0f658fb533ac",
-    "translationHash": "3b830c0e63d9c2b32fbc4db5032615c5df9a4e8e7b4cd46dd64d21cb7e606136"
+    "sourceHash": "eff3e58e480a1842ff65850235df174e0af8dd20e3243bb7765bd094d1c59ddf",
+    "translationHash": "022d4b2b1835daf3ea7c588d928ff42b54b8112c4a7e25ed3c13d001697b6b68"
   },
   {
     "pageId": "dcp-designer",
     "language": "hi",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "2f79eb4663c7b4ea8653e818d05147bb0e233f197f057f0fc7aa0f658fb533ac",
-    "translationHash": "16e8ffd46ae0c3a644cf3017b0e081545597cc9e55242a5f18c428c9f7c1923e"
+    "sourceHash": "eff3e58e480a1842ff65850235df174e0af8dd20e3243bb7765bd094d1c59ddf",
+    "translationHash": "c22a9c9acb6b365dad0ec6f96aea8bda60d990576516d78e0e253dbf6eee8aa0"
   },
   {
     "pageId": "dcp-designer",
     "language": "ml",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "2f79eb4663c7b4ea8653e818d05147bb0e233f197f057f0fc7aa0f658fb533ac",
-    "translationHash": "3e66944dbbc8375f067c87187b74f31d22e5f4bf57cb9ecb282005914b47df4d"
+    "sourceHash": "eff3e58e480a1842ff65850235df174e0af8dd20e3243bb7765bd094d1c59ddf",
+    "translationHash": "c4d26c60d42ecb38519560527dd9c10465ab8035cdaaa1a9b626d5f00e2db090"
   }
 ]

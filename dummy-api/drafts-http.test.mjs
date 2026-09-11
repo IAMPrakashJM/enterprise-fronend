@@ -21,6 +21,13 @@ test('shared draft HTTP authorization, payload restrictions and mandatory tenant
  assert.equal((await request('/drafts',admin,write)).status,200);assert.equal((await request('/drafts',admin,write)).status,200);
  assert.equal((await(await request('/drafts',user,{...scope,action:'load'})).json()).draft,null);
  assert.equal((await(await request('/drafts',admin,{...scope,action:'load'})).json()).draft.values.data.comment,'restore me');
+ const dcp={kind:'dcp',pageId:'dcp-designer',recordId:'owner-release-1'};
+ const dcpWrite={...dcp,action:'draft',version:0,operationId:'dcp-first',values:{schemaVersion:1,context:'b'.repeat(64),data:{version:'9007199254740993',checksum:'pinned',patch:{name:'Private',consent:false,notes:null}}}};
+ assert.equal((await request('/drafts',admin,dcpWrite)).status,200);
+ assert.equal((await(await request('/drafts',admin,{...dcp,action:'load'})).json()).draft.values.data.version,'9007199254740993');
+ assert.equal((await(await request('/drafts',user,{...dcp,action:'load'})).json()).draft,null);
+ assert.equal((await request('/drafts',admin,{...dcpWrite,values:{...dcpWrite.values,data:{...dcpWrite.values.data,version:1}}})).status,400);
+ const center=await(await request('/draft-center',admin,{action:'list',kind:'dcp'})).json();assert.equal(center.items.length,1);assert.ok(!JSON.stringify(center).includes('Private'));
  const policy=(await(await request('/draft-policy',admin)).json()).policy;
  assert.equal((await request('/draft-policy',user,{...policy,enabled:false})).status,403);
  assert.equal((await request('/draft-policy',admin,{...policy,excludedFields:['comment']})).status,200);

@@ -1,5 +1,5 @@
 /** Strict comma-delimited UTF-8 CSV, including quoted commas/newlines and escaped quotes. */
-export function parseCsv(source: string): {
+export function parseCsv(source: string, maximumRows = 500): {
     headers: string[];
     rows: string[][];
 } {
@@ -9,8 +9,8 @@ export function parseCsv(source: string): {
     const records: string[][] = [];
     let row: string[] = [], value = '', quoted = false, closed = false;
     const pushRow = () => { row.push(value); if (row.some(cell => cell.trim()))
-        records.push(row); row = []; value = ''; closed = false; if (records.length > 501)
-        throw new Error('Import at most 500 data rows at a time.'); };
+        records.push(row); row = []; value = ''; closed = false; if (records.length > maximumRows + 1)
+        throw new Error(maximumRows===500?'Import at most 500 data rows at a time.':'designer.datasetLimit'); };
     for (let i = 0; i < text.length; i++) {
         const c = text[i];
         if (quoted) {

@@ -332,7 +332,7 @@ export { inputClass };
 /** A labelled slider with its value read out beside it. The readout is what
     makes a slider usable for a setting: "13.5px" means something, a thumb
     position does not. */
-export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", onChange, className }: {
+export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", onChange, className, disabled }: {
   label: string;
   hint?: string;
   value: number;
@@ -340,6 +340,7 @@ export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", 
   max: number;
   step?: number;
   unit?: string;
+  disabled?: boolean;
   onChange: (value: number) => void;
   className?: string;
 }) {
@@ -349,8 +350,8 @@ export function RangeInput({ label, hint, value, min, max, step = 1, unit = "", 
       {(note) => (
       <div className="flex items-center gap-3">
         <input
-          type="range" min={min} max={max} step={step} value={value}
-          onChange={(event) => onChange(Number(event.target.value))}
+          disabled={disabled} type="range" min={min} max={max} step={step} value={value}
+          onChange={(event) => {if(!disabled)onChange(Number(event.target.value));}}
           aria-label={t(label)}
           aria-describedby={note}
           className="focus-ring h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-[var(--surface-3)] accent-[var(--primary)]"

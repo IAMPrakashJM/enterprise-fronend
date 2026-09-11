@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-config/src/dcp-designer-metadata.test.ts (2 tests) 12ms
+ ✓ packages/erp-config/src/dcp-repeating.test.ts (3 tests) 20ms
+ ✓ packages/erp-screens/src/dcp-designer/host-runtime.test.tsx (3 tests) 318ms
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  14:43:59
+   Duration  4.22s (transform 3.03s, setup 4.08s, collect 1.85s, tests 350ms, environment 1.71s, prepare 348ms)
+

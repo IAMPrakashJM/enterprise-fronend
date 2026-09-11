@@ -1,0 +1,14 @@
+✔ backend generates real SVG symbols and persists exact retry identity (21.756272ms)
+✔ rejects over-copies, incompatible stock, missing IDs and cross-category records (0.672734ms)
+✔ tenant, application and user isolation with server-only admin authority (8.119218ms)
+✔ print attempts are not completion; reprint reason and policy are enforced (37.880809ms)
+✔ payment QR never marks paid on creation or print and expires server-side (57.92795ms)
+✔ all advertised symbologies render; administrator simulation is explicit (99.859523ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 410.909611

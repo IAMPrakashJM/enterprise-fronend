@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/op-registration/workspace.test.tsx (3 tests) 905ms
+   ✓ effective tenant page size wins and unavailable preferences disable registration writes  358ms
+   ✓ unsaved identity blocks accidental patient switching  314ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  12:12:21
+   Duration  6.09s (transform 3.58s, setup 1.48s, collect 2.73s, tests 905ms, environment 556ms, prepare 139ms)
+

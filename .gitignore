@@ -17,3 +17,6 @@ desktop-clients/apps/desktop/src-tauri/gen
 .run/
 .deploy/
 desktop-clients/deploy.config.json
+
+# Reviewed release evidence is part of the documentation contract.
+!docs/releases/**/evidence/**/*.log

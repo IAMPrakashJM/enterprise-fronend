@@ -1,0 +1,12 @@
+✔ designer persists drafts, deduplicates retries, isolates scope and rejects stale saves (12.968483ms)
+✔ designer rejects duplicate IDs, unsupported components and ambiguous options (0.396404ms)
+✔ dependent API options persist leading-zero mappings and reject forged relationships and cross-scope access (8.435981ms)
+✔ dependency validation rejects cycles, dangling parents, invalid option mappings and excessive depth (0.904766ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 191.877919

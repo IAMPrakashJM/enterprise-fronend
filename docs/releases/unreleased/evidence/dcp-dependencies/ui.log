@@ -1,0 +1,15 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/dcp-designer/workspace.test.tsx (3 tests) 740ms
+   ✓ visual edits reuse stable IDs; failed save retains edits and reuses operation on retry  460ms
+ ✓ packages/erp-screens/src/dcp-designer/dependencies.test.tsx (3 tests) 881ms
+   ✓ parent change clears all descendants and late API responses cannot restore old options  391ms
+ ✓ packages/erp-screens/src/templates/page-template.test.tsx (8 tests) 2559ms
+   ✓ every configured template renders real shared content and starts with valid sample data  2212ms
+
+ Test Files  3 passed (3)
+      Tests  14 passed (14)
+   Start at  12:05:50
+   Duration  6.09s (transform 2.67s, setup 3.27s, collect 3.69s, tests 4.18s, environment 1.51s, prepare 240ms)
+

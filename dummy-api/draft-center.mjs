@@ -5,7 +5,7 @@ export function createDraftCenter({records,policy,access,context=()=>undefined,l
   let logical;try{logical=JSON.parse(row.key)[1];}catch{return null;}
   let kind,pageId,recordId;
   if(logical.startsWith('$draft:')){
-   const match=logical.match(/^\$draft:(import|approval):(.*)$/);if(!match)return null;
+   const match=logical.match(/^\$draft:(import|approval|dcp):(.*)$/);if(!match)return null;
    kind=match[1];try{[pageId,recordId]=JSON.parse(match[2]);}catch{return null;}
   }else{const match=logical.match(/^(form|billing|consultation):([^:]+):(.+)$/);if(!match)return null;kind='form';pageId=match[2];recordId=match[3];}
   if(typeof pageId!=='string'||typeof recordId!=='string')return null;
@@ -18,7 +18,7 @@ export function createDraftCenter({records,policy,access,context=()=>undefined,l
   if(!input||!['list','open','discard'].includes(input.action))return failure(400,'Invalid draft request.');
   const rows=records.draftIndex(user,product);
   if(input.action==='list'){
-   if((input.query!==undefined&&(typeof input.query!=='string'||input.query.length>200))||(input.kind&&!['form','import','approval'].includes(input.kind))||(input.status&&!['ready','outdated','unavailable','file-required'].includes(input.status))||!Number.isSafeInteger(input.offset??0)||(input.offset??0)<0)return failure(400,'Invalid draft request.');
+   if((input.query!==undefined&&(typeof input.query!=='string'||input.query.length>200))||(input.kind&&!['form','import','approval','dcp'].includes(input.kind))||(input.status&&!['ready','outdated','unavailable','file-required'].includes(input.status))||!Number.isSafeInteger(input.offset??0)||(input.offset??0)<0)return failure(400,'Invalid draft request.');
    if(input.language&&!['en','ar','hi','ml'].includes(input.language))return failure(400,'Invalid draft request.');
    const pageLabels=labels(user,product,input.language??'en');
    const q=(input.query??'').trim().toLowerCase(),offset=input.offset??0;

@@ -1,6 +1,6 @@
 import {parseDraftPolicy,type DraftPolicy} from '@pepbits/erp-config';
 import {RecordRequestFailure} from './records';
-export interface DraftScope {productId:string;pageId:string;recordId:string;kind:'import'|'approval'}
+export interface DraftScope {productId:string;pageId:string;recordId:string;kind:'import'|'approval'|'dcp'}
 export interface DraftPayload<T> {schemaVersion:number;context:string;data:T}
 export interface SharedDraft<T> {values:DraftPayload<T>;version:number;savedAt:string;excludedFields?:string[];disabled?:boolean}
 export interface SharedDraftBundle<T> {draft:SharedDraft<T>|null;draftVersion:number;draftPolicy:DraftPolicy}
@@ -27,7 +27,7 @@ export async function draftContext(value:unknown):Promise<string>{
  const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(value)));
  return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
 }
-export interface DraftCenterItem {id:string;productId:string;kind:'form'|'import'|'approval';version:number;savedAt:string;expiresAt:string;status:'ready'|'outdated'|'unavailable'|'file-required';pageId:string|null;recordId:string|null}
+export interface DraftCenterItem {id:string;productId:string;kind:'form'|'import'|'approval'|'dcp';version:number;savedAt:string;expiresAt:string;status:'ready'|'outdated'|'unavailable'|'file-required';pageId:string|null;recordId:string|null}
 export interface DraftCenterQuery {language?:string;query?:string;kind?:string;status?:string;offset?:number}
 export interface DraftCenterData {items:DraftCenterItem[];total:number;offset:number;policy:DraftPolicy;counts:{all:number;outdated:number;unavailable:number};serverTime:string}
 export interface DraftCenterAdapter {list(productId:string,query:DraftCenterQuery):Promise<DraftCenterData>;open(productId:string,item:DraftCenterItem):Promise<DraftCenterItem>;discard(productId:string,item:DraftCenterItem,operationId:string):Promise<void>}
@@ -37,7 +37,7 @@ export function createHttpDraftCenterAdapter(request:(path:string,init?:RequestI
   if(!r.ok)throw new RecordRequestFailure(r.status,r.headers.get('X-Sentinel-Reference')??undefined);
   return r.status===204?undefined:r.json();
  };
- const validItem=(item:any,productId:string)=>item&&/^[a-f0-9]{64}$/.test(item.id)&&item.productId===productId&&['form','import','approval'].includes(item.kind)&&['ready','outdated','unavailable','file-required'].includes(item.status)&&Number.isSafeInteger(item.version)&&item.version>0&&Number.isFinite(Date.parse(item.savedAt))&&Number.isFinite(Date.parse(item.expiresAt))&&(item.status==='unavailable'?item.pageId===null&&item.recordId===null:typeof item.pageId==='string'&&!!item.pageId&&typeof item.recordId==='string'&&!!item.recordId);
+ const validItem=(item:any,productId:string)=>item&&/^[a-f0-9]{64}$/.test(item.id)&&item.productId===productId&&['form','import','approval','dcp'].includes(item.kind)&&['ready','outdated','unavailable','file-required'].includes(item.status)&&Number.isSafeInteger(item.version)&&item.version>0&&Number.isFinite(Date.parse(item.savedAt))&&Number.isFinite(Date.parse(item.expiresAt))&&(item.status==='unavailable'?item.pageId===null&&item.recordId===null:typeof item.pageId==='string'&&!!item.pageId&&typeof item.recordId==='string'&&!!item.recordId);
  return {
   list:async(productId,query)=>{
    const value=await call(productId,{...query,action:'list'});

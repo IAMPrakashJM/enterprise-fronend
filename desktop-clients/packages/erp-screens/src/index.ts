@@ -53,3 +53,6 @@ export {IdentityResultPanel,IdentityHistory} from './identity-devices/components
 export {CareWorkspace,type CareWorkspaceProps} from './care-pages/workspace';
 
 export {DcpDesignerWorkspace,type DcpDesignerProps} from './dcp-designer/workspace';
+export {DesignerSections} from './dcp-designer/sections';
+
+export {DcpHostRuntime} from './dcp-designer/host-runtime';

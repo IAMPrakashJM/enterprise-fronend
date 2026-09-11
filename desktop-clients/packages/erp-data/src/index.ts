@@ -23,3 +23,7 @@ export * from './device-integrations';
 export * from './identity-devices';
 export * from './care-pages';
 export * from './dcp-designer';
+
+export * from './dcp-host';
+
+export * from './dcp-runtime';

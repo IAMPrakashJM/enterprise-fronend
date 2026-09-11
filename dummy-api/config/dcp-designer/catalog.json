@@ -1,0 +1,81 @@
+{
+  "sets": [
+    {
+      "revision": 1,
+      "updatedAt": "2026-09-11T00:00:00Z",
+      "updatedBy": "demo-seed",
+      "id": "countries",
+      "name": "designer.country",
+      "options": [
+        {
+          "value": "IN",
+          "label": "designer.india"
+        },
+        {
+          "value": "AE",
+          "label": "designer.uae"
+        }
+      ]
+    },
+    {
+      "revision": 1,
+      "updatedAt": "2026-09-11T00:00:00Z",
+      "updatedBy": "demo-seed",
+      "id": "states",
+      "name": "designer.state",
+      "options": [
+        {
+          "value": "KL",
+          "label": "designer.kerala"
+        },
+        {
+          "value": "KA",
+          "label": "designer.karnataka"
+        },
+        {
+          "value": "AZ",
+          "label": "designer.abuDhabi"
+        },
+        {
+          "value": "DU",
+          "label": "designer.dubai"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "revision": 1,
+      "updatedAt": "2026-09-11T00:00:00Z",
+      "updatedBy": "demo-seed",
+      "id": "country_state",
+      "name": "designer.catalogCountryState",
+      "parent": {
+        "id": "countries",
+        "revision": 1
+      },
+      "child": {
+        "id": "states",
+        "revision": 1
+      },
+      "pairs": [
+        {
+          "parentValue": "IN",
+          "childValue": "KL"
+        },
+        {
+          "parentValue": "IN",
+          "childValue": "KA"
+        },
+        {
+          "parentValue": "AE",
+          "childValue": "AZ"
+        },
+        {
+          "parentValue": "AE",
+          "childValue": "DU"
+        }
+      ]
+    }
+  ]
+}

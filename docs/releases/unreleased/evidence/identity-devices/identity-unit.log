@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/platform-ports/src/identity-devices.test.ts (2 tests) 17ms
+ ✓ packages/erp-screens/src/identity-devices/workspace.test.tsx (3 tests) 402ms
+   ✓ biometrics disabled still allows separate manual review and never implies authentication  315ms
+
+ Test Files  2 passed (2)
+      Tests  5 passed (5)
+   Start at  15:07:48
+   Duration  5.19s (transform 3.49s, setup 2.99s, collect 2.00s, tests 419ms, environment 1.54s, prepare 279ms)
+

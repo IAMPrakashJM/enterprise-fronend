@@ -1,0 +1,19 @@
+
+> nexora-monorepo@1.0.0 test:labels-api
+> node --test ../dummy-api/label-printing-store.test.mjs
+
+✔ backend generates real SVG symbols and persists exact retry identity (18.107237ms)
+✔ rejects over-copies, incompatible stock, missing IDs and cross-category records (0.896594ms)
+✔ tenant, application and user isolation with server-only admin authority (10.538244ms)
+✔ print attempts are not completion; reprint reason and policy are enforced (18.005666ms)
+✔ payment QR never marks paid on creation or print and expires server-side (45.237441ms)
+✔ all advertised symbologies render; administrator simulation is explicit (106.040646ms)
+✔ stock fit failure identifies the printer field (1.053214ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 371.377252

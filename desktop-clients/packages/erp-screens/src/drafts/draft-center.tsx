@@ -25,6 +25,7 @@ function Center(){
  };
  const open=(item:DraftCenterItem)=>void execute(async()=>{const next=await adapter.open(product.id,item);if(!alive.current)return;
   if(!next.pageId||!product.pages[next.pageId])throw {status:403};
+  if(next.kind==='dcp'){navigation.open({pageId:next.pageId});return;}
   if(next.kind==='form')navigation.open({pageId:next.pageId,...(next.recordId==='new'?{mode:'new' as const}:{mode:'edit' as const,recordId:next.recordId??undefined})});else setWorkflow(next);
  });
  const discard=(item:DraftCenterItem)=>{const id=crypto.randomUUID();void execute(async()=>{await adapter.discard(product.id,item,id);if(alive.current)await load();});};
@@ -34,7 +35,7 @@ function Center(){
   <div className="flex items-center justify-between gap-4"><h1 className="text-xl font-bold">{t('center.title')}</h1><Button disabled={busy} onClick={()=>{pending.current=null;void load();}}><LocalizedText message="center.refresh" /></Button></div>
   <p>{t('center.description',{application:product.name})}</p>
   {data?<Card tone="muted" className="space-y-2 p-3"><p>{t(data.policy.enabled?'center.storageOn':'draft.disabled')}</p><p>{t('center.retention',{days:data.policy.retentionDays})}</p><p>{t('center.counts',{all:data.counts.all,outdated:data.counts.outdated,unavailable:data.counts.unavailable})}</p><p>{t('center.exclusions',{fields:data.policy.excludedFields.join(', ')||t('center.none')})}</p></Card>:null}
-  <div className="grid gap-3 lg:grid-cols-3"><Input disabled={busy} label={t('center.search')} value={query} onChange={e=>{setQuery(e.target.value);setOffset(0);}}/><Select disabled={busy} placeholder={t('center.allTypes')} label={t('center.kind')} value={kind} options={['','form','import','approval'].map(value=>({value,label:t(value?'center.'+value:'center.allTypes')}))} onChange={e=>{setKind(e.target.value);setOffset(0);}}/><Select disabled={busy} placeholder={t('center.allStatuses')} label={t('center.status')} value={status} options={['','ready','outdated','unavailable','file-required'].map(value=>({value,label:t(value?'center.'+value:'center.allStatuses')}))} onChange={e=>{setStatus(e.target.value);setOffset(0);}}/></div>
+  <div className="grid gap-3 lg:grid-cols-3"><Input disabled={busy} label={t('center.search')} value={query} onChange={e=>{setQuery(e.target.value);setOffset(0);}}/><Select disabled={busy} placeholder={t('center.allTypes')} label={t('center.kind')} value={kind} options={['','form','import','approval','dcp'].map(value=>({value,label:t(value?'center.'+value:'center.allTypes')}))} onChange={e=>{setKind(e.target.value);setOffset(0);}}/><Select disabled={busy} placeholder={t('center.allStatuses')} label={t('center.status')} value={status} options={['','ready','outdated','unavailable','file-required'].map(value=>({value,label:t(value?'center.'+value:'center.allStatuses')}))} onChange={e=>{setStatus(e.target.value);setOffset(0);}}/></div>
   {error?<RecoveryNotice sessionRestored={!!readToken()} failure={failureFromError(error)} preservesValues busy={busy} onRetry={()=>void (pending.current?execute(pending.current):load())}/>:null}
   {busy?<p role="status">{t('center.loading')}</p>:null}
   {data&&!data.items.length?<p role="status">{t('center.empty')}</p>:null}

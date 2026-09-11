@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {isDcpValues,isDcpRevision} from '../desktop-clients/packages/erp-config/src/dcp-runtime.ts';
 import {createDesignerStore} from './dcp-designer-store.mjs';
 import {createCarePageStore} from './care-page-store.mjs';
 import {createIdentityStore} from './identity-device-store.mjs';
@@ -157,6 +158,7 @@ const draftCenter=createDraftCenter({records:recordStore,policy:(...args)=>draft
   },
   access:(user,product,{kind,pageId,recordId})=>{
     const nav=applicationConfig.navigation(user,product);if(nav.status!==200||!nav.body.pages.some(p=>p.id===pageId))return false;
+    if(kind==='dcp')return pageId==='dcp-designer';
     const page=PAGE_REGISTRY[pageId];if(!page)return false;
     if(kind==='import')return !!getImportDefinition(page.entity);
     if(kind==='approval'&&pageId!=='customer-master')return false;
@@ -814,7 +816,7 @@ const CORS = {
      not name: the request never leaves, nothing is logged, and the only symptom
      is a cell that will not save. */
   "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, If-None-Match, X-Product-Id",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, If-None-Match, X-Product-Id, Pepbits-Contract-Version",
   "Access-Control-Expose-Headers": "ETag",
   "Access-Control-Max-Age": "86400",
 };
@@ -1055,11 +1057,13 @@ const server = createServer(async (req, res) => {
     }
     const input=await readJson(req,262144).catch(()=>null);
     if(sessions.get(token)!==user)return send(res,401,{error:"Session ended."});
-    if(!input||!['import','approval'].includes(input.kind)||typeof input.pageId!=="string"||typeof input.recordId!=="string"||!input.recordId||input.recordId.length>150||!['load','draft','discard'].includes(input.action))return send(res,400,{error:"Invalid draft request."});
+    if(!input||!['import','approval','dcp'].includes(input.kind)||typeof input.pageId!=="string"||typeof input.recordId!=="string"||!input.recordId||input.recordId.length>150||!['load','draft','discard'].includes(input.action))return send(res,400,{error:"Invalid draft request."});
     if(!nav.body.pages.some(p=>p.id===input.pageId))return send(res,403,{error:"Draft page is not available."});
+    if(input.kind==='dcp'&&input.pageId!=='dcp-designer')return send(res,403,{error:'Draft page is not available.'});
     if(input.action==='draft'){
       const v=input.values;
       if(!v||v.schemaVersion!==1||typeof v.context!=="string"||!/^[a-f0-9]{64}$/.test(v.context)||!v.data||typeof v.data!=='object'||Array.isArray(v.data)||Object.keys(v).some(k=>!['schemaVersion','context','data'].includes(k)))return send(res,400,{error:"Invalid draft request."});
+      if(input.kind==='dcp'&&(Object.keys(v.data).some(k=>!['patch','version','checksum'].includes(k))||!isDcpValues(v.data.patch)||!isDcpRevision(v.data.version)||typeof v.data.checksum!=='string'||v.data.checksum.length>128))return send(res,400,{error:'Invalid draft request.'});
       if(input.kind==='approval'&&(Object.keys(v.data).some(k=>k!=='comment')||typeof v.data.comment!=='string'||v.data.comment.length>4000))return send(res,400,{error:"Invalid draft request."});
       if(input.kind==='import'&&(Object.keys(v.data).some(k=>k!=='mapping')||!v.data.mapping||typeof v.data.mapping!=='object'||Array.isArray(v.data.mapping)||Object.entries(v.data.mapping).some(([k,v])=>!/^[a-zA-Z][\w.-]{0,99}$/.test(k)||typeof v!=='string'||!/^\d{0,4}$/.test(v))))return send(res,400,{error:"Invalid draft request."});
     }

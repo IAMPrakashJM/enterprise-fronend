@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /home/pepadmin/enterprice/desktop-clients
+
+ ✓ packages/erp-screens/src/op-registration/workspace.test.tsx (3 tests) 461ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  11:47:51
+   Duration  3.51s (transform 2.21s, setup 979ms, collect 1.41s, tests 461ms, environment 394ms, prepare 77ms)
+

@@ -1,0 +1,16 @@
+✔ document read persists synthetic fields but never authenticates or changes patient (6.193375ms)
+✔ request scope isolates tenant, application, patient binding, owner and station (3.59117ms)
+✔ retries are idempotent, changed requests conflict and a fresh completion cannot replay (3.948622ms)
+✔ expired challenges are rejected including result replay (5.824162ms)
+✔ biometrics default off, admin policy and current lock apply to pending capture (4.450325ms)
+✔ no capture without consent; native transport unavailable and raw biometric data rejected (1.897491ms)
+✔ manual review works when biometrics are disabled and never sets authenticated (1.488208ms)
+✔ cancel stops capture, only one active request allowed, expired document is distinct (5.333119ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 165.304283

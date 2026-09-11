@@ -1,0 +1,2 @@
+PASS CSV duplicate blocking, column mapping, leading-zero IDs, quoted labels, explicit atomic catalog save and preserved host form and four-language catalog layouts; isolated demo API / Chromium.
+1/1 features suites passed

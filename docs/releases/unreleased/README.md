@@ -1,10 +1,12 @@
 # Current delivery and release records
 
+Local implementation: [DCP enterprise runtime](dcp-enterprise-runtime-2026-09-11.md), [DCP CSV option staging](dcp-csv-options-2026-09-11.md), [DCP reusable value sets](dcp-value-sets-2026-09-11.md) and [dependent dropdowns](dcp-dependencies-2026-09-11.md), locally verified and not deployed.
+
 Latest activation: [DCP form preview](dcp-preview-deployment-2026-09-11.md), deployed and verified on both demo sites.
 
 Earlier activation: [DCP visual designer — 11 September 2026](dcp-designer-deployment-2026-09-11.md), verified on both demo sites. Remote CI has a documented historical evidence-link failure.
 
-Status reviewed **11 September 2026**. The latest recorded frontend demo release is `20260910173632033-48931d24`, deployed to both public sites. Its [healthcare page deployment record](care-page-deployment-2026-09-10.md) contains source identity, API restart, live checks and rollback instructions.
+Status reviewed **11 September 2026**. The latest recorded frontend demo release is `20260911105427634-cc931847`, deployed to both public sites. Its [DCP preview deployment record](dcp-preview-deployment-2026-09-11.md) contains activation and verification evidence.
 
 Latest documentation follow-up: [Authored-guide translations and Jira connection review](documentation-translation-review-2026-09-11.md). Catalog changes are not yet deployed.
 
@@ -12,8 +14,8 @@ Latest documentation follow-up: [Authored-guide translations and Jira connection
 
 | Area | Current record |
 | --- | --- |
-| Latest implementation | [Healthcare reference pages](care-page-templates-2026-09-10.md): four additive pages, shared components, API persistence and local validation |
-| Latest deployment | [Healthcare reference pages on both demo sites](care-page-deployment-2026-09-10.md) |
+| Latest implementation | [DCP enterprise runtime](dcp-enterprise-runtime-2026-09-11.md): rules, bounded XLSX import, lifecycle, layouts and synthetic entity answers |
+| Latest deployment | [DCP form preview on both demo sites](dcp-preview-deployment-2026-09-11.md) |
 | Release evidence review | [11 September release documentation review](documentation-review-2026-09-11.md) |
 | Documentation reconciliation | [11 September documentation update](documentation-refresh-2026-09-11.md) |
 | Feature inventory | [Current feature catalog](../../features/README.md) |
@@ -73,3 +75,5 @@ The following records retain their original dates and test scopes. They are not 
 - [Healthcare reference page templates](care-page-templates-2026-09-10.md)
 
 Latest local implementation: [DCP visual designer](dcp-designer-2026-09-11.md), not deployed.
+
+The [DCP frontend contract and recovery increment](dcp-frontend-contract-2026-09-11.md) is in progress in local source. It records the verified backend-session handoff, v1 runtime integration and additional designer/recovery UI. It is not a deployed release or a declaration that the full frontend scope is finished.

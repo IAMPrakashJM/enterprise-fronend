@@ -311,5 +311,10 @@
   "designer.conflict": "designer.conflict",
   "designer.limit": "designer.limit",
   "designer.storage": "designer.storage",
-  "designer.invalidResponse": "designer.invalidResponse"
+  "designer.invalidResponse": "designer.invalidResponse",
+  "designer.catalogLimit": "designer.catalogLimit",
+  "designer.lifecycleConflict": "designer.lifecycleConflict",
+  "designer.commentRequired": "designer.commentRequired",
+  "designer.bindingRequired": "designer.bindingRequired",
+  "designer.datasetBudget": "designer.datasetBudget"
 }

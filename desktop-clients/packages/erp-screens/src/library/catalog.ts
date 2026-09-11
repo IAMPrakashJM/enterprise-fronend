@@ -14,9 +14,9 @@ export const CATALOG_GROUPS = [
 ] as const;
 export const CATALOG_ENTRIES = [
   {id:"TextDemo",group:"forms",components:["Input","SearchInput","Textarea","Highlight","ScannerInput"],source:"form-controls.tsx, option-filter.tsx, scanner-input.tsx"},
-  {id:"ValidationDemo",group:"forms",components:["FieldShell","Input"],source:"form-controls.tsx"},
+  {id:"ValidationDemo",group:"forms",components:["FieldShell","Input","FormErrorSummary"],source:"form-controls.tsx"},
   {id:"SelectDemo",group:"forms",components:["Select","SearchSelect","MultiSelect"],source:"form-controls.tsx, search-select.tsx"},
-  {id:"ChoiceDemo",group:"forms",components:["Checkbox","Radio","Toggle","RangeInput"],source:"form-controls.tsx"},
+  {id:"ChoiceDemo",group:"forms",components:["Checkbox","Radio","Toggle","RangeInput","RadioGroup","RangeField"],source:"form-controls.tsx"},
   {id:"FileDemo",group:"forms",components:["FilePicker"],source:"form-controls.tsx"},
   {id:"ReferenceDemo",group:"forms",components:["ReferenceField","ReferenceDataWarning"],source:"reference-data.tsx"},
   {id:"DateDemo",group:"dates",components:["DateInput","TimeInput","DateTimeInput","MonthInput","WeekInput"],source:"date-time.tsx"},

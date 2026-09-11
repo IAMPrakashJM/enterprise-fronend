@@ -1,0 +1,146 @@
+{
+  "baseCommit": "2f66cb5c2090d667cf7ff3dad349c003f9f8cbae",
+  "state": "Uncommitted working tree; includes dependent-dropdown and reusable-catalog increments",
+  "files": [
+    {
+      "path": "desktop-clients/e2e/dcp-dependent-dropdowns.mjs",
+      "sha256": "6d985e27bc573e3b0bbe5ff94c1af603e5220f0bd8e9fe3f8a50af3b3c8fecf6"
+    },
+    {
+      "path": "desktop-clients/e2e/dcp-value-sets.mjs",
+      "sha256": "907af8eccf482d98f599cfbbcecdce0773eb017419a2f221f5cea917783f8797"
+    },
+    {
+      "path": "desktop-clients/e2e/suites.mjs",
+      "sha256": "2ce7f4e38e510851fe37e2d6352984a0a6198b38dfac790a75c3ea955e242e82"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-catalog.ts",
+      "sha256": "08615471535da7aed855fdc30d132c6ff76e15adc9e70a95c31a52a4d8138f5a"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/dcp-designer.ts",
+      "sha256": "a468ce95ac0903d034001ef996a747865229ea18d2f194a29210407ec7c5c8a4"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/documentation.ts",
+      "sha256": "861ac5e2e9b19a436424ed0497072a4596f8f8ce442ab7054ce9b03fe5c3c56e"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/index.ts",
+      "sha256": "d03d9cde7f551508b4194b490951e26c1342d56f409adc55318c614aff1d63ea"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ar.ts",
+      "sha256": "83beffc1952c064bbaa45dc87556807e4da9325317339fb72a756428e05c8712"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/en.ts",
+      "sha256": "da529908ef442aac3c7ee5de656aa6bfe37063352a604a7b21b05a6b7f2935b2"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/hi.ts",
+      "sha256": "ae825589002b6a547b98ddecf1efbcf5f8e61825cdbfe0cfbf96db8406c8e1d6"
+    },
+    {
+      "path": "desktop-clients/packages/erp-config/src/locales/ml.ts",
+      "sha256": "3250fe3cec282ad7ff1405eae71898ed16adefbddb1aaf6587bebfd1281f4063"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/catalog-field.tsx",
+      "sha256": "748b2dfcec09ea85ccf3a56749e8b139a0583496bb8ae95ff2f0c3b8167280a8"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/catalog-manager.test.tsx",
+      "sha256": "a2ba205f16b7f9c619d8081f2e91e80686e7c80af5a6ae90ae2a3e63219fd332"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/catalog-manager.tsx",
+      "sha256": "1bc1bb77c37622fc26de8d2add853ae8e50db2592f4f0cd9e620e5c07bd753c5"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/components.tsx",
+      "sha256": "765d2e5c84e79b8e359e2aa8b0545b0791f55ea696786bc27e722cb4d2a72e49"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/dependencies.test.tsx",
+      "sha256": "fad08385ebc0eca1976a6b38ce6364ab956b9044fabfd434fb4f109b5a706ab7"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/preview-lookups.ts",
+      "sha256": "cc7c2dee5b68bd8ec41e0c2ecab1b59841701a3c9d73aef2b70fc6a295236868"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/preview.tsx",
+      "sha256": "f5ab8783aa4a4d5c1d63b58cdb79171d0f4b12afe70f39f0ddd80aeef0d05cdf"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx",
+      "sha256": "c5145f8bd04134dae172f9486173df987fdccd4035dd415ab5a411a304713a35"
+    },
+    {
+      "path": "desktop-clients/packages/erp-screens/src/templates/template-parts.tsx",
+      "sha256": "0e530b544394c1bb3a5338aea5ef39a05b92854d9dbfd4414868198a215c126f"
+    },
+    {
+      "path": "desktop-clients/packages/ops-ui/src/messages.en.ts",
+      "sha256": "c4229c71514b5a51d19da079ebcfae511024d2e1921d5f82b1e991a73e36603b"
+    },
+    {
+      "path": "dummy-api/config/api-messages.json",
+      "sha256": "a65ab6327190b647aca69a3d903077bfc8ba90c640caa2c4861200eef65b1c10"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/catalog.json",
+      "sha256": "ff2c64d7a5d116fe35742c1b882c1fd3c0bedd8a92299477ade6f0ae269fde14"
+    },
+    {
+      "path": "dummy-api/config/dcp-designer/examples.json",
+      "sha256": "39d840380bbb826de584e0775434f171791347b5dc5c0d90c26aa5e93f0ea9df"
+    },
+    {
+      "path": "dummy-api/config/documentation/availability.json",
+      "sha256": "d9d9d8a156cbd95bab0874c4fb8e4d33537f1e303fb431ba628c43cd62d15e8e"
+    },
+    {
+      "path": "dummy-api/config/documentation/releases.json",
+      "sha256": "f6df8c99d63292e34e94ef3ca812e4d41373d8c7dd09f06f5fd25c0998b56228"
+    },
+    {
+      "path": "dummy-api/config/documentation/translation-revisions.json",
+      "sha256": "8c3eee112b9e118c4aa821e022f3bc4a5630474fe1ee37cdcf39feb18f3b47ee"
+    },
+    {
+      "path": "dummy-api/config/documentation/translations.json",
+      "sha256": "f722609d0fb09c4342922fafbbf880705a3226f1e9ed6f0c1cd7d8f26828a8b6"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ar.json",
+      "sha256": "1eab831b11ea0dfbc4dda44c0f462fbe43253b077ab34ed1cd58d28c65a0d3f1"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/en.json",
+      "sha256": "bed799967eb9318a7beb454b34b0b5f266d908d28290c0a727c180905dbdb999"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/hi.json",
+      "sha256": "f74a20642c55878a767df649eb8ab2977ad15ac26d85eafee1efb6b045bde73d"
+    },
+    {
+      "path": "dummy-api/config/localization/shared/ml.json",
+      "sha256": "dee6b0b08e0eb99740f31fee4f8fe961508e66bb0620ba23264573904bca700a"
+    },
+    {
+      "path": "dummy-api/dcp-catalog-store.mjs",
+      "sha256": "605e31409cd3ddba89091f198f5fc805a782cac788e524e6e047d5363352093d"
+    },
+    {
+      "path": "dummy-api/dcp-designer-store.mjs",
+      "sha256": "d6add209b75bf1871ef690f4de706c57fb084f570e7105bac19e3d7293758fad"
+    },
+    {
+      "path": "dummy-api/dcp-designer-store.test.mjs",
+      "sha256": "2ddbdb75c1b140498252fc19a5598b98e514c0d6538625f0a24cd0cbdfba1189"
+    }
+  ]
+}

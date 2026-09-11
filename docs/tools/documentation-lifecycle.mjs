@@ -28,7 +28,7 @@ const families={
 };
 const all=Object.keys(PAGE_REGISTRY).sort();
 function affected(path){
- if(path.includes('dcp-designer'))return ['dcp-designer'];
+ if(path.includes('dcp-designer')||path.includes('dcp-catalog')||path.includes('dcp-rules')||path.includes('dcp-lifecycle')||path.includes('dcp-host')||path.includes('dcp-runtime')||path.includes('/imports/workbook-options')||path.includes('/imports/csv-options'))return ['dcp-designer'];
  if(path.includes('identity-devices')||path.includes('identity-device-store'))return ['identity-card-readers', 'passport-scanner', 'patient-biometric-verification'];
 
  if(path.includes('device-integrations')||path.includes('device-integration-store')||path.includes('scanner-input'))return ['device-integrations', 'scanner-workbench', 'device-automation'];

@@ -1,0 +1,2 @@
+PASS front-design.pepbits.com: authenticated registration route, five steps, API configuration/patient load, identity-to-visit transition, visible footer, no page errors. No records saved.
+PASS desktop.front-design.pepbits.com: authenticated registration route, five steps, API configuration/patient load, identity-to-visit transition, visible footer, no page errors. No records saved.

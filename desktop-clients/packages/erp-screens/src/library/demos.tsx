@@ -5,7 +5,7 @@ import { type DataColumn } from "@pepbits/erp-config";
 import {useERP} from "@pepbits/erp-shell";
 import { Plus } from "lucide-react";
 import {
-  ScannerInput, Highlight, Input, SearchInput, Textarea, Select, MultiSelect, Checkbox, Radio, Toggle, FilePicker, RangeInput, FieldShell,
+  FormErrorSummary,RadioGroup,RangeField,ScannerInput, Highlight, Input, SearchInput, Textarea, Select, MultiSelect, Checkbox, Radio, Toggle, FilePicker, RangeInput, FieldShell,
   SearchSelect, ReferenceField, ReferenceDataWarning, Button, IconButton,
   DateInput, TimeInput, DateTimeInput, MonthInput, WeekInput, DateRangeInput, Calendar,
   Card, CardHeader, CardTitle, CardContent, CardFooter, CardGrid, StatCard, Avatar, Badge, StatusBadge,
@@ -38,7 +38,7 @@ export function ValidationDemo() {
   const [value, setValue] = useState("");
   return <div className="space-y-3">
     <Input label="Name" required value={value} onChange={e => setValue(e.target.value)} error={!value.trim() ? "Required" : undefined} />
-    <Input label="Record ID" value="DEMO-001" readOnly />
+    <FormErrorSummary title={t("Required")} errors={value.trim()?[]:[{id:"name",label:t("Name"),message:t("Required")}]}/><Input label="Record ID" value="DEMO-001" readOnly />
     <Input label="Status" value={t("Disabled")} disabled />
     <FieldShell label="Progress" hint="catalog.fieldShellHint">{describedBy => <progress aria-label={t("Progress")} aria-describedby={describedBy} value={60} max={100} />}</FieldShell>
   </div>;
@@ -69,7 +69,7 @@ export function ChoiceDemo() {
       <Radio label="Active" name={groupName} checked={choice === "active"} onChange={() => setChoice("active")} />
       <Radio label="Inactive" name={groupName} checked={choice === "inactive"} onChange={() => setChoice("inactive")} />
     </fieldset>
-    <Toggle label="Enabled" checked={enabled} onChange={setEnabled} />
+    <RadioGroup label="Status" options={[{value:"active",label:"Active"},{value:"inactive",label:"Inactive"}]} value={choice} onChange={setChoice}/><RangeField label="Amount" min={0} max={100} value={amount} onChange={value=>setAmount(value??0)} disabled={!enabled}/><Toggle label="Enabled" checked={enabled} onChange={setEnabled} />
     <RangeInput label="Progress" min={0} max={100} value={amount} onChange={setAmount} unit="%" />
   </div>;
 }

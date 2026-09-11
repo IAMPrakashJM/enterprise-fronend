@@ -1,0 +1,2 @@
+PASS three identity pages, EID synthetic document, expired passport, biometric opt-in, manual fallback, authenticated:false, four languages; isolated demo API and Chromium. No real device, biometric capture or authentication.
+1/1 features suites passed

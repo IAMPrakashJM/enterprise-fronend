@@ -42,3 +42,11 @@ export * from './device-integrations.ts';
 export * from './identity-devices.ts';
 export * from './care-pages.ts';
 export * from './dcp-designer.ts';
+
+export * from './dcp-catalog.ts';
+
+export * from './dcp-rules.ts';
+
+export * from './dcp-lifecycle.ts';
+
+export * from './dcp-runtime.ts';

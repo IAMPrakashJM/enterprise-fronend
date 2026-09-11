@@ -1,0 +1,2 @@
+PASS XLSX formula/expanded-size rejection and compressed 120-row import with paged preview, rule authoring, entity binding, review/approve/publish, immutable published controls, server validation and submitted answer locking; isolated demo API / Chromium.
+1/1 features suites passed
