@@ -1,0 +1,55 @@
+{
+  "applicationCommit": "0cab668d3dc816ff6f855cc5911c2b4bad5e1b75",
+  "releaseId": "20260911145802227-397d1cf5",
+  "scope": "Production-built Next.js and Vite demo shells; public Chromium, API-owned synthetic data. No native or production Spring/Postgres acceptance.",
+  "artifacts": [
+    {
+      "path": "activation.txt",
+      "sha256": "09cb1681771edee9d7088c6467bc3e8162a3f1d4056ddf610cbbad07eb17449e"
+    },
+    {
+      "path": "api-restart.txt",
+      "sha256": "3509010c4ff2ff220c2c35c77a6d02f1e7231e9185ade7d14f1dff3e15490d50"
+    },
+    {
+      "path": "desktop.front-design.pepbits.com-repeating.png",
+      "sha256": "2445a817e3cbf829a44acb77461434d54ef69584e0d7cdfa7fa5550fea38ce5d"
+    },
+    {
+      "path": "desktop.front-design.pepbits.com-runtime.png",
+      "sha256": "31ce5f14d667d8d798654dbd8dc08d61db2d6aa8d8ae6767d2123a8f39c31fb6"
+    },
+    {
+      "path": "front-design.pepbits.com-repeating.png",
+      "sha256": "bf2d398cc39cc858288f834c1494bf5a0ec5b8df85730ef9aee1d5ed71958e94"
+    },
+    {
+      "path": "front-design.pepbits.com-runtime.png",
+      "sha256": "869697013773c01dafc47d2d387f9d6a62fbe29e547dba7762f7b8fac181a9e1"
+    },
+    {
+      "path": "live-check.mjs",
+      "sha256": "c58e1823dd2a547e7222825a9c9a994630f84e0e71d21d096f2ff14753e688dc"
+    },
+    {
+      "path": "live-initial.txt",
+      "sha256": "e6fed065e8d26e97d1d7fce9c07a6f8c98a252bb5f09bcc822e288eecb74415f"
+    },
+    {
+      "path": "live.txt",
+      "sha256": "570002874f35b41e8427cfe30a73b949ca1a95ab05590e8702846112d444bb28"
+    },
+    {
+      "path": "prepare.txt",
+      "sha256": "26baed37b70475b8509d24f70fa4b450e63c5a70bf7aab4b7e48b6e05620fd3e"
+    },
+    {
+      "path": "release.json",
+      "sha256": "edd49c8a3c62aa9fd67ed79e016e9f1dd8c72efd69fdbd71ebfc29fc1d669690"
+    },
+    {
+      "path": "remote-ci.json",
+      "sha256": "fdebb1afe59c2083c51fc1f0d7a61c93c66519e6a9e94dc2894c550296a717aa"
+    }
+  ]
+}

@@ -158,3 +158,7 @@ const adapter = createDcpRuntimeAdapter(authenticatedRequest, hostPaths);
 The verified backend fixture handoff is [PLIBRYBEND-206](https://pepbits.atlassian.net/browse/PLIBRYBEND-206); the [frontend-owner response](https://pepbits.atlassian.net/browse/PLIBRYBEND-206?focusedCommentId=10095) records the remaining backend requirements and ownership. Contract fixtures from attachment 10000 are retained under `desktop-clients/packages/erp-data/src/fixtures/dcp-v1/`; they are actual-engine synthetic fixtures, not PostgreSQL or live-host evidence.
 
 This completes additional frontend capabilities, **not the full supplied enterprise scope**. Advanced authoring components and nested editable grids, staged large-dataset job UI, organizational assignment and independent permission administration, attachments/capture/domain packs, workflow/attestation/amendment interfaces, print/report operations and actual native acceptance remain work. Backend tasks remain with the other session. None of the current work is a deployment claim.
+
+### Deployment follow-up — 11 September 2026
+
+The supported increment above is now deployed on both demo sites as `20260911145802227-397d1cf5`, from application commit `0cab668d3dc816ff6f855cc5911c2b4bad5e1b75`. Public browser checks verified the shared runtime and repeatable designer through the demo API. This supersedes the earlier local-only status, while the remaining enterprise scope stays pending. See [deployment evidence](../releases/unreleased/dcp-frontend-deployment-2026-09-11.md).

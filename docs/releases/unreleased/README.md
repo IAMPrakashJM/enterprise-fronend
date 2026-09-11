@@ -77,3 +77,5 @@ The following records retain their original dates and test scopes. They are not 
 Latest local implementation: [DCP visual designer](dcp-designer-2026-09-11.md), not deployed.
 
 The [DCP frontend contract and recovery increment](dcp-frontend-contract-2026-09-11.md) is in progress in local source. It records the verified backend-session handoff, v1 runtime integration and additional designer/recovery UI. It is not a deployed release or a declaration that the full frontend scope is finished.
+
+- [DCP frontend deployment — 11 September 2026](dcp-frontend-deployment-2026-09-11.md): committed source, both public demo sites, API restart and retained live verification.
