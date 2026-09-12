@@ -1,0 +1,7 @@
+{
+  "id": "20260912002147213-851cb66e",
+  "createdAt": "2026-09-12T00:22:40.242Z",
+  "webApiUrl": "https://front-design.pepbits.com/api",
+  "desktopApiUrl": "https://desktop.front-design.pepbits.com/api",
+  "allowLocalApi": false
+}

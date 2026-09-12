@@ -83,3 +83,5 @@ The [DCP frontend contract and recovery increment](dcp-frontend-contract-2026-09
 - [DCP designer style alignment — 12 September 2026](dcp-designer-style-2026-09-12.md): local presentation-only update, not deployed.
 
 - [DCP designer style deployment — 12 September 2026](dcp-style-deployment-2026-09-12.md): release checks and activation follow-up.
+
+Latest activation: [DCP designer style alignment](dcp-style-deployment-2026-09-12.md), release `20260912002147213-851cb66e`, verified on both public sites on 12 September 2026. This supersedes earlier latest-activation statements above.

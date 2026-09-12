@@ -4,7 +4,7 @@ Feature: DCP-01. The shared frontend provides a visual designer at **Library →
 
 ## Designer layout
 
-The style update of 12 September 2026 uses a compact component palette, a central section/field canvas and a selected-field inspector. On wide screens the palette and inspector scroll independently; field settings appear before review/release settings. Narrow screens stack the panels. Existing actions, field properties, authorization and API behavior are unchanged. Colors, radii, typography and density continue to follow effective host preferences. See the [local style verification](../releases/unreleased/dcp-designer-style-2026-09-12.md); this update is not yet deployed.
+The style update of 12 September 2026 uses a compact component palette, a central section/field canvas and a selected-field inspector. On wide screens the palette and inspector scroll independently; field settings appear before review/release settings. Narrow screens stack the panels. Existing actions, field properties, authorization and API behavior are unchanged. Colors, radii, typography and density continue to follow effective host preferences. See the [local style verification](../releases/unreleased/dcp-designer-style-2026-09-12.md) and [verified deployment](../releases/unreleased/dcp-style-deployment-2026-09-12.md) to both demo sites.
 
 ## User workflow
 
