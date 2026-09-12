@@ -2,6 +2,10 @@
 
 Feature: DCP-01. The shared frontend provides a visual designer at **Library → Page Library → DCP Visual Designer** (`/library/dcp-designer`). Review/publication and entity answers run through the synthetic demo API. Production host DCP wiring remains separate.
 
+## Designer layout
+
+The style update of 12 September 2026 uses a compact component palette, a central section/field canvas and a selected-field inspector. On wide screens the palette and inspector scroll independently; field settings appear before review/release settings. Narrow screens stack the panels. Existing actions, field properties, authorization and API behavior are unchanged. Colors, radii, typography and density continue to follow effective host preferences. See the [local style verification](../releases/unreleased/dcp-designer-style-2026-09-12.md); this update is not yet deployed.
+
 ## User workflow
 
 1. Select a section. Click a palette item to add it there, or drag its handle onto a section. Supported types are text, long text, email, number, date, time, dropdown and checkbox.

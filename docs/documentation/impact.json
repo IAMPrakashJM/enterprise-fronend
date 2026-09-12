@@ -9124,26 +9124,20 @@
       "reason": "Reviewed conditional source/type and multi-pathway forms; final server checks preserve signed originals, require distinct inpatient identifiers and keep beds occupied after clinical completion."
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/components.tsx": {
-      "sha256": "bed7e5a25e61834edaa77d4764864c1a12ad333c3442732545f05e8645828cb6",
+      "sha256": "c0e5af7e680bf26b067caf5ab7fac64f78a9b1a6994a3649fc2301b01eee106a",
       "pages": [
         "dcp-designer"
       ],
-      "disposition": "updated",
-      "reason": "Reviewed against the current DCP designer, Draft Recovery and Form Controls guides. Those guides describe v1 preview/save, row identities, repeatable authoring, safe recovery, presentation and API boundaries. Shared additive exports do not change unrelated page workflows; wildcard pages remain conservatively covered, not claimed rewritten.",
-      "guideHashes": {
-        "dcp-designer": "2b3790b1e489256fb9e5239c2188c7e77f3f69e19b7bf73a45e374d221922d2e"
-      }
+      "disposition": "no-content-impact",
+      "reason": "Presentation-only DCP palette, canvas and inspector alignment. Existing help actions, field properties, permissions, persistence and API contracts are unchanged."
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css": {
-      "sha256": "1f11b3f72aa5ee99e08227f1af2d0dad7998efd12113fbeb1e7b4d4dccb7bec9",
+      "sha256": "dd02b5d3dcc8bf80feec87fca76acecd21b87fe528b4621bb872459821019c9e",
       "pages": [
         "dcp-designer"
       ],
-      "disposition": "updated",
-      "reason": "Designer help covers rules, bounded imports, release lifecycle and owner-bound demo runtime; production limits remain explicit.",
-      "guideHashes": {
-        "dcp-designer": "2b3790b1e489256fb9e5239c2188c7e77f3f69e19b7bf73a45e374d221922d2e"
-      }
+      "disposition": "no-content-impact",
+      "reason": "Presentation-only DCP palette, canvas and inspector alignment. Existing help actions, field properties, permissions, persistence and API contracts are unchanged."
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css.d.ts": {
       "sha256": "d29f747a0b837be9c4e733886004c861b2b63e54de5f4dc5839f7e460ad642ac",
@@ -9168,15 +9162,12 @@
       }
     },
     "desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx": {
-      "sha256": "769b319c6a83337b9a9bbf894b48165a7c3fa87963b35960761554e2d866b514",
+      "sha256": "57dd02b0c4081af713026d834992514e9c2ad1c0f6c62538e78cbcef0b56aa98",
       "pages": [
         "dcp-designer"
       ],
-      "disposition": "updated",
-      "reason": "Reviewed against the current DCP designer, Draft Recovery and Form Controls guides. Those guides describe v1 preview/save, row identities, repeatable authoring, safe recovery, presentation and API boundaries. Shared additive exports do not change unrelated page workflows; wildcard pages remain conservatively covered, not claimed rewritten.",
-      "guideHashes": {
-        "dcp-designer": "2b3790b1e489256fb9e5239c2188c7e77f3f69e19b7bf73a45e374d221922d2e"
-      }
+      "disposition": "no-content-impact",
+      "reason": "Presentation-only DCP palette, canvas and inspector alignment. Existing help actions, field properties, permissions, persistence and API contracts are unchanged."
     },
     "desktop-clients/packages/erp-config/src/dcp-designer.ts": {
       "sha256": "56ef6e7838fc2e33b2e2db9f26fb50bf149a0409fb0f399693b2a7740248a03d",

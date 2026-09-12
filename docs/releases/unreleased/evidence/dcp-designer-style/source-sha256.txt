@@ -1,0 +1,3 @@
+c0e5af7e680bf26b067caf5ab7fac64f78a9b1a6994a3649fc2301b01eee106a  desktop-clients/packages/erp-screens/src/dcp-designer/components.tsx
+57dd02b0c4081af713026d834992514e9c2ad1c0f6c62538e78cbcef0b56aa98  desktop-clients/packages/erp-screens/src/dcp-designer/workspace.tsx
+dd02b5d3dcc8bf80feec87fca76acecd21b87fe528b4621bb872459821019c9e  desktop-clients/packages/erp-screens/src/dcp-designer/designer.module.css
