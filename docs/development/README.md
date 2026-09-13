@@ -26,3 +26,7 @@ Update links, version pointers, templates, rules and evidence without rewriting 
 If the documentation gate or CI configuration changes, test the gate and check workflow wiring. A new CI step is configured locally until the branch is pushed and the hosted run actually executes.
 
 - [DCP enterprise form scope and reuse assessment](README-DCP-ENTERPRISE-FORM-SCOPE.md).
+
+## Latest DCP form/backend handoff
+
+The [latest form structure and backend expectations](DCP-LATEST-FORM-BACKEND-HANDOFF-2026-09-11.md) and [validated authoring JSON example](examples/dcp-latest-form-structure.json) describe the deployed designer separately from the backend v1 runtime contract. Both files are attached to [PLIBRYBEND-206, latest frontend handoff](https://pepbits.atlassian.net/browse/PLIBRYBEND-206?focusedCommentId=10096). The contract-owner follow-up is on [PLIBRYBEND-194](https://pepbits.atlassian.net/browse/PLIBRYBEND-194?focusedCommentId=10097). Comments were read back after posting; no issue statuses were changed.

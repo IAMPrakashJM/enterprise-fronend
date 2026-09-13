@@ -1,0 +1,239 @@
+{
+  "title": "Employee extension",
+  "layout": "tabs",
+  "columns": 2,
+  "binding": {
+    "entityType": "employee",
+    "trigger": "extension"
+  },
+  "sections": [
+    {
+      "id": "identity",
+      "title": "Identity and location",
+      "fields": [
+        {
+          "id": "reference",
+          "label": "Reference",
+          "labels": {
+            "en": "Reference",
+            "ar": "المرجع",
+            "hi": "संदर्भ",
+            "ml": "റഫറൻസ്"
+          },
+          "type": "text",
+          "required": true,
+          "rules": {
+            "normalize": "trim-uppercase",
+            "format": "ascii-letters",
+            "minLength": 2,
+            "maxLength": 20
+          }
+        },
+        {
+          "id": "company",
+          "label": "Company",
+          "type": "select",
+          "control": "search",
+          "options": [
+            {
+              "value": "001",
+              "label": "Lotus Limited"
+            },
+            {
+              "value": "002",
+              "label": "Leo Limited"
+            }
+          ]
+        },
+        {
+          "id": "country",
+          "label": "Country",
+          "type": "select",
+          "options": [
+            {
+              "value": "IN",
+              "label": "India"
+            },
+            {
+              "value": "AE",
+              "label": "United Arab Emirates"
+            }
+          ]
+        },
+        {
+          "id": "state",
+          "label": "State / emirate",
+          "type": "select",
+          "dependsOn": "country",
+          "options": [
+            {
+              "value": "KL",
+              "label": "Kerala",
+              "parentValue": "IN"
+            },
+            {
+              "value": "KA",
+              "label": "Karnataka",
+              "parentValue": "IN"
+            },
+            {
+              "value": "AZ",
+              "label": "Abu Dhabi",
+              "parentValue": "AE"
+            },
+            {
+              "value": "DU",
+              "label": "Dubai",
+              "parentValue": "AE"
+            }
+          ]
+        },
+        {
+          "id": "entityKind",
+          "label": "Entity type",
+          "type": "select",
+          "control": "radio",
+          "options": [
+            {
+              "value": "PERSON",
+              "label": "Person"
+            },
+            {
+              "value": "BUSINESS",
+              "label": "Business"
+            }
+          ]
+        },
+        {
+          "id": "identifierType",
+          "label": "Identifier type",
+          "type": "select",
+          "dependsOn": "country",
+          "additionalParents": [
+            {
+              "fieldId": "entityKind"
+            }
+          ],
+          "options": [
+            {
+              "value": "IN-PERSON-DEMO",
+              "label": "India person identifier — synthetic",
+              "parentValue": "IN",
+              "parentValues": {
+                "entityKind": "PERSON"
+              }
+            },
+            {
+              "value": "IN-BUSINESS-DEMO",
+              "label": "India business identifier — synthetic",
+              "parentValue": "IN",
+              "parentValues": {
+                "entityKind": "BUSINESS"
+              }
+            },
+            {
+              "value": "AE-PERSON-DEMO",
+              "label": "UAE person identifier — synthetic",
+              "parentValue": "AE",
+              "parentValues": {
+                "entityKind": "PERSON"
+              }
+            },
+            {
+              "value": "AE-BUSINESS-DEMO",
+              "label": "UAE business identifier — synthetic",
+              "parentValue": "AE",
+              "parentValues": {
+                "entityKind": "BUSINESS"
+              }
+            }
+          ]
+        },
+        {
+          "id": "needsReview",
+          "label": "Needs review",
+          "type": "checkbox",
+          "control": "toggle"
+        },
+        {
+          "id": "reviewReason",
+          "label": "Review reason",
+          "type": "textarea",
+          "rules": {
+            "visibleWhen": {
+              "fieldId": "needsReview",
+              "operator": "eq",
+              "value": true
+            },
+            "requiredWhen": {
+              "fieldId": "needsReview",
+              "operator": "eq",
+              "value": true
+            },
+            "maxLength": 500
+          }
+        }
+      ]
+    },
+    {
+      "id": "observations",
+      "title": "Repeated observations",
+      "repeatable": true,
+      "minItems": 1,
+      "maxItems": 10,
+      "fields": [
+        {
+          "id": "note",
+          "label": "Note",
+          "type": "textarea",
+          "required": true,
+          "rules": {
+            "normalize": "trim",
+            "maxLength": 500
+          }
+        },
+        {
+          "id": "rating",
+          "label": "Rating",
+          "type": "number",
+          "min": 0,
+          "required": true,
+          "rules": {
+            "max": 10,
+            "integer": true
+          },
+          "control": "rating"
+        },
+        {
+          "id": "quantity",
+          "label": "Quantity",
+          "type": "number",
+          "min": 0,
+          "required": true,
+          "rules": {
+            "integer": true
+          }
+        },
+        {
+          "id": "unitValue",
+          "label": "Unit value — numeric demonstration",
+          "type": "number",
+          "min": 0,
+          "required": true
+        },
+        {
+          "id": "lineTotal",
+          "label": "Line total — numeric demonstration",
+          "type": "number",
+          "rules": {
+            "calculation": {
+              "operation": "product",
+              "left": "quantity",
+              "right": "unitValue"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

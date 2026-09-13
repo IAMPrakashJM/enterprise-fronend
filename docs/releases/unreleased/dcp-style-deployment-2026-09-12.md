@@ -26,3 +26,7 @@ Preparation and activation completed successfully. Both shells passed isolated a
 [Hosted CI](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34661401340) was still running in the retained [status snapshot](evidence/dcp-style-deployment/dcp-style-remote-ci.json); full hosted success is not claimed. Browser acceptance does not establish native Tauri, physical-device, native-speaker or production backend acceptance.
 
 Rollback: with Node 24, run `npm run deploy --prefix desktop-clients -- --activate 20260911145802227-397d1cf5`. The prior release remains retained.
+
+## Hosted CI follow-up — 13 September 2026
+
+The documentation commit's [completed hosted run](https://github.com/IAMPrakashJM/enterprise-fronend/actions/runs/34661518865) failed in `feature-browser (features)`. Reported failures were `dcp-designer.mjs`, `page-library.mjs`, `library-preferences.ts`, `clinical-templates.ts` and `page-templates.ts`. The `check`, `native-linux`, `browser`, navigation and product jobs passed. This updates the earlier in-progress observation without changing the retained snapshot or the successful focused public deployment checks. Root-cause fixes and a passing full hosted rerun are not claimed by this documentation follow-up.
