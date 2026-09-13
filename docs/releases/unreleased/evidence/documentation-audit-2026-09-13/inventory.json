@@ -1,0 +1,671 @@
+{
+  "base": "d8c05a0af170b5fa62b5ce464e1ab624775e9690",
+  "scope": "All tracked Markdown at audit start; content hashes reflect the documentation updates.",
+  "count": 166,
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "290ba6b7ec97627c996cd357c040e587fdce55434f8f399cbc416c3f4b2fdfa1"
+    },
+    {
+      "path": "README.md",
+      "sha256": "833a6f7d90a8d536d6c2e230cea97477dad7d4f2f2b9b9e493e1629f2593a04a"
+    },
+    {
+      "path": "demo-pages/AllyVora_OP_Registration_README.md",
+      "sha256": "55a6ac12d2b84bbe3629f1884036dfaeb134a86939de778a282a56aee577d483"
+    },
+    {
+      "path": "desktop-clients/README.md",
+      "sha256": "c0805988d6d3f9bb3ad845b2de2d270a35a2184e593ec8528f9458ca4f67c9e8"
+    },
+    {
+      "path": "desktop-clients/apps/web/AGENTS.md",
+      "sha256": "63f2c50380ed6303237cce215ce27af1d620d094c215e28d1b1538a3c070e3bb"
+    },
+    {
+      "path": "desktop-clients/apps/web/CLAUDE.md",
+      "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+    },
+    {
+      "path": "desktop-clients/docs/README.md",
+      "sha256": "3c3776c043192fdbf14d3f188df56f65fba035a4ac1a75524e0d28d4bf5d7460"
+    },
+    {
+      "path": "desktop-clients/docs/ai-hardening-ledger.md",
+      "sha256": "2092e1da39d15c7d3c849191fd1ba4ba522fe6cb9195891aa0fdc067e47fdf61"
+    },
+    {
+      "path": "desktop-clients/docs/ai-service-contract.md",
+      "sha256": "f736aa09ea9fb1f91157f682f81a5aafd8814ed1fcb5e76ba43fd218fc112b37"
+    },
+    {
+      "path": "desktop-clients/docs/approvals.md",
+      "sha256": "8040a19b3ce103a925513584f84eb5a9017b845766548c51d7c3d0a4866076a1"
+    },
+    {
+      "path": "desktop-clients/docs/backend-message-localization.md",
+      "sha256": "f4a1a2db72b2c4615fe222026ffa42cfb67f0f7b77131b92dce35ad5b5ac688f"
+    },
+    {
+      "path": "desktop-clients/docs/backend-navigation-implementation.md",
+      "sha256": "8bbe66369c05f94c909916c7469f9aa66a059b348864f4825f37f8c0fa7865fe"
+    },
+    {
+      "path": "desktop-clients/docs/backend-navigation-localization-plan.md",
+      "sha256": "867b0fc237f2da8fb4c1cd9c58e0200bb2aedb26490466fd5d0336bc4417c189"
+    },
+    {
+      "path": "desktop-clients/docs/clinical-page-templates.md",
+      "sha256": "79dd8f655f4dbf73a4b6744bd5738bf43b2267db0fa64225aa7dc153771d26da"
+    },
+    {
+      "path": "desktop-clients/docs/code-review-2026-09-08.md",
+      "sha256": "bcf03effb70791abfde7c0b6f868b0121de42cdf0ff1ef3b5e3a975d9aa87ecd"
+    },
+    {
+      "path": "desktop-clients/docs/component-library.md",
+      "sha256": "3492c461e73196e1125596df6c2f562a021d0560d02b0337be2486be845035cd"
+    },
+    {
+      "path": "desktop-clients/docs/csv-import.md",
+      "sha256": "8a0ac478630d273d98b9717ad5177ba7f2afdb72966c4bcba1f76bbaac5d637c"
+    },
+    {
+      "path": "desktop-clients/docs/deployment.md",
+      "sha256": "83be50650f3a4655b1e326bcaf58628102c9ac0cbe923bac492aa81a3a59cd1b"
+    },
+    {
+      "path": "desktop-clients/docs/desktop-development-plan.md",
+      "sha256": "f4e36d1954764df38a08067ea5b772be9186f8da8c70bd64f581c10d62068210"
+    },
+    {
+      "path": "desktop-clients/docs/desktop-reliability.md",
+      "sha256": "b16d3015420d32f3dc96b03ae29b149805bd549d824b752adcc23f86ebcda211"
+    },
+    {
+      "path": "desktop-clients/docs/documentation-center-integration.md",
+      "sha256": "3a9105ccaa2422f0ba8a2f0d14e8b8247366e3301bae8e49e7511e40a31f0c5c"
+    },
+    {
+      "path": "desktop-clients/docs/documentation-coverage.md",
+      "sha256": "88574ec8f08e81448b982fa079755ede363a0f498367f86ce2b268add6e0de25"
+    },
+    {
+      "path": "desktop-clients/docs/documentation-release-center-plan.md",
+      "sha256": "5942214ad1488ac36907afe50cb083fdc85bede6cf07f3a78d79c6e8ce12489b"
+    },
+    {
+      "path": "desktop-clients/docs/draft-recovery-center.md",
+      "sha256": "1b07dadffdc3854ccc22d1c5dd3421d5d3946a3b926e2a6e93f2bb51ddecb629"
+    },
+    {
+      "path": "desktop-clients/docs/engineering-review-2026-09-08.md",
+      "sha256": "c570a321910191f63dfec67ccc6dbc45b2bbfbb9185aae3075a7ccbf4a6bfc1e"
+    },
+    {
+      "path": "desktop-clients/docs/enterprise-workspace-framework-readme.md",
+      "sha256": "1caf3c8e72dc6bb14be7d2d4289c35f66e88a75c6b985c4fe19cccdc771cfc13"
+    },
+    {
+      "path": "desktop-clients/docs/frontend-product-review.md",
+      "sha256": "feda89a738b007fffbb8e78f48a25cd5ba67b85e4c5df5fdcc30c41d46b395d3"
+    },
+    {
+      "path": "desktop-clients/docs/handbook/README.md",
+      "sha256": "4772a4c5c5376329ed45d518b7e3891f9a1c44e8b8f88a5dddde4a7ec9b88caa"
+    },
+    {
+      "path": "desktop-clients/docs/handbook/VALIDATION.md",
+      "sha256": "fe2949f985d5866fbcd3c2ccbe69a79e2f1783a77ee14a8622b85fd5a53b74c5"
+    },
+    {
+      "path": "desktop-clients/docs/handbook/frontend-platform-guide.md",
+      "sha256": "54b34305088aa35d977eaa8ba03027816a92237c917d9bae655646bc53ef7f5b"
+    },
+    {
+      "path": "desktop-clients/docs/library-preference-audit.md",
+      "sha256": "fedadc82fbda5f0c4303d0c537a47c6319b2d79e86129cae09f61fcad056ba51"
+    },
+    {
+      "path": "desktop-clients/docs/library-preference-implementation.md",
+      "sha256": "53451dfdb39df7e68e1d0b7b310b1e6ee0de9c36316652c3394c42bffd048a75"
+    },
+    {
+      "path": "desktop-clients/docs/localization-completion-report.md",
+      "sha256": "feac6f9f0b8bd3ac60c6ae83b1c4f86d936943776581a0583cfc6f5b7a5b0720"
+    },
+    {
+      "path": "desktop-clients/docs/localization-review/README.md",
+      "sha256": "ff9d2870f6345c9896816c705e8012b467342ffe6b5420cffb546b2aaa7471f8"
+    },
+    {
+      "path": "desktop-clients/docs/localization-test-report-2026-09-08.md",
+      "sha256": "eb62ff793e21a7c64b1b1540e774d21d929cbba5f35b4ed4bd7c0db05030cb5f"
+    },
+    {
+      "path": "desktop-clients/docs/localization.md",
+      "sha256": "c87e91ee02d159c4685996f25364e3a23ef2c682264adaf5563fcb4fceaadc7e"
+    },
+    {
+      "path": "desktop-clients/docs/page-body-localization.md",
+      "sha256": "6f3c01752ae3a83f1e5821d85bf16c1d125fdcd63d79ad079d5172a2c95b91ad"
+    },
+    {
+      "path": "desktop-clients/docs/page-template-library.md",
+      "sha256": "550be4df9eeff7b40e69955b402df5b15528e785b080a0f59a6332bf83496aa7"
+    },
+    {
+      "path": "desktop-clients/docs/patient-query-parity.md",
+      "sha256": "0ef896e3c8bbc4d8de265684ea1bb3a3aaa860839ec87746623c27aedcbf6bd5"
+    },
+    {
+      "path": "desktop-clients/docs/patient-record-parity.md",
+      "sha256": "779b16e78aa91a26dc183d7a34808a48b0a8ce41956419b189076f82fe877c65"
+    },
+    {
+      "path": "desktop-clients/docs/product-profiles.md",
+      "sha256": "ba5f00598fb0d530b1751a178ddc00c80ce194c50038c0c4ce4a5a319f65b5aa"
+    },
+    {
+      "path": "desktop-clients/docs/record-editing.md",
+      "sha256": "194e8a45e3308807a9f705cbe19337e156a0bd33c56eb5f826bb620590bbf137"
+    },
+    {
+      "path": "desktop-clients/docs/record-panels.md",
+      "sha256": "f30a714306a8a3dbb04d2590ab08cfc73306bb8a526b6aa1bedf4116e1666181"
+    },
+    {
+      "path": "desktop-clients/docs/remaining-work.md",
+      "sha256": "dcba4d1de4af42066a2d224b4b91d60170685e3cf998fc33f8d29bf41170a47e"
+    },
+    {
+      "path": "desktop-clients/docs/review-follow-up-2026-09-08.md",
+      "sha256": "5dd5c59360c4fb0a646d3cd66d3d6867a3b6b0e48bb5d53dd83cba2830e73a3f"
+    },
+    {
+      "path": "desktop-clients/docs/running-tauri.md",
+      "sha256": "4e90fa00c3c0104d9dd5519634af6468ab455ce9843df037382b3544fb5a1aa7"
+    },
+    {
+      "path": "desktop-clients/docs/sentinel-deployment-2026-09-08.md",
+      "sha256": "400fdb1c7bb27c84b32b22f88e8d50430fa4827142485548a2d69922b1906cac"
+    },
+    {
+      "path": "desktop-clients/docs/sentinel-monitoring.md",
+      "sha256": "7df693c5a7c13944fcb6df39c5b482321c9b327e47f8406b0e9d73380cb5dde8"
+    },
+    {
+      "path": "desktop-clients/docs/server-completion-2026-09-08.md",
+      "sha256": "b9226c8c7d80db4aad752b0506dbf1a5ec72b9d2de5432aa89998be2ee2d7c68"
+    },
+    {
+      "path": "desktop-clients/docs/shared-draft-recovery.md",
+      "sha256": "ff930836553827a226adbc541694e6a06a117e90e3fd38d5365d3de883501123"
+    },
+    {
+      "path": "desktop-clients/docs/shared-ui-components.md",
+      "sha256": "cf8cb3271e6d9386da73802863c92369de7210afccd780c2dbbd3a14108198f9"
+    },
+    {
+      "path": "desktop-clients/docs/superpowers/plans/2026-09-03-contextual-ai-assistant.md",
+      "sha256": "3a0922ef3bde5dbf60c035d4fd857b64b6a3bc6563f6b63a24dd80908b28eab8"
+    },
+    {
+      "path": "desktop-clients/docs/superpowers/plans/2026-09-03-nexora-monorepo.md",
+      "sha256": "76ee563bce435f4ef89ee988cd4bef8258509cd522a94116c2d6a334ce7bc115"
+    },
+    {
+      "path": "desktop-clients/docs/superpowers/specs/2026-09-03-contextual-ai-assistant-design.md",
+      "sha256": "3ceca2f8600b294251aafe2603634e12ea3be40e35d33e1d20337a5106c1d4b9"
+    },
+    {
+      "path": "desktop-clients/docs/superpowers/specs/2026-09-03-nexora-monorepo-design.md",
+      "sha256": "6431a7a1b31e61afb15eaf62bae4cb6db2ce3a5dbc7e6f450d9234658a241661"
+    },
+    {
+      "path": "desktop-clients/docs/tenant-preference-policies.md",
+      "sha256": "11edbc529e75f56b9651a20bd9f4e4196cc7d8ca65b6e7930c6b61b9dc0d65ba"
+    },
+    {
+      "path": "desktop-clients/docs/ui-gap-analysis.md",
+      "sha256": "0b2bdfe388f01e950cba79b63b0ad16ece75ad11569753ee2f0db0c0e9d592e3"
+    },
+    {
+      "path": "desktop-clients/docs/ui-roadmap.md",
+      "sha256": "d8d95b8eadd0405c709a3069b278e26351f445f0e879d90529ca17444253345b"
+    },
+    {
+      "path": "desktop-clients/docs/user-error-recovery.md",
+      "sha256": "b05e25505fb3d303c7b1da8ccbe5470c747cecbb0a01742569a16c33076677ec"
+    },
+    {
+      "path": "desktop-clients/docs/worklist-workflows.md",
+      "sha256": "74b707cb424a67af588eba301fcdb5439ef54617d8bb13f89fbe74dc9d489d99"
+    },
+    {
+      "path": "desktop-clients/e2e/README.md",
+      "sha256": "0401523d3d31097b986a46b3f5acd556a2136a0e96670c93b2dc39d3bea8936f"
+    },
+    {
+      "path": "desktop-clients/packages/workspace-core/README.md",
+      "sha256": "b97068f7ac9a875783f75364ac3d79d83763b321cb385d65eef158126ac02aac"
+    },
+    {
+      "path": "desktop-clients/source/nexora-enterprise-erp/AGENTS.md",
+      "sha256": "63f2c50380ed6303237cce215ce27af1d620d094c215e28d1b1538a3c070e3bb"
+    },
+    {
+      "path": "desktop-clients/source/nexora-enterprise-erp/CLAUDE.md",
+      "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+    },
+    {
+      "path": "desktop-clients/source/nexora-enterprise-erp/README.md",
+      "sha256": "7261ee5fc0c076b4748e684198a1df3e9e0c3a83bc282639ca97e255f648cb3b"
+    },
+    {
+      "path": "desktop-clients/source/vantage-erp-next/README.md",
+      "sha256": "79f3a269192a7755688ba1f0695ac6ba721bd13c26f4cb2125e8ff58fadb90f5"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "ce276e3b3a17c9da367e882bafe0228c72621174c079f242526a73efac86aac7"
+    },
+    {
+      "path": "docs/architecture/README.md",
+      "sha256": "229e6c6bd90d5c355147586d4d263507988090d15a90606888e204615ef29694"
+    },
+    {
+      "path": "docs/architecture/library-preferences.md",
+      "sha256": "5799166d3abe24cb08ccc3d28f3a4a5c3fea9e407529ff18d66593b41cb6f933"
+    },
+    {
+      "path": "docs/development/DCP-LATEST-FORM-BACKEND-HANDOFF-2026-09-11.md",
+      "sha256": "8d61b347ffe2898a8a77fa57d277808c3198be6ba4eaa0f2f93b65f42937b5c2"
+    },
+    {
+      "path": "docs/development/README-DCP-ENTERPRISE-FORM-SCOPE.md",
+      "sha256": "7cd1e860ad36e4f722950aa3314160d4bfa947e7401b46efd339d1e05e4a2c35"
+    },
+    {
+      "path": "docs/development/README.md",
+      "sha256": "2043e017f31436ff9bb2384851b716750069d9851938310e1854a3e92768dcd9"
+    },
+    {
+      "path": "docs/development/RULES.md",
+      "sha256": "75f36592fd6d7a7ba69a2e6d551b89ba17942dc07bc0e767f53e4e0c64acb9cf"
+    },
+    {
+      "path": "docs/documentation/README.md",
+      "sha256": "38a122ed0327857b94489a051d854ff46af2a98cd223f5ecd482c06ff69b1ee3"
+    },
+    {
+      "path": "docs/documentation/reference-guide-audit-2026-09-11.md",
+      "sha256": "622cf50eb1c407b9ccaf7f502cd8e90d95d9f2788513558e5221486aa639ffe9"
+    },
+    {
+      "path": "docs/features/README.md",
+      "sha256": "5a8b1e96c09d470dd18e31f66fe15a543ce97a72fd45f9d643a15e730fcafe8c"
+    },
+    {
+      "path": "docs/features/barcode-qr-printing.md",
+      "sha256": "ce055cf4e40b264da4020efa56a2a1c26d9f29e3bd17c06604623c7fb5d956ef"
+    },
+    {
+      "path": "docs/features/billing-clinic.md",
+      "sha256": "e3f96f23ba4877a4c338409fdeb232b38214560b2c7fc9a3f1ced9f75cb1a618"
+    },
+    {
+      "path": "docs/features/care-page-templates.md",
+      "sha256": "d621d5e4077995034ed178f386cdec2ddbd2f5dd8dfb9319350899e9a540acb0"
+    },
+    {
+      "path": "docs/features/clinical-consultation.md",
+      "sha256": "4f21d1ddb2222e70f622dcdcc91a68070b6f1f34316ef6c6ba7d5d88c52a9856"
+    },
+    {
+      "path": "docs/features/clinical-triage.md",
+      "sha256": "491c1991537d03de728c7370452fd10225ebce728529c5d8783a90e164158ca4"
+    },
+    {
+      "path": "docs/features/clinical-workspace-update.md",
+      "sha256": "934ea528377faf5883d40fadff0605ab4787681089f9851b92d957bc8e842f94"
+    },
+    {
+      "path": "docs/features/comprehensive-consultation.md",
+      "sha256": "d64d61b7db28e3ee985403089fd5329fcedffb26ca6d0b01e0bb6eabb5a1cf46"
+    },
+    {
+      "path": "docs/features/dcp-designer.md",
+      "sha256": "7bf78f57cd16970a26659753f368c85280c6fb9b4436fc75801dad037f8d9c2c"
+    },
+    {
+      "path": "docs/features/device-integrations.md",
+      "sha256": "85771a79a42d1e64f6e3a566c0e6b416a9337cdf433d50c840bf3600a2c4ad50"
+    },
+    {
+      "path": "docs/features/identity-devices.md",
+      "sha256": "847ed8fd4294df4ddb06b0d61b4bbbf61ea939daf14e45230986c2ddab2dbe72"
+    },
+    {
+      "path": "docs/features/library-preferences.md",
+      "sha256": "7b5226a191d68df495c10db56252273ee22de8032ef1a1f34f652c8fb358ce6a"
+    },
+    {
+      "path": "docs/features/op-consultation.md",
+      "sha256": "59a6b74db69953bc90b8a6ebee6327bff2f968c1531874ff56b0b07c684495d9"
+    },
+    {
+      "path": "docs/features/op-registration.md",
+      "sha256": "64217876ad4c90f833997a885778bb5496195d749fb145d58b41a8c8e216cc3d"
+    },
+    {
+      "path": "docs/features/own-settings.md",
+      "sha256": "775e42de21d6e926743232ba9b263050822534babab85564f67c2ec729dd0ba6"
+    },
+    {
+      "path": "docs/features/page-library-catalog.md",
+      "sha256": "3743f32e11d26024230edb61ef0c220218f25e404e83dbaa0a2a9b3db0ff5706"
+    },
+    {
+      "path": "docs/features/page-templates-csv.md",
+      "sha256": "d28a50c7bdd5f4dae45d894f7e949e09d9f2831b5c80c942349c4be48d388db6"
+    },
+    {
+      "path": "docs/features/registry-design-family.md",
+      "sha256": "c48fe64c971c9f25b774404a6f1835f1b3c91b9f1a83195aa67072fee1408a87"
+    },
+    {
+      "path": "docs/releases/CHANGELOG.md",
+      "sha256": "10d14d8b9788c23610292a5d284d7edae12081776e02da51048703bc29bdb9d9"
+    },
+    {
+      "path": "docs/releases/README.md",
+      "sha256": "86c4a775facbf6de4a35b4922263f5644c2c2d62be81a6981e92db88a33c9c52"
+    },
+    {
+      "path": "docs/releases/VERSIONING.md",
+      "sha256": "2c3b0c0f1cd36c471652f390e39e8e9e28642aea0094f46ea39a0ed20832d0c6"
+    },
+    {
+      "path": "docs/releases/templates/README.md",
+      "sha256": "f7bd9b2cdd8c961c308ee49eb63d502c3b6be953d54d2e4f855a7b2cc3adc116"
+    },
+    {
+      "path": "docs/releases/templates/feature.md",
+      "sha256": "55720a1fad5da5355e3463ca1fb7ae7419c8672d731fc5d186390746cd8282c6"
+    },
+    {
+      "path": "docs/releases/templates/release-notes.md",
+      "sha256": "89538cbfef435798f283a93e50a026f194afc1d908d0741a4246882ceec6d769"
+    },
+    {
+      "path": "docs/releases/templates/test-evidence.md",
+      "sha256": "cd7a237ebaa358ba6e110bb5f4b78930ffa99bb26ef3d56c813c8a5dac4e117e"
+    },
+    {
+      "path": "docs/releases/unreleased/README.md",
+      "sha256": "f97f00e9e8619369676d4f7399de66bebf4ec06fd8a3615b7c109ebaa9fed40e"
+    },
+    {
+      "path": "docs/releases/unreleased/barcode-qr-printing-2026-09-10.md",
+      "sha256": "4bf4b97067c27e221af10464d877b6816c343d207fb84204bd10d186d9a90edb"
+    },
+    {
+      "path": "docs/releases/unreleased/billing-banner-deployment-2026-09-10.md",
+      "sha256": "73cc838d51421508cf1402a8cda3b44e99f0e0d02af22488cdd45b1ee0a401fb"
+    },
+    {
+      "path": "docs/releases/unreleased/billing-banner-removal-2026-09-10.md",
+      "sha256": "9afe788c4f6ff0e2e9d7e957d725fc22e1a8a755c26191caa85a77cbc108e6a5"
+    },
+    {
+      "path": "docs/releases/unreleased/billing-catalog-launch-2026-09-10.md",
+      "sha256": "1f39cd968d5e72c00b45b5f2ad691aeb3cd8e1e3a49036dd3ff5706e2b41c5a7"
+    },
+    {
+      "path": "docs/releases/unreleased/billing-catalog-launch-deployment-2026-09-10.md",
+      "sha256": "7e2a1a8156db5ad440e91da07588fbce6f81188337a2370371bbcf9da8ab0f56"
+    },
+    {
+      "path": "docs/releases/unreleased/billing-clinic-2026-09-09.md",
+      "sha256": "a6602d59b5be33b3d35eaafff32ee2c9242e40064ea30bd0ce2dd231dc8919f2"
+    },
+    {
+      "path": "docs/releases/unreleased/billing-rail-alignment-2026-09-10.md",
+      "sha256": "c015fd4c69b96fa4902a7a87173eb61a63b73676f54757cf3b77ddbb7f4e78c0"
+    },
+    {
+      "path": "docs/releases/unreleased/care-page-deployment-2026-09-10.md",
+      "sha256": "9db83dc5bf85f4c721462784acc3b53e6a652fefd684accb19038c7c9b002725"
+    },
+    {
+      "path": "docs/releases/unreleased/care-page-templates-2026-09-10.md",
+      "sha256": "b80e38e6b3f01687fbf1588c94172f8508e266058c98b7d01bed8c7040ae8aac"
+    },
+    {
+      "path": "docs/releases/unreleased/catalog-notices-2026-09-10.md",
+      "sha256": "52d4f6d5c80451fce6acac6e7bc0d31f094d05211e04601a87ada0664d1e105e"
+    },
+    {
+      "path": "docs/releases/unreleased/catalog-notices-deployment-2026-09-10.md",
+      "sha256": "510ae7dd3ecbb8c30f1879a7f64dffe1e79458bb841677e4e018ad1b85cdd4a5"
+    },
+    {
+      "path": "docs/releases/unreleased/clinical-consultation-2026-09-09.md",
+      "sha256": "79fd6a89d68668bcc2bf0d902dca29a557e21ca7d301ff746a1ccd453bdc4c88"
+    },
+    {
+      "path": "docs/releases/unreleased/clinical-triage-2026-09-09.md",
+      "sha256": "61f369e2800d786c40a11308b1263d5246ed63d09ef8a0069eb9611938404b1a"
+    },
+    {
+      "path": "docs/releases/unreleased/clinical-workspaces-2026-09-10.md",
+      "sha256": "638ff7d6737a24713baebfe5ace9c74f39363b31b9fb89243e0b955ecf88c27c"
+    },
+    {
+      "path": "docs/releases/unreleased/clinical-workspaces-deployment-2026-09-10.md",
+      "sha256": "988120b3e0854e72639d51b7379777917ed19bc417193c2a133d901280df47dc"
+    },
+    {
+      "path": "docs/releases/unreleased/comprehensive-consultation-2026-09-10.md",
+      "sha256": "5a832c8d28087822a07890e3bc2b1f8ec7b3bdad158d05d35d8bb3d480599e22"
+    },
+    {
+      "path": "docs/releases/unreleased/comprehensive-deployment-2026-09-10.md",
+      "sha256": "e553017857f6a63420248ec00118fe7ac927cf6b792e36b1263130c4f959140f"
+    },
+    {
+      "path": "docs/releases/unreleased/consultation-expanded-2026-09-09.md",
+      "sha256": "2368c3c956c9bcc47675c2199f4bc6522fce91fdb7b937abff296798925fd02e"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-csv-options-2026-09-11.md",
+      "sha256": "7fa710e5bf61893874e572d135de5350727995474ec965b47a94de35c8bea3cc"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-dependencies-2026-09-11.md",
+      "sha256": "f2c192a490ee41ac951f9a04a934c1c00dd7f52f7c8b69588efa02bd749ed302"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-designer-2026-09-11.md",
+      "sha256": "aade4907a4dd5ec2ac328ba9635d6b5bf69c38c9580f51cf15e7b827f26821aa"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-designer-deployment-2026-09-11.md",
+      "sha256": "241d2e2cb68947846f631dee72c8e4c81b618b47e05243b2b02cc25d1e578098"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-designer-style-2026-09-12.md",
+      "sha256": "e9e6c93f5b0cbc32b424d7e2038ec82250ce7e0c99a713c8b0ec302896e91d7e"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-enterprise-runtime-2026-09-11.md",
+      "sha256": "11f712d6f3e8dc1b00b89965f2ae98255b77f6f7ed4810b9571b1782c2e32edf"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-frontend-contract-2026-09-11.md",
+      "sha256": "0a2019403a27ae9f1fb7602b962b76ab1574a570bd3536c66289f654667d3205"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-frontend-deployment-2026-09-11.md",
+      "sha256": "da4f3ea1316bb0c7a24804a201e408f1152268a8d755d9a0cec233becbb969ac"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-preview-2026-09-11.md",
+      "sha256": "66ba283ca33a59d9bf05f1a6235d63baa46b4fa5e931aad52afe701237bbd588"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-preview-deployment-2026-09-11.md",
+      "sha256": "a5153fdf1d4c7b6fcf93e98219fb65472cbca83dbaaa05eb4c727ae9eeb26fb5"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-style-deployment-2026-09-12.md",
+      "sha256": "94ae7e57eec891f241ca087eadf3606c0235ef2e1c349a2027351681945cda1a"
+    },
+    {
+      "path": "docs/releases/unreleased/dcp-value-sets-2026-09-11.md",
+      "sha256": "458c51dfa0b99d1294eaebfa49682421d5045b7abbfc9d089dae4950ba5d1fb3"
+    },
+    {
+      "path": "docs/releases/unreleased/deployment-2026-09-09.md",
+      "sha256": "10c1e4ff7399392ef3a0e1a8626c800a71371ad1d787f4c359a5b414d5c6a9d5"
+    },
+    {
+      "path": "docs/releases/unreleased/device-integrations-2026-09-10.md",
+      "sha256": "0d555d3de940aa9744a26c976abb7da1bc429da3f1f8501761e4ec94b3bc8d46"
+    },
+    {
+      "path": "docs/releases/unreleased/documentation-2026-09-09.md",
+      "sha256": "2cb76e74fc91e87745a51d2cdb7c98a652189aca8e27bf6fabffd9fd1de9b094"
+    },
+    {
+      "path": "docs/releases/unreleased/documentation-refresh-2026-09-11.md",
+      "sha256": "f2caeec405f4a55cfc6d73aa090d7da875780d905c939048bc91a05781e1dcd4"
+    },
+    {
+      "path": "docs/releases/unreleased/documentation-review-2026-09-11.md",
+      "sha256": "6a7be6ba2ea09b25916451bc7fd67d7c91053774340c4d42daf0204324e68cd0"
+    },
+    {
+      "path": "docs/releases/unreleased/documentation-translation-review-2026-09-11.md",
+      "sha256": "30a552d9fc0284f43236430940543a849c4b64197487628ded09b36dbb667aad"
+    },
+    {
+      "path": "docs/releases/unreleased/identity-devices-2026-09-10.md",
+      "sha256": "2a69fc87c7def6d68a9e9348c2475c829c63656d50fcb8aca21c0c18111242ed"
+    },
+    {
+      "path": "docs/releases/unreleased/library-preferences-2026-09-09.md",
+      "sha256": "a3197b912aeb9d6a3445913fd20f59fd2e9c5d2bf6e1b657bf4229aeeca97907"
+    },
+    {
+      "path": "docs/releases/unreleased/op-consultation-2026-09-09.md",
+      "sha256": "4684650bfdad3a23ab4a5a3d0ba74eb6a789b3ee997d8329c2eced58a1354d33"
+    },
+    {
+      "path": "docs/releases/unreleased/op-consultation-deployment-2026-09-10.md",
+      "sha256": "b6111209ea7e519c9ae2046caca8d9826eed8ae60997a9731282b98c1f959634"
+    },
+    {
+      "path": "docs/releases/unreleased/op-registration-2026-09-10.md",
+      "sha256": "8d16e3028d3e95ace9d4e99a87c91ca81ed09c3272631534aa10738a0c8829db"
+    },
+    {
+      "path": "docs/releases/unreleased/own-settings-2026-09-10.md",
+      "sha256": "9b181d3fba51da1e98b6f1455dc8dedda6a50bd5c3eb8e2340419e2506088dec"
+    },
+    {
+      "path": "docs/releases/unreleased/own-settings-deployment-2026-09-10.md",
+      "sha256": "29ffaf4caf254c0582642de7ddacac495ad932f54622c0b5fe5ad9f4fdb91f9d"
+    },
+    {
+      "path": "docs/releases/unreleased/page-library-catalog-2026-09-10.md",
+      "sha256": "eedbc397e3ee71485530629902107801dae46a6c30eb4a579e0290553520f378"
+    },
+    {
+      "path": "docs/releases/unreleased/page-library-catalog-deployment-2026-09-10.md",
+      "sha256": "22e57e013d9dd84c417bd93d113e705e21091a3e39fc41e697ffa0da47a694cd"
+    },
+    {
+      "path": "docs/releases/unreleased/page-library-labels-2026-09-10.md",
+      "sha256": "cd96d12f7a197a5623203286d2d0b0ce6ff8899396e6719eafbd669609e9fcc9"
+    },
+    {
+      "path": "docs/releases/unreleased/page-templates-csv-2026-09-09.md",
+      "sha256": "f36206002e0b3260731f3eb80c1c3b230a83cab3f06a193431fce68341ec179c"
+    },
+    {
+      "path": "docs/releases/unreleased/query-preferences-2026-09-09.md",
+      "sha256": "12ac4bbbab6ba46e8fba0da3819600ebe5576f6f51d0bb1c24e611800b9f87fa"
+    },
+    {
+      "path": "docs/releases/unreleased/record-preferences-2026-09-09.md",
+      "sha256": "0c25fdc6c20035fbd2bbad06ea11f49894e2c99328c6a67d4fbe5524cf7588ab"
+    },
+    {
+      "path": "docs/releases/unreleased/registry-design-family-2026-09-09.md",
+      "sha256": "59e3e5b144ef58865c93b5cc8335a7d998eb771582b6185eacae413b60f41fa8"
+    },
+    {
+      "path": "docs/releases/unreleased/unified-documentation-2026-09-10.md",
+      "sha256": "2a62edf4328aa6b0ae803eb52a5654c6efe398894d2c903f95585333f2dfd3ff"
+    },
+    {
+      "path": "docs/releases/unreleased/unified-documentation-deployment-2026-09-10.md",
+      "sha256": "0396cee476792105246a5a80c55ce20b3afd063412528b6b874fe945b0076d3e"
+    },
+    {
+      "path": "docs/releases/unreleased/verification-2026-09-09.md",
+      "sha256": "b3bec7eb23ab17618227fcf270d6d8c3958b4cd162fd2ab243d8c65a3ae0c173"
+    },
+    {
+      "path": "docs/reports/README.md",
+      "sha256": "eda9aef7e6f19d19ce9dc02b5d2d22eb40e43953d7623ee029257ef0e1cf7a85"
+    },
+    {
+      "path": "docs/testing/CHANGELOG.md",
+      "sha256": "d07f4caf6ece3b9f3eee4f40151ed9ecf0e502b3a021c79c0853f77ef8a74f2c"
+    },
+    {
+      "path": "docs/testing/README.md",
+      "sha256": "52f7af6aeb0e392f6bf60972a21de058067942c7d9397e2933f439be2bc27fc7"
+    },
+    {
+      "path": "docs/testing/v1.0.0/MODULE-MATRIX.md",
+      "sha256": "6cacbbe2318d4879ea79053cb49b1d7de6169dc51ca388640731f85e37ad8c85"
+    },
+    {
+      "path": "docs/testing/v1.0.0/PRE-COMMIT.md",
+      "sha256": "ed0b1341bd255a8691cbc5b76cf887fe2498fddf0986745c15ae65a682978b31"
+    },
+    {
+      "path": "docs/testing/v1.0.0/USE-CASES.md",
+      "sha256": "d8bb9fb2987d7456287f69613117d4e0261c88265b8a5fb8e46361529752a350"
+    },
+    {
+      "path": "dummy-api/README.md",
+      "sha256": "7d178802bfb2d79d0074c39c166616e8620a39376d08bc7cb03ed6828a00344d"
+    },
+    {
+      "path": "dummy-api/config/README.md",
+      "sha256": "8e9c6204df79772746c34c568624d02190805fe6290127d5414277513480e5d8"
+    },
+    {
+      "path": "dummy-api/config/clinic-billing/README.md",
+      "sha256": "fb7be98f8e90299b6ac7fed8766d9edd1ad3728425904f1079ad10f117bdc90e"
+    },
+    {
+      "path": "dummy-api/config/clinical-consultation/README.md",
+      "sha256": "97c9fda17629d60b8c51142ce9762e3cd588a55be69991f0a7fbc3c29a40d555"
+    },
+    {
+      "path": "dummy-api/config/clinical-templates/README.md",
+      "sha256": "17029ba5f6779e74bb6ce2275a068d8fb547b7d45cbe31ddabb18333abfd41fc"
+    },
+    {
+      "path": "dummy-api/config/clinical-triage/README.md",
+      "sha256": "430724971d051fbdaca88341844ad1e71af7e0be09609bebae83739bd363b678"
+    }
+  ]
+}

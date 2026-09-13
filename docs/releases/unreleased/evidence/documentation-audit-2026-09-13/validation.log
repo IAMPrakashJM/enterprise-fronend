@@ -1,0 +1,37 @@
+PASS 98 documentation files: local links/headings, current testing guide, Library inventory, release identity/status and retained evidence hashes
+PASS documentation impact receipts, 316 page registrations and translation revisions; 1116 authoring/review items remain explicitly pending
+✔ broken destinations, headings and repository escapes fail; valid local links pass (2.64602ms)
+✔ release records cannot claim publication without identity or mutate recorded hashes (1.248314ms)
+✔ the repository documentation satisfies the current contract (164.81672ms)
+✔ source edits and mapping changes require fresh impact review; explanations are mandatory (1.458497ms)
+✔ source edits invalidate reviewed translations even when their text is unchanged (0.655429ms)
+✔ required-field metadata invalidates a translation review even if visible strings do not change (0.258102ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 246.871572
+
+> nexora-monorepo@1.0.0 verify:localization
+> node scripts/localization/check-copy.mjs && node scripts/localization/check-api-copy.mjs && node scripts/localization/sync-fallbacks.mjs --check
+
+PASS 17352 catalog keys in four languages; 1253 static presentation references; explicit data/code exceptions.
+PASS 231 static API errors registered with catalog message keys.
+
+> nexora-monorepo@1.0.0 verify:library
+> node scripts/library/generate-examples.mjs --check
+
+PASS 26 examples match their compiled demo functions
+
+> nexora-monorepo@1.0.0 verify:templates
+> node scripts/templates/generate-example.ts --check
+
+(node:2063142) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/pepadmin/enterprice/desktop-clients/scripts/templates/generate-example.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/pepadmin/enterprice/desktop-clients/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS TypeScript template example matches the rendered demo adapter
+PASS repository-wide local links/headings: 167 Markdown files (166 tracked baseline plus new audit record).

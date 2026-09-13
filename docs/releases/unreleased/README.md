@@ -1,23 +1,17 @@
 # Current delivery and release records
 
-Local implementation: [DCP enterprise runtime](dcp-enterprise-runtime-2026-09-11.md), [DCP CSV option staging](dcp-csv-options-2026-09-11.md), [DCP reusable value sets](dcp-value-sets-2026-09-11.md) and [dependent dropdowns](dcp-dependencies-2026-09-11.md), locally verified and not deployed.
+Status reviewed **13 September 2026**. Latest recorded activation: [DCP designer style alignment](dcp-style-deployment-2026-09-12.md), release `20260912002147213-851cb66e`, verified on both demo sites. The earlier [DCP frontend contract/runtime deployment](dcp-frontend-deployment-2026-09-11.md) already delivered the dependent dropdown, value-set, bounded import, repeatable-field and runtime increments; their original implementation records retain historical local-only status.
 
-Latest activation: [DCP form preview](dcp-preview-deployment-2026-09-11.md), deployed and verified on both demo sites.
-
-Earlier activation: [DCP visual designer — 11 September 2026](dcp-designer-deployment-2026-09-11.md), verified on both demo sites. Remote CI has a documented historical evidence-link failure.
-
-Status reviewed **11 September 2026**. The latest recorded frontend demo release is `20260911105427634-cc931847`, deployed to both public sites. Its [DCP preview deployment record](dcp-preview-deployment-2026-09-11.md) contains activation and verification evidence.
-
-Latest documentation follow-up: [Authored-guide translations and Jira connection review](documentation-translation-review-2026-09-11.md). Catalog changes are not yet deployed.
+Latest documentation review: [repository audit — 13 September 2026](documentation-audit-2026-09-13.md). This review does not redeploy the application or resolve hosted feature-browser failures.
 
 ## Current state
 
 | Area | Current record |
 | --- | --- |
-| Latest implementation | [DCP enterprise runtime](dcp-enterprise-runtime-2026-09-11.md): rules, bounded XLSX import, lifecycle, layouts and synthetic entity answers |
-| Latest deployment | [DCP form preview on both demo sites](dcp-preview-deployment-2026-09-11.md) |
+| Latest implementation | [DCP style alignment](dcp-designer-style-2026-09-12.md), preserving the deployed designer/runtime contracts |
+| Latest deployment | [DCP style on both demo sites](dcp-style-deployment-2026-09-12.md) |
 | Release evidence review | [11 September release documentation review](documentation-review-2026-09-11.md) |
-| Documentation reconciliation | [11 September documentation update](documentation-refresh-2026-09-11.md) |
+| Documentation reconciliation | [13 September repository audit](documentation-audit-2026-09-13.md) |
 | Feature inventory | [Current feature catalog](../../features/README.md) |
 | Testing contract | [Current testing guide](../../testing/README.md) |
 | In-app authoring and review backlog | [Documentation lifecycle](../../documentation/README.md) and [generated backlog](../../documentation/backlog.json) |
@@ -74,13 +68,13 @@ The following records retain their original dates and test scopes. They are not 
 - [Identity device library, 10 September 2026](identity-devices-2026-09-10.md)
 - [Healthcare reference page templates](care-page-templates-2026-09-10.md)
 
-Latest local implementation: [DCP visual designer](dcp-designer-2026-09-11.md), not deployed.
+Historical initial implementation: [DCP visual designer](dcp-designer-2026-09-11.md); later deployment records above supersede its local-only status.
 
-The [DCP frontend contract and recovery increment](dcp-frontend-contract-2026-09-11.md) is in progress in local source. It records the verified backend-session handoff, v1 runtime integration and additional designer/recovery UI. It is not a deployed release or a declaration that the full frontend scope is finished.
+The [DCP frontend contract and recovery increment](dcp-frontend-contract-2026-09-11.md) records the original implementation. Its [deployment follow-up](dcp-frontend-deployment-2026-09-11.md) establishes delivery; the full enterprise scope remains incomplete.
 
 - [DCP frontend deployment — 11 September 2026](dcp-frontend-deployment-2026-09-11.md): committed source, both public demo sites, API restart and retained live verification.
 
-- [DCP designer style alignment — 12 September 2026](dcp-designer-style-2026-09-12.md): local presentation-only update, not deployed.
+- [DCP designer style alignment — 12 September 2026](dcp-designer-style-2026-09-12.md): original local presentation-only evidence; see its deployment follow-up.
 
 - [DCP designer style deployment — 12 September 2026](dcp-style-deployment-2026-09-12.md): release checks and activation follow-up.
 

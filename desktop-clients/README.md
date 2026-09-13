@@ -8,10 +8,14 @@ apps/desktop    Vite 7 + Tauri 2 — records open in in-window workspace tabs   
 packages/*      @pepbits/* — the shared surface both shells render
 ```
 
+## Current documentation and delivery
+
+Use the [repository documentation index](../docs/README.md) and [current delivery record](../docs/releases/unreleased/README.md) for current status. The latest recorded demo release is `20260912002147213-851cb66e`. The [DCP designer guide](../docs/features/dcp-designer.md) covers visual authoring, preview, datasets, runtime and recovery; the [backend handoff](../docs/development/DCP-LATEST-FORM-BACKEND-HANDOFF-2026-09-11.md) separates frontend authoring metadata from the supplied backend v1 contract. Hosted feature-browser failures remain documented; historical passing counts below are not evidence for newer source.
+
 ## Run
 
 ```bash
-npm install
+npm ci                # Node.js 24+; install the committed lockfile
 npm run dev:stack      # demo API :3200 + web :3100   <- the usual one
 npm run dev:all        # demo API + web + desktop
 npm run dev:api        # demo API only  :3200

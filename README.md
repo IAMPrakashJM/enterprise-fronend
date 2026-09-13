@@ -37,6 +37,7 @@ Domain-specific rules and production integrations belong to the application usin
 | Device integration | Keyboard-wedge scanner input, record resolution, workstation routing, receipt/report jobs, device policies, simulated event automation and typed native connector contracts |
 | Identity device demos | Card/EID reader, passport scanner and one-to-one biometric verification workflows with request expiry, cancellation, mismatch handling and manual review |
 | AI integration foundations | Shared AI configuration, client/UI packages and provider, context, credential and egress checks; feature-specific readiness remains documented separately |
+| DCP form designer | Visual sections and fields, dependent dropdowns/value sets, bounded CSV/XLSX staging, repeatable fields, preview, demo lifecycle, shared recovery and a separate typed backend v1 runtime adapter; production host integration remains pending |
 | Quality and delivery | TypeScript checks, component/API/browser tests, localization and architecture gates, isolated deployment packaging, release identity checks and rollback support |
 
 Capabilities apply to their supported components and page engines; not every page exposes every action. See the [feature catalog](docs/features/README.md) for behavior, integration contracts and completion boundaries.
@@ -133,6 +134,8 @@ Follow the [testing guide](docs/testing/README.md) for the appropriate scope and
 
 - [Web demo](https://front-design.pepbits.com)
 - [Desktop-browser demo](https://desktop.front-design.pepbits.com)
+
+Latest recorded demo release: `20260912002147213-851cb66e` (DCP designer layout). The [13 September documentation audit](docs/releases/unreleased/documentation-audit-2026-09-13.md) records remaining documentation and hosted-test gaps.
 
 Use the [delivery records](docs/releases/unreleased/README.md) to identify the source, deployment and checks for a particular change. Local builds, remote CI, public deployment and production acceptance are recorded separately.
 

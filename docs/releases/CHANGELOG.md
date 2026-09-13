@@ -1,5 +1,10 @@
 # Frontend delivery changelog
 
+## 13 September 2026 — Repository documentation audit
+
+Reconciled current release indexes, added DCP coverage to the root/workspace architecture map, updated the demo API overview against its current dependencies, endpoint families and SQLite preferences, and removed stale DCP completion statements. Historical evidence remains unchanged. See the [audit and remaining gaps](unreleased/documentation-audit-2026-09-13.md). Documentation checks do not resolve hosted browser failures or certify missing domain/native reviews.
+
+
 ## Release evidence review — 11 September 2026
 
 Reconciled the current release pointers with retained deployment evidence and Git publication. Clarified that the latest release is the latest recorded deployment, without implying a fresh live check. Historical evidence remains unchanged. See the [review record](unreleased/documentation-review-2026-09-11.md).

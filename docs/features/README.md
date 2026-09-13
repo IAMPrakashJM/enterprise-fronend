@@ -1,6 +1,6 @@
 # Feature catalog
 
-Reviewed 11 September 2026. See the [current delivery index](../releases/unreleased/README.md) for deployment status and the [documentation coverage](../README.md#current-status) for remaining authoring/review work. The [page-help audit](../documentation/reference-guide-audit-2026-09-11.md) maps the reference-only pages to their actual implementations and distinguishes platform instructions from missing domain workflows.
+Reviewed 13 September 2026. See the [current delivery index](../releases/unreleased/README.md) for deployment status and the [documentation coverage](../README.md#current-status) for remaining authoring/review work. The [page-help audit](../documentation/reference-guide-audit-2026-09-11.md) maps the reference-only pages to their actual implementations and distinguishes platform instructions from missing domain workflows.
 
 - [Own Settings and default module](own-settings.md): API-backed personal startup module with tenant controls.
 
@@ -52,4 +52,4 @@ Never substitute a screenshot, an empty route or a passing build for functional 
 
 - [Healthcare reference page templates](care-page-templates.md): emergency, inpatient and consultation reference designs with shared components and CSV-backed API records.
 
-- [DCP Visual Designer](dcp-designer.md): shared visual authoring, preview and demo draft persistence; production DCP integration pending.
+- [DCP Visual Designer](dcp-designer.md): shared visual authoring, dependent lookups/value sets, bounded CSV/XLSX staging, repeatable fields, preview, lifecycle, scoped recovery and backend v1 runtime demonstration; production host integration remains pending.

@@ -1,6 +1,6 @@
 # Architecture index
 
-Reviewed 11 September 2026. These links describe implemented contracts; historical plans remain labelled as plans.
+Reviewed 13 September 2026. These links describe implemented contracts; historical plans remain labelled as plans.
 
 - [Library, preference policy and component flows](library-preferences.md): current package boundaries, setting resolution, APIs, rendering and failure behavior.
 - [Existing workspace architecture](../../desktop-clients/docs/enterprise-workspace-framework-readme.md): records, tabs, split views and optional windows.
@@ -14,3 +14,7 @@ Reviewed 11 September 2026. These links describe implemented contracts; historic
 - [Identity devices](../features/identity-devices.md): scoped capture requests, assertion boundary and device-policy checks.
 
 Architecture explains responsibility and intent. Release evidence establishes what was tested and delivered.
+
+- [DCP designer and runtime](../features/dcp-designer.md#architecture-and-public-integration): shared renderer, typed authoring definition, adapters, catalog and recovery boundaries.
+- [DCP backend handoff](../development/DCP-LATEST-FORM-BACKEND-HANDOFF-2026-09-11.md): current frontend expectations and the distinction between authoring and backend v1 contracts.
+- [Demo API inventory](../../dummy-api/README.md): current endpoint families, storage ownership and production boundaries.

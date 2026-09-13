@@ -69,7 +69,11 @@ deploy. Its API URLs must still match the deployment config:
 npm run deploy -- --activate PREVIOUS_RELEASE_ID
 ```
 
-## Latest activation — Component Library, 9 September 2026
+## Current activation — DCP designer style, 12 September 2026
+
+Release `20260912002147213-851cb66e`, application commit `6ec329f22e589dece2894ef5b12ad4961e5ff8b0`, is the latest recorded activation on both demo sites. The API was not restarted. Previous release `20260911145802227-397d1cf5` is retained for rollback. See the [deployment evidence and hosted-CI follow-up](../../docs/releases/unreleased/dcp-style-deployment-2026-09-12.md). Current state takes precedence over the dated historical entries below; those entries describe their original activation, not multiple simultaneously active releases.
+
+## Historical activation — Component Library, 9 September 2026
 
 Release `20260909012454211-3a549a4a`, from application commit `6796689`, is active
 on both demo hosts. All six CI jobs and public Library, localization, asset and

@@ -4360,24 +4360,24 @@
     "language": "ar",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "17454d8de240e7cd58554a7028ce894d6815da683e3ca25ac3637a3fe9d5aeac",
-    "translationHash": "b809e8fa9910b0168c0dfb9f9c38bd1f7d435be097a91c697685bd5f1aedca1d"
+    "sourceHash": "583844dca091c28b883ffaa71d37418641d8cefbb7add6697be5ae9ce5acdc81",
+    "translationHash": "7d0a2ba779efb919342974ec301e62756d81ebec6fde5b4a66f5006b6abcaf4d"
   },
   {
     "pageId": "form-controls",
     "language": "hi",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "17454d8de240e7cd58554a7028ce894d6815da683e3ca25ac3637a3fe9d5aeac",
-    "translationHash": "c2eaed36fbcd30cfb14d028eb2644084007b23bc6092d03b175fcd58674b671a"
+    "sourceHash": "583844dca091c28b883ffaa71d37418641d8cefbb7add6697be5ae9ce5acdc81",
+    "translationHash": "89fc4db831ad3d6e1a104618ea811c8b661b06b164a7f86190a9daecc30686fe"
   },
   {
     "pageId": "form-controls",
     "language": "ml",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "17454d8de240e7cd58554a7028ce894d6815da683e3ca25ac3637a3fe9d5aeac",
-    "translationHash": "a4f2189438d8affd4fe86a1a96838c089ae37ec3521e843be1eed79611afb98b"
+    "sourceHash": "583844dca091c28b883ffaa71d37418641d8cefbb7add6697be5ae9ce5acdc81",
+    "translationHash": "f8e48d03f59ccac49c2f1ee6004f05de9c8a38db4c4d5682cb11551d81bac51f"
   },
   {
     "pageId": "feedback-components",
@@ -4972,24 +4972,24 @@
     "language": "ar",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "1c62db06d305f83346eacc4b29828858fedcc97d52fcb21b0518953760af8f72",
-    "translationHash": "ac2c3882e165e921db5b558bab3356c489b1f134108f0c7f5ce4d9ae1e5b4a7a"
+    "sourceHash": "d0c3fdbc9cc124b381d5f36a7d496d6d8fd5a9d271965277771afe0a3d111484",
+    "translationHash": "4e9d36f7a200d3433f7ec6446650fcedbfb387d4d440de0f1ce9aef941802045"
   },
   {
     "pageId": "draft-recovery",
     "language": "hi",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "1c62db06d305f83346eacc4b29828858fedcc97d52fcb21b0518953760af8f72",
-    "translationHash": "d01e283aa8c7f8179af0a84be9f9558d76ce22ac5148781556e4487ff8cb65b5"
+    "sourceHash": "d0c3fdbc9cc124b381d5f36a7d496d6d8fd5a9d271965277771afe0a3d111484",
+    "translationHash": "640a0211083b1e76e1abadee145667124521fc8035e20f37ba62d1b040228f7f"
   },
   {
     "pageId": "draft-recovery",
     "language": "ml",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "1c62db06d305f83346eacc4b29828858fedcc97d52fcb21b0518953760af8f72",
-    "translationHash": "c1ce7e313a6ba13ab838a2b23da56d060e4e275628535dabf796ab74efeb1587"
+    "sourceHash": "d0c3fdbc9cc124b381d5f36a7d496d6d8fd5a9d271965277771afe0a3d111484",
+    "translationHash": "b213dfd958292c444563bdbdbe794a20a8f927f2eb41b6974f788ce6d9e4c389"
   },
   {
     "pageId": "date-components",
@@ -8236,23 +8236,23 @@
     "language": "ar",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "eff3e58e480a1842ff65850235df174e0af8dd20e3243bb7765bd094d1c59ddf",
-    "translationHash": "022d4b2b1835daf3ea7c588d928ff42b54b8112c4a7e25ed3c13d001697b6b68"
+    "sourceHash": "041cf272ec119920108daaadc946b4686aa51e976792fa8ad510b8ddaec814ca",
+    "translationHash": "f8e488605695904a586c6862cfe298b7c9132a02287a120982a3eba9548896fc"
   },
   {
     "pageId": "dcp-designer",
     "language": "hi",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "eff3e58e480a1842ff65850235df174e0af8dd20e3243bb7765bd094d1c59ddf",
-    "translationHash": "c22a9c9acb6b365dad0ec6f96aea8bda60d990576516d78e0e253dbf6eee8aa0"
+    "sourceHash": "041cf272ec119920108daaadc946b4686aa51e976792fa8ad510b8ddaec814ca",
+    "translationHash": "937c10c4d55e6f61c40445820b50d3a876a2ddc493fecbcbb19c405c3e867d06"
   },
   {
     "pageId": "dcp-designer",
     "language": "ml",
     "issue": "current",
     "review": "pending",
-    "sourceHash": "eff3e58e480a1842ff65850235df174e0af8dd20e3243bb7765bd094d1c59ddf",
-    "translationHash": "c4d26c60d42ecb38519560527dd9c10465ab8035cdaaa1a9b626d5f00e2db090"
+    "sourceHash": "041cf272ec119920108daaadc946b4686aa51e976792fa8ad510b8ddaec814ca",
+    "translationHash": "6065fab1007ee68e794353ec96886f68c29d3bfbe299b5784f446640f145a897"
   }
 ]

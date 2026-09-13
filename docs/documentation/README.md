@@ -49,6 +49,6 @@ The existing guide validator checks guide structure and change links; browser te
 
 There are 168 inherited reference-only guides and pending native reviews across the catalog. The report lists each page/language separately; it does not mark boilerplate as a completed workflow. Domain owners must provide/verify those instructions, and native reviewers must verify terminology. Current automated multilingual checks establish matching API content and direction, not language quality. Branch protection and any external reviewer assignment remain administrative work, not completed configuration.
 
-## Latest catalog review — 11 September 2026
+## Current catalog review — 13 September 2026
 
-The [translation follow-up](../releases/unreleased/documentation-translation-review-2026-09-11.md) closes 12 incomplete language entries across four authored guides. Current totals: 168 reference-guide authoring issues, 504 incomplete translation entries on those references and 441 complete authored-guide translations awaiting native review. The overall 1,113-item count is unchanged because completed translations still require actual native review. This is local source completion, not a new deployment.
+Regenerating the backlog and checking the current snapshot yields 316 page registrations: 148 authored guides and 168 reference-only guides. The 1,116 backlog entries comprise 168 guide-authoring issues, 504 incomplete reference-guide translations and 444 authored-guide translations awaiting native review. Earlier dated audit records retain their original counts. The [current repository audit](../releases/unreleased/documentation-audit-2026-09-13.md) records the validation and remaining boundaries. A current translation hash is not native-speaker approval.
